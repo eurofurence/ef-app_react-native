@@ -2465,6 +2465,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-async-storage/async-storage@npm:^1.17.7":
+  version: 1.17.7
+  resolution: "@react-native-async-storage/async-storage@npm:1.17.7"
+  dependencies:
+    merge-options: ^3.0.4
+  peerDependencies:
+    react-native: ^0.0.0-0 || 0.60 - 0.69 || 1000.0.0
+  checksum: f0cb30b015b2073a6ccae2c290bde78a0921258883d5071a93c474550e34137bc0cfab48fadbb9be72c1d8f2d2b6ca14cd6f32e4c833c5b1ca1dff9f74b772a0
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-debugger-ui@npm:^7.0.3":
   version: 7.0.3
   resolution: "@react-native-community/cli-debugger-ui@npm:7.0.3"
@@ -5043,6 +5054,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.12.9
     "@expo/ngrok": ^2.5.0
+    "@react-native-async-storage/async-storage": ^1.17.7
     "@reduxjs/toolkit": ^1.8.3
     "@testing-library/jest-native": ^4.0.5
     "@testing-library/react-native": ^10.1.1
@@ -5068,6 +5080,7 @@ __metadata:
     react-redux: ^8.0.2
     react-test-renderer: ^17.0.2
     redux-logger: ^3.0.6
+    redux-persist: ^6.0.0
     typescript: ~4.3.5
   languageName: unknown
   linkType: soft
@@ -7282,6 +7295,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-plain-obj@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "is-plain-obj@npm:2.1.0"
+  checksum: cec9100678b0a9fe0248a81743041ed990c2d4c99f893d935545cfbc42876cbe86d207f3b895700c690ad2fa520e568c44afc1605044b535a7820c1d40e38daa
+  languageName: node
+  linkType: hard
+
 "is-plain-object@npm:^2.0.3, is-plain-object@npm:^2.0.4":
   version: 2.0.4
   resolution: "is-plain-object@npm:2.0.4"
@@ -8683,6 +8703,15 @@ __metadata:
   version: 0.2.0
   resolution: "memory-cache@npm:0.2.0"
   checksum: 255c87fec360ce06818ca7aeb5850d798e14950a9fcea879d88e1f8d1f4a6cffb8ed16da54aa677f5ec8e47773fbe15775a1cdf837ac190e17e9fb4b71e87bee
+  languageName: node
+  linkType: hard
+
+"merge-options@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "merge-options@npm:3.0.4"
+  dependencies:
+    is-plain-obj: ^2.1.0
+  checksum: d86ddb3dd6e85d558dbf25dc944f3527b6bacb944db3fdda6e84a3f59c4e4b85231095f58b835758b9a57708342dee0f8de0dffa352974a48221487fe9f4584f
   languageName: node
   linkType: hard
 
@@ -10543,6 +10572,15 @@ __metadata:
   dependencies:
     deep-diff: ^0.3.5
   checksum: c40f63c44c6475cf6374ae0eaa810d913f142614cb80692a0beacaf135c5dc3eb3e2cdd4296f01446ba48cb69b82e81363b84d829f1f6659382c991022a814ac
+  languageName: node
+  linkType: hard
+
+"redux-persist@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "redux-persist@npm:6.0.0"
+  peerDependencies:
+    redux: ">4.0.0"
+  checksum: edaf10dbf17351ce8058d0802357adae8665b3a1ff39371834e37838ddbe1a79cccbc717b8ba54acb5307651ccf51d0f7dc1cbc8dbae0726ff952d11ef61c6b8
   languageName: node
   linkType: hard
 

@@ -9,10 +9,11 @@ type ReduxOptions = {
     store?: typeof store;
 };
 
-export const customRender = (ui, { preloadedState = {}, store = configureStore({ reducer: reducers, preloadedState }), ...renderOptions }: ReduxOptions = {}) => {
+export const customRender = <Result,>(ui, options: ReduxOptions = {}) => {
+    const { preloadedState = {}, store = configureStore({ reducer: reducers, preloadedState }) } = options;
     const wrapper = ({ children }) => <StoreProvider store={store}>{children}</StoreProvider>;
 
-    return render(ui, { wrapper, ...renderOptions });
+    return render<Result>(ui, { wrapper });
 };
 
 interface RenderHookResult<Result, Props> {
