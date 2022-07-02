@@ -6,6 +6,6 @@ describe("LoadingIndicator", function () {
     it("renders", () => {
         render(<LoadingIndicator />);
 
-        expect(screen.toJSON()).toMatchSnapshot();
+        expect(screen.getByTestId("loadingindicator")).toBeTruthy();
     });
 });

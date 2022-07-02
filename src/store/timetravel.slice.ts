@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface TimeTravelState {
-    timeTravelAmount: number;
-    timeTravelEnabled: boolean;
-    timeTravelVisible: boolean;
+    amount: number;
+    enabled: boolean;
+    visible: boolean;
 }
 
 const initialState: TimeTravelState = {
-    timeTravelAmount: 0,
-    timeTravelEnabled: false,
-    timeTravelVisible: false,
+    amount: 0,
+    enabled: false,
+    visible: false,
 };
 
 export const timeTravelSlice = createSlice({
@@ -17,19 +17,19 @@ export const timeTravelSlice = createSlice({
     initialState,
     reducers: {
         travelForward: (state, action: PayloadAction<number>) => {
-            state.timeTravelAmount += action.payload;
+            state.amount += action.payload;
         },
         travelBackward: (state, action: PayloadAction<number>) => {
-            state.timeTravelAmount -= action.payload;
+            state.amount -= action.payload;
         },
         resetTravel: (state) => {
-            state.timeTravelAmount = 0;
+            state.amount = 0;
         },
         enableTimeTravel: (state, action: PayloadAction<boolean>) => {
-            state.timeTravelEnabled = action.payload;
+            state.enabled = action.payload;
         },
         showTimeTravel: (state, action: PayloadAction<boolean>) => {
-            state.timeTravelVisible = action.payload;
+            state.visible = action.payload;
         },
     },
 });

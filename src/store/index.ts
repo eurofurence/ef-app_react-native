@@ -5,11 +5,13 @@ import logger from "redux-logger";
 import { eurofurenceService } from "./eurofurence.service";
 import { timeTravelSlice } from "./timetravel.slice";
 
+export const reducers = {
+    timetravel: timeTravelSlice.reducer,
+    [eurofurenceService.reducerPath]: eurofurenceService.reducer,
+};
+
 export const store = configureStore({
-    reducer: {
-        timetravel: timeTravelSlice.reducer,
-        [eurofurenceService.reducerPath]: eurofurenceService.reducer,
-    },
+    reducer: reducers,
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(eurofurenceService.middleware).concat(logger),
 });
 
