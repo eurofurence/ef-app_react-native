@@ -40,6 +40,10 @@
     },
     "web": {
       "favicon": "./assets/images/playstore.png"
-    }
+    },
+    "notification": {
+      "color": "#006459",
+      "icon": "./assets/images/playstore.png"
+    },
   }
 }

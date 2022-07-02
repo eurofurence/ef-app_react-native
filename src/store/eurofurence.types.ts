@@ -32,6 +32,7 @@ export type AnnouncementRecord = RecordMetadata & {
 
 export type EventRecord = RecordMetadata & {
     Title: string;
+    StartDateTimeUtc: DateTimeString;
 };
 
 export type DealerRecord = RecordMetadata & {

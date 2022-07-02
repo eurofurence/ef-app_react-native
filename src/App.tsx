@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 
+import { NotificationManager } from "./components/Notifications/NotificationManager";
 import { StartScreen } from "./screens/StartScreen";
 
 /**
@@ -9,6 +10,7 @@ import { StartScreen } from "./screens/StartScreen";
 export default function App() {
     return (
         <View style={styles.container}>
+            <NotificationManager />
             <StatusBar style="auto" />
             <StartScreen />
         </View>

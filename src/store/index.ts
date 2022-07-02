@@ -6,9 +6,11 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, R
 import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 
 import { eurofurenceService } from "./eurofurence.service";
+import { notificationsSlice } from "./notifications.slice";
 import { timeTravelSlice } from "./timetravel.slice";
 
 export const reducers = combineReducers({
+    [notificationsSlice.name]: notificationsSlice.reducer,
     [timeTravelSlice.name]: timeTravelSlice.reducer,
     [eurofurenceService.reducerPath]: eurofurenceService.reducer,
 });
@@ -18,8 +20,7 @@ const persistedReducer = persistReducer(
         key: "root",
         version: 2,
         storage: AsyncStorage,
-        stateReconciler: autoMergeLevel1,
-        whitelist: [timeTravelSlice.name, eurofurenceService.reducerPath],
+        whitelist: [timeTravelSlice.name, eurofurenceService.reducerPath, notificationsSlice.name],
     },
     reducers
 );

@@ -32,7 +32,7 @@ export const eurofurenceService = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: "https://app.eurofurence.org/EF26" }),
     tagTypes: ["Announcement", "Event", "Dealer", "EventDay", "EventTrack", "EventRoom", "Map", "KnowledgeGroup", "KnowledgeEntry"],
     extractRehydrationInfo(action, { reducerPath }) {
-        if (action.type === "persist/REHYDRATE") {
+        if (action.type === "persist/REHYDRATE" && action.payload) {
             return action.payload[reducerPath];
         }
     },
