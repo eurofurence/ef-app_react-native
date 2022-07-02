@@ -3,9 +3,11 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import logger from "redux-logger";
 
 import { eurofurenceService } from "./eurofurence.service";
+import { timeTravelSlice } from "./timetravel.slice";
 
 export const store = configureStore({
     reducer: {
+        timetravel: timeTravelSlice.reducer,
         [eurofurenceService.reducerPath]: eurofurenceService.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(eurofurenceService.middleware).concat(logger),
