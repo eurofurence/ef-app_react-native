@@ -1,4 +1,4 @@
-type RecordMetadata = {
+export type RecordMetadata = {
     Id: string;
     LastChangeDateTimeUtc: string;
     IsDeleted: number;
