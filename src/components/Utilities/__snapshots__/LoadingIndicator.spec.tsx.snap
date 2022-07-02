@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoadingIndicator renders 1`] = `
+<Text>
+  We are loading some data, hang tight!
+</Text>
+`;
