@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore, EmptyObject } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import logger from "redux-logger";
-import { PersistConfig, persistReducer, persistStore } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
 
 import { eurofurenceService } from "./eurofurence.service";
 import { timeTravelSlice } from "./timetravel.slice";
