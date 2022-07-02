@@ -24,5 +24,6 @@
     "@types/react-native": "~0.67.6",
     "typescript": "~4.3.5"
   },
-  "private": true
+  "private": true,
+  "packageManager": "yarn@3.2.1"
 }

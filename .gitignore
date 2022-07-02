@@ -1,6 +1,16 @@
 .vscode/
 package-lock.json
 
+# Yarn V2
+.pnp.*
+.yarn/*
+.yarn/cache/**
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
 # Created by create-expo-app
 node_modules/
 .expo/
