@@ -2957,6 +2957,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/redux-logger@npm:^3":
+  version: 3.0.9
+  resolution: "@types/redux-logger@npm:3.0.9"
+  dependencies:
+    redux: ^4.0.0
+  checksum: c41fdc09198fae2d62ff7d6bd029ccae1fed655e6a7abd40614a8db5d6e01adbe565881b2c8d398789804a48259e3399af3939f994a532c11904ba2021799275
+  languageName: node
+  linkType: hard
+
 "@types/scheduler@npm:*":
   version: 0.16.2
   resolution: "@types/scheduler@npm:0.16.2"
@@ -4772,6 +4781,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deep-diff@npm:^0.3.5":
+  version: 0.3.8
+  resolution: "deep-diff@npm:0.3.8"
+  checksum: 8a0fb6cbe468e50211836f8daa1c14798b2d7436bfbcb7d8eb0902e0d61bf1dfd48d5b9edd46a10596182b90ad25f87461b8e55111ff9257b6067ad0676f79c9
+  languageName: node
+  linkType: hard
+
 "deep-extend@npm:^0.6.0":
   version: 0.6.0
   resolution: "deep-extend@npm:0.6.0"
@@ -5004,6 +5020,7 @@ __metadata:
     "@types/prettier": ^2
     "@types/react": ~17.0.21
     "@types/react-native": ~0.67.6
+    "@types/redux-logger": ^3
     eslint: ^8.19.0
     eslint-config-universe: ^11.0.0
     expo: ~45.0.0
@@ -5015,6 +5032,7 @@ __metadata:
     react-native: 0.68.2
     react-native-web: 0.17.7
     react-redux: ^8.0.2
+    redux-logger: ^3.0.6
     typescript: ~4.3.5
   languageName: unknown
   linkType: soft
@@ -10385,6 +10403,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"redux-logger@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "redux-logger@npm:3.0.6"
+  dependencies:
+    deep-diff: ^0.3.5
+  checksum: c40f63c44c6475cf6374ae0eaa810d913f142614cb80692a0beacaf135c5dc3eb3e2cdd4296f01446ba48cb69b82e81363b84d829f1f6659382c991022a814ac
+  languageName: node
+  linkType: hard
+
 "redux-thunk@npm:^2.4.1":
   version: 2.4.1
   resolution: "redux-thunk@npm:2.4.1"
@@ -10394,7 +10421,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux@npm:^4.1.2":
+"redux@npm:^4.0.0, redux@npm:^4.1.2":
   version: 4.2.0
   resolution: "redux@npm:4.2.0"
   dependencies:

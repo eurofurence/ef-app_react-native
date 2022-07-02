@@ -19,7 +19,8 @@
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
     "react-native-web": "0.17.7",
-    "react-redux": "^8.0.2"
+    "react-redux": "^8.0.2",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -30,6 +31,7 @@
     "@types/prettier": "^2",
     "@types/react": "~17.0.21",
     "@types/react-native": "~0.67.6",
+    "@types/redux-logger": "^3",
     "eslint": "^8.19.0",
     "eslint-config-universe": "^11.0.0",
     "jest": "^28.1.2",

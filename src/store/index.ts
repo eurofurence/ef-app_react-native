@@ -1,8 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import logger from "redux-logger";
+
+import { eurofurenceService } from "./eurofurence.service";
 
 export const store = configureStore({
-    reducer: {},
+    reducer: {
+        [eurofurenceService.reducerPath]: eurofurenceService.reducer,
+    },
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(eurofurenceService.middleware).concat(logger),
 });
 
 // Types for the Store
