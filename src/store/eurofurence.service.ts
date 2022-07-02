@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import moment from "moment";
 import { REHYDRATE } from "redux-persist";
 
-import { enrichDealer } from "./eurofurence.enrichers";
+import { enrichDealerRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
     DealerRecord,
     EnrichedDealerRecord,
+    EnrichedMapRecord,
     EventDayRecord,
     EventRecord,
     EventRoomRecord,
@@ -14,6 +14,7 @@ import {
     KnowledgeEntryRecord,
     KnowledgeGroupRecord,
     MapRecord,
+    RecordId,
     RecordMetadata,
 } from "./eurofurence.types";
 
@@ -40,7 +41,7 @@ export const eurofurenceService = createApi({
             query: () => ({ url: "/Api/Announcements" }),
             providesTags: tagsFromList("Announcement"),
         }),
-        getAnnouncementsById: builder.query<AnnouncementRecord, string>({
+        getAnnouncementsById: builder.query<AnnouncementRecord, RecordId>({
             query: (args) => ({ url: `/Api/Announcements/${args}` }),
             providesTags: tagsFromItem("Announcement"),
         }),
@@ -48,25 +49,25 @@ export const eurofurenceService = createApi({
             query: () => ({ url: "/Api/Events" }),
             providesTags: tagsFromList("Event"),
         }),
-        getEventById: builder.query<EventRecord, string>({
+        getEventById: builder.query<EventRecord, RecordId>({
             query: (args) => ({ url: `/Api/Events/${args}` }),
             providesTags: tagsFromItem("Event"),
         }),
         getDealers: builder.query<EnrichedDealerRecord[], void>({
             query: () => ({ url: "/Api/Dealers" }),
             providesTags: tagsFromList("Dealer"),
-            transformResponse: (result: DealerRecord[]): EnrichedDealerRecord[] => result.map(enrichDealer),
+            transformResponse: (result: DealerRecord[]): EnrichedDealerRecord[] => result.map(enrichDealerRecord),
         }),
-        getDealerById: builder.query<EnrichedDealerRecord, string>({
+        getDealerById: builder.query<EnrichedDealerRecord, RecordId>({
             query: (args) => ({ url: `/Api/Dealers/${args}` }),
             providesTags: tagsFromItem("Dealer"),
-            transformResponse: enrichDealer,
+            transformResponse: enrichDealerRecord,
         }),
         getEventDays: builder.query<EventDayRecord[], void>({
             query: () => ({ url: "/Api/EventConferenceDays" }),
             providesTags: tagsFromList("EventDay"),
         }),
-        getEventDayById: builder.query<EventDayRecord, string>({
+        getEventDayById: builder.query<EventDayRecord, RecordId>({
             query: (args) => ({ url: `/Api/EventConferenceDays/${args}` }),
             providesTags: tagsFromItem("EventDay"),
         }),
@@ -74,7 +75,7 @@ export const eurofurenceService = createApi({
             query: () => ({ url: "/Api/EventConferenceTracks" }),
             providesTags: tagsFromList("EventTrack"),
         }),
-        getEventTrackById: builder.query<EventTrackRecord, string>({
+        getEventTrackById: builder.query<EventTrackRecord, RecordId>({
             query: (args) => ({ url: `/Api/EventConferenceTracks/${args}` }),
             providesTags: tagsFromItem("EventTrack"),
         }),
@@ -82,7 +83,7 @@ export const eurofurenceService = createApi({
             query: () => ({ url: "/Api/EventConferenceRooms" }),
             providesTags: tagsFromList("EventRoom"),
         }),
-        getEventRoomById: builder.query<EventRoomRecord, string>({
+        getEventRoomById: builder.query<EventRoomRecord, RecordId>({
             query: (args) => ({ url: `/Api/EventConferenceRooms/${args}` }),
             providesTags: tagsFromItem("EventRoom"),
         }),
@@ -90,15 +91,16 @@ export const eurofurenceService = createApi({
             query: () => ({ url: "/Api/MAps" }),
             providesTags: tagsFromList("Map"),
         }),
-        getMapById: builder.query<MapRecord, string>({
+        getMapById: builder.query<EnrichedMapRecord, RecordId>({
             query: (args) => ({ url: `/Api/Maps/${args}` }),
             providesTags: tagsFromItem("Map"),
+            transformResponse: enrichMapRecord,
         }),
         getKnowledgeGroups: builder.query<KnowledgeGroupRecord[], void>({
             query: () => ({ url: "/Api/KnowledgeGroups" }),
             providesTags: tagsFromList("KnowledgeGroup"),
         }),
-        getKnowledgeGroupById: builder.query<KnowledgeGroupRecord, string>({
+        getKnowledgeGroupById: builder.query<KnowledgeGroupRecord, RecordId>({
             query: (args) => ({ url: `/Api/KnowledgeGroups/${args}` }),
             providesTags: tagsFromItem("KnowledgeGroup"),
         }),
@@ -106,7 +108,7 @@ export const eurofurenceService = createApi({
             query: () => ({ url: "/Api/KnowledgeEntries" }),
             providesTags: tagsFromList("KnowledgeEntry"),
         }),
-        getKnowledgeEntryById: builder.query<KnowledgeEntryRecord, string>({
+        getKnowledgeEntryById: builder.query<KnowledgeEntryRecord, RecordId>({
             query: (args) => ({ url: `/Api/KnowledgeEntries/${args}` }),
             providesTags: tagsFromItem("KnowledgeEntry"),
         }),

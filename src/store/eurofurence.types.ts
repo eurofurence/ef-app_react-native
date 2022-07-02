@@ -1,18 +1,33 @@
+/**
+ * A URL leading to an image.
+ */
+export type ImageUrl = string | undefined;
+
+/**
+ * Named type to use when referencing other records.
+ */
+export type RecordId = string;
+
+/**
+ * A date as a UTC Date Time string;
+ */
+type DateTimeString = string;
+
 export type RecordMetadata = {
-    Id: string;
-    LastChangeDateTimeUtc: string;
+    Id: RecordId;
+    LastChangeDateTimeUtc: DateTimeString;
     IsDeleted: number;
 };
 
 export type AnnouncementRecord = RecordMetadata & {
-    ValidFromDateTimeUtc: string;
-    ValidUntilDateTimeUtc: string;
+    ValidFromDateTimeUtc: DateTimeString;
+    ValidUntilDateTimeUtc: DateTimeString;
     ExternalReference?: string;
     Area: string;
     Author: string;
     Title: string;
     Content: string;
-    ImageId: string;
+    ImageId: RecordId;
 };
 
 export type EventRecord = RecordMetadata & {
@@ -21,15 +36,15 @@ export type EventRecord = RecordMetadata & {
 
 export type DealerRecord = RecordMetadata & {
     RegistrationNumber: number;
-    ArtistImageId?: string;
-    ArtistThumbnailImageId?: string;
-    ArtPreviewImageId?: string;
+    ArtistImageId?: RecordId;
+    ArtistThumbnailImageId?: RecordId;
+    ArtPreviewImageId?: RecordId;
 };
 
 export type EnrichedDealerRecord = DealerRecord & {
-    ArtistImageUrl?: string;
-    ArtistThumbnailImageUrl?: string;
-    ArtPreviewImageUrl?: string;
+    ArtistImageUrl?: ImageUrl;
+    ArtistThumbnailImageUrl?: ImageUrl;
+    ArtPreviewImageUrl?: ImageUrl;
 };
 
 export type EventDayRecord = RecordMetadata & {
@@ -47,13 +62,17 @@ export type EventRoomRecord = RecordMetadata & {
 export type MapRecord = RecordMetadata & {
     Description: string;
     IsBrowseable: boolean;
+    ImageId?: RecordId;
 };
 
+export type EnrichedMapRecord = MapRecord & {
+    ImageUrl?: ImageUrl;
+};
 export type KnowledgeGroupRecord = RecordMetadata & {
     Name: string;
 };
 
 export type KnowledgeEntryRecord = RecordMetadata & {
     Title: string;
-    KnowledgeGroupId: string;
+    KnowledgeGroupId: RecordId;
 };
