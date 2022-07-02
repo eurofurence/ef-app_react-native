@@ -1,6 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
+/**
+ * Base App. Handles all ui related layout stuff. Context providers go in index.tsx
+ * @constructor
+ */
 export default function App() {
   return (
     <View style={styles.container}>
