@@ -1,5 +1,6 @@
 {
   "expo": {
+    "entryPoint": "./src/index.tsx",
     "name": "ef-app_react-native",
     "slug": "ef-app_react-native",
     "version": "1.0.0",
