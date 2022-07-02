@@ -2,10 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { render, renderHook } from "@testing-library/react-native";
 import { Provider as StoreProvider } from "react-redux";
 
-import { reducers, RootState, store } from "./store";
+import { reducers, RootState, store, TestingRootState } from "./store";
 
 type ReduxOptions = {
-    preloadedState?: Partial<RootState>;
+    preloadedState?: Partial<TestingRootState>;
     store?: typeof store;
 };
 

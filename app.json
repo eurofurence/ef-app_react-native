@@ -1,16 +1,19 @@
 {
   "expo": {
     "entryPoint": "./src/index.tsx",
-    "name": "ef-app_react-native",
-    "slug": "ef-app_react-native",
-    "version": "1.0.0",
+    "name": "Eurofurence",
+    "slug": "ef-app-react-native",
+    "description": "Your one stop shop to the convention!",
+    "owner": "eurofurence",
+    "version": "3.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/images/playstore.png",
+    "userInterfaceStyle": "automatic",
+    "scheme": "eurofurence",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/playstore.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#006459"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,14 +25,21 @@
       "supportsTablet": true
     },
     "android": {
+      "versionCode": 400,
+      "package": "org.eurofurence.connavigator",
+      "splash": {
+        "resizeMode": "native"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      },
-      "package": "com.eurofurence.connavigator"
+        "backgroundColor": "#006459"
+      }
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#006459"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/playstore.png"
     }
   }
 }
