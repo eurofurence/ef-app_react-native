@@ -28,7 +28,7 @@ describe("useNow", function () {
 
         const diff = result.current[0].diff(moment(), "minutes");
 
-        expect(diff).toBe(59);
+        expect(diff).toBe(60);
     });
     it("returns a time in the past if a state is supplied with a negative amount", () => {
         const { result } = customRenderHook(() => useNow(), {

@@ -3,7 +3,6 @@ import { combineReducers, configureStore, EmptyObject } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import logger from "redux-logger";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
-import autoMergeLevel1 from "redux-persist/es/stateReconciler/autoMergeLevel1";
 
 import { eurofurenceService } from "./eurofurence.service";
 import { notificationsSlice } from "./notifications.slice";
