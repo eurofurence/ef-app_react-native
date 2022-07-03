@@ -1,16 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { REHYDRATE } from "redux-persist";
 
-import { enrichDealerRecord, enrichMapRecord } from "./eurofurence.enrichers";
+import { enrichDealerRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
     DealerRecord,
     EnrichedDealerRecord,
+    EnrichedImageRecord,
     EnrichedMapRecord,
     EventDayRecord,
     EventRecord,
     EventRoomRecord,
     EventTrackRecord,
+    ImageRecord,
     KnowledgeEntryRecord,
     KnowledgeGroupRecord,
     MapRecord,
@@ -30,7 +32,8 @@ const tagsFromItem =
 export const eurofurenceService = createApi({
     reducerPath: "eurofurenceService",
     baseQuery: fetchBaseQuery({ baseUrl: "https://app.eurofurence.org/EF26" }),
-    tagTypes: ["Announcement", "Event", "Dealer", "EventDay", "EventTrack", "EventRoom", "Map", "KnowledgeGroup", "KnowledgeEntry"],
+    tagTypes: ["Announcement", "Event", "Dealer", "EventDay", "EventTrack", "EventRoom", "Map", "KnowledgeGroup", "KnowledgeEntry", "Image"],
+    keepUnusedDataFor: 0,
     extractRehydrationInfo(action, { reducerPath }) {
         if (action.type === "persist/REHYDRATE" && action.payload) {
             return action.payload[reducerPath];
@@ -104,7 +107,7 @@ export const eurofurenceService = createApi({
             query: (args) => ({ url: `/Api/KnowledgeGroups/${args}` }),
             providesTags: tagsFromItem("KnowledgeGroup"),
         }),
-        getKnowledgeEntrys: builder.query<KnowledgeEntryRecord[], void>({
+        getKnowledgeEntries: builder.query<KnowledgeEntryRecord[], void>({
             query: () => ({ url: "/Api/KnowledgeEntries" }),
             providesTags: tagsFromList("KnowledgeEntry"),
         }),
@@ -112,7 +115,12 @@ export const eurofurenceService = createApi({
             query: (args) => ({ url: `/Api/KnowledgeEntries/${args}` }),
             providesTags: tagsFromItem("KnowledgeEntry"),
         }),
+        getImages: builder.query<EnrichedImageRecord[], void>({
+            query: () => ({ url: `/Api/Images` }),
+            providesTags: tagsFromList("Image"),
+            transformResponse: (result: ImageRecord[]) => result.map(enrichImageRecord),
+        }),
     }),
 });
 
-export const { useGetAnnouncementsQuery, useGetEventsQuery, useGetEventByIdQuery, useGetDealersQuery } = eurofurenceService;
+export const { useGetAnnouncementsQuery, useGetEventsQuery, useGetEventByIdQuery, useGetDealersQuery, useGetImagesQuery } = eurofurenceService;

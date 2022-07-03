@@ -77,3 +77,11 @@ export type KnowledgeEntryRecord = RecordMetadata & {
     Title: string;
     KnowledgeGroupId: RecordId;
 };
+
+export type ImageRecord = RecordMetadata & {
+    ContentHashSha1: string;
+};
+
+export type EnrichedImageRecord = ImageRecord & {
+    ImageUrl: ImageUrl;
+};

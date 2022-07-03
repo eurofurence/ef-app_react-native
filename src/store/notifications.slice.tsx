@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import * as Notifications from "expo-notifications";
+// import * as Notifications from "expo-notifications";
 import moment, { Moment } from "moment";
 
 import { EventRecord, RecordId } from "./eurofurence.types";
@@ -34,14 +34,14 @@ export const notificationsSlice = createSlice({
                     dateScheduled: scheduleTime.toISOString(),
                 };
 
-                Notifications.scheduleNotificationAsync({
-                    identifier: notification.recordId,
-                    content: {
-                        title: "An event is starting soon!",
-                        subtitle: event.Title,
-                    },
-                    trigger: scheduleTime.toDate(),
-                });
+                // Notifications.scheduleNotificationAsync({
+                //     identifier: notification.recordId,
+                //     content: {
+                //         title: "An event is starting soon!",
+                //         subtitle: event.Title,
+                //     },
+                //     trigger: scheduleTime.toDate(),
+                // });
 
                 return { payload: notification };
             },
