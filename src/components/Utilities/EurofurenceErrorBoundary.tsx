@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export class EurofurenceErrorBoundary extends React.PureComponent<{ children: ReactNode }, { hasError: boolean }> {
-    constructor(props) {
+    constructor(props: { children: ReactNode }) {
         super(props);
         this.state = { hasError: false };
     }
