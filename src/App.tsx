@@ -1,7 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
 
-import { AuthorizationOverview } from "./components/Authorization/AuthorizationOverview";
 import { PlatformCacheSynchronizer } from "./components/CacheSynchronizer/CacheSynchronizer";
 import { PlatformNotificationManager } from "./components/Notifications/NotificationManager";
 import { StartScreen } from "./screens/StartScreen";

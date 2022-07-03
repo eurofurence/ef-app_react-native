@@ -1,13 +1,17 @@
+import Constants from "expo-constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
 
 import { withPlatform } from "../../hoc/withPlatform";
-import { notificationsSlice } from "../../store/notifications.slice";
+import { useAppSelector } from "../../store";
+import { usePostDeviceRegistrationMutation } from "../../store/authorization.service";
 
 export const NotificationManager = () => {
+    const [registerDevice, result] = usePostDeviceRegistrationMutation();
     const [expoPushToken, setExpoPushToken] = useState("");
+    const token = useAppSelector((state) => state.authorization.token);
 
     useEffect(() => {
         Notifications.setNotificationHandler({
@@ -28,6 +32,21 @@ export const NotificationManager = () => {
             Notifications.removeNotificationSubscription(notificationHAndlerSubscription);
         };
     }, []);
+
+    useEffect(() => {
+        if (expoPushToken === "") {
+            console.debug("NotificationManager", "Cannot register device as there is no token", expoPushToken);
+            // There is no token we can report yet.
+            return;
+        }
+        const topics = ["react-native", `version-${Constants.manifest?.android?.versionCode}`, "cid-EF26"];
+        console.debug("NotificationManager", "Registering device with the API", expoPushToken, topics);
+
+        registerDevice({
+            DeviceId: expoPushToken,
+            Topics: topics,
+        });
+    }, [expoPushToken, token]);
 
     return null;
 };

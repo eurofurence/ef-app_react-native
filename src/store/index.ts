@@ -36,8 +36,8 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         })
-            .concat(eurofurenceService.middleware, authorizationService.middleware)
-            .concat(logger),
+            .concat(logger)
+            .concat(eurofurenceService.middleware, authorizationService.middleware),
 });
 
 export const persistor = persistStore(store);

@@ -14,8 +14,13 @@ export const AuthorizationOverview = () => {
     }
 
     return (
-        <View style={styles.container}>
-            {whoAmI.isError ? <Text style={styles.title}>You are not logged in.</Text> : <Text style={styles.title}>Welcome back {whoAmI.data?.Username}</Text>}
+        <View>
+            <Text style={{ fontSize: 25, fontWeight: "bold" }}>Authorization</Text>
+            {whoAmI.isError ? (
+                <Text style={{ fontSize: 25, fontWeight: "bold" }}>You are not logged in.</Text>
+            ) : (
+                <Text style={{ fontSize: 25, fontWeight: "bold" }}>Welcome back {whoAmI.data?.Username}</Text>
+            )}
             <Button
                 title={whoAmI.isSuccess ? "Click here to log out." : "Log in as reviewer"}
                 onPress={() => {
@@ -34,23 +39,3 @@ export const AuthorizationOverview = () => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        width: 800,
-        maxWidth: "95vw",
-        marginVertical: 40,
-        marginHorizontal: 20,
-        display: "flex",
-        gap: "20px",
-    },
-    title: {
-        fontSize: 25,
-        fontWeight: "bold",
-        textAlign: "left",
-        flexGrow: 1,
-    },
-    button: {
-        borderRadius: 5,
-    },
-});

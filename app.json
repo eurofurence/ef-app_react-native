@@ -32,7 +32,7 @@
         "resizeMode": "native"
       },
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/playstore.png",
         "backgroundColor": "#006459"
       }
     },
@@ -41,10 +41,6 @@
     },
     "web": {
       "favicon": "./assets/images/playstore.png"
-    },
-    "notification": {
-      "color": "#006459",
-      "icon": "./assets/images/playstore.png"
-    },
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { authorizationService } from "./authorization.service";
 import { TokenRegSysResponse } from "./authorization.types";
@@ -11,12 +11,13 @@ type AuthorizationState = {
     isExpired: boolean;
 };
 
+const initialState = {
+    isLoggedIn: false,
+    isExpired: false,
+} as AuthorizationState;
 export const authorizationSlice = createSlice({
     name: "authorization",
-    initialState: {
-        isLoggedIn: false,
-        isExpired: false,
-    } as AuthorizationState,
+    initialState,
     reducers: {
         logout: (state) => {
             state.token = undefined;
