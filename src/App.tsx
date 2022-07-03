@@ -14,6 +14,7 @@ export default function App() {
         <GestureHandlerRootView style={styles.container}>
             <StatusBar style="auto" />
             <StartScreen />
+
             <PlatformNotificationManager />
             <PlatformCacheSynchronizer />
         </GestureHandlerRootView>

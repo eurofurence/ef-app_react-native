@@ -9,11 +9,11 @@ type ReduxOptions = {
     store?: typeof store;
 };
 
-export const customRender = <Result,>(ui, options: ReduxOptions = {}) => {
+export const customRender = <Result,>(ui: any, options: ReduxOptions = {}) => {
     const preloadedState = options.preloadedState as any;
     const store = legacy_createStore(reducers, preloadedState);
 
-    const wrapper = ({ children }) => <StoreProvider store={store}>{children}</StoreProvider>;
+    const wrapper = ({ children }: { children: any }) => <StoreProvider store={store}>{children}</StoreProvider>;
 
     return render<Result>(ui, { wrapper });
 };
@@ -28,7 +28,7 @@ export const customRenderHook = <Result, Props>(renderCallback: (props: Props) =
     const preloadedState = options.preloadedState as any;
     const store = legacy_createStore(reducers, preloadedState);
 
-    const wrapper = ({ children }) => <StoreProvider store={store}>{children}</StoreProvider>;
+    const wrapper = ({ children }: { children: any }) => <StoreProvider store={store}>{children}</StoreProvider>;
 
     // @ts-ignore This type somehow does not match
     return renderHook(renderCallback, { wrapper });

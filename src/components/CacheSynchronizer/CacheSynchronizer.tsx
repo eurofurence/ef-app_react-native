@@ -8,14 +8,15 @@ import { EnrichedImageRecord } from "../../store/eurofurence.types";
 export const CacheSynchronizer = () => {
     const [isCaching, setIsCaching] = useState(false);
     const [prefetchedImages, setPrefetchedImages] = useState(0);
-    const images: Query<EnrichedImageRecord[]> = useGetImagesQuery(null, {});
+    const images: Query<EnrichedImageRecord[]> = useGetImagesQuery();
 
     useEffect(() => {
         const fetchImages = async () => {
             if (images.data === undefined) {
                 return;
             }
-            const imageUrls = images.data.map((it) => it.ImageUrl);
+            const imageUrls = images.data.map((it) => it.ImageUrl).filter((it): it is string => it !== undefined);
+            // @ts-expect-error this method seemingly might not exist?
             const cachedImages = await Image.queryCache(imageUrls);
 
             setPrefetchedImages(Object.keys(cachedImages).length);
