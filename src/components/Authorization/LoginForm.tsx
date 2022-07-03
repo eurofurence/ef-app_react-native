@@ -22,11 +22,6 @@ export const LoginForm: FC<{ close: () => void }> = ({ close }) => {
         handleSubmit,
         formState: { errors },
     } = useForm<LoginSchema>({
-        defaultValues: {
-            regno: undefined,
-            username: undefined,
-            password: undefined,
-        },
         resolver: zodResolver(loginSchema),
     });
     const [login, result] = usePostTokenMutation();
@@ -55,7 +50,7 @@ export const LoginForm: FC<{ close: () => void }> = ({ close }) => {
                     required: true,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput style={[styles.marginAfter, styles.input]} placeholder="Your username" onChange={onChange} onBlur={onBlur} value={value} />
+                    <TextInput style={[styles.marginAfter, styles.input]} placeholder="Your username" onChange={onChange} onBlur={onBlur} value={value} autoCapitalize={"none"} />
                 )}
             />
 
@@ -69,7 +64,14 @@ export const LoginForm: FC<{ close: () => void }> = ({ close }) => {
                     required: true,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput style={[styles.marginAfter, styles.input]} placeholder="Your registration number" onChange={onChange} onBlur={onBlur} value={value} />
+                    <TextInput
+                        style={[styles.marginAfter, styles.input]}
+                        placeholder="Your registration number"
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={value?.toString()}
+                        autoCapitalize={"none"}
+                    />
                 )}
             />
             <Text>Enter your password</Text>
@@ -82,15 +84,25 @@ export const LoginForm: FC<{ close: () => void }> = ({ close }) => {
                     required: true,
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
-                    <TextInput style={[styles.marginAfter, styles.input]} placeholder="Your password" onChange={onChange} onBlur={onBlur} value={value} secureTextEntry />
+                    <TextInput
+                        style={[styles.marginAfter, styles.input]}
+                        placeholder="Your password"
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        value={value}
+                        secureTextEntry
+                        autoCapitalize={"none"}
+                    />
                 )}
             />
             {result.error && <Text style={styles.error}>Something went wrong during login. Please try again</Text>}
+            {result.isLoading && <Text>Logging in . . .</Text>}
+            {errors && <Text>{JSON.stringify(Object.keys(errors))}</Text>}
             <View style={[styles.marginBefore, styles.row]}>
                 <Button style={{}} containerStyle={styles.rowLeft} outline icon="arrow-back" onPress={close}>
                     Back
                 </Button>
-                <Button disabled={result.isLoading} style={{}} containerStyle={styles.rowRight} outline={false} icon="log-in" onPress={handleSubmit(onSubmit)}>
+                <Button style={{}} containerStyle={styles.rowRight} outline={false} icon="log-in" onPress={handleSubmit(onSubmit)}>
                     Log-in
                 </Button>
             </View>
