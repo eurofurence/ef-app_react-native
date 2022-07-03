@@ -1,15 +1,16 @@
 import moment, { Moment } from "moment";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import { useAppSelector } from "../store";
 
 /**
  * Get the current date, which includes time travelling.
  */
-export const useNow = (): Moment => {
+export const useNow = (): [Moment, () => Moment] => {
     const amount = useAppSelector((state) => (state.timetravel.enabled ? state.timetravel.amount : 0));
 
-    return useMemo(() => {
-        return moment().add(amount, "milliseconds");
-    }, [amount]);
+    const getNow = useCallback(() => moment().add(amount, "millisecond"), [amount]);
+    const now = useMemo(() => getNow(), [getNow]);
+
+    return [now, getNow];
 };

@@ -12,7 +12,7 @@ describe("useNow", function () {
     it("returns now when no state is supplied", () => {
         const { result } = renderHook(() => useNow(), {});
 
-        expect(result.current.valueOf()).toBeCloseTo(moment().valueOf(), -2);
+        expect(result.current[0].valueOf()).toBeCloseTo(moment().valueOf(), -2);
     });
 
     it("returns a time in the future if a state is supplied", () => {
@@ -26,7 +26,7 @@ describe("useNow", function () {
             },
         });
 
-        const diff = result.current.diff(moment(), "minutes");
+        const diff = result.current[0].diff(moment(), "minutes");
 
         expect(diff).toBe(59);
     });
@@ -41,7 +41,7 @@ describe("useNow", function () {
             },
         });
 
-        const diff = result.current.diff(moment(), "minutes");
+        const diff = result.current[0].diff(moment(), "minutes");
 
         expect(diff).toBe(-60);
     });
@@ -57,7 +57,7 @@ describe("useNow", function () {
             },
         });
 
-        const diff = result.current.diff(moment(), "minutes");
+        const diff = result.current[0].diff(moment(), "minutes");
 
         expect(diff).toBe(0);
     });
