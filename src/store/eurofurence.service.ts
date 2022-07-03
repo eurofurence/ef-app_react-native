@@ -35,7 +35,7 @@ export const eurofurenceService = createApi({
     tagTypes: ["Announcement", "Event", "Dealer", "EventDay", "EventTrack", "EventRoom", "Map", "KnowledgeGroup", "KnowledgeEntry", "Image"],
     keepUnusedDataFor: 0,
     extractRehydrationInfo(action, { reducerPath }) {
-        if (action.type === "persist/REHYDRATE" && action.payload) {
+        if (action.type === REHYDRATE && action.payload) {
             return action.payload[reducerPath];
         }
     },

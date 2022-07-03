@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, Platform, Text } from "react-native";
+import { Image, Text } from "react-native";
 
 import { withPlatform } from "../../hoc/withPlatform";
 import { useGetImagesQuery } from "../../store/eurofurence.service";
@@ -29,6 +29,10 @@ export const CacheSynchronizer = () => {
 
         fetchImages();
     }, [images.data]);
+
+    if (!isCaching) {
+        return null;
+    }
 
     return (
         <Text>

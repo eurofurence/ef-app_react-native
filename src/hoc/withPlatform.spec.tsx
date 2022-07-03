@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react-native";
-import { Platform, Text } from "react-native";
+import { Text } from "react-native";
 
 import { render } from "../testUtils";
 import { withPlatform } from "./withPlatform";
