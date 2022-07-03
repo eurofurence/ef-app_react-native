@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.3",
     "@react-native-async-storage/async-storage": "^1.17.7",
     "@reduxjs/toolkit": "^1.8.3",
     "expo": "~45.0.0",
@@ -25,6 +26,7 @@
     "moment": "^2.29.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-hook-form": "^7.33.1",
     "react-i18next": "^11.17.4",
     "react-native": "0.68.2",
     "react-native-gesture-handler": "~2.2.1",
@@ -32,7 +34,8 @@
     "react-native-web": "0.17.7",
     "react-redux": "^8.0.2",
     "redux-logger": "^3.0.6",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

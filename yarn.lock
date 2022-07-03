@@ -2061,6 +2061,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^2.9.3":
+  version: 2.9.3
+  resolution: "@hookform/resolvers@npm:2.9.3"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: e0010426c9415024ed65ac32e40a3b0a15837c3bc465ce6aa7048e7a47eb5ec5d4578b662e7bb3fdf528f8fb9216bf8b97fb5742b9f79f0314c7472e3b37c2f6
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.9.2":
   version: 0.9.5
   resolution: "@humanwhocodes/config-array@npm:0.9.5"
@@ -5127,6 +5136,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.12.9
     "@expo/ngrok": ^2.5.0
+    "@hookform/resolvers": ^2.9.3
     "@react-native-async-storage/async-storage": ^1.17.7
     "@reduxjs/toolkit": ^1.8.3
     "@testing-library/jest-native": ^4.0.5
@@ -5155,6 +5165,7 @@ __metadata:
     prettier: ^2.7.1
     react: 17.0.2
     react-dom: 17.0.2
+    react-hook-form: ^7.33.1
     react-i18next: ^11.17.4
     react-native: 0.68.2
     react-native-gesture-handler: ~2.2.1
@@ -5165,6 +5176,7 @@ __metadata:
     redux-logger: ^3.0.6
     redux-persist: ^6.0.0
     typescript: ~4.3.5
+    zod: ^3.17.3
   languageName: unknown
   linkType: soft
 
@@ -10592,6 +10604,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-hook-form@npm:^7.33.1":
+  version: 7.33.1
+  resolution: "react-hook-form@npm:7.33.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: ec8f938b5af32148956edc9a87b6a0a99cc305617925608961cf4352ad1a786daea9fdc4d15106aea2821937d27367a69ab525882f07c0bb7ea45fba5dbf8ff2
+  languageName: node
+  linkType: hard
+
 "react-i18next@npm:^11.17.4":
   version: 11.17.4
   resolution: "react-i18next@npm:11.17.4"
@@ -13201,5 +13222,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.17.3":
+  version: 3.17.3
+  resolution: "zod@npm:3.17.3"
+  checksum: f74b5d8a307cbed734e7a4a7f57a0c6b0a2d5062adee25e86eceaa1bec606621d6861804130f53342dec2d6e77fe9365f3a5118d55c81688f69f3de5fd3e59af
   languageName: node
   linkType: hard
