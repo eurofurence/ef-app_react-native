@@ -10,6 +10,7 @@ import { Navigator } from "../components/Containers/Navigator";
 import { Pager } from "../components/Containers/Pager";
 import { LoadingIndicator } from "../components/Utilities/LoadingIndicator";
 import { useAppDispatch, useAppSelector } from "../store";
+import { selectById } from "../store/authorization.service";
 import { logout } from "../store/authorization.slice";
 import { useGetAnnouncementsQuery, useGetDealersQuery, useGetEventByIdQuery, useGetEventsQuery } from "../store/eurofurence.service";
 import { AnnouncementRecord, EnrichedDealerRecord, EventRecord } from "../store/eurofurence.types";
@@ -59,8 +60,8 @@ export const StartScreen = () => {
                 <Text style={{ fontSize: 20, padding: 5 }}> {t("hello")}</Text>
                 {announcements.isFetching ? <LoadingIndicator /> : <Text>There are {announcements.data?.length} announcements</Text>}
                 {events.isFetching ? <LoadingIndicator /> : <Text>There are {events.data?.length} events</Text>}
-                {event.isFetching ? <LoadingIndicator /> : <Text>We have retrieved event {event.data.Title}</Text>}
-                {dealers.isFetching ? <LoadingIndicator /> : <Text>We have {dealers.data.length} dealers</Text>}
+                {event.isFetching ? <LoadingIndicator /> : <Text>We have retrieved event {event.data?.Title}</Text>}
+                {dealers.isFetching ? <LoadingIndicator /> : <Text>We have {dealers.data?.length} dealers</Text>}
                 <Button containerStyle={styles.marginAfter} onPress={() => setRead(false)}>
                     Reset read
                 </Button>

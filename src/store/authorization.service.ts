@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { TokenRegSysRequest, TokenRegSysResponse, TokenWhoAmIResponse } from "./authorization.types";
+import { RecordId, RecordMetadata } from "./eurofurence.types";
 
 export const authorizationService = createApi({
     reducerPath: "authorizationService",
@@ -48,5 +49,27 @@ export const authorizationService = createApi({
         }),
     }),
 });
+
+export const selectById =
+    <T extends RecordMetadata>(id: RecordId) =>
+    (
+        query: Query<T[]>
+    ): Query<T[]> & {
+        record: T | undefined;
+    } => ({
+        ...query,
+        record: query.data?.find((record) => record.Id === id),
+    });
+
+export const filterByIds =
+    <T extends RecordMetadata>(ids: RecordId[]) =>
+    (
+        query: Query<T[]>
+    ): Query<T[]> & {
+        records: T[];
+    } => ({
+        ...query,
+        records: query.data?.filter((it) => it.Id in ids) ?? [],
+    });
 
 export const { usePostTokenMutation, useGetWhoAmIQuery, usePostDeviceRegistrationMutation } = authorizationService;

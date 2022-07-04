@@ -6,7 +6,7 @@
     "description": "Your one stop shop to the convention!",
     "owner": "eurofurence",
     "version": "3.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/playstore.png",
     "userInterfaceStyle": "automatic",
     "scheme": "eurofurence",

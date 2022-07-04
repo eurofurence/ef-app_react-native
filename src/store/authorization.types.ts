@@ -1,5 +1,5 @@
 export type TokenRegSysRequest = {
-    RegNo: number;
+    RegNo: string;
     Username: string;
     Password: string;
     AccessToken?: string;
