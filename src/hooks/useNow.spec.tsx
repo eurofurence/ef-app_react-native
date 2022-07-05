@@ -9,13 +9,13 @@ describe("useNow", function () {
             return () => jest.requireActual("moment")("2020-01-01T12:00:00.000Z");
         });
     });
-    it("returns now when no state is supplied", () => {
+    it("returns now when no state is supplied", async () => {
         const { result } = renderHook(() => useNow(), {});
 
         expect(result.current[0].valueOf()).toBeCloseTo(moment().valueOf(), -2);
     });
 
-    it("returns a time in the future if a state is supplied", () => {
+    it("returns a time in the future if a state is supplied", async () => {
         const { result } = customRenderHook(() => useNow(), {
             preloadedState: {
                 timetravel: {
@@ -30,7 +30,7 @@ describe("useNow", function () {
 
         expect(diff).toBe(60);
     });
-    it("returns a time in the past if a state is supplied with a negative amount", () => {
+    it("returns a time in the past if a state is supplied with a negative amount", async () => {
         const { result } = customRenderHook(() => useNow(), {
             preloadedState: {
                 timetravel: {
@@ -46,7 +46,7 @@ describe("useNow", function () {
         expect(diff).toBe(-60);
     });
 
-    it("does not apply timetravel when it is not enabled", () => {
+    it("does not apply timetravel when it is not enabled", async () => {
         const { result } = customRenderHook(() => useNow(), {
             preloadedState: {
                 timetravel: {

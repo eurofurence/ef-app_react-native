@@ -1,5 +1,6 @@
 import { legacy_createStore } from "@reduxjs/toolkit";
 import { render, renderHook } from "@testing-library/react-native";
+import { ReactElement } from "react";
 import { Provider as StoreProvider } from "react-redux";
 
 import { reducers, RootState, store } from "./store";
@@ -9,7 +10,7 @@ type ReduxOptions = {
     store?: typeof store;
 };
 
-export const customRender = <Result,>(ui: any, options: ReduxOptions = {}) => {
+export const customRender = <Result,>(ui: ReactElement<Result>, options: ReduxOptions = {}): ReturnType<typeof render> => {
     const preloadedState = options.preloadedState as any;
     const store = legacy_createStore(reducers, preloadedState);
 

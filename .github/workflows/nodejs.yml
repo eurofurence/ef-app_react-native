@@ -17,4 +17,4 @@ jobs:
           cache: 'npm'
       - run: yarn install
       - run: yarn lint
-      - run: yarn test
+      - run: yarn test --forceExit
