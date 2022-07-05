@@ -1,45 +1,47 @@
-import { useEffect, useState } from "react";
-import { Image, Text } from "react-native";
+import {useEffect, useState} from 'react'
+import {Image, Text} from 'react-native'
 
-import { withPlatform } from "../../hoc/withPlatform";
-import { useGetImagesQuery } from "../../store/eurofurence.service";
-import { EnrichedImageRecord } from "../../store/eurofurence.types";
+import {withPlatform} from '../../hoc/withPlatform'
+import {useGetImagesQuery} from '../../store/eurofurence.service'
+import {EnrichedImageRecord} from '../../store/eurofurence.types'
 
 export const CacheSynchronizer = () => {
-    const [isCaching, setIsCaching] = useState(false);
-    const [prefetchedImages, setPrefetchedImages] = useState(0);
-    const images: Query<EnrichedImageRecord[]> = useGetImagesQuery();
+    const [isCaching, setIsCaching] = useState(false)
+    const [prefetchedImages, setPrefetchedImages] = useState(0)
+    const images: Query<EnrichedImageRecord[]> = useGetImagesQuery()
 
     useEffect(() => {
         const fetchImages = async () => {
             if (images.data === undefined) {
-                return;
+                return
             }
-            const imageUrls = images.data.map((it) => it.ImageUrl).filter((it): it is string => it !== undefined);
+            const imageUrls = images.data.map(it => it.ImageUrl).filter((it): it is string => it !== undefined)
             // @ts-expect-error this method seemingly might not exist?
-            const cachedImages = await Image.queryCache(imageUrls);
+            const cachedImages = await Image.queryCache(imageUrls)
 
-            setPrefetchedImages(Object.keys(cachedImages).length);
+            setPrefetchedImages(Object.keys(cachedImages).length)
 
-            const nonCachedImages = imageUrls.filter((url) => !(url in cachedImages));
+            const nonCachedImages = imageUrls.filter(url => !(url in cachedImages))
 
-            await Promise.all(nonCachedImages.map((url) => Image.prefetch(url).then(() => setPrefetchedImages((c) => c + 1))));
+            await Promise.all(
+                nonCachedImages.map(url => Image.prefetch(url).then(() => setPrefetchedImages(c => c + 1)))
+            )
 
-            setIsCaching(false);
-        };
+            setIsCaching(false)
+        }
 
-        fetchImages();
-    }, [images.data]);
+        fetchImages()
+    }, [images.data])
 
     if (!isCaching) {
-        return null;
+        return null
     }
 
     return (
         <Text>
             We are prefetching images. We are currently at {prefetchedImages} out of {images.data?.length}
         </Text>
-    );
-};
+    )
+}
 
-export const PlatformCacheSynchronizer = withPlatform(CacheSynchronizer, ["android", "ios"]);
+export const PlatformCacheSynchronizer = withPlatform(CacheSynchronizer, ['android', 'ios'])

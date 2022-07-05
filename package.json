@@ -11,6 +11,9 @@
     "lint": "eslint ./src --ext js,ts,jsx,tsx",
     "test": "jest"
   },
+  "resolutions": {
+    "@types/react": "^17"
+  },
   "dependencies": {
     "@hookform/resolvers": "^2.9.3",
     "@react-native-async-storage/async-storage": "^1.17.7",

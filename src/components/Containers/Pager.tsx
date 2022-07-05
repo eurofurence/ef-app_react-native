@@ -1,52 +1,110 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useState } from "react"
-import { View } from "react-native"
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import { Button } from "./Button";
+import {forwardRef, ReactNode, useEffect, useImperativeHandle, useState} from 'react'
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native'
+import Animated, {useAnimatedStyle, useSharedValue, withTiming} from 'react-native-reanimated'
 
-const quickCubicOut = {
-    duration: 234,
-    easing: Easing.out(Easing.cubic),
-};
+import {quickCubicOut} from '../../consts/animations'
 
-export const Pager = forwardRef(({ style, left, right }, ref) => {
-    const [isRight, setIsRight] = useState(false);
+/**
+ * Arguments to the pager.
+ */
+export interface PagerProps {
+    /**
+     * Main view style.
+     */
+    style?: StyleProp<ViewStyle>
 
+    /**
+     * Left content.
+     */
+    left?: ReactNode
 
-    const [width, setWidth] = useState(100);
-    const offset = useSharedValue(0);
+    /**
+     * Right content.
+     */
+    right?: ReactNode
+}
 
+/**
+ * Operations provided by the pager.
+ */
+export interface PagerRef {
+    /**
+     * Moves to the left page with animations.
+     */
+    toLeft(): void
+
+    /**
+     * Moves to the right page with animations.
+     */
+    toRight(): void
+
+    /**
+     * Moves to the left page immediately.
+     */
+    toLeftImmediately(): void
+
+    /**
+     * Moves to the right page immediately.
+     */
+    toRightImmediately(): void
+}
+
+export const Pager = forwardRef<PagerRef, PagerProps>(({style, left, right}, ref) => {
+    // Maintain internal state where the page is.
+    const [isRight, setIsRight] = useState(false)
+
+    // Use layout width.
+    const [width, setWidth] = useState(100)
+
+    // Use to flip the pages.
+    const offset = useSharedValue(0)
+
+    // React to desired right-ness.
     useEffect(() => {
-        if (isRight && offset.value < 1)
-            offset.value = withTiming(1, quickCubicOut)
-        else if (!isRight && offset.value > 0)
-            offset.value = withTiming(0, quickCubicOut)
+        if (isRight && offset.value < 1) offset.value = withTiming(1, quickCubicOut)
+        else if (!isRight && offset.value > 0) offset.value = withTiming(0, quickCubicOut)
     }, [isRight, offset])
 
-    const dynamicContainer = useAnimatedStyle(() => ({
-        transform: [{ translateX: -0.5 * width * offset.value }]
-    }), [width, offset]);
+    // Animate transformation for page flipping (half of total width).
+    const dynamicContainer = useAnimatedStyle(
+        () => ({
+            transform: [{translateX: -0.5 * width * offset.value}]
+        }),
+        [width, offset]
+    )
 
-    useImperativeHandle(ref, () => ({
-        toLeft: () => setIsRight(false),
-        toRight: () => setIsRight(true),
-        toLeftImmediately: () => {
-            offset.value = 0;
-            setIsRight(false);
-        },
-        toRightImmediately: () => {
-            offset.value = 1;
-            setIsRight(true);
-        },
-    }), [offset]);
+    // Handle to invoke internal mutations from outside if needed.
+    useImperativeHandle(
+        ref,
+        () => ({
+            toLeft: () => setIsRight(false),
+            toRight: () => setIsRight(true),
+            toLeftImmediately: () => {
+                offset.value = 0
+                setIsRight(false)
+            },
+            toRightImmediately: () => {
+                offset.value = 1
+                setIsRight(true)
+            }
+        }),
+        [offset]
+    )
 
-    return <Animated.View
-        style={[{ flexDirection: 'row', left: 0, width: '200%' }, style, dynamicContainer,]}
-        onLayout={e => setWidth(e.nativeEvent.layout.width)}>
-        <View style={{ flex: 1 }}>
-            {left}
-        </View>
-        <View style={{ flex: 1 }}>
-            {right}
-        </View>
-    </Animated.View>
-});
+    // Double width row that starts on the left. Translates the right part via status.
+    return (
+        <Animated.View
+            style={[styles.pages, style, dynamicContainer]}
+            onLayout={e => setWidth(e.nativeEvent.layout.width)}>
+            <View style={styles.equal}>{left}</View>
+            <View style={styles.equal}>{right}</View>
+        </Animated.View>
+    )
+})
+
+const styles = StyleSheet.create({
+    pages: {flexDirection: 'row', left: 0, width: '200%'},
+    equal: {
+        flex: 1
+    }
+})
