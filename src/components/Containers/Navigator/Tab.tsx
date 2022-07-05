@@ -1,42 +1,42 @@
-import Ionicons from '@expo/vector-icons/Ionicons'
-import {FC, ReactNode, useMemo} from 'react'
-import {StyleSheet, View, Text} from 'react-native'
-import {TouchableOpacity} from 'react-native-gesture-handler'
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { FC, ReactNode, useMemo } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-import {useTheme} from '../../../context/Theme'
-import {IconiconsNames} from '../../../types/Ionicons'
+import { useTheme } from "../../../context/Theme";
+import { IconiconsNames } from "../../../types/Ionicons";
 
 export interface TabProps {
     /**
      * The icon to display.
      */
-    icon: IconiconsNames
+    icon: IconiconsNames;
 
     /**
      * The name of the tab.
      */
-    text: string
+    text: string;
 
     /**
      * True if to be rendered as active.
      */
-    active?: boolean
+    active?: boolean;
 
     /**
      * If true or node, indicator will be presented over the this tab.
      */
-    indicate?: boolean | ReactNode
+    indicate?: boolean | ReactNode;
 
     /**
      * If given, invoked when the tab is pressed.
      */
-    onPress?: () => void
+    onPress?: () => void;
 }
 
-export const Tab: FC<TabProps> = ({icon, text, indicate, active, onPress}) => {
-    const theme = useTheme()
-    const color = useMemo(() => ({color: active ? theme.secondary : theme.text}), [theme, active])
-    const fillNotify = useMemo(() => ({backgroundColor: theme.notification}), [theme])
+export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => {
+    const theme = useTheme();
+    const color = useMemo(() => ({ color: active ? theme.secondary : theme.text }), [theme, active]);
+    const fillNotify = useMemo(() => ({ backgroundColor: theme.notification }), [theme]);
 
     return (
         <TouchableOpacity containerStyle={styles.tabContainer} style={styles.tab} onPress={onPress}>
@@ -46,9 +46,7 @@ export const Tab: FC<TabProps> = ({icon, text, indicate, active, onPress}) => {
                 {!indicate ? null : (
                     <View style={styles.indicatorArea}>
                         <View style={styles.indicatorLocator}>
-                            <View style={[styles.indicatorContent, fillNotify]}>
-                                {indicate === true ? null : indicate}
-                            </View>
+                            <View style={[styles.indicatorContent, fillNotify]}>{indicate === true ? null : indicate}</View>
                         </View>
                     </View>
                 )}
@@ -57,46 +55,46 @@ export const Tab: FC<TabProps> = ({icon, text, indicate, active, onPress}) => {
                 <Text style={color}>{text}</Text>
             </View>
         </TouchableOpacity>
-    )
-}
+    );
+};
 const styles = StyleSheet.create({
     tabContainer: {
-        flex: 1
+        flex: 1,
     },
     tab: {
-        alignItems: 'center',
-        padding: 16
+        alignItems: "center",
+        padding: 16,
     },
     tabLine: {
-        alignSelf: 'stretch',
-        alignItems: 'center'
+        alignSelf: "stretch",
+        alignItems: "center",
     },
     indicatorArea: {
-        position: 'absolute',
+        position: "absolute",
         width: 24,
-        height: 24
+        height: 24,
     },
     indicatorLocator: {
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         right: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
+        alignItems: "center",
+        justifyContent: "center",
     },
     indicatorContent: {
-        position: 'absolute',
+        position: "absolute",
         minWidth: 12,
         minHeight: 12,
         padding: 4,
-        borderRadius: 99999
+        borderRadius: 99999,
     },
     root: {
-        position: 'absolute',
+        position: "absolute",
         left: 0,
         top: 0,
         right: 0,
         bottom: 0,
-        justifyContent: 'flex-end',
-        overflow: 'hidden'
-    }
-})
+        justifyContent: "flex-end",
+        overflow: "hidden",
+    },
+});

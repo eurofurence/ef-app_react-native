@@ -1,62 +1,62 @@
-import {zodResolver} from '@hookform/resolvers/zod'
-import {FC, useEffect} from 'react'
-import {useForm, Controller} from 'react-hook-form'
-import {StyleSheet, Text, View} from 'react-native'
-import {TextInput} from 'react-native-gesture-handler'
-import {z} from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FC, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { StyleSheet, Text, View } from "react-native";
+import { TextInput } from "react-native-gesture-handler";
+import { z } from "zod";
 
-import {usePostTokenMutation} from '../../store/authorization.service'
-import {Button} from '../Containers/Button'
+import { usePostTokenMutation } from "../../store/authorization.service";
+import { Button } from "../Containers/Button";
 
 const loginSchema = z.object({
-    regno: z.preprocess(a => parseInt(z.string().parse(a), 10), z.number().positive()),
+    regno: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number().positive()),
     username: z.string().min(1),
-    password: z.string().min(1)
-})
+    password: z.string().min(1),
+});
 
-type LoginSchema = z.infer<typeof loginSchema>
+type LoginSchema = z.infer<typeof loginSchema>;
 
-export const LoginForm: FC<{close: () => void}> = ({close}) => {
+export const LoginForm: FC<{ close: () => void }> = ({ close }) => {
     const {
         control,
         handleSubmit,
-        formState: {errors}
+        formState: { errors },
     } = useForm<LoginSchema>({
-        resolver: zodResolver(loginSchema)
-    })
-    const [login, result] = usePostTokenMutation()
+        resolver: zodResolver(loginSchema),
+    });
+    const [login, result] = usePostTokenMutation();
 
     const onSubmit = (data: LoginSchema) => {
         login({
             RegNo: data.regno,
             Username: data.username,
-            Password: data.password
-        })
-    }
+            Password: data.password,
+        });
+    };
 
     useEffect(() => {
         if (result.isSuccess) {
-            close()
+            close();
         }
-    }, [result])
+    }, [result]);
     return (
-        <View style={{padding: 30}}>
+        <View style={{ padding: 30 }}>
             <Text>Enter your username</Text>
             {errors.username?.message && <Text style={styles.error}>{errors.username?.message}</Text>}
             <Controller
                 control={control}
-                name={'username'}
+                name={"username"}
                 rules={{
-                    required: true
+                    required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
                         style={[styles.marginAfter, styles.input]}
                         placeholder="Your username"
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
-                        autoCapitalize={'none'}
+                        autoCapitalize={"none"}
                     />
                 )}
             />
@@ -66,18 +66,18 @@ export const LoginForm: FC<{close: () => void}> = ({close}) => {
 
             <Controller
                 control={control}
-                name={'regno'}
+                name={"regno"}
                 rules={{
-                    required: true
+                    required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
                         style={[styles.marginAfter, styles.input]}
                         placeholder="Your registration number"
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value?.toString()}
-                        autoCapitalize={'none'}
+                        autoCapitalize={"none"}
                     />
                 )}
             />
@@ -86,11 +86,11 @@ export const LoginForm: FC<{close: () => void}> = ({close}) => {
 
             <Controller
                 control={control}
-                name={'password'}
+                name={"password"}
                 rules={{
-                    required: true
+                    required: true,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
                         style={[styles.marginAfter, styles.input]}
                         placeholder="Your password"
@@ -98,7 +98,7 @@ export const LoginForm: FC<{close: () => void}> = ({close}) => {
                         onBlur={onBlur}
                         value={value}
                         secureTextEntry
-                        autoCapitalize={'none'}
+                        autoCapitalize={"none"}
                     />
                 )}
             />
@@ -109,45 +109,39 @@ export const LoginForm: FC<{close: () => void}> = ({close}) => {
                 <Button style={{}} containerStyle={styles.rowLeft} outline icon="arrow-back" onPress={close}>
                     Back
                 </Button>
-                <Button
-                    style={{}}
-                    containerStyle={styles.rowRight}
-                    outline={false}
-                    icon="log-in"
-                    onPress={handleSubmit(onSubmit)}
-                >
+                <Button style={{}} containerStyle={styles.rowRight} outline={false} icon="log-in" onPress={handleSubmit(onSubmit)}>
                     Log-in
                 </Button>
             </View>
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     marginAfter: {
-        marginBottom: 16
+        marginBottom: 16,
     },
     input: {
-        borderBottomColor: 'black',
+        borderBottomColor: "black",
         borderBottomWidth: 1,
-        paddingVertical: 8
+        paddingVertical: 8,
     },
     error: {
         fontSize: 10,
-        color: '#a01010'
+        color: "#a01010",
     },
     marginBefore: {
-        marginTop: 16
+        marginTop: 16,
     },
     row: {
-        flexDirection: 'row'
+        flexDirection: "row",
     },
     rowLeft: {
         flex: 1,
-        marginRight: 8
+        marginRight: 8,
     },
     rowRight: {
         flex: 1,
-        marginLeft: 8
-    }
-})
+        marginLeft: 8,
+    },
+});

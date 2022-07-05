@@ -9,7 +9,7 @@ import { useAppSelector } from "../../store";
 import { usePostDeviceRegistrationMutation } from "../../store/authorization.service";
 
 export const NotificationManager = () => {
-    const [registerDevice, result] = usePostDeviceRegistrationMutation();
+    const [registerDevice] = usePostDeviceRegistrationMutation();
     const [expoPushToken, setExpoPushToken] = useState("");
     const token = useAppSelector((state) => state.authorization.token);
 
