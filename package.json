@@ -2,6 +2,18 @@
   "name": "ef-app_react-native",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
+  "contributors": [
+    {
+      "name": "requinard"
+    },
+    {
+      "name": "PazuzuEU"
+    },
+    {
+      "name": "Luchs (pinselohrkater)"
+    }
+  ],
+  "license": "MIT",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
