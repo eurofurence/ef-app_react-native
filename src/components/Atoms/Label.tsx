@@ -25,9 +25,9 @@ export const Label: FC<LabelProps> = ({ style, type = "span", variant = "regular
     const marginColor = useMemo(() => {
         const result: StyleProp<TextStyle> = { color: theme[color] };
         if (typeof ml === "number") result.marginLeft = ml;
-        if (typeof mt === "number") result.marginTop = ml;
-        if (typeof mr === "number") result.marginRight = ml;
-        if (typeof mb === "number") result.marginBottom = ml;
+        if (typeof mt === "number") result.marginTop = mt;
+        if (typeof mr === "number") result.marginRight = mr;
+        if (typeof mb === "number") result.marginBottom = mb;
         return result;
     }, [ml, mt, mr, mb, theme, color]);
 
