@@ -5,6 +5,8 @@ import { View, StyleSheet } from "react-native";
 import { IconiconsNames } from "../../types/Ionicons";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 
+const displayFor = (index: number, i: number) => (i === index ? "flex" : "none");
+
 export interface TabNavigatorScreenOptions {
     icon: IconiconsNames;
     title: string;
@@ -27,7 +29,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ initialRouteName, children
         initialRouteName,
     });
 
-    const tabs = useRef<TabsRef>();
+    const tabs = useRef<any>();
 
     const performNavigation = useCallback(
         (route) => () => {
@@ -54,7 +56,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ initialRouteName, children
         <NavigationContent>
             {/* Tabbed content. */}
             {state.routes.map((route, i) => (
-                <View key={route.key} style={[StyleSheet.absoluteFill, { display: i === state.index ? "flex" : "none" }]}>
+                <View key={route.key} style={[StyleSheet.absoluteFill, { display: displayFor(state.index, i) }]}>
                     {descriptors[route.key].render()}
                 </View>
             ))}

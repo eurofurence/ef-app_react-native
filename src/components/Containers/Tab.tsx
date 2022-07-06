@@ -39,8 +39,8 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
     const fillNotify = useMemo(() => ({ backgroundColor: theme.notification }), [theme]);
 
     return (
-        <TouchableOpacity containerStyle={styles.tabContainer} style={styles.tab} onPress={onPress}>
-            <View style={styles.tabLine}>
+        <TouchableOpacity containerStyle={styles.container} style={styles.tab} onPress={onPress}>
+            <View style={styles.item}>
                 <Ionicons name={icon} size={24} color={active ? theme.secondary : theme.text} />
 
                 {!indicate ? null : (
@@ -51,21 +51,21 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
                     </View>
                 )}
             </View>
-            <View style={styles.tabLine}>
+            <View style={styles.item}>
                 <Text style={color}>{text}</Text>
             </View>
         </TouchableOpacity>
     );
 };
 const styles = StyleSheet.create({
-    tabContainer: {
+    container: {
         flex: 1,
     },
     tab: {
         alignItems: "center",
         padding: 16,
     },
-    tabLine: {
+    item: {
         alignSelf: "stretch",
         alignItems: "center",
     },
@@ -87,14 +87,5 @@ const styles = StyleSheet.create({
         minHeight: 12,
         padding: 4,
         borderRadius: 99999,
-    },
-    root: {
-        position: "absolute",
-        left: 0,
-        top: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: "flex-end",
-        overflow: "hidden",
     },
 });
