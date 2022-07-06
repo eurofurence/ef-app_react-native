@@ -93,7 +93,7 @@ export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, r
 
     // Double width row that starts on the left. Translates the right part via status.
     return (
-        <Animated.View style={[styles.pages, style, dynamicContainer]} onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
+        <Animated.View style={[styles.pages, style, dynamicContainer]} onLayout={(e) => setWidth(e.nativeEvent.layout.width || width)}>
             <View style={styles.equal}>{left}</View>
             <View style={styles.equal}>{right}</View>
         </Animated.View>

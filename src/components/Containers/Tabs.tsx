@@ -201,7 +201,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ tabs, indicateMore, onOpen
                     </View>
 
                     {/* Children rendered as the expandable content. */}
-                    <View style={[styles.content, fillBackground]} onLayout={(e) => setHeight(e.nativeEvent.layout.height)}>
+                    <View style={[styles.content, fillBackground]} onLayout={(e) => setHeight(e.nativeEvent.layout.height || height)}>
                         {children}
                     </View>
                 </Animated.View>
