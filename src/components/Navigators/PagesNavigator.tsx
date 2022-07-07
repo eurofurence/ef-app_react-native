@@ -1,6 +1,6 @@
 import { useNavigationBuilder, TabRouter, TabActions, createNavigatorFactory } from "@react-navigation/native";
 import { FC, ReactNode, useCallback, MutableRefObject, useState, useEffect, useMemo } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
@@ -8,21 +8,9 @@ import { quickCubicOut } from "../../consts/animations";
 import { IconiconsNames } from "../../types/Ionicons";
 import { Pages } from "../Containers/Pages";
 import { TabsRef } from "../Containers/Tabs";
+import { navigateTab } from "./Common";
 
-const displayFor = (index: number, i: number) => {
-    switch (i) {
-        case index - 1:
-            return "flex";
-        case index:
-            return "flex";
-        case index + 1:
-            return "flex";
-        default:
-            return "none";
-    }
-};
-
-export interface PagedNavigatorScreenOptions {
+export interface PagesNavigatorScreenOptions {
     icon: IconiconsNames;
     title: string;
     indicate?: boolean | ReactNode;
@@ -30,13 +18,15 @@ export interface PagedNavigatorScreenOptions {
     more?: ReactNode | ((tabs: MutableRefObject<TabsRef | undefined>) => ReactNode);
 }
 
-export interface PagedNavigatorProps {
+export interface PagesNavigatorProps {
+    contentStyle?: StyleProp<ViewStyle>;
+    pagesStyle?: StyleProp<ViewStyle>;
     initialRouteName: string;
     children: ReactNode;
-    screenOptions: PagedNavigatorScreenOptions;
+    screenOptions: PagesNavigatorScreenOptions;
 }
 
-export const PagedNavigator: FC<PagedNavigatorProps> = ({ initialRouteName, children, screenOptions }) => {
+export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -44,54 +34,13 @@ export const PagedNavigator: FC<PagedNavigatorProps> = ({ initialRouteName, chil
         initialRouteName,
     });
 
-    const [width, setWidth] = useState(400);
-
-    const performIndexNavigation = useCallback(
-        (index) => {
-            const route = state.routes.at(index);
-            if (!route) return;
-            const event = navigation.emit({
-                type: "tabPress",
-                target: route.key,
-                canPreventDefault: true,
-            });
-
-            if (!event.defaultPrevented) {
-                navigation.dispatch({
-                    ...TabActions.jumpTo(route.name),
-                    target: state.key,
-                });
-            }
-        },
-        [state, navigation]
-    );
-
-    const performRouteNavigation = useCallback(
-        (route) => () => {
-            const event = navigation.emit({
-                type: "tabPress",
-                target: route.key,
-                canPreventDefault: true,
-            });
-
-            if (!event.defaultPrevented) {
-                navigation.dispatch({
-                    ...TabActions.jumpTo(route.name),
-                    target: state.key,
-                });
-            }
-        },
-        [navigation]
-    );
-
-    const pagesStyle = useMemo(() => ({ width: state.routes.length * width }), [state.routes.length, width]);
-    const pageStyle = useMemo(() => ({ width }), [width]);
+    const [width, setWidth] = useState(-1);
 
     const start = useSharedValue(0);
     const offset = useSharedValue(0);
 
     useEffect(() => {
-        offset.value = withTiming(state.index, quickCubicOut);
+        offset.value = withTiming(state.index, { ...quickCubicOut });
     }, [offset, state.index]);
 
     const translation = useAnimatedStyle(
@@ -113,7 +62,7 @@ export const PagedNavigator: FC<PagedNavigatorProps> = ({ initialRouteName, chil
             let index = Math.round(offset.value);
             index = Math.max(0, Math.min(index, state.routes.length - 1));
             if (index !== state.index) {
-                runOnJS(performIndexNavigation)(index);
+                runOnJS(navigateTab)(navigation, index);
             }
         })
         .onEnd((e) => {
@@ -121,9 +70,9 @@ export const PagedNavigator: FC<PagedNavigatorProps> = ({ initialRouteName, chil
             let index = Math.round(offset.value + shift);
             index = Math.max(0, Math.min(index, state.routes.length - 1));
 
-            offset.value = withTiming(index, quickCubicOut);
+            offset.value = withTiming(index, { ...quickCubicOut });
             if (index !== state.index) {
-                runOnJS(performIndexNavigation)(index);
+                runOnJS(navigateTab)(navigation, index);
             }
         });
 
@@ -131,43 +80,68 @@ export const PagedNavigator: FC<PagedNavigatorProps> = ({ initialRouteName, chil
         <NavigationContent>
             {/* Page bar. */}
             <Pages
+                style={pagesStyle}
                 pages={state.routes.map((route, i) => ({
                     active: state.index === i,
                     icon: descriptors[route.key].options.icon,
                     text: descriptors[route.key].options.title || route.name,
-                    onPress: performRouteNavigation(route),
+                    onPress: () => navigateTab(navigation, route),
                     indicate: descriptors[route.key].options.indicate,
                 }))}
             />
 
             {/* Pages content. */}
-            <GestureDetector gesture={gesture}>
-                <View style={styles.container} onLayout={(e) => setWidth(e.nativeEvent.layout.width || width)}>
-                    <Animated.View style={[styles.pages, pagesStyle, translation]}>
+            <View style={[styles.content, contentStyle]} onLayout={(e) => setWidth(e.nativeEvent.layout.width || width)}>
+                <GestureDetector gesture={gesture}>
+                    <Animated.View style={[styles.arranger, translation]}>
                         {state.routes.map((route, i) => (
-                            <View key={route.key} style={[pageStyle]}>
-                                <View style={[{ display: displayFor(state.index, i) }, pageStyle]}>{descriptors[route.key].render()}</View>
+                            <View key={route.key} style={styles.page}>
+                                <View style={styleForChild(state.index, i)}>{descriptors[route.key].render()}</View>
                             </View>
                         ))}
                     </Animated.View>
-                </View>
-            </GestureDetector>
+                </GestureDetector>
+            </View>
         </NavigationContent>
     );
 };
 
-export const createPagedNavigator = createNavigatorFactory(PagedNavigator);
+export const createPagesNavigator = createNavigatorFactory(PagesNavigator);
 
 const styles = StyleSheet.create({
-    container: {
+    content: {
         flex: 1,
         overflow: "hidden",
     },
-    pages: {
-        flex: 1,
+    arranger: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        bottom: 0,
+        width: "500%",
         flexDirection: "row",
+        alignItems: "stretch",
     },
     page: {
         flex: 1,
     },
+    visible: {
+        flex: 1,
+        display: "flex",
+    },
+    hidden: {
+        flex: 1,
+        display: "none",
+    },
 });
+
+const styleForChild = (index: number, i: number) => {
+    switch (i) {
+        case index - 1:
+        case index:
+        case index + 1:
+            return styles.visible;
+        default:
+            return styles.hidden;
+    }
+};

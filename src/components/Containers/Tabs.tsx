@@ -1,5 +1,5 @@
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
@@ -12,6 +12,11 @@ import { Tab } from "./Tab";
  * Arguments to the navigator.
  */
 export interface TabsProps {
+    /**
+     * Style used on the container of the tabs.
+     */
+    style?: StyleProp<ViewStyle>;
+
     /**
      * If given, tabs that are layed out before the more/less button.
      */
@@ -90,7 +95,7 @@ export interface TabsRef {
  * or dragging, translates it into view and overlays the containing view with
  * a semi-opaque layer.
  */
-export const Tabs = forwardRef<TabsRef, TabsProps>(({ tabs, indicateMore, onOpen, onClose, children }, ref) => {
+export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore, onOpen, onClose, children }, ref) => {
     // Computed styles.
     const theme = useTheme();
     const fillDarken = useMemo(() => ({ backgroundColor: theme.darken }), [theme]);
@@ -107,8 +112,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ tabs, indicateMore, onOpen
 
     // Nove to desired target state on change of relevant properties.
     useEffect(() => {
-        if (open && offset.value < 1) offset.value = withTiming(1, quickCubicOut);
-        else if (!open && offset.value > 0) offset.value = withTiming(0.0, quickCubicOut);
+        if (open && offset.value < 1) offset.value = withTiming(1, { ...quickCubicOut });
+        else if (!open && offset.value > 0) offset.value = withTiming(0.0, { ...quickCubicOut });
     }, [offset, open, height]);
 
     // Derive opacity from offset.
@@ -168,10 +173,10 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ tabs, indicateMore, onOpen
 
             // Close if smaller than threshold, otherwise open again.
             if (offset.value < threshold) {
-                offset.value = withTiming(0, quickCubicOut);
+                offset.value = withTiming(0, { ...quickCubicOut });
                 runOnJS(setOpen)(false);
             } else {
-                offset.value = withTiming(1, quickCubicOut);
+                offset.value = withTiming(1, { ...quickCubicOut });
                 runOnJS(setOpen)(true);
             }
         });
@@ -179,10 +184,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ tabs, indicateMore, onOpen
     // TODO: Add safe area to tabs.
     // TODO: Integration with back button.
 
-    // Returns a gesture recognizer that contains the entire view. Contains a touchable for
-    // dismissal and the view panning out the child content. Renders a set of tabs and the children under it.
     return (
-        <View style={styles.root} pointerEvents="box-none">
+        <>
             {/* Dismissal area. */}
             <View style={StyleSheet.absoluteFill} pointerEvents={open ? "auto" : "none"}>
                 <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} disabled={!open} onPress={() => setOpen(false)}>
@@ -192,7 +195,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ tabs, indicateMore, onOpen
 
             <GestureDetector gesture={gesture}>
                 <Animated.View style={dynamicContainer}>
-                    <View style={[styles.tabs, bordersDarken, fillBackground]}>
+                    <View style={[styles.tabs, bordersDarken, fillBackground, style]}>
                         {/* Dynamic tabs. */}
                         {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
 
@@ -206,7 +209,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ tabs, indicateMore, onOpen
                     </View>
                 </Animated.View>
             </GestureDetector>
-        </View>
+        </>
     );
 });
 
