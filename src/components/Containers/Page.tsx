@@ -1,7 +1,7 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FC, useEffect, useMemo } from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { quickCubicOut } from "../../consts/animations";
@@ -42,8 +42,7 @@ export const Page: FC<PageProps> = ({ icon, text, active, onPress, indicatorHeig
 
     const status = useSharedValue(active ? 1 : 0);
     useEffect(() => {
-        if (active) status.value = withTiming(1, quickCubicOut);
-        else status.value = withTiming(0, quickCubicOut);
+        status.value = withTiming(active ? 1 : 0, { ...quickCubicOut });
     }, [active, status]);
 
     const dynamicBorder = useAnimatedStyle(
@@ -54,7 +53,7 @@ export const Page: FC<PageProps> = ({ icon, text, active, onPress, indicatorHeig
     );
 
     return (
-        <TouchableWithoutFeedback containerStyle={styles.container} style={[styles.page, border]} onPress={onPress}>
+        <TouchableOpacity containerStyle={styles.container} style={[styles.page, border]} onPress={onPress}>
             <Animated.View style={[styles.border, border, dynamicBorder]} />
             {!icon ? null : (
                 <View style={[styles.item]}>
@@ -65,7 +64,7 @@ export const Page: FC<PageProps> = ({ icon, text, active, onPress, indicatorHeig
             <View style={styles.item}>
                 <Text style={[styles.text, color]}>{text}</Text>
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     );
 };
 const styles = StyleSheet.create({

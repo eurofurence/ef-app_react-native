@@ -61,8 +61,8 @@ export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, r
 
     // React to desired right-ness.
     useEffect(() => {
-        if (isRight && offset.value < 1) offset.value = withTiming(1, quickCubicOut);
-        else if (!isRight && offset.value > 0) offset.value = withTiming(0, quickCubicOut);
+        if (isRight && offset.value < 1) offset.value = withTiming(1, { ...quickCubicOut });
+        else if (!isRight && offset.value > 0) offset.value = withTiming(0, { ...quickCubicOut });
     }, [isRight, offset]);
 
     // Animate transformation for page flipping (half of total width).

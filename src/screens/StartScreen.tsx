@@ -1,23 +1,19 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { FC, MutableRefObject, useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { MutableRefObject, useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { MainMenu } from "../app/MainMenu/MainMenu";
-import { PagerLogin } from "../app/MainMenu/PagerLogin";
-import { PagerPrimary } from "../app/MainMenu/PagerPrimary";
 import { Label } from "../components/Atoms/Label";
-import { AuthorizationOverview } from "../components/Authorization/AuthorizationOverview";
 import { Button } from "../components/Containers/Button";
-import { Pager } from "../components/Containers/Pager";
-import { Pages } from "../components/Containers/Pages";
-import { Tabs, TabsRef } from "../components/Containers/Tabs";
-import { createPagedNavigator } from "../components/Navigators/PagedNavigator";
+import { TabsRef } from "../components/Containers/Tabs";
+import { createPagesNavigator } from "../components/Navigators/PagesNavigator";
 import { createTabNavigator } from "../components/Navigators/TabsNavigator";
 import { LoadingIndicator } from "../components/Utilities/LoadingIndicator";
 import { useTheme } from "../context/Theme";
-import { useAppDispatch, useAppSelector } from "../store";
+import { useAppDispatch } from "../store";
 import { logout } from "../store/authorization.slice";
 import { useGetAnnouncementsQuery, useGetDealersQuery, useGetEventByIdQuery, useGetEventsQuery } from "../store/eurofurence.service";
 import { AnnouncementRecord, EnrichedDealerRecord, EventRecord } from "../store/eurofurence.types";
@@ -26,11 +22,21 @@ const MainNavigator = createStackNavigator();
 
 const AreasNavigator = createTabNavigator();
 
-const PagesNavigator = createPagedNavigator();
+const PagesNavigator = createPagesNavigator();
 
-const NoScreen = ({ navigation, route }) => {
+const NoContent = ({ navigation, route }) => {
     return (
         <View style={{ padding: 30 }}>
+            <Label type="h1">{route.name}</Label>
+            <Label type="h2">Content not implemented yet</Label>
+        </View>
+    );
+};
+
+const NoScreen = ({ navigation, route }) => {
+    const top = useSafeAreaInsets()?.top;
+    return (
+        <View style={{ padding: 30, paddingTop: top + (top ? 40 : 30) }}>
             <Label type="h1">{route.name}</Label>
             <Label type="h2">Screen not implemented yet</Label>
         </View>
@@ -38,13 +44,15 @@ const NoScreen = ({ navigation, route }) => {
 };
 
 const EventsScreen = ({ navigation, route }) => {
+    const top = useSafeAreaInsets()?.top;
+    const pagesStyle = useMemo(() => ({ paddingTop: top + (top ? 10 : 0) }), [top]);
     return (
-        <PagesNavigator.Navigator>
-            <PagesNavigator.Screen name="Mon" component={NoScreen} />
-            <PagesNavigator.Screen name="Tue" component={NoScreen} />
-            <PagesNavigator.Screen name="Wed" component={NoScreen} />
-            <PagesNavigator.Screen name="Thu" component={NoScreen} />
-            <PagesNavigator.Screen name="Fri" component={NoScreen} />
+        <PagesNavigator.Navigator pagesStyle={pagesStyle} initialRouteName="Wed">
+            <PagesNavigator.Screen name="Mon" component={NoContent} />
+            <PagesNavigator.Screen name="Tue" component={NoContent} />
+            <PagesNavigator.Screen name="Wed" component={NoContent} />
+            <PagesNavigator.Screen name="Thu" component={NoContent} />
+            <PagesNavigator.Screen name="Fri" component={NoContent} />
         </PagesNavigator.Navigator>
     );
 };
@@ -52,6 +60,7 @@ const EventsScreen = ({ navigation, route }) => {
 const HomeScreen = ({ navigation, route }) => {
     // const { t } = useTranslation();
     const dispatch = useAppDispatch();
+    const top = useSafeAreaInsets()?.top;
 
     const announcements: Query<AnnouncementRecord[]> = useGetAnnouncementsQuery();
 
@@ -62,7 +71,7 @@ const HomeScreen = ({ navigation, route }) => {
     const dealers: Query<EnrichedDealerRecord[]> = useGetDealersQuery();
 
     return (
-        <View style={{ padding: 30 }}>
+        <ScrollView contentContainerStyle={{ padding: 30, paddingTop: top + (top ? 70 : 60), paddingBottom: 100 }}>
             {announcements.isFetching ? <LoadingIndicator /> : <Label mb={15}>There are {announcements.data?.length} announcements</Label>}
             {events.isFetching ? <LoadingIndicator /> : <Label mb={15}>There are {events.data?.length} events</Label>}
             {event.isFetching ? <LoadingIndicator /> : <Label mb={15}>We have retrieved event {event.data?.Title ?? "..."}</Label>}
@@ -89,20 +98,24 @@ const HomeScreen = ({ navigation, route }) => {
                     Important span
                 </Label>
             </View>
-        </View>
+        </ScrollView>
     );
 };
-const AreasScreen = ({ navigation, route }) => (
-    <AreasNavigator.Navigator screenOptions={{ more: (tabs: MutableRefObject<TabsRef | undefined>) => <MainMenu tabs={tabs} /> }}>
-        <AreasNavigator.Screen name="Home" options={{ icon: "home" }} component={HomeScreen} />
-        <AreasNavigator.Screen name="Events" options={{ icon: "calendar" }} component={EventsScreen} />
-        <AreasNavigator.Screen name="Dealers" options={{ icon: "cart-outline" }} component={NoScreen} />
-    </AreasNavigator.Navigator>
-);
+const AreasScreen = ({ navigation, route }) => {
+    const bottom = useSafeAreaInsets()?.bottom;
+    const tabsStyle = useMemo(() => ({ paddingBottom: Math.max(bottom, 30) }), [bottom]);
+    return (
+        <AreasNavigator.Navigator tabsStyle={tabsStyle} screenOptions={{ more: (tabs: MutableRefObject<TabsRef | undefined>) => <MainMenu tabs={tabs} /> }}>
+            <AreasNavigator.Screen name="Home" options={{ icon: "home" }} component={HomeScreen} />
+            <AreasNavigator.Screen name="Events" options={{ icon: "calendar" }} component={EventsScreen} />
+            <AreasNavigator.Screen name="Dealers" options={{ icon: "cart-outline" }} component={NoScreen} />
+        </AreasNavigator.Navigator>
+    );
+};
 export const StartScreen = () => {
     return (
         <NavigationContainer>
-            <View style={StyleSheet.absoluteFill}>
+            <View style={[StyleSheet.absoluteFill, { overflow: "hidden" }]}>
                 <MainNavigator.Navigator screenOptions={{ headerShown: false }}>
                     <MainNavigator.Screen name="Default" component={AreasScreen} />
                 </MainNavigator.Navigator>
