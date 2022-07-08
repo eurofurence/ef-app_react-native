@@ -33,6 +33,24 @@ export type AnnouncementRecord = RecordMetadata & {
 export type EventRecord = RecordMetadata & {
     Title: string;
     StartDateTimeUtc: DateTimeString;
+
+    Slug?: string;
+    SubTitle?: string;
+    Abstract?: string;
+    ConferenceDayId?: string;
+    ConferenceTrackId?: string;
+    ConferenceRoomId?: string;
+    Description?: string;
+    Duration?: string;
+    StartTime?: string;
+    EndTime?: string;
+    EndDateTimeUtc?: string;
+    PanelHosts?: string;
+    IsDeviatingFromConBook?: boolean;
+    IsAcceptingFeedback?: boolean;
+    BannerImageId?: string;
+    PosterImageId?: string;
+    Tags?: string[];
 };
 
 export type DealerRecord = RecordMetadata & {
@@ -49,15 +67,16 @@ export type EnrichedDealerRecord = DealerRecord & {
 };
 
 export type EventDayRecord = RecordMetadata & {
-    Title: string;
+    Name?: string;
+    Date?: string;
 };
 
 export type EventTrackRecord = RecordMetadata & {
-    Title: string;
+    Name?: string;
 };
 
 export type EventRoomRecord = RecordMetadata & {
-    Title: string;
+    Name?: string;
 };
 
 export type MapRecord = RecordMetadata & {

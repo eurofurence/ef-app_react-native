@@ -1,11 +1,15 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FC, useMemo } from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useTheme } from "../../context/Theme";
 import { IconiconsNames } from "../../types/Ionicons";
 import { Label } from "../Atoms/Label";
+
+const iconSize = 20;
+const pad = 8;
+const border = 2;
 
 /**
  * Arguments to the button.
@@ -32,6 +36,11 @@ export interface ButtonProps {
     icon?: IconiconsNames;
 
     /**
+     * If given, displayed as the button's icon, this is displayed on the right side.
+     */
+    iconRight?: IconiconsNames;
+
+    /**
      * The text of the button.
      */
     children?: string;
@@ -42,52 +51,54 @@ export interface ButtonProps {
     onPress?: () => void;
 }
 
-export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, children, onPress }) => {
+export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress }) => {
     // Computed styles.
     const theme = useTheme();
     const base = useMemo(() => (outline ? styles.outlineContent : styles.fillContent), [outline]);
     const fill = useMemo(() => ({ backgroundColor: outline ? theme.background : theme.inverted }), [outline, theme]);
 
     return (
-        <TouchableOpacity containerStyle={containerStyle} style={[base, fill, style]} onPress={onPress}>
-            {!icon ? null : <Ionicons style={styles.icon} name={icon} size={24} color={outline ? theme.important : theme.invImportant} />}
+        <TouchableOpacity containerStyle={containerStyle} style={[styles.content, base, fill, style]} onPress={onPress}>
+            {!icon ? <View style={styles.placeholder} /> : <Ionicons name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
 
-            {!children ? null : (
+            {typeof children === "string" ? (
                 <Label style={styles.text} color={outline ? "important" : "invImportant"}>
                     {children}
                 </Label>
+            ) : (
+                children
             )}
+
+            {!iconRight ? <View style={styles.placeholder} /> : <Ionicons name={iconRight} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
-    fillContent: {
-        height: 44,
+    content: {
         borderRadius: 16,
-        padding: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+    },
+    fillContent: {
+        padding: pad,
         backgroundColor: "black",
-        justifyContent: "center",
     },
     outlineContent: {
-        borderRadius: 16,
-        padding: 8,
+        padding: pad - border,
         borderColor: "black",
-        borderWidth: 2,
-        justifyContent: "center",
+        borderWidth: border,
     },
-    icon: {},
+    placeholder: {
+        width: iconSize,
+        height: iconSize,
+    },
     text: {
-        position: "absolute",
-        left: 0,
-        right: 0,
         textAlign: "center",
         textAlignVertical: "center",
     },
     outlineText: {
-        position: "absolute",
-        left: 0,
-        right: 0,
         textAlign: "center",
         textAlignVertical: "center",
     },

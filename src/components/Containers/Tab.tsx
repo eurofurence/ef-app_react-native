@@ -52,7 +52,7 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
                 )}
             </View>
             <View style={styles.item}>
-                <Text style={color}>{text}</Text>
+                <Text style={[styles.text, color]}>{text}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
     item: {
         alignSelf: "stretch",
         alignItems: "center",
+    },
+    text: {
+        textAlign: "center",
     },
     indicatorArea: {
         position: "absolute",

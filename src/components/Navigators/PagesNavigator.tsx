@@ -1,5 +1,5 @@
-import { useNavigationBuilder, TabRouter, TabActions, createNavigatorFactory } from "@react-navigation/native";
-import { FC, ReactNode, useCallback, MutableRefObject, useState, useEffect, useMemo } from "react";
+import { useNavigationBuilder, TabRouter, createNavigatorFactory } from "@react-navigation/native";
+import { FC, ReactNode, MutableRefObject, useState, useEffect, useMemo } from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
@@ -35,6 +35,8 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
     });
 
     const [width, setWidth] = useState(-1);
+
+    const arrangerWidth = useMemo(() => ({ width: `${state.routes.length * 100}%` }), [state.routes.length]);
 
     const start = useSharedValue(0);
     const offset = useSharedValue(0);
@@ -93,7 +95,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
             {/* Pages content. */}
             <View style={[styles.content, contentStyle]} onLayout={(e) => setWidth(e.nativeEvent.layout.width || width)}>
                 <GestureDetector gesture={gesture}>
-                    <Animated.View style={[styles.arranger, translation]}>
+                    <Animated.View style={[styles.arranger, arrangerWidth, translation]}>
                         {state.routes.map((route, i) => (
                             <View key={route.key} style={styles.page}>
                                 <View style={styleForChild(state.index, i)}>{descriptors[route.key].render()}</View>
@@ -118,7 +120,6 @@ const styles = StyleSheet.create({
         left: 0,
         top: 0,
         bottom: 0,
-        width: "500%",
         flexDirection: "row",
         alignItems: "stretch",
     },

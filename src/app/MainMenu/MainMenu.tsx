@@ -20,6 +20,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             messages: () => tabs.current?.close(),
             info: () => tabs.current?.close(),
             catchEmAll: () => tabs.current?.close(),
+            maps: () => tabs.current?.close(),
             services: () => tabs.current?.close(),
             settings: () => tabs.current?.close(),
             about: () => tabs.current?.close(),
@@ -37,6 +38,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                     onInfo={on.info}
                     onCatchEmAll={on.catchEmAll}
                     onServices={on.services}
+                    onMaps={on.maps}
                     onSettings={on.settings}
                     onAbout={on.about}
                 />

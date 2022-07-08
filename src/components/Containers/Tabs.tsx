@@ -114,7 +114,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
     useEffect(() => {
         if (open && offset.value < 1) offset.value = withTiming(1, { ...quickCubicOut });
         else if (!open && offset.value > 0) offset.value = withTiming(0.0, { ...quickCubicOut });
-    }, [offset, open, height]);
+    }, [offset, open]);
 
     // Derive opacity from offset.
     const dynamicDismiss = useAnimatedStyle(
@@ -153,7 +153,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
             if (data) onOpen && runOnJS(onOpen)();
             else onClose && runOnJS(onClose)();
         },
-        [offset]
+        [offset, onOpen, onClose]
     );
 
     // Enable panning the navigator to dismiss. Only available if open.

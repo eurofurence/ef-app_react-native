@@ -10,11 +10,11 @@ export interface TabNavigatorScreenOptions {
     icon: IconiconsNames;
     title: string;
     indicate?: boolean | ReactNode;
-    indicateMore?: boolean | ReactNode;
-    more?: ReactNode | ((tabs: MutableRefObject<TabsRef | undefined>) => ReactNode);
 }
 
 export interface TabNavigatorProps {
+    more?: ReactNode | ((tabs: MutableRefObject<TabsRef | undefined>) => ReactNode);
+    indicateMore?: boolean | ReactNode;
     contentStyle?: StyleProp<ViewStyle>;
     tabsStyle?: StyleProp<ViewStyle>;
     initialRouteName: string;
@@ -22,7 +22,7 @@ export interface TabNavigatorProps {
     screenOptions: TabNavigatorScreenOptions;
 }
 
-export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
+export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -31,9 +31,6 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, i
     });
 
     const tabs = useRef<any>();
-
-    // Get current options to render "more" content.
-    const currentOptions = descriptors[state.routes[state.index].key].options;
 
     return (
         <NavigationContent>
@@ -50,7 +47,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, i
             <Tabs
                 style={tabsStyle}
                 ref={tabs}
-                indicateMore={currentOptions.indicateMore}
+                indicateMore={indicateMore}
                 tabs={state.routes.map((route, i) => ({
                     active: state.index === i,
                     icon: descriptors[route.key].options.icon,
@@ -59,7 +56,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, i
                     indicate: descriptors[route.key].options.indicate,
                 }))}
             >
-                {typeof currentOptions.more === "function" ? currentOptions.more(tabs) : currentOptions.more}
+                {typeof more === "function" ? more(tabs) : more}
             </Tabs>
         </NavigationContent>
     );
