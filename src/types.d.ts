@@ -17,3 +17,10 @@ type Query<DataType = unknown, ArgsType = unknown> = {
     isSuccess: boolean;
     isError: boolean;
 };
+
+type Route<ParamProps extends object, RouteName extends string> = {
+    key: string;
+    name: RouteName;
+    path?: string;
+    params: Readonly<ParamProps>;
+};

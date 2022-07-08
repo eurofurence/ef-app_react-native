@@ -5,6 +5,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import { EurofurenceErrorBoundary } from "./components/Utilities/EurofurenceErrorBoundary";
 import { persistor, store } from "./store";
+
 import "./i18n";
 
 const Index = () => {

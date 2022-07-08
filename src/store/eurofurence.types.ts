@@ -67,7 +67,7 @@ export type EnrichedDealerRecord = DealerRecord & {
 };
 
 export type EventDayRecord = RecordMetadata & {
-    Name?: string;
+    Name: string;
     Date?: string;
 };
 
