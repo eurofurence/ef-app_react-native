@@ -35,6 +35,16 @@ i18next
                 Events: {
                     when: "{{ day }}, {{ start }} until {{ finish }}.",
                 },
+                TimeTravel: {
+                    title: "Time Travel",
+                    subtitle: "Adjust time settings for testing and debugging",
+                    originalTime: "Original: {{ time }}",
+                    currentTime: "Current: {{ time }}",
+                    difference: "Your time difference is {{ diff }}",
+                    enable: "Enable",
+                    disable: "Disable",
+                    reset: "Reset",
+                },
             },
             nl: {
                 translation: {

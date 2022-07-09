@@ -11,6 +11,7 @@ import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { LoadingIndicator } from "../../components/Utilities/LoadingIndicator";
 import { useSignalLoading } from "../../context/LoadingContext";
+import { TimeTravel } from "../../components/Utilities/TimeTravel";
 import { useTheme } from "../../context/Theme";
 import { useAppDispatch } from "../../store";
 import { logout } from "../../store/authorization.slice";
@@ -55,6 +56,8 @@ export const ScreenHome: FC<ScreenHomeProps> = () => {
             {event.isFetching ? <LoadingIndicator /> : <Label mb={15}>We have retrieved event {event.data?.Title ?? "..."}</Label>}
             {dealers.isFetching ? <LoadingIndicator /> : <Label mb={15}>We have {dealers.data?.length ?? "..."} dealers</Label>}
             <Button onPress={() => dispatch(logout())}>Log-out</Button>
+
+            <TimeTravel />
 
             {/* Theme verifier. */}
             <View style={{ marginTop: 30, flexDirection: "row", flexWrap: "wrap" }}>

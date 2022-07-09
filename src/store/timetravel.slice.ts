@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import moment, { MomentInputObject } from "moment";
 
 interface TimeTravelState {
     amount: number;
@@ -35,3 +36,10 @@ export const timeTravelSlice = createSlice({
 });
 
 export const { travelForward, travelBackward, resetTravel, enableTimeTravel, showTimeTravel } = timeTravelSlice.actions;
+
+const getTimeInterval = (unit: moment.unitOfTime.DurationConstructor) => moment.duration(1, unit).asMilliseconds();
+export const ONE_MINUTE = getTimeInterval("minute");
+export const ONE_HOUR = getTimeInterval("hour");
+export const ONE_DAY = getTimeInterval("day");
+export const ONE_WEEK = getTimeInterval("week");
+export const ONE_MONTH = getTimeInterval("month");
