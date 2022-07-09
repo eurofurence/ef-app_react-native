@@ -3,8 +3,9 @@ import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ScreenStart } from "./app/ScreenStart";
-import { PlatformCacheSynchronizer } from "./components/CacheSynchronizer/CacheSynchronizer";
 import { PlatformNotificationManager } from "./components/Notifications/NotificationManager";
+import { PlatformImageSynchronizer } from "./components/Utilities/ImageSynchronizer";
+import { Synchronizer } from "./components/Utilities/Synchronizer";
 
 /**
  * Base App. Handles all ui related layout stuff. Context providers go in index.tsx. Actual UI content should be in screens or components
@@ -16,7 +17,8 @@ export default function App() {
             <ScreenStart />
 
             <PlatformNotificationManager />
-            <PlatformCacheSynchronizer />
+            <PlatformImageSynchronizer />
+            <Synchronizer />
         </GestureHandlerRootView>
     );
 }
