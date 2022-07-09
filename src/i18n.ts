@@ -45,6 +45,9 @@ i18next
                     disable: "Disable",
                     reset: "Reset",
                 },
+                Settings: {
+                    timeTravel: "Show time travel settings.",
+                },
             },
             nl: {
                 translation: {

@@ -2511,6 +2511,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/checkbox@npm:^0.5.12":
+  version: 0.5.12
+  resolution: "@react-native-community/checkbox@npm:0.5.12"
+  peerDependencies:
+    react: "*"
+    react-native: ">= 0.62"
+    react-native-windows: ">=0.62"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 9c07132873697732d32eb6729648a0c920dba8118d660eb22a6fcc4f5c4cc1f3c7aed2a022136a8053dcbc05cc8f546927a5086554ed08f72e806708b617ab33
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-debugger-ui@npm:^7.0.3":
   version: 7.0.3
   resolution: "@react-native-community/cli-debugger-ui@npm:7.0.3"
@@ -5216,6 +5230,7 @@ __metadata:
     "@expo/ngrok": ^2.5.0
     "@hookform/resolvers": ^2.9.3
     "@react-native-async-storage/async-storage": ^1.17.7
+    "@react-native-community/checkbox": ^0.5.12
     "@react-navigation/core": ^6.2.2
     "@react-navigation/native": ^6.0.11
     "@react-navigation/stack": ^6.2.2
