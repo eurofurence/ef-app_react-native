@@ -10,8 +10,8 @@ import { Button } from "../../components/Containers/Button";
 import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { LoadingIndicator } from "../../components/Utilities/LoadingIndicator";
-import { useSignalLoading } from "../../context/LoadingContext";
 import { TimeTravel } from "../../components/Utilities/TimeTravel";
+import { useSignalLoading } from "../../context/LoadingContext";
 import { useTheme } from "../../context/Theme";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { logout } from "../../store/authorization.slice";
@@ -42,8 +42,6 @@ export const ScreenHome: FC<ScreenHomeProps> = () => {
     const event = useAppSelector((state) => eventsSelector.selectById(state, "76430fe0-ece7-48c9-b8e6-fdbc3974ff64"));
     const eventsInRoom = useAppSelector((state) => eventsSelector.selectByDay(state, "7f69f120-3c8a-49bf-895a-20c2adade161"));
     const dealers = useAppSelector(dealersSelectors.selectAll);
-
-    useSignalLoading(announcements.isFetching || events.isFetching || event.isFetching || dealers.isFetching);
 
     return (
         <Scroller>
