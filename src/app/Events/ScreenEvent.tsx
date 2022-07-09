@@ -14,7 +14,7 @@ import { ContentEvent } from "./ContentEvent";
 /**
  * Params handled by the screen in route.
  */
-export type ScreenEventsParams = {
+export type ScreenEventParams = {
     // TODO: This could be a discriminative union, would need some type checking.
     /**
      * The ID, needed if the event is not passed explicitly, i.e., as an external link.

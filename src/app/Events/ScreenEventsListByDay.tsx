@@ -11,12 +11,12 @@ import { useSignalLoading } from "../../context/LoadingContext";
 import { useGetEventRoomsQuery, useGetEventsQuery, useGetEventTracksQuery } from "../../store/eurofurence.service";
 import { EventDayRecord } from "../../store/eurofurence.types";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
-import { EventsNavigatorParamsList } from "./ScreenEvents";
+import { ScreenEventsTabsNavigatorParamsList } from "./ScreenEventsTabs";
 
 /**
  * Params handled by the screen in route.
  */
-export type ScreenEventsDayParams = {
+export type ScreenEventsListByDayParams = {
     /**
      * The day that's events are listed.
      */
@@ -26,9 +26,9 @@ export type ScreenEventsDayParams = {
 /**
  * The properties to the screen as a component.
  */
-export type ScreenEventsDayProps = CompositeScreenProps<PagesScreenProps<EventsNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type ScreenEventsListByDayProps = CompositeScreenProps<PagesScreenProps<ScreenEventsTabsNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
-export const ScreenEventsDay: FC<ScreenEventsDayProps> = ({ navigation, route }) => {
+export const ScreenEventsListByDay: FC<ScreenEventsListByDayProps> = ({ navigation, route }) => {
     // Get the day.
     const day = route.params.day;
 

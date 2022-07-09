@@ -4,7 +4,7 @@ import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
-import { ScreenEvent, ScreenEventsParams } from "./Events/ScreenEvent";
+import { ScreenEvent, ScreenEventParams } from "./Events/ScreenEvent";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
 
 /**
@@ -19,14 +19,15 @@ export type ScreenStartNavigatorParamsList = {
     /**
      * Detail screen for events.
      */
-    Event: ScreenEventsParams;
+    Event: ScreenEventParams;
 
     /**
      * About page.
      */
     About: ScreenEmptyParams;
 };
-const StartNavigator = createStackNavigator<ScreenStartNavigatorParamsList>();
+
+const ScreenStartNavigator = createStackNavigator<ScreenStartNavigatorParamsList>();
 
 /**
  * The properties to the screen as a component.
@@ -37,11 +38,11 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
     return (
         <NavigationContainer>
             <View style={StyleSheet.absoluteFill}>
-                <StartNavigator.Navigator screenOptions={{ headerShown: false }}>
-                    <StartNavigator.Screen name="Areas" component={ScreenAreas} />
-                    <StartNavigator.Screen name="Event" component={ScreenEvent} />
-                    <StartNavigator.Screen name="About" component={ScreenEmpty} />
-                </StartNavigator.Navigator>
+                <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
+                    <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
+                    <ScreenStartNavigator.Screen name="Event" component={ScreenEvent} />
+                    <ScreenStartNavigator.Screen name="About" component={ScreenEmpty} />
+                </ScreenStartNavigator.Navigator>
             </View>
         </NavigationContainer>
     );

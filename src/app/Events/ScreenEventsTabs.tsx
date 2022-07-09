@@ -12,36 +12,36 @@ import { useSignalLoading } from "../../context/LoadingContext";
 import { useGetEventDaysQuery } from "../../store/eurofurence.service";
 import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
-import { ScreenEventsDay, ScreenEventsDayParams } from "./ScreenEventsDay";
+import { ScreenEventsListByDay, ScreenEventsListByDayParams } from "./ScreenEventsListByDay";
 
 // TODO: Might have an distinction between days, tracks, rooms as param.
 
 /**
  * Available routes.
  */
-export type EventsNavigatorParamsList = {
+export type ScreenEventsTabsNavigatorParamsList = {
     /**
      * All names (days) want events-day parameters.
      */
-    [day: string]: ScreenEventsDayParams;
+    [day: string]: ScreenEventsListByDayParams;
 };
 
 /**
  * Create an instance of the pages-navigator with the provided routes.
  */
-const EventsNavigator = createPagesNavigator<EventsNavigatorParamsList>();
+const ScreenEventsTabsNavigator = createPagesNavigator<ScreenEventsTabsNavigatorParamsList>();
 
 /**
  * Params handled by the screen in route. Delegated parameters for the days. TODO: Verify.
  */
-export type ScreenEventsParams = NavigatorScreenParams<EventsNavigatorParamsList>;
+export type ScreenEventsTabsParams = NavigatorScreenParams<ScreenEventsTabsNavigatorParamsList>;
 
 /**
  * The properties to the screen as a component.
  */
-export type ScreenEventsProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Events">, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type ScreenEventsTabsProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Events">, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
-export const ScreenEvents: FC<ScreenEventsProps> = () => {
+export const ScreenEventsTabs: FC<ScreenEventsTabsProps> = () => {
     // Use event days.
     const days = useGetEventDaysQuery();
 
@@ -56,16 +56,16 @@ export const ScreenEvents: FC<ScreenEventsProps> = () => {
     if (!days.data?.length) return null;
 
     return (
-        <EventsNavigator.Navigator pagesStyle={pagesStyle}>
+        <ScreenEventsTabsNavigator.Navigator pagesStyle={pagesStyle}>
             {days.data.map((day) => (
-                <EventsNavigator.Screen
+                <ScreenEventsTabsNavigator.Screen
                     key={day.Id}
                     name={day.Name as string}
-                    component={ScreenEventsDay}
+                    component={ScreenEventsListByDay}
                     options={{ title: moment(day.Date).format("ddd") }}
                     initialParams={{ day: clone(day) }}
                 />
             ))}
-        </EventsNavigator.Navigator>
+        </ScreenEventsTabsNavigator.Navigator>
     );
 };
