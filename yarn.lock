@@ -5236,6 +5236,7 @@ __metadata:
     expo: ~45.0.0
     expo-constants: ^13.1.1
     expo-device: ^4.2.0
+    expo-localization: ^13.0.0
     expo-notifications: ^0.15.4
     expo-status-bar: ~1.3.0
     expo-updates: ~0.13.2
@@ -5981,6 +5982,17 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 7c7b54e7c721fa87e600142734fdc6c4c8814661767c9b5a4a1c0da1d41f33b5b214f2ccd5ee84e622bb5ff044123e383dd8230aff5a5ce644974a05a49d0e4b
+  languageName: node
+  linkType: hard
+
+"expo-localization@npm:^13.0.0":
+  version: 13.1.0
+  resolution: "expo-localization@npm:13.1.0"
+  dependencies:
+    rtl-detect: ^1.0.2
+  peerDependencies:
+    expo: "*"
+  checksum: f97bac33daf0ce187f1d505b916b8d73180b09869fcd0ec03f8cd9092c69b3af84788a24d0928775ee6378d5171b49595546734539d6a3c8f575246ee61cb76c
   languageName: node
   linkType: hard
 
@@ -11486,6 +11498,13 @@ __metadata:
   bin:
     rimraf: ./bin.js
   checksum: 3ea587b981a19016297edb96d1ffe48af7e6af69660e3b371dbfc73722a73a0b0e9be5c88089fbeeb866c389c1098e07f64929c7414290504b855f54f901ab10
+  languageName: node
+  linkType: hard
+
+"rtl-detect@npm:^1.0.2":
+  version: 1.0.4
+  resolution: "rtl-detect@npm:1.0.4"
+  checksum: d562535baa0db62f57f0a1d4676297bff72fd6b94e88f0f0900d5c3e810ab512c5c4cadffd3e05fbe8d9c74310c919afa3ea8c1001c244e5555e8eef12d02d6f
   languageName: node
   linkType: hard
 

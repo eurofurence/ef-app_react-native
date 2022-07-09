@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
@@ -13,7 +14,7 @@ import { useGetAnnouncementsQuery, useGetDealersQuery, useGetEventByIdQuery, use
 import { AnnouncementRecord, EnrichedDealerRecord, EventRecord } from "../../store/eurofurence.types";
 
 export const HomeScreen: FC<{ navigation: any; route: any }> = ({ navigation, route }) => {
-    // const { t } = useTranslation();
+    const { t } = useTranslation("Home");
     const dispatch = useAppDispatch();
 
     const announcements: Query<AnnouncementRecord[]> = useGetAnnouncementsQuery();
@@ -30,8 +31,8 @@ export const HomeScreen: FC<{ navigation: any; route: any }> = ({ navigation, ro
                 {/* <ProgressBar progress={countdown.percentage} color={colors.primary} style={{ marginTop: 20, marginBottom: 5 }} /> */}
             </Section>
 
-            {announcements.isFetching ? <LoadingIndicator /> : <Label mb={15}>There are {announcements.data?.length} announcements</Label>}
-            {events.isFetching ? <LoadingIndicator /> : <Label mb={15}>There are {events.data?.length} events</Label>}
+            {announcements.isFetching ? <LoadingIndicator /> : <Label mb={15}>{t("announcementsTitle", { count: announcements.data?.length })}</Label>}
+            {events.isFetching ? <LoadingIndicator /> : <Label mb={15}>{t("eventsTitle", { count: events.data?.length })}</Label>}
             {event.isFetching ? <LoadingIndicator /> : <Label mb={15}>We have retrieved event {event.data?.Title ?? "..."}</Label>}
             {dealers.isFetching ? <LoadingIndicator /> : <Label mb={15}>We have {dealers.data?.length ?? "..."} dealers</Label>}
             <Button onPress={() => dispatch(logout())}>Log-out</Button>

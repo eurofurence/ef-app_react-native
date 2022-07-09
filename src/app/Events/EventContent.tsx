@@ -1,5 +1,6 @@
 import moment from "moment";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
@@ -17,6 +18,7 @@ export interface EventContentProps {
 }
 
 export const EventContent: FC<EventContentProps> = ({ isFavorited, event, day, track, room }) => {
+    const { t } = useTranslation("Events");
     return (
         <>
             <Section icon={isFavorited ? "heart" : "calendar"} title={event.Title ?? ""} subtitle={event.SubTitle} />
@@ -41,8 +43,7 @@ export const EventContent: FC<EventContentProps> = ({ isFavorited, event, day, t
 
             <Label type="caption">When</Label>
             <Label type="h3" mb={20}>
-                {!day ? null : `${moment(day.Date).format("dddd")}, `}
-                {moment(event.StartDateTimeUtc).format("hh:mm")} until {moment(event.EndDateTimeUtc).format("hh:mm")}
+                {t("when", { day: day && moment(day.Date).format("dddd"), start: moment(event.StartDateTimeUtc).format("LT"), finish: moment(event.EndDateTimeUtc).format("LT") })}
             </Label>
 
             <Label type="caption">Track</Label>
