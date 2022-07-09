@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import * as Notifications from "expo-notifications";
-import moment, { Moment } from "moment";
 
-import { EventRecord, RecordId } from "./eurofurence.types";
+import { RecordId } from "./eurofurence.types";
 
 export type Notification = {
     recordId: RecordId;
@@ -22,31 +20,13 @@ export const notificationsSlice = createSlice({
     name: "notifications",
     initialState,
     reducers: {
-        createEventReminder: {
-            reducer: (state, action: PayloadAction<Notification>) => {
-                state.notifications.push(action.payload);
-            },
-            prepare: (scheduleTime: Moment, event: EventRecord) => {
-                const notification: Notification = {
-                    recordId: event.Id,
-                    type: "EventReminder",
-                    dateCreated: moment().toISOString(),
-                    dateScheduled: scheduleTime.toISOString(),
-                };
-
-                // Notifications.scheduleNotificationAsync({
-                //     identifier: notification.recordId,
-                //     content: {
-                //         title: "An event is starting soon!",
-                //         subtitle: event.Title,
-                //     },
-                //     trigger: scheduleTime.toDate(),
-                // });
-
-                return { payload: notification };
-            },
+        addNotification: (state, action: PayloadAction<Notification>) => {
+            state.notifications.push(action.payload);
+        },
+        removeNotification: (state, action: PayloadAction<RecordId>) => {
+            state.notifications = state.notifications.filter((it) => it.recordId !== action.payload);
         },
     },
 });
 
-export const { createEventReminder } = notificationsSlice.actions;
+export const { addNotification, removeNotification } = notificationsSlice.actions;
