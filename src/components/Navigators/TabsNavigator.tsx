@@ -6,34 +6,88 @@ import { IoniconsNames } from "../../types/Ionicons";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 import { navigateTab } from "./Common";
 
+/**
+ * Options for a tabs-screen.
+ */
 export type TabNavigationOptions = {
+    /**
+     * The icon to use.
+     */
     icon: IoniconsNames;
+
+    /**
+     * The title of the screen.
+     */
     title: string;
+
+    /**
+     * True if this tab should indicate or a node of what it should indicate.
+     */
     indicate?: boolean | ReactNode;
 };
 
 export type TabNavigatorProps = {
+    /**
+     * Render function for the content under more.
+     */
     more?: ReactNode | ((tabs: RefObject<TabsRef>) => ReactNode);
+
+    /**
+     * True if the more tab should indicate or a node of what it should indicate.
+     */
     indicateMore?: boolean | ReactNode;
+
+    /**
+     * Style of the content. This is the container around all pages.
+     */
     contentStyle?: StyleProp<ViewStyle>;
+
+    /**
+     * Style of a tab. This is on the page's individual container.
+     */
     tabsStyle?: StyleProp<ViewStyle>;
+
+    /**
+     * The initial route.
+     */
     initialRouteName: string;
+
+    /**
+     * The screens.
+     */
     children: ReactNode;
+
+    /**
+     * The default screen options.
+     */
     screenOptions: TabNavigationOptions;
 };
 
+/**
+ * Events handled by the tabs emitter.
+ */
 export type TabNavigationEventMap = {
+    /**
+     * A tab was pressed.
+     */
     tabPress: {
         data: undefined;
         canPreventDefault: true;
     };
 };
+
+/**
+ * Type of navigation when using a screen inside a tab navigator.
+ */
 export type TabNavigationProp<
     ParamList extends ParamListBase,
     RouteName extends keyof ParamList = keyof ParamList,
     NavigatorID extends string | undefined = undefined
 > = NavigationProp<ParamList, RouteName, NavigatorID, TabNavigationState<ParamList>, TabNavigationOptions, TabNavigationEventMap> & TabActionHelpers<ParamList>;
 
+/**
+ * Props to a tabs-screen.
+ */
 export type TabScreenProps<ParamList extends ParamListBase, RouteName extends keyof ParamList = keyof ParamList, NavigatorID extends string | undefined = undefined> = {
     navigation: TabNavigationProp<ParamList, RouteName, NavigatorID>;
     route: RouteProp<ParamList, RouteName>;

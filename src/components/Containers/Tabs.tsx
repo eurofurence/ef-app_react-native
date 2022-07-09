@@ -5,10 +5,11 @@ import Animated, { Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSh
 
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
+import { Activity } from "../Atoms/Activity";
 import { Tab } from "./Tab";
 
 /**
- * Arguments to the navigator.
+ * Arguments to the tabs.
  */
 export type TabsProps = {
     /**
@@ -200,6 +201,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
 
                         {/* More-tab. */}
                         <Tab icon={open ? "arrow-down-circle" : "menu"} text={open ? "Less" : "More"} indicate={indicateMore} onPress={() => setOpen((current) => !current)} />
+
+                        <Activity style={styles.activity} />
                     </View>
 
                     {/* Children rendered as the expandable content. */}
@@ -233,6 +236,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderTopWidth: 1,
         borderBottomWidth: 1,
+    },
+    activity: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
     },
     content: {
         position: "absolute",

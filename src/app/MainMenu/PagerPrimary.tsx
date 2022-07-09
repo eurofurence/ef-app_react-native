@@ -7,6 +7,9 @@ import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
 import { useAppSelector } from "../../store";
 
+/**
+ * Props to the pager.
+ */
 export type PagerMenuProps = {
     onMessages?: () => void;
     onLogin?: () => void;

@@ -4,6 +4,7 @@ import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./App";
 import { EurofurenceErrorBoundary } from "./components/Utilities/EurofurenceErrorBoundary";
+import { LoadingContextProvider } from "./context/LoadingContext";
 import { persistor, store } from "./store";
 
 import "./i18n";
@@ -13,7 +14,9 @@ const Index = () => {
         <StoreProvider store={store}>
             <EurofurenceErrorBoundary>
                 <PersistGate persistor={persistor}>
-                    <App />
+                    <LoadingContextProvider>
+                        <App />
+                    </LoadingContextProvider>
                 </PersistGate>
             </EurofurenceErrorBoundary>
         </StoreProvider>

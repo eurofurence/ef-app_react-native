@@ -7,6 +7,9 @@ import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
 
+/**
+ * Arguments to the page.
+ */
 export type PageProps = {
     /**
      * The icon to display.

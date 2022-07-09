@@ -12,21 +12,46 @@ import { ScreenHome, ScreenHomeParams } from "./Home/ScreenHome";
 import { MainMenu } from "./MainMenu/MainMenu";
 import { ScreenStartNavigatorParamsList } from "./ScreenStart";
 
+/**
+ * Available routes.
+ */
 export type ScreenAreasNavigatorParamsList = {
+    /**
+     * Area home screen, should show announcements and personalized content.
+     */
     Home: ScreenHomeParams;
+
+    /**
+     * Events list.
+     */
     Events: ScreenEventsParams;
+
+    /**
+     * Dealers list.
+     */
     Dealers: ScreenEmptyParams;
 };
 
+/**
+ * Create an instance of the tabs-navigator with the provided routes.
+ */
 export const AreasNavigator = createTabNavigator<ScreenAreasNavigatorParamsList>();
 
+/**
+ * Params handled by the screen in route. Delegated parameters for the areas.
+ */
 export type ScreenAreasParams = NavigatorScreenParams<ScreenAreasNavigatorParamsList>;
 
+/**
+ * The properties to the screen as a component. Delegated parameters for the areas. TODO: Verify.
+ */
 export type ScreenAreasProps = StackScreenProps<ScreenStartNavigatorParamsList>;
 
 export const ScreenAreas: FC<ScreenAreasProps> = () => {
+    // Compute safe inset at the bottom and convert to style.
     const bottom = useSafeAreaInsets()?.bottom;
     const tabsStyle = useMemo(() => ({ paddingBottom: Math.max(bottom, 30) }), [bottom]);
+
     return (
         <View style={StyleSheet.absoluteFill}>
             <AreasNavigator.Navigator tabsStyle={tabsStyle} more={(tabs: RefObject<TabsRef>) => <MainMenu tabs={tabs} />}>

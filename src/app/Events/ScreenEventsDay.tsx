@@ -7,26 +7,43 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { Button } from "../../components/Containers/Button";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { useSignalLoading } from "../../context/LoadingContext";
 import { useGetEventRoomsQuery, useGetEventsQuery, useGetEventTracksQuery } from "../../store/eurofurence.service";
 import { EventDayRecord } from "../../store/eurofurence.types";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
 import { EventsNavigatorParamsList } from "./ScreenEvents";
 
+/**
+ * Params handled by the screen in route.
+ */
 export type ScreenEventsDayParams = {
+    /**
+     * The day that's events are listed.
+     */
     day: EventDayRecord;
 };
 
+/**
+ * The properties to the screen as a component.
+ */
 export type ScreenEventsDayProps = CompositeScreenProps<PagesScreenProps<EventsNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const ScreenEventsDay: FC<ScreenEventsDayProps> = ({ navigation, route }) => {
+    // Get the day.
     const day = route.params.day;
 
+    // Use events, tracks, and rooms.
     const events = useGetEventsQuery();
     const tracks = useGetEventTracksQuery();
     const rooms = useGetEventRoomsQuery();
 
+    // Ready if all queries are ready.
     const ready = events.isSuccess && tracks.isSuccess && rooms.isSuccess;
 
+    // Indicate if queries are active.
+    useSignalLoading(events.isFetching || tracks.isFetching || rooms.isFetching);
+
+    // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(
         (event) =>
             navigation.push("Event", {
@@ -38,20 +55,22 @@ export const ScreenEventsDay: FC<ScreenEventsDayProps> = ({ navigation, route })
             }),
         [navigation, tracks, rooms]
     );
+
+    // Do not render content when nothing is present. TODO: Loading content.
+    if (!ready || !events.data) return null;
+
     return (
         <View style={StyleSheet.absoluteFill}>
             <ScrollView>
-                {!ready || !events.data
-                    ? null
-                    : events.data
-                          .filter((event) => event.ConferenceDayId === day.Id)
-                          .map((event) => (
-                              <View key={event.Id} style={{ padding: 10 }}>
-                                  <Button outline onPress={() => navigateTo(event)}>
-                                      {event.Title}
-                                  </Button>
-                              </View>
-                          ))}
+                {events.data
+                    .filter((event) => event.ConferenceDayId === day.Id)
+                    .map((event) => (
+                        <View key={event.Id} style={{ padding: 10 }}>
+                            <Button outline onPress={() => navigateTo(event)}>
+                                {event.Title}
+                            </Button>
+                        </View>
+                    ))}
             </ScrollView>
         </View>
     );

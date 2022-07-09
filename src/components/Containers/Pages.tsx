@@ -53,7 +53,6 @@ export const Pages: FC<PagesProps> = ({ style, pages, indicatorHeight = 4 }) => 
     const theme = useTheme();
     const fillBackground = useMemo(() => ({ backgroundColor: theme.background }), [theme]);
     const bordersDarken = useMemo(() => ({ borderColor: theme.darken }), [theme]);
-
     return (
         <>
             <View style={[styles.pages, bordersDarken, fillBackground, style]}>

@@ -13,9 +13,6 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
     const pager = useRef<PagerRef>(null);
     const on = useMemo(
         () => ({
-            home: () => tabs.current?.close(),
-            events: () => tabs.current?.close(),
-            dealers: () => tabs.current?.close(),
             login: () => pager.current?.toRight(),
             loginBack: () => pager.current?.toLeft(),
             messages: () => tabs.current?.close(),

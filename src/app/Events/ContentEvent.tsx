@@ -9,11 +9,33 @@ import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
 import { EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord } from "../../store/eurofurence.types";
 
+/**
+ * Props to the content.
+ */
 export type ContentEventProps = {
+    /**
+     * True if favorited. TODO: This should not be given fixed but resolved and changable.
+     */
     isFavorited?: boolean;
+
+    /**
+     * The event to display.
+     */
     event: EventRecord;
+
+    /**
+     * The day if present, will not be resolved on load.
+     */
     day?: EventDayRecord;
+
+    /**
+     * The track if present, will not be resolved on load.
+     */
     track?: EventTrackRecord;
+
+    /**
+     * The room if present, will not be resolved on load.
+     */
     room?: EventRoomRecord;
 };
 

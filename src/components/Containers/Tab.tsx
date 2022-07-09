@@ -6,6 +6,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
 
+/**
+ * Arguments to the tab.
+ */
 export type TabProps = {
     /**
      * The icon to display.

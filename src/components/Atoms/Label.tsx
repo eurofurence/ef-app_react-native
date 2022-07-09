@@ -3,13 +3,42 @@ import { StyleProp, StyleSheet, Text, TextStyle, TextProps } from "react-native"
 
 import { Theme, useTheme } from "../../context/Theme";
 
+/**
+ * Props to label.
+ */
 export type LabelProps = TextProps & {
+    /**
+     * The type, one of some predefined primary style values.
+     */
     type?: keyof typeof types;
+
+    /**
+     * The variant, one of some predefined secondary style values, overriding type.
+     */
     variant?: keyof typeof variants;
+    /**
+     * The color name, a value from the theme.
+     */
     color?: keyof Theme;
+
+    /**
+     * Margin left.
+     */
     ml?: number;
+
+    /**
+     * Margin top.
+     */
     mt?: number;
+
+    /**
+     * Margin right.
+     */
     mr?: number;
+
+    /**
+     * Margin bottom.
+     */
     mb?: number;
 };
 

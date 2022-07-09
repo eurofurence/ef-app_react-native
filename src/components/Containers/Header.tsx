@@ -5,15 +5,18 @@ import { StyleSheet, View, ViewProps } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useTheme } from "../../context/Theme";
+import { Activity } from "../Atoms/Activity";
 import { Label } from "../Atoms/Label";
 import { Row } from "./Row";
 
 const iconSize = 32;
 
-export const Header: FC<ViewProps> = ({ style, children }) => {
-    const colors = useTheme();
+export type HeaderProps = ViewProps;
 
-    const borderColor = useMemo(() => ({ borderColor: colors.text }), [colors]);
+export const Header: FC<HeaderProps> = ({ style, children }) => {
+    const theme = useTheme();
+
+    const borderColor = useMemo(() => ({ borderColor: theme.darken }), [theme]);
 
     const navigation = useNavigation();
 
@@ -28,6 +31,8 @@ export const Header: FC<ViewProps> = ({ style, children }) => {
             <View style={styles.placeholder} />
 
             <TouchableOpacity containerStyle={styles.back} onPress={() => navigation.goBack()} />
+
+            <Activity style={styles.activity} />
         </Row>
     );
 };
@@ -49,5 +54,11 @@ const styles = StyleSheet.create({
         left: 0,
         bottom: 0,
         width: "30%",
+    },
+    activity: {
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        right: 0,
     },
 });

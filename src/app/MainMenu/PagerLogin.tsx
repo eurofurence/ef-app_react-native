@@ -29,7 +29,8 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
 
     const onSubmit = (data: LoginSchema) => {
         login({
-            RegNo: data.regno.toString(),
+            // TODO: Fix types here.
+            RegNo: data.regno,
             Username: data.username,
             Password: data.password,
         });

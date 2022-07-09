@@ -1,10 +1,43 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+/**
+ * Props to the scroller.
+ */
 export type ScrollerProps = {
-    limitWidth?: boolean;
+    /**
+     * The width to limit the content to.
+     */
+    limitWidth?: number;
 };
 
-export const Scroller: FC<ScrollerProps> = ({ limitWidth = true, children }) => (
-    <ScrollView contentContainerStyle={{ paddingHorizontal: 30, paddingBottom: 100, maxWidth: limitWidth ? 600 : undefined, alignSelf: "center" }}>{children}</ScrollView>
-);
+/**
+ * A scrolling content with a child that has a maximum width.
+ * @constructor
+ */
+export const Scroller: FC<ScrollerProps> = ({ limitWidth = 600, children }) => {
+    const limitStyle = useMemo<ViewStyle>(() => ({ maxWidth: limitWidth }), [limitWidth]);
+    return (
+        <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.arranger}>
+                <View style={[styles.content, limitStyle]}>{children}</View>
+            </View>
+        </ScrollView>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        paddingHorizontal: 30,
+        paddingBottom: 100,
+    },
+    arranger: {
+        flexDirection: "row",
+        justifyContent: "center",
+    },
+    content: {
+        flex: 1,
+        alignSelf: "center",
+    },
+});

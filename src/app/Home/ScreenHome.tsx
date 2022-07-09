@@ -10,6 +10,7 @@ import { Button } from "../../components/Containers/Button";
 import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { LoadingIndicator } from "../../components/Utilities/LoadingIndicator";
+import { useSignalLoading } from "../../context/LoadingContext";
 import { useTheme } from "../../context/Theme";
 import { useAppDispatch } from "../../store";
 import { logout } from "../../store/authorization.slice";
@@ -18,11 +19,18 @@ import { AnnouncementRecord, EnrichedDealerRecord, EventRecord } from "../../sto
 import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
 
+/**
+ * Params handled by the screen in route, nothing so far.
+ */
 export type ScreenHomeParams = undefined;
 
+/**
+ * The properties to the screen as a component.
+ */
 export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Home">, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const ScreenHome: FC<ScreenHomeProps> = () => {
+    // The content of this screen so far is more of a sandbox, nothing fixed.
     const { t } = useTranslation("Home");
     const dispatch = useAppDispatch();
 
@@ -34,10 +42,12 @@ export const ScreenHome: FC<ScreenHomeProps> = () => {
     const event: Query<EventRecord, string> = useGetEventByIdQuery("76430fe0-ece7-48c9-b8e6-fdbc3974ff64");
     const dealers: Query<EnrichedDealerRecord[]> = useGetDealersQuery();
 
+    useSignalLoading(announcements.isFetching || events.isFetching || event.isFetching || dealers.isFetching);
+
     return (
         <Scroller>
             <Section icon="alarm" title="Countdown">
-                {/* <ProgressBar progress={countdown.percentage} color={colors.primary} style={{ marginTop: 20, marginBottom: 5 }} /> */}
+                {/* <Progress progress={countdown.percentage} color={colors.primary} style={{ marginTop: 20, marginBottom: 5 }} /> */}
             </Section>
 
             {announcements.isFetching ? <LoadingIndicator /> : <Label mb={15}>{t("announcementsTitle", { count: announcements.data?.length })}</Label>}

@@ -9,10 +9,28 @@ import { Label } from "./Label";
 
 const iconSize = 32; // Matches H1 font size.
 
+/**
+ * Props to section.
+ */
 export type SectionProps = {
+    /**
+     * The style to pass to the root column.
+     */
     style?: StyleProp<ViewStyle>;
+
+    /**
+     * The icon, if one should be displayed.
+     */
     icon?: IoniconsNames;
+
+    /**
+     * The primary text.
+     */
     title: string;
+
+    /**
+     * The subtitle, displayed after the text.
+     */
     subtitle?: string;
 };
 
