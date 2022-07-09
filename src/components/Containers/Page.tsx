@@ -2,9 +2,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { FC, useEffect, useMemo } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { quickCubicOut } from "../../consts/animations";
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
 
@@ -42,7 +41,7 @@ export const Page: FC<PageProps> = ({ icon, text, active, onPress, indicatorHeig
 
     const status = useSharedValue(active ? 1 : 0);
     useEffect(() => {
-        status.value = withTiming(active ? 1 : 0, { ...quickCubicOut });
+        status.value = withTiming(active ? 1 : 0, { duration: 234, easing: Easing.out(Easing.cubic) });
     }, [active, status]);
 
     const dynamicBorder = useAnimatedStyle(

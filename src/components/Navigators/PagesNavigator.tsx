@@ -2,9 +2,8 @@ import { useNavigationBuilder, TabRouter, createNavigatorFactory, ParamListBase,
 import { FC, ReactNode, MutableRefObject, useState, useEffect, useMemo } from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { quickCubicOut } from "../../consts/animations";
 import { IoniconsNames } from "../../types/Ionicons";
 import { Pages } from "../Containers/Pages";
 import { TabsRef } from "../Containers/Tabs";
@@ -59,7 +58,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
     const offset = useSharedValue(0);
 
     useEffect(() => {
-        offset.value = withTiming(state.index, { ...quickCubicOut });
+        offset.value = withTiming(state.index, { duration: 234, easing: Easing.out(Easing.cubic) });
     }, [offset, state.index]);
 
     const translation = useAnimatedStyle(
@@ -89,7 +88,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
             let index = Math.round(offset.value + shift);
             index = Math.max(0, Math.min(index, state.routes.length - 1));
 
-            offset.value = withTiming(index, { ...quickCubicOut });
+            offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) });
             if (index !== state.index) {
                 runOnJS(navigateTab)(navigation, index);
             }

@@ -1,9 +1,8 @@
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { quickCubicOut } from "../../consts/animations";
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
 import { Tab } from "./Tab";
@@ -112,8 +111,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
 
     // Nove to desired target state on change of relevant properties.
     useEffect(() => {
-        if (open && offset.value < 1) offset.value = withTiming(1, { ...quickCubicOut });
-        else if (!open && offset.value > 0) offset.value = withTiming(0.0, { ...quickCubicOut });
+        if (open && offset.value < 1) offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
+        else if (!open && offset.value > 0) offset.value = withTiming(0.0, { duration: 234, easing: Easing.out(Easing.cubic) });
     }, [offset, open]);
 
     // Derive opacity from offset.
@@ -173,10 +172,10 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
 
             // Close if smaller than threshold, otherwise open again.
             if (offset.value < threshold) {
-                offset.value = withTiming(0, { ...quickCubicOut });
+                offset.value = withTiming(0, { duration: 234, easing: Easing.out(Easing.cubic) });
                 runOnJS(setOpen)(false);
             } else {
-                offset.value = withTiming(1, { ...quickCubicOut });
+                offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
                 runOnJS(setOpen)(true);
             }
         });

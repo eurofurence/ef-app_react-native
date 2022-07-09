@@ -5236,10 +5236,10 @@ __metadata:
     expo: ~45.0.0
     expo-constants: ^13.1.1
     expo-device: ^4.2.0
-    expo-localization: ^13.0.0
+    expo-localization: ~13.0.0
     expo-notifications: ^0.15.4
     expo-status-bar: ~1.3.0
-    expo-updates: ~0.13.2
+    expo-updates: ~0.13.3
     i18next: ^21.8.11
     jest: ^28.1.2
     lodash: ^4.17.21
@@ -5985,14 +5985,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-localization@npm:^13.0.0":
-  version: 13.1.0
-  resolution: "expo-localization@npm:13.1.0"
+"expo-localization@npm:~13.0.0":
+  version: 13.0.0
+  resolution: "expo-localization@npm:13.0.0"
   dependencies:
     rtl-detect: ^1.0.2
   peerDependencies:
     expo: "*"
-  checksum: f97bac33daf0ce187f1d505b916b8d73180b09869fcd0ec03f8cd9092c69b3af84788a24d0928775ee6378d5171b49595546734539d6a3c8f575246ee61cb76c
+  checksum: 844ad044fc3b7d284666d5234c7a5a10f09a1eb27a6388f1b9398f79f0a20ffc404100d31212fba281e161c2f1ebdf2511da55463e885e158cd5d120e4fd9d20
   languageName: node
   linkType: hard
 
@@ -6088,9 +6088,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-updates@npm:~0.13.2":
-  version: 0.13.2
-  resolution: "expo-updates@npm:0.13.2"
+"expo-updates@npm:~0.13.3":
+  version: 0.13.3
+  resolution: "expo-updates@npm:0.13.3"
   dependencies:
     "@expo/code-signing-certificates": 0.0.1
     "@expo/config": ^6.0.14
@@ -6108,7 +6108,7 @@ __metadata:
     expo: "*"
   bin:
     expo-updates: bin/cli.js
-  checksum: 2b901e714bb2440f5003323de89a2feaffd6bf4a7e33de1b29e22e020446018545260c9ebc467b18105056a0cb0d8548d4cdc2945ecda2c12a1fc550debc8a33
+  checksum: 05b5f0f6152dc75c0efccd739f9882ae1a2b31b8140bf655c495854101b59fd4620387ed7a8ab8bf5317d8d206a7737b52a5596763e1cf18ca5d538a0f197900
   languageName: node
   linkType: hard
 
