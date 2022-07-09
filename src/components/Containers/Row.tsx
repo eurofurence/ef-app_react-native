@@ -1,10 +1,11 @@
 import { FC, useMemo } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
 
-export interface RowProps extends ViewProps {
+export type RowProps = ViewProps & {
     type?: keyof typeof types;
     variant?: keyof typeof variants;
-}
+};
+
 export const Row: FC<RowProps> = ({ style, type, variant, children, ...rest }) => {
     const resType = useMemo(() => (type ? types[type] : types.regular), [type]);
     const resVariant = useMemo(() => (variant ? variants[variant] : variants.start), [variant]);

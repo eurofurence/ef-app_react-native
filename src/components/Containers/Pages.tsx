@@ -2,13 +2,13 @@ import { FC, useMemo } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { useTheme } from "../../context/Theme";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 import { Page } from "./Page";
 
 /**
  * Arguments to the pages.
  */
-export interface PagesProps {
+export type PagesProps = {
     /**
      * Style used on the container of the pages.
      */
@@ -21,7 +21,7 @@ export interface PagesProps {
         /**
          * The icon to display.
          */
-        icon?: IconiconsNames;
+        icon?: IoniconsNames;
 
         /**
          * The name of the page.
@@ -43,7 +43,7 @@ export interface PagesProps {
      * Height of the active indicators.
      */
     indicatorHeight?: number;
-}
+};
 
 /**
  * A row of pages.

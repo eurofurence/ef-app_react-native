@@ -5,13 +5,13 @@ import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValu
 
 import { quickCubicOut } from "../../consts/animations";
 import { useTheme } from "../../context/Theme";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 import { Tab } from "./Tab";
 
 /**
  * Arguments to the navigator.
  */
-export interface TabsProps {
+export type TabsProps = {
     /**
      * Style used on the container of the tabs.
      */
@@ -24,7 +24,7 @@ export interface TabsProps {
         /**
          * The icon to display.
          */
-        icon: IconiconsNames;
+        icon: IoniconsNames;
 
         /**
          * The name of the tab.
@@ -65,13 +65,13 @@ export interface TabsProps {
     /**
      * The content to render in the more-area.
      */
-    children?: React.ReactNode;
-}
+    children?: ReactNode;
+};
 
 /**
  * Operations provided by the navigator.
  */
-export interface TabsRef {
+export type TabsRef = {
     /**
      * Closes the more-area with animations.
      */
@@ -86,7 +86,7 @@ export interface TabsRef {
      * Closes the more-area immediately.
      */
     closeImmediately(): void;
-}
+};
 
 /**
  * A row of tabs and a "more" button.

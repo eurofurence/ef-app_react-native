@@ -7,7 +7,7 @@ import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
 import { useAppSelector } from "../../store";
 
-export interface PagerMenuProps {
+export type PagerMenuProps = {
     onMessages?: () => void;
     onLogin?: () => void;
     onInfo?: () => void;
@@ -16,7 +16,7 @@ export interface PagerMenuProps {
     onMaps?: () => void;
     onAbout?: () => void;
     onSettings?: () => void;
-}
+};
 
 export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings }) => {
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);

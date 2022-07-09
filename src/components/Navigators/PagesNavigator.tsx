@@ -1,30 +1,47 @@
-import { useNavigationBuilder, TabRouter, createNavigatorFactory } from "@react-navigation/native";
+import { useNavigationBuilder, TabRouter, createNavigatorFactory, ParamListBase, RouteProp, NavigationProp, TabNavigationState, TabActionHelpers } from "@react-navigation/native";
 import { FC, ReactNode, MutableRefObject, useState, useEffect, useMemo } from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { quickCubicOut } from "../../consts/animations";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 import { Pages } from "../Containers/Pages";
 import { TabsRef } from "../Containers/Tabs";
 import { navigateTab } from "./Common";
 
-export interface PagesNavigatorScreenOptions {
-    icon: IconiconsNames;
+export type PagesNavigationOptions = {
+    icon: IoniconsNames;
     title: string;
     indicate?: boolean | ReactNode;
     indicateMore?: boolean | ReactNode;
     more?: ReactNode | ((tabs: MutableRefObject<TabsRef | undefined>) => ReactNode);
-}
+};
 
-export interface PagesNavigatorProps {
+export type PagesNavigatorProps = {
     contentStyle?: StyleProp<ViewStyle>;
     pagesStyle?: StyleProp<ViewStyle>;
     initialRouteName: string;
     children: ReactNode;
-    screenOptions: PagesNavigatorScreenOptions;
-}
+    screenOptions: PagesNavigationOptions;
+};
+
+export type PagesNavigationEventMap = {
+    tabPress: {
+        data: undefined;
+        canPreventDefault: true;
+    };
+};
+export type PagesNavigationProp<
+    ParamList extends ParamListBase,
+    RouteName extends keyof ParamList = keyof ParamList,
+    NavigatorID extends string | undefined = undefined
+> = NavigationProp<ParamList, RouteName, NavigatorID, TabNavigationState<ParamList>, PagesNavigationOptions, PagesNavigationEventMap> & TabActionHelpers<ParamList>;
+
+export type PagesScreenProps<ParamList extends ParamListBase, RouteName extends keyof ParamList = keyof ParamList, NavigatorID extends string | undefined = undefined> = {
+    navigation: PagesNavigationProp<ParamList, RouteName, NavigatorID>;
+    route: RouteProp<ParamList, RouteName>;
+};
 
 export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, children, screenOptions }) => {
     // Make builder from passed arguments.

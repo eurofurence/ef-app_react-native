@@ -1,26 +1,43 @@
-import { useNavigationBuilder, TabRouter, createNavigatorFactory } from "@react-navigation/native";
-import { FC, ReactNode, useRef, MutableRefObject } from "react";
+import { useNavigationBuilder, TabRouter, createNavigatorFactory, ParamListBase, NavigationProp, TabNavigationState, TabActionHelpers, RouteProp } from "@react-navigation/native";
+import { FC, ReactNode, useRef, RefObject } from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 import { navigateTab } from "./Common";
 
-export interface TabNavigatorScreenOptions {
-    icon: IconiconsNames;
+export type TabNavigationOptions = {
+    icon: IoniconsNames;
     title: string;
     indicate?: boolean | ReactNode;
-}
+};
 
-export interface TabNavigatorProps {
-    more?: ReactNode | ((tabs: MutableRefObject<TabsRef | undefined>) => ReactNode);
+export type TabNavigatorProps = {
+    more?: ReactNode | ((tabs: RefObject<TabsRef>) => ReactNode);
     indicateMore?: boolean | ReactNode;
     contentStyle?: StyleProp<ViewStyle>;
     tabsStyle?: StyleProp<ViewStyle>;
     initialRouteName: string;
     children: ReactNode;
-    screenOptions: TabNavigatorScreenOptions;
-}
+    screenOptions: TabNavigationOptions;
+};
+
+export type TabNavigationEventMap = {
+    tabPress: {
+        data: undefined;
+        canPreventDefault: true;
+    };
+};
+export type TabNavigationProp<
+    ParamList extends ParamListBase,
+    RouteName extends keyof ParamList = keyof ParamList,
+    NavigatorID extends string | undefined = undefined
+> = NavigationProp<ParamList, RouteName, NavigatorID, TabNavigationState<ParamList>, TabNavigationOptions, TabNavigationEventMap> & TabActionHelpers<ParamList>;
+
+export type TabScreenProps<ParamList extends ParamListBase, RouteName extends keyof ParamList = keyof ParamList, NavigatorID extends string | undefined = undefined> = {
+    navigation: TabNavigationProp<ParamList, RouteName, NavigatorID>;
+    route: RouteProp<ParamList, RouteName>;
+};
 
 export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
     // Make builder from passed arguments.
@@ -30,7 +47,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, conten
         initialRouteName,
     });
 
-    const tabs = useRef<any>();
+    const tabs = useRef<TabsRef>(null);
 
     return (
         <NavigationContent>

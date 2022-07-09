@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { ColorValue } from "react-native";
-export interface Theme {
+
+export type Theme = {
     primary: ColorValue;
     secondary: ColorValue;
     background: ColorValue;
@@ -13,7 +14,8 @@ export interface Theme {
     notification: ColorValue;
     darken: ColorValue;
     lighten: ColorValue;
-}
+};
+
 export const useTheme = (): Theme => {
     // Stub.
 

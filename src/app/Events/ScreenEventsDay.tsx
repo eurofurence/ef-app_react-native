@@ -1,12 +1,24 @@
+import { CompositeScreenProps } from "@react-navigation/core";
+import { StackScreenProps } from "@react-navigation/stack";
 import { clone } from "lodash";
 import { FC, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { Button } from "../../components/Containers/Button";
+import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { useGetEventRoomsQuery, useGetEventsQuery, useGetEventTracksQuery } from "../../store/eurofurence.service";
+import { EventDayRecord } from "../../store/eurofurence.types";
+import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { EventsNavigatorParamsList } from "./ScreenEvents";
 
-export const EventsBrowserDayScreen: FC<{ navigation: any; route: any }> = ({ navigation, route }) => {
+export type ScreenEventsDayParams = {
+    day: EventDayRecord;
+};
+
+export type ScreenEventsDayProps = CompositeScreenProps<PagesScreenProps<EventsNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
+
+export const ScreenEventsDay: FC<ScreenEventsDayProps> = ({ navigation, route }) => {
     const day = route.params.day;
 
     const events = useGetEventsQuery();
@@ -29,7 +41,7 @@ export const EventsBrowserDayScreen: FC<{ navigation: any; route: any }> = ({ na
     return (
         <View style={StyleSheet.absoluteFill}>
             <ScrollView>
-                {!ready
+                {!ready || !events.data
                     ? null
                     : events.data
                           .filter((event) => event.ConferenceDayId === day.Id)

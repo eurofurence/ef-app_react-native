@@ -5,10 +5,11 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Col } from "./Col";
 import { Row } from "./Row";
 
-export interface GridProps {
+export type GridProps = {
     style?: StyleProp<ViewStyle>;
     cols?: number;
-}
+};
+
 export const Grid: FC<GridProps> = ({ style, cols = 2, children }) => {
     const childrenArray = useMemo(() => (Array.isArray(children) ? children : [children]), [children]);
 

@@ -1,10 +1,11 @@
 import { FC, useMemo } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
 
-export interface ColProps extends ViewProps {
+export type ColProps = ViewProps & {
     type?: keyof typeof types;
     variant?: keyof typeof variants;
-}
+};
+
 export const Col: FC<ColProps> = ({ style, type, variant, children, ...rest }) => {
     const resType = useMemo(() => (type ? types[type] : types.regular), [type]);
     const resVariant = useMemo(() => (variant ? variants[variant] : variants.start), [variant]);

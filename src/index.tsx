@@ -11,7 +11,6 @@ import "./i18n";
 const Index = () => {
     return (
         <StoreProvider store={store}>
-            {/* @ts-expect-error Error boundaries are class based and they do not work nice with functions */}
             <EurofurenceErrorBoundary>
                 <PersistGate persistor={persistor}>
                     <App />

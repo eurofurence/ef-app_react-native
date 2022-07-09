@@ -2,19 +2,19 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { FC } from "react";
 import { StyleSheet, View, StyleProp, ViewStyle } from "react-native";
 
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 import { Col } from "../Containers/Col";
 import { Row } from "../Containers/Row";
 import { Label } from "./Label";
 
 const iconSize = 32; // Matches H1 font size.
 
-export interface SectionProps {
+export type SectionProps = {
     style?: StyleProp<ViewStyle>;
-    icon?: IconiconsNames;
+    icon?: IoniconsNames;
     title: string;
     subtitle?: string;
-}
+};
 
 export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark", title, subtitle }) => {
     return (

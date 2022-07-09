@@ -7,7 +7,7 @@ import { quickCubicOut } from "../../consts/animations";
 /**
  * Arguments to the pager.
  */
-export interface PagerProps {
+export type PagerProps = {
     /**
      * Main view style.
      */
@@ -22,12 +22,12 @@ export interface PagerProps {
      * Right content.
      */
     right?: ReactNode;
-}
+};
 
 /**
  * Operations provided by the pager.
  */
-export interface PagerRef {
+export type PagerRef = {
     /**
      * Moves to the left page with animations.
      */
@@ -47,7 +47,7 @@ export interface PagerRef {
      * Moves to the right page immediately.
      */
     toRightImmediately(): void;
-}
+};
 
 export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, ref) => {
     // Maintain internal state where the page is.

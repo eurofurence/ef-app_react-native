@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { StartScreen } from "./app/StartScreen";
+import { ScreenStart } from "./app/ScreenStart";
 import { PlatformCacheSynchronizer } from "./components/CacheSynchronizer/CacheSynchronizer";
 import { PlatformNotificationManager } from "./components/Notifications/NotificationManager";
 
@@ -13,7 +13,7 @@ export default function App() {
     return (
         <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
             <StatusBar style="auto" />
-            <StartScreen />
+            <ScreenStart />
 
             <PlatformNotificationManager />
             <PlatformCacheSynchronizer />

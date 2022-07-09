@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useTheme } from "../../context/Theme";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 import { Label } from "../Atoms/Label";
 
 const iconSize = 20;
@@ -14,7 +14,7 @@ const border = 2;
 /**
  * Arguments to the button.
  */
-export interface ButtonProps {
+export type ButtonProps = {
     /**
      * The style for the view arranging the button's layout.
      */
@@ -33,12 +33,12 @@ export interface ButtonProps {
     /**
      * If given, displayed as the button's icon.
      */
-    icon?: IconiconsNames;
+    icon?: IoniconsNames;
 
     /**
      * If given, displayed as the button's icon, this is displayed on the right side.
      */
-    iconRight?: IconiconsNames;
+    iconRight?: IoniconsNames;
 
     /**
      * The text of the button.
@@ -49,7 +49,7 @@ export interface ButtonProps {
      * If given, invoked on button press.
      */
     onPress?: () => void;
-}
+};
 
 export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress }) => {
     // Computed styles.

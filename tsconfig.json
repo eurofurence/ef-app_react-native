@@ -3,5 +3,6 @@
     "rootDir": "./src",
     "strict": true
   },
-  "extends": "expo/tsconfig.base"
+  "extends": "expo/tsconfig.base",
+  "include": ["src"]
 }

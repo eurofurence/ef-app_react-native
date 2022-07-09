@@ -6,13 +6,13 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-na
 
 import { quickCubicOut } from "../../consts/animations";
 import { useTheme } from "../../context/Theme";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 
-export interface PageProps {
+export type PageProps = {
     /**
      * The icon to display.
      */
-    icon?: IconiconsNames;
+    icon?: IoniconsNames;
 
     /**
      * The name of the tab.
@@ -33,7 +33,7 @@ export interface PageProps {
      * Height of the active indicator.
      */
     indicatorHeight?: number;
-}
+};
 
 export const Page: FC<PageProps> = ({ icon, text, active, onPress, indicatorHeight = 4 }) => {
     const theme = useTheme();

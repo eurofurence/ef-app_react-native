@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, Text, TextStyle, TextProps } from "react-native"
 
 import { Theme, useTheme } from "../../context/Theme";
 
-export interface LabelProps extends TextProps {
+export type LabelProps = TextProps & {
     type?: keyof typeof types;
     variant?: keyof typeof variants;
     color?: keyof Theme;
@@ -11,7 +11,7 @@ export interface LabelProps extends TextProps {
     mt?: number;
     mr?: number;
     mb?: number;
-}
+};
 
 export const Label: FC<LabelProps> = ({ style, type, variant, color = "text", ml, mt, mr, mb, children, ...props }) => {
     // Get theme for resolution.

@@ -83,7 +83,10 @@
     "extends": "universe",
     "plugins": [
       "testing-library"
-    ]
+    ],
+    "rules": {
+      "import/namespace": "off"
+    }
   },
   "jest": {
     "preset": "@testing-library/react-native",
@@ -91,6 +94,9 @@
       "@testing-library/jest-native/extend-expect",
       "./src/setupTests.js"
     ]
+  },
+  "prettier": {
+    "endOfLine": "crlf"
   },
   "private": true,
   "packageManager": "yarn@3.2.1"

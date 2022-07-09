@@ -1,15 +1,16 @@
-import { FC, MutableRefObject, useMemo, useRef } from "react";
+import { FC, RefObject, useMemo, useRef } from "react";
 
-import { Pager } from "../../components/Containers/Pager";
+import { Pager, PagerRef } from "../../components/Containers/Pager";
 import { TabsRef } from "../../components/Containers/Tabs";
 import { PagerLogin } from "./PagerLogin";
 import { PagerPrimary } from "./PagerPrimary";
 
-export interface MainMenuProps {
-    tabs: MutableRefObject<TabsRef | undefined>;
-}
+export type MainMenuProps = {
+    tabs: RefObject<TabsRef>;
+};
+
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
-    const pager = useRef<any>();
+    const pager = useRef<PagerRef>(null);
     const on = useMemo(
         () => ({
             home: () => tabs.current?.close(),
