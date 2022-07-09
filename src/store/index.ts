@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { Platform } from "react-native";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 
 import { authorizationService } from "./authorization.service";
@@ -27,6 +28,18 @@ const persistedReducer = persistReducer(
     },
     reducers
 );
+
+const logger = createLogger({
+    stateTransformer: (state) => {
+        const transformed = { ...state };
+        if (Platform.OS === "android") {
+            delete transformed._persist;
+            delete transformed.authorizationService;
+            delete transformed.eurofurenceService;
+        }
+        return transformed;
+    },
+});
 
 export const store = configureStore({
     reducer: persistedReducer,

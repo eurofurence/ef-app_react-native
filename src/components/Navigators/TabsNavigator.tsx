@@ -1,28 +1,99 @@
-import { useNavigationBuilder, TabRouter, createNavigatorFactory } from "@react-navigation/native";
-import { FC, ReactNode, useRef, MutableRefObject } from "react";
+import { useNavigationBuilder, TabRouter, createNavigatorFactory, ParamListBase, NavigationProp, TabNavigationState, TabActionHelpers, RouteProp } from "@react-navigation/native";
+import { FC, ReactNode, useRef, RefObject } from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 import { navigateTab } from "./Common";
 
-export interface TabNavigatorScreenOptions {
-    icon: IconiconsNames;
+/**
+ * Options for a tabs-screen.
+ */
+export type TabNavigationOptions = {
+    /**
+     * The icon to use.
+     */
+    icon: IoniconsNames;
+
+    /**
+     * The title of the screen.
+     */
     title: string;
+
+    /**
+     * True if this tab should indicate or a node of what it should indicate.
+     */
     indicate?: boolean | ReactNode;
+};
+
+export type TabNavigatorProps = {
+    /**
+     * Render function for the content under more.
+     */
+    more?: ReactNode | ((tabs: RefObject<TabsRef>) => ReactNode);
+
+    /**
+     * True if the more tab should indicate or a node of what it should indicate.
+     */
     indicateMore?: boolean | ReactNode;
-    more?: ReactNode | ((tabs: MutableRefObject<TabsRef | undefined>) => ReactNode);
-}
 
-export interface TabNavigatorProps {
+    /**
+     * Style of the content. This is the container around all pages.
+     */
     contentStyle?: StyleProp<ViewStyle>;
-    tabsStyle?: StyleProp<ViewStyle>;
-    initialRouteName: string;
-    children: ReactNode;
-    screenOptions: TabNavigatorScreenOptions;
-}
 
-export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
+    /**
+     * Style of a tab. This is on the page's individual container.
+     */
+    tabsStyle?: StyleProp<ViewStyle>;
+
+    /**
+     * The initial route.
+     */
+    initialRouteName: string;
+
+    /**
+     * The screens.
+     */
+    children: ReactNode;
+
+    /**
+     * The default screen options.
+     */
+    screenOptions: TabNavigationOptions;
+};
+
+/**
+ * Events handled by the tabs emitter.
+ */
+export type TabNavigationEventMap = {
+    /**
+     * A tab was pressed.
+     */
+    tabPress: {
+        data: undefined;
+        canPreventDefault: true;
+    };
+};
+
+/**
+ * Type of navigation when using a screen inside a tab navigator.
+ */
+export type TabNavigationProp<
+    ParamList extends ParamListBase,
+    RouteName extends keyof ParamList = keyof ParamList,
+    NavigatorID extends string | undefined = undefined
+> = NavigationProp<ParamList, RouteName, NavigatorID, TabNavigationState<ParamList>, TabNavigationOptions, TabNavigationEventMap> & TabActionHelpers<ParamList>;
+
+/**
+ * Props to a tabs-screen.
+ */
+export type TabScreenProps<ParamList extends ParamListBase, RouteName extends keyof ParamList = keyof ParamList, NavigatorID extends string | undefined = undefined> = {
+    navigation: TabNavigationProp<ParamList, RouteName, NavigatorID>;
+    route: RouteProp<ParamList, RouteName>;
+};
+
+export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -30,10 +101,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, i
         initialRouteName,
     });
 
-    const tabs = useRef<any>();
-
-    // Get current options to render "more" content.
-    const currentOptions = descriptors[state.routes[state.index].key].options;
+    const tabs = useRef<TabsRef>(null);
 
     return (
         <NavigationContent>
@@ -50,7 +118,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, i
             <Tabs
                 style={tabsStyle}
                 ref={tabs}
-                indicateMore={currentOptions.indicateMore}
+                indicateMore={indicateMore}
                 tabs={state.routes.map((route, i) => ({
                     active: state.index === i,
                     icon: descriptors[route.key].options.icon,
@@ -59,7 +127,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ contentStyle, tabsStyle, i
                     indicate: descriptors[route.key].options.indicate,
                 }))}
             >
-                {typeof currentOptions.more === "function" ? currentOptions.more(tabs) : currentOptions.more}
+                {typeof more === "function" ? more(tabs) : more}
             </Tabs>
         </NavigationContent>
     );

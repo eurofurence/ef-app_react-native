@@ -2,60 +2,56 @@ import { FC } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Button } from "../../components/Containers/Button";
+import { Col } from "../../components/Containers/Col";
+import { Grid } from "../../components/Containers/Grid";
+import { Tab } from "../../components/Containers/Tab";
 import { useAppSelector } from "../../store";
 
-export interface PagerMenuProps {
+/**
+ * Props to the pager.
+ */
+export type PagerMenuProps = {
     onMessages?: () => void;
     onLogin?: () => void;
     onInfo?: () => void;
     onCatchEmAll?: () => void;
     onServices?: () => void;
-    onSettings?: () => void;
+    onMaps?: () => void;
     onAbout?: () => void;
-}
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onSettings, onAbout }) => {
+    onSettings?: () => void;
+};
+
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings }) => {
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
 
     return (
-        <View style={{ padding: 30 }}>
+        <Col type="stretch">
             {loggedIn ? (
-                <>
-                    <Text style={styles.marginAfter}>
+                <View style={{ padding: 30 }}>
+                    <Text style={styles.marginBefore}>
                         You have <Text style={{ fontWeight: "bold" }}>12</Text> new messages
                     </Text>
-                    <Button containerStyle={styles.marginAfter} icon="mail-outline" onPress={onMessages}>
+                    <Button containerStyle={styles.marginBefore} icon="mail-outline" onPress={onMessages}>
                         Open messages
                     </Button>
-                </>
+                </View>
             ) : (
-                <>
-                    <Text style={styles.marginAfter}>You are currently not logged in</Text>
-                    <Button containerStyle={styles.marginAfter} icon="log-in" onPress={onLogin}>
+                <View style={{ padding: 30 }}>
+                    <Text style={styles.marginBefore}>You are currently not logged in</Text>
+                    <Button containerStyle={styles.marginBefore} icon="log-in" onPress={onLogin}>
                         Log-in now
                     </Button>
-                </>
+                </View>
             )}
-
-            <Text style={styles.marginAfter}>More locations</Text>
-            <Button containerStyle={styles.marginAfter} icon="information-circle" onPress={onInfo}>
-                Info articles
-            </Button>
-            <Button containerStyle={styles.marginAfter} icon="paw" onPress={onCatchEmAll}>
-                Catch-em-all
-            </Button>
-            <Button containerStyle={styles.marginAfter} icon="book-outline" onPress={onServices}>
-                Services
-            </Button>
-
-            <View style={[styles.marginBefore, styles.row]}>
-                <Button containerStyle={styles.rowLeft} outline icon="cog" onPress={onSettings}>
-                    Settings
-                </Button>
-                <Button containerStyle={styles.rowRight} outline icon="card-outline" onPress={onAbout}>
-                    About
-                </Button>
-            </View>
-        </View>
+            <Grid cols={3} style={{ alignSelf: "stretch" }}>
+                <Tab icon="information-circle" text="Info articles" onPress={onInfo} />
+                <Tab icon="paw" text="Catch-em-all" onPress={onCatchEmAll} />
+                <Tab icon="book-outline" text="Services" onPress={onServices} />
+                <Tab icon="map" text="Maps" onPress={onMaps} />
+                <Tab icon="card-outline" text="About" onPress={onAbout} />
+                <Tab icon="cog" text="Settings" onPress={onSettings} />
+            </Grid>
+        </Col>
     );
 };
 
@@ -65,9 +61,6 @@ const styles = StyleSheet.create({
     },
     marginBefore: {
         marginTop: 16,
-    },
-    row: {
-        flexDirection: "row",
     },
     rowLeft: {
         flex: 1,

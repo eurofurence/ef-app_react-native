@@ -123,4 +123,16 @@ export const eurofurenceService = createApi({
     }),
 });
 
-export const { useGetAnnouncementsQuery, useGetEventsQuery, useGetEventByIdQuery, useGetDealersQuery, useGetImagesQuery } = eurofurenceService;
+export const {
+    useGetAnnouncementsQuery,
+    useGetEventsQuery,
+    useGetEventByIdQuery,
+    useGetDealersQuery,
+    useGetImagesQuery,
+    useGetEventDaysQuery,
+    useGetEventDayByIdQuery,
+    useGetEventTracksQuery,
+    useGetEventTrackByIdQuery,
+    useGetEventRoomsQuery,
+    useGetEventRoomByIdQuery,
+} = eurofurenceService;

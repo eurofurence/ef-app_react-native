@@ -4,13 +4,16 @@ import { StyleSheet, View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useTheme } from "../../context/Theme";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 
-export interface TabProps {
+/**
+ * Arguments to the tab.
+ */
+export type TabProps = {
     /**
      * The icon to display.
      */
-    icon: IconiconsNames;
+    icon: IoniconsNames;
 
     /**
      * The name of the tab.
@@ -31,7 +34,7 @@ export interface TabProps {
      * If given, invoked when the tab is pressed.
      */
     onPress?: () => void;
-}
+};
 
 export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => {
     const theme = useTheme();
@@ -52,7 +55,7 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
                 )}
             </View>
             <View style={styles.item}>
-                <Text style={color}>{text}</Text>
+                <Text style={[styles.text, color]}>{text}</Text>
             </View>
         </TouchableOpacity>
     );
@@ -68,6 +71,9 @@ const styles = StyleSheet.create({
     item: {
         alignSelf: "stretch",
         alignItems: "center",
+    },
+    text: {
+        textAlign: "center",
     },
     indicatorArea: {
         position: "absolute",

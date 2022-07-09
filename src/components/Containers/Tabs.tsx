@@ -1,17 +1,17 @@
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Animated, { runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { quickCubicOut } from "../../consts/animations";
 import { useTheme } from "../../context/Theme";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
+import { Activity } from "../Atoms/Activity";
 import { Tab } from "./Tab";
 
 /**
- * Arguments to the navigator.
+ * Arguments to the tabs.
  */
-export interface TabsProps {
+export type TabsProps = {
     /**
      * Style used on the container of the tabs.
      */
@@ -24,7 +24,7 @@ export interface TabsProps {
         /**
          * The icon to display.
          */
-        icon: IconiconsNames;
+        icon: IoniconsNames;
 
         /**
          * The name of the tab.
@@ -65,13 +65,13 @@ export interface TabsProps {
     /**
      * The content to render in the more-area.
      */
-    children?: React.ReactNode;
-}
+    children?: ReactNode;
+};
 
 /**
  * Operations provided by the navigator.
  */
-export interface TabsRef {
+export type TabsRef = {
     /**
      * Closes the more-area with animations.
      */
@@ -86,7 +86,7 @@ export interface TabsRef {
      * Closes the more-area immediately.
      */
     closeImmediately(): void;
-}
+};
 
 /**
  * A row of tabs and a "more" button.
@@ -112,9 +112,9 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
 
     // Nove to desired target state on change of relevant properties.
     useEffect(() => {
-        if (open && offset.value < 1) offset.value = withTiming(1, { ...quickCubicOut });
-        else if (!open && offset.value > 0) offset.value = withTiming(0.0, { ...quickCubicOut });
-    }, [offset, open, height]);
+        if (open && offset.value < 1) offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
+        else if (!open && offset.value > 0) offset.value = withTiming(0.0, { duration: 234, easing: Easing.out(Easing.cubic) });
+    }, [offset, open]);
 
     // Derive opacity from offset.
     const dynamicDismiss = useAnimatedStyle(
@@ -153,7 +153,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
             if (data) onOpen && runOnJS(onOpen)();
             else onClose && runOnJS(onClose)();
         },
-        [offset]
+        [offset, onOpen, onClose]
     );
 
     // Enable panning the navigator to dismiss. Only available if open.
@@ -173,10 +173,10 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
 
             // Close if smaller than threshold, otherwise open again.
             if (offset.value < threshold) {
-                offset.value = withTiming(0, { ...quickCubicOut });
+                offset.value = withTiming(0, { duration: 234, easing: Easing.out(Easing.cubic) });
                 runOnJS(setOpen)(false);
             } else {
-                offset.value = withTiming(1, { ...quickCubicOut });
+                offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
                 runOnJS(setOpen)(true);
             }
         });
@@ -201,6 +201,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
 
                         {/* More-tab. */}
                         <Tab icon={open ? "arrow-down-circle" : "menu"} text={open ? "Less" : "More"} indicate={indicateMore} onPress={() => setOpen((current) => !current)} />
+
+                        <Activity style={styles.activity} />
                     </View>
 
                     {/* Children rendered as the expandable content. */}
@@ -234,6 +236,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderTopWidth: 1,
         borderBottomWidth: 1,
+    },
+    activity: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
     },
     content: {
         position: "absolute",

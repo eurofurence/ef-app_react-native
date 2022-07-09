@@ -2,17 +2,19 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { FC, useEffect, useMemo } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { quickCubicOut } from "../../consts/animations";
 import { useTheme } from "../../context/Theme";
-import { IconiconsNames } from "../../types/Ionicons";
+import { IoniconsNames } from "../../types/Ionicons";
 
-export interface PageProps {
+/**
+ * Arguments to the page.
+ */
+export type PageProps = {
     /**
      * The icon to display.
      */
-    icon?: IconiconsNames;
+    icon?: IoniconsNames;
 
     /**
      * The name of the tab.
@@ -33,7 +35,7 @@ export interface PageProps {
      * Height of the active indicator.
      */
     indicatorHeight?: number;
-}
+};
 
 export const Page: FC<PageProps> = ({ icon, text, active, onPress, indicatorHeight = 4 }) => {
     const theme = useTheme();
@@ -42,7 +44,7 @@ export const Page: FC<PageProps> = ({ icon, text, active, onPress, indicatorHeig
 
     const status = useSharedValue(active ? 1 : 0);
     useEffect(() => {
-        status.value = withTiming(active ? 1 : 0, { ...quickCubicOut });
+        status.value = withTiming(active ? 1 : 0, { duration: 234, easing: Easing.out(Easing.cubic) });
     }, [active, status]);
 
     const dynamicBorder = useAnimatedStyle(

@@ -6,6 +6,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { z } from "zod";
 
 import { Button } from "../../components/Containers/Button";
+import { Row } from "../../components/Containers/Row";
 import { usePostTokenMutation } from "../../store/authorization.service";
 
 const loginSchema = z.object({
@@ -28,6 +29,7 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
 
     const onSubmit = (data: LoginSchema) => {
         login({
+            // TODO: Fix types here.
             RegNo: data.regno,
             Username: data.username,
             Password: data.password,
@@ -104,15 +106,15 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
             />
             {result.error && <Text style={styles.error}>Something went wrong during login. Please try again</Text>}
             {result.isLoading && <Text>Logging in . . .</Text>}
-            {errors && <Text>{JSON.stringify(Object.keys(errors))}</Text>}
-            <View style={[styles.marginBefore, styles.row]}>
+            {/* {errors && <Text>{JSON.stringify(Object.keys(errors))}</Text>} */}
+            <Row style={styles.marginBefore}>
                 <Button style={{}} containerStyle={styles.rowLeft} outline icon="arrow-back" onPress={close}>
                     Back
                 </Button>
                 <Button style={{}} containerStyle={styles.rowRight} outline={false} icon="log-in" onPress={handleSubmit(onSubmit)}>
                     Log-in
                 </Button>
-            </View>
+            </Row>
         </View>
     );
 };
@@ -132,9 +134,6 @@ const styles = StyleSheet.create({
     },
     marginBefore: {
         marginTop: 16,
-    },
-    row: {
-        flexDirection: "row",
     },
     rowLeft: {
         flex: 1,

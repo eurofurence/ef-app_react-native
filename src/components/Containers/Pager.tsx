@@ -1,13 +1,11 @@
 import { forwardRef, ReactNode, useEffect, useImperativeHandle, useState } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-
-import { quickCubicOut } from "../../consts/animations";
+import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 /**
  * Arguments to the pager.
  */
-export interface PagerProps {
+export type PagerProps = {
     /**
      * Main view style.
      */
@@ -22,12 +20,12 @@ export interface PagerProps {
      * Right content.
      */
     right?: ReactNode;
-}
+};
 
 /**
  * Operations provided by the pager.
  */
-export interface PagerRef {
+export type PagerRef = {
     /**
      * Moves to the left page with animations.
      */
@@ -47,7 +45,7 @@ export interface PagerRef {
      * Moves to the right page immediately.
      */
     toRightImmediately(): void;
-}
+};
 
 export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, ref) => {
     // Maintain internal state where the page is.
@@ -61,8 +59,8 @@ export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, r
 
     // React to desired right-ness.
     useEffect(() => {
-        if (isRight && offset.value < 1) offset.value = withTiming(1, { ...quickCubicOut });
-        else if (!isRight && offset.value > 0) offset.value = withTiming(0, { ...quickCubicOut });
+        if (isRight && offset.value < 1) offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
+        else if (!isRight && offset.value > 0) offset.value = withTiming(0, { duration: 234, easing: Easing.out(Easing.cubic) });
     }, [isRight, offset]);
 
     // Animate transformation for page flipping (half of total width).

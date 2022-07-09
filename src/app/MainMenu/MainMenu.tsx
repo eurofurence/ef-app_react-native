@@ -1,25 +1,24 @@
-import { FC, MutableRefObject, useMemo, useRef } from "react";
+import { FC, RefObject, useMemo, useRef } from "react";
 
-import { Pager } from "../../components/Containers/Pager";
+import { Pager, PagerRef } from "../../components/Containers/Pager";
 import { TabsRef } from "../../components/Containers/Tabs";
 import { PagerLogin } from "./PagerLogin";
 import { PagerPrimary } from "./PagerPrimary";
 
-export interface MainMenuProps {
-    tabs: MutableRefObject<TabsRef | undefined>;
-}
+export type MainMenuProps = {
+    tabs: RefObject<TabsRef>;
+};
+
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
-    const pager = useRef<any>();
+    const pager = useRef<PagerRef>(null);
     const on = useMemo(
         () => ({
-            home: () => tabs.current?.close(),
-            events: () => tabs.current?.close(),
-            dealers: () => tabs.current?.close(),
             login: () => pager.current?.toRight(),
             loginBack: () => pager.current?.toLeft(),
             messages: () => tabs.current?.close(),
             info: () => tabs.current?.close(),
             catchEmAll: () => tabs.current?.close(),
+            maps: () => tabs.current?.close(),
             services: () => tabs.current?.close(),
             settings: () => tabs.current?.close(),
             about: () => tabs.current?.close(),
@@ -37,6 +36,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                     onInfo={on.info}
                     onCatchEmAll={on.catchEmAll}
                     onServices={on.services}
+                    onMaps={on.maps}
                     onSettings={on.settings}
                     onAbout={on.about}
                 />
