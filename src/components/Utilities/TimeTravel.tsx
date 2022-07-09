@@ -18,9 +18,10 @@ export const TimeTravel = () => {
     const dispatch = useAppDispatch();
     const { t } = useTranslation("TimeTravel");
     const [now] = useNow();
-    const { amount, enabled } = useAppSelector((state) => state.timetravel);
+    const { amount, enabled, visible } = useAppSelector((state) => state.timetravel);
+
     return (
-        <View>
+        <View testID={"TimeTravel"}>
             <Section title={t("title")} icon={"airplane"} subtitle={t("subtitle")} />
             <Label mb={5}>{t("originalTime", { time: moment().format("llll") })}</Label>
             <Label mb={5}>{t("currentTime", { time: now.format("llll") })}</Label>
