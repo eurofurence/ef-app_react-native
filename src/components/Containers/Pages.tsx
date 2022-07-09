@@ -15,11 +15,6 @@ export type PagesProps = {
     style?: StyleProp<ViewStyle>;
 
     /**
-     * Style used on the container of the pages.
-     */
-    style?: StyleProp<ViewStyle>;
-
-    /**
      * If given, page that are layed out.
      */
     pages?: {
