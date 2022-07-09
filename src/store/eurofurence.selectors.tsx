@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
 
 import {
     announcementsAdapter,
@@ -22,6 +22,18 @@ export const eventsSelector = {
     selectByRoom: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId)),
     selectByTrack: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceTrackId === itemId)),
     selectByDay: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceDayId === itemId)),
+    selectUpcomingEvents: createSelector([baseEventsSelector.selectAll, (events, now: Moment) => now], (events, now) =>
+        events.filter((it) => {
+            const startMoment = moment(it.StartDateTimeUtc);
+            return now.isBetween(startMoment.subtract(30, "minutes"), startMoment);
+        })
+    ),
+    selectFavorites: createSelector([baseEventsSelector.selectAll, (state: RootState) => state.notifications.notifications], (events, notifications) =>
+        notifications
+            .filter((it) => it.type === "EventReminder")
+            .map((it) => events.find((event) => event.Id === it.recordId))
+            .filter((it) => it !== undefined)
+    ),
 };
 export const eventDaysSelectors = eventDaysAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventDays);
 export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventRooms);
@@ -33,12 +45,12 @@ export const dealersSelectors = dealersAdapter.getSelectors<RootState>((state) =
 const baseAnnouncementsSelectors = announcementsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.announcements);
 export const annoucenementsSelectors = {
     ...baseAnnouncementsSelectors,
-    getActiveAnnouncements: createSelector([baseAnnouncementsSelectors.selectAll, (state, now: Moment) => now], (announcements, now) =>
+    selectActiveAnnouncements: createSelector([baseAnnouncementsSelectors.selectAll, (state, now: Moment) => now], (announcements, now) =>
         announcements.filter((it) => now.isBetween(it.ValidFromDateTimeUtc, it.ValidUntilDateTimeUtc))
     ),
 };
 const baseMapsSelectors = mapsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.maps);
 export const mapsSelectors = {
     ...baseMapsSelectors,
-    getBrowseableMaps: createSelector(baseMapsSelectors.selectAll, (maps) => maps.filter((it) => it.IsBrowseable)),
+    selectBrowseableMaps: createSelector(baseMapsSelectors.selectAll, (maps) => maps.filter((it) => it.IsBrowseable)),
 };
