@@ -9,6 +9,7 @@ import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { LoadingIndicator } from "../../components/Utilities/LoadingIndicator";
 import { useSignalLoading } from "../../context/LoadingContext";
 import { useTheme } from "../../context/Theme";
@@ -33,6 +34,7 @@ export const ScreenHome: FC<ScreenHomeProps> = () => {
     // The content of this screen so far is more of a sandbox, nothing fixed.
     const { t } = useTranslation("Home");
     const dispatch = useAppDispatch();
+    const { synchronize } = useSynchronizer();
 
     const announcements = useAppSelector(annoucenementsSelectors.selectAll);
 
@@ -54,6 +56,7 @@ export const ScreenHome: FC<ScreenHomeProps> = () => {
             <Label mb={15}>There are {eventsInRoom.length} events in 2d5d9a98-aaca-4434-959d-99d20e675d3a</Label>
             <Label mb={15}>We have {dealers.length ?? "..."} dealers</Label>
             <Button onPress={() => dispatch(logout())}>Log-out</Button>
+            <Button onPress={synchronize}>Synchronize</Button>
 
             {/* Theme verifier. */}
             <View style={{ marginTop: 30, flexDirection: "row", flexWrap: "wrap" }}>
