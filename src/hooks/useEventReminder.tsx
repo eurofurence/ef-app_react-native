@@ -4,13 +4,13 @@ import { useCallback, useMemo } from "react";
 import { Platform } from "react-native";
 
 import { useAppDispatch, useAppSelector } from "../store";
+import { addNotification, Notification, removeNotification } from "../store/background.slice";
 import { EventRecord } from "../store/eurofurence.types";
-import { addNotification, Notification, removeNotification } from "../store/notifications.slice";
 
 export const useEventReminder = (event: EventRecord) => {
     const dispatch = useAppDispatch();
     const timetravel = useAppSelector((state) => state.timetravel.amount);
-    const notificationEntry = useAppSelector((state) => state.notifications.notifications.find((it) => it.recordId === event.Id));
+    const notificationEntry = useAppSelector((state) => state.background.notifications.find((it) => it.recordId === event.Id));
 
     const createReminder = useCallback(() => {
         const scheduleDate = moment(event.StartDateTimeUtc).subtract(timetravel, "milliseconds").subtract(30, "minutes");

@@ -25,8 +25,10 @@ export const ScheduledNotifications = () => {
     return (
         <View>
             <Section title={"Notifications"} subtitle={"All scheduled notifications on this device"} icon={"notifications"} />
+            {!notifications.length && <Label mb={15}>There are no scheduled notifications!</Label>}
 
             {notifications.map((item) => (
+                // @ts-expect-error Value does not really exist yet
                 <Label key={item.identifier} mb={15}>{`${item.identifier} scheduled on ${moment(item.trigger?.value).format("llll")}`}</Label>
             ))}
         </View>

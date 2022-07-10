@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Scroller } from "../../components/Containers/Scroller";
+import { RemoteMessages } from "./RemoteMessages";
 import { PlatformScheduledNotifications } from "./ScheduledNotifications";
 import { TimeTravel } from "./TimeTravel";
 
@@ -18,6 +19,8 @@ export const SettingsScreen = () => {
             <TimeTravel />
 
             <PlatformScheduledNotifications />
+
+            <RemoteMessages />
         </Scroller>
     );
 };

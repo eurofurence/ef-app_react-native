@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import { Notification } from "./notifications.slice";
+import { Notification } from "./background.slice";
 
 export const selectEventReminders = createSelector(
     (state: any): Notification[] => state.notifications.notifications,

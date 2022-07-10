@@ -8,16 +8,24 @@ export type Notification = {
     dateScheduled: string;
     dateCreated: string;
 };
+
+export type FCMMessage = {
+    dateReceived: string;
+    content: object;
+    identifier: string;
+};
 type NotificationState = {
     notifications: Notification[];
+    fcmMessages: FCMMessage[];
 };
 
 const initialState: NotificationState = {
     notifications: [],
+    fcmMessages: [],
 };
 
-export const notificationsSlice = createSlice({
-    name: "notifications",
+export const backgroundSlice = createSlice({
+    name: "background",
     initialState,
     reducers: {
         addNotification: (state, action: PayloadAction<Notification>) => {
@@ -26,7 +34,10 @@ export const notificationsSlice = createSlice({
         removeNotification: (state, action: PayloadAction<RecordId>) => {
             state.notifications = state.notifications.filter((it) => it.recordId !== action.payload);
         },
+        logFCMMessage: (state, action: PayloadAction<FCMMessage>) => {
+            state.fcmMessages.push(action.payload);
+        },
     },
 });
 
-export const { addNotification, removeNotification } = notificationsSlice.actions;
+export const { addNotification, removeNotification, logFCMMessage } = backgroundSlice.actions;
