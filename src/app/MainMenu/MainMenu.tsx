@@ -21,7 +21,11 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
         () => ({
             login: () => pager.current?.toRight(),
             loginBack: () => pager.current?.toLeft(),
-            messages: () => tabs.current?.close(),
+            messages: () => {
+                // @ts-expect-error nav typng
+                navigation.navigate("PrivateMessageList");
+                return tabs.current?.close();
+            },
             info: () => tabs.current?.close(),
             catchEmAll: () => {
                 openFursuitGames();

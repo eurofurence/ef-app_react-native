@@ -110,3 +110,14 @@ export type ImageRecord = RecordMetadata & {
 export type EnrichedImageRecord = ImageRecord & {
     ImageUrl: ImageUrl;
 };
+
+export type CommunicationRecord = RecordMetadata & {
+    RecipientUid: string;
+    SenderUid?: string;
+    CreatedDateTimeUtc: string;
+    ReceivedDateTimeUtc?: string;
+    ReadDateTimeUtc?: string;
+    AuthorName?: string;
+    Subject?: string;
+    Message?: string;
+};
