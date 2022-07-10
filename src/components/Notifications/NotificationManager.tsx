@@ -3,6 +3,7 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { useEffect, useState } from "react";
 import { Platform } from "react-native";
+import { useEffectOnce } from "usehooks-ts";
 
 import { withPlatform } from "../../hoc/withPlatform";
 import { useAppSelector } from "../../store";
@@ -13,7 +14,7 @@ export const NotificationManager = () => {
     const [expoPushToken, setExpoPushToken] = useState("");
     const token = useAppSelector((state) => state.authorization.token);
 
-    useEffect(() => {
+    useEffectOnce(() => {
         Notifications.setNotificationHandler({
             handleNotification: async () => ({
                 shouldShowAlert: true,
@@ -23,7 +24,7 @@ export const NotificationManager = () => {
         });
     });
 
-    useEffect(() => {
+    useEffectOnce(() => {
         registerForPushNotifications().then((token) => setExpoPushToken(token));
 
         const notificationHAndlerSubscription = Notifications.addNotificationReceivedListener(handleNotification);
@@ -31,7 +32,7 @@ export const NotificationManager = () => {
         return () => {
             Notifications.removeNotificationSubscription(notificationHAndlerSubscription);
         };
-    }, []);
+    });
 
     useEffect(() => {
         if (expoPushToken === "") {

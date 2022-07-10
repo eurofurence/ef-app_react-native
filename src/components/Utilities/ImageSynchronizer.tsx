@@ -27,7 +27,7 @@ export const ImageSynchronizer = () => {
             setIsCaching(false);
         };
 
-        fetchImages();
+        fetchImages().catch(console.error);
     }, [images]);
 
     if (!isCaching) {
