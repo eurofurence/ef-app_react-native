@@ -1,8 +1,10 @@
 import { noop } from "lodash";
-import { createContext, FC, useContext, useEffect, useState } from "react";
+import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { Vibration } from "react-native";
 
 import { useAppDispatch, useAppSelector } from "../../store";
 import { applySync } from "../../store/eurofurence.cache";
+import { ImageSynchronizer, PlatformImageSynchronizer } from "./ImageSynchronizer";
 
 type SynchronizationProviderProps = {
     /**
@@ -26,7 +28,24 @@ export const SynchronizationProvider: FC = ({ children }) => {
             .catch(console.error);
     }, [count]);
 
-    return <SynchronizationContext.Provider value={{ synchronize: () => setCount((c) => c + 1) }}>{children}</SynchronizationContext.Provider>;
+    const synchronize = useCallback(() => {
+        Vibration.vibrate(150);
+        setCount((c) => c + 1);
+    }, []);
+
+    const providerValues = useMemo(
+        () => ({
+            synchronize,
+        }),
+        [synchronize]
+    );
+
+    return (
+        <SynchronizationContext.Provider value={providerValues}>
+            <PlatformImageSynchronizer />
+            {children}
+        </SynchronizationContext.Provider>
+    );
 };
 
 export const useSynchronizer = () => {

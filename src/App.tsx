@@ -5,7 +5,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ScreenStart } from "./app/ScreenStart";
 import { PlatformNotificationManager } from "./components/Notifications/NotificationManager";
-import { PlatformImageSynchronizer } from "./components/Synchronization/ImageSynchronizer";
 import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
 
 /**
@@ -20,7 +19,6 @@ export default function App() {
                     <ScreenStart />
 
                     <PlatformNotificationManager />
-                    <PlatformImageSynchronizer />
                 </SynchronizationProvider>
             </BottomSheetModalProvider>
         </GestureHandlerRootView>
