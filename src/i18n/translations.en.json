@@ -1,0 +1,26 @@
+{
+  "Home": {
+    "announcementsTitle_zero": "There are no announcements.",
+    "announcementsTitle_one": "There is {{ count }} announcements.",
+    "announcementsTitle_other": "There are {{ count }} announcements.",
+    "eventsTitle_zero": "There are no events.",
+    "eventsTitle_one": "We have retrieved {{ count }} event.",
+    "eventsTitle_other": "We have retrieved {{ count }} events."
+  },
+  "Events": {
+    "when": "{{ day }}, {{ start }} until {{ finish }}."
+  },
+  "TimeTravel": {
+    "title": "Time Travel",
+    "subtitle": "Adjust time settings for testing and debugging",
+    "originalTime": "Original: {{ time }}",
+    "currentTime": "Current: {{ time }}",
+    "difference": "Your time difference is {{ diff }}",
+    "enable": "Enable",
+    "disable": "Disable",
+    "reset": "Reset"
+  },
+  "Settings": {
+    "timeTravel": "Show time travel settings."
+  }
+}

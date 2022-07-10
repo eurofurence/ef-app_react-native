@@ -68,7 +68,7 @@ export type EnrichedDealerRecord = DealerRecord & {
 
 export type EventDayRecord = RecordMetadata & {
     Name: string;
-    Date?: string;
+    Date: string;
 };
 
 export type EventTrackRecord = RecordMetadata & {
@@ -90,10 +90,16 @@ export type EnrichedMapRecord = MapRecord & {
 };
 export type KnowledgeGroupRecord = RecordMetadata & {
     Name: string;
+    Description: string;
+    Order: number;
+    showInHamburgerMenu: boolean;
+    FontAwesomeIconCharacterUnicodeAddress?: string;
 };
 
 export type KnowledgeEntryRecord = RecordMetadata & {
     Title: string;
+    Text: string;
+    Order: number;
     KnowledgeGroupId: RecordId;
 };
 

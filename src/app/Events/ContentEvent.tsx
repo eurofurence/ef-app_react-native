@@ -7,6 +7,7 @@ import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
+import { useEventReminder } from "../../hooks/useEventReminder";
 import { EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord } from "../../store/eurofurence.types";
 
 /**
@@ -39,8 +40,9 @@ export type ContentEventProps = {
     room?: EventRoomRecord;
 };
 
-export const ContentEvent: FC<ContentEventProps> = ({ isFavorited, event, day, track, room }) => {
+export const ContentEvent: FC<ContentEventProps> = ({ event, day, track, room }) => {
     const { t } = useTranslation("Events");
+    const { isFavorited, toggleReminder } = useEventReminder(event);
     return (
         <>
             <Section icon={isFavorited ? "heart" : "calendar"} title={event.Title ?? ""} subtitle={event.SubTitle} />
@@ -49,7 +51,7 @@ export const ContentEvent: FC<ContentEventProps> = ({ isFavorited, event, day, t
             </Label>
 
             <Row>
-                <Button containerStyle={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"}>
+                <Button containerStyle={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
                     {isFavorited ? "Unfavorite" : "Favorite"}
                 </Button>
                 <Button containerStyle={styles.rowRight} icon="pencil">

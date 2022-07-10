@@ -1,0 +1,13 @@
+{
+  "Home": {
+    "announcementsTitle_zero": "Er zijn geen aankondigingen.",
+    "announcementsTitle_one": "Er is {{ count }} aankondiging.",
+    "announcementsTitle_other": "Er zijn {{ count }} aankondigingen.",
+    "eventsTitle_zero": "Er zijn geen events.",
+    "eventsTitle_one": "We vonden {{ count }} event.",
+    "eventsTitle_other": "We hebben {{ count }} events gevondens."
+  },
+  "Events": {
+    "when": "{{ day }}, van {{ start }} tot {{ finish }}."
+  }
+}

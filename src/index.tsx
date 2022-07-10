@@ -7,7 +7,7 @@ import { EurofurenceErrorBoundary } from "./components/Utilities/EurofurenceErro
 import { LoadingContextProvider } from "./context/LoadingContext";
 import { persistor, store } from "./store";
 
-import "./i18n";
+import "./i18n/index";
 
 const Index = () => {
     return (

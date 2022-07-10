@@ -2,20 +2,19 @@ import { useEffect, useState } from "react";
 import { Image, Text } from "react-native";
 
 import { withPlatform } from "../../hoc/withPlatform";
+import { useAppSelector } from "../../store";
+import { imagesSelectors } from "../../store/eurofurence.selectors";
 import { useGetImagesQuery } from "../../store/eurofurence.service";
 import { EnrichedImageRecord } from "../../store/eurofurence.types";
 
-export const CacheSynchronizer = () => {
+export const ImageSynchronizer = () => {
     const [isCaching, setIsCaching] = useState(false);
     const [prefetchedImages, setPrefetchedImages] = useState(0);
-    const images: Query<EnrichedImageRecord[]> = useGetImagesQuery();
+    const images = useAppSelector(imagesSelectors.selectAll);
 
     useEffect(() => {
         const fetchImages = async () => {
-            if (images.data === undefined) {
-                return;
-            }
-            const imageUrls = images.data.map((it) => it.ImageUrl).filter((it): it is string => it !== undefined);
+            const imageUrls = images.map((it) => it.ImageUrl).filter((it): it is string => it !== undefined);
             // @ts-expect-error this method seemingly might not exist?
             const cachedImages = await Image.queryCache(imageUrls);
 
@@ -28,8 +27,8 @@ export const CacheSynchronizer = () => {
             setIsCaching(false);
         };
 
-        fetchImages();
-    }, [images.data]);
+        fetchImages().catch(console.error);
+    }, [images]);
 
     if (!isCaching) {
         return null;
@@ -37,9 +36,9 @@ export const CacheSynchronizer = () => {
 
     return (
         <Text>
-            We are prefetching images. We are currently at {prefetchedImages} out of {images.data?.length}
+            We are prefetching images. We are currently at {prefetchedImages} out of {images.length}
         </Text>
     );
 };
 
-export const PlatformCacheSynchronizer = withPlatform(CacheSynchronizer, ["android", "ios"]);
+export const PlatformImageSynchronizer = withPlatform(ImageSynchronizer, ["android", "ios"]);
