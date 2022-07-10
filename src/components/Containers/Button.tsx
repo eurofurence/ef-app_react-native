@@ -49,16 +49,18 @@ export type ButtonProps = {
      * If given, invoked on button press.
      */
     onPress?: () => void;
+
+    onLongPress?: () => void;
 };
 
-export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress }) => {
+export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress, onLongPress }) => {
     // Computed styles.
     const theme = useTheme();
     const base = useMemo(() => (outline ? styles.outlineContent : styles.fillContent), [outline]);
     const fill = useMemo(() => ({ backgroundColor: outline ? theme.background : theme.inverted }), [outline, theme]);
 
     return (
-        <TouchableOpacity containerStyle={containerStyle} style={[styles.content, base, fill, style]} onPress={onPress}>
+        <TouchableOpacity containerStyle={containerStyle} style={[styles.content, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
             {!icon ? <View style={styles.placeholder} /> : <Ionicons name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
 
             {typeof children === "string" ? (

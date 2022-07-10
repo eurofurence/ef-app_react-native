@@ -1,7 +1,7 @@
 import moment from "moment";
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Share } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
@@ -43,6 +43,18 @@ export type ContentEventProps = {
 export const ContentEvent: FC<ContentEventProps> = ({ event, day, track, room }) => {
     const { t } = useTranslation("Events");
     const { isFavorited, toggleReminder } = useEventReminder(event);
+
+    const shareEvent = useCallback(() => {
+        Share.share(
+            {
+                title: event.Title,
+                url: `https://app.eurofurence.org/EF26/Web/Events/${event.Id}`,
+                message: `Check out ${event.Title} on EF!\nhttps://app.eurofurence.org/EF26/Web/Events/${event.Id}`,
+            },
+            {}
+        );
+    }, [event]);
+
     return (
         <>
             <Section icon={isFavorited ? "heart" : "calendar"} title={event.Title ?? ""} subtitle={event.SubTitle} />
@@ -58,6 +70,10 @@ export const ContentEvent: FC<ContentEventProps> = ({ event, day, track, room })
                     Give feedback
                 </Button>
             </Row>
+
+            <Button containerStyle={styles.share} icon={"share"} onPress={shareEvent}>
+                Share this event
+            </Button>
 
             <Section icon="git-merge" title="About" />
             <Label type="caption">Hosted by</Label>
@@ -94,5 +110,8 @@ const styles = StyleSheet.create({
     rowRight: {
         flex: 1,
         marginLeft: 8,
+    },
+    share: {
+        marginVertical: 15,
     },
 });
