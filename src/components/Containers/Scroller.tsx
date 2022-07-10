@@ -1,5 +1,5 @@
-import { FC, useMemo } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { FC, ReactElement, ReactNode, useMemo } from "react";
+import { RefreshControlProps, StyleSheet, View, ViewStyle } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 /**
@@ -10,16 +10,18 @@ export type ScrollerProps = {
      * The width to limit the content to.
      */
     limitWidth?: number;
+
+    refreshControl?: ReactElement<RefreshControlProps>;
 };
 
 /**
  * A scrolling content with a child that has a maximum width.
  * @constructor
  */
-export const Scroller: FC<ScrollerProps> = ({ limitWidth = 600, children }) => {
+export const Scroller: FC<ScrollerProps> = ({ limitWidth = 600, refreshControl, children }) => {
     const limitStyle = useMemo<ViewStyle>(() => ({ maxWidth: limitWidth }), [limitWidth]);
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView contentContainerStyle={styles.container} refreshControl={refreshControl}>
             <View style={styles.arranger}>
                 <View style={[styles.content, limitStyle]}>{children}</View>
             </View>

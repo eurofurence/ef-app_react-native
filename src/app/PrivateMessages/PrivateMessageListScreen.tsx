@@ -2,7 +2,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import React, { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { RefreshControl, StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -15,8 +15,8 @@ import { CommunicationRecord } from "../../store/eurofurence.types";
 
 export const PrivateMessageListScreen = () => {
     const navigation = useNavigation();
-    const { data }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
-        pollingInterval: 1000,
+    const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
+        pollingInterval: 10000,
     });
 
     const top = useSafeAreaInsets()?.top;
@@ -25,7 +25,7 @@ export const PrivateMessageListScreen = () => {
     return (
         <View>
             <Header style={headerStyle}>Private Messages</Header>
-            <Scroller>
+            <Scroller refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
                 {data?.map((message) => (
                     <TouchableOpacity
                         style={styles.container}
