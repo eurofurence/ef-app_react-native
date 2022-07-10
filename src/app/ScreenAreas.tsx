@@ -30,6 +30,11 @@ export type ScreenAreasNavigatorParamsList = {
      * Dealers list.
      */
     Dealers: ScreenEmptyParams;
+
+    /**
+     * Settings Screen.
+     */
+    Settings: ScreenEmptyParams;
 };
 
 /**

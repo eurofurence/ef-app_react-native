@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import { FC, RefObject, useMemo, useRef } from "react";
 
 import { Pager, PagerRef } from "../../components/Containers/Pager";
@@ -10,6 +11,7 @@ export type MainMenuProps = {
 };
 
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
+    const navigation = useNavigation();
     const pager = useRef<PagerRef>(null);
     const on = useMemo(
         () => ({
@@ -20,7 +22,8 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             catchEmAll: () => tabs.current?.close(),
             maps: () => tabs.current?.close(),
             services: () => tabs.current?.close(),
-            settings: () => tabs.current?.close(),
+            // @ts-expect-error nav typing
+            settings: () => navigation.navigate("Settings"),
             about: () => tabs.current?.close(),
         }),
         [tabs, pager]

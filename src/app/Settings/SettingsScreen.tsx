@@ -1,32 +1,23 @@
-import CheckBox from "@react-native-community/checkbox";
-import React from "react";
-import { useTranslation } from "react-i18next";
+import React, { useMemo } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { Row } from "../../components/Containers/Row";
 import { Scroller } from "../../components/Containers/Scroller";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { showTimeTravel } from "../../store/timetravel.slice";
-
-const TimeTravelCheckbox = React.memo(() => {
-    const { t } = useTranslation("Settings");
-    const dispatch = useAppDispatch();
-    const visible = useAppSelector((state) => state.timetravel.visible);
-    return (
-        <Row>
-            <CheckBox value={visible} onValueChange={(value) => dispatch(showTimeTravel(value))} />
-            <Label mb={15}>{t("timeTravel")}</Label>
-        </Row>
-    );
-});
+import { PlatformScheduledNotifications } from "./ScheduledNotifications";
+import { TimeTravel } from "./TimeTravel";
 
 export const SettingsScreen = () => {
+    const top = useSafeAreaInsets()?.top;
+    const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
     return (
         <Scroller>
-            <Section title={"Developer Settings"} />
+            <Section style={headerStyle} title={"Developer Settings"} icon={"bug"} />
+            <Label mb={15}>You shouldn't touch these unless you know what you're doing.</Label>
 
-            <TimeTravelCheckbox />
+            <TimeTravel />
+
+            <PlatformScheduledNotifications />
         </Scroller>
     );
 };

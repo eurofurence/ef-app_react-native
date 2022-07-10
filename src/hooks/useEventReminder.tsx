@@ -13,7 +13,7 @@ export const useEventReminder = (event: EventRecord) => {
     const notificationEntry = useAppSelector((state) => state.notifications.notifications.find((it) => it.recordId === event.Id));
 
     const createReminder = useCallback(() => {
-        const scheduleDate = moment(event.StartDateTimeUtc).subtract(timetravel, "milliseconds");
+        const scheduleDate = moment(event.StartDateTimeUtc).subtract(timetravel, "milliseconds").subtract(30, "minutes");
         const notification: Notification = {
             recordId: event.Id,
             type: "EventReminder",
