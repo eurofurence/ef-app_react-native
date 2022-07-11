@@ -2,7 +2,7 @@ import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabAc
 import { FC, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { IoniconsNames } from "../../types/Ionicons";
 import { Pages, PagesRef } from "../Containers/Pages";
@@ -154,6 +154,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
         .activeOffsetX([-panSlack, panSlack])
         .onBegin(() => {
             start.value = offset.value;
+            cancelAnimation(offset);
         })
         .onUpdate((e) => {
             // Update from translation.
