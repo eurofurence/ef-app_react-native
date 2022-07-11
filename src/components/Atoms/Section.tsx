@@ -47,7 +47,7 @@ export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark",
             {!subtitle ? null : (
                 <Row type="center">
                     <View style={styles.placeholder} />
-                    <Label style={styles.fill} type="h2" ellipsizeMode="tail">
+                    <Label style={styles.fill} type="h3" ellipsizeMode="tail">
                         {subtitle}
                     </Label>
                 </Row>

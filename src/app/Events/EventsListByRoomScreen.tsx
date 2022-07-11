@@ -1,7 +1,9 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
+import { View } from "react-native";
 
+import { Section } from "../../components/Atoms/Section";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
@@ -30,5 +32,15 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ naviga
     const room = "room" in route.params ? route.params?.room : null;
     const eventsByRoom = useAppSelector((state) => eventsSelector.selectByRoom(state, room?.Id ?? ""));
 
-    return <EventsListGeneric navigation={navigation} events={eventsByRoom} />;
+    return (
+        <EventsListGeneric
+            navigation={navigation}
+            events={eventsByRoom}
+            leader={
+                <View style={{ paddingHorizontal: 30 }}>
+                    <Section title={room?.Name ?? ""} subtitle={`${eventsByRoom.length} events in total`} />
+                </View>
+            }
+        />
+    );
 };

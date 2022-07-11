@@ -53,11 +53,6 @@ export type TabNavigatorProps = {
     initialRouteName: string;
 
     /**
-     * True if screens should be hidden when not viewed.
-     */
-    detach?: boolean;
-
-    /**
      * The screens.
      */
     children: ReactNode;
@@ -98,7 +93,7 @@ export type TabScreenProps<ParamList extends ParamListBase, RouteName extends ke
     route: RouteProp<ParamList, RouteName>;
 };
 
-export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, detach = true, children, screenOptions }) => {
+export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -112,11 +107,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, conten
         <NavigationContent>
             <View style={[styles.content, contentStyle]}>
                 {/* Tabbed content. */}
-                {state.routes.map((route, i) => (
-                    <View key={route.key} style={styleForChild(state.index, i, detach)}>
-                        {descriptors[route.key].render()}
-                    </View>
-                ))}
+                <View style={styles.tab}>{descriptors[state.routes[state.index].key].render()}</View>
             </View>
 
             {/* Tab bar. */}
@@ -144,14 +135,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
     },
-    visible: {
+    tab: {
         flex: 1,
-        display: "flex",
-    },
-    hidden: {
-        flex: 1,
-        display: "none",
     },
 });
-
-const styleForChild = (index: number, i: number, detach: boolean) => (index === i || !detach ? styles.visible : styles.hidden);

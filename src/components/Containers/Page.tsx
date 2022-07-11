@@ -2,7 +2,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { FC, useEffect, useMemo } from "react";
 import { StyleSheet, View, Text, ViewProps } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { cancelAnimation, Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
@@ -56,6 +56,7 @@ export const Page: FC<PageProps> = ({ icon, text, active, onPress, onLayout, ind
 
     const status = useSharedValue(active ? 1 : 0);
     useEffect(() => {
+        cancelAnimation(status);
         status.value = withTiming(active ? 1 : 0, { duration: 234, easing: Easing.out(Easing.cubic) });
     }, [active, status]);
 

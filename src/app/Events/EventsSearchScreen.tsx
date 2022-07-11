@@ -1,7 +1,7 @@
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { FC, useCallback, useContext, useEffect } from "react";
-import { Text, View, Keyboard } from "react-native";
+import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
+import { Text, View, Keyboard, StyleSheet, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 import { Button } from "../../components/Containers/Button";
@@ -9,6 +9,7 @@ import { Floater } from "../../components/Containers/Floater";
 import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { useTheme } from "../../context/Theme";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
 import { EventsSearchContext } from "./EventsSearchContext";
 import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
@@ -36,17 +37,19 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
     const onRoom = useCallback(() => navigation.getParent()?.setParams({ filterType: "rooms" }), [navigation]);
     const onTrack = useCallback(() => navigation.getParent()?.setParams({ filterType: "tracks" }), [navigation]);
 
+    const theme = useTheme();
+    const border = useMemo<ViewStyle>(() => ({ borderBottomColor: theme.text }), [theme]);
     return (
         <Floater>
-            <View style={{ justifyContent: "flex-end", flex: 1 }}>
-                <Row style={{ marginBottom: 30 }}>
+            <View style={styles.end}>
+                <Row style={[styles.categories, border]}>
                     <Tab icon="calendar-outline" text="Filter by day" onPress={onDay} />
                     <Tab icon="bus-outline" text="Filter by track" onPress={onTrack} />
                     <Tab icon="business-outline" text="Filter by room" onPress={onRoom} />
                 </Row>
-                <View style={{ height: 200 }}>
+                <View style={styles.searchArea}>
                     <Text>Enter your query</Text>
-                    <TextInput style={{ paddingVertical: 15, marginVertical: 15 }} value={search} onChangeText={setSearch} placeholder="Enter query" />
+                    <TextInput style={[styles.searchField, border]} value={search} onChangeText={setSearch} placeholder="Enter query" />
 
                     {!results ? null : <Button onPress={() => navigation.jumpTo("Results")}>View all {results.length} results</Button>}
                 </View>
@@ -54,3 +57,23 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
         </Floater>
     );
 };
+
+const styles = StyleSheet.create({
+    end: {
+        justifyContent: "flex-end",
+        flex: 1,
+    },
+    categories: {
+        paddingBottom: 20,
+        marginBottom: 30,
+        borderBottomWidth: 1,
+    },
+    searchArea: {
+        height: 160,
+    },
+    searchField: {
+        paddingVertical: 5,
+        borderBottomWidth: 1,
+        marginVertical: 25,
+    },
+});
