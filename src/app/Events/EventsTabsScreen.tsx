@@ -83,7 +83,13 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
 
         const handle = setTimeout(() => {
             const searchActual = search.toLowerCase().trim();
-            const results = events.filter((event) => event.Title.toLowerCase().includes(searchActual));
+            const results = events.filter(
+                (event) =>
+                    event.Title.toLowerCase().includes(searchActual) ||
+                    event.SubTitle?.toLowerCase()?.includes(searchActual) ||
+                    event.Abstract?.toLowerCase()?.includes(searchActual) ||
+                    event.PanelHosts?.toLowerCase()?.includes(searchActual)
+            );
             setResults(results);
         }, 100);
 

@@ -3,6 +3,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { FC, useCallback, useContext } from "react";
 import { View } from "react-native";
 
+import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
@@ -21,7 +22,7 @@ export type EventsListSearchResultsScreenParams = undefined;
 export type EventsListSearchResultsScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProps> = ({ navigation }) => {
-    const { setSearch, results } = useContext(EventsSearchContext);
+    const { search, setSearch, results } = useContext(EventsSearchContext);
 
     const onClear = useCallback(() => {
         setSearch("");
@@ -33,8 +34,9 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
             navigation={navigation}
             events={results ?? []}
             leader={
-                <View style={{ padding: 30 }}>
-                    <Button icon="remove-circle" onPress={onClear}>
+                <View style={{ paddingHorizontal: 30, paddingBottom: 30 }}>
+                    <Section icon="search" title={search} subtitle={`${results?.length} results in total`} />
+                    <Button icon="arrow-back-circle" onPress={onClear}>
                         Clear search
                     </Button>
                 </View>

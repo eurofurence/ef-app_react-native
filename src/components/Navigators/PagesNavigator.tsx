@@ -53,6 +53,11 @@ export type PagesNavigatorProps = {
     detach?: boolean;
 
     /**
+     * The amount of vertical pan travel that is still allowed for swipe.
+     */
+    panSlack?: number;
+
+    /**
      * The screens.
      */
     children: ReactNode;
@@ -93,7 +98,7 @@ export type PagesScreenProps<ParamList extends ParamListBase, RouteName extends 
     route: RouteProp<ParamList, RouteName>;
 };
 
-export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, detach = true, children, screenOptions }) => {
+export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, detach = true, panSlack = 40, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -146,7 +151,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
 
     // Swipe page gesture.
     const gesture = Gesture.Pan()
-        .activeOffsetX([-20, 20])
+        .activeOffsetX([-panSlack, panSlack])
         .onBegin(() => {
             start.value = offset.value;
         })
@@ -195,7 +200,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
                     <Animated.View style={[styles.arranger, arrangerWidth, translation]}>
                         {state.routes.map((route, i) => (
                             <View key={route.key} style={styles.page}>
-                                <View style={styleForChild(viewing, i, detach)}>{descriptors[route.key].render()}</View>
+                                {shouldSkipChild(viewing, i, detach) ? null : descriptors[route.key].render()}
                             </View>
                         ))}
                     </Animated.View>
@@ -223,24 +228,16 @@ const styles = StyleSheet.create({
     page: {
         flex: 1,
     },
-    visible: {
-        flex: 1,
-        display: "flex",
-    },
-    hidden: {
-        flex: 1,
-        display: "none",
-    },
 });
 
-const styleForChild = (index: number, i: number, detach: boolean) => {
-    if (!detach) return styles.visible;
+const shouldSkipChild = (index: number, i: number, detach: boolean) => {
+    if (!detach) return false;
     switch (i) {
         case index - 1:
         case index:
         case index + 1:
-            return styles.visible;
+            return false;
         default:
-            return styles.hidden;
+            return true;
     }
 };

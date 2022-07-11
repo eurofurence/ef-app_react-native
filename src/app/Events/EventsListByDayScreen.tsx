@@ -1,7 +1,10 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
+import moment from "moment";
 import { FC } from "react";
+import { View } from "react-native";
 
+import { Section } from "../../components/Atoms/Section";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
@@ -30,5 +33,15 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigati
     const day = "day" in route.params ? route.params?.day : null;
     const eventsByDay = useAppSelector((state) => eventsSelector.selectByDay(state, day?.Id ?? ""));
 
-    return <EventsListGeneric navigation={navigation} events={eventsByDay} />;
+    return (
+        <EventsListGeneric
+            navigation={navigation}
+            events={eventsByDay}
+            leader={
+                <View style={{ paddingHorizontal: 30 }}>
+                    <Section title={day?.Name ?? ""} subtitle={`${eventsByDay.length} events on ${moment(day?.Date).format("dddd")}`} />
+                </View>
+            }
+        />
+    );
 };
