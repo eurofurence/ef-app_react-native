@@ -1,5 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { FC, useMemo } from "react";
+import { FC, ReactNode, useMemo } from "react";
+import * as React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -43,7 +44,7 @@ export type ButtonProps = {
     /**
      * The text of the button.
      */
-    children?: string;
+    children?: ReactNode;
 
     /**
      * If given, invoked on button press.
@@ -63,13 +64,9 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, 
         <TouchableOpacity containerStyle={containerStyle} style={[styles.content, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
             {!icon ? <View style={styles.placeholder} /> : <Ionicons name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
 
-            {typeof children === "string" ? (
-                <Label style={styles.text} color={outline ? "important" : "invImportant"}>
-                    {children}
-                </Label>
-            ) : (
-                children
-            )}
+            <Label style={styles.text} color={outline ? "important" : "invImportant"}>
+                {children}
+            </Label>
 
             {!iconRight ? <View style={styles.placeholder} /> : <Ionicons name={iconRight} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
         </TouchableOpacity>

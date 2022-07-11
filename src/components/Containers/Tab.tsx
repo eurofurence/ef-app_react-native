@@ -36,6 +36,10 @@ export type TabProps = {
     onPress?: () => void;
 };
 
+/**
+ * Tab is an icon/caption combo intended for use in the bottom-navigation control.
+ * @constructor
+ */
 export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => {
     const theme = useTheme();
     const color = useMemo(() => ({ color: active ? theme.secondary : theme.text }), [theme, active]);

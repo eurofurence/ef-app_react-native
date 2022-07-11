@@ -1,4 +1,4 @@
-import { FC, ReactElement, ReactNode, useMemo } from "react";
+import { FC, ReactElement, useMemo } from "react";
 import { RefreshControlProps, StyleSheet, View, ViewStyle } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -21,7 +21,7 @@ export type ScrollerProps = {
 export const Scroller: FC<ScrollerProps> = ({ limitWidth = 600, refreshControl, children }) => {
     const limitStyle = useMemo<ViewStyle>(() => ({ maxWidth: limitWidth }), [limitWidth]);
     return (
-        <ScrollView contentContainerStyle={styles.container} refreshControl={refreshControl}>
+        <ScrollView style={styles.scroller} contentContainerStyle={styles.container} refreshControl={refreshControl}>
             <View style={styles.arranger}>
                 <View style={[styles.content, limitStyle]}>{children}</View>
             </View>
@@ -30,16 +30,21 @@ export const Scroller: FC<ScrollerProps> = ({ limitWidth = 600, refreshControl, 
 };
 
 const styles = StyleSheet.create({
+    scroller: {
+        flex: 1,
+    },
     container: {
         paddingHorizontal: 30,
         paddingBottom: 100,
     },
     arranger: {
+        flex: 1,
         flexDirection: "row",
         justifyContent: "center",
+        alignItems: "stretch",
     },
     content: {
         flex: 1,
-        alignSelf: "center",
+        alignSelf: "stretch",
     },
 });

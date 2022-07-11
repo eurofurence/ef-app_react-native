@@ -20,7 +20,7 @@ export type TabsProps = {
     /**
      * If given, tabs that are layed out before the more/less button.
      */
-    tabs?: {
+    tabs: {
         /**
          * The icon to display.
          */

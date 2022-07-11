@@ -3,7 +3,7 @@ import { FC, useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 
 import { EventRecord } from "../../store/eurofurence.types";
-import { ContentEvent } from "./ContentEvent";
+import { EventContent } from "./EventContent";
 
 type EventActionsSheetProps = {
     eventRecord: EventRecord | undefined;
@@ -27,7 +27,7 @@ export const EventActionsSheet: FC<EventActionsSheetProps> = ({ eventRecord, onC
 
     return (
         <BottomSheet snapPoints={["25%", "50%", "75%"]} index={-1} enablePanDownToClose ref={sheetRef} onClose={onClose}>
-            <BottomSheetScrollView style={styles.container}>{eventRecord && <ContentEvent event={eventRecord} />}</BottomSheetScrollView>
+            <BottomSheetScrollView style={styles.container}>{eventRecord && <EventContent event={eventRecord} />}</BottomSheetScrollView>
         </BottomSheet>
     );
 };

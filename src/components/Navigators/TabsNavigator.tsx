@@ -53,6 +53,11 @@ export type TabNavigatorProps = {
     initialRouteName: string;
 
     /**
+     * True if screens should be hidden when not viewed.
+     */
+    detach?: boolean;
+
+    /**
      * The screens.
      */
     children: ReactNode;
@@ -93,7 +98,7 @@ export type TabScreenProps<ParamList extends ParamListBase, RouteName extends ke
     route: RouteProp<ParamList, RouteName>;
 };
 
-export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
+export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, detach = true, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -108,7 +113,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, conten
             <View style={[styles.content, contentStyle]}>
                 {/* Tabbed content. */}
                 {state.routes.map((route, i) => (
-                    <View key={route.key} style={styleForChild(state.index, i)}>
+                    <View key={route.key} style={styleForChild(state.index, i, detach)}>
                         {descriptors[route.key].render()}
                     </View>
                 ))}
@@ -122,7 +127,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, conten
                 tabs={state.routes.map((route, i) => ({
                     active: state.index === i,
                     icon: descriptors[route.key].options.icon,
-                    text: descriptors[route.key].options.title || route.name,
+                    text: descriptors[route.key].options.title,
                     onPress: () => navigateTab(navigation, route),
                     indicate: descriptors[route.key].options.indicate,
                 }))}
@@ -149,4 +154,4 @@ const styles = StyleSheet.create({
     },
 });
 
-const styleForChild = (index: number, i: number) => (index === i ? styles.visible : styles.hidden);
+const styleForChild = (index: number, i: number, detach: boolean) => (index === i || !detach ? styles.visible : styles.hidden);
