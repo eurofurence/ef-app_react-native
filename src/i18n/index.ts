@@ -18,6 +18,7 @@ i18next
         cacheUserLanguage: Function.prototype,
     } as LanguageDetectorModule)
     .init({
+        compatibilityJSON: "v3",
         fallbackLng: "en",
         debug: true,
         defaultNS: "Home",
