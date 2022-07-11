@@ -1,5 +1,6 @@
-import { FC, useMemo } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
+import { LayoutRectangle, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
@@ -17,7 +18,7 @@ export type PagesProps = {
     /**
      * If given, page that are layed out.
      */
-    pages?: {
+    pages: {
         /**
          * The icon to display.
          */
@@ -45,28 +46,94 @@ export type PagesProps = {
     indicatorHeight?: number;
 };
 
+export type PagesRef = {
+    /**
+     * Scroll to the page index.
+     * @param index
+     */
+    scrollTo: (index: number) => void;
+};
+
 /**
  * A row of pages.
  */
-export const Pages: FC<PagesProps> = ({ style, pages, indicatorHeight = 4 }) => {
+export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicatorHeight = 4 }, ref) => {
     // Computed styles.
     const theme = useTheme();
     const fillBackground = useMemo(() => ({ backgroundColor: theme.background }), [theme]);
     const bordersDarken = useMemo(() => ({ borderColor: theme.darken }), [theme]);
-    return (
-        <>
-            <View style={[styles.pages, bordersDarken, fillBackground, style]}>
-                {/* Pages. */}
-                {pages?.map((tab, i) => <Page key={i} icon={tab.icon} text={tab.text} active={tab.active} onPress={tab.onPress} indicatorHeight={indicatorHeight} />) ?? null}
-            </View>
-        </>
+
+    // Width of all pages. Anchors (locations and widths of the individual top tabs, the anchors start out at the given length).
+    const [totalWidth, setTotalWidth] = useState(-1);
+    const [anchors, setAnchors] = useState<{ x: number; width: number }[]>([]);
+
+    // Updates the anchors.
+    const updateAnchors = useCallback(
+        (i: number, layout: LayoutRectangle & { left?: number }) => {
+            setAnchors((current) => {
+                const copy = current.slice();
+                copy.length = pages.length;
+                copy[i] = { x: layout.left ?? layout.x, width: layout.width };
+                return copy;
+            });
+        },
+        [pages]
     );
-};
+
+    // Reference for scrolling to tab.
+    const scrollView = useRef<ScrollView>(null);
+
+    // Provide handle for scrolling to the index.
+    useImperativeHandle(
+        ref,
+        () => ({
+            scrollTo: (index: number) => {
+                // Get anchor. If not present, ignore.
+                const anchor = anchors[index];
+                if (!anchor) return;
+
+                // Scroll to it but leave space to the left of it.
+                const { x, width } = anchor;
+                scrollView.current?.scrollTo({
+                    x: x - (totalWidth - width) / 2,
+                });
+            },
+        }),
+        [anchors, scrollView, totalWidth]
+    );
+
+    return (
+        <View style={[styles.pages, bordersDarken, fillBackground, style]}>
+            <ScrollView
+                ref={scrollView}
+                contentContainerStyle={styles.content}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                onLayout={(e) => setTotalWidth(e.nativeEvent.layout.width)}
+            >
+                {pages?.map((tab, i) => (
+                    <Page
+                        key={i}
+                        icon={tab.icon}
+                        text={tab.text}
+                        active={tab.active}
+                        onPress={tab.onPress}
+                        indicatorHeight={indicatorHeight}
+                        onLayout={(e) => updateAnchors(i, e.nativeEvent.layout)}
+                    />
+                )) ?? null}
+            </ScrollView>
+        </View>
+    );
+});
 
 const styles = StyleSheet.create({
     pages: {
         flexDirection: "row",
         borderTopWidth: 1,
         borderBottomWidth: 1,
+    },
+    content: {
+        minWidth: "100%",
     },
 });

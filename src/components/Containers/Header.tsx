@@ -24,7 +24,7 @@ export const Header: FC<HeaderProps> = ({ style, children }) => {
         <Row style={[styles.container, borderColor, style]} type="center" variant="spaced">
             <Ionicons name="chevron-back" size={iconSize} />
 
-            <Label type="lead" ellipsizeMode="tail" numberOfLines={1}>
+            <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
                 {children}
             </Label>
 
@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
         paddingTop: 30,
         paddingHorizontal: 15,
         paddingBottom: 15,
+    },
+    text: {
+        flex: 1,
     },
     placeholder: {
         width: iconSize,

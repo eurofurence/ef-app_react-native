@@ -72,11 +72,11 @@ export type EventDayRecord = RecordMetadata & {
 };
 
 export type EventTrackRecord = RecordMetadata & {
-    Name?: string;
+    Name: string;
 };
 
 export type EventRoomRecord = RecordMetadata & {
-    Name?: string;
+    Name: string;
 };
 
 export type MapRecord = RecordMetadata & {

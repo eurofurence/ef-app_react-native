@@ -3,9 +3,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { OpenFursuitGames } from "../components/Utilities/OpenFursuitGames";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
-import { ScreenEvent, ScreenEventParams } from "./Events/ScreenEvent";
+import { EventScreen, EventScreenParams } from "./Events/EventScreen";
 import { PrivateMessageItemParams, PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
@@ -23,7 +22,7 @@ export type ScreenStartNavigatorParamsList = {
     /**
      * Detail screen for events.
      */
-    Event: ScreenEventParams;
+    Event: EventScreenParams;
 
     /**
      * About page.
@@ -48,7 +47,7 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
             <View style={StyleSheet.absoluteFill}>
                 <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
-                    <ScreenStartNavigator.Screen name="Event" component={ScreenEvent} />
+                    <ScreenStartNavigator.Screen name="Event" component={EventScreen} />
                     <ScreenStartNavigator.Screen name="About" component={ScreenEmpty} />
                     <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />

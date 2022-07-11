@@ -1,11 +1,11 @@
-import { useNavigationBuilder, TabRouter, createNavigatorFactory, ParamListBase, RouteProp, NavigationProp, TabNavigationState, TabActionHelpers } from "@react-navigation/native";
-import { FC, ReactNode, useState, useEffect, useMemo } from "react";
-import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabActionHelpers, TabNavigationState, TabRouter, useNavigationBuilder } from "@react-navigation/native";
+import { FC, ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import Animated, { Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { IoniconsNames } from "../../types/Ionicons";
-import { Pages } from "../Containers/Pages";
+import { Pages, PagesRef } from "../Containers/Pages";
 import { navigateTab } from "./Common";
 
 /**
@@ -21,6 +21,11 @@ export type PagesNavigationOptions = {
      * The title of the screen.
      */
     title: string;
+
+    /**
+     * True if this screen should be prioritized.
+     */
+    prioritize?: boolean;
 };
 
 /**
@@ -41,6 +46,11 @@ export type PagesNavigatorProps = {
      * The initial route.
      */
     initialRouteName: string;
+
+    /**
+     * True if screens should be hidden when not viewed.
+     */
+    detach?: boolean;
 
     /**
      * The screens.
@@ -83,7 +93,7 @@ export type PagesScreenProps<ParamList extends ParamListBase, RouteName extends 
     route: RouteProp<ParamList, RouteName>;
 };
 
-export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, children, screenOptions }) => {
+export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, detach = true, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -91,17 +101,42 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
         initialRouteName,
     });
 
-    const [width, setWidth] = useState(-1);
+    // Reference, used for scrolling to selected page in tabs.
+    const pages = useRef<PagesRef>(null);
 
+    // Width of the pages in total.
+    const [width, setWidth] = useState(-1);
+    const [viewing, setViewing] = useState(state.index);
+
+    // Style for arranger's width, fitting all given pages.
     const arrangerWidth = useMemo(() => ({ width: `${state.routes.length * 100}%` }), [state.routes.length]);
 
+    // Target and offset used for differentially determining if set from navigation or set from pan or button press.
+    const target = useSharedValue(state.index);
+    const offset = useSharedValue(state.index);
     const start = useSharedValue(0);
-    const offset = useSharedValue(0);
 
+    // React to state and current target.
     useEffect(() => {
-        offset.value = withTiming(state.index, { duration: 234, easing: Easing.out(Easing.cubic) });
-    }, [offset, state.index]);
+        if (target.value !== state.index) {
+            offset.value = state.index;
+            target.value = state.index;
+        }
+    }, [target, offset, state.index]);
 
+    // Convert translation into viewed page, which can be reacted to as a state.
+    useAnimatedReaction(
+        () => Math.max(0, Math.min(Math.round(offset.value), state.routes.length - 1)),
+        (index) => runOnJS(setViewing)(index),
+        [navigation, offset, state.routes.length]
+    );
+
+    // React to viewed page change by scrolling to the page in the top tabs.
+    useEffect(() => {
+        pages.current?.scrollTo(viewing);
+    }, [pages, viewing]);
+
+    // Style that translates the arranger, so it shows the page.
     const translation = useAnimatedStyle(
         () => ({
             transform: [{ translateX: -width * offset.value }],
@@ -109,28 +144,29 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
         [width, offset]
     );
 
+    // Swipe page gesture.
     const gesture = Gesture.Pan()
+        .activeOffsetX([-20, 20])
         .onBegin(() => {
             start.value = offset.value;
         })
         .onUpdate((e) => {
             // Update from translation.
-            offset.value = -e.translationX / width + start.value;
-            offset.value = Math.max(0, Math.min(offset.value, state.routes.length - 1));
-
-            let index = Math.round(offset.value);
-            index = Math.max(0, Math.min(index, state.routes.length - 1));
-            if (index !== state.index) {
+            offset.value = Math.max(0, Math.min(-e.translationX / width + start.value, state.routes.length - 1));
+            const index = Math.round(offset.value);
+            if (target.value !== index) {
+                target.value = index;
                 runOnJS(navigateTab)(navigation, index);
             }
         })
         .onEnd((e) => {
             const shift = e.translationX > 0 ? -0.4 : 0.4;
-            let index = Math.round(offset.value + shift);
-            index = Math.max(0, Math.min(index, state.routes.length - 1));
+            const index = Math.max(0, Math.min(Math.round(offset.value + shift), state.routes.length - 1));
 
             offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) });
-            if (index !== state.index) {
+
+            if (target.value !== index) {
+                target.value = index;
                 runOnJS(navigateTab)(navigation, index);
             }
         });
@@ -139,12 +175,17 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
         <NavigationContent>
             {/* Page bar. */}
             <Pages
+                ref={pages}
                 style={pagesStyle}
                 pages={state.routes.map((route, i) => ({
-                    active: state.index === i,
+                    active: viewing === i,
                     icon: descriptors[route.key].options.icon,
-                    text: descriptors[route.key].options.title || route.name,
-                    onPress: () => navigateTab(navigation, route),
+                    text: descriptors[route.key].options.title,
+                    onPress: () => {
+                        offset.value = i;
+                        target.value = i;
+                        navigateTab(navigation, i);
+                    },
                 }))}
             />
 
@@ -154,7 +195,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
                     <Animated.View style={[styles.arranger, arrangerWidth, translation]}>
                         {state.routes.map((route, i) => (
                             <View key={route.key} style={styles.page}>
-                                <View style={styleForChild(state.index, i)}>{descriptors[route.key].render()}</View>
+                                <View style={styleForChild(viewing, i, detach)}>{descriptors[route.key].render()}</View>
                             </View>
                         ))}
                     </Animated.View>
@@ -192,7 +233,8 @@ const styles = StyleSheet.create({
     },
 });
 
-const styleForChild = (index: number, i: number) => {
+const styleForChild = (index: number, i: number, detach: boolean) => {
+    if (!detach) return styles.visible;
     switch (i) {
         case index - 1:
         case index:
