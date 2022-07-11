@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { StyleProp, StyleSheet, Text, TextStyle, TextProps } from "react-native";
+import { StyleProp, StyleSheet, Text, TextProps, TextStyle } from "react-native";
 
 import { Theme, useTheme } from "../../context/Theme";
 

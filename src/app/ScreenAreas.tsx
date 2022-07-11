@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { TabsRef } from "../components/Containers/Tabs";
 import { createTabNavigator } from "../components/Navigators/TabsNavigator";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
-import { EventsTabsScreenParams, EventsTabsScreen } from "./Events/EventsTabsScreen";
+import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { ScreenHome, ScreenHomeParams } from "./Home/ScreenHome";
 import { MainMenu } from "./MainMenu/MainMenu";
 import { ScreenStartNavigatorParamsList } from "./ScreenStart";

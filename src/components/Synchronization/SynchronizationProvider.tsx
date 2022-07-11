@@ -4,7 +4,7 @@ import { Vibration } from "react-native";
 
 import { useAppDispatch, useAppSelector } from "../../store";
 import { applySync } from "../../store/eurofurence.cache";
-import { ImageSynchronizer, PlatformImageSynchronizer } from "./ImageSynchronizer";
+import { PlatformImageSynchronizer } from "./ImageSynchronizer";
 
 type SynchronizationProviderProps = {
     /**

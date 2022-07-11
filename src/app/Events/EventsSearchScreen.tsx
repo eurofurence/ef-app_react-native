@@ -1,7 +1,7 @@
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
-import { Text, View, Keyboard, StyleSheet, ViewStyle } from "react-native";
+import { Keyboard, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 import { Button } from "../../components/Containers/Button";

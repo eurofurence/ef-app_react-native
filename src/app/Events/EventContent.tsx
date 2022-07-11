@@ -1,7 +1,7 @@
 import moment from "moment";
 import { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Share } from "react-native";
+import { Share, StyleSheet } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
