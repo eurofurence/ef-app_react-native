@@ -1,3 +1,4 @@
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -13,12 +14,14 @@ import { Synchronizer } from "./components/Utilities/Synchronizer";
 export default function App() {
     return (
         <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
-            <StatusBar style="auto" />
-            <ScreenStart />
+            <BottomSheetModalProvider>
+                <StatusBar style="auto" />
+                <ScreenStart />
 
-            <PlatformNotificationManager />
-            <PlatformImageSynchronizer />
-            <Synchronizer />
+                <PlatformNotificationManager />
+                <PlatformImageSynchronizer />
+                <Synchronizer />
+            </BottomSheetModalProvider>
         </GestureHandlerRootView>
     );
 }

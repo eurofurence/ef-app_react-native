@@ -1,16 +1,17 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { clone } from "lodash";
-import { FC, useCallback } from "react";
-import { StyleSheet, View } from "react-native";
+import { FC, useCallback, useState } from "react";
+import { StyleSheet, Vibration, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { Button } from "../../components/Containers/Button";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { useSignalLoading } from "../../context/LoadingContext";
 import { useGetEventRoomsQuery, useGetEventsQuery, useGetEventTracksQuery } from "../../store/eurofurence.service";
-import { EventDayRecord } from "../../store/eurofurence.types";
+import { EventDayRecord, EventRecord } from "../../store/eurofurence.types";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { EventActionsSheet } from "./EventActionsSheet";
 import { ScreenEventsTabsNavigatorParamsList } from "./ScreenEventsTabs";
 
 /**
@@ -36,6 +37,9 @@ export const ScreenEventsListByDay: FC<ScreenEventsListByDayProps> = ({ navigati
     const events = useGetEventsQuery();
     const tracks = useGetEventTracksQuery();
     const rooms = useGetEventRoomsQuery();
+
+    // Set event for action sheet
+    const [selectedEvent, setSelectedEvent] = useState<EventRecord | undefined>(undefined);
 
     // Ready if all queries are ready.
     const ready = events.isSuccess && tracks.isSuccess && rooms.isSuccess;
@@ -66,12 +70,20 @@ export const ScreenEventsListByDay: FC<ScreenEventsListByDayProps> = ({ navigati
                     .filter((event) => event.ConferenceDayId === day.Id)
                     .map((event) => (
                         <View key={event.Id} style={{ padding: 10 }}>
-                            <Button outline onPress={() => navigateTo(event)}>
+                            <Button
+                                outline
+                                onPress={() => navigateTo(event)}
+                                onLongPress={() => {
+                                    Vibration.vibrate(50);
+                                    setSelectedEvent(event);
+                                }}
+                            >
                                 {event.Title}
                             </Button>
                         </View>
                     ))}
             </ScrollView>
+            <EventActionsSheet eventRecord={selectedEvent} onClose={() => setSelectedEvent(undefined)} />
         </View>
     );
 };
