@@ -10,7 +10,6 @@ import { Button } from "../../components/Containers/Button";
 import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { LoadingIndicator } from "../../components/Utilities/LoadingIndicator";
-import { TimeTravel } from "../../components/Utilities/TimeTravel";
 import { useSignalLoading } from "../../context/LoadingContext";
 import { useTheme } from "../../context/Theme";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -18,6 +17,7 @@ import { logout } from "../../store/authorization.slice";
 import { annoucenementsSelectors, dealersSelectors, eventsSelector } from "../../store/eurofurence.selectors";
 import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { TimeTravel } from "../Settings/TimeTravel";
 
 /**
  * Params handled by the screen in route, nothing so far.
@@ -54,7 +54,7 @@ export const ScreenHome: FC<ScreenHomeProps> = () => {
             <Label mb={15}>There are {eventsInRoom.length} events in 2d5d9a98-aaca-4434-959d-99d20e675d3a</Label>
             <Label mb={15}>We have {dealers.length ?? "..."} dealers</Label>
             <Button onPress={() => dispatch(logout())}>Log-out</Button>
-            <TimeTravel />
+
             {/* Theme verifier. */}
             <View style={{ marginTop: 30, flexDirection: "row", flexWrap: "wrap" }}>
                 {Object.entries(theme).map(([name, color]) => (

@@ -1,15 +1,18 @@
 import Constants from "expo-constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-import { useEffect, useState } from "react";
+import moment from "moment";
+import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { useEffectOnce } from "usehooks-ts";
 
 import { withPlatform } from "../../hoc/withPlatform";
-import { useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { usePostDeviceRegistrationMutation } from "../../store/authorization.service";
+import { logFCMMessage } from "../../store/background.slice";
 
 export const NotificationManager = () => {
+    const dispatch = useAppDispatch();
     const [registerDevice] = usePostDeviceRegistrationMutation();
     const [expoPushToken, setExpoPushToken] = useState("");
     const token = useAppSelector((state) => state.authorization.token);
@@ -24,10 +27,23 @@ export const NotificationManager = () => {
         });
     });
 
+    const handleNotification = useCallback((notification: Notifications.Notification) => {
+        console.debug("Received a notification", notification.request.identifier, notification);
+
+        dispatch(
+            logFCMMessage({
+                dateReceived: moment().toISOString(),
+                content: notification.request.content,
+                identifier: notification.request.identifier,
+            })
+        );
+    }, []);
+
     useEffectOnce(() => {
         registerForPushNotifications().then((token) => setExpoPushToken(token));
 
         const notificationHAndlerSubscription = Notifications.addNotificationReceivedListener(handleNotification);
+        Notifications.addNotificationResponseReceivedListener(console.debug);
 
         return () => {
             Notifications.removeNotificationSubscription(notificationHAndlerSubscription);
@@ -50,10 +66,6 @@ export const NotificationManager = () => {
     }, [expoPushToken, token]);
 
     return null;
-};
-
-const handleNotification = (notification: Notifications.Notification) => {
-    console.debug("Received a notification", notification.request.identifier, notification);
 };
 
 const registerForPushNotifications = async (): Promise<string> => {

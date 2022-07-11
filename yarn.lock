@@ -4803,6 +4803,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"compare-urls@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "compare-urls@npm:2.0.0"
+  dependencies:
+    normalize-url: ^2.0.1
+  checksum: 706a305fcbafac63e3e3dafe71283b2fbef05ed18f64636e13bf201cdca164ff16463a7004023535497828f69b822ce44c3b43fcaa0e99d8976b26b1f326595c
+  languageName: node
+  linkType: hard
+
 "compare-versions@npm:^3.4.0":
   version: 3.6.0
   resolution: "compare-versions@npm:3.6.0"
@@ -5404,6 +5413,7 @@ __metadata:
     expo-notifications: ^0.15.4
     expo-status-bar: ~1.3.0
     expo-updates: ~0.13.3
+    expo-web-browser: ~10.2.1
     i18next: ^21.8.11
     jest: ^26.6.3
     jest-expo: ^45.0.1
@@ -6302,6 +6312,17 @@ __metadata:
   bin:
     expo-updates: bin/cli.js
   checksum: 05b5f0f6152dc75c0efccd739f9882ae1a2b31b8140bf655c495854101b59fd4620387ed7a8ab8bf5317d8d206a7737b52a5596763e1cf18ca5d538a0f197900
+  languageName: node
+  linkType: hard
+
+"expo-web-browser@npm:~10.2.1":
+  version: 10.2.1
+  resolution: "expo-web-browser@npm:10.2.1"
+  dependencies:
+    compare-urls: ^2.0.0
+  peerDependencies:
+    expo: "*"
+  checksum: 6097bb5ed3ef45947f782262240774fc29e683548fc934fae11194e596ac560242c225dcc8fd601aae808248dddf07e6647625553203f5cc10d5918c1208b19b
   languageName: node
   linkType: hard
 
@@ -7893,6 +7914,13 @@ __metadata:
   version: 3.0.3
   resolution: "is-path-inside@npm:3.0.3"
   checksum: abd50f06186a052b349c15e55b182326f1936c89a78bf6c8f2b707412517c097ce04bc49a0ca221787bc44e1049f51f09a2ffb63d22899051988d3a618ba13e9
+  languageName: node
+  linkType: hard
+
+"is-plain-obj@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "is-plain-obj@npm:1.1.0"
+  checksum: 0ee04807797aad50859652a7467481816cbb57e5cc97d813a7dcd8915da8195dc68c436010bf39d195226cde6a2d352f4b815f16f26b7bf486a5754290629931
   languageName: node
   linkType: hard
 
@@ -10273,6 +10301,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"normalize-url@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "normalize-url@npm:2.0.1"
+  dependencies:
+    prepend-http: ^2.0.0
+    query-string: ^5.0.1
+    sort-keys: ^2.0.0
+  checksum: 30e337ee03fc7f360c7d2b966438657fabd2628925cc58bffc893982fe4d2c59b397ae664fa2c319cd83565af73eee88906e80bc5eec91bc32b601920e770d75
+  languageName: node
+  linkType: hard
+
 "npm-package-arg@npm:^7.0.0":
   version: 7.0.0
   resolution: "npm-package-arg@npm:7.0.0"
@@ -10940,6 +10979,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prepend-http@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "prepend-http@npm:2.0.0"
+  checksum: 7694a9525405447662c1ffd352fcb41b6410c705b739b6f4e3a3e21cf5fdede8377890088e8934436b8b17ba55365a615f153960f30877bf0d0392f9e93503ea
+  languageName: node
+  linkType: hard
+
 "prettier-linter-helpers@npm:^1.0.0":
   version: 1.0.0
   resolution: "prettier-linter-helpers@npm:1.0.0"
@@ -11121,6 +11167,17 @@ __metadata:
   version: 6.5.3
   resolution: "qs@npm:6.5.3"
   checksum: 6f20bf08cabd90c458e50855559539a28d00b2f2e7dddcb66082b16a43188418cb3cb77cbd09268bcef6022935650f0534357b8af9eeb29bf0f27ccb17655692
+  languageName: node
+  linkType: hard
+
+"query-string@npm:^5.0.1":
+  version: 5.1.1
+  resolution: "query-string@npm:5.1.1"
+  dependencies:
+    decode-uri-component: ^0.2.0
+    object-assign: ^4.1.0
+    strict-uri-encode: ^1.0.0
+  checksum: 4ac760d9778d413ef5f94f030ed14b1a07a1708dd13fd3bc54f8b9ef7b425942c7577f30de0bf5a7d227ee65a9a0350dfa3a43d1d266880882fb7ce4c434a4dd
   languageName: node
   linkType: hard
 
@@ -12445,6 +12502,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"sort-keys@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "sort-keys@npm:2.0.0"
+  dependencies:
+    is-plain-obj: ^1.0.0
+  checksum: f0fd827fa9f8f866e98588d2a38c35209afbf1e9a05bb0e4ceeeb8bbf31d923c8902b0a7e0f561590ddb65e58eba6a74f74b991c85360bcc52e83a3f0d1cffd7
+  languageName: node
+  linkType: hard
+
 "source-map-resolve@npm:^0.5.0":
   version: 0.5.3
   resolution: "source-map-resolve@npm:0.5.3"
@@ -12663,6 +12729,13 @@ __metadata:
   version: 2.2.0
   resolution: "stream-buffers@npm:2.2.0"
   checksum: 4587d9e8f050d689fb38b4295e73408401b16de8edecc12026c6f4ae92956705ecfd995ae3845d7fa3ebf19502d5754df9143d91447fd881d86e518f43882c1c
+  languageName: node
+  linkType: hard
+
+"strict-uri-encode@npm:^1.0.0":
+  version: 1.1.0
+  resolution: "strict-uri-encode@npm:1.1.0"
+  checksum: 9466d371f7b36768d43f7803f26137657559e4c8b0161fb9e320efb8edba3ae22f8e99d4b0d91da023b05a13f62ec5412c3f4f764b5788fac11d1fea93720bb3
   languageName: node
   linkType: hard
 

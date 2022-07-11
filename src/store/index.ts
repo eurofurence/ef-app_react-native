@@ -7,13 +7,13 @@ import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, R
 
 import { authorizationService } from "./authorization.service";
 import { authorizationSlice } from "./authorization.slice";
+import { backgroundSlice } from "./background.slice";
 import { eurofurenceCache } from "./eurofurence.cache";
 import { eurofurenceService } from "./eurofurence.service";
-import { notificationsSlice } from "./notifications.slice";
 import { timeTravelSlice } from "./timetravel.slice";
 
 export const reducers = combineReducers({
-    [notificationsSlice.name]: notificationsSlice.reducer,
+    [backgroundSlice.name]: backgroundSlice.reducer,
     [timeTravelSlice.name]: timeTravelSlice.reducer,
     [authorizationSlice.name]: authorizationSlice.reducer,
     [eurofurenceCache.name]: eurofurenceCache.reducer,
@@ -26,7 +26,7 @@ const persistedReducer = persistReducer(
         key: "root",
         version: 2,
         storage: AsyncStorage,
-        whitelist: [timeTravelSlice.name, eurofurenceService.reducerPath, notificationsSlice.name, authorizationSlice.name, eurofurenceCache.name],
+        whitelist: [timeTravelSlice.name, eurofurenceService.reducerPath, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name],
     },
     reducers
 );
@@ -38,6 +38,7 @@ const logger = createLogger({
             delete transformed._persist;
             delete transformed.authorizationService;
             delete transformed.eurofurenceService;
+            delete transformed.eurofurenceCache;
         }
         return transformed;
     },

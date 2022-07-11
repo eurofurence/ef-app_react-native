@@ -2,14 +2,14 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
+import { Label } from "../../components/Atoms/Label";
+import { Section } from "../../components/Atoms/Section";
+import { Button } from "../../components/Containers/Button";
+import { Col } from "../../components/Containers/Col";
+import { Row } from "../../components/Containers/Row";
 import { useNow } from "../../hooks/useNow";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { enableTimeTravel, ONE_DAY, ONE_HOUR, ONE_MINUTE, ONE_MONTH, ONE_WEEK, resetTravel, travelBackward, travelForward } from "../../store/timetravel.slice";
-import { Label } from "../Atoms/Label";
-import { Section } from "../Atoms/Section";
-import { Button } from "../Containers/Button";
-import { Col } from "../Containers/Col";
-import { Row } from "../Containers/Row";
 
 /**
  * A self-contained component to adjust time travel settings. Useful for development.
@@ -18,7 +18,11 @@ export const TimeTravel = () => {
     const dispatch = useAppDispatch();
     const { t } = useTranslation("TimeTravel");
     const [now] = useNow();
-    const { amount, enabled } = useAppSelector((state) => state.timetravel);
+    const { amount, enabled, visible } = useAppSelector((state) => state.timetravel);
+
+    if (!visible) {
+        return null;
+    }
 
     return (
         <View testID={"TimeTravel"}>
