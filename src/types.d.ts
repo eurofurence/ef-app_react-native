@@ -10,6 +10,7 @@ type Query<DataType = unknown, ArgsType = unknown> = {
     endpointName?: string;
     startedTimeStamp?: number;
     fulfilledTimeStamp?: number;
+    refetch: () => void;
 
     isUninitialized: boolean;
     isLoading: boolean;

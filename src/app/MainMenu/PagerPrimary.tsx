@@ -6,6 +6,7 @@ import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
 import { useAppSelector } from "../../store";
+import { PrivateMessageLinker } from "../PrivateMessages/PrivateMessageLinker";
 
 /**
  * Props to the pager.
@@ -27,14 +28,7 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
     return (
         <Col type="stretch">
             {loggedIn ? (
-                <View style={{ padding: 30 }}>
-                    <Text style={styles.marginBefore}>
-                        You have <Text style={{ fontWeight: "bold" }}>12</Text> new messages
-                    </Text>
-                    <Button containerStyle={styles.marginBefore} icon="mail-outline" onPress={onMessages}>
-                        Open messages
-                    </Button>
-                </View>
+                <PrivateMessageLinker onOpenMessages={onMessages} />
             ) : (
                 <View style={{ padding: 30 }}>
                     <Text style={styles.marginBefore}>You are currently not logged in</Text>

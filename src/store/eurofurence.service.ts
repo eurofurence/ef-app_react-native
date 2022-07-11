@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import _ from "lodash";
 import { REHYDRATE } from "redux-persist";
 
 import { enrichDealerRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
+    CommunicationRecord,
     DealerRecord,
     EnrichedDealerRecord,
     EnrichedImageRecord,
@@ -31,8 +33,19 @@ const tagsFromItem =
 
 export const eurofurenceService = createApi({
     reducerPath: "eurofurenceService",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://app.eurofurence.org/EF26" }),
-    tagTypes: ["Announcement", "Event", "Dealer", "EventDay", "EventTrack", "EventRoom", "Map", "KnowledgeGroup", "KnowledgeEntry", "Image"],
+    baseQuery: fetchBaseQuery({
+        baseUrl: "https://app.eurofurence.org/EF26",
+        prepareHeaders: (headers, { getState }) => {
+            const token: string | undefined = (getState() as any).authorization?.token;
+
+            if (token) {
+                headers.set("Authorization", `Bearer ${token}`);
+            }
+
+            return headers;
+        },
+    }),
+    tagTypes: ["Announcement", "Event", "Dealer", "EventDay", "EventTrack", "EventRoom", "Map", "KnowledgeGroup", "KnowledgeEntry", "Image", "Communication"],
     keepUnusedDataFor: 0,
     extractRehydrationInfo(action, { reducerPath }) {
         if (action.type === REHYDRATE && action.payload) {
@@ -120,6 +133,23 @@ export const eurofurenceService = createApi({
             providesTags: tagsFromList("Image"),
             transformResponse: (result: ImageRecord[]) => result.map(enrichImageRecord),
         }),
+        getCommunications: builder.query<CommunicationRecord[], void>({
+            query: () => "/Api/Communication/PrivateMessages",
+            providesTags: tagsFromList("Communication"),
+            transformResponse: (result: CommunicationRecord[]) => _.orderBy(result, (it) => it.CreatedDateTimeUtc, "desc"),
+        }),
+        markCommunicationRead: builder.mutation<boolean, RecordId>({
+            query: (arg) => ({
+                url: `/Api/Communication/PrivateMessages/${arg}/Read`,
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/json",
+                },
+                body: "true",
+                responseHandler: async (response: Response) => response.ok,
+            }),
+            invalidatesTags: (result, error, arg) => (result ? [{ type: "Communication", id: arg }] : []),
+        }),
     }),
 });
 
@@ -135,4 +165,6 @@ export const {
     useGetEventTrackByIdQuery,
     useGetEventRoomsQuery,
     useGetEventRoomByIdQuery,
+    useGetCommunicationsQuery,
+    useMarkCommunicationReadMutation,
 } = eurofurenceService;

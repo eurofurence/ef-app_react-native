@@ -6,6 +6,8 @@ import { StyleSheet, View } from "react-native";
 import { OpenFursuitGames } from "../components/Utilities/OpenFursuitGames";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { ScreenEvent, ScreenEventParams } from "./Events/ScreenEvent";
+import { PrivateMessageItemParams, PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
+import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
 import { SettingsScreen } from "./Settings/SettingsScreen";
 
@@ -29,6 +31,8 @@ export type ScreenStartNavigatorParamsList = {
     About: ScreenEmptyParams;
 
     Settings: ScreenEmptyParams;
+    PrivateMessageList: ScreenEmptyParams;
+    PrivateMessageItem: PrivateMessageItemParams;
 };
 
 const ScreenStartNavigator = createStackNavigator<ScreenStartNavigatorParamsList>();
@@ -47,6 +51,8 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
                     <ScreenStartNavigator.Screen name="Event" component={ScreenEvent} />
                     <ScreenStartNavigator.Screen name="About" component={ScreenEmpty} />
                     <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
+                    <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />
+                    <ScreenStartNavigator.Screen name="PrivateMessageItem" component={PrivateMessageItemScreen} />
                 </ScreenStartNavigator.Navigator>
             </View>
         </NavigationContainer>
