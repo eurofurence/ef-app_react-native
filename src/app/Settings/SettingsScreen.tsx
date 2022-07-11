@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
@@ -14,7 +14,7 @@ export const SettingsScreen = () => {
     const top = useSafeAreaInsets()?.top;
     const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
     return (
-        <View>
+        <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>Settings</Header>
             <Scroller>
                 <Section title={"Developer Settings"} icon={"bug"} />

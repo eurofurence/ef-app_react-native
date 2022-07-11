@@ -44,7 +44,7 @@ export type ScreenStartProps = object;
 export const ScreenStart: FC<ScreenStartProps> = () => {
     return (
         <NavigationContainer>
-            <View style={StyleSheet.absoluteFill}>
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: "green" }]}>
                 <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
                     <ScreenStartNavigator.Screen name="Event" component={EventScreen} />

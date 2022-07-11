@@ -1,7 +1,6 @@
-import { useRoute } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC, useEffect, useMemo } from "react";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
@@ -31,7 +30,7 @@ export const PrivateMessageItemScreen: FC<PrivateMessageItemProps> = ({ route })
     }, [params.message]);
 
     return (
-        <View>
+        <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>{params.message.Subject}</Header>
             <Scroller>
                 <Text>{params.message.Message}</Text>
