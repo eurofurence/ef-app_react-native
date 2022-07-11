@@ -23,7 +23,7 @@ export const PrivateMessageListScreen = () => {
     const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
 
     return (
-        <View>
+        <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>Private Messages</Header>
             <Scroller refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
                 {data?.map((message) => (
