@@ -108,6 +108,11 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     const top = useSafeAreaInsets()?.top;
     const pagesStyle = useMemo(() => ({ paddingTop: top }), [top]);
 
+    // Ignore rendering if data is not loaded to prevent jumping on initialization.
+    if (actualType === "days" && !days?.length) return null;
+    if (actualType === "tracks" && !tracks?.length) return null;
+    if (actualType === "rooms" && !rooms?.length) return null;
+
     // If the screens require too much performance we should set detach to true again.
     return (
         <EventsSearchContext.Provider value={{ search, setSearch, results }}>

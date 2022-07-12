@@ -55,6 +55,7 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
                 renderItem={(entry: { item: EventRecord }) => (
                     <View key={entry.item.Id} style={{ padding: 10 }}>
                         <Button
+                            style={{ height: 60 }}
                             outline
                             onPress={() => navigateTo(entry.item)}
                             onLongPress={() => {
