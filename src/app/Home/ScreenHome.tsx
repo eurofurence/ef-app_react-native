@@ -10,15 +10,12 @@ import { Button } from "../../components/Containers/Button";
 import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
-import { LoadingIndicator } from "../../components/Utilities/LoadingIndicator";
-import { useSignalLoading } from "../../context/LoadingContext";
 import { useTheme } from "../../context/Theme";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { logout } from "../../store/authorization.slice";
 import { annoucenementsSelectors, dealersSelectors, eventsSelector } from "../../store/eurofurence.selectors";
 import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
-import { TimeTravel } from "../Settings/TimeTravel";
 
 /**
  * Params handled by the screen in route, nothing so far.

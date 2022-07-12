@@ -4,8 +4,6 @@ import { Image, Text } from "react-native";
 import { withPlatform } from "../../hoc/withPlatform";
 import { useAppSelector } from "../../store";
 import { imagesSelectors } from "../../store/eurofurence.selectors";
-import { useGetImagesQuery } from "../../store/eurofurence.service";
-import { EnrichedImageRecord } from "../../store/eurofurence.types";
 
 export const ImageSynchronizer = () => {
     const [isCaching, setIsCaching] = useState(false);

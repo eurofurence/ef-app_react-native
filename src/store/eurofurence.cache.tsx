@@ -1,5 +1,4 @@
 import { createEntityAdapter, createSlice, EntityAdapter, EntityState, PayloadAction } from "@reduxjs/toolkit";
-import { modelId } from "expo-device";
 import moment from "moment";
 
 import { enrichDealerRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";

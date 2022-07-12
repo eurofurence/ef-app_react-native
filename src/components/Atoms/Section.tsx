@@ -1,6 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { FC } from "react";
-import { StyleSheet, View, StyleProp, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { IoniconsNames } from "../../types/Ionicons";
 import { Col } from "../Containers/Col";

@@ -1,6 +1,6 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { FC, useEffect, useMemo } from "react";
-import { StyleSheet, View, Text, ViewProps } from "react-native";
+import { StyleSheet, Text, View, ViewProps } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
