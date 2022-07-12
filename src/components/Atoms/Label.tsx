@@ -87,7 +87,7 @@ const types = StyleSheet.create({
     },
     caption: {
         fontSize: 14,
-        fontWeight: "bold",
+        fontWeight: "600",
     },
     regular: {
         fontSize: 14,

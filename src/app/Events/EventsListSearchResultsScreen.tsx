@@ -34,7 +34,7 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
             navigation={navigation}
             events={results ?? []}
             leader={
-                <View style={{ paddingHorizontal: 30, paddingBottom: 30 }}>
+                <View style={{ paddingBottom: 30 }}>
                     <Section icon="search" title={search} subtitle={`${results?.length} results in total`} />
                     <Button icon="arrow-back-circle" onPress={onClear}>
                         Clear search

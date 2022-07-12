@@ -6,7 +6,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { TabsRef } from "../components/Containers/Tabs";
 import { createTabNavigator } from "../components/Navigators/TabsNavigator";
-import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
+import { ScreenEmptyParams } from "./Common/ScreenEmpty";
+import { DealersListAllScreen, DealersListAllScreenParams } from "./Dealers/DealersListAllScreen";
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { ScreenHome, ScreenHomeParams } from "./Home/ScreenHome";
 import { MainMenu } from "./MainMenu/MainMenu";
@@ -29,7 +30,7 @@ export type ScreenAreasNavigatorParamsList = {
     /**
      * Dealers list.
      */
-    Dealers: ScreenEmptyParams;
+    Dealers: DealersListAllScreenParams;
 
     /**
      * Settings Screen.
@@ -62,7 +63,7 @@ export const ScreenAreas: FC<ScreenAreasProps> = () => {
             <AreasNavigator.Navigator tabsStyle={tabsStyle} more={(tabs: RefObject<TabsRef>) => <MainMenu tabs={tabs} />}>
                 <AreasNavigator.Screen name="Home" options={{ title: "Home", icon: "home" }} component={ScreenHome} />
                 <AreasNavigator.Screen name="Events" options={{ title: "Events", icon: "calendar" }} component={EventsTabsScreen} />
-                <AreasNavigator.Screen name="Dealers" options={{ title: "Dealers", icon: "cart-outline" }} component={ScreenEmpty} />
+                <AreasNavigator.Screen name="Dealers" options={{ title: "Dealers", icon: "cart-outline" }} component={DealersListAllScreen} />
             </AreasNavigator.Navigator>
         </View>
     );

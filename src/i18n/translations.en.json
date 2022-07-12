@@ -10,6 +10,11 @@
   "Events": {
     "when": "{{ day }}, {{ start }} until {{ finish }}."
   },
+  "Dealers": {
+    "attends_thu": "Thursday",
+    "attends_fri": "Friday",
+    "attends_sat": "Saturday"
+  },
   "TimeTravel": {
     "title": "Time Travel",
     "subtitle": "Adjust time settings for testing and debugging",

@@ -1,16 +1,11 @@
-import { CompositeScreenProps } from "@react-navigation/core";
-import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
-import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
-import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
 import { EventTrackRecord } from "../../store/eurofurence.types";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
 import { EventsListGeneric } from "./EventsListGeneric";
-import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -23,24 +18,14 @@ export type EventsListByTrackScreenParams = {
 };
 
 /**
- * The properties to the screen as a component.
+ * The properties to the screen as a component. TODO: Unify and verify types.
  */
-export type EventsListByTrackScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type EventsListByTrackScreenProps = EventsListByDayScreenProps;
 
 export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ navigation, route }) => {
     // Get the track. Use it to resolve events to display.
     const track = "track" in route.params ? route.params?.track : null;
     const eventsByTrack = useAppSelector((state) => eventsSelector.selectByTrack(state, track?.Id ?? ""));
 
-    return (
-        <EventsListGeneric
-            navigation={navigation}
-            events={eventsByTrack}
-            leader={
-                <View style={{ paddingHorizontal: 30 }}>
-                    <Section title={track?.Name ?? ""} subtitle={`${eventsByTrack.length} events in total`} />
-                </View>
-            }
-        />
-    );
+    return <EventsListGeneric navigation={navigation} events={eventsByTrack} leader={<Section title={track?.Name ?? ""} subtitle={`${eventsByTrack.length} events in total`} />} />;
 };

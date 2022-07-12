@@ -9,5 +9,10 @@
   },
   "Events": {
     "when": "{{ day }}, van {{ start }} tot {{ finish }}."
+  },
+  "Dealers": {
+    "attends_thu": "Donderdag",
+    "attends_fri": "Vrijdag",
+    "attends_sat": "Zaterdag"
   }
 }

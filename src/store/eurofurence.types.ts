@@ -32,8 +32,9 @@ export type AnnouncementRecord = RecordMetadata & {
 
 export type EventRecord = RecordMetadata & {
     Title: string;
-    StartDateTimeUtc: DateTimeString;
 
+    // TODO: Unverified API data type, carried from last version. Please review
+    // as soon as a proper API specification is presented.
     Slug?: string;
     SubTitle?: string;
     Abstract?: string;
@@ -42,9 +43,10 @@ export type EventRecord = RecordMetadata & {
     ConferenceRoomId?: string;
     Description?: string;
     Duration?: string;
-    StartTime?: string;
-    EndTime?: string;
-    EndDateTimeUtc?: string;
+    StartTime: string;
+    StartDateTimeUtc: DateTimeString;
+    EndTime: string;
+    EndDateTimeUtc: DateTimeString;
     PanelHosts?: string;
     IsDeviatingFromConBook?: boolean;
     IsAcceptingFeedback?: boolean;
@@ -58,6 +60,23 @@ export type DealerRecord = RecordMetadata & {
     ArtistImageId?: RecordId;
     ArtistThumbnailImageId?: RecordId;
     ArtPreviewImageId?: RecordId;
+
+    // TODO: Unverified API data type, carried from last version. Please review
+    // as soon as a proper API specification is presented.
+    AttendeeNickname: string;
+    DisplayName: string;
+    Merchandise: string;
+    ShortDescription?: string;
+    AboutTheArtistText?: string;
+    AboutTheArtText?: string;
+    TwitterHandle?: string;
+    TelegramHandle?: string;
+    AttendsOnThursday?: boolean;
+    AttendsOnFriday?: boolean;
+    AttendsOnSaturday?: boolean;
+    ArtPreviewCaption?: string;
+    IsAfterDark?: boolean;
+    Categories?: string[];
 };
 
 export type EnrichedDealerRecord = DealerRecord & {
