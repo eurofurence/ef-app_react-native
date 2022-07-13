@@ -1,13 +1,11 @@
-import { StackScreenProps } from "@react-navigation/stack";
-import { FC, useMemo } from "react";
+import { useRoute } from "@react-navigation/core";
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
+import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence.selectors";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
 import { DealerContent } from "./DealerContent";
 
 /**
@@ -20,18 +18,10 @@ export type DealerScreenParams = {
     id: string;
 };
 
-/**
- * Properties to the screen as a component.
- */
-export type DealerScreenProps = StackScreenProps<ScreenStartNavigatorParamsList, "Dealer">;
-
-export const DealerScreen: FC<DealerScreenProps> = ({ route }) => {
-    // @ts-expect-error derivative
+export const DealerScreen = () => {
+    const route = useRoute<Route<DealerScreenParams, "Dealer">>();
     const dealer = useAppSelector((state) => dealersSelectors.selectById(state, route.params.id));
-
-    // TODO Shared pattern.
-    const top = useSafeAreaInsets()?.top;
-    const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
+    const headerStyle = useTopHeaderStyle();
 
     return (
         <View style={StyleSheet.absoluteFill}>

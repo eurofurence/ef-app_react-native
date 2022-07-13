@@ -3,7 +3,7 @@ import { createContext, FC, useCallback, useContext, useEffect, useMemo, useStat
 import { Vibration } from "react-native";
 
 import { useAppDispatch, useAppSelector } from "../../store";
-import { applySync, resetCache } from "../../store/eurofurence.cache";
+import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
 import { PlatformImageSynchronizer } from "./ImageSynchronizer";
 
 type SynchronizationProviderProps = {
@@ -41,6 +41,7 @@ export const SynchronizationProvider: FC = ({ children }) => {
     }, [dispatch]);
 
     const synchronize = useCallback(() => {
+        dispatch(startCacheSync());
         Vibration.vibrate(150);
         setCount((c) => c + 1);
     }, []);
