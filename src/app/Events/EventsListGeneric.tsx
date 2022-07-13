@@ -1,4 +1,3 @@
-import { clone } from "lodash";
 import moment, { Moment } from "moment";
 import { FC, ReactNode, useCallback, useState } from "react";
 import { FlatList, ImageSourcePropType, StyleSheet, Vibration, View } from "react-native";
@@ -6,7 +5,7 @@ import { FlatList, ImageSourcePropType, StyleSheet, Vibration, View } from "reac
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { createImageUrl } from "../../store/eurofurence.enrichers";
-import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
+import { eventRoomsSelectors } from "../../store/eurofurence.selectors";
 import { EventRecord } from "../../store/eurofurence.types";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
@@ -28,25 +27,17 @@ export type EventsListGenericProps = {
 export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer }) => {
     const [now] = useNow();
 
-    // Use events,days, tracks, and rooms.
-    const days = useAppSelector(eventDaysSelectors.selectAll);
-    const tracks = useAppSelector(eventTracksSelectors.selectAll);
-    const rooms = useAppSelector(eventRoomsSelectors.selectAll);
-
     // Set event for action sheet
     const [selectedEvent, setSelectedEvent] = useState<EventRecord | undefined>(undefined);
+    const rooms = useAppSelector(eventRoomsSelectors.selectAll);
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(
-        (event) =>
+        (event: EventRecord) =>
             navigation.push("Event", {
                 id: event.Id,
-                event: clone(event),
-                day: clone(days.find((day) => day.Id === event.ConferenceDayId)),
-                track: clone(tracks.find((track) => track.Id === event.ConferenceTrackId)),
-                room: clone(rooms.find((room) => room.Id === event.ConferenceRoomId)),
             }),
-        [navigation, tracks, rooms]
+        [navigation]
     );
 
     return (

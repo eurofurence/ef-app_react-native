@@ -3,6 +3,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { TokenRegSysRequest, TokenRegSysResponse, TokenWhoAmIResponse } from "./authorization.types";
 import { RecordId, RecordMetadata } from "./eurofurence.types";
 
+type NewPrivateMessage = {
+    RecipientUid: string;
+    AuthorName: string;
+    Subject: string;
+    Message: string;
+};
+
 export const authorizationService = createApi({
     reducerPath: "authorizationService",
     baseQuery: fetchBaseQuery({
@@ -47,6 +54,19 @@ export const authorizationService = createApi({
                 },
             }),
         }),
+        createSyncRequest: builder.mutation({
+            query: () => ({
+                url: "/Api/PushNotifications/SyncRequest",
+                method: "POST",
+            }),
+        }),
+        sendPrivateMessage: builder.mutation<string, NewPrivateMessage>({
+            query: (args) => ({
+                url: "/Api/Communication/PrivateMessages",
+                method: "POST",
+                body: args,
+            }),
+        }),
     }),
 });
 
@@ -72,4 +92,4 @@ export const filterByIds =
         records: query.data?.filter((it) => it.Id in ids) ?? [],
     });
 
-export const { usePostTokenMutation, useGetWhoAmIQuery, usePostDeviceRegistrationMutation } = authorizationService;
+export const { usePostTokenMutation, useGetWhoAmIQuery, usePostDeviceRegistrationMutation, useCreateSyncRequestMutation, useSendPrivateMessageMutation } = authorizationService;

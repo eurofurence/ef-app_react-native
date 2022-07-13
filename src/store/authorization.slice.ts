@@ -6,6 +6,7 @@ import { TokenRegSysResponse } from "./authorization.types";
 type AuthorizationState = {
     token?: string;
     username?: string;
+    uid?: string;
     tokenValidUntil?: string;
     isLoggedIn: boolean;
     isExpired: boolean;
@@ -31,6 +32,7 @@ export const authorizationSlice = createSlice({
             state.token = payload.Token;
             state.username = payload.Username;
             state.tokenValidUntil = payload.TokenValidUntil;
+            state.uid = payload.Uid;
             state.isLoggedIn = true;
             state.isExpired = false;
         });

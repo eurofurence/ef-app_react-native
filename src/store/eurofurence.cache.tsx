@@ -91,7 +91,7 @@ export const mapsAdapter = createEntityAdapter<EnrichedMapRecord>({
 });
 type EurofurenceCacheState = {
     lastSynchronised: string;
-    state: "uninitialized" | "preview" | string;
+    state: "uninitialized" | "preview" | "refreshing" | string;
     events: EntityState<EventRecord>;
     eventDays: EntityState<EventDayRecord>;
     eventRooms: EntityState<EventRoomRecord>;
@@ -159,7 +159,13 @@ export const eurofurenceCache = createSlice({
             syncEntities(state.announcements, announcementsAdapter, action.payload.Announcements, undefined);
             syncEntities(state.maps, mapsAdapter, action.payload.Maps, enrichMapRecord);
         },
+        resetCache: () => {
+            return initialState;
+        },
+        startCacheSync: (state) => {
+            state.state = "refreshing";
+        },
     },
 });
 
-export const { applySync } = eurofurenceCache.actions;
+export const { applySync, resetCache, startCacheSync } = eurofurenceCache.actions;

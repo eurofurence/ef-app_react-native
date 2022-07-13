@@ -3,7 +3,9 @@ import { View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
+import { Button } from "../../components/Containers/Button";
 import { useAppSelector } from "../../store";
+import { useCreateSyncRequestMutation } from "../../store/authorization.service";
 
 export const RemoteMessages = () => {
     const messages = useAppSelector((state) => state.background.fcmMessages);

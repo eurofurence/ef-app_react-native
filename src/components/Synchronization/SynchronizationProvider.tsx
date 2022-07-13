@@ -3,7 +3,7 @@ import { createContext, FC, useCallback, useContext, useEffect, useMemo, useStat
 import { Vibration } from "react-native";
 
 import { useAppDispatch, useAppSelector } from "../../store";
-import { applySync } from "../../store/eurofurence.cache";
+import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
 import { PlatformImageSynchronizer } from "./ImageSynchronizer";
 
 type SynchronizationProviderProps = {
@@ -11,9 +11,15 @@ type SynchronizationProviderProps = {
      * Call this function to trigger a synchronization step.
      */
     synchronize: () => void;
+
+    /**
+     * Clear the entire cache and start over again.
+     */
+    clear: () => void;
 };
 const SynchronizationContext = createContext<SynchronizationProviderProps>({
     synchronize: noop,
+    clear: noop,
 });
 
 export const SynchronizationProvider: FC = ({ children }) => {
@@ -28,14 +34,22 @@ export const SynchronizationProvider: FC = ({ children }) => {
             .catch(console.error);
     }, [count]);
 
+    const clearCache = useCallback(() => {
+        Vibration.vibrate(400);
+        dispatch(resetCache());
+        synchronize();
+    }, [dispatch]);
+
     const synchronize = useCallback(() => {
+        dispatch(startCacheSync());
         Vibration.vibrate(150);
         setCount((c) => c + 1);
     }, []);
 
     const providerValues = useMemo(
-        () => ({
+        (): SynchronizationProviderProps => ({
             synchronize,
+            clear: clearCache,
         }),
         [synchronize]
     );
