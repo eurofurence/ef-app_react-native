@@ -1,6 +1,5 @@
-import { clone } from "lodash";
-import { FC, ReactNode, useCallback, useState } from "react";
-import { FlatList, StyleSheet, Vibration, View } from "react-native";
+import { FC, ReactNode, useCallback } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
 
 import { Button } from "../../components/Containers/Button";
 import { EnrichedDealerRecord } from "../../store/eurofurence.types";
@@ -20,15 +19,10 @@ export type DealersListGenericProps = {
 };
 
 export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, leader, dealers, trailer }) => {
-    // Set dealer for action sheet
-    const [selectedDealer, setSelectedDealer] = useState<EnrichedDealerRecord | undefined>(undefined);
-
-    // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(
         (dealer) =>
             navigation.push("Dealer", {
                 id: dealer.Id,
-                dealer: clone(dealer),
             }),
         [navigation]
     );
@@ -42,21 +36,12 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
                 data={dealers}
                 renderItem={(entry: { item: EnrichedDealerRecord }) => (
                     <View key={entry.item.Id} style={{ padding: 10 }}>
-                        <Button
-                            style={{ height: 60 }}
-                            outline
-                            onPress={() => navigateTo(entry.item)}
-                            onLongPress={() => {
-                                Vibration.vibrate(50);
-                                setSelectedDealer(entry.item);
-                            }}
-                        >
+                        <Button style={{ height: 60 }} outline onPress={() => navigateTo(entry.item)}>
                             {entry.item.DisplayName || entry.item.AttendeeNickname}
                         </Button>
                     </View>
                 )}
             />
-            {/*<EventActionsSheet eventRecord={selectedEvent} onClose={() => setSelectedEvent(undefined)} />*/}
         </View>
     );
 };

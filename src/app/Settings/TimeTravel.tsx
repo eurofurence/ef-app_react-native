@@ -18,11 +18,7 @@ export const TimeTravel = () => {
     const dispatch = useAppDispatch();
     const { t } = useTranslation("TimeTravel");
     const [now] = useNow();
-    const { amount, enabled, visible } = useAppSelector((state) => state.timetravel);
-
-    if (!visible) {
-        return null;
-    }
+    const { amount, enabled } = useAppSelector((state) => state.timetravel);
 
     return (
         <View testID={"TimeTravel"}>

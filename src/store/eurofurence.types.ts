@@ -83,6 +83,7 @@ export type EnrichedDealerRecord = DealerRecord & {
     ArtistImageUrl?: ImageUrl;
     ArtistThumbnailImageUrl?: ImageUrl;
     ArtPreviewImageUrl?: ImageUrl;
+    FullName: string;
 };
 
 export type EventDayRecord = RecordMetadata & {
