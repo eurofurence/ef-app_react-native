@@ -7,6 +7,7 @@ import { Section } from "../../components/Atoms/Section";
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
 import { CacheStats } from "./CacheStats";
+import { DevButtons } from "./DevButtons";
 import { RemoteMessages } from "./RemoteMessages";
 import { PlatformScheduledNotifications } from "./ScheduledNotifications";
 import { TimeTravel } from "./TimeTravel";
@@ -25,6 +26,7 @@ export const SettingsScreen = () => {
                 <TimeTravel />
                 <PlatformScheduledNotifications />
                 <RemoteMessages />
+                <DevButtons />
             </Scroller>
         </View>
     );
