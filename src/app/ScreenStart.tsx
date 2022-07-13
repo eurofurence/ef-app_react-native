@@ -4,6 +4,7 @@ import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
+import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen, EventScreenParams } from "./Events/EventScreen";
 import { PrivateMessageItemParams, PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
@@ -23,6 +24,11 @@ export type ScreenStartNavigatorParamsList = {
      * Detail screen for events.
      */
     Event: EventScreenParams;
+
+    /**
+     * Detail screen for dealer.
+     */
+    Dealer: DealerScreenParams;
 
     /**
      * About page.
@@ -48,6 +54,7 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
                 <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
                     <ScreenStartNavigator.Screen name="Event" component={EventScreen} />
+                    <ScreenStartNavigator.Screen name="Dealer" component={DealerScreen} />
                     <ScreenStartNavigator.Screen name="About" component={ScreenEmpty} />
                     <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />

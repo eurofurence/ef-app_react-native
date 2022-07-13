@@ -1,7 +1,7 @@
 import { clone } from "lodash";
 import moment, { Moment } from "moment";
 import { FC, ReactNode, useCallback, useState } from "react";
-import { FlatList, ImageSourcePropType, StyleSheet, Vibration, View } from "react-native";
+import { ImageSourcePropType, SectionList, StyleSheet, Vibration, View } from "react-native";
 
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
@@ -10,22 +10,25 @@ import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from ".
 import { EventRecord } from "../../store/eurofurence.types";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
+import { EventSection, EventSectionProps } from "./EventSection";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
+
+export type EventsSectionedListItem = EventSectionProps & { data: EventRecord[] };
 
 /**
  * The properties to the component.
  */
-export type EventsListGenericProps = {
+export type EventsSectionedListGenericProps = {
     /**
      * Navigation type. Copied from the screens rendering this component.
      */
     navigation: EventsListByDayScreenProps["navigation"];
     leader?: ReactNode;
-    events: EventRecord[];
+    eventsGroups: EventsSectionedListItem[];
     trailer?: ReactNode;
 };
 
-export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer }) => {
+export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ navigation, leader, eventsGroups, trailer }) => {
     const [now] = useNow();
 
     // Use events,days, tracks, and rooms.
@@ -51,14 +54,15 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <FlatList
+            <SectionList
                 style={styles.list}
                 contentContainerStyle={styles.container}
                 scrollEnabled={true}
                 ListHeaderComponent={<>{leader}</>}
                 ListFooterComponent={<>{trailer}</>}
-                data={events}
+                sections={eventsGroups}
                 keyExtractor={(item) => item.Id}
+                renderSectionHeader={({ section }) => <EventSection timeUtc={section.timeUtc} />}
                 renderItem={(entry: { item: EventRecord }) => (
                     <EventCard
                         key={entry.item.Id}

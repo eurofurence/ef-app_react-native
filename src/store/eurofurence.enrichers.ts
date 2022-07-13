@@ -1,6 +1,7 @@
 import { DealerRecord, EnrichedDealerRecord, EnrichedImageRecord, EnrichedMapRecord, ImageRecord, ImageUrl, MapRecord } from "./eurofurence.types";
 
-const createImageUrl = (imageId: string | undefined): ImageUrl | undefined => imageId && `https://app.eurofurence.org/EF26/Api/Images/${imageId}/Content`;
+// TODO: If this is still necessary, this should be exported somewhere proper.
+export const createImageUrl = (imageId: string | undefined): ImageUrl | undefined => imageId && `https://app.eurofurence.org/EF26/Api/Images/${imageId}/Content`;
 
 export const enrichDealerRecord = (record: DealerRecord): EnrichedDealerRecord => ({
     ...record,

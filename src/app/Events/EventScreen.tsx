@@ -5,8 +5,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
-import { useSignalLoading } from "../../context/LoadingContext";
-import { useGetEventByIdQuery, useGetEventDayByIdQuery, useGetEventRoomByIdQuery, useGetEventTrackByIdQuery } from "../../store/eurofurence.service";
+import { useAppSelector } from "../../store";
+import { eventDaysSelectors, eventRoomsSelectors, eventsSelector, eventTracksSelectors } from "../../store/eurofurence.selectors";
 import { EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord } from "../../store/eurofurence.types";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
 import { EventContent } from "./EventContent";
@@ -51,28 +51,25 @@ export const EventScreen: FC<EventScreenProps> = ({ route }) => {
     // Use the ID param.
     const id = route.params.id;
 
-    // Get the passed event or resolve remotely. If given in the route parameters, the query will not be executed.
+    // Get the passed event or resolve from state.
     const eventParam = route.params.event;
-    const eventRemote = useGetEventByIdQuery(id as string, { skip: !!eventParam || !id });
-    const event = useMemo(() => eventParam ?? eventRemote.data, [eventParam, eventRemote]);
+    const eventRemote = useAppSelector((state) => (!eventParam && id ? eventsSelector.selectById(state, id) : undefined));
+    const event = useMemo(() => eventParam ?? eventRemote, [eventParam, eventRemote]);
 
     // Get or use day.
     const dayParam = route.params.day;
-    const dayRemote = useGetEventDayByIdQuery(event?.ConferenceDayId as string, { skip: !!dayParam || !event?.ConferenceDayId });
-    const day = useMemo(() => dayParam ?? dayRemote.data, [dayParam, dayRemote]);
+    const dayRemote = useAppSelector((state) => (!dayParam && event?.ConferenceDayId ? eventDaysSelectors.selectById(state, event.ConferenceDayId) : undefined));
+    const day = useMemo(() => dayParam ?? dayRemote, [dayParam, dayRemote]);
 
     // Get or use track.
     const trackParam = route.params.track;
-    const trackRemote = useGetEventTrackByIdQuery(event?.ConferenceTrackId as string, { skip: !!trackParam || !event?.ConferenceTrackId });
-    const track = useMemo(() => trackParam ?? trackRemote.data, [trackParam, trackRemote]);
+    const trackRemote = useAppSelector((state) => (!trackParam && event?.ConferenceTrackId ? eventTracksSelectors.selectById(state, event.ConferenceTrackId) : undefined));
+    const track = useMemo(() => trackParam ?? trackRemote, [trackParam, trackRemote]);
 
     // Get or use room.
     const roomParam = route.params.room;
-    const roomRemote = useGetEventRoomByIdQuery(event?.ConferenceRoomId as string, { skip: !!trackParam || !event?.ConferenceRoomId });
-    const room = useMemo(() => roomParam ?? roomRemote.data, [roomParam, roomRemote]);
-
-    // Signal if any query is active.
-    useSignalLoading(eventRemote.isFetching || dayRemote.isFetching || trackRemote.isFetching || roomRemote.isFetching);
+    const roomRemote = useAppSelector((state) => (!roomParam && event?.ConferenceRoomId ? eventRoomsSelectors.selectById(state, event.ConferenceRoomId) : undefined));
+    const room = useMemo(() => roomParam ?? roomRemote, [roomParam, roomRemote]);
 
     // TODO Shared pattern.
     const top = useSafeAreaInsets()?.top;
