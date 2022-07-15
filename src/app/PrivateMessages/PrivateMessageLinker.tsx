@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Button } from "../../components/Containers/Button";
@@ -13,6 +14,7 @@ type PrivateMessageLinkerProps = {
  * @constructor
  */
 export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMessages }) => {
+    const { t } = useTranslation("Menu");
     const { unread } = useGetCommunicationsQuery(undefined, {
         pollingInterval: 10000,
         selectFromResult: (query) => ({
@@ -22,11 +24,9 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMess
     });
     return (
         <View style={{ padding: 30 }}>
-            <Text style={styles.marginBefore}>
-                You have <Text style={{ fontWeight: "bold" }}>{unread?.length}</Text> new messages
-            </Text>
+            <Text style={styles.marginBefore}>{t("messages", { count: unread?.length ?? 0 })}</Text>
             <Button containerStyle={styles.marginBefore} icon="mail-outline" onPress={onOpenMessages}>
-                Open messages
+                {t("open_messages")}
             </Button>
         </View>
     );

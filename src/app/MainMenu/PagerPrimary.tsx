@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 import { Button } from "../../components/Containers/Button";
@@ -23,6 +24,7 @@ export type PagerMenuProps = {
 };
 
 export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings }) => {
+    const { t } = useTranslation("Menu");
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
 
     return (
@@ -31,19 +33,19 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
                 <PrivateMessageLinker onOpenMessages={onMessages} />
             ) : (
                 <View style={{ padding: 30 }}>
-                    <Text style={styles.marginBefore}>You are currently not logged in</Text>
+                    <Text style={styles.marginBefore}>{t("not_logged_in")}</Text>
                     <Button containerStyle={styles.marginBefore} icon="log-in" onPress={onLogin}>
-                        Log-in now
+                        {t("logged_in_now")}
                     </Button>
                 </View>
             )}
             <Grid cols={3} style={{ alignSelf: "stretch" }}>
-                <Tab icon="information-circle" text="Info articles" onPress={onInfo} />
-                <Tab icon="paw" text="Catch-em-all" onPress={onCatchEmAll} />
-                <Tab icon="book-outline" text="Services" onPress={onServices} />
-                <Tab icon="map" text="Maps" onPress={onMaps} />
-                <Tab icon="card-outline" text="About" onPress={onAbout} />
-                <Tab icon="cog" text="Settings" onPress={onSettings} />
+                <Tab icon="information-circle" text={t("info")} onPress={onInfo} />
+                <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />
+                <Tab icon="book-outline" text={t("services")} onPress={onServices} />
+                <Tab icon="map" text={t("maps")} onPress={onMaps} />
+                <Tab icon="card-outline" text={t("about")} onPress={onAbout} />
+                <Tab icon="cog" text={t("settings")} onPress={onSettings} />
             </Grid>
         </Col>
     );

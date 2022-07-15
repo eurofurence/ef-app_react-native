@@ -7,13 +7,43 @@
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events."
   },
+  "Menu": {
+    "not_logged_in": "You are currently not logged in",
+    "logged_in_now": "Log-in now",
+    "info": "Info articles",
+    "catch_em": "Catch-em-all",
+    "services": "Services",
+    "maps": "Maps",
+    "about": "About",
+    "settings": "Settings",
+    "messages": "You have {{count}} new messages",
+    "open_messages": "Open messages",
+    "home": "Home",
+    "events": "Events",
+    "dealers": "Dealers",
+    "more": "More",
+    "less": "Less"
+  },
   "Events": {
     "when": "{{ day }}, {{ start }} until {{ finish }}."
   },
   "Dealers": {
+    "dealers_at_convention" : "Dealers at Eurofurence",
+    "dealers_count": "{{count}} dealers"
+  },
+  "Dealer": {
+    "viewing_dealer": "Viewing dealer",
     "attends_thu": "Thursday",
     "attends_fri": "Friday",
-    "attends_sat": "Saturday"
+    "attends_sat": "Saturday",
+    "about": "About",
+    "about_the_art": "About the art",
+    "about_the_artist": "About the artist",
+    "attends": "Attends on",
+    "merchandise": "Merchandise",
+    "after_dark": "After dark",
+    "in_after_dark": "Located in the after dark section",
+    "categories": "Located in the after dark section"
   },
   "TimeTravel": {
     "title": "Time Travel",

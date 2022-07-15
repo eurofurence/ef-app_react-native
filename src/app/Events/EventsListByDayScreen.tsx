@@ -6,6 +6,7 @@ import { FC, useMemo } from "react";
 
 import { Section } from "../../components/Atoms/Section";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";
@@ -29,8 +30,11 @@ export type EventsListByDayScreenParams = {
 export type EventsListByDayScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigation, route }) => {
+    const [now] = useNow();
+
     // Get the day. Use it to resolve events to display.
     const day = "day" in route.params ? route.params?.day : null;
+    const isToday = useMemo(() => now.isSame(day?.Date, "day"), [now, day]);
     const eventsByDay = useAppSelector((state) => eventsCompleteSelector.selectByDay(state, day?.Id ?? ""));
     const eventsGroups = useMemo(() => {
         const groups: EventsSectionedListItem[] = [];
@@ -49,7 +53,12 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigati
         <EventsSectionedListGeneric
             navigation={navigation}
             eventsGroups={eventsGroups}
-            leader={<Section title={day?.Name ?? ""} subtitle={`${eventsByDay.length} events on ${moment(day?.Date).format("dddd")}`} />}
+            leader={
+                <Section
+                    title={day?.Name ?? ""}
+                    subtitle={isToday ? `${eventsByDay.length} events today` : `${eventsByDay.length} events on ${moment(day?.Date).format("dddd")}`}
+                />
+            }
         />
     );
 };

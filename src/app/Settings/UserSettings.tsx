@@ -1,12 +1,12 @@
 import { orderBy } from "lodash";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
-import { Row } from "../../components/Containers/Row";
+import { Col } from "../../components/Containers/Col";
 
 type Language = {
     code: string;
@@ -34,14 +34,20 @@ export const UserSettings = () => {
     return (
         <View>
             <Section title={t("settingsSection")} icon={"cog"} />
-            <Label mb={15}>{t("currentLanguage")}</Label>
-            <Row>
+            <Label>{t("currentLanguage")}</Label>
+            <Col type="stretch">
                 {languages.map((it) => (
-                    <Button onPress={changeLanguage(it.code)} key={it.code} outline={i18n.language === it.code}>
+                    <Button style={styles.marginBefore} onPress={changeLanguage(it.code)} key={it.code} outline={i18n.language === it.code}>
                         {it.name}
                     </Button>
                 ))}
-            </Row>
+            </Col>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    marginBefore: {
+        marginTop: 16,
+    },
+});

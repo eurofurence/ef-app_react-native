@@ -1,6 +1,7 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
@@ -28,6 +29,8 @@ export type DealersListAllScreenParams = {
 export type DealersListAllScreenProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Dealers">, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const DealersListAllScreen: FC<DealersListAllScreenProps> = ({ navigation }) => {
+    const { t } = useTranslation("Dealers");
+
     // Get the day. Use it to resolve events to display.
     const dealers = useAppSelector(dealersSelectors.selectAll);
 
@@ -37,7 +40,7 @@ export const DealersListAllScreen: FC<DealersListAllScreenProps> = ({ navigation
             dealers={dealers}
             leader={
                 <View style={{ paddingHorizontal: 30 }}>
-                    <Section title={"Dealers at Eurofurence"} subtitle={`${dealers.length} dealers`} />
+                    <Section title={t("dealers_at_convention")} subtitle={t("dealers_count", { count: dealers.length })} />
                 </View>
             }
         />

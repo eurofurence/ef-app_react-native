@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { StyleSheet, Vibration, View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";

@@ -48,6 +48,16 @@ export type TabsProps = {
     }[];
 
     /**
+     * Text to display for opening the menu.
+     */
+    textMore?: string;
+
+    /**
+     * Text to display for closing the menu.
+     */
+    textLess?: string;
+
+    /**
      * If true or node, indicator will be presented over the more button.
      */
     indicateMore?: true | ReactNode;
@@ -95,7 +105,7 @@ export type TabsRef = {
  * or dragging, translates it into view and overlays the containing view with
  * a semi-opaque layer.
  */
-export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore, onOpen, onClose, children }, ref) => {
+export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "More", textLess = "Less", indicateMore, onOpen, onClose, children }, ref) => {
     // Computed styles.
     const theme = useTheme();
     const styleDismiss = useMemo(() => ({ backgroundColor: theme.darken }), [theme]);
@@ -206,7 +216,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
                         {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
 
                         {/* More-tab. */}
-                        <Tab icon={isOpen ? "arrow-down-circle" : "menu"} text={isOpen ? "Less" : "More"} indicate={indicateMore} onPress={isOpen ? close : open} />
+                        <Tab icon={isOpen ? "arrow-down-circle" : "menu"} text={isOpen ? textLess : textMore} indicate={indicateMore} onPress={isOpen ? close : open} />
 
                         <Activity style={styles.activity} />
                     </View>

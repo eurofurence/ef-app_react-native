@@ -1,6 +1,7 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC, RefObject, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -54,16 +55,18 @@ export type ScreenAreasParams = NavigatorScreenParams<ScreenAreasNavigatorParams
 export type ScreenAreasProps = StackScreenProps<ScreenStartNavigatorParamsList>;
 
 export const ScreenAreas: FC<ScreenAreasProps> = () => {
+    const { t } = useTranslation("Menu");
+
     // Compute safe inset at the bottom and convert to style.
     const bottom = useSafeAreaInsets()?.bottom;
     const tabsStyle = useMemo(() => ({ paddingBottom: Math.max(bottom, 30) }), [bottom]);
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <AreasNavigator.Navigator tabsStyle={tabsStyle} more={(tabs: RefObject<TabsRef>) => <MainMenu tabs={tabs} />}>
-                <AreasNavigator.Screen name="Home" options={{ title: "Home", icon: "home" }} component={HomeScreen} />
-                <AreasNavigator.Screen name="Events" options={{ title: "Events", icon: "calendar" }} component={EventsTabsScreen} />
-                <AreasNavigator.Screen name="Dealers" options={{ title: "Dealers", icon: "cart-outline" }} component={DealersListAllScreen} />
+            <AreasNavigator.Navigator tabsStyle={tabsStyle} textMore={t("more")} textLess={t("less")} more={(tabs: RefObject<TabsRef>) => <MainMenu tabs={tabs} />}>
+                <AreasNavigator.Screen name="Home" options={{ title: t("home"), icon: "home" }} component={HomeScreen} />
+                <AreasNavigator.Screen name="Events" options={{ title: t("events"), icon: "calendar" }} component={EventsTabsScreen} />
+                <AreasNavigator.Screen name="Dealers" options={{ title: t("dealers"), icon: "cart-outline" }} component={DealersListAllScreen} />
             </AreasNavigator.Navigator>
         </View>
     );

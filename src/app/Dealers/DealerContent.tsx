@@ -16,7 +16,7 @@ export type DealerContentProps = {
 };
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
-    const { t } = useTranslation("Dealers");
+    const { t } = useTranslation("Dealer");
 
     const dealerDays = useMemo(() => {
         const result = [];
@@ -25,6 +25,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
         if (dealer.AttendsOnSaturday) result.push(t("attends_sat"));
         return result.join(", ");
     }, [dealer, t]);
+
     return (
         <Scroller>
             {!dealer.ArtistImageUrl ? null : (
@@ -33,32 +34,32 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
                 </View>
             )}
 
-            <Section icon="brush" title={dealer.DisplayName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
+            <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
             <Label type="para">{dealer.ShortDescription}</Label>
 
-            <Section icon="git-merge" title="About" />
-            <Label type="caption">Attends on</Label>
+            <Section icon="git-merge" title={t("about")} />
+            <Label type="caption">{t("attends")}</Label>
             <Label type="h3" mb={20}>
                 {dealerDays}
             </Label>
 
-            <Label type="caption">Merchandise</Label>
+            <Label type="caption">{t("merchandise")}</Label>
             <Label type="h3" mb={20}>
                 {dealer.Merchandise}
             </Label>
 
             {!dealer.IsAfterDark ? null : (
                 <>
-                    <Label type="caption">After dark</Label>
+                    <Label type="caption">{t("after_dark")}</Label>
                     <Label type="h3" mb={20}>
-                        Located in the after dark section
+                        {t("in_after_dark")}
                     </Label>
                 </>
             )}
 
             {!dealer.Categories?.length ? null : (
                 <>
-                    <Label type="caption">Categories</Label>
+                    <Label type="caption">{t("categories")}</Label>
                     <Label type="h3" mb={20}>
                         {dealer.Categories?.join(", ")}
                     </Label>
@@ -67,7 +68,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 
             {!dealer.AboutTheArtText && !dealer.ArtPreviewImageUrl ? null : (
                 <>
-                    <Section icon="film" title="About the art" />
+                    <Section icon="film" title={t("about_the_art")} />
 
                     {!dealer.ArtPreviewImageUrl ? null : (
                         <View style={styles.imageLine}>
@@ -85,7 +86,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 
             {!dealer.AboutTheArtistText && !dealer.ArtistImageId ? null : (
                 <>
-                    <Section icon="person-circle-outline" title="About the artist" />
+                    <Section icon="person-circle-outline" title={t("about_the_artist")} />
 
                     {!dealer.ArtistImageUrl ? null : (
                         <View style={styles.imageLine}>

@@ -1,4 +1,42 @@
 {
+  "Menu": {
+    "not_logged_in": "Du bist nicht angemeldet",
+    "logged_in_now": "Jetzt anmelden",
+    "info": "Infoartikel",
+    "catch_em": "Catch-em-all",
+    "services": "Services",
+    "maps": "Karten",
+    "about": "Über uns",
+    "settings": "Einstellungen",
+    "messages": "Du hast {{count}} neue Nachrichten",
+    "open_messages": "Nachrichten öffnen",
+    "home": "Start",
+    "events": "Events",
+    "dealers": "Dealer",
+    "more": "Mehr",
+    "less": "Zuklappen"
+  },
+  "Events": {
+    "when": "{{ day }}, {{ start }} bis {{ finish }}."
+  },
+  "Dealers": {
+    "dealers_at_convention": "Dealers an der Eurofurence",
+    "dealers_count": "{{count}} Dealer"
+  },
+  "Dealer": {
+    "viewing_dealer": "Betrachte Dealer",
+    "attends_thu": "Donnerstag",
+    "attends_fri": "Freitag",
+    "attends_sat": "Samstag",
+    "about": "Infos",
+    "about_the_art": "Über die Person",
+    "about_the_artist": "Über das Angebot",
+    "attends": "Anwesend",
+    "merchandise": "Angebot",
+    "after_dark": "After Dark",
+    "in_after_dark": "Im After Dark Bereich",
+    "categories": "Kategorien"
+  },
   "Settings": {
     "currentLanguage": "Ihre sprache ist Deutsch!",
     "settingsSection": "Einstellungen"

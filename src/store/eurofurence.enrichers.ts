@@ -17,7 +17,9 @@ export const enrichDealerRecord = (record: DealerRecord): EnrichedDealerRecord =
     ArtistImageUrl: internalCreateImageUrl(record.ArtistImageId),
     ArtistThumbnailImageUrl: internalCreateImageUrl(record.ArtistThumbnailImageId),
     ArtPreviewImageUrl: internalCreateImageUrl(record.ArtPreviewImageId),
-    FullName: record.DisplayName ?? record.AttendeeNickname,
+    // The full name uses logical instead of defined-ness based cut, as the display name is
+    // sometimes given as empty, which is defined but not wanted.
+    FullName: record.DisplayName || record.AttendeeNickname,
 });
 
 export const enrichMapRecord = (record: MapRecord): EnrichedMapRecord => ({

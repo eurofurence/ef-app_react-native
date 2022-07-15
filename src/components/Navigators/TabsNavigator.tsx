@@ -33,6 +33,16 @@ export type TabNavigatorProps = {
     more?: ReactNode | ((tabs: RefObject<TabsRef>) => ReactNode);
 
     /**
+     * Text to display for opening the menu.
+     */
+    textMore?: string;
+
+    /**
+     * Text to display for closing the menu.
+     */
+    textLess?: string;
+
+    /**
      * True if the more tab should indicate or a node of what it should indicate.
      */
     indicateMore?: boolean | ReactNode;
@@ -93,7 +103,17 @@ export type TabScreenProps<ParamList extends ParamListBase, RouteName extends ke
     route: RouteProp<ParamList, RouteName>;
 };
 
-export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
+export const TabNavigator: FC<TabNavigatorProps> = ({
+    more,
+    indicateMore,
+    textMore = "More",
+    textLess = "Less",
+    contentStyle,
+    tabsStyle,
+    initialRouteName,
+    children,
+    screenOptions,
+}) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -114,6 +134,8 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, conten
             <Tabs
                 style={tabsStyle}
                 ref={tabs}
+                textMore={textMore}
+                textLess={textLess}
                 indicateMore={indicateMore}
                 tabs={state.routes.map((route, i) => ({
                     active: state.index === i,
