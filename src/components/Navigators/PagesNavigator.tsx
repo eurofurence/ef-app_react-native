@@ -168,7 +168,9 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
             // Animate to the end position. If able to finish, sync navigation.
             offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished, current) => {
                 if (finished) {
-                    runOnJS(navigateTab)(navigation, typeof current === "number" ? Math.round(current) : index);
+                    // The callback apparently does not work as per spec, or the closure is not capturing the proper index. Therefore
+                    // we want to navigate to the actual endpoint rather than the index.
+                    runOnJS(navigateTab)(navigation, Math.round(current as number));
                 }
             });
         });

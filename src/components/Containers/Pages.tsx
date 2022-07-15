@@ -17,7 +17,7 @@ export type PagesProps = {
     style?: StyleProp<ViewStyle>;
 
     /**
-     * If given, page that are layed out.
+     * If given, page that are laid out.
      */
     pages: {
         /**

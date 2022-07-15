@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
+import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen, EventScreenParams } from "./Events/EventScreen";
@@ -47,9 +48,19 @@ const ScreenStartNavigator = createStackNavigator<ScreenStartNavigatorParamsList
  */
 export type ScreenStartProps = object;
 
+export const PERSISTENCE_KEY = `NAVIGATION_STATE`;
+
 export const ScreenStart: FC<ScreenStartProps> = () => {
+    // Get navigation state from persistence.
+    const [isReady, initialState, onStateChange] = useNavigationStatePersistence();
+
+    // If not yet loaded, skip rendering.
+    if (!isReady) {
+        return null;
+    }
+
     return (
-        <NavigationContainer>
+        <NavigationContainer initialState={initialState} onStateChange={onStateChange}>
             <View style={[StyleSheet.absoluteFill, { backgroundColor: "green" }]}>
                 <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
