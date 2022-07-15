@@ -18,10 +18,10 @@ export type EventsListGenericProps = {
     leader?: ReactNode;
     events: EventWithDetails[];
     trailer?: ReactNode;
-    renderPre?: (event: EventWithDetails, inv: boolean) => ReactNode;
+    cardType?: "duration" | "time";
 };
 
-export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer, renderPre }) => {
+export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer, cardType = "duration" }) => {
     // Set event for action sheet
     const [selectedEvent, setSelectedEvent] = useState<EventRecord | undefined>(undefined);
 
@@ -50,7 +50,7 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
                     <EventCard
                         key={entry.item.Id}
                         event={entry.item}
-                        renderPre={renderPre}
+                        type={cardType}
                         onPress={() => navigateTo(entry.item)}
                         onLongPress={() => {
                             Vibration.vibrate(50);

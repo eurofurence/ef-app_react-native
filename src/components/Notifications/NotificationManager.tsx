@@ -64,14 +64,18 @@ export const NotificationManager = () => {
             await registerDevice({
                 DeviceId: expoPushToken,
                 Topics: topics,
-            }).then(console.log, console.error);
+            });
+
+            console.debug("NotificationManager", "Subscribing via API", topics);
 
             for (const topic of topics) {
                 await subscribeToTopic({
                     DeviceId: expoPushToken,
                     Topic: topic,
-                }).then(console.log, console.error);
+                });
             }
+
+            console.debug("NotificationManager", "Completed subscriptions");
         })().catch(console.error);
     }, [expoPushToken, token]);
 

@@ -20,10 +20,10 @@ export type EventsSectionedListGenericProps = {
     leader?: ReactNode;
     eventsGroups: EventsSectionedListItem[];
     trailer?: ReactNode;
-    renderPre?: (event: EventWithDetails, inv: boolean) => ReactNode;
+    cardType?: "duration" | "time";
 };
 
-export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ navigation, leader, eventsGroups, trailer, renderPre }) => {
+export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ navigation, leader, eventsGroups, trailer, cardType = "duration" }) => {
     // Set event for action sheet
     const [selectedEvent, setSelectedEvent] = useState<EventWithDetails | undefined>(undefined);
 
@@ -47,7 +47,7 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
                     <EventCard
                         key={entry.item.Id}
                         event={entry.item}
-                        renderPre={renderPre}
+                        type={cardType}
                         onPress={() => navigateTo(entry.item)}
                         onLongPress={() => {
                             Vibration.vibrate(50);

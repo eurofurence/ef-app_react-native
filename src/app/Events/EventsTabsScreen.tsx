@@ -64,7 +64,6 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
 
     // Use to display results tab.
     const hasSearchResults = useEventsSearchHasResults();
-    console.log(hasSearchResults);
 
     // Convert given optional type to actual filter type.
     const actualType = useMemo(() => {
