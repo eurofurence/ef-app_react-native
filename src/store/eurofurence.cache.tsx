@@ -1,11 +1,12 @@
 import { createEntityAdapter, createSlice, EntityAdapter, EntityState, PayloadAction } from "@reduxjs/toolkit";
 import moment from "moment";
 
-import { enrichDealerRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
+import { enrichDealerRecord, enrichEventRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
     DealerRecord,
     EnrichedDealerRecord,
+    EnrichedEventRecord,
     EnrichedImageRecord,
     EnrichedMapRecord,
     EventDayRecord,
@@ -43,7 +44,7 @@ type SyncResponse = {
     Maps: EntitySyncState<MapRecord>;
 };
 
-export const eventsAdapter = createEntityAdapter<EventRecord>({
+export const eventsAdapter = createEntityAdapter<EnrichedEventRecord>({
     selectId: (model) => model.Id,
     sortComparer: (a, b) => moment(a.StartDateTimeUtc).subtract(b.StartDateTimeUtc).valueOf(),
 });
@@ -92,7 +93,7 @@ export const mapsAdapter = createEntityAdapter<EnrichedMapRecord>({
 type EurofurenceCacheState = {
     lastSynchronised: string;
     state: "uninitialized" | "preview" | "refreshing" | string;
-    events: EntityState<EventRecord>;
+    events: EntityState<EnrichedEventRecord>;
     eventDays: EntityState<EventDayRecord>;
     eventRooms: EntityState<EventRoomRecord>;
     eventTracks: EntityState<EventRoomRecord>;
@@ -148,7 +149,7 @@ export const eurofurenceCache = createSlice({
             state.lastSynchronised = action.payload.CurrentDateTimeUtc;
             state.state = action.payload.State;
 
-            syncEntities(state.events, eventsAdapter, action.payload.Events, undefined);
+            syncEntities(state.events, eventsAdapter, action.payload.Events, enrichEventRecord);
             syncEntities(state.eventDays, eventDaysAdapter, action.payload.EventConferenceDays, undefined);
             syncEntities(state.eventRooms, eventRoomsAdapter, action.payload.EventConferenceRooms, undefined);
             syncEntities(state.eventTracks, eventTracksAdapter, action.payload.EventConferenceTracks, undefined);

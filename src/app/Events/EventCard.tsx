@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { ImageSourcePropType } from "react-native";
+import { match } from "ts-pattern";
 
 import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
@@ -28,6 +29,7 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
     // Renders the override or default. The override will receive if it needs to
     // render on inverted color, i.e., background.
     const pre = useMemo(() => {
+        match(type).with("duration");
         if (type === "duration") {
             // Convert event duration to readable.
             const duration = moment.duration(event.Duration);
