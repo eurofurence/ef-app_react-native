@@ -119,7 +119,10 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, conten
                     active: state.index === i,
                     icon: descriptors[route.key].options.icon,
                     text: descriptors[route.key].options.title,
-                    onPress: () => navigateTab(navigation, route),
+                    onPress: () => {
+                        navigateTab(navigation, route);
+                        tabs.current?.close();
+                    },
                     indicate: descriptors[route.key].options.indicate,
                 }))}
             >

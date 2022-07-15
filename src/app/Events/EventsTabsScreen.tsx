@@ -71,13 +71,14 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
         return route.params?.filterType ?? "days";
     }, [hasSearchResults, route.params?.filterType]);
 
+    const currentDayName = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Name, [days, now]);
     // Find initial name for selected type.
     const initialName = useMemo(() => {
         if (actualType === "results") return "Results";
-        if (actualType === "days") return days.find((day) => moment(day.Date).isSame(now, "day"))?.Name ?? days[0]?.Name;
+        if (actualType === "days") return currentDayName ?? days[0].Name;
         if (actualType === "tracks") return tracks[0]?.Name;
         if (actualType === "rooms") return rooms[0]?.Name;
-    }, [days, tracks, rooms, now, actualType]);
+    }, [days, currentDayName, tracks, rooms, now, actualType]);
 
     // Compute the safe area.
     const top = useSafeAreaInsets()?.top;
@@ -103,7 +104,7 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
                           key={day.Id}
                           name={day.Name}
                           component={EventsListByDayScreen}
-                          options={{ title: moment(day.Date).format("ddd") }}
+                          options={{ title: moment(day.Date).format("ddd"), highlight: day.Name === currentDayName }}
                           initialParams={{ day: clone(day) }}
                       />
                   ))}

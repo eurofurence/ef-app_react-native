@@ -1,11 +1,11 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { FC, useEffect, useMemo } from "react";
-import { StyleSheet, Text, View, ViewProps } from "react-native";
+import { FC, useMemo } from "react";
+import { StyleSheet, View, ViewProps, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated, { cancelAnimation, Easing, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useTheme } from "../../context/Theme";
 import { IoniconsNames } from "../../types/Ionicons";
+import { Label } from "../Atoms/Label";
 
 const iconSize = 20;
 
@@ -14,9 +14,24 @@ const iconSize = 20;
  */
 export type PageProps = {
     /**
+     * The icon of the page.
+     */
+    icon?: IoniconsNames;
+
+    /**
+     * The caption of the page.
+     */
+    text?: string;
+
+    /**
      * True if to be rendered as active.
      */
     active?: boolean;
+
+    /**
+     * True if this page should be highlighted.
+     */
+    highlight?: boolean;
 
     /**
      * If given, invoked when the tab is pressed.
@@ -27,57 +42,34 @@ export type PageProps = {
      * Called on layout.
      */
     onLayout?: ViewProps["onLayout"];
-
-    /**
-     * Height of the active indicator.
-     */
-    indicatorHeight?: number;
-
-    /**
-     * The icon of the page.
-     */
-    icon?: IoniconsNames;
-
-    /**
-     * The caption of the page.
-     */
-    text?: string;
 };
 
 /**
  * Page is an icon or caption view intended for use in the top-navigation control.
  * @constructor
  */
-export const Page: FC<PageProps> = ({ icon, text, active, onPress, onLayout, indicatorHeight = 4 }) => {
+export const Page: FC<PageProps> = ({ icon, text, active = false, highlight = false, onPress, onLayout }) => {
     const theme = useTheme();
-    const container = useMemo(() => (icon ? styles.containerStatic : styles.containerGrow), [icon]);
-    const border = useMemo(() => ({ borderBottomColor: theme.secondary }), [theme, active]);
-    const color = useMemo(() => ({ color: active ? theme.secondary : theme.text }), [theme, active]);
 
-    const status = useSharedValue(active ? 1 : 0);
-    useEffect(() => {
-        cancelAnimation(status);
-        status.value = withTiming(active ? 1 : 0, { duration: 234, easing: Easing.out(Easing.cubic) });
-    }, [active, status]);
+    // The color to use for icon or text, i.e., foreground.
+    const colorContent = useMemo(() => (highlight ? (active ? theme.invImportant : theme.invText) : active ? theme.secondary : theme.text), [theme, active, highlight]);
 
-    const dynamicBorder = useAnimatedStyle(
-        () => ({
-            borderBottomWidth: status.value * indicatorHeight,
-        }),
-        [status, indicatorHeight]
-    );
+    // The style of the container and the item.
+    const styleContainer = useMemo<ViewStyle>(() => (icon ? styles.containerStatic : styles.containerGrow), [icon]);
+    const styleItem = useMemo<ViewStyle>(() => ({ backgroundColor: highlight ? theme.secondary : undefined }), [theme, highlight]);
 
     return (
-        <View style={container} onLayout={onLayout}>
-            <TouchableOpacity containerStyle={container} style={[styles.page, border]} onPress={onPress}>
-                <Animated.View style={[styles.border, border, dynamicBorder]} />
+        <View style={styleContainer} onLayout={onLayout}>
+            <TouchableOpacity containerStyle={styleContainer} style={styles.page} onPress={onPress}>
                 {icon ? (
-                    <View style={styles.item}>
-                        <Ionicons name={icon} size={iconSize} color={active ? theme.secondary : theme.text} />
+                    <View style={[styles.item, styleItem]}>
+                        <Ionicons name={icon} size={iconSize} color={colorContent} />
                     </View>
                 ) : (
-                    <View style={styles.item}>
-                        <Text style={[styles.text, color]}>{text ?? " "}</Text>
+                    <View style={[styles.item, styleItem]}>
+                        <Label style={styles.text} color={colorContent}>
+                            {text ?? " "}
+                        </Label>
                     </View>
                 )}
             </TouchableOpacity>
@@ -96,7 +88,8 @@ const styles = StyleSheet.create({
     },
     page: {
         alignItems: "center",
-        padding: 16,
+        paddingHorizontal: 4,
+        paddingVertical: 8,
         flex: 1,
     },
     border: {
@@ -109,8 +102,10 @@ const styles = StyleSheet.create({
     item: {
         alignSelf: "stretch",
         alignItems: "center",
-        height: iconSize,
+        height: iconSize + 12,
         justifyContent: "center",
+        padding: 4,
+        borderRadius: 8,
     },
     text: {
         fontWeight: "bold",

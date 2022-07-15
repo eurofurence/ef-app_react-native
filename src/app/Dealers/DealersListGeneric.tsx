@@ -34,6 +34,9 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
                 ListHeaderComponent={<>{leader}</>}
                 ListFooterComponent={<>{trailer}</>}
                 data={dealers}
+                keyExtractor={(item) => item.Id}
+                initialNumToRender={5}
+                maxToRenderPerBatch={5}
                 renderItem={(entry: { item: EnrichedDealerRecord }) => (
                     <View key={entry.item.Id} style={{ padding: 10 }}>
                         <Button style={{ height: 60 }} outline onPress={() => navigateTo(entry.item)}>

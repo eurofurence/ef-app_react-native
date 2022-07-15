@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-import { StyleProp, StyleSheet, Text, TextProps, TextStyle } from "react-native";
+import { ColorValue, StyleProp, StyleSheet, Text, TextProps, TextStyle } from "react-native";
 
 import { Theme, useTheme } from "../../context/Theme";
 
@@ -19,7 +19,7 @@ export type LabelProps = TextProps & {
     /**
      * The color name, a value from the theme.
      */
-    color?: keyof Theme;
+    color?: keyof Theme | ColorValue;
 
     /**
      * Margin left.
@@ -50,7 +50,9 @@ export const Label: FC<LabelProps> = ({ style, type, variant, color = "text", ml
     const resType = useMemo(() => (type ? types[type] : types.regular), [type]);
     const resVariant = useMemo(() => (variant ? variants[variant] : variants.regular), [variant]);
     const marginColor = useMemo(() => {
-        const result: StyleProp<TextStyle> = { color: theme[color] };
+        // Get color value from theme, otherwise use as is.
+        const colorValue = typeof color === "string" && color in theme ? theme[color] : color;
+        const result: StyleProp<TextStyle> = { color: colorValue };
         if (typeof ml === "number") result.marginLeft = ml;
         if (typeof mt === "number") result.marginTop = mt;
         if (typeof mr === "number") result.marginRight = mr;
