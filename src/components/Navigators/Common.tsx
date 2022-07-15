@@ -17,6 +17,9 @@ export function navigateTab<ParamList extends ParamListBase, RouteName extends k
     const state = navigation.getState();
     const target = typeof nameOrIndex === "number" ? state.routes[nameOrIndex] : nameOrIndex;
 
+    // Skip if invalid target.
+    if (!target) return;
+
     // Emit event.
     const event = navigation.emit({
         type: "tabPress",

@@ -5,6 +5,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ScreenStart } from "./app/ScreenStart";
 import { PlatformNotificationManager } from "./components/Notifications/NotificationManager";
+import { EventsSearchProvider } from "./components/Searching/EventsSearchContext";
 import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
 
 /**
@@ -15,10 +16,12 @@ export default function App() {
         <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
             <BottomSheetModalProvider>
                 <SynchronizationProvider>
-                    <StatusBar style="auto" />
-                    <ScreenStart />
+                    <EventsSearchProvider>
+                        <StatusBar style="auto" />
+                        <ScreenStart />
 
-                    <PlatformNotificationManager />
+                        <PlatformNotificationManager />
+                    </EventsSearchProvider>
                 </SynchronizationProvider>
             </BottomSheetModalProvider>
         </GestureHandlerRootView>

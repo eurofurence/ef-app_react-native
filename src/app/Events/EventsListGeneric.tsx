@@ -1,11 +1,7 @@
-import moment, { Moment } from "moment";
 import { FC, ReactNode, useCallback, useState } from "react";
-import { FlatList, ImageSourcePropType, StyleSheet, Vibration, View } from "react-native";
+import { FlatList, StyleSheet, Vibration, View } from "react-native";
 
-import { useNow } from "../../hooks/useNow";
-import { useAppSelector } from "../../store";
-import { createImageUrl } from "../../store/eurofurence.enrichers";
-import { eventRoomsSelectors } from "../../store/eurofurence.selectors";
+import { EventWithDetails } from "../../store/eurofurence.selectors";
 import { EventRecord } from "../../store/eurofurence.types";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
@@ -20,20 +16,18 @@ export type EventsListGenericProps = {
      */
     navigation: EventsListByDayScreenProps["navigation"];
     leader?: ReactNode;
-    events: EventRecord[];
+    events: EventWithDetails[];
     trailer?: ReactNode;
+    cardType?: "duration" | "time";
 };
 
-export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer }) => {
-    const [now] = useNow();
-
+export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer, cardType = "duration" }) => {
     // Set event for action sheet
     const [selectedEvent, setSelectedEvent] = useState<EventRecord | undefined>(undefined);
-    const rooms = useAppSelector(eventRoomsSelectors.selectAll);
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(
-        (event: EventRecord) =>
+        (event: EventWithDetails) =>
             navigation.push("Event", {
                 id: event.Id,
             }),
@@ -50,16 +44,13 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
                 ListFooterComponent={<>{trailer}</>}
                 data={events}
                 keyExtractor={(item) => item.Id}
-                renderItem={(entry: { item: EventRecord }) => (
+                initialNumToRender={5}
+                maxToRenderPerBatch={5}
+                renderItem={(entry: { item: EventWithDetails }) => (
                     <EventCard
                         key={entry.item.Id}
-                        background={eventBanner(entry.item)}
-                        pre={eventDuration(entry.item)}
-                        title={entry.item.Title}
-                        subtitle={rooms.find((room) => room.Id === entry.item.ConferenceRoomId)?.Name}
-                        tag={entry.item.PanelHosts}
-                        happening={eventHappening(entry.item, now)}
-                        done={eventDone(entry.item, now)}
+                        event={entry.item}
+                        type={cardType}
                         onPress={() => navigateTo(entry.item)}
                         onLongPress={() => {
                             Vibration.vibrate(50);
@@ -82,17 +73,3 @@ const styles = StyleSheet.create({
         paddingBottom: 100,
     },
 });
-
-// TODO: Plase see if we will have an enriched format here too.
-
-const eventDuration = (event: EventRecord) => {
-    const duration = moment.duration(event.Duration);
-    if (duration.asMinutes() > 59) return duration.asHours() + "h";
-    else return duration.asMinutes() + "m";
-};
-
-const eventBanner = (event: EventRecord): ImageSourcePropType | undefined => (event.BannerImageId ? { uri: createImageUrl(event.BannerImageId) } : undefined);
-
-const eventHappening = (event: EventRecord, now: Moment): boolean => now.isBetween(event.StartDateTimeUtc, event.EndDateTimeUtc);
-
-const eventDone = (event: EventRecord, now: Moment): boolean => now.isAfter(event.EndDateTimeUtc);

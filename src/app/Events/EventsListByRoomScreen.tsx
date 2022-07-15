@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Section } from "../../components/Atoms/Section";
 import { useAppSelector } from "../../store";
-import { eventsSelector } from "../../store/eurofurence.selectors";
+import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
 import { EventRoomRecord } from "../../store/eurofurence.types";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
 import { EventsListGeneric } from "./EventsListGeneric";
@@ -25,7 +25,9 @@ export type EventsListByRoomScreenProps = EventsListByDayScreenProps;
 export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ navigation, route }) => {
     // Get the room. Use it to resolve events to display.
     const room = "room" in route.params ? route.params?.room : null;
-    const eventsByRoom = useAppSelector((state) => eventsSelector.selectByRoom(state, room?.Id ?? ""));
+    const eventsByRoom = useAppSelector((state) => eventsCompleteSelector.selectByRoom(state, room?.Id ?? ""));
 
-    return <EventsListGeneric navigation={navigation} events={eventsByRoom} leader={<Section title={room?.Name ?? ""} subtitle={`${eventsByRoom.length} events in total`} />} />;
+    return (
+        <EventsListGeneric navigation={navigation} events={eventsByRoom} leader={<Section title={room?.Name ?? ""} subtitle={`${eventsByRoom.length} events`} />} cardType="time" />
+    );
 };

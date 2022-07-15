@@ -1,6 +1,6 @@
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { FC, useCallback, useContext, useEffect, useMemo } from "react";
+import React, { FC, useCallback, useEffect, useMemo } from "react";
 import { Keyboard, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
@@ -9,9 +9,9 @@ import { Floater } from "../../components/Containers/Floater";
 import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { useEventsSearchContext } from "../../components/Searching/EventsSearchContext";
 import { useTheme } from "../../context/Theme";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
-import { EventsSearchContext } from "./EventsSearchContext";
 import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
 
 /**
@@ -25,7 +25,7 @@ export type EventsSearchScreenParams = undefined;
 export type EventsSearchScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) => {
-    const { search, setSearch, results } = useContext(EventsSearchContext);
+    const { search, setSearch, results } = useEventsSearchContext();
 
     // Hide keyboard on navigating away from this page.
     const isFocused = useIsFocused();

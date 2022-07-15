@@ -8,12 +8,13 @@ import { useEffectOnce } from "usehooks-ts";
 
 import { withPlatform } from "../../hoc/withPlatform";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { usePostDeviceRegistrationMutation } from "../../store/authorization.service";
+import { usePostDeviceRegistrationMutation, usePostSubscribeToTopicMutation } from "../../store/authorization.service";
 import { logFCMMessage } from "../../store/background.slice";
 
 export const NotificationManager = () => {
     const dispatch = useAppDispatch();
     const [registerDevice] = usePostDeviceRegistrationMutation();
+    const [subscribeToTopic] = usePostSubscribeToTopicMutation();
     const [expoPushToken, setExpoPushToken] = useState("");
     const token = useAppSelector((state) => state.authorization.token);
 
@@ -51,18 +52,31 @@ export const NotificationManager = () => {
     });
 
     useEffect(() => {
-        if (expoPushToken === "") {
-            console.debug("NotificationManager", "Cannot register device as there is no token", expoPushToken);
-            // There is no token we can report yet.
-            return;
-        }
-        const topics = ["react-native", `version-${Constants.manifest?.android?.versionCode}`, "cid-EF26"];
-        console.debug("NotificationManager", "Registering device with the API", expoPushToken, topics);
+        (async () => {
+            if (expoPushToken === "") {
+                console.debug("NotificationManager", "Cannot register device as there is no token", expoPushToken);
+                // There is no token we can report yet.
+                return;
+            }
+            const topics = ["react-native", `version-${Constants.manifest?.android?.versionCode}`, "cid-EF26"];
+            console.debug("NotificationManager", "Registering device with the API", expoPushToken, topics);
 
-        registerDevice({
-            DeviceId: expoPushToken,
-            Topics: topics,
-        });
+            await registerDevice({
+                DeviceId: expoPushToken,
+                Topics: topics,
+            });
+
+            console.debug("NotificationManager", "Subscribing via API", topics);
+
+            for (const topic of topics) {
+                await subscribeToTopic({
+                    DeviceId: expoPushToken,
+                    Topic: topic,
+                });
+            }
+
+            console.debug("NotificationManager", "Completed subscriptions");
+        })().catch(console.error);
     }, [expoPushToken, token]);
 
     return null;

@@ -1,4 +1,4 @@
-import { createSelector } from "@reduxjs/toolkit";
+import { createSelector, Dictionary } from "@reduxjs/toolkit";
 import moment, { Moment } from "moment";
 
 import {
@@ -33,11 +33,22 @@ const baseMapsSelectors = mapsAdapter.getSelectors<RootState>((state) => state.e
 /**
  * An event with the external references as required.
  */
-type EventWithDetails = EventRecord & {
+export type EventWithDetails = EventRecord & {
     ConferenceRoom: EventRoomRecord;
     ConferenceDay: EventDayRecord;
     ConferenceTrack: EventTrackRecord;
 };
+
+const applyDetails = (rooms: Dictionary<EventRoomRecord>, tracks: Dictionary<EventTrackRecord>, days: Dictionary<EventDayRecord>) => (event: EventRecord) => {
+    return {
+        ...event,
+        // Either we propagate undefined-ness in the type or we ignore.
+        ConferenceRoom: rooms[event.ConferenceRoomId as any] as any,
+        ConferenceDay: days[event.ConferenceDayId as any] as any,
+        ConferenceTrack: tracks[event.ConferenceTrackId as any] as any,
+    } as EventWithDetails;
+};
+
 export const eventsSelector = {
     ...baseEventsSelector,
     selectByRoom: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId)),
@@ -55,17 +66,47 @@ export const eventsSelector = {
             .map((it) => events.find((event) => event.Id === it.recordId))
             .filter((it) => it !== undefined)
     ),
-    selectCompleteEventById: createSelector(
+};
+
+export const eventsCompleteSelector = {
+    ...baseEventsSelector,
+    selectAll: createSelector(
+        [baseEventsSelector.selectAll, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
+        (events, days, tracks, rooms): EventWithDetails[] => events.map(applyDetails(rooms, tracks, days))
+    ),
+    selectByRoom: createSelector(
+        [
+            baseEventsSelector.selectAll,
+            eventDaysSelectors.selectEntities,
+            eventTracksSelectors.selectEntities,
+            eventRoomsSelectors.selectEntities,
+            (state, itemId: RecordId) => itemId,
+        ],
+        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId).map(applyDetails(rooms, tracks, days))
+    ),
+    selectByTrack: createSelector(
+        [
+            baseEventsSelector.selectAll,
+            eventDaysSelectors.selectEntities,
+            eventTracksSelectors.selectEntities,
+            eventRoomsSelectors.selectEntities,
+            (state, itemId: RecordId) => itemId,
+        ],
+        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceTrackId === itemId).map(applyDetails(rooms, tracks, days))
+    ),
+    selectByDay: createSelector(
+        [
+            baseEventsSelector.selectAll,
+            eventDaysSelectors.selectEntities,
+            eventTracksSelectors.selectEntities,
+            eventRoomsSelectors.selectEntities,
+            (state, itemId: RecordId) => itemId,
+        ],
+        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceDayId === itemId).map(applyDetails(rooms, tracks, days))
+    ),
+    selectById: createSelector(
         [baseEventsSelector.selectById, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
-        (event, days, tracks, rooms): EventWithDetails | undefined =>
-            event
-                ? ({
-                      ...event,
-                      ConferenceRoom: event.ConferenceRoomId && rooms[event.ConferenceRoomId],
-                      ConferenceDay: event.ConferenceDayId && days[event.ConferenceDayId],
-                      ConferenceTrack: event.ConferenceTrackId && tracks[event.ConferenceTrackId],
-                  } as any as EventWithDetails)
-                : undefined
+        (event, days, tracks, rooms): EventWithDetails | undefined => (!event ? undefined : applyDetails(rooms, tracks, days)(event))
     ),
 };
 
