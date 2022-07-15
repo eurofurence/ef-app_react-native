@@ -37,7 +37,7 @@ export const UserSettings = () => {
             <Label mb={15}>{t("currentLanguage")}</Label>
             <Row>
                 {languages.map((it) => (
-                    <Button onPress={changeLanguage(it.code)} key={it.code}>
+                    <Button onPress={changeLanguage(it.code)} key={it.code} outline={i18n.language === it.code}>
                         {it.name}
                     </Button>
                 ))}
