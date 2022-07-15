@@ -1,4 +1,14 @@
-import { DealerRecord, EnrichedDealerRecord, EnrichedImageRecord, EnrichedMapRecord, ImageRecord, ImageUrl, MapRecord } from "./eurofurence.types";
+import {
+    DealerRecord,
+    EnrichedDealerRecord,
+    EnrichedEventRecord,
+    EnrichedImageRecord,
+    EnrichedMapRecord,
+    EventRecord,
+    ImageRecord,
+    ImageUrl,
+    MapRecord,
+} from "./eurofurence.types";
 
 const internalCreateImageUrl = (imageId: string | undefined): ImageUrl | undefined => imageId && `https://app.eurofurence.org/EF26/Api/Images/${imageId}/Content`;
 
@@ -18,6 +28,12 @@ export const enrichMapRecord = (record: MapRecord): EnrichedMapRecord => ({
 export const enrichImageRecord = (record: ImageRecord): EnrichedImageRecord => ({
     ...record,
     ImageUrl: internalCreateImageUrl(record.Id),
+});
+
+export const enrichEventRecord = (record: EventRecord): EnrichedEventRecord => ({
+    ...record,
+    BannerImageUrl: internalCreateImageUrl(record.BannerImageId),
+    PosterImageUrl: internalCreateImageUrl(record.PosterImageId),
 });
 
 /**

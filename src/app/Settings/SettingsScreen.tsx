@@ -11,6 +11,7 @@ import { DevButtons } from "./DevButtons";
 import { RemoteMessages } from "./RemoteMessages";
 import { PlatformScheduledNotifications } from "./ScheduledNotifications";
 import { TimeTravel } from "./TimeTravel";
+import { UserSettings } from "./UserSettings";
 
 export const SettingsScreen = () => {
     const top = useSafeAreaInsets()?.top;
@@ -19,6 +20,7 @@ export const SettingsScreen = () => {
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>Settings</Header>
             <Scroller>
+                <UserSettings />
                 <Section title={"Developer Settings"} icon={"bug"} />
                 <Label mb={15}>You shouldn't touch these unless you know what you're doing.</Label>
 

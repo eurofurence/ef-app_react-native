@@ -27,8 +27,8 @@ export const TimeTravel = () => {
             <Label mb={5}>{t("currentTime", { time: now.format("llll") })}</Label>
             <Label mb={5}>{t("difference", { diff: moment.duration(amount, "millisecond").humanize() })}</Label>
             <Row>
-                <Button containerStyle={styles.button} onPress={() => dispatch(enableTimeTravel(!enabled))}>
-                    {enabled ? t("disable") : t("enable")}
+                <Button containerStyle={styles.button} outline={enabled} onPress={() => dispatch(enableTimeTravel(!enabled))}>
+                    Enable
                 </Button>
                 <Button containerStyle={styles.button} onPress={() => dispatch(resetTravel())}>
                     {t("reset")}

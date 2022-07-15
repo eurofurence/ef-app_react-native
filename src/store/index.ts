@@ -37,6 +37,7 @@ export const store = configureStore({
         const middleware = getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                ignoredPaths: [eurofurenceCache.name, eurofurenceService.reducerPath],
             },
         }).concat(eurofurenceService.middleware, authorizationService.middleware);
 
