@@ -1,6 +1,5 @@
 import moment from "moment";
 import React, { FC, useMemo } from "react";
-import { match } from "ts-pattern";
 
 import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
@@ -25,34 +24,30 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
 
     // Renders the override or default. The override will receive if it needs to
     // render on inverted color, i.e., background.
-    const pre = useMemo(
-        () =>
-            match(type)
-                .with("duration", () => {
-                    // Convert event duration to readable.
-                    const duration = moment.duration(event.Duration);
-                    const durationText = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
+    const pre = useMemo(() => {
+        if (type === "duration") {
+            // Convert event duration to readable.
+            const duration = moment.duration(event.Duration);
+            const durationText = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
 
-                    // Return simple label with duration text.
-                    return (
-                        <Label style={{ color: done ? theme.important : theme.invText }} type="h2">
-                            {durationText}
-                        </Label>
-                    );
-                })
-                .otherwise(() => {
-                    const start = moment(event.StartDateTimeUtc);
-                    return (
-                        <Col type="center">
-                            <Label type="caption" color={done ? "important" : "invText"}>
-                                {start.format("ddd")}
-                            </Label>
-                            <Label color={done ? "important" : "invText"}>{start.format("LT")}</Label>
-                        </Col>
-                    );
-                }),
-        [type, event, done, theme]
-    );
+            // Return simple label with duration text.
+            return (
+                <Label style={{ color: done ? theme.important : theme.invText }} type="h2">
+                    {durationText}
+                </Label>
+            );
+        } else {
+            const start = moment(event.StartDateTimeUtc);
+            return (
+                <Col type="center">
+                    <Label type="caption" color={done ? "important" : "invText"}>
+                        {start.format("ddd")}
+                    </Label>
+                    <Label color={done ? "important" : "invText"}>{start.format("LT")}</Label>
+                </Col>
+            );
+        }
+    }, [type, event, done, theme]);
 
     return (
         <EventCardContent

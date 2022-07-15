@@ -9,7 +9,7 @@ import { createTabNavigator } from "../components/Navigators/TabsNavigator";
 import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealersListAllScreen, DealersListAllScreenParams } from "./Dealers/DealersListAllScreen";
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
-import { ScreenHome, ScreenHomeParams } from "./Home/ScreenHome";
+import { HomeScreen, ScreenHomeParams } from "./Home/HomeScreen";
 import { MainMenu } from "./MainMenu/MainMenu";
 import { ScreenStartNavigatorParamsList } from "./ScreenStart";
 
@@ -61,7 +61,7 @@ export const ScreenAreas: FC<ScreenAreasProps> = () => {
     return (
         <View style={StyleSheet.absoluteFill}>
             <AreasNavigator.Navigator tabsStyle={tabsStyle} more={(tabs: RefObject<TabsRef>) => <MainMenu tabs={tabs} />}>
-                <AreasNavigator.Screen name="Home" options={{ title: "Home", icon: "home" }} component={ScreenHome} />
+                <AreasNavigator.Screen name="Home" options={{ title: "Home", icon: "home" }} component={HomeScreen} />
                 <AreasNavigator.Screen name="Events" options={{ title: "Events", icon: "calendar" }} component={EventsTabsScreen} />
                 <AreasNavigator.Screen name="Dealers" options={{ title: "Dealers", icon: "cart-outline" }} component={DealersListAllScreen} />
             </AreasNavigator.Navigator>
