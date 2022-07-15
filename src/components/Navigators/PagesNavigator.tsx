@@ -117,17 +117,14 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
     const arrangerWidth = useMemo(() => ({ width: `${state.routes.length * 100}%` }), [state.routes.length]);
 
     // Target and offset used for differentially determining if set from navigation or set from pan or button press.
-    const target = useSharedValue(state.index);
     const offset = useSharedValue(state.index);
     const start = useSharedValue(0);
 
     // React to state and current target.
     useEffect(() => {
-        if (target.value !== state.index) {
-            offset.value = state.index;
-            target.value = state.index;
-        }
-    }, [target, offset, state.index]);
+        cancelAnimation(offset);
+        offset.value = state.index;
+    }, [offset, state.index]);
 
     // Convert translation into viewed page, which can be reacted to as a state.
     useAnimatedReaction(
@@ -159,22 +156,17 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
         .onUpdate((e) => {
             // Update from translation.
             offset.value = Math.max(0, Math.min(-e.translationX / width + start.value, state.routes.length - 1));
-            const index = Math.round(offset.value);
-            if (target.value !== index) {
-                target.value = index;
-                runOnJS(navigateTab)(navigation, index);
-            }
         })
         .onEnd((e) => {
             const shift = e.translationX > 0 ? -0.4 : 0.4;
             const index = Math.max(0, Math.min(Math.round(offset.value + shift), state.routes.length - 1));
 
-            offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) });
-
-            if (target.value !== index) {
-                target.value = index;
-                runOnJS(navigateTab)(navigation, index);
-            }
+            // Animate to the end position. If able to finish, sync navigation.
+            offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished) => {
+                if (finished) {
+                    runOnJS(navigateTab)(navigation, index);
+                }
+            });
         });
 
     return (
@@ -189,7 +181,6 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
                     text: descriptors[route.key].options.title,
                     onPress: () => {
                         offset.value = i;
-                        target.value = i;
                         navigateTab(navigation, i);
                     },
                 }))}
