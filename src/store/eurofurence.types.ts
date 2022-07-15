@@ -55,6 +55,11 @@ export type EventRecord = RecordMetadata & {
     Tags?: string[];
 };
 
+export type EnrichedEventRecord = EventRecord & {
+    PosterImageUrl?: ImageUrl;
+    BannerImageUrl?: ImageUrl;
+};
+
 export type DealerRecord = RecordMetadata & {
     RegistrationNumber: number;
     ArtistImageId?: RecordId;

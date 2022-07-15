@@ -26,6 +26,8 @@
     "reset": "Reset"
   },
   "Settings": {
-    "timeTravel": "Show time travel settings."
+    "timeTravel": "Show time travel settings.",
+    "currentLanguage": "Your current language is English!",
+    "settingsSection": "Settings"
   }
 }

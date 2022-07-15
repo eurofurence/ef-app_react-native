@@ -1,14 +1,11 @@
 import moment from "moment";
 import React, { FC, useMemo } from "react";
-import { ImageSourcePropType } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
 import { useTheme } from "../../context/Theme";
 import { useEventIsDone, useEventIsHappening } from "../../hooks/useEventProperties";
-import { createImageUrl } from "../../store/eurofurence.enrichers";
 import { EventWithDetails } from "../../store/eurofurence.selectors";
-import { EventRecord } from "../../store/eurofurence.types";
 import { EventCardContent } from "./EventCardContent";
 
 export type EventCardProps = {
@@ -55,7 +52,7 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
     return (
         <EventCardContent
             key={event.Id}
-            background={eventBanner(event)}
+            background={event.BannerImageUrl ? { uri: event.BannerImageUrl } : undefined}
             pre={pre}
             title={event.Title}
             subtitle={event.ConferenceRoom?.Name}
@@ -67,7 +64,3 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
         />
     );
 };
-
-// TODO: Plase see if we will have an enriched format here too.
-
-const eventBanner = (event: EventRecord): ImageSourcePropType | undefined => (event.BannerImageId ? { uri: createImageUrl(event.BannerImageId) } : undefined);

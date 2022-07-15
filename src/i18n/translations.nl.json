@@ -14,5 +14,10 @@
     "attends_thu": "Donderdag",
     "attends_fri": "Vrijdag",
     "attends_sat": "Zaterdag"
+  },
+  "Settings": {
+    "timeTravel": "Laat tijdreizen zien.",
+    "currentLanguage": "Jouw huidige taal is Nederlands!",
+    "settingsSection": "Instellingen"
   }
 }

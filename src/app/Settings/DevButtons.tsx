@@ -7,8 +7,8 @@ import { useAppSelector } from "../../store";
 import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/authorization.service";
 
 export const DevButtons = () => {
-    const [createSync] = useCreateSyncRequestMutation();
-    const [sendMessage, message] = useSendPrivateMessageMutation();
+    const [createSync, syncResult] = useCreateSyncRequestMutation();
+    const [sendMessage, messageResult] = useSendPrivateMessageMutation();
     const me = useAppSelector((state) => state.authorization.uid);
 
     const onSendMessage = useCallback(() => {
@@ -27,10 +27,6 @@ export const DevButtons = () => {
         alert(`Sent a message to ${me}`);
     }, [me]);
 
-    useEffect(() => {
-        console.debug("Dev Buttons", message);
-    }, [message]);
-
     return (
         <View>
             <Section title={"Dev Buttons"} subtitle={"Make the API do something"} />
@@ -46,7 +42,7 @@ export const DevButtons = () => {
                     alert("Told all devices to synchronize");
                 }}
             >
-                Force ALL devices to sync via API (do not touch)
+                Force Resync {syncResult.status}
             </Button>
 
             <Button
@@ -55,7 +51,7 @@ export const DevButtons = () => {
                     onSendMessage();
                 }}
             >
-                Receive Private Message
+                Receive Private Message {messageResult.status}
             </Button>
         </View>
     );

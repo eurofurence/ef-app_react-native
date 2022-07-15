@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import _ from "lodash";
 
 import { RecordId } from "./eurofurence.types";
 
@@ -35,7 +36,10 @@ export const backgroundSlice = createSlice({
             state.notifications = state.notifications.filter((it) => it.recordId !== action.payload);
         },
         logFCMMessage: (state, action: PayloadAction<FCMMessage>) => {
-            state.fcmMessages.push(action.payload);
+            state.fcmMessages = _.chain(state.fcmMessages)
+                .concat(action.payload)
+                .orderBy((it) => it.dateReceived, "desc")
+                .value();
         },
     },
 });

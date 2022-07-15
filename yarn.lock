@@ -6963,6 +6963,7 @@ __metadata:
     expo-updates: ~0.13.3
     expo-web-browser: ~10.2.1
     i18next: ^21.8.11
+    i18next-react-native-async-storage: ^1.0.4
     jest: ^26.6.3
     jest-expo: ^45.0.1
     lodash: ^4.17.21
@@ -9564,6 +9565,15 @@ __metadata:
   version: 1.0.4
   resolution: "hyphenate-style-name@npm:1.0.4"
   checksum: 4f5bf4b055089754924babebaa23c17845937bcca6aee95d5d015f8fa1e6814279002bd6a9e541e3fac2cd02519fc76305396727066c57c8e21a7e73e7a12137
+  languageName: node
+  linkType: hard
+
+"i18next-react-native-async-storage@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "i18next-react-native-async-storage@npm:1.0.4"
+  peerDependencies:
+    i18next: ">=13.0.1"
+  checksum: 7fe878b761e92ea68dfffeda82e4f44f4d1c971943376306c8ecf9359829c869b165e58f1c6777928c2cb851e7d0614661c60f07cbea8300944a8b4865128714
   languageName: node
   linkType: hard
 
