@@ -1,119 +1,65 @@
-import React, { FC, useMemo } from "react";
-import { Image, ImageSourcePropType, Platform, StyleSheet, View, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import moment from "moment";
+import React, { FC, ReactNode, useMemo } from "react";
+import { ImageSourcePropType } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { useTheme } from "../../context/Theme";
-import { appStyles } from "../AppStyles";
+import { useEventIsDone, useEventIsHappening } from "../../hooks/useEventProperties";
+import { createImageUrl } from "../../store/eurofurence.enrichers";
+import { EventWithDetails } from "../../store/eurofurence.selectors";
+import { EventRecord } from "../../store/eurofurence.types";
+import { EventCardContent } from "./EventCardContent";
 
 export type EventCardProps = {
-    background?: ImageSourcePropType;
-    pre: string;
-    title?: string;
-    subtitle?: string;
-    tag?: string;
-    happening: boolean;
-    done: boolean;
+    event: EventWithDetails;
+    renderPre?: (event: EventWithDetails, inv: boolean) => ReactNode;
     onPress?: () => void;
     onLongPress?: () => void;
 };
 
-export const EventCard: FC<EventCardProps> = ({ background, pre, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
-    // TODO: Indicate if happening at the moment.
-
+export const EventCard: FC<EventCardProps> = ({ event, renderPre, onPress, onLongPress }) => {
     const theme = useTheme();
-    const blurRadius = Platform.OS === "android" ? 3 : 8;
-    const backgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.surface }), [theme]);
-    const preBackgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
+
+    // Resolve event statuses.
+    const happening = useEventIsHappening(event);
+    const done = useEventIsDone(event);
+
+    // Renders the override or default. The override will receive if it needs to
+    // render on inverted color, i.e., background.
+    const pre = useMemo(() => {
+        // If given, use override.
+        if (typeof renderPre === "function") {
+            return renderPre(event, !done);
+        }
+
+        // Convert event duration to readable.
+        const duration = moment.duration(event.Duration);
+        const durationText = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
+
+        // Return simple label with duration text.
+        return (
+            <Label style={{ color: done ? theme.important : theme.invText }} type="h2">
+                {durationText}
+            </Label>
+        );
+    }, [renderPre, event, done, theme]);
 
     return (
-        <TouchableOpacity containerStyle={styles.container} style={[appStyles.shadow, styles.content, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
-            {!background ? null : <Image style={styles.background} resizeMode="cover" blurRadius={blurRadius} source={background} />}
-
-            {!pre ? null : (
-                <View style={[styles.pre, preBackgroundStyle]}>
-                    <View>
-                        <Label style={{ color: done ? theme.important : theme.invText }} type="h2">
-                            {pre}
-                        </Label>
-                    </View>
-                </View>
-            )}
-            <View style={styles.main}>
-                {!title ? null : (
-                    <Label style={styles.title} type="h2">
-                        {title}
-                    </Label>
-                )}
-
-                <View style={styles.subtitleArea}>
-                    {!subtitle ? null : (
-                        <Label style={styles.subtitle} type="caption" ellipsizeMode="tail" numberOfLines={2}>
-                            {subtitle}
-                        </Label>
-                    )}
-
-                    {!tag ? null : (
-                        <Label style={styles.tag} type="caption" ellipsizeMode="tail" numberOfLines={2}>
-                            {tag}
-                        </Label>
-                    )}
-                </View>
-            </View>
-        </TouchableOpacity>
+        <EventCardContent
+            key={event.Id}
+            background={eventBanner(event)}
+            pre={pre}
+            title={event.Title}
+            subtitle={event.ConferenceRoom?.Name}
+            tag={event.PanelHosts}
+            happening={happening}
+            done={done}
+            onPress={onPress}
+            onLongPress={onLongPress}
+        />
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        minHeight: 80,
-        marginVertical: 15,
-    },
-    content: {
-        borderRadius: 16,
-        overflow: "hidden",
-        flexDirection: "row",
-    },
-    pre: {
-        overflow: "hidden",
-        flexBasis: 70,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    background: {
-        position: "absolute",
-        width: undefined,
-        height: undefined,
-        left: -10,
-        top: -10,
-        right: -10,
-        bottom: -10,
-        opacity: 0.2,
-    },
-    main: {
-        flex: 1,
-        padding: 16,
-    },
-    head: {},
-    title: {},
-    subtitleArea: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    subtitle: {
-        flex: 1,
-        flexShrink: 1,
-    },
-    tag: {
-        flexShrink: 5,
-        flex: 1,
-        fontWeight: "600",
-        textAlign: "right",
-    },
-    indicator: {
-        position: "absolute",
-        top: 0,
-        right: 0,
-        padding: 16,
-    },
-});
+// TODO: Plase see if we will have an enriched format here too.
+
+const eventBanner = (event: EventRecord): ImageSourcePropType | undefined => (event.BannerImageId ? { uri: createImageUrl(event.BannerImageId) } : undefined);

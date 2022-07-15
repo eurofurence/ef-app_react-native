@@ -7,7 +7,7 @@ import { FC, useMemo } from "react";
 import { Section } from "../../components/Atoms/Section";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { useAppSelector } from "../../store";
-import { eventsSelector } from "../../store/eurofurence.selectors";
+import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
 import { EventsSectionedListGeneric, EventsSectionedListItem } from "./EventsSectionedListGeneric";
@@ -31,7 +31,7 @@ export type EventsListByDayScreenProps = CompositeScreenProps<PagesScreenProps<E
 export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigation, route }) => {
     // Get the day. Use it to resolve events to display.
     const day = "day" in route.params ? route.params?.day : null;
-    const eventsByDay = useAppSelector((state) => eventsSelector.selectByDay(state, day?.Id ?? ""));
+    const eventsByDay = useAppSelector((state) => eventsCompleteSelector.selectByDay(state, day?.Id ?? ""));
     const eventsGroups = useMemo(() => {
         const groups: EventsSectionedListItem[] = [];
         for (const event of orderBy(eventsByDay, "StartDateTimeUtc")) {

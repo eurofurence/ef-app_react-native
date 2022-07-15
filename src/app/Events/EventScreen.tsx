@@ -1,13 +1,11 @@
 import { useRoute } from "@react-navigation/core";
-import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
 import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
-import { eventsSelector } from "../../store/eurofurence.selectors";
+import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
 import { EventContent } from "./EventContent";
 
 /**
@@ -22,7 +20,7 @@ export type EventScreenParams = {
 
 export const EventScreen = () => {
     const route = useRoute<Route<EventScreenParams, "Event">>();
-    const event = useAppSelector((state) => eventsSelector.selectCompleteEventById(state, route.params.id));
+    const event = useAppSelector((state) => eventsCompleteSelector.selectById(state, route.params.id));
     const headerStyle = useTopHeaderStyle();
 
     return (

@@ -60,6 +60,18 @@ export const authorizationService = createApi({
                 method: "POST",
             }),
         }),
+        postSubscribeToTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
+            query: (arg) => ({
+                url: `/Api/PushNotifications/SubscribeToTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
+                method: "POST",
+            }),
+        }),
+        postUnsubscribeFromTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
+            query: (arg) => ({
+                url: `/Api/PushNotifications/UnsubscribeFromTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
+                method: "POST",
+            }),
+        }),
         sendPrivateMessage: builder.mutation<string, NewPrivateMessage>({
             query: (args) => ({
                 url: "/Api/Communication/PrivateMessages",
@@ -92,4 +104,12 @@ export const filterByIds =
         records: query.data?.filter((it) => it.Id in ids) ?? [],
     });
 
-export const { usePostTokenMutation, useGetWhoAmIQuery, usePostDeviceRegistrationMutation, useCreateSyncRequestMutation, useSendPrivateMessageMutation } = authorizationService;
+export const {
+    usePostTokenMutation,
+    useGetWhoAmIQuery,
+    usePostDeviceRegistrationMutation,
+    useCreateSyncRequestMutation,
+    useSendPrivateMessageMutation,
+    usePostSubscribeToTopicMutation,
+    usePostUnsubscribeFromTopicMutation,
+} = authorizationService;

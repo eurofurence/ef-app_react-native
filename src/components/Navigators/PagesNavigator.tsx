@@ -98,7 +98,7 @@ export type PagesScreenProps<ParamList extends ParamListBase, RouteName extends 
     route: RouteProp<ParamList, RouteName>;
 };
 
-export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, detach = true, panSlack = 55, children, screenOptions }) => {
+export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, detach = true, panSlack = 15, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,

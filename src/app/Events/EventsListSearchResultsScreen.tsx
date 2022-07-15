@@ -1,14 +1,14 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import { FC, useCallback, useContext } from "react";
+import { FC, useCallback } from "react";
 import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { useEventsSearchContext } from "../../components/Searching/EventsSearchContext";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
 import { EventsListGeneric } from "./EventsListGeneric";
-import { EventsSearchContext } from "./EventsSearchContext";
 import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
 
 /**
@@ -22,7 +22,7 @@ export type EventsListSearchResultsScreenParams = undefined;
 export type EventsListSearchResultsScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProps> = ({ navigation }) => {
-    const { search, setSearch, results } = useContext(EventsSearchContext);
+    const { search, setSearch, results } = useEventsSearchContext();
 
     const onClear = useCallback(() => {
         setSearch("");
