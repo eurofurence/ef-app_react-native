@@ -13,7 +13,7 @@ import {
     knowledgeGroupsAdapter,
     mapsAdapter,
 } from "./eurofurence.cache";
-import { EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord, RecordId } from "./eurofurence.types";
+import { EnrichedEventRecord, EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord, RecordId } from "./eurofurence.types";
 import { RootState } from "./index";
 
 // These selectors are basic and we can immediately export them
@@ -33,7 +33,7 @@ const baseMapsSelectors = mapsAdapter.getSelectors<RootState>((state) => state.e
 /**
  * An event with the external references as required.
  */
-export type EventWithDetails = EventRecord & {
+export type EventWithDetails = EnrichedEventRecord & {
     ConferenceRoom: EventRoomRecord;
     ConferenceDay: EventDayRecord;
     ConferenceTrack: EventTrackRecord;
