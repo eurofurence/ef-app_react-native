@@ -26,7 +26,7 @@ export const EventScreen = () => {
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>{event?.Title ?? "Viewing event"}</Header>
-            <Scroller>{!event ? null : <EventContent event={event} day={event.ConferenceDay} track={event.ConferenceTrack} room={event.ConferenceRoom} />}</Scroller>
+            <Scroller>{!event ? null : <EventContent event={event} />}</Scroller>
         </View>
     );
 };

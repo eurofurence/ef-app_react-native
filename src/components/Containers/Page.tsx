@@ -1,10 +1,10 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { FC, useMemo } from "react";
 import { StyleSheet, View, ViewProps, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useTheme } from "../../context/Theme";
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Label } from "../Atoms/Label";
 
 const iconSize = 20;
@@ -16,7 +16,7 @@ export type PageProps = {
     /**
      * The icon of the page.
      */
-    icon?: IoniconsNames;
+    icon?: IconNames;
 
     /**
      * The caption of the page.
@@ -63,7 +63,7 @@ export const Page: FC<PageProps> = ({ icon, text, active = false, highlight = fa
             <TouchableOpacity containerStyle={styleContainer} style={styles.page} onPress={onPress}>
                 {icon ? (
                     <View style={[styles.item, styleItem]}>
-                        <Ionicons name={icon} size={iconSize} color={colorContent} />
+                        <Icon name={icon} size={iconSize} color={colorContent} />
                     </View>
                 ) : (
                     <View style={[styles.item, styleItem]}>

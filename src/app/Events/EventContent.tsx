@@ -9,7 +9,7 @@ import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
 import { appBase, conAbbr } from "../../configuration";
 import { useEventReminder } from "../../hooks/useEventReminder";
-import { EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord } from "../../store/eurofurence.types";
+import { EventWithDetails } from "../../store/eurofurence.selectors";
 
 /**
  * Props to the content.
@@ -23,27 +23,16 @@ export type EventContentProps = {
     /**
      * The event to display.
      */
-    event: EventRecord;
-
-    /**
-     * The day if present, will not be resolved on load.
-     */
-    day?: EventDayRecord;
-
-    /**
-     * The track if present, will not be resolved on load.
-     */
-    track?: EventTrackRecord;
-
-    /**
-     * The room if present, will not be resolved on load.
-     */
-    room?: EventRoomRecord;
+    event: EventWithDetails;
 };
 
-export const EventContent: FC<EventContentProps> = ({ event, day, track, room }) => {
+export const EventContent: FC<EventContentProps> = ({ event }) => {
     const { t } = useTranslation("Events");
     const { isFavorited, toggleReminder } = useEventReminder(event);
+
+    const day = event.ConferenceDay;
+    const track = event.ConferenceTrack;
+    const room = event.ConferenceRoom;
 
     const shareEvent = useCallback(() => {
         Share.share(
@@ -76,7 +65,7 @@ export const EventContent: FC<EventContentProps> = ({ event, day, track, room })
                 Share this event
             </Button>
 
-            <Section icon="git-merge" title="About" />
+            <Section icon="directions-fork" title="About" />
             <Label type="caption">Hosted by</Label>
             <Label type="h3" mb={20}>
                 {event.PanelHosts}
@@ -97,7 +86,7 @@ export const EventContent: FC<EventContentProps> = ({ event, day, track, room })
                 {room?.Name || " "}
             </Label>
 
-            <Section icon="information-circle" title="More about the event" />
+            <Section icon="information" title="More about the event" />
             <Label type="para">{event.Description}</Label>
         </>
     );

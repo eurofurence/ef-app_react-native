@@ -33,7 +33,7 @@ export const DevButtons = () => {
             <Section title={"Dev Buttons"} subtitle={"Make the API do something"} />
 
             <Button
-                icon={"warning"}
+                icon="alert"
                 containerStyle={styles.button}
                 onPress={() => alert("Long hold to activate this function")}
                 onLongPress={() => {

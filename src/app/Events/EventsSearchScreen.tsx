@@ -1,6 +1,7 @@
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, useCallback, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Keyboard, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
@@ -25,6 +26,7 @@ export type EventsSearchScreenParams = undefined;
 export type EventsSearchScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) => {
+    const { t } = useTranslation("Events");
     const { search, setSearch, results } = useEventsSearchContext();
 
     // Hide keyboard on navigating away from this page.
@@ -43,9 +45,9 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
         <Floater>
             <View style={styles.end}>
                 <Row style={[styles.categories, border]}>
-                    <Tab icon="calendar-outline" text="Filter by day" onPress={onDay} />
-                    <Tab icon="bus-outline" text="Filter by track" onPress={onTrack} />
-                    <Tab icon="business-outline" text="Filter by room" onPress={onRoom} />
+                    <Tab icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
+                    <Tab icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
+                    <Tab icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
                 </Row>
                 <View style={styles.searchArea}>
                     <Text>Enter your query</Text>

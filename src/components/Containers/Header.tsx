@@ -1,4 +1,4 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
 import { FC, useMemo } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
@@ -22,7 +22,7 @@ export const Header: FC<HeaderProps> = ({ style, children }) => {
 
     return (
         <Row style={[styles.container, borderColor, style]} type="center" variant="spaced">
-            <Ionicons name="chevron-back" size={iconSize} />
+            <Icon name="chevron-left" size={iconSize} />
 
             <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
                 {children}

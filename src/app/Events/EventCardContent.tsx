@@ -2,6 +2,7 @@ import React, { FC, ReactNode, useMemo } from "react";
 import { Image, ImageSourcePropType, Platform, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
 import { useTheme } from "../../context/Theme";
 import { appStyles } from "../AppStyles";
@@ -30,15 +31,8 @@ export const EventCardContent: FC<EventCardProps> = ({ background, pre, title, s
         <TouchableOpacity containerStyle={styles.container} style={[appStyles.shadow, styles.content, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
             {!background ? null : <Image style={styles.background} resizeMode="cover" blurRadius={blurRadius} source={background} />}
 
-            {!pre ? null : (
-                <View style={[styles.pre, preBackgroundStyle]}>
-                    <View>
-                        <Label style={{ color: done ? theme.important : theme.invText }} type="h2">
-                            {pre}
-                        </Label>
-                    </View>
-                </View>
-            )}
+            {!pre ? null : <View style={[styles.pre, preBackgroundStyle]}>{pre}</View>}
+
             <View style={styles.main}>
                 {!title ? null : (
                     <Label style={styles.title} type="h2">
@@ -60,6 +54,12 @@ export const EventCardContent: FC<EventCardProps> = ({ background, pre, title, s
                     )}
                 </View>
             </View>
+
+            {!happening ? null : (
+                <View style={styles.indicator}>
+                    <Indicator color={done ? theme.important : theme.invText} />
+                </View>
+            )}
         </TouchableOpacity>
     );
 };
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     indicator: {
         position: "absolute",
         top: 0,
-        right: 0,
-        padding: 16,
+        left: 0,
+        padding: 14,
     },
 });

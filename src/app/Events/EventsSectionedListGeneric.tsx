@@ -7,7 +7,9 @@ import { EventCard } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
 
-export type EventsSectionedListItem = EventSectionProps & { data: EventWithDetails[] };
+export type EventsSectionedListItem = EventSectionProps & {
+    data: EventWithDetails[];
+};
 
 /**
  * The properties to the component.
@@ -42,7 +44,7 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
                 keyExtractor={(item) => item.Id}
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
-                renderSectionHeader={({ section }) => <EventSection timeUtc={section.timeUtc} />}
+                renderSectionHeader={({ section }) => <EventSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
                 renderItem={(entry: { item: EventWithDetails }) => (
                     <EventCard
                         key={entry.item.Id}

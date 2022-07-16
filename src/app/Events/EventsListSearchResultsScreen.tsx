@@ -35,8 +35,8 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
             events={results ?? []}
             leader={
                 <View style={{ paddingBottom: 30 }}>
-                    <Section icon="search" title={search} subtitle={`${results?.length} results in total`} />
-                    <Button icon="arrow-back-circle" onPress={onClear}>
+                    <Section icon="view-list" title={search} subtitle={`${results?.length} results in total`} />
+                    <Button icon="chevron-left" onPress={onClear}>
                         Clear search
                     </Button>
                 </View>

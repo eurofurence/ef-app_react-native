@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Animated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
 
 import { useTheme } from "../../context/Theme";
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Page } from "./Page";
 
 /**
@@ -23,7 +23,7 @@ export type PagesProps = {
         /**
          * The icon to display.
          */
-        icon?: IoniconsNames;
+        icon?: IconNames;
 
         /**
          * The name of the page.

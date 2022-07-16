@@ -7,7 +7,12 @@ import { AppErrorBoundary } from "./components/Utilities/AppErrorBoundary";
 import { LoadingContextProvider } from "./context/LoadingContext";
 import { persistor, store } from "./store";
 
+import "react-native-reanimated";
+
+// Add locales to make them known for device deployment.
 import "./i18n/index";
+import "moment/locale/de";
+import "moment/locale/nl";
 
 const Index = () => {
     return (

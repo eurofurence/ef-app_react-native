@@ -2,7 +2,7 @@ import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabAc
 import { FC, ReactNode, RefObject, useRef } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 import { navigateTab } from "./Common";
 
@@ -13,7 +13,7 @@ export type TabNavigationOptions = {
     /**
      * The icon to use.
      */
-    icon: IoniconsNames;
+    icon: IconNames;
 
     /**
      * The title of the screen.

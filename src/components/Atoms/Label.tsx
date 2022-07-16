@@ -105,4 +105,5 @@ const variants = StyleSheet.create({
     bold: { fontWeight: "bold" },
     striked: { textDecorationLine: "underline" },
     underlined: { textDecorationLine: "underline" },
+    middle: { textAlign: "center", textAlignVertical: "center" },
 });

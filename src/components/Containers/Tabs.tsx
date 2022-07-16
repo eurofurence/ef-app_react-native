@@ -4,7 +4,7 @@ import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useTheme } from "../../context/Theme";
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Activity } from "../Atoms/Activity";
 import { Tab } from "./Tab";
 
@@ -24,7 +24,7 @@ export type TabsProps = {
         /**
          * The icon to display.
          */
-        icon: IoniconsNames;
+        icon: IconNames;
 
         /**
          * The name of the tab.

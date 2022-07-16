@@ -17,7 +17,18 @@
     "less": "Zuklappen"
   },
   "Events": {
-    "when": "{{ day }}, {{ start }} bis {{ finish }}."
+    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
+    "filter_by_day": "Tage ansehen",
+    "filter_by_track": "Kategorien ansehen",
+    "filter_by_room": "Räume ansehen",
+    "morning": "Morgens",
+    "afternoon": "Nachmittags",
+    "evening": "Am Abend",
+    "night": "In der Nacht",
+    "events_count": "{{count}} Events",
+    "events_done": "Vergangen"
+  },
+  "Event": {
   },
   "Dealers": {
     "dealers_at_convention": "Dealers an der Eurofurence",
@@ -29,8 +40,8 @@
     "attends_fri": "Freitag",
     "attends_sat": "Samstag",
     "about": "Infos",
-    "about_the_art": "Über die Person",
-    "about_the_artist": "Über das Angebot",
+    "about_the_art": "Über das Angebot",
+    "about_the_artist": "Über die Person",
     "attends": "Anwesend",
     "merchandise": "Angebot",
     "after_dark": "After Dark",

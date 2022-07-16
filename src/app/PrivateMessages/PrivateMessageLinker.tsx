@@ -26,7 +26,7 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMess
     return (
         <View style={{ padding: 30 }}>
             <Text style={styles.marginBefore}>{t("messages", { count: unread?.length ?? 0 })}</Text>
-            <Button containerStyle={styles.marginBefore} icon="mail-outline" onPress={onOpenMessages}>
+            <Button containerStyle={styles.marginBefore} icon={unread?.length ? "email-multiple-outline" : "email-open-multiple-outline"} onPress={onOpenMessages}>
                 {t("open_messages")}
             </Button>
         </View>

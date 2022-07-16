@@ -34,17 +34,17 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
             ) : (
                 <View style={{ padding: 30 }}>
                     <Text style={styles.marginBefore}>{t("not_logged_in")}</Text>
-                    <Button containerStyle={styles.marginBefore} icon="log-in" onPress={onLogin}>
+                    <Button containerStyle={styles.marginBefore} icon="login" onPress={onLogin}>
                         {t("logged_in_now")}
                     </Button>
                 </View>
             )}
             <Grid cols={3} style={{ alignSelf: "stretch" }}>
-                <Tab icon="information-circle" text={t("info")} onPress={onInfo} />
+                <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
                 <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />
                 <Tab icon="book-outline" text={t("services")} onPress={onServices} />
                 <Tab icon="map" text={t("maps")} onPress={onMaps} />
-                <Tab icon="card-outline" text={t("about")} onPress={onAbout} />
+                <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
                 <Tab icon="cog" text={t("settings")} onPress={onSettings} />
             </Grid>
         </Col>

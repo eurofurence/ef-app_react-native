@@ -31,7 +31,12 @@ export const CacheStats = () => {
                 <Button onPress={sync.synchronize} icon={"sync"} containerStyle={styles.button}>
                     Synchronize
                 </Button>
-                <Button icon={"trash"} containerStyle={styles.button} onPress={() => alert("To clean the cache you need to long press this button")} onLongPress={sync.clear}>
+                <Button
+                    icon="trash-can-outline"
+                    containerStyle={styles.button}
+                    onPress={() => alert("To clean the cache you need to long press this button")}
+                    onLongPress={sync.clear}
+                >
                     Clear cache
                 </Button>
             </Row>

@@ -1,4 +1,5 @@
 import { orderBy } from "lodash";
+import moment from "moment";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
@@ -27,6 +28,7 @@ export const UserSettings = () => {
     const changeLanguage = useCallback(
         (newLanguage: string) => () => {
             i18n.changeLanguage(newLanguage);
+            moment.locale(newLanguage);
         },
         []
     );

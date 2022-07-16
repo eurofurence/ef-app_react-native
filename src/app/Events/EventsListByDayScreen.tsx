@@ -1,17 +1,17 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import { orderBy } from "lodash";
-import moment from "moment";
+import { chain } from "lodash";
 import { FC, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
-import { Section } from "../../components/Atoms/Section";
+import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
-import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
-import { EventDayRecord } from "../../store/eurofurence.types";
+import { EventDayRecord, PartOfDay } from "../../store/eurofurence.types";
+import { IconNames } from "../../types/IconNames";
 import { ScreenStartNavigatorParamsList } from "../ScreenStart";
-import { EventsSectionedListGeneric, EventsSectionedListItem } from "./EventsSectionedListGeneric";
+import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
 
 /**
@@ -30,34 +30,36 @@ export type EventsListByDayScreenParams = {
 export type EventsListByDayScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
 
 export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigation, route }) => {
-    const [now] = useNow();
+    const { t } = useTranslation("Events");
 
     // Get the day. Use it to resolve events to display.
     const day = "day" in route.params ? route.params?.day : null;
-    const isToday = useMemo(() => now.isSame(day?.Date, "day"), [now, day]);
     const eventsByDay = useAppSelector((state) => eventsCompleteSelector.selectByDay(state, day?.Id ?? ""));
     const eventsGroups = useMemo(() => {
-        const groups: EventsSectionedListItem[] = [];
-        for (const event of orderBy(eventsByDay, "StartDateTimeUtc")) {
-            let target = groups.length ? groups[groups.length - 1] : undefined;
-            if (target?.timeUtc !== event.StartDateTimeUtc) {
-                target = { timeUtc: event.StartDateTimeUtc, data: [] };
-                groups.push(target);
-            }
-            target.data.push(event);
-        }
-
-        return groups;
-    }, [eventsByDay]);
+        return chain(eventsByDay)
+            .orderBy("StartDateTimeUtc")
+            .groupBy("PartOfDay")
+            .entries()
+            .map(([partOfDay, events]) => ({
+                title: t(partOfDay as PartOfDay),
+                subtitle: t("events_count", { count: events.length }),
+                icon: ((partOfDay === "morning" && "weather-sunset-up") ||
+                    (partOfDay === "afternoon" && "weather-sunny") ||
+                    (partOfDay === "evening" && "weather-sunset-down") ||
+                    (partOfDay === "night" && "weather-night") ||
+                    "weather-sunny") as IconNames,
+                data: events,
+            }))
+            .value();
+    }, [t, eventsByDay]);
     return (
         <EventsSectionedListGeneric
             navigation={navigation}
             eventsGroups={eventsGroups}
             leader={
-                <Section
-                    title={day?.Name ?? ""}
-                    subtitle={isToday ? `${eventsByDay.length} events today` : `${eventsByDay.length} events on ${moment(day?.Date).format("dddd")}`}
-                />
+                <Label type="h1" variant="middle" mt={30}>
+                    {day?.Name ?? ""}
+                </Label>
             }
         />
     );

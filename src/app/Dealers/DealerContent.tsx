@@ -37,7 +37,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
             <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
             <Label type="para">{dealer.ShortDescription}</Label>
 
-            <Section icon="git-merge" title={t("about")} />
+            <Section icon="directions-fork" title={t("about")} />
             <Label type="caption">{t("attends")}</Label>
             <Label type="h3" mb={20}>
                 {dealerDays}
@@ -86,7 +86,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 
             {!dealer.AboutTheArtistText && !dealer.ArtistImageId ? null : (
                 <>
-                    <Section icon="person-circle-outline" title={t("about_the_artist")} />
+                    <Section icon="account-circle-outline" title={t("about_the_artist")} />
 
                     {!dealer.ArtistImageUrl ? null : (
                         <View style={styles.imageLine}>

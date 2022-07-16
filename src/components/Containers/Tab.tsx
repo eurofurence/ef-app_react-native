@@ -1,10 +1,10 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { FC, ReactNode, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useTheme } from "../../context/Theme";
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 
 /**
  * Arguments to the tab.
@@ -13,7 +13,7 @@ export type TabProps = {
     /**
      * The icon to display.
      */
-    icon: IoniconsNames;
+    icon: IconNames;
 
     /**
      * The name of the tab.
@@ -48,7 +48,7 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
     return (
         <TouchableOpacity containerStyle={styles.container} style={styles.tab} onPress={onPress}>
             <View style={styles.item}>
-                <Ionicons name={icon} size={24} color={active ? theme.secondary : theme.text} />
+                <Icon name={icon} size={24} color={active ? theme.secondary : theme.text} />
 
                 {!indicate ? null : (
                     <View style={styles.indicatorArea}>

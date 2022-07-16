@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Pages, PagesRef } from "../Containers/Pages";
 import { navigateTab } from "./Common";
 
@@ -19,7 +19,7 @@ export type PagesNavigationOptions = {
     /**
      * The icon to use.
      */
-    icon: IoniconsNames;
+    icon: IconNames;
 
     /**
      * The title of the screen.

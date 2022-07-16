@@ -1,4 +1,4 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import React, { useMemo } from "react";
@@ -45,7 +45,7 @@ export const PrivateMessageListScreen = () => {
                                 {message.ReadDateTimeUtc === null ? "Unread" : "Read"} - Sent on {moment(message.CreatedDateTimeUtc).format("llll")}
                             </Label>
                         </Col>
-                        <Ionicons name={"arrow-forward"} />
+                        <Icon name="chevron-right" />
                     </TouchableOpacity>
                 ))}
             </Scroller>

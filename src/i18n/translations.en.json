@@ -25,10 +25,21 @@
     "less": "Less"
   },
   "Events": {
-    "when": "{{ day }}, {{ start }} until {{ finish }}."
+    "when": "{{day}}, {{start}} until {{finish}}.",
+    "filter_by_day": "Browse days",
+    "filter_by_track": "Browse tracks",
+    "filter_by_room": "Browse rooms",
+    "morning": "In the morning",
+    "afternoon": "In the afternoon",
+    "evening": "In the evening",
+    "night": "At night",
+    "events_count": "{{count}} events",
+    "events_done": "Events concluded"
+  },
+  "Event": {
   },
   "Dealers": {
-    "dealers_at_convention" : "Dealers at Eurofurence",
+    "dealers_at_convention": "Dealers at Eurofurence",
     "dealers_count": "{{count}} dealers"
   },
   "Dealer": {
@@ -59,5 +70,6 @@
     "timeTravel": "Show time travel settings.",
     "currentLanguage": "Your current language is English!",
     "settingsSection": "Settings"
-  }
+  },
+  "Todo": {}
 }
