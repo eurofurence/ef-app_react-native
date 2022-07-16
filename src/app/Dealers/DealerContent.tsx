@@ -2,9 +2,9 @@ import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image } from "react-native";
 
+import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { Scroller } from "../../components/Containers/Scroller";
 import { EnrichedDealerRecord } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
 
@@ -27,7 +27,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
     }, [dealer, t]);
 
     return (
-        <Scroller>
+        <>
             {!dealer.ArtistImageUrl ? null : (
                 <View style={[appStyles.shadow, styles.avatar]}>
                     <Image resizeMode="cover" style={styles.avatarImage} source={{ uri: dealer.ArtistImageUrl }} />
@@ -72,9 +72,9 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 
                     {!dealer.ArtPreviewImageUrl ? null : (
                         <View style={styles.imageLine}>
-                            <Image resizeMode="contain" style={styles.image} source={{ uri: dealer.ArtPreviewImageUrl }} />
+                            <AutoScaleImage style={styles.image} source={dealer.ArtPreviewImageUrl} />
 
-                            <Label type="caption" numberOfLines={4} ellipsizeMode="tail">
+                            <Label mt={10} type="caption" numberOfLines={4} ellipsizeMode="tail">
                                 {dealer.ArtPreviewCaption}
                             </Label>
                         </View>
@@ -86,18 +86,18 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 
             {!dealer.AboutTheArtistText && !dealer.ArtistImageId ? null : (
                 <>
-                    <Section icon="account-circle-outline" title={t("about_the_artist")} />
+                    <Section icon="account-circle-outline" title={t("about_the_artist", { name: dealer.FullName })} />
 
                     {!dealer.ArtistImageUrl ? null : (
                         <View style={styles.imageLine}>
-                            <Image resizeMode="contain" style={styles.image} source={{ uri: dealer.ArtistImageUrl }} />
+                            <AutoScaleImage style={styles.image} source={dealer.ArtistImageUrl} />
                         </View>
                     )}
 
                     <Label type="para">{dealer.AboutTheArtistText}</Label>
                 </>
             )}
-        </Scroller>
+        </>
     );
 };
 
@@ -122,8 +122,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
-        width: "100%",
-        aspectRatio: 1,
-        marginBottom: 20,
+        alignSelf: "stretch",
     },
 });

@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useMemo } from "react";
-import { Image, ImageSourcePropType, Platform, StyleSheet, View, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Image, ImageSourcePropType, Platform, StyleSheet, View, ViewStyle, TouchableOpacity } from "react-native";
 
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
@@ -28,7 +27,7 @@ export const EventCardContent: FC<EventCardProps> = ({ background, pre, title, s
     const preBackgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
 
     return (
-        <TouchableOpacity containerStyle={styles.container} style={[appStyles.shadow, styles.content, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
+        <TouchableOpacity style={[styles.container, appStyles.shadow, styles.content, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
             {!background ? null : <Image style={styles.background} resizeMode="cover" blurRadius={blurRadius} source={background} />}
 
             {!pre ? null : <View style={[styles.pre, preBackgroundStyle]}>{pre}</View>}

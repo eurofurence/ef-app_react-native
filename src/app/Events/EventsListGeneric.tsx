@@ -2,7 +2,6 @@ import { FC, ReactNode, useCallback, useState } from "react";
 import { FlatList, StyleSheet, Vibration, View } from "react-native";
 
 import { EventWithDetails } from "../../store/eurofurence.selectors";
-import { EventRecord } from "../../store/eurofurence.types";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
@@ -23,7 +22,7 @@ export type EventsListGenericProps = {
 
 export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer, cardType = "duration" }) => {
     // Set event for action sheet
-    const [selectedEvent, setSelectedEvent] = useState<EventRecord | undefined>(undefined);
+    const [selectedEvent, setSelectedEvent] = useState<EventWithDetails | undefined>(undefined);
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(

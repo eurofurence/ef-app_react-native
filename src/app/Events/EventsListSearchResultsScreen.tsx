@@ -1,6 +1,7 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import { FC, useCallback } from "react";
+import { chain } from "lodash";
+import { FC, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
@@ -29,10 +30,13 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
         navigation.jumpTo("Search");
     }, [setSearch, navigation]);
 
+    const events = useMemo(() => (!results ? [] : chain(results).orderBy("StartDateTimeUtc").value()), []);
+
     return (
         <EventsListGeneric
             navigation={navigation}
-            events={results ?? []}
+            events={events}
+            cardType="time"
             leader={
                 <View style={{ paddingBottom: 30 }}>
                     <Section icon="view-list" title={search} subtitle={`${results?.length} results in total`} />

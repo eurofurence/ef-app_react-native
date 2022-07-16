@@ -26,7 +26,7 @@
     "evening": "Am Abend",
     "night": "In der Nacht",
     "events_count": "{{count}} Events",
-    "events_done": "Vergangen"
+    "events_done": "Bereits zu Ende"
   },
   "Event": {
   },
@@ -41,7 +41,7 @@
     "attends_sat": "Samstag",
     "about": "Infos",
     "about_the_art": "Über das Angebot",
-    "about_the_artist": "Über die Person",
+    "about_the_artist": "Über {{name}}",
     "attends": "Anwesend",
     "merchandise": "Angebot",
     "after_dark": "After Dark",

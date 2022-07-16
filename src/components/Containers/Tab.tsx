@@ -1,7 +1,6 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { FC, ReactNode, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { IconNames } from "../../types/IconNames";
@@ -46,7 +45,7 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
     const fillNotify = useMemo(() => ({ backgroundColor: theme.notification }), [theme]);
 
     return (
-        <TouchableOpacity containerStyle={styles.container} style={styles.tab} onPress={onPress}>
+        <TouchableOpacity style={[styles.container, styles.tab]} onPress={onPress}>
             <View style={styles.item}>
                 <Icon name={icon} size={24} color={active ? theme.secondary : theme.text} />
 

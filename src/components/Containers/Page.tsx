@@ -1,7 +1,6 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { FC, useMemo } from "react";
-import { StyleSheet, View, ViewProps, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View, ViewProps, ViewStyle, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { IconNames } from "../../types/IconNames";
@@ -60,7 +59,7 @@ export const Page: FC<PageProps> = ({ icon, text, active = false, highlight = fa
 
     return (
         <View style={styleContainer} onLayout={onLayout}>
-            <TouchableOpacity containerStyle={styleContainer} style={styles.page} onPress={onPress}>
+            <TouchableOpacity style={styleContainer} onPress={onPress}>
                 {icon ? (
                     <View style={[styles.item, styleItem]}>
                         <Icon name={icon} size={iconSize} color={colorContent} />
@@ -79,18 +78,14 @@ export const Page: FC<PageProps> = ({ icon, text, active = false, highlight = fa
 const styles = StyleSheet.create({
     containerStatic: {
         flexDirection: "row",
-        alignItems: "stretch",
+        justifyContent: "center",
+        paddingVertical: 6,
     },
     containerGrow: {
         flexDirection: "row",
-        alignItems: "stretch",
+        justifyContent: "center",
+        paddingVertical: 6,
         flexGrow: 1,
-    },
-    page: {
-        alignItems: "center",
-        paddingHorizontal: 4,
-        paddingVertical: 8,
-        flex: 1,
     },
     border: {
         position: "absolute",
@@ -104,8 +99,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: iconSize + 12,
         justifyContent: "center",
-        padding: 4,
-        borderRadius: 8,
+        padding: 6,
+        paddingHorizontal: 10,
+        borderRadius: 6,
     },
     text: {
         fontWeight: "bold",

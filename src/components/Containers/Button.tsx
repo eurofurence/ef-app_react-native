@@ -1,8 +1,7 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as React from "react";
 import { FC, ReactNode, useMemo } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleProp, StyleSheet, View, ViewStyle, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { IconNames } from "../../types/IconNames";
@@ -61,7 +60,7 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, 
     const fill = useMemo(() => ({ backgroundColor: outline ? theme.background : theme.inverted }), [outline, theme]);
 
     return (
-        <TouchableOpacity containerStyle={containerStyle} style={[styles.content, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
+        <TouchableOpacity style={[containerStyle, styles.content, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
             {!icon ? <View style={styles.placeholder} /> : <Icon name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>

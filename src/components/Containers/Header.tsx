@@ -1,8 +1,7 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
 import { FC, useMemo } from "react";
-import { StyleSheet, View, ViewProps } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View, ViewProps, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { Activity } from "../Atoms/Activity";
@@ -30,7 +29,7 @@ export const Header: FC<HeaderProps> = ({ style, children }) => {
 
             <View style={styles.placeholder} />
 
-            <TouchableOpacity containerStyle={styles.back} onPress={() => navigation.goBack()} />
+            <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()} />
 
             <Activity style={styles.activity} />
         </Row>
