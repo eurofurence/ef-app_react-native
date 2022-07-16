@@ -16,7 +16,8 @@ import { CommunicationRecord } from "../../store/eurofurence.types";
 export const PrivateMessageListScreen = () => {
     const navigation = useNavigation();
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
-        pollingInterval: 10000,
+        // TODO: We need to react to FCM PM notifications.
+        // pollingInterval: 10000,
     });
 
     const top = useSafeAreaInsets()?.top;

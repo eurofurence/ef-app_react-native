@@ -1,3 +1,4 @@
+import { apiBase } from "../configuration";
 import {
     DealerRecord,
     EnrichedDealerRecord,
@@ -10,7 +11,7 @@ import {
     MapRecord,
 } from "./eurofurence.types";
 
-const internalCreateImageUrl = (imageId: string | undefined): ImageUrl | undefined => imageId && `https://app.eurofurence.org/EF26/Api/Images/${imageId}/Content`;
+const internalCreateImageUrl = (imageId: string | undefined): ImageUrl | undefined => imageId && `${apiBase}/Images/${imageId}/Content`;
 
 export const enrichDealerRecord = (record: DealerRecord): EnrichedDealerRecord => ({
     ...record,

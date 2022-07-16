@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -6,6 +6,7 @@ import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
+import { useAppSelector } from "../../store";
 import { CacheStats } from "./CacheStats";
 import { DevButtons } from "./DevButtons";
 import { RemoteMessages } from "./RemoteMessages";
@@ -16,6 +17,11 @@ import { UserSettings } from "./UserSettings";
 export const SettingsScreen = () => {
     const top = useSafeAreaInsets()?.top;
     const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
+
+    const fcm = useAppSelector((state) => state.background.fcmMessages);
+    useEffect(() => {
+        console.log(fcm);
+    }, [fcm]);
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>Settings</Header>

@@ -7,6 +7,7 @@ import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
+import { appBase, conAbbr } from "../../configuration";
 import { useEventReminder } from "../../hooks/useEventReminder";
 import { EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord } from "../../store/eurofurence.types";
 
@@ -48,8 +49,8 @@ export const EventContent: FC<EventContentProps> = ({ event, day, track, room })
         Share.share(
             {
                 title: event.Title,
-                url: `https://app.eurofurence.org/EF26/Web/Events/${event.Id}`,
-                message: `Check out ${event.Title} on EF!\nhttps://app.eurofurence.org/EF26/Web/Events/${event.Id}`,
+                url: `${appBase}/Web/Events/${event.Id}`,
+                message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
             },
             {}
         );

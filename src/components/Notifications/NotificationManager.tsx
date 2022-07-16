@@ -1,4 +1,3 @@
-import Constants from "expo-constants";
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import moment from "moment";
@@ -6,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import { useEffectOnce } from "usehooks-ts";
 
+import { conId } from "../../configuration";
 import { withPlatform } from "../../hoc/withPlatform";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { usePostDeviceRegistrationMutation, usePostSubscribeToTopicMutation } from "../../store/authorization.service";
@@ -43,11 +43,10 @@ export const NotificationManager = () => {
     useEffectOnce(() => {
         registerForPushNotifications().then((token) => setExpoPushToken(token));
 
-        const notificationHAndlerSubscription = Notifications.addNotificationReceivedListener(handleNotification);
-        Notifications.addNotificationResponseReceivedListener(console.debug);
+        const notificationHandlerSubscription = Notifications.addNotificationReceivedListener(handleNotification);
 
         return () => {
-            Notifications.removeNotificationSubscription(notificationHAndlerSubscription);
+            Notifications.removeNotificationSubscription(notificationHandlerSubscription);
         };
     });
 
@@ -58,7 +57,7 @@ export const NotificationManager = () => {
                 // There is no token we can report yet.
                 return;
             }
-            const topics = ["react-native", `version-${Constants.manifest?.android?.versionCode}`, "cid-EF26"];
+            const topics = [`${conId}-android`, `${conId}-expo`, `${conId},`];
             console.debug("NotificationManager", "Registering device with the API", expoPushToken, topics);
 
             await registerDevice({

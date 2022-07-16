@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import _ from "lodash";
 import { REHYDRATE } from "redux-persist";
 
+import { apiBase } from "../configuration";
 import { enrichDealerRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
@@ -34,7 +35,7 @@ const tagsFromItem =
 export const eurofurenceService = createApi({
     reducerPath: "eurofurenceService",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://app.eurofurence.org/EF26",
+        baseUrl: apiBase,
         prepareHeaders: (headers, { getState }) => {
             const token: string | undefined = (getState() as any).authorization?.token;
 
@@ -54,93 +55,93 @@ export const eurofurenceService = createApi({
     },
     endpoints: (builder) => ({
         getAnnouncements: builder.query<AnnouncementRecord[], void>({
-            query: () => ({ url: "/Api/Announcements" }),
+            query: () => ({ url: "/Announcements" }),
             providesTags: tagsFromList("Announcement"),
         }),
         getAnnouncementsById: builder.query<AnnouncementRecord, RecordId>({
-            query: (args) => ({ url: `/Api/Announcements/${args}` }),
+            query: (args) => ({ url: `/Announcements/${args}` }),
             providesTags: tagsFromItem("Announcement"),
         }),
         getEvents: builder.query<EventRecord[], void>({
-            query: () => ({ url: "/Api/Events" }),
+            query: () => ({ url: "/Events" }),
             providesTags: tagsFromList("Event"),
         }),
         getEventById: builder.query<EventRecord, RecordId>({
-            query: (args) => ({ url: `/Api/Events/${args}` }),
+            query: (args) => ({ url: `/Events/${args}` }),
             providesTags: tagsFromItem("Event"),
         }),
         getDealers: builder.query<EnrichedDealerRecord[], void>({
-            query: () => ({ url: "/Api/Dealers" }),
+            query: () => ({ url: "/Dealers" }),
             providesTags: tagsFromList("Dealer"),
             transformResponse: (result: DealerRecord[]): EnrichedDealerRecord[] => result.map(enrichDealerRecord),
         }),
         getDealerById: builder.query<EnrichedDealerRecord, RecordId>({
-            query: (args) => ({ url: `/Api/Dealers/${args}` }),
+            query: (args) => ({ url: `/Dealers/${args}` }),
             providesTags: tagsFromItem("Dealer"),
             transformResponse: enrichDealerRecord,
         }),
         getEventDays: builder.query<EventDayRecord[], void>({
-            query: () => ({ url: "/Api/EventConferenceDays" }),
+            query: () => ({ url: "/EventConferenceDays" }),
             providesTags: tagsFromList("EventDay"),
         }),
         getEventDayById: builder.query<EventDayRecord, RecordId>({
-            query: (args) => ({ url: `/Api/EventConferenceDays/${args}` }),
+            query: (args) => ({ url: `/EventConferenceDays/${args}` }),
             providesTags: tagsFromItem("EventDay"),
         }),
         getEventTracks: builder.query<EventTrackRecord[], void>({
-            query: () => ({ url: "/Api/EventConferenceTracks" }),
+            query: () => ({ url: "/EventConferenceTracks" }),
             providesTags: tagsFromList("EventTrack"),
         }),
         getEventTrackById: builder.query<EventTrackRecord, RecordId>({
-            query: (args) => ({ url: `/Api/EventConferenceTracks/${args}` }),
+            query: (args) => ({ url: `/EventConferenceTracks/${args}` }),
             providesTags: tagsFromItem("EventTrack"),
         }),
         getEventRooms: builder.query<EventRoomRecord[], void>({
-            query: () => ({ url: "/Api/EventConferenceRooms" }),
+            query: () => ({ url: "/EventConferenceRooms" }),
             providesTags: tagsFromList("EventRoom"),
         }),
         getEventRoomById: builder.query<EventRoomRecord, RecordId>({
-            query: (args) => ({ url: `/Api/EventConferenceRooms/${args}` }),
+            query: (args) => ({ url: `/EventConferenceRooms/${args}` }),
             providesTags: tagsFromItem("EventRoom"),
         }),
         getMaps: builder.query<MapRecord[], void>({
-            query: () => ({ url: "/Api/MAps" }),
+            query: () => ({ url: "/Maps" }),
             providesTags: tagsFromList("Map"),
         }),
         getMapById: builder.query<EnrichedMapRecord, RecordId>({
-            query: (args) => ({ url: `/Api/Maps/${args}` }),
+            query: (args) => ({ url: `/Maps/${args}` }),
             providesTags: tagsFromItem("Map"),
             transformResponse: enrichMapRecord,
         }),
         getKnowledgeGroups: builder.query<KnowledgeGroupRecord[], void>({
-            query: () => ({ url: "/Api/KnowledgeGroups" }),
+            query: () => ({ url: "/KnowledgeGroups" }),
             providesTags: tagsFromList("KnowledgeGroup"),
         }),
         getKnowledgeGroupById: builder.query<KnowledgeGroupRecord, RecordId>({
-            query: (args) => ({ url: `/Api/KnowledgeGroups/${args}` }),
+            query: (args) => ({ url: `/KnowledgeGroups/${args}` }),
             providesTags: tagsFromItem("KnowledgeGroup"),
         }),
         getKnowledgeEntries: builder.query<KnowledgeEntryRecord[], void>({
-            query: () => ({ url: "/Api/KnowledgeEntries" }),
+            query: () => ({ url: "/KnowledgeEntries" }),
             providesTags: tagsFromList("KnowledgeEntry"),
         }),
         getKnowledgeEntryById: builder.query<KnowledgeEntryRecord, RecordId>({
-            query: (args) => ({ url: `/Api/KnowledgeEntries/${args}` }),
+            query: (args) => ({ url: `/KnowledgeEntries/${args}` }),
             providesTags: tagsFromItem("KnowledgeEntry"),
         }),
         getImages: builder.query<EnrichedImageRecord[], void>({
-            query: () => ({ url: `/Api/Images` }),
+            query: () => ({ url: `/Images` }),
             providesTags: tagsFromList("Image"),
             transformResponse: (result: ImageRecord[]) => result.map(enrichImageRecord),
         }),
         getCommunications: builder.query<CommunicationRecord[], void>({
-            query: () => "/Api/Communication/PrivateMessages",
+            query: () => "/Communication/PrivateMessages",
             providesTags: tagsFromList("Communication"),
             transformResponse: (result: CommunicationRecord[]) => _.orderBy(result, (it) => it.CreatedDateTimeUtc, "desc"),
         }),
         markCommunicationRead: builder.mutation<boolean, RecordId>({
             query: (arg) => ({
-                url: `/Api/Communication/PrivateMessages/${arg}/Read`,
+                url: `/Communication/PrivateMessages/${arg}/Read`,
                 method: "POST",
                 headers: {
                     "Content-Type": "text/json",
