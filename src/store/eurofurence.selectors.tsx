@@ -214,6 +214,7 @@ export const mapsSelectors = {
                 .value()
     ),
 };
+
 export const mapsCompleteSelectors = {
     ...baseMapsSelectors,
     selectAll: createSelector([baseMapsSelectors.selectAll, imagesSelectors.selectEntities], (maps, images): MapWithDetails[] => maps.map(applyMapDetails(images))),
@@ -225,12 +226,23 @@ export const mapsCompleteSelectors = {
     ),
     selectValidLinksByTarget: createSelector(
         [baseMapsSelectors.selectAll, imagesSelectors.selectEntities, (state, target: RecordId) => target],
-        (maps, images, target): { map: MapWithDetails; entry: MapEntryRecord; link: LinkFragment }[] =>
-            chain(maps)
-                .map(applyMapDetails(images))
-                .flatMap((map) => map.Entries.map((entry) => ({ map, entry })))
-                .flatMap(({ map, entry }) => entry.Links.map((link) => ({ map, entry, link })))
-                .filter(({ link }) => target === link.Target)
-                .value()
+        (maps, images, target): { map: MapWithDetails; entry: MapEntryRecord; link: LinkFragment }[] => {
+            const applyDetails = applyMapDetails(images);
+            const results = [];
+
+            // Flat map via nested loops. This is easier to read and does not instantiate arrays in the flat map steps.
+            for (const map of maps) {
+                // Enumerate map's entries.
+                for (const entry of map.Entries) {
+                    // Enumerate entry's links.
+                    for (const link of entry.Links) {
+                        // Append if on target.
+                        if (target === link.Target) results.push({ map: applyDetails(map), entry, link });
+                    }
+                }
+            }
+
+            return results;
+        }
     ),
 };
