@@ -25,7 +25,6 @@
     "less": "Less"
   },
   "Events": {
-    "when": "{{day}}, {{start}} until {{finish}}.",
     "filter_by_day": "Browse days",
     "filter_by_track": "Browse tracks",
     "filter_by_room": "Browse rooms",
@@ -37,6 +36,8 @@
     "events_done": "Events concluded"
   },
   "Event": {
+    "view_on_map": "View on map",
+    "when": "{{day}}, {{start}} until {{finish}}."
   },
   "Dealers": {
     "all": "All",
@@ -58,7 +59,8 @@
     "after_dark": "After dark",
     "in_after_dark": "Located in the after dark section",
     "categories": "Categories",
-    "attends_today": "Dealer is attending today"
+    "attends_today": "Dealer is attending today",
+    "view_on_map": "View on map"
   },
   "TimeTravel": {
     "title": "Time Travel",

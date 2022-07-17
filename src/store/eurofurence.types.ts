@@ -1,7 +1,7 @@
 /**
  * A URL leading to an image.
  */
-export type ImageUrl = string | undefined;
+export type ImageUrl = string;
 
 /**
  * Time categorized in part of day.
@@ -116,14 +116,32 @@ export type EventRoomRecord = RecordMetadata & {
 };
 
 export type MapRecord = RecordMetadata & {
+    // TODO: Verify nullability.
     Description: string;
     IsBrowseable: boolean;
-    ImageId?: RecordId;
+    ImageId: RecordId;
+    Entries: MapEntryRecord[];
+};
+
+export type MapEntryRecord = RecordMetadata & {
+    // TODO: Verify nullability.
+    X: number;
+    Y: number;
+    TapRadius: number;
+    Links: LinkFragment[];
+};
+
+export type LinkFragment = {
+    // TODO: Verify nullability.
+    FragmentType: "WebExternal" | "MapExternal" | "MapEntry" | "DealerDetail" | "EventConferenceRoom";
+    Name: string;
+    Target: string;
 };
 
 export type EnrichedMapRecord = MapRecord & {
-    ImageUrl?: ImageUrl;
+    ImageUrl: ImageUrl;
 };
+
 export type KnowledgeGroupRecord = RecordMetadata & {
     Name: string;
     Description: string;
@@ -141,6 +159,10 @@ export type KnowledgeEntryRecord = RecordMetadata & {
 
 export type ImageRecord = RecordMetadata & {
     ContentHashSha1: string;
+
+    // Needed because of downsampling.
+    Width: number;
+    Height: number;
 };
 
 export type EnrichedImageRecord = ImageRecord & {

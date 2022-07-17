@@ -28,15 +28,10 @@ export const CacheStats = () => {
             <Label>There are {cache.images.ids.length} images</Label>
 
             <Row style={styles.container}>
-                <Button onPress={sync.synchronize} icon={"sync"} containerStyle={styles.button}>
+                <Button onPress={sync.synchronize} icon={"sync"} style={styles.button}>
                     Synchronize
                 </Button>
-                <Button
-                    icon="trash-can-outline"
-                    containerStyle={styles.button}
-                    onPress={() => alert("To clean the cache you need to long press this button")}
-                    onLongPress={sync.clear}
-                >
+                <Button icon="trash-can-outline" style={styles.button} onPress={() => alert("To clean the cache you need to long press this button")} onLongPress={sync.clear}>
                     Clear cache
                 </Button>
             </Row>

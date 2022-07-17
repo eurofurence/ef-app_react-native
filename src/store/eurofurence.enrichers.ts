@@ -13,7 +13,12 @@ import {
     MapRecord,
 } from "./eurofurence.types";
 
-const internalCreateImageUrl = (imageId: string | undefined): ImageUrl | undefined => imageId && `${apiBase}/Images/${imageId}/Content`;
+/**
+ * Creates an image URL, if the input can be undefined, the outut can also be undefined.
+ * @param imageId
+ */
+const internalCreateImageUrl = <T extends string | undefined>(imageId: T): T extends undefined ? ImageUrl | undefined : ImageUrl =>
+    imageId && `${apiBase}/Images/${imageId}/Content`;
 
 const internalCategorizeTime = (input: MomentInput) => {
     const hours = moment(input).hours();

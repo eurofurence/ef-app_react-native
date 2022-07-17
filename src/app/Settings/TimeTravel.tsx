@@ -27,45 +27,45 @@ export const TimeTravel = () => {
             <Label mb={5}>{t("currentTime", { time: now.format("llll") })}</Label>
             <Label mb={5}>{t("difference", { diff: moment.duration(amount, "millisecond").humanize() })}</Label>
             <Row>
-                <Button containerStyle={styles.button} outline={enabled} onPress={() => dispatch(enableTimeTravel(!enabled))}>
+                <Button style={styles.button} outline={enabled} onPress={() => dispatch(enableTimeTravel(!enabled))}>
                     Enable
                 </Button>
-                <Button containerStyle={styles.button} onPress={() => dispatch(resetTravel())}>
+                <Button style={styles.button} onPress={() => dispatch(resetTravel())}>
                     {t("reset")}
                 </Button>
             </Row>
             <Row>
                 <Col>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelForward(ONE_MINUTE))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelForward(ONE_MINUTE))}>
                         +1 minute
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelForward(ONE_HOUR))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelForward(ONE_HOUR))}>
                         +1 hour
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelForward(ONE_DAY))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelForward(ONE_DAY))}>
                         +1 day
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelForward(ONE_WEEK))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelForward(ONE_WEEK))}>
                         +1 week
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelForward(ONE_MONTH))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelForward(ONE_MONTH))}>
                         +1 month
                     </Button>
                 </Col>
                 <Col>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelBackward(ONE_MINUTE))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelBackward(ONE_MINUTE))}>
                         -1 minute
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelBackward(ONE_HOUR))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelBackward(ONE_HOUR))}>
                         -1 hour
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelBackward(ONE_DAY))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelBackward(ONE_DAY))}>
                         -1 day
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelBackward(ONE_WEEK))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelBackward(ONE_WEEK))}>
                         -1 week
                     </Button>
-                    <Button containerStyle={styles.button} onPress={() => dispatch(travelBackward(ONE_MONTH))}>
+                    <Button style={styles.button} onPress={() => dispatch(travelBackward(ONE_MONTH))}>
                         -1 month
                     </Button>
                 </Col>

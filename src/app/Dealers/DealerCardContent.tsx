@@ -26,7 +26,7 @@ export const DealerCardContent: FC<DealerCardContentProps> = ({ avatar, preview,
 
             {!avatar ? null : (
                 <View style={styles.avatarContainer}>
-                    <View style={[styles.avatarCircle, appStyles.shadow]}>
+                    <View style={styles.avatarCircle}>
                         <Image style={styles.avatarImage} source={avatar} resizeMode="cover" />
                     </View>
                 </View>

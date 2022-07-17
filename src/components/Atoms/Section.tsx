@@ -39,7 +39,7 @@ export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark",
         <Col style={[styles.container, style]}>
             <Row type="center">
                 {!icon ? <View style={styles.placeholder} /> : <Icon style={styles.icon} name={icon} size={iconSize} />}
-                <Label style={styles.fill} type="h1" color="important" ellipsizeMode="tail">
+                <Label style={styles.containerFill} type="h1" color="important" ellipsizeMode="tail">
                     {title}
                 </Label>
             </Row>
@@ -47,7 +47,7 @@ export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark",
             {!subtitle ? null : (
                 <Row type="center">
                     <View style={styles.placeholder} />
-                    <Label style={styles.fill} type="h3" ellipsizeMode="tail">
+                    <Label style={styles.containerFill} type="h3" ellipsizeMode="tail">
                         {subtitle}
                     </Label>
                 </Row>
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     icon: {
         marginRight: 8,
     },
-    fill: {
+    containerFill: {
         flex: 1,
     },
 });

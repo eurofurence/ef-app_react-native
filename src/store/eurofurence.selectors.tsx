@@ -1,4 +1,5 @@
 import { createSelector, Dictionary } from "@reduxjs/toolkit";
+import { chain } from "lodash";
 import moment, { Moment } from "moment";
 
 import {
@@ -18,10 +19,14 @@ import {
     DealerRecord,
     EnrichedDealerRecord,
     EnrichedEventRecord,
+    EnrichedImageRecord,
+    EnrichedMapRecord,
     EventDayRecord,
     EventRecord,
     EventRoomRecord,
     EventTrackRecord,
+    LinkFragment,
+    MapEntryRecord,
     RecordId,
 } from "./eurofurence.types";
 import { RootState } from "./index";
@@ -126,10 +131,6 @@ export const annoucenementsSelectors = {
         announcements.filter((it) => now.isBetween(it.ValidFromDateTimeUtc, it.ValidUntilDateTimeUtc))
     ),
 };
-export const mapsSelectors = {
-    ...baseMapsSelectors,
-    selectBrowseableMaps: createSelector(baseMapsSelectors.selectAll, (maps) => maps.filter((it) => it.IsBrowseable)),
-};
 
 /**
  * An event with the external references as required.
@@ -182,5 +183,54 @@ export const dealersCompleteSelectors = {
     ),
     selectById: createSelector([baseDealersSelectors.selectById, eventDaysSelectors.selectEntities], (dealer, days): DealerWithDetails | undefined =>
         !dealer ? undefined : applyDealerDetails(days)(dealer)
+    ),
+};
+
+/**
+ * An event with the external references as required.
+ */
+export type MapWithDetails = EnrichedMapRecord & {
+    Image: EnrichedImageRecord;
+};
+
+const applyMapDetails = (images: Dictionary<EnrichedImageRecord>) => (map: EnrichedMapRecord) => {
+    return {
+        ...map,
+        Image: images[map.ImageId],
+    } as MapWithDetails;
+};
+
+export const mapsSelectors = {
+    ...baseMapsSelectors,
+    selectBrowseableMaps: createSelector(baseMapsSelectors.selectAll, (maps) => maps.filter((it) => it.IsBrowseable)),
+
+    selectValidLinksByTarget: createSelector(
+        [baseMapsSelectors.selectAll, (state, target: RecordId) => target],
+        (maps, target): { map: EnrichedMapRecord; entry: MapEntryRecord; link: LinkFragment }[] =>
+            chain(maps)
+                .flatMap((map) => map.Entries.map((entry) => ({ map, entry })))
+                .flatMap(({ map, entry }) => entry.Links.map((link) => ({ map, entry, link })))
+                .filter(({ link }) => target === link.Target)
+                .value()
+    ),
+};
+export const mapsCompleteSelectors = {
+    ...baseMapsSelectors,
+    selectAll: createSelector([baseMapsSelectors.selectAll, imagesSelectors.selectEntities], (maps, images): MapWithDetails[] => maps.map(applyMapDetails(images))),
+    selectById: createSelector([baseMapsSelectors.selectById, imagesSelectors.selectEntities], (map, images): MapWithDetails | undefined =>
+        !map ? undefined : applyMapDetails(images)(map)
+    ),
+    selectBrowseableMaps: createSelector([baseMapsSelectors.selectAll, imagesSelectors.selectEntities], (maps, images) =>
+        maps.filter((it) => it.IsBrowseable).map(applyMapDetails(images))
+    ),
+    selectValidLinksByTarget: createSelector(
+        [baseMapsSelectors.selectAll, imagesSelectors.selectEntities, (state, target: RecordId) => target],
+        (maps, images, target): { map: MapWithDetails; entry: MapEntryRecord; link: LinkFragment }[] =>
+            chain(maps)
+                .map(applyMapDetails(images))
+                .flatMap((map) => map.Entries.map((entry) => ({ map, entry })))
+                .flatMap(({ map, entry }) => entry.Links.map((link) => ({ map, entry, link })))
+                .filter(({ link }) => target === link.Target)
+                .value()
     ),
 };
