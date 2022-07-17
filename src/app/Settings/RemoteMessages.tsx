@@ -10,7 +10,7 @@ export const RemoteMessages = () => {
 
     return (
         <View>
-            <Section title={"Remote Messages"} subtitle={"Messages that we got from FMC"} icon={"call"} />
+            <Section title={"Remote Messages"} subtitle={"Messages that we got from FMC"} icon="message-flash" />
 
             {messages.length === 0 && <Label mb={15}>We have not received any messages from FCM</Label>}
 

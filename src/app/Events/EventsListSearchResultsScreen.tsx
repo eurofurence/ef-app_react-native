@@ -1,15 +1,18 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import { FC, useCallback } from "react";
+import { chain } from "lodash";
+import { FC, useCallback, useMemo } from "react";
 import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchContext } from "../../components/Searching/EventsSearchContext";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsListGeneric } from "./EventsListGeneric";
-import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -19,7 +22,12 @@ export type EventsListSearchResultsScreenParams = undefined;
 /**
  * The properties to the screen as a component.
  */
-export type EventsListSearchResultsScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type EventsListSearchResultsScreenProps =
+    // Route carrying from events tabs screen at "Results", own navigation via own parameter list.
+    CompositeScreenProps<
+        PagesScreenProps<EventsTabsScreenParamsList, "Results">,
+        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+    >;
 
 export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProps> = ({ navigation }) => {
     const { search, setSearch, results } = useEventsSearchContext();
@@ -29,14 +37,17 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
         navigation.jumpTo("Search");
     }, [setSearch, navigation]);
 
+    const events = useMemo(() => chain(results).orderBy("StartDateTimeUtc").value(), []);
+
     return (
         <EventsListGeneric
             navigation={navigation}
-            events={results ?? []}
+            events={events}
+            cardType="time"
             leader={
                 <View style={{ paddingBottom: 30 }}>
-                    <Section icon="search" title={search} subtitle={`${results?.length} results in total`} />
-                    <Button icon="arrow-back-circle" onPress={onClear}>
+                    <Section icon="view-list" title={search} subtitle={`${results?.length} results in total`} />
+                    <Button icon="chevron-left" onPress={onClear}>
                         Clear search
                     </Button>
                 </View>

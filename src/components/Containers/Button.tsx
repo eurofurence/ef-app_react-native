@@ -1,11 +1,10 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as React from "react";
 import { FC, ReactNode, useMemo } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleProp, StyleSheet, View, ViewStyle, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../../context/Theme";
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Label } from "../Atoms/Label";
 
 const iconSize = 20;
@@ -34,12 +33,12 @@ export type ButtonProps = {
     /**
      * If given, displayed as the button's icon.
      */
-    icon?: IoniconsNames;
+    icon?: IconNames;
 
     /**
      * If given, displayed as the button's icon, this is displayed on the right side.
      */
-    iconRight?: IoniconsNames;
+    iconRight?: IconNames;
 
     /**
      * The text of the button.
@@ -61,14 +60,14 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, 
     const fill = useMemo(() => ({ backgroundColor: outline ? theme.background : theme.inverted }), [outline, theme]);
 
     return (
-        <TouchableOpacity containerStyle={containerStyle} style={[styles.content, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
-            {!icon ? <View style={styles.placeholder} /> : <Ionicons name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
+        <TouchableOpacity style={[containerStyle, styles.content, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
+            {!icon ? <View style={styles.placeholder} /> : <Icon name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>
                 {children}
             </Label>
 
-            {!iconRight ? <View style={styles.placeholder} /> : <Ionicons name={iconRight} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
+            {!iconRight ? <View style={styles.placeholder} /> : <Icon name={iconRight} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
         </TouchableOpacity>
     );
 };

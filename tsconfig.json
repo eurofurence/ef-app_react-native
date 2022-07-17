@@ -1,8 +1,12 @@
 {
   "compilerOptions": {
-    "rootDir": "./src",
+    "rootDir": ".",
     "strict": true
   },
   "extends": "expo/tsconfig.base",
-  "include": ["src"]
+  "include": [
+    "./src",
+    "./node_modules/moment/locale",
+    "./package.json"
+  ]
 }

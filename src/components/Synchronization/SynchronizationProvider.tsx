@@ -2,6 +2,7 @@ import { noop } from "lodash";
 import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Vibration } from "react-native";
 
+import { apiBase } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
 import { PlatformImageSynchronizer } from "./ImageSynchronizer";
@@ -28,7 +29,7 @@ export const SynchronizationProvider: FC = ({ children }) => {
     const [count, setCount] = useState(1);
 
     useEffect(() => {
-        fetch(`https://app.eurofurence.org/EF26/Api/Sync?since=${lastFetch}`)
+        fetch(`${apiBase}/Sync?since=${lastFetch}`)
             .then((r) => r.json())
             .then((data) => dispatch(applySync(data)))
             .catch(console.error);

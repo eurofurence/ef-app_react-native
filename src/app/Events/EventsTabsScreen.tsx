@@ -3,17 +3,19 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { clone } from "lodash";
 import moment from "moment";
-import { FC, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { createPagesNavigator } from "../../components/Navigators/PagesNavigator";
+import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchHasResults } from "../../components/Searching/EventsSearchContext";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
-import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { EventDayRecord } from "../../store/eurofurence.types";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsListByDayScreen, EventsListByDayScreenParams } from "./EventsListByDayScreen";
 import { EventsListByRoomScreen, EventsListByRoomScreenParams } from "./EventsListByRoomScreen";
 import { EventsListByTrackScreen, EventsListByTrackScreenParams } from "./EventsListByTrackScreen";
@@ -25,7 +27,7 @@ import { EventsSearchScreen, EventsSearchScreenParams } from "./EventsSearchScre
 /**
  * Available routes.
  */
-export type EventsTabsScreenNavigatorParamsList = {
+export type EventsTabsScreenParamsList = {
     Search: EventsSearchScreenParams;
 
     Results: EventsListSearchResultsScreenParams;
@@ -39,21 +41,29 @@ export type EventsTabsScreenNavigatorParamsList = {
 /**
  * Create an instance of the pages-navigator with the provided routes.
  */
-const EventsTabsScreenNavigator = createPagesNavigator<EventsTabsScreenNavigatorParamsList>();
+const EventsTabsScreenNavigator = createPagesNavigator<EventsTabsScreenParamsList>();
 
 /**
  * Params handled by the screen in route. Delegated parameters for the days. TODO: Verify.
  */
-export type EventsTabsScreenParams = NavigatorScreenParams<EventsTabsScreenNavigatorParamsList> & {
+export type EventsTabsScreenParams = NavigatorScreenParams<EventsTabsScreenParamsList> & {
     filterType?: "days" | "tracks" | "rooms";
 };
 
 /**
  * The properties to the screen as a component.
  */
-export type EventsTabsScreenProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Events">, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type EventsTabsScreenProps =
+    // Route carrying from area screen at "Events", navigation via own parameter list and parents.
+    CompositeScreenProps<
+        TabScreenProps<ScreenAreasParamsList, "Events">,
+        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+    >;
 
 export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
+    const { t } = useTranslation("Events");
+    const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), [t]);
+
     // Use now with optional time travel.
     const [now] = useNow();
 
@@ -71,13 +81,14 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
         return route.params?.filterType ?? "days";
     }, [hasSearchResults, route.params?.filterType]);
 
+    const currentDayName = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Name, [days, now]);
     // Find initial name for selected type.
     const initialName = useMemo(() => {
         if (actualType === "results") return "Results";
-        if (actualType === "days") return days.find((day) => moment(day.Date).isSame(now, "day"))?.Name ?? days[0]?.Name;
+        if (actualType === "days") return currentDayName ?? days[0]?.Name;
         if (actualType === "tracks") return tracks[0]?.Name;
         if (actualType === "rooms") return rooms[0]?.Name;
-    }, [days, tracks, rooms, now, actualType]);
+    }, [days, currentDayName, tracks, rooms, now, actualType]);
 
     // Compute the safe area.
     const top = useSafeAreaInsets()?.top;
@@ -92,9 +103,9 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     return (
         <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialName}>
             {/*Tab for searching and filtering*/}
-            <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "search" }} component={EventsSearchScreen} />
+            <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
 
-            {actualType !== "results" ? null : <EventsTabsScreenNavigator.Screen name="Results" options={{ icon: "list" }} component={EventsListSearchResultsScreen} />}
+            {actualType !== "results" ? null : <EventsTabsScreenNavigator.Screen name="Results" options={{ icon: "view-list" }} component={EventsListSearchResultsScreen} />}
 
             {actualType !== "days"
                 ? null
@@ -103,7 +114,7 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
                           key={day.Id}
                           name={day.Name}
                           component={EventsListByDayScreen}
-                          options={{ title: moment(day.Date).format("ddd") }}
+                          options={{ title: formatDay(day), highlight: day.Name === currentDayName }}
                           initialParams={{ day: clone(day) }}
                       />
                   ))}

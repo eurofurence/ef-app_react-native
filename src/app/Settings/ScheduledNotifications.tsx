@@ -24,7 +24,7 @@ export const ScheduledNotifications = () => {
 
     return (
         <View>
-            <Section title={"Notifications"} subtitle={"All scheduled notifications on this device"} icon={"notifications"} />
+            <Section title={"Notifications"} subtitle={"All scheduled notifications on this device"} icon="notification-clear-all" />
             {!notifications.length && <Label mb={15}>There are no scheduled notifications!</Label>}
 
             {notifications.map((item) => (

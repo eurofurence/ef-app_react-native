@@ -1,10 +1,9 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ScreenStart } from "./app/ScreenStart";
-import { PlatformNotificationManager } from "./components/Notifications/NotificationManager";
+import { PlatformNotificationManager } from "./components/Managers/NotificationManager";
 import { EventsSearchProvider } from "./components/Searching/EventsSearchContext";
 import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
 
@@ -17,7 +16,6 @@ export default function App() {
             <BottomSheetModalProvider>
                 <SynchronizationProvider>
                     <EventsSearchProvider>
-                        <StatusBar style="auto" />
                         <ScreenStart />
 
                         <PlatformNotificationManager />

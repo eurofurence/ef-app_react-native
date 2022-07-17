@@ -7,14 +7,14 @@ import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
 import { useMarkCommunicationReadMutation } from "../../store/eurofurence.service";
 import { CommunicationRecord, RecordId } from "../../store/eurofurence.types";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { ScreenStartParamsList } from "../ScreenStart";
 
 export type PrivateMessageItemParams = {
     id: RecordId;
     message: CommunicationRecord;
 };
 
-export type PrivateMessageItemProps = StackScreenProps<ScreenStartNavigatorParamsList, "PrivateMessageItem">;
+export type PrivateMessageItemProps = StackScreenProps<ScreenStartParamsList, "PrivateMessageItem">;
 
 export const PrivateMessageItemScreen: FC<PrivateMessageItemProps> = ({ route }) => {
     const params = route.params;

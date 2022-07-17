@@ -1,10 +1,10 @@
-import { forwardRef, ReactNode, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import { forwardRef, ReactNode, useCallback, useImperativeHandle, useMemo, useState } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Animated, { Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useTheme } from "../../context/Theme";
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Activity } from "../Atoms/Activity";
 import { Tab } from "./Tab";
 
@@ -24,7 +24,7 @@ export type TabsProps = {
         /**
          * The icon to display.
          */
-        icon: IoniconsNames;
+        icon: IconNames;
 
         /**
          * The name of the tab.
@@ -46,6 +46,16 @@ export type TabsProps = {
          */
         onPress?: () => void;
     }[];
+
+    /**
+     * Text to display for opening the menu.
+     */
+    textMore?: string;
+
+    /**
+     * Text to display for closing the menu.
+     */
+    textLess?: string;
 
     /**
      * If true or node, indicator will be presented over the more button.
@@ -95,31 +105,30 @@ export type TabsRef = {
  * or dragging, translates it into view and overlays the containing view with
  * a semi-opaque layer.
  */
-export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore, onOpen, onClose, children }, ref) => {
+export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "More", textLess = "Less", indicateMore, onOpen, onClose, children }, ref) => {
     // Computed styles.
     const theme = useTheme();
-    const fillDarken = useMemo(() => ({ backgroundColor: theme.darken }), [theme]);
+    const styleDismiss = useMemo(() => ({ backgroundColor: theme.darken }), [theme]);
     const fillBackground = useMemo(() => ({ backgroundColor: theme.background }), [theme]);
     const bordersDarken = useMemo(() => ({ borderColor: theme.darken }), [theme]);
 
     // Height of the content rendered as children, state if currently open.
     const [height, setHeight] = useState(425);
-    const [open, setOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     // Start is used for pan gesture, offset is used to animate the actual openness.
     const start = useSharedValue(0);
     const offset = useSharedValue(0);
 
-    // Nove to desired target state on change of relevant properties.
-    useEffect(() => {
-        if (open && offset.value < 1) offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
-        else if (!open && offset.value > 0) offset.value = withTiming(0.0, { duration: 234, easing: Easing.out(Easing.cubic) });
-    }, [offset, open]);
-
-    // Derive opacity from offset.
+    // Derive opacity from offset. If completely closed, translate out.
     const dynamicDismiss = useAnimatedStyle(
         () => ({
             opacity: offset.value,
+            transform: [
+                {
+                    translateY: offset.value === 0 ? 99999 : 0,
+                },
+            ],
         }),
         [offset]
     );
@@ -132,35 +141,41 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
         [offset, height]
     );
 
-    // Handle to invoke internal mutations from outside if needed.
-    useImperativeHandle(
-        ref,
-        () => ({
-            close: () => setOpen(false),
-            open: () => setOpen(true),
-            closeImmediately: () => {
-                offset.value = 0;
-                setOpen(false);
-            },
-        }),
-        [offset]
-    );
+    // Opens the more area and runs the handlers.
+    const open = useCallback(() => {
+        offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished) => {
+            if (finished) {
+                runOnJS(setIsOpen)(true);
+                onOpen && runOnJS(onOpen)();
+            }
+        });
+    }, [offset]);
 
-    // React to change of offset value in order to universally dispatch opening and closing callbacks.
-    useAnimatedReaction(
-        () => offset.value > 0,
-        (data) => {
-            if (data) onOpen && runOnJS(onOpen)();
-            else onClose && runOnJS(onClose)();
-        },
-        [offset, onOpen, onClose]
-    );
+    // Closes the more area and runs the handlers.
+    const close = useCallback(() => {
+        offset.value = withTiming(0, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished) => {
+            if (finished) {
+                runOnJS(setIsOpen)(false);
+                onClose && runOnJS(onClose)();
+            }
+        });
+    }, [offset]);
+
+    // Closes the more area immediately and runs the handlers.
+    const closeImmediately = useCallback(() => {
+        offset.value = 0;
+        setIsOpen(false);
+        onClose && onClose();
+    }, [offset]);
+
+    // Handle to invoke internal mutations from outside if needed.
+    useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [open, close, closeImmediately]);
 
     // Enable panning the navigator to dismiss. Only available if open.
     const gesture = Gesture.Pan()
-        // .enabled(open)
         .onBegin(() => {
             start.value = offset.value;
+            cancelAnimation(offset);
         })
         .onUpdate((e) => {
             // Update from translation.
@@ -172,13 +187,16 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
             const threshold = e.translationY > 0 ? 0.9 : 0.1;
 
             // Close if smaller than threshold, otherwise open again.
-            if (offset.value < threshold) {
-                offset.value = withTiming(0, { duration: 234, easing: Easing.out(Easing.cubic) });
-                runOnJS(setOpen)(false);
-            } else {
-                offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
-                runOnJS(setOpen)(true);
-            }
+            const targetIsOpen = offset.value >= threshold;
+            const targetValue = targetIsOpen ? 1 : 0;
+            offset.value = withTiming(targetValue, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished) => {
+                if (finished) {
+                    runOnJS(setIsOpen)(targetIsOpen);
+
+                    if (targetIsOpen) onOpen && runOnJS(onOpen)();
+                    else onClose && runOnJS(onClose)();
+                }
+            });
         });
 
     // TODO: Add safe area to tabs.
@@ -187,11 +205,9 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
     return (
         <>
             {/* Dismissal area. */}
-            <View style={StyleSheet.absoluteFill} pointerEvents={open ? "auto" : "none"}>
-                <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} disabled={!open} onPress={() => setOpen(false)}>
-                    <Animated.View style={[styles.dismiss, fillDarken, dynamicDismiss]} />
-                </TouchableWithoutFeedback>
-            </View>
+            <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
+                <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
+            </Animated.View>
 
             <GestureDetector gesture={gesture}>
                 <Animated.View style={dynamicContainer}>
@@ -200,7 +216,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, indicateMore,
                         {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
 
                         {/* More-tab. */}
-                        <Tab icon={open ? "arrow-down-circle" : "menu"} text={open ? "Less" : "More"} indicate={indicateMore} onPress={() => setOpen((current) => !current)} />
+                        <Tab icon={isOpen ? "arrow-down-circle" : "menu"} text={isOpen ? textLess : textMore} indicate={indicateMore} onPress={isOpen ? close : open} />
 
                         <Activity style={styles.activity} />
                     </View>

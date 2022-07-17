@@ -5,7 +5,7 @@ import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
 import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
+import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
 import { EventContent } from "./EventContent";
 
 /**
@@ -20,13 +20,13 @@ export type EventScreenParams = {
 
 export const EventScreen = () => {
     const route = useRoute<Route<EventScreenParams, "Event">>();
-    const event = useAppSelector((state) => eventsCompleteSelector.selectById(state, route.params.id));
+    const event = useAppSelector((state) => eventsCompleteSelectors.selectById(state, route.params.id));
     const headerStyle = useTopHeaderStyle();
 
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>{event?.Title ?? "Viewing event"}</Header>
-            <Scroller>{!event ? null : <EventContent event={event} day={event.ConferenceDay} track={event.ConferenceTrack} room={event.ConferenceRoom} />}</Scroller>
+            <Scroller>{!event ? null : <EventContent event={event} />}</Scroller>
         </View>
     );
 };

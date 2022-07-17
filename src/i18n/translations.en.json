@@ -7,13 +7,58 @@
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events."
   },
+  "Menu": {
+    "not_logged_in": "You are currently not logged in",
+    "logged_in_now": "Log-in now",
+    "info": "Info articles",
+    "catch_em": "Catch-em-all",
+    "services": "Services",
+    "maps": "Maps",
+    "about": "About",
+    "settings": "Settings",
+    "messages": "You have {{count}} new messages",
+    "open_messages": "Open messages",
+    "home": "Home",
+    "events": "Events",
+    "dealers": "Dealers",
+    "more": "More",
+    "less": "Less"
+  },
   "Events": {
-    "when": "{{ day }}, {{ start }} until {{ finish }}."
+    "when": "{{day}}, {{start}} until {{finish}}.",
+    "filter_by_day": "Browse days",
+    "filter_by_track": "Browse tracks",
+    "filter_by_room": "Browse rooms",
+    "morning": "In the morning",
+    "afternoon": "In the afternoon",
+    "evening": "In the evening",
+    "night": "At night",
+    "events_count": "{{count}} events",
+    "events_done": "Events concluded"
+  },
+  "Event": {
   },
   "Dealers": {
+    "all": "All",
+    "dealers_on_this_day": "Dealers on this day",
+    "dealers_on_day": "Dealers on {{day}}",
+    "dealers_at_convention": "Dealers at {{convention}}",
+    "dealers_count": "{{count}} dealers"
+  },
+  "Dealer": {
+    "viewing_dealer": "Viewing dealer",
     "attends_thu": "Thursday",
     "attends_fri": "Friday",
-    "attends_sat": "Saturday"
+    "attends_sat": "Saturday",
+    "about": "About",
+    "about_the_art": "About the art",
+    "about_the_artist": "About the artist",
+    "attends": "Attends on",
+    "merchandise": "Merchandise",
+    "after_dark": "After dark",
+    "in_after_dark": "Located in the after dark section",
+    "categories": "Categories",
+    "attends_today": "Dealer is attending today"
   },
   "TimeTravel": {
     "title": "Time Travel",
@@ -29,5 +74,6 @@
     "timeTravel": "Show time travel settings.",
     "currentLanguage": "Your current language is English!",
     "settingsSection": "Settings"
-  }
+  },
+  "Todo": {}
 }

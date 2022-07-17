@@ -1,9 +1,10 @@
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from "react";
 import { LayoutRectangle, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import Animated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
 
 import { useTheme } from "../../context/Theme";
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Page } from "./Page";
 
 /**
@@ -16,13 +17,13 @@ export type PagesProps = {
     style?: StyleProp<ViewStyle>;
 
     /**
-     * If given, page that are layed out.
+     * If given, page that are laid out.
      */
     pages: {
         /**
          * The icon to display.
          */
-        icon?: IoniconsNames;
+        icon?: IconNames;
 
         /**
          * The name of the page.
@@ -35,10 +36,20 @@ export type PagesProps = {
         active?: boolean;
 
         /**
+         * True if to be rendered as highlighted.
+         */
+        highlight?: boolean;
+
+        /**
          * If given, invoked when the page is pressed.
          */
         onPress?: () => void;
     }[];
+
+    /**
+     * Index of the page to display as active. Can be a real-valued shared value.
+     */
+    indicatorIndex?: number | SharedValue<number>;
 
     /**
      * Height of the active indicators.
@@ -57,11 +68,12 @@ export type PagesRef = {
 /**
  * A row of pages.
  */
-export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicatorHeight = 4 }, ref) => {
+export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicatorIndex = -1, indicatorHeight = 4 }, ref) => {
     // Computed styles.
     const theme = useTheme();
-    const fillBackground = useMemo(() => ({ backgroundColor: theme.background }), [theme]);
-    const bordersDarken = useMemo(() => ({ borderColor: theme.darken }), [theme]);
+    const styleIndicator = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary, height: indicatorHeight }), [theme, indicatorHeight]);
+    const styleBackground = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
+    const styleDarken = useMemo<ViewStyle>(() => ({ borderColor: theme.darken }), [theme]);
 
     // Width of all pages. Anchors (locations and widths of the individual top tabs, the anchors start out at the given length).
     const [totalWidth, setTotalWidth] = useState(-1);
@@ -79,6 +91,28 @@ export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicator
         },
         [pages]
     );
+
+    const dynamicIndicator = useAnimatedStyle(() => {
+        // Get base values for interpolation.
+        const value = typeof indicatorIndex === "number" ? indicatorIndex : indicatorIndex.value;
+        const lower = Math.floor(value);
+        const upper = Math.ceil(value);
+        const anchorLower = anchors[lower];
+        const anchorUpper = anchors[upper];
+        const inf = value - lower;
+
+        // Interpolate between the valid points, use a single one if equal or at an end.
+        let left, width;
+        if (!anchorLower && !anchorUpper) [left, width] = [0, 0];
+        else if (!anchorUpper || anchorLower === anchorUpper) [left, width] = [anchorLower.x, anchorLower.width];
+        else if (!anchorLower) [left, width] = [anchorUpper.x, anchorUpper.width];
+        else [left, width] = [(1 - inf) * anchorLower.x + inf * anchorUpper.x, (1 - inf) * anchorLower.width + inf * anchorUpper.width];
+
+        // Transform to center, then scale by width, then translate to adequate position.
+        return {
+            transform: [{ translateX: left }, { scaleX: width }, { translateX: 0.5 }],
+        };
+    }, [anchors, indicatorIndex]);
 
     // Reference for scrolling to tab.
     const scrollView = useRef<ScrollView>(null);
@@ -103,7 +137,7 @@ export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicator
     );
 
     return (
-        <View style={[styles.pages, bordersDarken, fillBackground, style]}>
+        <View style={[styles.pages, styleDarken, styleBackground, style]}>
             <ScrollView
                 ref={scrollView}
                 contentContainerStyle={styles.content}
@@ -111,14 +145,15 @@ export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicator
                 showsHorizontalScrollIndicator={false}
                 onLayout={(e) => setTotalWidth(e.nativeEvent.layout.width)}
             >
-                {pages?.map((tab, i) => (
+                <Animated.View style={[styles.indicator, styleIndicator, dynamicIndicator]} />
+                {pages?.map((page, i) => (
                     <Page
                         key={i}
-                        icon={tab.icon}
-                        text={tab.text}
-                        active={tab.active}
-                        onPress={tab.onPress}
-                        indicatorHeight={indicatorHeight}
+                        icon={page.icon}
+                        text={page.text}
+                        active={page.active}
+                        highlight={page.highlight}
+                        onPress={page.onPress}
                         onLayout={(e) => updateAnchors(i, e.nativeEvent.layout)}
                     />
                 )) ?? null}
@@ -135,5 +170,11 @@ const styles = StyleSheet.create({
     },
     content: {
         minWidth: "100%",
+    },
+    indicator: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        width: 1,
     },
 });

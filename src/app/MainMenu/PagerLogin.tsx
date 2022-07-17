@@ -108,10 +108,10 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
             {result.isLoading && <Text>Logging in . . .</Text>}
             {/* {errors && <Text>{JSON.stringify(Object.keys(errors))}</Text>} */}
             <Row style={styles.marginBefore}>
-                <Button style={{}} containerStyle={styles.rowLeft} outline icon="arrow-back" onPress={close}>
+                <Button style={{}} containerStyle={styles.rowLeft} outline icon="chevron-left" onPress={close}>
                     Back
                 </Button>
-                <Button style={{}} containerStyle={styles.rowRight} outline={false} icon="log-in" onPress={handleSubmit(onSubmit)}>
+                <Button style={{}} containerStyle={styles.rowRight} outline={false} icon="login" onPress={handleSubmit(onSubmit)}>
                     Log-in
                 </Button>
             </Row>

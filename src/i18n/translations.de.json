@@ -1,4 +1,57 @@
 {
+  "Menu": {
+    "not_logged_in": "Du bist nicht angemeldet",
+    "logged_in_now": "Jetzt anmelden",
+    "info": "Infoartikel",
+    "catch_em": "Catch-em-all",
+    "services": "Services",
+    "maps": "Karten",
+    "about": "Über uns",
+    "settings": "Einstellungen",
+    "messages": "Du hast {{count}} neue Nachrichten",
+    "open_messages": "Nachrichten öffnen",
+    "home": "Start",
+    "events": "Events",
+    "dealers": "Dealer",
+    "more": "Mehr",
+    "less": "Zuklappen"
+  },
+  "Events": {
+    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
+    "filter_by_day": "Tage ansehen",
+    "filter_by_track": "Kategorien ansehen",
+    "filter_by_room": "Räume ansehen",
+    "morning": "Morgens",
+    "afternoon": "Nachmittags",
+    "evening": "Am Abend",
+    "night": "In der Nacht",
+    "events_count": "{{count}} Events",
+    "events_done": "Bereits zu Ende"
+  },
+  "Event": {
+  },
+  "Dealers": {
+    "all": "Alle",
+    "dealers_on_this_day": "Dealer an diesem Tag",
+    "dealers_on_day": "Dealer am {{day}}",
+    "dealers_at_convention": "Dealer an der Eurofurence",
+    "dealers_count": "{{count}} Dealer"
+  },
+  "Dealer": {
+    "viewing_dealer": "Betrachte Dealer",
+    "attends_thu": "Donnerstag",
+    "attends_fri": "Freitag",
+    "attends_sat": "Samstag",
+    "about": "Infos",
+    "about_the_art": "Über das Angebot",
+    "about_the_artist": "Über {{name}}",
+    "attends": "Anwesend",
+    "merchandise": "Angebot",
+    "after_dark": "After Dark",
+    "in_after_dark": "Im After Dark Bereich",
+    "categories": "Kategorien",
+    "attends_today": "Dealer ist Heute anwesend"
+  },
   "Settings": {
     "currentLanguage": "Ihre sprache ist Deutsch!",
     "settingsSection": "Einstellungen"

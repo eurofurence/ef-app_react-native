@@ -25,11 +25,13 @@ i18next
         detect: async (callback: (language: string) => void) => {
             const fallback = Localization.locale.split("-")[0];
 
-            const savedLangauge = await AsyncStorage.getItem(I18NEXT_LANGAGUE_KEY);
+            const savedLanguage = await AsyncStorage.getItem(I18NEXT_LANGAGUE_KEY);
 
-            logger("Detecting languages", "Saved", savedLangauge, "Fallback", fallback);
+            logger("Detecting languages", "Saved", savedLanguage, "Fallback", fallback);
 
-            return savedLangauge ? callback(savedLangauge) : callback(fallback);
+            // Set moment locale from detection and invoke callback.
+            moment.locale(savedLanguage ?? fallback);
+            return callback(savedLanguage ?? fallback);
         },
         cacheUserLanguage: async (lng: string) =>
             AsyncStorage.setItem(I18NEXT_LANGAGUE_KEY, lng)

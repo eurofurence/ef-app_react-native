@@ -1,8 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { StatusBar } from "expo-status-bar";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
+import { useThemeType } from "../context/Theme";
+import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen, EventScreenParams } from "./Events/EventScreen";
@@ -14,7 +17,7 @@ import { SettingsScreen } from "./Settings/SettingsScreen";
 /**
  * Available routes.
  */
-export type ScreenStartNavigatorParamsList = {
+export type ScreenStartParamsList = {
     /**
      * Primary areas.
      */
@@ -40,16 +43,30 @@ export type ScreenStartNavigatorParamsList = {
     PrivateMessageItem: PrivateMessageItemParams;
 };
 
-const ScreenStartNavigator = createStackNavigator<ScreenStartNavigatorParamsList>();
+const ScreenStartNavigator = createStackNavigator<ScreenStartParamsList>();
 
 /**
- * The properties to the screen as a component.
+ * The properties to the screen as a component. This does not have navigator properties, as it
+ * is the node initially providing the navigation container.
  */
 export type ScreenStartProps = object;
 
 export const ScreenStart: FC<ScreenStartProps> = () => {
+    // Get the theme type for status bar configuration.
+    const themeType = useThemeType();
+
+    // Get navigation state from persistence.
+    const [isReady, initialState, onStateChange] = useNavigationStatePersistence();
+
+    // If not yet loaded, skip rendering.
+    if (!isReady) {
+        return null;
+    }
+
     return (
-        <NavigationContainer>
+        <NavigationContainer initialState={initialState} onStateChange={onStateChange}>
+            <StatusBar style={themeType === "light" ? "dark" : "light"} />
+
             <View style={[StyleSheet.absoluteFill, { backgroundColor: "green" }]}>
                 <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />

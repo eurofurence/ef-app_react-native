@@ -4,6 +4,16 @@
 export type ImageUrl = string | undefined;
 
 /**
+ * Time categorized in part of day.
+ */
+export type PartOfDay = "morning" | "afternoon" | "evening" | "night";
+
+/**
+ * Attendance day for dealers.
+ */
+export type AttendanceDay = "thu" | "fri" | "sat";
+
+/**
  * Named type to use when referencing other records.
  */
 export type RecordId = string;
@@ -56,6 +66,7 @@ export type EventRecord = RecordMetadata & {
 };
 
 export type EnrichedEventRecord = EventRecord & {
+    PartOfDay: PartOfDay;
     PosterImageUrl?: ImageUrl;
     BannerImageUrl?: ImageUrl;
 };

@@ -1,5 +1,6 @@
 import moment from "moment";
 import React, { FC, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
@@ -16,6 +17,7 @@ export type EventCardProps = {
 };
 
 export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPress, onLongPress }) => {
+    const { t } = useTranslation("Event");
     const theme = useTheme();
 
     // Resolve event statuses.
@@ -25,33 +27,38 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
     // Renders the override or default. The override will receive if it needs to
     // render on inverted color, i.e., background.
     const pre = useMemo(() => {
-        if (type === "duration") {
-            // Convert event duration to readable.
-            const duration = moment.duration(event.Duration);
-            const durationText = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
+        // Convert event start and duration to readable.
+        const start = moment(event.StartDateTimeUtc);
+        const duration = moment.duration(event.Duration);
 
+        const day = start.format("ddd");
+        const time = start.format("LT");
+        const runtime = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
+
+        if (type === "duration") {
             // Return simple label with duration text.
             return (
-                <Label style={{ color: done ? theme.important : theme.invText }} type="h2">
-                    {durationText}
-                </Label>
+                <Col type="center">
+                    <Label type="h4" color={done ? "important" : "invText"}>
+                        {runtime}
+                    </Label>
+                    <Label color={done ? "important" : "invText"}>{time}</Label>
+                </Col>
             );
         } else {
-            const start = moment(event.StartDateTimeUtc);
             return (
                 <Col type="center">
                     <Label type="caption" color={done ? "important" : "invText"}>
-                        {start.format("ddd")}
+                        {day}
                     </Label>
-                    <Label color={done ? "important" : "invText"}>{start.format("LT")}</Label>
+                    <Label color={done ? "important" : "invText"}>{time}</Label>
                 </Col>
             );
         }
-    }, [type, event, done, theme]);
+    }, [t, type, event, done, theme]);
 
     return (
         <EventCardContent
-            key={event.Id}
             background={event.BannerImageUrl ? { uri: event.BannerImageUrl } : undefined}
             pre={pre}
             title={event.Title}

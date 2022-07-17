@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import { apiBase } from "../configuration";
 import { TokenRegSysRequest, TokenRegSysResponse, TokenWhoAmIResponse } from "./authorization.types";
 import { RecordId, RecordMetadata } from "./eurofurence.types";
 
@@ -13,7 +14,7 @@ type NewPrivateMessage = {
 export const authorizationService = createApi({
     reducerPath: "authorizationService",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://app.eurofurence.org/EF26",
+        baseUrl: apiBase,
         prepareHeaders: (headers, { getState }) => {
             const token: string | undefined = (getState() as any).authorization?.token;
 
@@ -28,7 +29,7 @@ export const authorizationService = createApi({
     endpoints: (builder) => ({
         postToken: builder.mutation<TokenRegSysResponse, TokenRegSysRequest>({
             query: (args) => ({
-                url: "/Api/Tokens/RegSys",
+                url: "/Tokens/RegSys",
                 method: "POST",
                 body: {
                     RegNo: args.RegNo,
@@ -40,13 +41,13 @@ export const authorizationService = createApi({
         }),
         getWhoAmI: builder.query<TokenWhoAmIResponse, void>({
             query: () => ({
-                url: "/Api/Tokens/WhoAmI",
+                url: "/Tokens/WhoAmI",
             }),
             providesTags: ["User"],
         }),
         postDeviceRegistration: builder.mutation<void, { DeviceId: string; Topics: string[] }>({
             query: (args) => ({
-                url: "/Api/PushNotifications/FcmDeviceRegistration",
+                url: "/PushNotifications/FcmDeviceRegistration",
                 method: "POST",
                 body: {
                     DeviceId: args.DeviceId,
@@ -56,25 +57,25 @@ export const authorizationService = createApi({
         }),
         createSyncRequest: builder.mutation({
             query: () => ({
-                url: "/Api/PushNotifications/SyncRequest",
+                url: "/PushNotifications/SyncRequest",
                 method: "POST",
             }),
         }),
         postSubscribeToTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
             query: (arg) => ({
-                url: `/Api/PushNotifications/SubscribeToTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
+                url: `/PushNotifications/SubscribeToTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
                 method: "POST",
             }),
         }),
         postUnsubscribeFromTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
             query: (arg) => ({
-                url: `/Api/PushNotifications/UnsubscribeFromTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
+                url: `/PushNotifications/UnsubscribeFromTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
                 method: "POST",
             }),
         }),
         sendPrivateMessage: builder.mutation<string, NewPrivateMessage>({
             query: (args) => ({
-                url: "/Api/Communication/PrivateMessages",
+                url: "/Communication/PrivateMessages",
                 method: "POST",
                 body: args,
             }),

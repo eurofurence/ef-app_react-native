@@ -16,6 +16,7 @@ import { UserSettings } from "./UserSettings";
 export const SettingsScreen = () => {
     const top = useSafeAreaInsets()?.top;
     const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
+
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>Settings</Header>

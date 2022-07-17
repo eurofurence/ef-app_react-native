@@ -6,8 +6,14 @@ import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
+import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
+import { EventsListByTrackScreenProps } from "./EventsListByTrackScreen";
+import { EventsListSearchResultsScreenProps } from "./EventsListSearchResultsScreen";
+import { EventsSearchScreenProps } from "./EventsSearchScreen";
 
-export type EventsSectionedListItem = EventSectionProps & { data: EventWithDetails[] };
+export type EventsSectionedListItem = EventSectionProps & {
+    data: EventWithDetails[];
+};
 
 /**
  * The properties to the component.
@@ -16,7 +22,12 @@ export type EventsSectionedListGenericProps = {
     /**
      * Navigation type. Copied from the screens rendering this component.
      */
-    navigation: EventsListByDayScreenProps["navigation"];
+    navigation:
+        | EventsSearchScreenProps["navigation"]
+        | EventsListSearchResultsScreenProps["navigation"]
+        | EventsListByDayScreenProps["navigation"]
+        | EventsListByRoomScreenProps["navigation"]
+        | EventsListByTrackScreenProps["navigation"];
     leader?: ReactNode;
     eventsGroups: EventsSectionedListItem[];
     trailer?: ReactNode;
@@ -42,7 +53,7 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
                 keyExtractor={(item) => item.Id}
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
-                renderSectionHeader={({ section }) => <EventSection timeUtc={section.timeUtc} />}
+                renderSectionHeader={({ section }) => <EventSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
                 renderItem={(entry: { item: EventWithDetails }) => (
                     <EventCard
                         key={entry.item.Id}

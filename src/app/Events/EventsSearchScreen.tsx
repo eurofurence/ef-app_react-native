@@ -1,6 +1,7 @@
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, useCallback, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Keyboard, StyleSheet, Text, View, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
@@ -9,10 +10,12 @@ import { Floater } from "../../components/Containers/Floater";
 import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchContext } from "../../components/Searching/EventsSearchContext";
 import { useTheme } from "../../context/Theme";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
-import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -22,9 +25,15 @@ export type EventsSearchScreenParams = undefined;
 /**
  * The properties to the screen as a component.
  */
-export type EventsSearchScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type EventsSearchScreenProps =
+    // Route carrying from events tabs screen at "Search", own navigation via own parameter list.
+    CompositeScreenProps<
+        PagesScreenProps<EventsTabsScreenParamsList, "Search">,
+        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+    >;
 
 export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) => {
+    const { t } = useTranslation("Events");
     const { search, setSearch, results } = useEventsSearchContext();
 
     // Hide keyboard on navigating away from this page.
@@ -43,9 +52,9 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
         <Floater>
             <View style={styles.end}>
                 <Row style={[styles.categories, border]}>
-                    <Tab icon="calendar-outline" text="Filter by day" onPress={onDay} />
-                    <Tab icon="bus-outline" text="Filter by track" onPress={onTrack} />
-                    <Tab icon="business-outline" text="Filter by room" onPress={onRoom} />
+                    <Tab icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
+                    <Tab icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
+                    <Tab icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
                 </Row>
                 <View style={styles.searchArea}>
                     <Text>Enter your query</Text>

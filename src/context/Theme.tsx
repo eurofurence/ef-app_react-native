@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { ColorValue } from "react-native";
 
-export type Theme = {
+export type Theme = Record<string, ColorValue> & {
     primary: ColorValue;
     secondary: ColorValue;
     background: ColorValue;
@@ -15,6 +15,8 @@ export type Theme = {
     darken: ColorValue;
     lighten: ColorValue;
 };
+
+export const useThemeType = (): "light" | "dark" => "light";
 
 export const useTheme = (): Theme => {
     // Stub.

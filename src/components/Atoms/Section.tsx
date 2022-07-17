@@ -1,8 +1,8 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Col } from "../Containers/Col";
 import { Row } from "../Containers/Row";
 import { Label } from "./Label";
@@ -21,7 +21,7 @@ export type SectionProps = {
     /**
      * The icon, if one should be displayed.
      */
-    icon?: IoniconsNames;
+    icon?: IconNames;
 
     /**
      * The primary text.
@@ -38,7 +38,7 @@ export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark",
     return (
         <Col style={[styles.container, style]}>
             <Row type="center">
-                {!icon ? <View style={styles.placeholder} /> : <Ionicons style={styles.icon} name={icon} size={iconSize} />}
+                {!icon ? <View style={styles.placeholder} /> : <Icon style={styles.icon} name={icon} size={iconSize} />}
                 <Label style={styles.fill} type="h1" color="important" ellipsizeMode="tail">
                     {title}
                 </Label>

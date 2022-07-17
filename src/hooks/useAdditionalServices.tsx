@@ -1,6 +1,7 @@
 import * as WebBrowser from "expo-web-browser";
 import { useCallback } from "react";
 
+import { appBase } from "../configuration";
 import { useAppSelector } from "../store";
 
 export const useAdditionalServices = () => {
@@ -11,6 +12,6 @@ export const useAdditionalServices = () => {
             alert("You are not logged in.");
             return;
         }
-        WebBrowser.openBrowserAsync(`https://app.eurofurence.org/EF26/companion/#/login?embedded=false&returnPath=/&token=${token}`).catch(console.error);
+        WebBrowser.openBrowserAsync(`${appBase}/companion/#/login?embedded=false&returnPath=/&token=${token}`).catch(console.error);
     }, [token]);
 };

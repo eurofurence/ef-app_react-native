@@ -13,7 +13,17 @@ import {
     knowledgeGroupsAdapter,
     mapsAdapter,
 } from "./eurofurence.cache";
-import { EnrichedEventRecord, EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord, RecordId } from "./eurofurence.types";
+import {
+    AttendanceDay,
+    DealerRecord,
+    EnrichedDealerRecord,
+    EnrichedEventRecord,
+    EventDayRecord,
+    EventRecord,
+    EventRoomRecord,
+    EventTrackRecord,
+    RecordId,
+} from "./eurofurence.types";
 import { RootState } from "./index";
 
 // These selectors are basic and we can immediately export them
@@ -23,12 +33,12 @@ export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((
 export const knowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
 export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeEntries);
 export const imagesSelectors = imagesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.images);
-export const dealersSelectors = dealersAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.dealers);
 
 // Save these selectors as we re-use them later
 const baseEventsSelector = eventsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.events);
 const baseAnnouncementsSelectors = announcementsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.announcements);
 const baseMapsSelectors = mapsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.maps);
+const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.dealers);
 
 /**
  * An event with the external references as required.
@@ -39,7 +49,7 @@ export type EventWithDetails = EnrichedEventRecord & {
     ConferenceTrack: EventTrackRecord;
 };
 
-const applyDetails = (rooms: Dictionary<EventRoomRecord>, tracks: Dictionary<EventTrackRecord>, days: Dictionary<EventDayRecord>) => (event: EventRecord) => {
+const applyEventDetails = (rooms: Dictionary<EventRoomRecord>, tracks: Dictionary<EventTrackRecord>, days: Dictionary<EventDayRecord>) => (event: EventRecord) => {
     return {
         ...event,
         // Either we propagate undefined-ness in the type or we ignore.
@@ -49,7 +59,7 @@ const applyDetails = (rooms: Dictionary<EventRoomRecord>, tracks: Dictionary<Eve
     } as EventWithDetails;
 };
 
-export const eventsSelector = {
+export const eventsSelectors = {
     ...baseEventsSelector,
     selectByRoom: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId)),
     selectByTrack: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceTrackId === itemId)),
@@ -68,11 +78,11 @@ export const eventsSelector = {
     ),
 };
 
-export const eventsCompleteSelector = {
+export const eventsCompleteSelectors = {
     ...baseEventsSelector,
     selectAll: createSelector(
         [baseEventsSelector.selectAll, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
-        (events, days, tracks, rooms): EventWithDetails[] => events.map(applyDetails(rooms, tracks, days))
+        (events, days, tracks, rooms): EventWithDetails[] => events.map(applyEventDetails(rooms, tracks, days))
     ),
     selectByRoom: createSelector(
         [
@@ -82,7 +92,7 @@ export const eventsCompleteSelector = {
             eventRoomsSelectors.selectEntities,
             (state, itemId: RecordId) => itemId,
         ],
-        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId).map(applyDetails(rooms, tracks, days))
+        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId).map(applyEventDetails(rooms, tracks, days))
     ),
     selectByTrack: createSelector(
         [
@@ -92,7 +102,7 @@ export const eventsCompleteSelector = {
             eventRoomsSelectors.selectEntities,
             (state, itemId: RecordId) => itemId,
         ],
-        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceTrackId === itemId).map(applyDetails(rooms, tracks, days))
+        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceTrackId === itemId).map(applyEventDetails(rooms, tracks, days))
     ),
     selectByDay: createSelector(
         [
@@ -102,11 +112,11 @@ export const eventsCompleteSelector = {
             eventRoomsSelectors.selectEntities,
             (state, itemId: RecordId) => itemId,
         ],
-        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceDayId === itemId).map(applyDetails(rooms, tracks, days))
+        (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceDayId === itemId).map(applyEventDetails(rooms, tracks, days))
     ),
     selectById: createSelector(
         [baseEventsSelector.selectById, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
-        (event, days, tracks, rooms): EventWithDetails | undefined => (!event ? undefined : applyDetails(rooms, tracks, days)(event))
+        (event, days, tracks, rooms): EventWithDetails | undefined => (!event ? undefined : applyEventDetails(rooms, tracks, days)(event))
     ),
 };
 
@@ -119,4 +129,58 @@ export const annoucenementsSelectors = {
 export const mapsSelectors = {
     ...baseMapsSelectors,
     selectBrowseableMaps: createSelector(baseMapsSelectors.selectAll, (maps) => maps.filter((it) => it.IsBrowseable)),
+};
+
+/**
+ * An event with the external references as required.
+ */
+export type DealerWithDetails = EnrichedDealerRecord & {
+    AttendanceDayNames: AttendanceDay[];
+    AttendanceDays: EventDayRecord[];
+};
+
+const applyDealerDetails = (days: Dictionary<EventDayRecord>) => (dealer: DealerRecord) => {
+    // Concatenated day names.
+    const attendanceDayNames: AttendanceDay[] = [];
+    if (dealer.AttendsOnThursday) attendanceDayNames.push("thu");
+    if (dealer.AttendsOnFriday) attendanceDayNames.push("fri");
+    if (dealer.AttendsOnSaturday) attendanceDayNames.push("sat");
+
+    // Actual conference days.
+    const attendanceDays: EventDayRecord[] = [];
+    for (const day of Object.values(days)) {
+        // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
+        if (dealer.AttendsOnThursday && day && moment(day.Date).day() === 4) attendanceDays.push(day);
+        if (dealer.AttendsOnFriday && day && moment(day.Date).day() === 5) attendanceDays.push(day);
+        if (dealer.AttendsOnSaturday && day && moment(day.Date).day() === 6) attendanceDays.push(day);
+    }
+
+    return {
+        ...dealer,
+        AttendanceDayNames: attendanceDayNames,
+        AttendanceDays: attendanceDays,
+    } as DealerWithDetails;
+};
+
+export const dealersSelectors = baseDealersSelectors;
+
+export const dealersCompleteSelectors = {
+    ...baseDealersSelectors,
+    selectAll: createSelector([baseDealersSelectors.selectAll, eventDaysSelectors.selectEntities], (dealers, days): DealerWithDetails[] => dealers.map(applyDealerDetails(days))),
+    selectByDayName: createSelector([baseDealersSelectors.selectAll, eventDaysSelectors.selectEntities, (state, day: AttendanceDay) => day], (dealers, days, day) =>
+        dealers
+            .filter(
+                (it) =>
+                    // Check for thursday when given as "thu".
+                    it.AttendsOnThursday === (day === "thu") ||
+                    // Check for friday when given as "fri".
+                    it.AttendsOnFriday === (day === "fri") ||
+                    // Check for saturday when given as "sat".
+                    it.AttendsOnSaturday === (day === "sat")
+            )
+            .map(applyDealerDetails(days))
+    ),
+    selectById: createSelector([baseDealersSelectors.selectById, eventDaysSelectors.selectEntities], (dealer, days): DealerWithDetails | undefined =>
+        !dealer ? undefined : applyDealerDetails(days)(dealer)
+    ),
 };

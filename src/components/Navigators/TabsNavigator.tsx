@@ -2,7 +2,7 @@ import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabAc
 import { FC, ReactNode, RefObject, useRef } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 import { navigateTab } from "./Common";
 
@@ -13,7 +13,7 @@ export type TabNavigationOptions = {
     /**
      * The icon to use.
      */
-    icon: IoniconsNames;
+    icon: IconNames;
 
     /**
      * The title of the screen.
@@ -31,6 +31,16 @@ export type TabNavigatorProps = {
      * Render function for the content under more.
      */
     more?: ReactNode | ((tabs: RefObject<TabsRef>) => ReactNode);
+
+    /**
+     * Text to display for opening the menu.
+     */
+    textMore?: string;
+
+    /**
+     * Text to display for closing the menu.
+     */
+    textLess?: string;
 
     /**
      * True if the more tab should indicate or a node of what it should indicate.
@@ -93,7 +103,17 @@ export type TabScreenProps<ParamList extends ParamListBase, RouteName extends ke
     route: RouteProp<ParamList, RouteName>;
 };
 
-export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, contentStyle, tabsStyle, initialRouteName, children, screenOptions }) => {
+export const TabNavigator: FC<TabNavigatorProps> = ({
+    more,
+    indicateMore,
+    textMore = "More",
+    textLess = "Less",
+    contentStyle,
+    tabsStyle,
+    initialRouteName,
+    children,
+    screenOptions,
+}) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {
         children,
@@ -114,12 +134,17 @@ export const TabNavigator: FC<TabNavigatorProps> = ({ more, indicateMore, conten
             <Tabs
                 style={tabsStyle}
                 ref={tabs}
+                textMore={textMore}
+                textLess={textLess}
                 indicateMore={indicateMore}
                 tabs={state.routes.map((route, i) => ({
                     active: state.index === i,
                     icon: descriptors[route.key].options.icon,
                     text: descriptors[route.key].options.title,
-                    onPress: () => navigateTab(navigation, route),
+                    onPress: () => {
+                        navigateTab(navigation, route);
+                        tabs.current?.close();
+                    },
                     indicate: descriptors[route.key].options.indicate,
                 }))}
             >

@@ -1,9 +1,8 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import React, { useMemo } from "react";
-import { RefreshControl, StyleSheet, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { RefreshControl, StyleSheet, View, TouchableOpacity } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
@@ -16,7 +15,9 @@ import { CommunicationRecord } from "../../store/eurofurence.types";
 export const PrivateMessageListScreen = () => {
     const navigation = useNavigation();
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
-        pollingInterval: 10000,
+        // TODO: We need to react to FCM PM notifications.
+        // pollingInterval: 10000,
+        refetchOnFocus: true,
     });
 
     const top = useSafeAreaInsets()?.top;
@@ -44,7 +45,7 @@ export const PrivateMessageListScreen = () => {
                                 {message.ReadDateTimeUtc === null ? "Unread" : "Read"} - Sent on {moment(message.CreatedDateTimeUtc).format("llll")}
                             </Label>
                         </Col>
-                        <Ionicons name={"arrow-forward"} />
+                        <Icon name="chevron-right" />
                     </TouchableOpacity>
                 ))}
             </Scroller>

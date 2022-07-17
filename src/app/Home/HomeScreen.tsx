@@ -13,9 +13,9 @@ import { useSynchronizer } from "../../components/Synchronization/Synchronizatio
 import { useTheme } from "../../context/Theme";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { logout } from "../../store/authorization.slice";
-import { annoucenementsSelectors, dealersSelectors, eventsSelector } from "../../store/eurofurence.selectors";
-import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { annoucenementsSelectors, dealersSelectors, eventsSelectors } from "../../store/eurofurence.selectors";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 import { DeviceSpecificWarnings } from "./DeviceSpecificWarnings";
 
 /**
@@ -26,7 +26,7 @@ export type ScreenHomeParams = undefined;
 /**
  * The properties to the screen as a component.
  */
-export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Home">, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasParamsList, "Home">, StackScreenProps<ScreenStartParamsList>>;
 
 export const HomeScreen: FC<ScreenHomeProps> = () => {
     // The content of this screen so far is more of a sandbox, nothing fixed.
@@ -38,9 +38,9 @@ export const HomeScreen: FC<ScreenHomeProps> = () => {
 
     const theme = useTheme();
 
-    const events = useAppSelector(eventsSelector.selectAll);
-    const event = useAppSelector((state) => eventsSelector.selectById(state, "76430fe0-ece7-48c9-b8e6-fdbc3974ff64"));
-    const eventsInRoom = useAppSelector((state) => eventsSelector.selectByDay(state, "7f69f120-3c8a-49bf-895a-20c2adade161"));
+    const events = useAppSelector(eventsSelectors.selectAll);
+    const event = useAppSelector((state) => eventsSelectors.selectById(state, "76430fe0-ece7-48c9-b8e6-fdbc3974ff64"));
+    const eventsInRoom = useAppSelector((state) => eventsSelectors.selectByDay(state, "7f69f120-3c8a-49bf-895a-20c2adade161"));
     const dealers = useAppSelector(dealersSelectors.selectAll);
 
     return (

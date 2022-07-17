@@ -1,64 +1,80 @@
+import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image } from "react-native";
 
+import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { Scroller } from "../../components/Containers/Scroller";
-import { EnrichedDealerRecord } from "../../store/eurofurence.types";
+import { useNow } from "../../hooks/useNow";
+import { DealerWithDetails } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
 
 /**
  * Props to the content.
  */
 export type DealerContentProps = {
-    dealer: EnrichedDealerRecord;
+    dealer: DealerWithDetails;
 };
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
-    const { t } = useTranslation("Dealers");
+    const { t } = useTranslation("Dealer");
+    const [now] = useNow();
 
-    const dealerDays = useMemo(() => {
-        const result = [];
-        if (dealer.AttendsOnThursday) result.push(t("attends_thu"));
-        if (dealer.AttendsOnFriday) result.push(t("attends_fri"));
-        if (dealer.AttendsOnSaturday) result.push(t("attends_sat"));
-        return result.join(", ");
-    }, [dealer, t]);
+    const days = useMemo(
+        () =>
+            dealer.AttendanceDays
+                // Convert to long representation.
+                .map((day) => moment(day.Date).format("dddd"))
+                // Join comma separated.
+                .join(", "),
+        [dealer, t]
+    );
+
+    // Check if in attendance today.
+    const attendsToday = useMemo(() => Boolean(dealer.AttendanceDays.find((day) => moment(day.Date).isSame(now, "day"))), [dealer]);
+
     return (
-        <Scroller>
+        <>
             {!dealer.ArtistImageUrl ? null : (
-                <View style={[appStyles.shadow, styles.avatar]}>
+                <View style={[appStyles.shadow, styles.avatarCircle]}>
                     <Image resizeMode="cover" style={styles.avatarImage} source={{ uri: dealer.ArtistImageUrl }} />
                 </View>
             )}
 
-            <Section icon="brush" title={dealer.DisplayName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
+            <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
+
+            {!attendsToday ? null : (
+                <Label type="caption" variant="middle" mb={20}>
+                    {t("attends_today")}
+                </Label>
+            )}
+
             <Label type="para">{dealer.ShortDescription}</Label>
 
-            <Section icon="git-merge" title="About" />
-            <Label type="caption">Attends on</Label>
+            <Section icon="directions-fork" title={t("about")} />
+            <Label type="caption">{t("attends")}</Label>
             <Label type="h3" mb={20}>
-                {dealerDays}
+                {days}
             </Label>
 
-            <Label type="caption">Merchandise</Label>
+            <Label type="caption">{t("merchandise")}</Label>
             <Label type="h3" mb={20}>
                 {dealer.Merchandise}
             </Label>
 
             {!dealer.IsAfterDark ? null : (
                 <>
-                    <Label type="caption">After dark</Label>
+                    <Label type="caption">{t("after_dark")}</Label>
                     <Label type="h3" mb={20}>
-                        Located in the after dark section
+                        {t("in_after_dark")}
                     </Label>
                 </>
             )}
 
             {!dealer.Categories?.length ? null : (
                 <>
-                    <Label type="caption">Categories</Label>
+                    <Label type="caption">{t("categories")}</Label>
                     <Label type="h3" mb={20}>
                         {dealer.Categories?.join(", ")}
                     </Label>
@@ -67,13 +83,13 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 
             {!dealer.AboutTheArtText && !dealer.ArtPreviewImageUrl ? null : (
                 <>
-                    <Section icon="film" title="About the art" />
+                    <Section icon="film" title={t("about_the_art")} />
 
                     {!dealer.ArtPreviewImageUrl ? null : (
                         <View style={styles.imageLine}>
-                            <Image resizeMode="contain" style={styles.image} source={{ uri: dealer.ArtPreviewImageUrl }} />
+                            <AutoScaleImage style={styles.image} source={dealer.ArtPreviewImageUrl} />
 
-                            <Label type="caption" numberOfLines={4} ellipsizeMode="tail">
+                            <Label mt={10} type="caption" numberOfLines={4} ellipsizeMode="tail">
                                 {dealer.ArtPreviewCaption}
                             </Label>
                         </View>
@@ -85,23 +101,23 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 
             {!dealer.AboutTheArtistText && !dealer.ArtistImageId ? null : (
                 <>
-                    <Section icon="person-circle-outline" title="About the artist" />
+                    <Section icon="account-circle-outline" title={t("about_the_artist", { name: dealer.FullName })} />
 
                     {!dealer.ArtistImageUrl ? null : (
                         <View style={styles.imageLine}>
-                            <Image resizeMode="contain" style={styles.image} source={{ uri: dealer.ArtistImageUrl }} />
+                            <AutoScaleImage style={styles.image} source={dealer.ArtistImageUrl} />
                         </View>
                     )}
 
                     <Label type="para">{dealer.AboutTheArtistText}</Label>
                 </>
             )}
-        </Scroller>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
-    avatar: {
+    avatarCircle: {
         width: 120,
         height: 120,
         borderRadius: 60,
@@ -121,8 +137,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     image: {
-        width: "100%",
-        aspectRatio: 1,
-        marginBottom: 20,
+        alignSelf: "stretch",
     },
 });

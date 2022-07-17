@@ -1,8 +1,7 @@
-import Ionicons from "@expo/vector-icons/Ionicons";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
 import { FC, useMemo } from "react";
-import { StyleSheet, View, ViewProps } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View, ViewProps, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { Activity } from "../Atoms/Activity";
@@ -16,13 +15,13 @@ export type HeaderProps = ViewProps;
 export const Header: FC<HeaderProps> = ({ style, children }) => {
     const theme = useTheme();
 
-    const borderColor = useMemo(() => ({ borderColor: theme.darken }), [theme]);
+    const containerStyle = useMemo(() => ({ backgroundColor: theme.background, borderColor: theme.darken }), [theme]);
 
     const navigation = useNavigation();
 
     return (
-        <Row style={[styles.container, borderColor, style]} type="center" variant="spaced">
-            <Ionicons name="chevron-back" size={iconSize} />
+        <Row style={[styles.container, containerStyle, style]} type="center" variant="spaced">
+            <Icon name="chevron-left" size={iconSize} />
 
             <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
                 {children}
@@ -30,7 +29,7 @@ export const Header: FC<HeaderProps> = ({ style, children }) => {
 
             <View style={styles.placeholder} />
 
-            <TouchableOpacity containerStyle={styles.back} onPress={() => navigation.goBack()} />
+            <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()} />
 
             <Activity style={styles.activity} />
         </Row>

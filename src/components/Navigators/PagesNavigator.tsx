@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { IoniconsNames } from "../../types/Ionicons";
+import { IconNames } from "../../types/IconNames";
 import { Pages, PagesRef } from "../Containers/Pages";
 import { navigateTab } from "./Common";
 
@@ -13,9 +13,13 @@ import { navigateTab } from "./Common";
  */
 export type PagesNavigationOptions = {
     /**
+     * True if this page should be highlighted.
+     */
+    highlight?: boolean;
+    /**
      * The icon to use.
      */
-    icon: IoniconsNames;
+    icon: IconNames;
 
     /**
      * The title of the screen.
@@ -162,9 +166,11 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
             const index = Math.max(0, Math.min(Math.round(offset.value + shift), state.routes.length - 1));
 
             // Animate to the end position. If able to finish, sync navigation.
-            offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished) => {
+            offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished, current) => {
                 if (finished) {
-                    runOnJS(navigateTab)(navigation, index);
+                    // The callback apparently does not work as per spec, or the closure is not capturing the proper index. Therefore
+                    // we want to navigate to the actual endpoint rather than the index.
+                    runOnJS(navigateTab)(navigation, Math.round(current as number));
                 }
             });
         });
@@ -175,8 +181,10 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
             <Pages
                 ref={pages}
                 style={pagesStyle}
+                indicatorIndex={offset}
                 pages={state.routes.map((route, i) => ({
                     active: viewing === i,
+                    highlight: descriptors[route.key].options.highlight,
                     icon: descriptors[route.key].options.icon,
                     text: descriptors[route.key].options.title,
                     onPress: () => {

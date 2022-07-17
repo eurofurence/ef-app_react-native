@@ -2163,9 +2163,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gorhom/bottom-sheet@npm:^4":
-  version: 4.4.1
-  resolution: "@gorhom/bottom-sheet@npm:4.4.1"
+"@gorhom/bottom-sheet@npm:^4.4.2":
+  version: 4.4.2
+  resolution: "@gorhom/bottom-sheet@npm:4.4.2"
   dependencies:
     "@gorhom/portal": 1.0.13
     invariant: ^2.2.4
@@ -2176,7 +2176,7 @@ __metadata:
     react-native: "*"
     react-native-gesture-handler: ">=1.10.1"
     react-native-reanimated: ">=2.2.0"
-  checksum: d4d93664ef805428e86f8be3ff1c848d8627fbcf94ebd45d4b7484b37db72c2152bdee3904d466ed755ec899f94300715848643991f4407f020d018ef73e5ad1
+  checksum: 32034ec389df39b9b3ebd886eda02bb14b7bedf4c654dfb54c1b5bc1fe78f790011b279d02956d8805e9dfe3dd1fcdb416dc82cf3dcc7e13265475021adf7522
   languageName: node
   linkType: hard
 
@@ -6933,7 +6933,7 @@ __metadata:
     "@babel/core": ^7.12.9
     "@expo/ngrok": ^2.5.0
     "@expo/webpack-config": ^0.16.25
-    "@gorhom/bottom-sheet": ^4
+    "@gorhom/bottom-sheet": ^4.4.2
     "@hookform/resolvers": ^2.9.3
     "@react-native-async-storage/async-storage": ^1.17.7
     "@react-native-community/checkbox": ^0.5.12

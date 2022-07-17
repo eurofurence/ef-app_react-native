@@ -1,8 +1,9 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { StyleSheet, Vibration, View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
+import { conName } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/authorization.service";
 
@@ -19,7 +20,7 @@ export const DevButtons = () => {
 
         sendMessage({
             RecipientUid: me,
-            AuthorName: "Eurofurence React Native Dev Menu",
+            AuthorName: `${conName} React Native Dev Menu`,
             Subject: "You have won a grand prize!",
             Message: "You get to program more next year! ",
         });
@@ -32,7 +33,7 @@ export const DevButtons = () => {
             <Section title={"Dev Buttons"} subtitle={"Make the API do something"} />
 
             <Button
-                icon={"warning"}
+                icon="alert"
                 containerStyle={styles.button}
                 onPress={() => alert("Long hold to activate this function")}
                 onLongPress={() => {

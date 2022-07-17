@@ -1,11 +1,12 @@
 import { useRoute } from "@react-navigation/core";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
 import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
-import { dealersSelectors } from "../../store/eurofurence.selectors";
+import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
 import { DealerContent } from "./DealerContent";
 
 /**
@@ -19,13 +20,14 @@ export type DealerScreenParams = {
 };
 
 export const DealerScreen = () => {
+    const { t } = useTranslation("Dealer");
     const route = useRoute<Route<DealerScreenParams, "Dealer">>();
-    const dealer = useAppSelector((state) => dealersSelectors.selectById(state, route.params.id));
+    const dealer = useAppSelector((state) => dealersCompleteSelectors.selectById(state, route.params.id));
     const headerStyle = useTopHeaderStyle();
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>{dealer?.FullName ?? "Viewing dealer"}</Header>
+            <Header style={headerStyle}>{dealer?.FullName ?? t("viewing_dealer")}</Header>
             <Scroller>{!dealer ? null : <DealerContent dealer={dealer} />}</Scroller>
         </View>
     );
