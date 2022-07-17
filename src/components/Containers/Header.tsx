@@ -15,12 +15,12 @@ export type HeaderProps = ViewProps;
 export const Header: FC<HeaderProps> = ({ style, children }) => {
     const theme = useTheme();
 
-    const borderColor = useMemo(() => ({ borderColor: theme.darken }), [theme]);
+    const containerStyle = useMemo(() => ({ backgroundColor: theme.background, borderColor: theme.darken }), [theme]);
 
     const navigation = useNavigation();
 
     return (
-        <Row style={[styles.container, borderColor, style]} type="center" variant="spaced">
+        <Row style={[styles.container, containerStyle, style]} type="center" variant="spaced">
             <Icon name="chevron-left" size={iconSize} />
 
             <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>

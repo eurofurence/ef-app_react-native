@@ -1,8 +1,8 @@
 import { FC, ReactNode, useCallback } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
-import { Button } from "../../components/Containers/Button";
 import { EnrichedDealerRecord } from "../../store/eurofurence.types";
+import { DealerCard } from "./DealerCard";
 import { DealersListAllScreenProps } from "./DealersListAllScreen";
 
 /**
@@ -30,6 +30,8 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
     return (
         <View style={StyleSheet.absoluteFill}>
             <FlatList
+                style={styles.list}
+                contentContainerStyle={styles.container}
                 scrollEnabled={true}
                 ListHeaderComponent={<>{leader}</>}
                 ListFooterComponent={<>{trailer}</>}
@@ -37,14 +39,18 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
                 keyExtractor={(item) => item.Id}
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
-                renderItem={(entry: { item: EnrichedDealerRecord }) => (
-                    <View key={entry.item.Id} style={{ padding: 10 }}>
-                        <Button style={{ height: 60 }} outline onPress={() => navigateTo(entry.item)}>
-                            {entry.item.DisplayName || entry.item.AttendeeNickname}
-                        </Button>
-                    </View>
-                )}
+                renderItem={(entry: { item: EnrichedDealerRecord }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={() => navigateTo(entry.item)} />}
             />
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    list: {
+        flex: 1,
+    },
+    container: {
+        paddingHorizontal: 20,
+        paddingBottom: 100,
+    },
+});

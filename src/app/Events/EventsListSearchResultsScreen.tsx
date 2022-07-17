@@ -30,7 +30,7 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
         navigation.jumpTo("Search");
     }, [setSearch, navigation]);
 
-    const events = useMemo(() => (!results ? [] : chain(results).orderBy("StartDateTimeUtc").value()), []);
+    const events = useMemo(() => chain(results).orderBy("StartDateTimeUtc").value(), []);
 
     return (
         <EventsListGeneric

@@ -59,7 +59,6 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
 
     return (
         <EventCardContent
-            key={event.Id}
             background={event.BannerImageUrl ? { uri: event.BannerImageUrl } : undefined}
             pre={pre}
             title={event.Title}

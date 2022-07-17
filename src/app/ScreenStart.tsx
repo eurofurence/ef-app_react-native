@@ -48,8 +48,6 @@ const ScreenStartNavigator = createStackNavigator<ScreenStartNavigatorParamsList
  */
 export type ScreenStartProps = object;
 
-export const PERSISTENCE_KEY = `NAVIGATION_STATE`;
-
 export const ScreenStart: FC<ScreenStartProps> = () => {
     // Get navigation state from persistence.
     const [isReady, initialState, onStateChange] = useNavigationStatePersistence();

@@ -1,64 +1,56 @@
-import React, { FC, ReactNode, useMemo } from "react";
-import { Image, ImageSourcePropType, Platform, StyleSheet, View, ViewStyle, TouchableOpacity } from "react-native";
+import React, { useMemo, FC } from "react";
+import { Image, ImageSourcePropType, Platform, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
-import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
 import { useTheme } from "../../context/Theme";
 import { appStyles } from "../AppStyles";
 
-export type EventCardProps = {
-    background?: ImageSourcePropType;
-    pre: ReactNode;
-    title?: string;
-    subtitle?: string;
-    tag?: string;
-    happening: boolean;
-    done: boolean;
+export type DealerCardContentProps = {
+    avatar?: ImageSourcePropType;
+    preview?: ImageSourcePropType;
+    name: string;
+    merchandise?: string;
+    days?: string;
     onPress?: () => void;
     onLongPress?: () => void;
 };
 
-export const EventCardContent: FC<EventCardProps> = ({ background, pre, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
-    // TODO: Indicate if happening at the moment.
-
+export const DealerCardContent: FC<DealerCardContentProps> = ({ avatar, preview, name, merchandise, days, onPress, onLongPress }) => {
     const theme = useTheme();
     const blurRadius = Platform.OS === "android" ? 3 : 8;
     const backgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
-    const preBackgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
 
     return (
         <TouchableOpacity style={[styles.container, appStyles.shadow, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
-            {!background ? null : <Image style={styles.background} resizeMode="cover" blurRadius={blurRadius} source={background} />}
+            {!preview ? null : <Image style={styles.background} resizeMode="cover" blurRadius={blurRadius} source={preview} />}
 
-            {!pre ? null : <View style={[styles.pre, preBackgroundStyle]}>{pre}</View>}
+            {!avatar ? null : (
+                <View style={styles.avatarContainer}>
+                    <View style={[styles.avatarCircle, appStyles.shadow]}>
+                        <Image style={styles.avatarImage} source={avatar} resizeMode="cover" />
+                    </View>
+                </View>
+            )}
 
             <View style={styles.main}>
-                {!title ? null : (
-                    <Label style={styles.title} type="h2">
-                        {title}
-                    </Label>
-                )}
+                <Label style={styles.title} type="h2">
+                    {name}
+                </Label>
 
                 <View style={styles.subtitleArea}>
-                    {!subtitle ? null : (
+                    {!merchandise ? null : (
                         <Label style={styles.subtitle} type="caption" ellipsizeMode="tail" numberOfLines={2}>
-                            {subtitle}
+                            {merchandise}
                         </Label>
                     )}
 
-                    {!tag ? null : (
+                    {!days ? null : (
                         <Label style={styles.tag} type="caption" ellipsizeMode="tail" numberOfLines={2}>
-                            {tag}
+                            {days}
                         </Label>
                     )}
                 </View>
             </View>
-
-            {!happening ? null : (
-                <View style={styles.indicator}>
-                    <Indicator color={done ? theme.important : theme.invText} />
-                </View>
-            )}
         </TouchableOpacity>
     );
 };
@@ -71,12 +63,6 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         flexDirection: "row",
     },
-    pre: {
-        overflow: "hidden",
-        flexBasis: 70,
-        alignItems: "center",
-        justifyContent: "center",
-    },
     background: {
         position: "absolute",
         width: undefined,
@@ -86,6 +72,38 @@ const styles = StyleSheet.create({
         right: -10,
         bottom: -10,
         opacity: 0.2,
+    },
+    avatarContainer: {
+        paddingLeft: 16,
+        paddingVertical: 16,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    avatarCircle: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        overflow: "hidden",
+    },
+    avatarImage: {
+        flex: 1,
+        alignSelf: "stretch",
+    },
+    image: {
+        position: "absolute",
+        width: undefined,
+        height: undefined,
+        left: -10,
+        top: -10,
+        right: -10,
+        bottom: -10,
+    },
+    imageOverlay: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
     },
     main: {
         flex: 1,
@@ -106,11 +124,5 @@ const styles = StyleSheet.create({
         flex: 1,
         fontWeight: "600",
         textAlign: "right",
-    },
-    indicator: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        padding: 14,
     },
 });

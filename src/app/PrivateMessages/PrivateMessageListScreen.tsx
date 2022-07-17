@@ -17,6 +17,7 @@ export const PrivateMessageListScreen = () => {
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
         // TODO: We need to react to FCM PM notifications.
         // pollingInterval: 10000,
+        refetchOnFocus: true,
     });
 
     const top = useSafeAreaInsets()?.top;

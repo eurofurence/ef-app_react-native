@@ -51,12 +51,16 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ naviga
                 icon: "calendar-outline" as IconNames,
                 data: events,
             }))
-            .concat({
-                title: t("events_done"),
-                subtitle: t("events_count", { count: done.length }),
-                icon: "calendar-clock-outline" as IconNames,
-                data: done,
-            })
+            .thru((chain) =>
+                done.length === 0
+                    ? chain
+                    : chain.concat({
+                          title: t("events_done"),
+                          subtitle: t("events_count", { count: done.length }),
+                          icon: "calendar-clock-outline" as IconNames,
+                          data: done,
+                      })
+            )
             .value();
     }, [t, eventsByRoom, isEventDone]);
 

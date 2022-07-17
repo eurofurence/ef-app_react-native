@@ -29,7 +29,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
     return (
         <>
             {!dealer.ArtistImageUrl ? null : (
-                <View style={[appStyles.shadow, styles.avatar]}>
+                <View style={[appStyles.shadow, styles.avatarCircle]}>
                     <Image resizeMode="cover" style={styles.avatarImage} source={{ uri: dealer.ArtistImageUrl }} />
                 </View>
             )}
@@ -102,7 +102,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
 };
 
 const styles = StyleSheet.create({
-    avatar: {
+    avatarCircle: {
         width: 120,
         height: 120,
         borderRadius: 60,
