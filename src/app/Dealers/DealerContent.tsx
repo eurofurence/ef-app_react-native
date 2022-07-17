@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image } from "react-native";
@@ -5,26 +6,28 @@ import { StyleSheet, View, Image } from "react-native";
 import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { EnrichedDealerRecord } from "../../store/eurofurence.types";
+import { DealerWithDetails } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
 
 /**
  * Props to the content.
  */
 export type DealerContentProps = {
-    dealer: EnrichedDealerRecord;
+    dealer: DealerWithDetails;
 };
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
     const { t } = useTranslation("Dealer");
 
-    const dealerDays = useMemo(() => {
-        const result = [];
-        if (dealer.AttendsOnThursday) result.push(t("attends_thu"));
-        if (dealer.AttendsOnFriday) result.push(t("attends_fri"));
-        if (dealer.AttendsOnSaturday) result.push(t("attends_sat"));
-        return result.join(", ");
-    }, [dealer, t]);
+    const days = useMemo(
+        () =>
+            dealer.AttendanceDays
+                // Convert to long representation.
+                .map((day) => moment(day.Date).format("dddd"))
+                // Join comma separatated.
+                .join(", "),
+        [dealer, t]
+    );
 
     return (
         <>
@@ -40,7 +43,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
             <Section icon="directions-fork" title={t("about")} />
             <Label type="caption">{t("attends")}</Label>
             <Label type="h3" mb={20}>
-                {dealerDays}
+                {days}
             </Label>
 
             <Label type="caption">{t("merchandise")}</Label>

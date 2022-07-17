@@ -1,11 +1,12 @@
+import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { EnrichedDealerRecord } from "../../store/eurofurence.types";
+import { DealerWithDetails } from "../../store/eurofurence.selectors";
 import { DealerCardContent } from "./DealerCardContent";
 
 export type DealerCardProps = {
-    dealer: EnrichedDealerRecord;
+    dealer: DealerWithDetails;
     onPress?: () => void;
     onLongPress?: () => void;
 };
@@ -21,23 +22,15 @@ export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }
 
     const preview = useMemo(() => (dealer.ArtPreviewImageUrl ? { uri: dealer.ArtPreviewImageUrl } : undefined), [dealer]);
 
-    const dealerDays = useMemo(() => {
-        const result = [];
-        if (dealer.AttendsOnThursday) result.push(t("attends_thu"));
-        if (dealer.AttendsOnFriday) result.push(t("attends_fri"));
-        if (dealer.AttendsOnSaturday) result.push(t("attends_sat"));
-        return result.join(", ");
-    }, [dealer, t]);
-
-    return (
-        <DealerCardContent
-            avatar={avatar}
-            preview={preview}
-            name={dealer.FullName}
-            merchandise={dealer.Merchandise}
-            days={dealerDays}
-            onPress={onPress}
-            onLongPress={onLongPress}
-        />
+    const days = useMemo(
+        () =>
+            dealer.AttendanceDays
+                // Convert to medium representation.
+                .map((day) => moment(day.Date).format("ddd"))
+                // Join comma separatated.
+                .join(", "),
+        [dealer, t]
     );
+
+    return <DealerCardContent avatar={avatar} preview={preview} name={dealer.FullName} merchandise={dealer.Merchandise} days={days} onPress={onPress} onLongPress={onLongPress} />;
 };

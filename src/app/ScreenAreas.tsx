@@ -1,3 +1,4 @@
+import { CompositeScreenProps } from "@react-navigation/core";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC, RefObject, useMemo } from "react";
@@ -6,18 +7,18 @@ import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { TabsRef } from "../components/Containers/Tabs";
-import { createTabNavigator } from "../components/Navigators/TabsNavigator";
+import { createTabNavigator, TabScreenProps } from "../components/Navigators/TabsNavigator";
 import { ScreenEmptyParams } from "./Common/ScreenEmpty";
-import { DealersListAllScreen, DealersListAllScreenParams } from "./Dealers/DealersListAllScreen";
+import { DealersTabsScreen, DealersTabsScreenParams } from "./Dealers/DealersTabsScreen";
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { HomeScreen, ScreenHomeParams } from "./Home/HomeScreen";
 import { MainMenu } from "./MainMenu/MainMenu";
-import { ScreenStartNavigatorParamsList } from "./ScreenStart";
+import { ScreenStartParamsList } from "./ScreenStart";
 
 /**
  * Available routes.
  */
-export type ScreenAreasNavigatorParamsList = {
+export type ScreenAreasParamsList = {
     /**
      * Area home screen, should show announcements and personalized content.
      */
@@ -31,7 +32,7 @@ export type ScreenAreasNavigatorParamsList = {
     /**
      * Dealers list.
      */
-    Dealers: DealersListAllScreenParams;
+    Dealers: DealersTabsScreenParams;
 
     /**
      * Settings Screen.
@@ -42,17 +43,19 @@ export type ScreenAreasNavigatorParamsList = {
 /**
  * Create an instance of the tabs-navigator with the provided routes.
  */
-export const AreasNavigator = createTabNavigator<ScreenAreasNavigatorParamsList>();
+export const AreasNavigator = createTabNavigator<ScreenAreasParamsList>();
 
 /**
  * Params handled by the screen in route. Delegated parameters for the areas.
  */
-export type ScreenAreasParams = NavigatorScreenParams<ScreenAreasNavigatorParamsList>;
+export type ScreenAreasParams = NavigatorScreenParams<ScreenAreasParamsList>;
 
 /**
  * The properties to the screen as a component. Delegated parameters for the areas. TODO: Verify.
  */
-export type ScreenAreasProps = StackScreenProps<ScreenStartNavigatorParamsList>;
+export type ScreenAreasProps =
+    // Route carrying from start screen at "Areas", navigation via own parameter list and parent.
+    CompositeScreenProps<StackScreenProps<ScreenStartParamsList, "Areas">, TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>>;
 
 export const ScreenAreas: FC<ScreenAreasProps> = () => {
     const { t } = useTranslation("Menu");
@@ -66,7 +69,7 @@ export const ScreenAreas: FC<ScreenAreasProps> = () => {
             <AreasNavigator.Navigator tabsStyle={tabsStyle} textMore={t("more")} textLess={t("less")} more={(tabs: RefObject<TabsRef>) => <MainMenu tabs={tabs} />}>
                 <AreasNavigator.Screen name="Home" options={{ title: t("home"), icon: "home" }} component={HomeScreen} />
                 <AreasNavigator.Screen name="Events" options={{ title: t("events"), icon: "calendar" }} component={EventsTabsScreen} />
-                <AreasNavigator.Screen name="Dealers" options={{ title: t("dealers"), icon: "cart-outline" }} component={DealersListAllScreen} />
+                <AreasNavigator.Screen name="Dealers" options={{ title: t("dealers"), icon: "cart-outline" }} component={DealersTabsScreen} />
             </AreasNavigator.Navigator>
         </View>
     );

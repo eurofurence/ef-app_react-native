@@ -1,16 +1,22 @@
+import { CompositeScreenProps } from "@react-navigation/core";
+import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
 import moment from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Label } from "../../components/Atoms/Label";
+import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useIsEventDone } from "../../hooks/useEventProperties";
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
+import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
 import { EventRoomRecord } from "../../store/eurofurence.types";
 import { IconNames } from "../../types/IconNames";
-import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -25,7 +31,12 @@ export type EventsListByRoomScreenParams = {
 /**
  * The properties to the screen as a component. TODO: Unify and verify types.
  */
-export type EventsListByRoomScreenProps = EventsListByDayScreenProps;
+export type EventsListByRoomScreenProps =
+    // Route carrying from events tabs screen at "Room", own navigation via own parameter list.
+    CompositeScreenProps<
+        PagesScreenProps<EventsTabsScreenParamsList, string>,
+        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+    >;
 
 export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ navigation, route }) => {
     const { t } = useTranslation("Events");
@@ -33,7 +44,7 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ naviga
 
     // Get the room. Use it to resolve events to display.
     const room = "room" in route.params ? route.params?.room : null;
-    const eventsByRoom = useAppSelector((state) => eventsCompleteSelector.selectByRoom(state, room?.Id ?? ""));
+    const eventsByRoom = useAppSelector((state) => eventsCompleteSelectors.selectByRoom(state, room?.Id ?? ""));
     const eventsGroups = useMemo(() => {
         const done = chain(eventsByRoom)
             .filter((event) => isEventDone(event))

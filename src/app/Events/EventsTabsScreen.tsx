@@ -7,15 +7,15 @@ import { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { createPagesNavigator } from "../../components/Navigators/PagesNavigator";
+import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchHasResults } from "../../components/Searching/EventsSearchContext";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";
-import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsListByDayScreen, EventsListByDayScreenParams } from "./EventsListByDayScreen";
 import { EventsListByRoomScreen, EventsListByRoomScreenParams } from "./EventsListByRoomScreen";
 import { EventsListByTrackScreen, EventsListByTrackScreenParams } from "./EventsListByTrackScreen";
@@ -27,7 +27,7 @@ import { EventsSearchScreen, EventsSearchScreenParams } from "./EventsSearchScre
 /**
  * Available routes.
  */
-export type EventsTabsScreenNavigatorParamsList = {
+export type EventsTabsScreenParamsList = {
     Search: EventsSearchScreenParams;
 
     Results: EventsListSearchResultsScreenParams;
@@ -41,19 +41,24 @@ export type EventsTabsScreenNavigatorParamsList = {
 /**
  * Create an instance of the pages-navigator with the provided routes.
  */
-const EventsTabsScreenNavigator = createPagesNavigator<EventsTabsScreenNavigatorParamsList>();
+const EventsTabsScreenNavigator = createPagesNavigator<EventsTabsScreenParamsList>();
 
 /**
  * Params handled by the screen in route. Delegated parameters for the days. TODO: Verify.
  */
-export type EventsTabsScreenParams = NavigatorScreenParams<EventsTabsScreenNavigatorParamsList> & {
+export type EventsTabsScreenParams = NavigatorScreenParams<EventsTabsScreenParamsList> & {
     filterType?: "days" | "tracks" | "rooms";
 };
 
 /**
  * The properties to the screen as a component.
  */
-export type EventsTabsScreenProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Events">, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type EventsTabsScreenProps =
+    // Route carrying from area screen at "Events", navigation via own parameter list and parents.
+    CompositeScreenProps<
+        TabScreenProps<ScreenAreasParamsList, "Events">,
+        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+    >;
 
 export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");

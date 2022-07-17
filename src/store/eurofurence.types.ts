@@ -9,6 +9,11 @@ export type ImageUrl = string | undefined;
 export type PartOfDay = "morning" | "afternoon" | "evening" | "night";
 
 /**
+ * Attendance day for dealers.
+ */
+export type AttendanceDay = "thu" | "fri" | "sat";
+
+/**
  * Named type to use when referencing other records.
  */
 export type RecordId = string;

@@ -10,10 +10,12 @@ import { Floater } from "../../components/Containers/Floater";
 import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchContext } from "../../components/Searching/EventsSearchContext";
 import { useTheme } from "../../context/Theme";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
-import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -23,7 +25,12 @@ export type EventsSearchScreenParams = undefined;
 /**
  * The properties to the screen as a component.
  */
-export type EventsSearchScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type EventsSearchScreenProps =
+    // Route carrying from events tabs screen at "Search", own navigation via own parameter list.
+    CompositeScreenProps<
+        PagesScreenProps<EventsTabsScreenParamsList, "Search">,
+        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+    >;
 
 export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) => {
     const { t } = useTranslation("Events");

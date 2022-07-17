@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         top: -10,
         right: -10,
         bottom: -10,
-        opacity: 0.2,
+        opacity: 0.1,
     },
     avatarContainer: {
         paddingLeft: 16,
@@ -84,10 +84,12 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 35,
         overflow: "hidden",
+        alignItems: "center",
+        justifyContent: "center",
     },
     avatarImage: {
-        flex: 1,
-        alignSelf: "stretch",
+        width: "100%",
+        height: "100%",
     },
     image: {
         position: "absolute",
@@ -116,7 +118,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     subtitle: {
-        flex: 1,
+        flex: 2,
         flexShrink: 1,
     },
     tag: {

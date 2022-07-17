@@ -1,7 +1,7 @@
 import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
 
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelector, EventWithDetails } from "../../store/eurofurence.selectors";
+import { eventsCompleteSelectors, EventWithDetails } from "../../store/eurofurence.selectors";
 
 export type EventsSearchContextType = {
     search: string;
@@ -17,7 +17,7 @@ export const EventsSearchContext = createContext<EventsSearchContextType>({
 
 export const EventsSearchProvider: FC = ({ children }) => {
     // Source of all events.
-    const events = useAppSelector(eventsCompleteSelector.selectAll);
+    const events = useAppSelector(eventsCompleteSelectors.selectAll);
 
     // State of query and results.
     const [search, setSearch] = useState<string>("");

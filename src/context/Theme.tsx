@@ -16,6 +16,8 @@ export type Theme = Record<string, ColorValue> & {
     lighten: ColorValue;
 };
 
+export const useThemeType = (): "light" | "dark" => "light";
+
 export const useTheme = (): Theme => {
     // Stub.
 

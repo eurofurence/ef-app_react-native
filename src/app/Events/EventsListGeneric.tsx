@@ -5,6 +5,10 @@ import { EventWithDetails } from "../../store/eurofurence.selectors";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
+import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
+import { EventsListByTrackScreenProps } from "./EventsListByTrackScreen";
+import { EventsListSearchResultsScreenProps } from "./EventsListSearchResultsScreen";
+import { EventsSearchScreenProps } from "./EventsSearchScreen";
 
 /**
  * The properties to the component.
@@ -13,7 +17,12 @@ export type EventsListGenericProps = {
     /**
      * Navigation type. Copied from the screens rendering this component.
      */
-    navigation: EventsListByDayScreenProps["navigation"];
+    navigation:
+        | EventsSearchScreenProps["navigation"]
+        | EventsListSearchResultsScreenProps["navigation"]
+        | EventsListByDayScreenProps["navigation"]
+        | EventsListByRoomScreenProps["navigation"]
+        | EventsListByTrackScreenProps["navigation"];
     leader?: ReactNode;
     events: EventWithDetails[];
     trailer?: ReactNode;

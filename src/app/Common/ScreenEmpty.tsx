@@ -6,8 +6,8 @@ import { View } from "react-native";
 import { Label } from "../../components/Atoms/Label";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useSignalLoading } from "../../context/LoadingContext";
-import { ScreenAreasNavigatorParamsList } from "../ScreenAreas";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 
 /**
  * Params handled by the screen in route.
@@ -17,7 +17,7 @@ export type ScreenEmptyParams = undefined;
 /**
  * The properties to the screen as a component.
  */
-export type ScreenEmptyProps = CompositeScreenProps<TabScreenProps<ScreenAreasNavigatorParamsList, "Dealers">, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type ScreenEmptyProps = CompositeScreenProps<TabScreenProps<ScreenAreasParamsList, "Dealers">, StackScreenProps<ScreenStartParamsList>>;
 
 /**
  * Placeholder screen.

@@ -39,7 +39,10 @@
   "Event": {
   },
   "Dealers": {
-    "dealers_at_convention": "Dealers at Eurofurence",
+    "all": "All",
+    "dealers_on_this_day": "Dealers on this day",
+    "dealers_on_day": "Dealers on {{day}}",
+    "dealers_at_convention": "Dealers at {{convention}}",
     "dealers_count": "{{count}} dealers"
   },
   "Dealer": {

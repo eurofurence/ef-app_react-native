@@ -6,13 +6,15 @@ import { useTranslation } from "react-i18next";
 
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelector } from "../../store/eurofurence.selectors";
+import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
 import { EventDayRecord, PartOfDay } from "../../store/eurofurence.types";
 import { IconNames } from "../../types/IconNames";
-import { ScreenStartNavigatorParamsList } from "../ScreenStart";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
-import { EventsTabsScreenNavigatorParamsList } from "./EventsTabsScreen";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -27,14 +29,19 @@ export type EventsListByDayScreenParams = {
 /**
  * The properties to the screen as a component.
  */
-export type EventsListByDayScreenProps = CompositeScreenProps<PagesScreenProps<EventsTabsScreenNavigatorParamsList, any>, StackScreenProps<ScreenStartNavigatorParamsList>>;
+export type EventsListByDayScreenProps =
+    // Route carrying from events tabs screen at "Day", own navigation via own parameter list.
+    CompositeScreenProps<
+        PagesScreenProps<EventsTabsScreenParamsList, string>,
+        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+    >;
 
 export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigation, route }) => {
     const { t } = useTranslation("Events");
 
     // Get the day. Use it to resolve events to display.
     const day = "day" in route.params ? route.params?.day : null;
-    const eventsByDay = useAppSelector((state) => eventsCompleteSelector.selectByDay(state, day?.Id ?? ""));
+    const eventsByDay = useAppSelector((state) => eventsCompleteSelectors.selectByDay(state, day?.Id ?? ""));
     const eventsGroups = useMemo(() => {
         return chain(eventsByDay)
             .orderBy("StartDateTimeUtc")
@@ -52,6 +59,7 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigati
             }))
             .value();
     }, [t, eventsByDay]);
+
     return (
         <EventsSectionedListGeneric
             navigation={navigation}
