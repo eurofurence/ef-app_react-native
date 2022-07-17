@@ -6,6 +6,7 @@ import { StyleSheet, View, Image } from "react-native";
 import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
+import { useNow } from "../../hooks/useNow";
 import { DealerWithDetails } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
 
@@ -18,16 +19,20 @@ export type DealerContentProps = {
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
     const { t } = useTranslation("Dealer");
+    const [now] = useNow();
 
     const days = useMemo(
         () =>
             dealer.AttendanceDays
                 // Convert to long representation.
                 .map((day) => moment(day.Date).format("dddd"))
-                // Join comma separatated.
+                // Join comma separated.
                 .join(", "),
         [dealer, t]
     );
+
+    // Check if in attendance today.
+    const attendsToday = useMemo(() => Boolean(dealer.AttendanceDays.find((day) => moment(day.Date).isSame(now, "day"))), [dealer]);
 
     return (
         <>
@@ -38,6 +43,13 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
             )}
 
             <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
+
+            {!attendsToday ? null : (
+                <Label type="caption" variant="middle" mb={20}>
+                    {t("attends_today")}
+                </Label>
+            )}
+
             <Label type="para">{dealer.ShortDescription}</Label>
 
             <Section icon="directions-fork" title={t("about")} />

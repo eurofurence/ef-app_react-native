@@ -57,7 +57,8 @@
     "merchandise": "Merchandise",
     "after_dark": "After dark",
     "in_after_dark": "Located in the after dark section",
-    "categories": "Categories"
+    "categories": "Categories",
+    "attends_today": "Dealer is attending today"
   },
   "TimeTravel": {
     "title": "Time Travel",
