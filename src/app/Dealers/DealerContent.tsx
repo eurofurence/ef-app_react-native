@@ -6,8 +6,10 @@ import { StyleSheet, View, Image } from "react-native";
 import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
+import { ImageExButton } from "../../components/Containers/ImageButton";
 import { useNow } from "../../hooks/useNow";
-import { DealerWithDetails } from "../../store/eurofurence.selectors";
+import { useAppSelector } from "../../store";
+import { DealerWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
 
 /**
@@ -20,6 +22,8 @@ export type DealerContentProps = {
 export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
     const { t } = useTranslation("Dealer");
     const [now] = useNow();
+
+    const mapLink = useAppSelector((state) => mapsCompleteSelectors.selectValidLinksByTarget(state, dealer.Id));
 
     const days = useMemo(
         () =>
@@ -80,6 +84,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
                     </Label>
                 </>
             )}
+
+            {mapLink.map(({ map, entry }, i) => (
+                <ImageExButton key={i} image={map.Image} target={{ x: entry.X, y: entry.Y, size: 400 }}>
+                    {t("view_on_map")}
+                </ImageExButton>
+            ))}
 
             {!dealer.AboutTheArtText && !dealer.ArtPreviewImageUrl ? null : (
                 <>

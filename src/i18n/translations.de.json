@@ -17,7 +17,6 @@
     "less": "Zuklappen"
   },
   "Events": {
-    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
     "filter_by_day": "Tage ansehen",
     "filter_by_track": "Kategorien ansehen",
     "filter_by_room": "Räume ansehen",
@@ -29,6 +28,8 @@
     "events_done": "Bereits zu Ende"
   },
   "Event": {
+    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
+    "view_on_map": "Auf der Karte ansehen"
   },
   "Dealers": {
     "all": "Alle",
@@ -50,7 +51,8 @@
     "after_dark": "After Dark",
     "in_after_dark": "Im After Dark Bereich",
     "categories": "Kategorien",
-    "attends_today": "Dealer ist Heute anwesend"
+    "attends_today": "Dealer ist Heute anwesend",
+    "view_on_map": "Auf der Karte ansehen"
   },
   "Settings": {
     "currentLanguage": "Ihre sprache ist Deutsch!",

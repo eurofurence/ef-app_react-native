@@ -34,7 +34,7 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
             ) : (
                 <View style={{ padding: 30 }}>
                     <Text style={styles.marginBefore}>{t("not_logged_in")}</Text>
-                    <Button containerStyle={styles.marginBefore} icon="login" onPress={onLogin}>
+                    <Button style={styles.marginBefore} icon="login" onPress={onLogin}>
                         {t("logged_in_now")}
                     </Button>
                 </View>

@@ -34,7 +34,7 @@ export const DevButtons = () => {
 
             <Button
                 icon="alert"
-                containerStyle={styles.button}
+                style={styles.button}
                 onPress={() => alert("Long hold to activate this function")}
                 onLongPress={() => {
                     console.log("Forcing  FCM sync devices");
@@ -47,7 +47,7 @@ export const DevButtons = () => {
             </Button>
 
             <Button
-                containerStyle={styles.button}
+                style={styles.button}
                 onPress={() => {
                     onSendMessage();
                 }}

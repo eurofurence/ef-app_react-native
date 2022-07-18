@@ -1,15 +1,17 @@
 import moment from "moment";
-import { FC, useCallback } from "react";
+import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Share, StyleSheet } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
+import { ImageExButton } from "../../components/Containers/ImageButton";
 import { Row } from "../../components/Containers/Row";
 import { appBase, conAbbr } from "../../configuration";
 import { useEventReminder } from "../../hooks/useEventReminder";
-import { EventWithDetails } from "../../store/eurofurence.selectors";
+import { useAppSelector } from "../../store";
+import { EventWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
 
 /**
  * Props to the content.
@@ -27,12 +29,14 @@ export type EventContentProps = {
 };
 
 export const EventContent: FC<EventContentProps> = ({ event }) => {
-    const { t } = useTranslation("Events");
+    const { t } = useTranslation("Event");
     const { isFavorited, toggleReminder } = useEventReminder(event);
 
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
+
+    const mapLink = useAppSelector((state) => mapsCompleteSelectors.selectValidLinksByTarget(state, room.Id));
 
     const shareEvent = useCallback(() => {
         Share.share(
@@ -53,15 +57,15 @@ export const EventContent: FC<EventContentProps> = ({ event }) => {
             </Label>
 
             <Row>
-                <Button containerStyle={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
+                <Button style={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
                     {isFavorited ? "Unfavorite" : "Favorite"}
                 </Button>
-                <Button containerStyle={styles.rowRight} icon="pencil">
+                <Button style={styles.rowRight} icon="pencil">
                     Give feedback
                 </Button>
             </Row>
 
-            <Button containerStyle={styles.share} icon={"share"} onPress={shareEvent}>
+            <Button style={styles.share} icon={"share"} onPress={shareEvent}>
                 Share this event
             </Button>
 
@@ -85,6 +89,12 @@ export const EventContent: FC<EventContentProps> = ({ event }) => {
             <Label type="h3" mb={20}>
                 {room?.Name || " "}
             </Label>
+
+            {mapLink.map(({ map, entry }, i) => (
+                <ImageExButton key={i} image={map.Image} target={{ x: entry.X, y: entry.Y, size: 400 }}>
+                    {t("view_on_map")}
+                </ImageExButton>
+            ))}
 
             <Section icon="information" title="More about the event" />
             <Label type="para">{event.Description}</Label>

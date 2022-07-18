@@ -16,12 +16,7 @@ const border = 2;
  */
 export type ButtonProps = {
     /**
-     * The style for the view arranging the button's layout.
-     */
-    containerStyle?: StyleProp<ViewStyle>;
-
-    /**
-     * The style for the view arranging the button's content.
+     * The style button.
      */
     style?: StyleProp<ViewStyle>;
 
@@ -53,14 +48,14 @@ export type ButtonProps = {
     onLongPress?: () => void;
 };
 
-export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress, onLongPress }) => {
+export const Button: FC<ButtonProps> = ({ style, outline, icon, iconRight, children, onPress, onLongPress }) => {
     // Computed styles.
     const theme = useTheme();
-    const base = useMemo(() => (outline ? styles.outlineContent : styles.fillContent), [outline]);
+    const base = useMemo(() => (outline ? styles.containerOutline : styles.containerFill), [outline]);
     const fill = useMemo(() => ({ backgroundColor: outline ? theme.background : theme.inverted }), [outline, theme]);
 
     return (
-        <TouchableOpacity style={[containerStyle, styles.content, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
+        <TouchableOpacity style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
             {!icon ? <View style={styles.placeholder} /> : <Icon name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>
@@ -73,17 +68,17 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, 
 };
 
 const styles = StyleSheet.create({
-    content: {
+    container: {
         borderRadius: 16,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
     },
-    fillContent: {
+    containerFill: {
         padding: pad,
         backgroundColor: "black",
     },
-    outlineContent: {
+    containerOutline: {
         padding: pad - border,
         borderColor: "black",
         borderWidth: border,
