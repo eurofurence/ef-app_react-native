@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/core";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
@@ -5,8 +6,10 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
+import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { useAppSelector } from "../../store";
+import { mapsSelectors } from "../../store/eurofurence.selectors";
 import { PrivateMessageLinker } from "../PrivateMessages/PrivateMessageLinker";
 
 /**
@@ -25,7 +28,9 @@ export type PagerMenuProps = {
 
 export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings }) => {
     const { t } = useTranslation("Menu");
+    const navigation = useNavigation();
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
+    const maps = useAppSelector(mapsSelectors.selectBrowseableMaps);
 
     return (
         <Col type="stretch">
@@ -47,6 +52,13 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
                 <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
                 <Tab icon="cog" text={t("settings")} onPress={onSettings} />
             </Grid>
+            <Col style={{ padding: 30, alignItems: "stretch" }}>
+                {maps.map((it) => (
+                    <Button key={it.Id} style={{ marginVertical: 10 }} icon={"map"} onPress={() => navigation.navigate("Map", { id: it.Id })}>
+                        {it.Description}
+                    </Button>
+                ))}
+            </Col>
         </Col>
     );
 };

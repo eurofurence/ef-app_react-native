@@ -202,7 +202,7 @@ const applyMapDetails = (images: Dictionary<EnrichedImageRecord>) => (map: Enric
 
 export const mapsSelectors = {
     ...baseMapsSelectors,
-    selectBrowseableMaps: createSelector(baseMapsSelectors.selectAll, (maps) => maps.filter((it) => it.IsBrowseable)),
+    selectBrowseableMaps: createSelector(baseMapsSelectors.selectAll, (maps): EnrichedMapRecord[] => maps.filter((it) => it.IsBrowseable)),
 
     selectValidLinksByTarget: createSelector(
         [baseMapsSelectors.selectAll, (state, target: RecordId) => target],

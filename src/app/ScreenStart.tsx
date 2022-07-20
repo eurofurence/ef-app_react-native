@@ -9,6 +9,7 @@ import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersis
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen, EventScreenParams } from "./Events/EventScreen";
+import { MapScreen, MapScreenParams } from "./Maps/MapScreen";
 import { PrivateMessageItemParams, PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
@@ -41,6 +42,7 @@ export type ScreenStartParamsList = {
     Settings: ScreenEmptyParams;
     PrivateMessageList: ScreenEmptyParams;
     PrivateMessageItem: PrivateMessageItemParams;
+    Map: MapScreenParams;
 };
 
 const ScreenStartNavigator = createStackNavigator<ScreenStartParamsList>();
@@ -76,6 +78,7 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
                     <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageItem" component={PrivateMessageItemScreen} />
+                    <ScreenStartNavigator.Screen name="Map" component={MapScreen} />
                 </ScreenStartNavigator.Navigator>
             </View>
         </NavigationContainer>

@@ -6983,6 +6983,7 @@ __metadata:
     react-test-renderer: ^17.0.2
     redux-logger: ^3.0.6
     redux-persist: ^6.0.0
+    ts-pattern: ^4.0.5
     typescript: ~4.3.5
     usehooks-ts: ^2.6.0
     zod: ^3.17.3
@@ -17313,6 +17314,13 @@ __metadata:
   version: 0.1.13
   resolution: "ts-interface-checker@npm:0.1.13"
   checksum: 20c29189c2dd6067a8775e07823ddf8d59a33e2ffc47a1bd59a5cb28bb0121a2969a816d5e77eda2ed85b18171aa5d1c4005a6b88ae8499ec7cc49f78571cb5e
+  languageName: node
+  linkType: hard
+
+"ts-pattern@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "ts-pattern@npm:4.0.5"
+  checksum: b1ecf36afb567ee6adbaee6e885e51775b1a390ed528589ae3bcb1e376412ed0774b54495ffca7be2a324e75268f894d34379b84388930485cf1359b30d5bc8b
   languageName: node
   linkType: hard
 

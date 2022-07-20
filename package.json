@@ -67,6 +67,7 @@
     "react-redux": "^8.0.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
+    "ts-pattern": "^4.0.5",
     "usehooks-ts": "^2.6.0",
     "zod": "^3.17.3"
   },
