@@ -1,5 +1,7 @@
 import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import { ImageZoom } from "@likashefqet/react-native-image-zoom";
 import { useRoute } from "@react-navigation/core";
+import { StatusBar } from "expo-status-bar";
 import { isEmpty } from "lodash";
 import { useEffect, useMemo, useRef } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
@@ -7,6 +9,7 @@ import Animated from "react-native-reanimated";
 
 import { Label } from "../../components/Atoms/Label";
 import { Header } from "../../components/Containers/Header";
+import { InteractiveImage } from "../../components/Containers/InteractiveImage";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
 import { EnrichedImageRecord, EnrichedMapRecord, RecordId } from "../../store/eurofurence.types";
@@ -50,16 +53,8 @@ export const MapScreen = () => {
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <Header>{map.Description}</Header>
-            <Animated.Image
-                source={{
-                    uri: map.ImageUrl,
-                }}
-                resizeMode={"contain"}
-                style={{
-                    flexGrow: 1,
-                }}
-            />
+            <StatusBar />
+            <InteractiveImage image={image} />
             <BottomSheet snapPoints={["10%", "75%"]} index={0} ref={sheetRef}>
                 <BottomSheetSectionList
                     sections={entries}
