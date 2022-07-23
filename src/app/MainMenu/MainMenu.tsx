@@ -1,9 +1,9 @@
-import { useNavigation } from "@react-navigation/core";
 import { FC, RefObject, useMemo, useRef } from "react";
 
 import { Pager, PagerRef } from "../../components/Containers/Pager";
 import { TabsRef } from "../../components/Containers/Tabs";
 import { useAdditionalServices } from "../../hooks/useAdditionalServices";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useFursuitGames } from "../../hooks/useFursuitGames";
 import { PagerLogin } from "./PagerLogin";
 import { PagerPrimary } from "./PagerPrimary";
@@ -13,7 +13,7 @@ export type MainMenuProps = {
 };
 
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
-    const navigation = useNavigation();
+    const navigation = useAppNavigation("Areas");
     const pager = useRef<PagerRef>(null);
     const openFursuitGames = useFursuitGames();
     const openAdditionalServices = useAdditionalServices();
@@ -22,7 +22,6 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             login: () => pager.current?.toRight(),
             loginBack: () => pager.current?.toLeft(),
             messages: () => {
-                // @ts-expect-error nav typng
                 navigation.navigate("PrivateMessageList");
                 return tabs.current?.close();
             },
@@ -37,7 +36,6 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 return tabs.current?.close();
             },
             settings: () => {
-                // @ts-expect-error nav typing
                 navigation.navigate("Settings");
                 tabs.current?.close();
             },

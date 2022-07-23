@@ -21,7 +21,7 @@ export type DealerScreenParams = {
 
 export const DealerScreen = () => {
     const { t } = useTranslation("Dealer");
-    const route = useRoute<Route<DealerScreenParams, "Dealer">>();
+    const route = useRoute<CustomRoute<DealerScreenParams, "Dealer">>();
     const dealer = useAppSelector((state) => dealersCompleteSelectors.selectById(state, route.params.id));
     const headerStyle = useTopHeaderStyle();
 

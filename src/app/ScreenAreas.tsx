@@ -43,7 +43,9 @@ export type ScreenAreasParamsList = {
     /**
      * Single map item screen.
      */
-    Map: MapScreenParams;
+    Map: {
+        id: string;
+    };
 };
 
 /**

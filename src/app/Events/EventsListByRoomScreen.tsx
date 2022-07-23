@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useIsEventDone } from "../../hooks/useEventProperties";
 import { useAppSelector } from "../../store";
 import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
@@ -38,7 +39,8 @@ export type EventsListByRoomScreenProps =
         PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ navigation, route }) => {
+export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ route }) => {
+    const navigation = useAppNavigation("Events");
     const { t } = useTranslation("Events");
     const isEventDone = useIsEventDone();
 

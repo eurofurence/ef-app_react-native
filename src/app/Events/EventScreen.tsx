@@ -19,7 +19,7 @@ export type EventScreenParams = {
 };
 
 export const EventScreen = () => {
-    const route = useRoute<Route<EventScreenParams, "Event">>();
+    const route = useRoute<CustomRoute<EventScreenParams, "Event">>();
     const event = useAppSelector((state) => eventsCompleteSelectors.selectById(state, route.params.id));
     const headerStyle = useTopHeaderStyle();
 

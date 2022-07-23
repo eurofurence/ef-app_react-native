@@ -9,11 +9,13 @@ import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 import { CommunicationRecord } from "../../store/eurofurence.types";
+import { ScreenStartParamsList } from "../ScreenStart";
 
 export const PrivateMessageListScreen = () => {
-    const navigation = useNavigation();
+    const navigation = useAppNavigation("PrivateMessageList");
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
         // TODO: We need to react to FCM PM notifications.
         // pollingInterval: 10000,
@@ -32,7 +34,6 @@ export const PrivateMessageListScreen = () => {
                         style={styles.container}
                         key={message.Id}
                         onPress={() =>
-                            // @ts-expect-error nav typing
                             navigation.navigate("PrivateMessageItem", {
                                 id: message.Id,
                                 message,
