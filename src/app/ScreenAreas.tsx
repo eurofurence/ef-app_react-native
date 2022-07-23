@@ -13,7 +13,6 @@ import { DealersTabsScreen, DealersTabsScreenParams } from "./Dealers/DealersTab
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { HomeScreen, ScreenHomeParams } from "./Home/HomeScreen";
 import { MainMenu } from "./MainMenu/MainMenu";
-import { MapScreenParams } from "./Maps/MapScreen";
 import { ScreenStartParamsList } from "./ScreenStart";
 
 /**
@@ -39,13 +38,6 @@ export type ScreenAreasParamsList = {
      * Settings Screen.
      */
     Settings: ScreenEmptyParams;
-
-    /**
-     * Single map item screen.
-     */
-    Map: {
-        id: string;
-    };
 };
 
 /**

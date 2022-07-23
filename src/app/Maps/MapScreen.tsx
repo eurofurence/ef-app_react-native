@@ -1,25 +1,21 @@
 import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import { useRoute } from "@react-navigation/core";
 import { StatusBar } from "expo-status-bar";
 import { isEmpty } from "lodash";
 import { useEffect, useMemo, useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { InteractiveImage } from "../../components/Containers/InteractiveImage";
+import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
-import { EnrichedImageRecord, EnrichedMapRecord, RecordId } from "../../store/eurofurence.types";
+import { EnrichedImageRecord, EnrichedMapRecord } from "../../store/eurofurence.types";
 import { LinkItem } from "./LinkItem";
-
-export type MapScreenParams = {
-    id: RecordId;
-};
 
 export const MapScreen = () => {
     const sheetRef = useRef<BottomSheet>();
-    const route = useRoute<CustomRoute<MapScreenParams, "Map">>();
+    const route2 = useAppRoute("Map");
 
-    const map = useAppSelector((state): EnrichedMapRecord | undefined => mapsSelectors.selectById(state, route.params.id));
+    const map = useAppSelector((state): EnrichedMapRecord | undefined => mapsSelectors.selectById(state, route2.params.id));
     const image = useAppSelector((state): EnrichedImageRecord | undefined => (map?.ImageId ? imagesSelectors.selectById(state, map?.ImageId) : undefined));
     const entries = useMemo(
         () =>

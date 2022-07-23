@@ -6,10 +6,11 @@ import { StyleSheet, View } from "react-native";
 
 import { useThemeType } from "../context/Theme";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
+import { RecordId } from "../store/eurofurence.types";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen, EventScreenParams } from "./Events/EventScreen";
-import { MapScreen, MapScreenParams } from "./Maps/MapScreen";
+import { MapScreen } from "./Maps/MapScreen";
 import { PrivateMessageItemParams, PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
@@ -42,7 +43,9 @@ export type ScreenStartParamsList = {
     Settings: ScreenEmptyParams;
     PrivateMessageList: ScreenEmptyParams;
     PrivateMessageItem: PrivateMessageItemParams;
-    Map: MapScreenParams;
+    Map: {
+        id: RecordId;
+    };
 };
 
 const ScreenStartNavigator = createStackNavigator<ScreenStartParamsList>();
