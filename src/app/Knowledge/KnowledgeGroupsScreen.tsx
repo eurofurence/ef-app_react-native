@@ -1,18 +1,15 @@
 import { FC } from "react";
-import { SectionList, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { SectionList, StyleSheet, View } from "react-native";
 
-import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { Header } from "../../components/Containers/Header";
-import { Row } from "../../components/Containers/Row";
+import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
 import { selectKnowledgeItemsSections } from "../../store/eurofurence.selectors";
 import { KnowledgeEntryRecord } from "../../store/eurofurence.types";
-import { appStyles } from "../AppStyles";
 
 export const KnowledgeListEntry: FC<{ entry: KnowledgeEntryRecord }> = ({ entry }) => {
     const navigation = useAppNavigation("KnowledgeGroups");
@@ -24,12 +21,15 @@ export const KnowledgeListEntry: FC<{ entry: KnowledgeEntryRecord }> = ({ entry 
 };
 
 export const KnowledgeGroupsScreen = () => {
+    const synchronizer = useSynchronizer();
     const headerStyle = useTopHeaderStyle();
     const entries = useAppSelector((state) => selectKnowledgeItemsSections(state));
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>Info Articles</Header>
             <SectionList
+                onRefresh={synchronizer.synchronize}
+                refreshing={synchronizer.isSynchronizing}
                 contentContainerStyle={styles.container}
                 sections={entries}
                 keyExtractor={(item, index) => item.Id + index}

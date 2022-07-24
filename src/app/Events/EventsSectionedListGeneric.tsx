@@ -1,6 +1,7 @@
 import { FC, ReactNode, useCallback, useState } from "react";
 import { SectionList, StyleSheet, Vibration, View } from "react-native";
 
+import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { EventWithDetails } from "../../store/eurofurence.selectors";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
@@ -40,10 +41,13 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback((event) => navigation.push("Event", { id: event.Id }), [navigation]);
+    const synchronizer = useSynchronizer();
 
     return (
         <View style={StyleSheet.absoluteFill}>
             <SectionList
+                refreshing={synchronizer.isSynchronizing}
+                onRefresh={synchronizer.synchronize}
                 style={styles.list}
                 contentContainerStyle={styles.container}
                 scrollEnabled={true}

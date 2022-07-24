@@ -275,3 +275,8 @@ export const selectKnowledgeItemsSections = createSelector(selectKnowledgeItems,
         data: it.entries,
     }))
 );
+
+export const selectIsSynchronized = createSelector(
+    (state: RootState) => state.eurofurenceCache.state,
+    (state) => state === "refreshing"
+);
