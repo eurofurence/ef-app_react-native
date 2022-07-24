@@ -6,6 +6,7 @@ import Animated, { runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, w
 
 import { EnrichedImageRecord } from "../../store/eurofurence.types";
 
+export type VisibleViewBounds = { left: number; top: number; right: number; bottom: number };
 type InteractiveImageProps = {
     /**
      * The image you want to render
@@ -73,30 +74,27 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
         const heightScale = image.Height / height;
 
         return debounce((focalX: number, focalY: number, scale: number) => {
-            // Slightly offset the focal points so they dont become 0
-            const fixedFocalX = focalX !== 0 ? focalX : 1;
-            const fixedFocalY = focalY !== 0 ? focalY : 1;
-            // todo: this does not properly calculate the parts of the image in view yet.
-            const right = width - fixedFocalX / scale;
-            const left = right - width;
+            const boxWidth = width / scale;
+            const boxHeight = height / scale;
 
-            const bottom = height - fixedFocalY / scale;
-            const top = bottom - height;
+            const right = width - focalX / scale;
+            const left = right - boxWidth;
+
+            const bottom = height - focalY / scale;
+            const top = bottom - boxHeight;
+
+            console.debug("scale", left, widthScale, left * widthScale);
+
             const bounds = {
-                left: left * widthScale,
-                right: right * widthScale,
-                top: top * heightScale,
-                bottom: bottom * heightScale,
+                left,
+                right,
+                top,
+                bottom,
             };
             debug && console.log("bounds updated", bounds);
 
             if (onBoundsUpdated) {
-                onBoundsUpdated({
-                    left,
-                    right,
-                    top,
-                    bottom,
-                });
+                onBoundsUpdated(bounds);
             }
         }, debounceTimeout ?? 300);
     }, [onBoundsUpdated]);
