@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import MarkdownView from "react-native-showdown";
 
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
@@ -13,14 +14,9 @@ export const KnowledgeEntryScreen = () => {
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>{entry?.Title}</Header>
-
-            <Text style={styles.text}>{entry?.Text}</Text>
+            <View style={{ flex: 1, margin: 16 }}>
+                <MarkdownView markdown={entry?.Text ?? ""} />
+            </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    text: {
-        padding: 16,
-    },
-});
