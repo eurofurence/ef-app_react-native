@@ -3,6 +3,7 @@ import _, { chain } from "lodash";
 import moment, { Moment } from "moment";
 import { SectionListData } from "react-native";
 
+import { conName } from "../configuration";
 import {
     announcementsAdapter,
     dealersAdapter,
@@ -35,7 +36,6 @@ import {
 import { RootState } from "./index";
 
 // These selectors are basic and we can immediately export them
-export const eventDaysSelectors = eventDaysAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventDays);
 export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventRooms);
 export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks);
 export const knowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
@@ -43,11 +43,37 @@ export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<Ro
 export const imagesSelectors = imagesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.images);
 
 // Save these selectors as we re-use them later
+const baseEventDaysSelectors = eventDaysAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventDays);
 const baseEventsSelector = eventsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.events);
 const baseAnnouncementsSelectors = announcementsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.announcements);
 const baseMapsSelectors = mapsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.maps);
 const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.dealers);
 
+export const eventDaysSelectors = {
+    ...baseEventDaysSelectors,
+    selectCountdownTitle: createSelector([baseEventDaysSelectors.selectAll, (days, now: Moment) => now], (days, now): string => {
+        const firstDay = _.chain(days)
+            .orderBy((it) => it.Date, "asc")
+            .first()
+            .value();
+        const lastDay = _.chain(days)
+            .orderBy((it) => it.Date, "desc")
+            .last()
+            .value();
+        const currentDay = days.find((it) => now.isSame(it.Date, "day"));
+
+        if (currentDay) {
+            return currentDay.Name;
+        } else if (now.isBefore(firstDay.Date, "day")) {
+            const diff = moment.duration(now.diff(firstDay.Date)).humanize();
+            return `${conName} will start in ${diff}`;
+        } else if (now.isAfter(lastDay.Date, "day")) {
+            return "That was it! We hope to see you again next year!";
+        } else {
+            return "";
+        }
+    }),
+};
 /**
  * An event with the external references as required.
  */
