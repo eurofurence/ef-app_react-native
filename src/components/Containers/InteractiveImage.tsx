@@ -83,18 +83,25 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
             const bottom = height - focalY / scale;
             const top = bottom - boxHeight;
 
-            console.debug("scale", left, widthScale, left * widthScale);
+            console.debug("scale", left, widthScale, left * widthScale, width, image.Width);
 
-            const bounds = {
+            const boxBounds = {
                 left,
                 right,
                 top,
                 bottom,
             };
-            debug && console.log("bounds updated", bounds);
+
+            const imageBounds = {
+                left: left * widthScale - left,
+                right: right * widthScale,
+                top: top * heightScale - top,
+                bottom: bottom * heightScale,
+            };
+            debug && console.log("bounds updated", boxBounds);
 
             if (onBoundsUpdated) {
-                onBoundsUpdated(bounds);
+                onBoundsUpdated(imageBounds);
             }
         }, debounceTimeout ?? 300);
     }, [onBoundsUpdated]);
