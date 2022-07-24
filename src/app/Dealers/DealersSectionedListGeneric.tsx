@@ -1,6 +1,7 @@
 import { FC, ReactNode, useCallback } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
 
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { DealerWithDetails } from "../../store/eurofurence.selectors";
 import { DealerCard } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
@@ -15,16 +16,13 @@ export type DealersSectionedListItem = DealerSectionProps & {
  * The properties to the component.
  */
 export type DealersSectionedListGenericProps = {
-    /**
-     * Navigation type. Copied from the screens rendering this component.
-     */
-    navigation: DealersListAllScreenProps["navigation"] | DealersListByDayScreenProps["navigation"];
     leader?: ReactNode;
     dealersGroups: DealersSectionedListItem[];
     trailer?: ReactNode;
 };
 
-export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> = ({ navigation, leader, dealersGroups, trailer }) => {
+export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> = ({ leader, dealersGroups, trailer }) => {
+    const navigation = useAppNavigation("Areas");
     const navigateTo = useCallback((dealer) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
 
     return (

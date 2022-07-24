@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { useAppNavigation, useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
 import { AttendanceDay } from "../../store/eurofurence.types";
@@ -37,7 +38,8 @@ export type DealersListByDayScreenProps =
         PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ navigation, route }) => {
+export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route }) => {
+    const route = useAppRoute("Dealers");
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
@@ -72,7 +74,6 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ naviga
 
     return (
         <DealersSectionedListGeneric
-            navigation={navigation}
             dealersGroups={dealersGroups}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
