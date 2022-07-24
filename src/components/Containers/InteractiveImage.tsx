@@ -42,6 +42,31 @@ type InteractiveImageProps = {
     debug?: boolean;
 };
 
+/**
+ * Rescale a point from one range to another range.
+ * @param pixelPoint The point on the originalRange.
+ * @param originalRangeWidth The width of the original range
+ * @param targetRangeWidth The width of the target range
+ */
+export const rescale = (pixelPoint: number, originalRangeWidth: number, targetRangeWidth: number) => {
+    const originalAsPercentage = 1 - (originalRangeWidth - pixelPoint) / originalRangeWidth;
+    return Math.round(originalAsPercentage * targetRangeWidth);
+};
+
+/**
+ * Convert an offset to an absolute number.
+ * @param absoluteOffset The offset for the item
+ * @param scaleFactor The amount that we are scaled in
+ * @param axisRange The maximum value that should be in the range.
+ */
+export const offsetToAbsolute = (absoluteOffset: number, scaleFactor: number, axisRange: number): [number, number] => {
+    const scaledOffset = absoluteOffset / scaleFactor;
+    const middle = axisRange / 2;
+    const middleWithOffset = middle - scaledOffset;
+    const bandwidth = middle / scaleFactor;
+    return [Math.floor(middleWithOffset - bandwidth), Math.ceil(middleWithOffset + bandwidth)];
+};
+
 export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpdated, debounceTimeout, minScale = 1, maxScale = 5, debug }) => {
     // Make the screen dimensions available for Reanimated
     const screenWidth = useSharedValue(Dimensions.get("window").width / (Dimensions.get("window").height / Dimensions.get("window").width));
@@ -70,20 +95,9 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
         const width = Dimensions.get("window").width;
         const height = Dimensions.get("window").height;
 
-        const widthScale = image.Width / width;
-        const heightScale = image.Height / height;
-
         return debounce((focalX: number, focalY: number, scale: number) => {
-            const boxWidth = width / scale;
-            const boxHeight = height / scale;
-
-            const right = width - focalX / scale;
-            const left = right - boxWidth;
-
-            const bottom = height - focalY / scale;
-            const top = bottom - boxHeight;
-
-            console.debug("scale", left, widthScale, left * widthScale, width, image.Width);
+            const [left, right] = offsetToAbsolute(focalX, scale, width);
+            const [top, bottom] = offsetToAbsolute(focalY, scale, height);
 
             const boxBounds = {
                 left,
@@ -93,10 +107,10 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
             };
 
             const imageBounds = {
-                left: left * widthScale - left,
-                right: right * widthScale,
-                top: top * heightScale - top,
-                bottom: bottom * heightScale,
+                left: rescale(left, width, image.Width),
+                right: rescale(right, width, image.Width),
+                top: rescale(top, height, image.Height),
+                bottom: rescale(bottom, height, image.Height),
             };
             debug && console.log("bounds updated", boxBounds);
 
