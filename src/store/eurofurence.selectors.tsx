@@ -104,15 +104,21 @@ export const eventsSelectors = {
             return now.isBetween(startMoment.subtract(30, "minutes"), startMoment);
         })
     ),
-    selectFavorites: createSelector([baseEventsSelector.selectAll, (state: RootState) => state.background.notifications], (events, notifications) =>
+    selectCurrentEvents: createSelector([baseEventsSelector.selectAll, (events, now: Moment) => now], (events, now) =>
+        events.filter((it) => {
+            const startMoment = moment(it.StartDateTimeUtc);
+            return now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc);
+        })
+    ),
+    selectFavorites: createSelector([baseEventsSelector.selectAll, (state: RootState) => state.background.notifications], (events, notifications): EnrichedEventRecord[] =>
         notifications
             .filter((it) => it.type === "EventReminder")
-            .map((it) => events.find((event) => event.Id === it.recordId))
-            .filter((it) => it !== undefined)
+            .map((it): EnrichedEventRecord | undefined => events.find((event) => event.Id === it.recordId))
+            .filter((it): it is EnrichedEventRecord => it !== undefined)
     ),
     selectEnrichedEvents: createSelector(
         [(state, events: EnrichedEventRecord[]) => events, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
-        (events, days, tracks, rooms) => events.map(applyEventDetails(rooms, tracks, events))
+        (events, days, tracks, rooms) => events.map(applyEventDetails(rooms, tracks, days))
     ),
 };
 

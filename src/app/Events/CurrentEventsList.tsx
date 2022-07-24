@@ -10,10 +10,10 @@ import { eventsCompleteSelectors, eventsSelectors } from "../../store/eurofurenc
 import { EventCard } from "./EventCard";
 import { EventsListGeneric } from "./EventsListGeneric";
 
-export const UpcomingEventsList = () => {
+export const CurrentEventList = () => {
     const navigation = useAppNavigation("Home");
     const [now] = useNow();
-    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectUpcomingEvents(state, now)));
+    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectCurrentEvents(state, now)));
 
     if (events.length === 0) {
         return null;
@@ -21,7 +21,7 @@ export const UpcomingEventsList = () => {
 
     return (
         <View>
-            <Section title={"Upcoming Events"} subtitle={"These events are starting in the next 30 minutes"} icon={"clock"} />
+            <Section title={"Current Events"} subtitle={"These events are currently happening"} icon={"clock"} />
             {events.map((event) => (
                 <EventCard
                     key={event.Id}

@@ -12,7 +12,6 @@ import { EventsListGeneric } from "./EventsListGeneric";
 
 export const FavoriteEventsList = () => {
     const navigation = useAppNavigation("Home");
-    const [now] = useNow();
     const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectFavorites(state)));
 
     if (events.length === 0) {
@@ -21,11 +20,12 @@ export const FavoriteEventsList = () => {
 
     return (
         <View>
-            <Section title={"Favorite Events"} />
+            <Section title={"Favorite Events"} subtitle={"You will receive a reminder about these events"} icon={"bookmark"} />
             {events.map((event) => (
                 <EventCard
                     key={event.Id}
                     event={event}
+                    type={"time"}
                     onPress={() =>
                         navigation.navigate("Event", {
                             id: event.Id,
