@@ -30,7 +30,9 @@ export type ScreenStartParamsList = {
     /**
      * Detail screen for events.
      */
-    Event: EventScreenParams;
+    Event: {
+        id: string;
+    };
 
     /**
      * Detail screen for dealer.

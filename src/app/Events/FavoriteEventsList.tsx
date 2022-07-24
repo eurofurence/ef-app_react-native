@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import { useEffect } from "react";
-import { View } from "react-native";
+import { Vibration, View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
@@ -10,10 +10,10 @@ import { eventsCompleteSelectors, eventsSelectors } from "../../store/eurofurenc
 import { EventCard } from "./EventCard";
 import { EventsListGeneric } from "./EventsListGeneric";
 
-export const UpcomingEventsList = () => {
+export const FavoriteEventsList = () => {
     const navigation = useAppNavigation("Home");
     const [now] = useNow();
-    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectUpcomingEvents(state, now)));
+    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectFavorites(state)));
 
     if (events.length === 0) {
         return null;
@@ -21,7 +21,7 @@ export const UpcomingEventsList = () => {
 
     return (
         <View>
-            <Section title={"Upcoming Events"} />
+            <Section title={"Favorite Events"} />
             {events.map((event) => (
                 <EventCard
                     key={event.Id}

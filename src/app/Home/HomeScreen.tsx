@@ -1,11 +1,14 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
+import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
+import { FavoriteEventsList } from "../Events/FavoriteEventsList";
+import { UpcomingEventsList } from "../Events/UpcomingEventsList";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { CountdownHeader } from "./CountdownHeader";
@@ -24,10 +27,13 @@ export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasPar
 export const HomeScreen: FC<ScreenHomeProps> = () => {
     const headerStyle = useTopHeaderStyle();
     return (
-        <View style={StyleSheet.absoluteFill}>
+        <ScrollView style={StyleSheet.absoluteFill}>
             <CountdownHeader />
-
-            <DeviceSpecificWarnings />
-        </View>
+            <View style={{ padding: 16, flex: 1 }}>
+                <DeviceSpecificWarnings />
+                <UpcomingEventsList />
+                <FavoriteEventsList />
+            </View>
+        </ScrollView>
     );
 };

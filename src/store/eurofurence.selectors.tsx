@@ -110,6 +110,10 @@ export const eventsSelectors = {
             .map((it) => events.find((event) => event.Id === it.recordId))
             .filter((it) => it !== undefined)
     ),
+    selectEnrichedEvents: createSelector(
+        [(state, events: EnrichedEventRecord[]) => events, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
+        (events, days, tracks, rooms) => events.map(applyEventDetails(rooms, tracks, events))
+    ),
 };
 
 export const eventsCompleteSelectors = {
@@ -151,6 +155,16 @@ export const eventsCompleteSelectors = {
     selectById: createSelector(
         [baseEventsSelector.selectById, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
         (event, days, tracks, rooms): EventWithDetails | undefined => (!event ? undefined : applyEventDetails(rooms, tracks, days)(event))
+    ),
+    selectUpcomingEvents: createSelector(
+        [baseEventsSelector.selectAll, (state, now: Moment) => now, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
+        (events, now, days, tracks, rooms) =>
+            events
+                .filter((it) => {
+                    const startMoment = moment(it.StartDateTimeUtc, true);
+                    return now.isBetween(startMoment.subtract(30, "minutes"), startMoment);
+                })
+                .map(applyEventDetails(rooms, tracks, days))
     ),
 };
 
