@@ -6,12 +6,14 @@ import { StyleSheet, View } from "react-native";
 
 import { useThemeType } from "../context/Theme";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
-import { RecordId } from "../store/eurofurence.types";
+import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen, EventScreenParams } from "./Events/EventScreen";
+import { KnowledgeEntryScreen } from "./Knowledge/KnowledgeEntryScreen";
+import { KnowledgeGroupsScreen } from "./Knowledge/KnowledgeGroupsScreen";
 import { MapScreen } from "./Maps/MapScreen";
-import { PrivateMessageItemParams, PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
+import { PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
 import { SettingsScreen } from "./Settings/SettingsScreen";
@@ -42,7 +44,14 @@ export type ScreenStartParamsList = {
 
     Settings: ScreenEmptyParams;
     PrivateMessageList: ScreenEmptyParams;
-    PrivateMessageItem: PrivateMessageItemParams;
+    PrivateMessageItem: {
+        id: RecordId;
+        message: CommunicationRecord;
+    };
+    KnowledgeGroups: object;
+    KnowledgeEntry: {
+        id: RecordId;
+    };
     Map: {
         id: RecordId;
     };
@@ -81,6 +90,8 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
                     <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageItem" component={PrivateMessageItemScreen} />
+                    <ScreenStartNavigator.Screen name="KnowledgeGroups" component={KnowledgeGroupsScreen} />
+                    <ScreenStartNavigator.Screen name="KnowledgeEntry" component={KnowledgeEntryScreen} />
                     <ScreenStartNavigator.Screen name="Map" component={MapScreen} />
                 </ScreenStartNavigator.Navigator>
             </View>

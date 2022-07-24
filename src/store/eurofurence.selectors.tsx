@@ -1,6 +1,7 @@
 import { createSelector, Dictionary } from "@reduxjs/toolkit";
-import { chain } from "lodash";
+import _, { chain } from "lodash";
 import moment, { Moment } from "moment";
+import { SectionListData } from "react-native";
 
 import {
     announcementsAdapter,
@@ -25,6 +26,8 @@ import {
     EventRecord,
     EventRoomRecord,
     EventTrackRecord,
+    KnowledgeEntryRecord,
+    KnowledgeGroupRecord,
     LinkFragment,
     MapEntryRecord,
     RecordId,
@@ -246,3 +249,29 @@ export const mapsCompleteSelectors = {
         }
     ),
 };
+
+/**
+ * Selects all knowledge items in a sorted manner that is ready for a section list.
+ */
+export const selectKnowledgeItems = createSelector(
+    [knowledgeGroupsSelectors.selectAll, knowledgeEntriesSelectors.selectAll],
+    (groups, entries): (KnowledgeGroupRecord & { entries: KnowledgeEntryRecord[] })[] => {
+        return _.chain(groups)
+            .orderBy((it) => it.Order)
+            .map((group) => ({
+                ...group,
+                entries: _.chain(entries)
+                    .filter((entry) => entry.KnowledgeGroupId === group.Id)
+                    .orderBy((it) => it.Order)
+                    .value(),
+            }))
+            .value();
+    }
+);
+
+export const selectKnowledgeItemsSections = createSelector(selectKnowledgeItems, (items): SectionListData<KnowledgeEntryRecord, KnowledgeGroupRecord>[] =>
+    items.map((it) => ({
+        ...it,
+        data: it.entries,
+    }))
+);
