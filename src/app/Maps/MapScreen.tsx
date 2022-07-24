@@ -46,7 +46,7 @@ export const MapScreen = () => {
     return (
         <View style={StyleSheet.absoluteFill}>
             <StatusBar />
-            <InteractiveImage image={image} />
+            <InteractiveImage image={image} maxScale={10} />
             <BottomSheet snapPoints={["10%", "75%"]} index={0} ref={sheetRef}>
                 <BottomSheetSectionList
                     sections={entries}

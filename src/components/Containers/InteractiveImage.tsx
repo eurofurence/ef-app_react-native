@@ -22,9 +22,26 @@ type InteractiveImageProps = {
      * @default 300
      */
     debounceTimeout?: number;
+
+    /**
+     * The minimum scale that can be zoomed out to.
+     * @default 1
+     */
+    minScale?: number;
+
+    /**
+     * The maximum scale that can be zoomed in to.
+     * @default 5
+     */
+    maxScale?: number;
+
+    /**
+     * Log debug messages to see what the view is doing
+     */
+    debug?: boolean;
 };
 
-export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpdated, debounceTimeout }) => {
+export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpdated, debounceTimeout, minScale = 1, maxScale = 5, debug }) => {
     // Make the screen dimensions available for Reanimated
     const screenWidth = useSharedValue(Dimensions.get("window").width / (Dimensions.get("window").height / Dimensions.get("window").width));
     const screenHeight = useSharedValue(Dimensions.get("window").height / (Dimensions.get("window").height / Dimensions.get("window").width));
@@ -56,11 +73,14 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
         const heightScale = image.Height / height;
 
         return debounce((focalX: number, focalY: number, scale: number) => {
+            // Slightly offset the focal points so they dont become 0
+            const fixedFocalX = focalX !== 0 ? focalX : 1;
+            const fixedFocalY = focalY !== 0 ? focalY : 1;
             // todo: this does not properly calculate the parts of the image in view yet.
-            const right = width - focalX / scale;
+            const right = width - fixedFocalX / scale;
             const left = right - width;
 
-            const bottom = height - focalY / scale;
+            const bottom = height - fixedFocalY / scale;
             const top = bottom - height;
             const bounds = {
                 left: left * widthScale,
@@ -68,7 +88,7 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
                 top: top * heightScale,
                 bottom: bottom * heightScale,
             };
-            console.log("bounds updated", bounds);
+            debug && console.log("bounds updated", bounds);
 
             if (onBoundsUpdated) {
                 onBoundsUpdated({
@@ -118,6 +138,12 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
         })
         .onEnd(() => {
             const clamp = (num: number, min: number, max: number) => {
+                debug &&
+                    console.log("Clamping", {
+                        num,
+                        min,
+                        max,
+                    });
                 if (num > max) {
                     return max;
                 } else if (num < min) {
@@ -127,21 +153,29 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
             };
 
             // Make sure that the scale is always between 1 and 5
-            scale.value = withTiming(clamp(savedScale.value, 1, 5));
+            scale.value = withTiming(clamp(scale.value, minScale, maxScale));
+            savedScale.value = clamp(scale.value, minScale, maxScale);
         });
 
     const doubleTapGesture = Gesture.Tap()
         .maxDuration(250)
         .numberOfTaps(2)
         .onEnd((event) => {
-            if (scale.value > 1) {
+            if (scale.value >= maxScale) {
+                debug && console.log("zoom", "resetting to 1");
                 // If we're zoomed in, reset
                 scale.value = withTiming(1);
                 savedScale.value = 1;
+            } else if (scale.value >= maxScale / 2) {
+                debug && console.log("zoom", "going to max");
+                // If we're half of the max scale, zoom to max
+                scale.value = withTiming(maxScale);
+                savedScale.value = maxScale;
             } else {
-                // If we're not zoomed in, set it to medium zoom
-                scale.value = withTiming(3);
-                savedScale.value = 3;
+                debug && console.log("zoom", "going to halfway");
+                // If we're not halfway to max, go to halfway to max
+                scale.value = withTiming(maxScale / 2);
+                savedScale.value = maxScale / 2;
             }
             // Reset scaling
             // TODO: make this center on the double tap

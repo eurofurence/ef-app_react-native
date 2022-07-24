@@ -39,7 +39,6 @@ export type DealersListByDayScreenProps =
     >;
 
 export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route }) => {
-    const route = useAppRoute("Dealers");
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
