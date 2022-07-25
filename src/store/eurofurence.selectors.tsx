@@ -332,3 +332,7 @@ export const selectIsSynchronized = createSelector(
     (state: RootState) => state.eurofurenceCache.state,
     (state) => state === "refreshing"
 );
+
+export const selectImagesById = createSelector([imagesSelectors.selectEntities, (state, imageIds: RecordId[]) => imageIds], (images, imageIds): EnrichedImageRecord[] =>
+    imageIds.map((it) => images[it]).filter((it): it is EnrichedImageRecord => it !== undefined)
+);
