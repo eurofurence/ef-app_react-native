@@ -21,7 +21,7 @@ export const UpcomingFavoriteEventsList = () => {
 
     return (
         <View>
-            <Section title={"Favorite Events"} subtitle={"These favorited events are happening today"} icon={"book-marker"} />
+            <Section title={"Favorite Events"} subtitle={"You will receive a reminder before this event starts"} icon={"book-marker"} />
             {events.map((event) => (
                 <EventCard
                     key={event.Id}
