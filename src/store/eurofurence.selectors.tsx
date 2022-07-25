@@ -93,6 +93,16 @@ const applyEventDetails = (rooms: Dictionary<EventRoomRecord>, tracks: Dictionar
     } as EventWithDetails;
 };
 
+const selectFavoriteEvents = createSelector([baseEventsSelector.selectAll, (state: RootState) => state.background.notifications], (events, notifications): EnrichedEventRecord[] =>
+    _.chain(notifications)
+        .filter((it) => it.type === "EventReminder")
+        .map((it): EnrichedEventRecord | undefined => events.find((event) => event.Id === it.recordId))
+        .filter((it): it is EnrichedEventRecord => it !== undefined)
+        .orderBy((it) => it.StartDateTimeUtc, "asc")
+        .value()
+);
+
+const selectUpcomingFavoriteEvents = createSelector([selectFavoriteEvents, (state, now: Moment) => now], (events, now) => events.filter((it) => now.isBefore(it.EndDateTimeUtc)));
 export const eventsSelectors = {
     ...baseEventsSelector,
     selectByRoom: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId)),
@@ -110,12 +120,8 @@ export const eventsSelectors = {
             return now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc);
         })
     ),
-    selectFavorites: createSelector([baseEventsSelector.selectAll, (state: RootState) => state.background.notifications], (events, notifications): EnrichedEventRecord[] =>
-        notifications
-            .filter((it) => it.type === "EventReminder")
-            .map((it): EnrichedEventRecord | undefined => events.find((event) => event.Id === it.recordId))
-            .filter((it): it is EnrichedEventRecord => it !== undefined)
-    ),
+    selectFavorites: selectFavoriteEvents,
+    selectUpcomingFavorites: selectUpcomingFavoriteEvents,
     selectEnrichedEvents: createSelector(
         [(state, events: EnrichedEventRecord[]) => events, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
         (events, days, tracks, rooms) => events.map(applyEventDetails(rooms, tracks, days))

@@ -8,6 +8,7 @@ import { AnnouncementList } from "../Announcements/AnnouncementList";
 import { CurrentEventList } from "../Events/CurrentEventsList";
 import { FavoriteEventsList } from "../Events/FavoriteEventsList";
 import { UpcomingEventsList } from "../Events/UpcomingEventsList";
+import { UpcomingFavoriteEventsList } from "../Events/UpcomingFavoriteEventsList";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { CountdownHeader } from "./CountdownHeader";
@@ -32,7 +33,7 @@ export const HomeScreen: FC<ScreenHomeProps> = () => {
                 <AnnouncementList />
                 <CurrentEventList />
                 <UpcomingEventsList />
-                <FavoriteEventsList />
+                <UpcomingFavoriteEventsList />
             </View>
         </ScrollView>
     );

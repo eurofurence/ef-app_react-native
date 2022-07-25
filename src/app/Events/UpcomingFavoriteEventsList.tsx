@@ -10,18 +10,18 @@ import { eventsCompleteSelectors, eventsSelectors } from "../../store/eurofurenc
 import { EventCard } from "./EventCard";
 import { EventsListGeneric } from "./EventsListGeneric";
 
-export const FavoriteEventsList = () => {
+export const UpcomingFavoriteEventsList = () => {
+    const [now] = useNow();
     const navigation = useAppNavigation("Home");
-    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectFavorites(state)));
+    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectUpcomingFavorites(state, now)));
 
     if (events.length === 0) {
         return null;
     }
 
-    // TODO: move this to a nice sectioned list
     return (
-        <View style={{ paddingHorizontal: 20, paddingBottom: 100 }}>
-            <Section title={"Favorite Events"} subtitle={"You will receive a reminder about these events"} icon={"bookmark"} />
+        <View>
+            <Section title={"Favorite Events"} subtitle={"These favorited events are happening today"} icon={"book-marker"} />
             {events.map((event) => (
                 <EventCard
                     key={event.Id}
