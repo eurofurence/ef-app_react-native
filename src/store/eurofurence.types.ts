@@ -155,6 +155,7 @@ export type KnowledgeEntryRecord = RecordMetadata & {
     Text: string;
     Order: number;
     KnowledgeGroupId: RecordId;
+    Links?: LinkFragment[];
 };
 
 export type ImageRecord = RecordMetadata & {

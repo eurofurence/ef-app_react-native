@@ -6974,6 +6974,7 @@ __metadata:
     react-hook-form: ^7.33.1
     react-i18next: ^11.17.4
     react-native: 0.68.2
+    react-native-easy-markdown: ^2.0.0
     react-native-gesture-handler: ~2.2.1
     react-native-reanimated: ~2.8.0
     react-native-safe-area-context: 4.2.4
@@ -14878,6 +14879,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-easy-markdown@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "react-native-easy-markdown@npm:2.0.0"
+  dependencies:
+    simple-markdown: ^0.4.4
+  peerDependencies:
+    react-native: "*"
+  checksum: 7e9d5f4c991c49e0234bf3e824312dc77406f4d276803519c0c18a902547ffe9d9e4c21f3fa52e267f73646444ffc01fe6e9e7341d58d7695fc5698f76870603
+  languageName: node
+  linkType: hard
+
 "react-native-gesture-handler@npm:~2.2.1":
   version: 2.2.1
   resolution: "react-native-gesture-handler@npm:2.2.1"
@@ -16183,6 +16195,13 @@ __metadata:
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: a2f098f247adc367dffc27845853e9959b9e88b01cb301658cfe4194352d8d2bb32e18467c786a7fe15f1d44b233ea35633d076d5e737870b7139949d1ab6318
+  languageName: node
+  linkType: hard
+
+"simple-markdown@npm:^0.4.4":
+  version: 0.4.4
+  resolution: "simple-markdown@npm:0.4.4"
+  checksum: 6ab48441b9c7ba4ea41300a1587e05ae406156d00ba363686341466d6b6cb5235fbe5a2330cbe4bbaec9b801ef9b0cdd3f32b9d9e0d32229249bc30ef607a9ac
   languageName: node
   linkType: hard
 
