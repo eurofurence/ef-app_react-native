@@ -1,4 +1,5 @@
 import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import { StatusBar } from "expo-status-bar";
 import _ from "lodash";
 import { useCallback, useRef, useState } from "react";
@@ -13,7 +14,7 @@ import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment } from "../../stor
 import { LinkItem } from "./LinkItem";
 
 export const MapScreen = () => {
-    const sheetRef = useRef<BottomSheet>();
+    const sheetRef = useRef<BottomSheetMethods | undefined>(undefined);
     const route2 = useAppRoute("Map");
     const [visibleEntries, setVisibleEntries] = useState<{ title: string; data: LinkFragment[] }[]>([]);
     const [isFiltering, setIsFiltering] = useState(false);

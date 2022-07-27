@@ -48,8 +48,8 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
                 <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />
                 <Tab icon="book-outline" text={t("services")} onPress={onServices} />
                 <Tab icon="map" text={t("maps")} onPress={onMaps} />
-                <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
-                <Tab icon="cog" text={t("settings")} onPress={onSettings} />
+                <Tab icon="card-account-details-outline" text={t("about")} onPress={() => navigation.navigate("About")} />
+                <Tab icon="cog" text={t("settings")} onPress={() => navigation.navigate("Settings")} />
             </Grid>
             <Col style={{ padding: 30, alignItems: "stretch" }}>
                 {maps.map((it) => (

@@ -9,6 +9,7 @@ import { conId } from "../configuration";
 import { useThemeType } from "../context/Theme";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
+import { AboutScreen } from "./About";
 import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { DealersTabsScreenParamsList } from "./Dealers/DealersTabsScreen";
@@ -61,6 +62,7 @@ export type ScreenStartParamsList = {
     Map: {
         id: RecordId;
     };
+    About: undefined;
 };
 
 const ScreenStartNavigator = createStackNavigator<ScreenStartParamsList>();
@@ -117,6 +119,7 @@ const linking: LinkingOptions<ScreenStartParamsList> = {
             KnowledgeEntry: "Knowledge/:id",
             Settings: "Settings",
             Map: "Map/:id",
+            About: "About",
         },
     } as any,
 };
@@ -148,13 +151,13 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
                     <ScreenStartNavigator.Screen name="Event" component={EventScreen} />
                     <ScreenStartNavigator.Screen name="Dealer" component={DealerScreen} />
-                    <ScreenStartNavigator.Screen name="About" component={ScreenEmpty} />
                     <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageItem" component={PrivateMessageItemScreen} />
                     <ScreenStartNavigator.Screen name="KnowledgeGroups" component={KnowledgeGroupsScreen} />
                     <ScreenStartNavigator.Screen name="KnowledgeEntry" component={KnowledgeEntryScreen} />
                     <ScreenStartNavigator.Screen name="Map" component={MapScreen} />
+                    <ScreenStartNavigator.Screen name="About" component={AboutScreen} />
                 </ScreenStartNavigator.Navigator>
             </View>
         </NavigationContainer>
