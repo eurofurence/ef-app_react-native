@@ -1,3 +1,4 @@
+import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import { orderBy } from "lodash";
 import moment from "moment";
@@ -32,31 +33,28 @@ export const UserSettings = () => {
     const dispatch = useAppDispatch();
     const analyticsEnabled = useAppSelector((state) => state.settingsSlice.analytics.enabled);
 
-    const changeLanguage = useCallback(
-        (newLanguage: string) => () => {
-            i18n.changeLanguage(newLanguage);
-            moment.locale(newLanguage);
-        },
-        []
-    );
-
     return (
         <View>
             <Section title={t("settingsSection")} icon={"cog"} />
-            <TouchableOpacity style={{ marginVertical: 30, flexDirection: "row" }} onPress={() => dispatch(setAnalytics(!analyticsEnabled))}>
+            <TouchableOpacity style={{ marginVertical: 20, flexDirection: "row" }} onPress={() => dispatch(setAnalytics(!analyticsEnabled))}>
                 <Label type={"regular"} style={{ flex: 1 }}>
-                    Allow us to collect analytics events
+                    {t("allowAnalytics")}
                 </Label>
                 <Checkbox value={analyticsEnabled} />
             </TouchableOpacity>
             <Label>{t("currentLanguage")}</Label>
-            <Col type="stretch">
+            <Picker<string>
+                selectedValue={i18n.language}
+                prompt={t("changeLanguage")}
+                onValueChange={(it) => {
+                    i18n.changeLanguage(it);
+                    moment.locale(it);
+                }}
+            >
                 {languages.map((it) => (
-                    <Button style={styles.marginBefore} onPress={changeLanguage(it.code)} key={it.code} outline={i18n.language === it.code}>
-                        {it.name}
-                    </Button>
+                    <Picker.Item label={it.name} value={it.code} key={it.code} />
                 ))}
-            </Col>
+            </Picker>
         </View>
     );
 };
