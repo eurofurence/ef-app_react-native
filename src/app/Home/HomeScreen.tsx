@@ -1,10 +1,15 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
-import { Scroller } from "../../components/Containers/Scroller";
+import { Section } from "../../components/Atoms/Section";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { conId } from "../../configuration";
+import { useNow } from "../../hooks/useNow";
+import { useAppSelector } from "../../store";
+import { eventDaysSelectors } from "../../store/eurofurence.selectors";
 import { AnnouncementList } from "../Announcements/AnnouncementList";
 import { CurrentEventList } from "../Events/CurrentEventsList";
 import { UpcomingEventsList } from "../Events/UpcomingEventsList";
@@ -25,16 +30,28 @@ export type ScreenHomeParams = undefined;
 export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasParamsList, "Home">, StackScreenProps<ScreenStartParamsList>>;
 
 export const HomeScreen: FC<ScreenHomeProps> = () => {
+    const [now] = useNow();
+
+    const subtitle = useAppSelector((state) => eventDaysSelectors.selectCountdownTitle(state, now));
+
     return (
-        <View style={StyleSheet.absoluteFill}>
+        <ScrollView>
             <CountdownHeader />
-            <Scroller>
+
+            <View
+                style={{
+                    width: 600,
+                    maxWidth: "100%",
+                    paddingHorizontal: 30,
+                }}
+            >
+                <Section title={conId} icon={"alarm"} subtitle={subtitle} />
                 <DeviceSpecificWarnings />
                 <AnnouncementList />
                 <CurrentEventList />
                 <UpcomingEventsList />
                 <UpcomingFavoriteEventsList />
-            </Scroller>
-        </View>
+            </View>
+        </ScrollView>
     );
 };
