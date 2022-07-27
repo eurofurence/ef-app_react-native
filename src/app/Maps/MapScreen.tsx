@@ -1,14 +1,15 @@
 import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import { StatusBar } from "expo-status-bar";
-import _, { isEmpty } from "lodash";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import _ from "lodash";
+import { useCallback, useRef, useState } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
+import { Header } from "../../components/Containers/Header";
 import { InteractiveImage, VisibleViewBounds } from "../../components/Containers/InteractiveImage";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
-import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment, MapEntryRecord } from "../../store/eurofurence.types";
+import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment } from "../../store/eurofurence.types";
 import { LinkItem } from "./LinkItem";
 
 export const MapScreen = () => {
@@ -50,17 +51,20 @@ export const MapScreen = () => {
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <StatusBar />
+            <Header>{map.Description}</Header>
             <InteractiveImage image={image} maxScale={10} onBoundsUpdated={filterEntries} />
-            <BottomSheet snapPoints={["10%", "75%"]} index={0} ref={sheetRef}>
-                <BottomSheetSectionList
-                    refreshing={isFiltering}
-                    sections={visibleEntries}
-                    keyExtractor={(item) => item.Target}
-                    renderItem={({ item }) => <LinkItem link={item} />}
-                    contentContainerStyle={{ paddingHorizontal: 15 }}
-                />
-            </BottomSheet>
+            {/* Apparently we cannot render this in a browser */}
+            {Platform.OS !== "web" && (
+                <BottomSheet snapPoints={["10%", "75%"]} index={0} ref={sheetRef}>
+                    <BottomSheetSectionList
+                        refreshing={isFiltering}
+                        sections={visibleEntries}
+                        keyExtractor={(item) => item.Target}
+                        renderItem={({ item }) => <LinkItem link={item} />}
+                        contentContainerStyle={{ paddingHorizontal: 15 }}
+                    />
+                </BottomSheet>
+            )}
         </View>
     );
 };

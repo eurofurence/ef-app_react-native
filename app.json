@@ -34,7 +34,24 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/playstore.png",
         "backgroundColor": "#006459"
-      }
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": false,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "app.eurofurence.org",
+              "pathPrefix": "/EF26/Web"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "androidStatusBar": {
       "backgroundColor": "#006459"

@@ -8,7 +8,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { TabsRef } from "../components/Containers/Tabs";
 import { createTabNavigator, TabScreenProps } from "../components/Navigators/TabsNavigator";
-import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealersTabsScreen, DealersTabsScreenParams } from "./Dealers/DealersTabsScreen";
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { HomeScreen, ScreenHomeParams } from "./Home/HomeScreen";
@@ -33,11 +32,6 @@ export type ScreenAreasParamsList = {
      * Dealers list.
      */
     Dealers: DealersTabsScreenParams;
-
-    /**
-     * Settings Screen.
-     */
-    Settings: ScreenEmptyParams;
 };
 
 /**
