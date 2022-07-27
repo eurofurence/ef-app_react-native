@@ -1,7 +1,7 @@
 import { ImageBackground, StyleSheet, View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
-import { conId, conName } from "../../configuration";
+import { conId } from "../../configuration";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence.selectors";

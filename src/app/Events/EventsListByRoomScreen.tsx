@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useAppNavigation, useAppRoute } from "../../hooks/useAppNavigation";
+import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useIsEventDone } from "../../hooks/useEventProperties";
 import { useAppSelector } from "../../store";
 import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";

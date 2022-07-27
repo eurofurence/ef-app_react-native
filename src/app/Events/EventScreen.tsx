@@ -1,4 +1,3 @@
-import { useRoute } from "@react-navigation/core";
 import { StyleSheet, View } from "react-native";
 
 import { Header } from "../../components/Containers/Header";

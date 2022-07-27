@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/core";
 import * as WebBrowser from "expo-web-browser";
 import { FC } from "react";
 import { match } from "ts-pattern";

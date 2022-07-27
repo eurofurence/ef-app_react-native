@@ -116,7 +116,6 @@ export const eventsSelectors = {
     ),
     selectCurrentEvents: createSelector([baseEventsSelector.selectAll, (events, now: Moment) => now], (events, now) =>
         events.filter((it) => {
-            const startMoment = moment(it.StartDateTimeUtc);
             return now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc);
         })
     ),

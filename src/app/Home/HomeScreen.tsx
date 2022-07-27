@@ -1,13 +1,12 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { AnnouncementList } from "../Announcements/AnnouncementList";
 import { CurrentEventList } from "../Events/CurrentEventsList";
-import { FavoriteEventsList } from "../Events/FavoriteEventsList";
 import { UpcomingEventsList } from "../Events/UpcomingEventsList";
 import { UpcomingFavoriteEventsList } from "../Events/UpcomingFavoriteEventsList";
 import { ScreenAreasParamsList } from "../ScreenAreas";

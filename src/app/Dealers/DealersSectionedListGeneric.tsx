@@ -6,8 +6,6 @@ import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { DealerWithDetails } from "../../store/eurofurence.selectors";
 import { DealerCard } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
-import { DealersListAllScreenProps } from "./DealersListAllScreen";
-import { DealersListByDayScreenProps } from "./DealersListByDayScreen";
 
 export type DealersSectionedListItem = DealerSectionProps & {
     data: DealerWithDetails[];

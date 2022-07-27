@@ -1,6 +1,4 @@
 import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
-import { StatusBar } from "expo-status-bar";
 import _ from "lodash";
 import { useCallback, useRef, useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";

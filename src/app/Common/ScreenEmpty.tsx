@@ -1,4 +1,4 @@
-import { CompositeScreenProps, useRoute } from "@react-navigation/core";
+import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
 import { View } from "react-native";

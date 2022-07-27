@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useAppNavigation, useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
 import { AttendanceDay } from "../../store/eurofurence.types";

@@ -7,11 +7,6 @@ import { EventWithDetails } from "../../store/eurofurence.selectors";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
-import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
-import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
-import { EventsListByTrackScreenProps } from "./EventsListByTrackScreen";
-import { EventsListSearchResultsScreenProps } from "./EventsListSearchResultsScreen";
-import { EventsSearchScreenProps } from "./EventsSearchScreen";
 
 export type EventsSectionedListItem = EventSectionProps & {
     data: EventWithDetails[];

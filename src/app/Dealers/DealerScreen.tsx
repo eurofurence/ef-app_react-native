@@ -1,4 +1,3 @@
-import { useRoute } from "@react-navigation/core";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 

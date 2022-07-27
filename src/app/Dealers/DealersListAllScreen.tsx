@@ -8,7 +8,6 @@ import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { conName } from "../../configuration";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
 import { IconNames } from "../../types/IconNames";

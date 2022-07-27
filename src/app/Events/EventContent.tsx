@@ -2,7 +2,6 @@ import moment from "moment";
 import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Share, StyleSheet } from "react-native";
-import MarkdownView from "react-native-showdown";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";

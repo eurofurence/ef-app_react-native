@@ -1,14 +1,11 @@
-import { useNavigation } from "@react-navigation/core";
-import { useEffect } from "react";
 import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelectors, eventsSelectors } from "../../store/eurofurence.selectors";
+import { eventsSelectors } from "../../store/eurofurence.selectors";
 import { EventCard } from "./EventCard";
-import { EventsListGeneric } from "./EventsListGeneric";
 
 export const UpcomingEventsList = () => {
     const navigation = useAppNavigation("Areas");
