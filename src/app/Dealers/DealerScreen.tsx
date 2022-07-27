@@ -4,6 +4,7 @@ import { StyleSheet, View } from "react-native";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
+import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
 import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
@@ -21,7 +22,7 @@ export type DealerScreenParams = {
 
 export const DealerScreen = () => {
     const { t } = useTranslation("Dealer");
-    const route = useRoute<CustomRoute<DealerScreenParams, "Dealer">>();
+    const route = useAppRoute("Dealer");
     const dealer = useAppSelector((state) => dealersCompleteSelectors.selectById(state, route.params.id));
     const headerStyle = useTopHeaderStyle();
 

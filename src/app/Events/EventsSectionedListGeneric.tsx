@@ -2,6 +2,7 @@ import { FC, ReactNode, useCallback, useState } from "react";
 import { SectionList, StyleSheet, Vibration, View } from "react-native";
 
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { EventWithDetails } from "../../store/eurofurence.selectors";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
@@ -20,22 +21,14 @@ export type EventsSectionedListItem = EventSectionProps & {
  * The properties to the component.
  */
 export type EventsSectionedListGenericProps = {
-    /**
-     * Navigation type. Copied from the screens rendering this component.
-     */
-    navigation:
-        | EventsSearchScreenProps["navigation"]
-        | EventsListSearchResultsScreenProps["navigation"]
-        | EventsListByDayScreenProps["navigation"]
-        | EventsListByRoomScreenProps["navigation"]
-        | EventsListByTrackScreenProps["navigation"];
     leader?: ReactNode;
     eventsGroups: EventsSectionedListItem[];
     trailer?: ReactNode;
     cardType?: "duration" | "time";
 };
 
-export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ navigation, leader, eventsGroups, trailer, cardType = "duration" }) => {
+export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ leader, eventsGroups, trailer, cardType = "duration" }) => {
+    const navigation = useAppNavigation("Areas");
     // Set event for action sheet
     const [selectedEvent, setSelectedEvent] = useState<EventWithDetails | undefined>(undefined);
 

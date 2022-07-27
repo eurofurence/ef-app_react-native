@@ -1,7 +1,7 @@
-import { StyleSheet, View, Image } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
+//@ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 
-import { ImageEx } from "../../components/Atoms/ImageEx";
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
 import { useAppRoute } from "../../hooks/useAppNavigation";

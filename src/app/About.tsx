@@ -3,6 +3,7 @@ import * as WebBrowser from "expo-web-browser";
 import { capitalize } from "lodash";
 import { FC } from "react";
 import { Image, Platform, StyleSheet, View } from "react-native";
+// @ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 import { TouchableOpacity } from "react-native-gesture-handler";
 

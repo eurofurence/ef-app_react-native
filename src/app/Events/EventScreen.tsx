@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
+import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
 import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
@@ -19,7 +20,7 @@ export type EventScreenParams = {
 };
 
 export const EventScreen = () => {
-    const route = useRoute<CustomRoute<EventScreenParams, "Event">>();
+    const route = useAppRoute("Event");
     const event = useAppSelector((state) => eventsCompleteSelectors.selectById(state, route.params.id));
     const headerStyle = useTopHeaderStyle();
 

@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 /**
  * A helper type to make RTK Query types more explicit
  */
@@ -25,3 +27,7 @@ type CustomRoute<ParamProps extends object, RouteName extends string> = {
     path?: string;
     params: Readonly<ParamProps>;
 };
+
+declare module "react-native-easy-markdown" {
+    export default Markdown = FC;
+}

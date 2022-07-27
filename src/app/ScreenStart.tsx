@@ -10,7 +10,7 @@ import { useThemeType } from "../context/Theme";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 import { AboutScreen } from "./About";
-import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
+import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { DealersTabsScreenParamsList } from "./Dealers/DealersTabsScreen";
 import { EventScreen } from "./Events/EventScreen";
@@ -43,12 +43,6 @@ export type ScreenStartParamsList = {
      * Detail screen for dealer.
      */
     Dealer: DealerScreenParams;
-
-    /**
-     * About page.
-     */
-    About: ScreenEmptyParams;
-
     Settings: ScreenEmptyParams;
     PrivateMessageList: ScreenEmptyParams;
     PrivateMessageItem: {

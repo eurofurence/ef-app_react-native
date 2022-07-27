@@ -1,8 +1,7 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import React, { useMemo } from "react";
-import { RefreshControl, StyleSheet, View, TouchableOpacity } from "react-native";
+import { RefreshControl, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
@@ -12,13 +11,11 @@ import { Scroller } from "../../components/Containers/Scroller";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 import { CommunicationRecord } from "../../store/eurofurence.types";
-import { ScreenStartParamsList } from "../ScreenStart";
+import { Query } from "../../types";
 
 export const PrivateMessageListScreen = () => {
     const navigation = useAppNavigation("PrivateMessageList");
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
-        // TODO: We need to react to FCM PM notifications.
-        // pollingInterval: 10000,
         refetchOnFocus: true,
     });
 
@@ -29,7 +26,7 @@ export const PrivateMessageListScreen = () => {
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>Private Messages</Header>
             <Scroller refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
-                {data?.map((message) => (
+                {data?.map((message: CommunicationRecord) => (
                     <TouchableOpacity
                         style={styles.container}
                         key={message.Id}

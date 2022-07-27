@@ -42,6 +42,7 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route 
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
+    // @ts-expect-error TODO: @lukashaertel pls fix
     const day = route.params?.day;
     const dealers = useAppSelector((state) => dealersCompleteSelectors.selectByDayName(state, day));
     const dealersGroups = useMemo(() => {

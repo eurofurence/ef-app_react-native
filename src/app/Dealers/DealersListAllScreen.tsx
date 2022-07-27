@@ -8,6 +8,7 @@ import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { conName } from "../../configuration";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
 import { IconNames } from "../../types/IconNames";
@@ -31,7 +32,7 @@ export type DealersListAllScreenProps =
         PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const DealersListAllScreen: FC<DealersListAllScreenProps> = ({ navigation }) => {
+export const DealersListAllScreen: FC<DealersListAllScreenProps> = () => {
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
@@ -51,7 +52,6 @@ export const DealersListAllScreen: FC<DealersListAllScreenProps> = ({ navigation
 
     return (
         <DealersSectionedListGeneric
-            navigation={navigation}
             dealersGroups={dealersGroups}
             leader={
                 <Label type="h1" variant="middle" mt={30}>

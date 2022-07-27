@@ -3,6 +3,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 
+import { Scroller } from "../../components/Containers/Scroller";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { AnnouncementList } from "../Announcements/AnnouncementList";
 import { CurrentEventList } from "../Events/CurrentEventsList";
@@ -26,15 +27,15 @@ export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasPar
 
 export const HomeScreen: FC<ScreenHomeProps> = () => {
     return (
-        <ScrollView style={StyleSheet.absoluteFill}>
+        <View style={StyleSheet.absoluteFill}>
             <CountdownHeader />
-            <View style={{ padding: 16, flex: 1 }}>
+            <Scroller>
                 <DeviceSpecificWarnings />
                 <AnnouncementList />
                 <CurrentEventList />
                 <UpcomingEventsList />
                 <UpcomingFavoriteEventsList />
-            </View>
-        </ScrollView>
+            </Scroller>
+        </View>
     );
 };

@@ -15,7 +15,7 @@ type LinkItemProps = {
 };
 
 const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
-    const navigation = useNavigation();
+    const navigation = useAppNavigation("Areas");
     const dealer = useAppSelector((state) => dealersCompleteSelectors.selectById(state, link.Target));
 
     if (dealer === undefined) {
@@ -34,7 +34,7 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
 };
 
 const MapEntryLinkItem: FC<LinkItemProps> = ({ link }) => {
-    const navigation = useAppNavigation("Home");
+    const navigation = useAppNavigation("Areas");
     return (
         <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: link.Target })}>
             {link.Name}

@@ -11,7 +11,7 @@ import { EventCard } from "./EventCard";
 import { EventsListGeneric } from "./EventsListGeneric";
 
 export const CurrentEventList = () => {
-    const navigation = useAppNavigation("Home");
+    const navigation = useAppNavigation("Areas");
     const [now] = useNow();
     const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectCurrentEvents(state, now)));
 

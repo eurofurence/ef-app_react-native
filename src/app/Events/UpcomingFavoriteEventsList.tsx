@@ -12,7 +12,7 @@ import { EventsListGeneric } from "./EventsListGeneric";
 
 export const UpcomingFavoriteEventsList = () => {
     const [now] = useNow();
-    const navigation = useAppNavigation("Home");
+    const navigation = useAppNavigation("Areas");
     const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectUpcomingFavorites(state, now)));
 
     if (events.length === 0) {

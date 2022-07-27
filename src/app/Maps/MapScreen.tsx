@@ -14,7 +14,7 @@ import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment } from "../../stor
 import { LinkItem } from "./LinkItem";
 
 export const MapScreen = () => {
-    const sheetRef = useRef<BottomSheetMethods | undefined>(undefined);
+    const sheetRef = useRef<BottomSheet>(null);
     const route2 = useAppRoute("Map");
     const [visibleEntries, setVisibleEntries] = useState<{ title: string; data: LinkFragment[] }[]>([]);
     const [isFiltering, setIsFiltering] = useState(false);

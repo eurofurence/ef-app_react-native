@@ -40,12 +40,12 @@ export type EventsListByRoomScreenProps =
     >;
 
 export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = () => {
-    const navigation = useAppNavigation("Events");
     const route = useAppRoute("Events");
     const { t } = useTranslation("Events");
     const isEventDone = useIsEventDone();
 
     // Get the room. Use it to resolve events to display.
+    // @ts-expect-error TODO: @lukashaertel pls fix
     const room = "room" in route.params ? route.params?.room : null;
     const eventsByRoom = useAppSelector((state) => eventsCompleteSelectors.selectByRoom(state, room?.Id ?? ""));
     const eventsGroups = useMemo(() => {
@@ -80,7 +80,6 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = () => {
 
     return (
         <EventsSectionedListGeneric
-            navigation={navigation}
             eventsGroups={eventsGroups}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
