@@ -26,7 +26,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 403,
+      "versionCode": 404,
       "package": "org.eurofurence.connavigator",
       "googleServicesFile": "./android/google-services.json",
       "splash": {
@@ -59,7 +59,19 @@
       "backgroundColor": "#006459"
     },
     "web": {
-      "favicon": "./assets/images/playstore.png"
+      "favicon": "./assets/images/playstore.png",
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyCF365l8zUac096MFPLUtbPE6sqH182G2Q",
+          "authDomain": "eurofurence-de86f.firebaseapp.com",
+          "databaseURL": "https://eurofurence-de86f.firebaseio.com",
+          "projectId": "eurofurence-de86f",
+          "storageBucket": "eurofurence-de86f.appspot.com",
+          "messagingSenderId": "1003745003618",
+          "appId": "1:1003745003618:web:6eca6a1ec8f5d5bfe9e93b",
+          "measurementId": "G-83EP75M02N"
+        }
+      }
     }
   }
 }

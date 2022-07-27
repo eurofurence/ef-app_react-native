@@ -1,6 +1,6 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import { FC } from "react";
+import { FC, memo } from "react";
 import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -29,7 +29,7 @@ export type ScreenHomeParams = undefined;
  */
 export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasParamsList, "Home">, StackScreenProps<ScreenStartParamsList>>;
 
-export const HomeScreen: FC<ScreenHomeProps> = () => {
+export const HomeScreen: FC<ScreenHomeProps> = memo(() => {
     const [now] = useNow();
 
     const subtitle = useAppSelector((state) => eventDaysSelectors.selectCountdownTitle(state, now));
@@ -54,4 +54,4 @@ export const HomeScreen: FC<ScreenHomeProps> = () => {
             </View>
         </ScrollView>
     );
-};
+});

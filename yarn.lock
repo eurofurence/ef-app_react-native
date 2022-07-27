@@ -2653,20 +2653,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/checkbox@npm:^0.5.12":
-  version: 0.5.12
-  resolution: "@react-native-community/checkbox@npm:0.5.12"
-  peerDependencies:
-    react: "*"
-    react-native: ">= 0.62"
-    react-native-windows: ">=0.62"
-  peerDependenciesMeta:
-    react-native-windows:
-      optional: true
-  checksum: 9c07132873697732d32eb6729648a0c920dba8118d660eb22a6fcc4f5c4cc1f3c7aed2a022136a8053dcbc05cc8f546927a5086554ed08f72e806708b617ab33
-  languageName: node
-  linkType: hard
-
 "@react-native-community/cli-debugger-ui@npm:^7.0.3":
   version: 7.0.3
   resolution: "@react-native-community/cli-debugger-ui@npm:7.0.3"
@@ -6936,7 +6922,6 @@ __metadata:
     "@gorhom/bottom-sheet": ^4.4.2
     "@hookform/resolvers": ^2.9.3
     "@react-native-async-storage/async-storage": ^1.17.7
-    "@react-native-community/checkbox": ^0.5.12
     "@react-navigation/core": ^6.2.2
     "@react-navigation/native": ^6.0.11
     "@react-navigation/stack": ^6.2.2
@@ -6955,8 +6940,10 @@ __metadata:
     eslint-config-universe: ^11.0.0
     eslint-plugin-testing-library: ^5.5.1
     expo: ~45.0.0
+    expo-checkbox: ~2.1.0
     expo-constants: ^13.1.1
     expo-device: ^4.2.0
+    expo-firebase-analytics: ~7.0.0
     expo-linking: ~3.1.0
     expo-localization: ~13.0.0
     expo-notifications: ^0.15.4
@@ -7778,6 +7765,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-checkbox@npm:~2.1.0":
+  version: 2.1.0
+  resolution: "expo-checkbox@npm:2.1.0"
+  checksum: b9a3bdb89905e3190cf4247a717c3284e2c3146c03060a140715141f1b5417c5ad9235afb06fb4e49889e1fc3658afaab56f902cc787731e5cb79086039f11ac
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:^13.1.1, expo-constants@npm:~13.1.0, expo-constants@npm:~13.1.1":
   version: 13.1.1
   resolution: "expo-constants@npm:13.1.1"
@@ -7826,6 +7820,28 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: bba54c98847a0d890a7d7fef67f8179a5905aa7fd46019de81cb7dadda1dfc4673e660e3e6b88f05e97f340c087229a5e54c7a5c1b2f28c3d51a1137c9df3b28
+  languageName: node
+  linkType: hard
+
+"expo-firebase-analytics@npm:~7.0.0":
+  version: 7.0.0
+  resolution: "expo-firebase-analytics@npm:7.0.0"
+  dependencies:
+    expo-firebase-core: ~5.0.0
+  peerDependencies:
+    expo: "*"
+  checksum: 6834e86f1a1644137ed9008d63cb77babd88230ea18f130cdaea3397f883e0448ed429f7b0009f33daf380cf8d39db3237598f1da66053858e1a90ebe090d6b9
+  languageName: node
+  linkType: hard
+
+"expo-firebase-core@npm:~5.0.0":
+  version: 5.0.0
+  resolution: "expo-firebase-core@npm:5.0.0"
+  dependencies:
+    expo-constants: ~13.1.0
+  peerDependencies:
+    expo: "*"
+  checksum: b30d1e277053cc58893aaa4fb4afd9dadcacecc37a2d97bcfacda115c4edf86189b70ccc6ab1fb7ad6a22a768646dfdb24de9265369fb9eb756315d3f6735300
   languageName: node
   linkType: hard
 

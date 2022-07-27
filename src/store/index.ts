@@ -10,6 +10,7 @@ import { authorizationSlice } from "./authorization.slice";
 import { backgroundSlice } from "./background.slice";
 import { eurofurenceCache } from "./eurofurence.cache";
 import { eurofurenceService } from "./eurofurence.service";
+import { settingsSlice } from "./settings.slice";
 import { timeTravelSlice } from "./timetravel.slice";
 
 export const reducers = combineReducers({
@@ -19,6 +20,7 @@ export const reducers = combineReducers({
     [eurofurenceCache.name]: eurofurenceCache.reducer,
     [eurofurenceService.reducerPath]: eurofurenceService.reducer,
     [authorizationService.reducerPath]: authorizationService.reducer,
+    [settingsSlice.name]: settingsSlice.reducer,
 });
 
 const persistedReducer = persistReducer(
@@ -26,7 +28,7 @@ const persistedReducer = persistReducer(
         key: "root",
         version: 2,
         storage: AsyncStorage,
-        whitelist: [timeTravelSlice.name, eurofurenceService.reducerPath, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name],
+        whitelist: [timeTravelSlice.name, eurofurenceService.reducerPath, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name, settingsSlice.name],
     },
     reducers
 );
@@ -44,6 +46,7 @@ export const store = configureStore({
         if (Platform.OS === "web") {
             middleware.concat(logger);
         }
+
         return middleware;
     },
 });

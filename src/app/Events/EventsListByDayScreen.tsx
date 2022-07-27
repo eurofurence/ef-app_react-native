@@ -1,7 +1,7 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
-import { FC, useMemo } from "react";
+import { FC, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Label } from "../../components/Atoms/Label";
@@ -36,7 +36,7 @@ export type EventsListByDayScreenProps =
         PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ route }) => {
+export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ route }) => {
     const { t } = useTranslation("Events");
 
     // Get the day. Use it to resolve events to display.
@@ -71,4 +71,4 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ route })
             }
         />
     );
-};
+});
