@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "1003745003618",
+    "firebase_url": "https://eurofurence-de86f.firebaseio.com",
+    "project_id": "eurofurence-de86f",
+    "storage_bucket": "eurofurence-de86f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003745003618:android:30d3376dc7797486",
+        "android_client_info": {
+          "package_name": "org.eurofurence.connavigator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003745003618-nrn1e3ei4kofrroqe1egcbatmrts4r2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoy8lY9f4cWx2fvS1HMBJaNHCkFWxm8DY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003745003618-nrn1e3ei4kofrroqe1egcbatmrts4r2o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1003745003618-4h7l033t08plmen0h8jo148qnahku46e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.eurofurence",
+                "app_store_id": "1112547322"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003745003618:android:d7da113c1dd5fb6a",
+        "android_client_info": {
+          "package_name": "org.eurofurence.connavigator.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1003745003618-nrn1e3ei4kofrroqe1egcbatmrts4r2o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoy8lY9f4cWx2fvS1HMBJaNHCkFWxm8DY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1003745003618-nrn1e3ei4kofrroqe1egcbatmrts4r2o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1003745003618-4h7l033t08plmen0h8jo148qnahku46e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.eurofurence",
+                "app_store_id": "1112547322"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
