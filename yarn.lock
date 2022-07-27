@@ -6982,7 +6982,7 @@ __metadata:
     react-native-screens: ~3.11.1
     react-native-showdown: ^1.0.1
     react-native-web: 0.17.7
-    react-native-webview: ^11.22.7
+    react-native-webview: 11.18.1
     react-redux: ^8.0.2
     react-test-renderer: ^17.0.2
     redux-logger: ^3.0.6
@@ -15021,16 +15021,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-webview@npm:^11.22.7":
-  version: 11.22.7
-  resolution: "react-native-webview@npm:11.22.7"
+"react-native-webview@npm:11.18.1":
+  version: 11.18.1
+  resolution: "react-native-webview@npm:11.18.1"
   dependencies:
     escape-string-regexp: 2.0.0
     invariant: 2.2.4
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 32fa1c87c40c7205efc5ef451e6ecb07cc7960323ca9f8eaed4749590c9451832ce06e39b4c1749e22a9e6fb8653ac5062ce0e91ffe9e3cc966430aaf042a9a7
+  checksum: a0dbdfa8d46efdf9f207f286aef00a843d5bf6f51503be44fe26df9c10536580fb877c090843b84622e540e57beae459d640db27cbc4021537a5233f0c8da200
   languageName: node
   linkType: hard
 

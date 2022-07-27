@@ -10,9 +10,18 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "android": {
+        "autoIncrement": "versionCode",
+        "buildType": "app-bundle"
+      }
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "track": "internal"
+      }
+    }
   }
 }

@@ -19,13 +19,14 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "assets/**/*",
+      "android/**/*"
     ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 400,
+      "versionCode": 403,
       "package": "org.eurofurence.connavigator",
       "googleServicesFile": "./android/google-services.json",
       "splash": {
@@ -51,7 +52,8 @@
             "DEFAULT"
           ]
         }
-      ]
+      ],
+      "permissions": []
     },
     "androidStatusBar": {
       "backgroundColor": "#006459"
