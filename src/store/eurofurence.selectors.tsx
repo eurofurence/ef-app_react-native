@@ -84,6 +84,8 @@ export type EventWithDetails = EnrichedEventRecord & {
 };
 
 const applyEventDetails = (rooms: Dictionary<EventRoomRecord>, tracks: Dictionary<EventTrackRecord>, days: Dictionary<EventDayRecord>) => (event: EventRecord) => {
+    if (tracks[event.ConferenceTrackId ?? ""] === undefined || days[event.ConferenceDayId ?? ""] === undefined || rooms[event.ConferenceRoomId ?? ""] === undefined)
+        return undefined;
     return {
         ...event,
         // Either we propagate undefined-ness in the type or we ignore.
@@ -123,7 +125,7 @@ export const eventsSelectors = {
     selectUpcomingFavorites: selectUpcomingFavoriteEvents,
     selectEnrichedEvents: createSelector(
         [(state, events: EnrichedEventRecord[]) => events, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
-        (events, days, tracks, rooms) => events.map(applyEventDetails(rooms, tracks, days))
+        (events, days, tracks, rooms) => events.map(applyEventDetails(rooms, tracks, days)).filter((it): it is EventWithDetails => it !== undefined)
     ),
 };
 
@@ -131,7 +133,7 @@ export const eventsCompleteSelectors = {
     ...baseEventsSelector,
     selectAll: createSelector(
         [baseEventsSelector.selectAll, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities],
-        (events, days, tracks, rooms): EventWithDetails[] => events.map(applyEventDetails(rooms, tracks, days))
+        (events, days, tracks, rooms): EventWithDetails[] => events.map(applyEventDetails(rooms, tracks, days)).filter((it): it is EventWithDetails => it !== undefined)
     ),
     selectByRoom: createSelector(
         [
