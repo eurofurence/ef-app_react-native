@@ -37,7 +37,11 @@ export type AnnouncementRecord = RecordMetadata & {
     Author: string;
     Title: string;
     Content: string;
-    ImageId: RecordId;
+    ImageId?: RecordId;
+};
+
+export type EnrichedAnnouncementRecord = AnnouncementRecord & {
+    ImageUrl?: ImageUrl;
 };
 
 export type EventRecord = RecordMetadata & {

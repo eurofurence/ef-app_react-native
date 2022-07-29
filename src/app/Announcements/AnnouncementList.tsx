@@ -5,6 +5,7 @@ import { Section } from "../../components/Atoms/Section";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { annoucenementsSelectors } from "../../store/eurofurence.selectors";
+import { AnnouncementItem } from "./AnnouncementItem";
 
 export const AnnouncementList = () => {
     const [now] = useNow();
@@ -17,11 +18,7 @@ export const AnnouncementList = () => {
             {announcements.length === 0 ? (
                 <Label mb={15}>There are currently no active announcements</Label>
             ) : (
-                announcements.map((it) => (
-                    <Label key={it.Id} mb={15}>
-                        {it.Title}
-                    </Label>
-                ))
+                announcements.map((it) => <AnnouncementItem announcement={it} key={it.Id} />)
             )}
         </View>
     );
