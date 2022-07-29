@@ -52,22 +52,22 @@ const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => s
 export const eventDaysSelectors = {
     ...baseEventDaysSelectors,
     selectCountdownTitle: createSelector([baseEventDaysSelectors.selectAll, (days, now: Moment) => now], (days, now): string => {
-        const firstDay = _.chain(days)
+        const firstDay: EventDayRecord | undefined = _.chain(days)
             .orderBy((it) => it.Date, "asc")
             .first()
             .value();
-        const lastDay = _.chain(days)
+        const lastDay: EventDayRecord | undefined = _.chain(days)
             .orderBy((it) => it.Date, "desc")
             .last()
             .value();
-        const currentDay = days.find((it) => now.isSame(it.Date, "day"));
+        const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(it.Date, "day"));
 
         if (currentDay) {
             return currentDay.Name;
-        } else if (now.isBefore(firstDay.Date, "day")) {
+        } else if (firstDay && now.isBefore(firstDay.Date, "day")) {
             const diff = moment.duration(now.diff(firstDay.Date)).humanize();
             return `${conName} will start in ${diff}`;
-        } else if (now.isAfter(lastDay.Date, "day")) {
+        } else if (lastDay && now.isAfter(lastDay.Date, "day")) {
             return "That was it! We hope to see you again next year!";
         } else {
             return "";
