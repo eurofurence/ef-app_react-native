@@ -2,10 +2,11 @@ import Constants from "expo-constants";
 import * as WebBrowser from "expo-web-browser";
 import { capitalize } from "lodash";
 import { FC } from "react";
-import { Image, Platform, StyleSheet, View } from "react-native";
+import { Image, Platform, StyleSheet, View, ScrollView } from "react-native";
 // @ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../components/Atoms/Label";
 import { Section } from "../components/Atoms/Section";
@@ -62,11 +63,11 @@ export const Credit: FC<{ uri: string; name: string; role: string; onPress?: () 
 );
 
 export const AboutScreen = () => {
-    const headerStyle = useTopHeaderStyle();
+    const safe = useSafeAreaInsets();
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>About</Header>
-            <Scroller>
+        <ScrollView stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll style={safe}>
+            <Header>About</Header>
+            <View style={{ paddingHorizontal: 20 }}>
                 <Section title={"App Details"} icon={"cellphone"} />
                 <Label>Platform: {capitalize(Platform.OS)}</Label>
                 <Label>
@@ -85,7 +86,7 @@ export const AboutScreen = () => {
                 <Credit uri={"https://avatars.githubusercontent.com/u/12624320"} name={"Shez"} role={"iOS Development"} />
                 <Section title={"Extra thanks"} icon={"message-outline"} />
                 <Markdown>{extraThanksMarkdown}</Markdown>
-            </Scroller>
-        </View>
+            </View>
+        </ScrollView>
     );
 };

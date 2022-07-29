@@ -1,10 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
-import { Scroller } from "../../components/Containers/Scroller";
 import { useAppRoute } from "../../hooks/useAppNavigation";
-import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
 import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
 import { DealerContent } from "./DealerContent";
@@ -23,12 +23,12 @@ export const DealerScreen = () => {
     const { t } = useTranslation("Dealer");
     const route = useAppRoute("Dealer");
     const dealer = useAppSelector((state) => dealersCompleteSelectors.selectById(state, route.params.id));
-    const headerStyle = useTopHeaderStyle();
+    const safe = useSafeAreaInsets();
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>{dealer?.FullName ?? t("viewing_dealer")}</Header>
-            <Scroller>{!dealer ? null : <DealerContent dealer={dealer} />}</Scroller>
-        </View>
+        <ScrollView style={safe} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+            <Header>{dealer?.FullName ?? t("viewing_dealer")}</Header>
+            <View style={{ paddingHorizontal: 20, paddingBottom: 100 }}>{!dealer ? null : <DealerContent dealer={dealer} />}</View>
+        </ScrollView>
     );
 };

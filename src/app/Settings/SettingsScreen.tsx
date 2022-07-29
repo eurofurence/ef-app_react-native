@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
@@ -14,13 +15,12 @@ import { TimeTravel } from "./TimeTravel";
 import { UserSettings } from "./UserSettings";
 
 export const SettingsScreen = () => {
-    const top = useSafeAreaInsets()?.top;
-    const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
+    const safe = useSafeAreaInsets();
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>Settings</Header>
-            <Scroller>
+        <ScrollView stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll style={safe}>
+            <Header>Settings</Header>
+            <View style={{ paddingHorizontal: 20 }}>
                 <UserSettings />
                 <Section title={"Developer Settings"} icon={"bug"} />
                 <Label mb={15}>You shouldn't touch these unless you know what you're doing.</Label>
@@ -30,7 +30,7 @@ export const SettingsScreen = () => {
                 <PlatformScheduledNotifications />
                 <RemoteMessages />
                 <DevButtons />
-            </Scroller>
-        </View>
+            </View>
+        </ScrollView>
     );
 };
