@@ -1,10 +1,10 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC, memo } from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { RefreshControl, ScrollView, View } from "react-native";
 
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { AnnouncementList } from "../Announcements/AnnouncementList";
 import { CurrentEventList } from "../Events/CurrentEventsList";
 import { UpcomingEventsList } from "../Events/UpcomingEventsList";
@@ -25,8 +25,9 @@ export type ScreenHomeParams = undefined;
 export type ScreenHomeProps = CompositeScreenProps<TabScreenProps<ScreenAreasParamsList, "Home">, StackScreenProps<ScreenStartParamsList>>;
 
 export const HomeScreen: FC<ScreenHomeProps> = memo(() => {
+    const { synchronize, isSynchronizing } = useSynchronizer();
     return (
-        <ScrollView stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
             <CountdownHeader />
 
             <View

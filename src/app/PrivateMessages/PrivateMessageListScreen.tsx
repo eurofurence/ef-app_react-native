@@ -40,7 +40,7 @@ export const PrivateMessageListScreen = () => {
 
     return (
         <SectionList
-            style={inserts}
+            style={[inserts]}
             sections={sectionedData}
             keyExtractor={(item, index) => item.Id + index}
             stickySectionHeadersEnabled
@@ -53,36 +53,38 @@ export const PrivateMessageListScreen = () => {
                 </Label>
             )}
             renderItem={({ item }) => (
-                <Card
-                    key={item.Id}
-                    onPress={() =>
-                        navigation.navigate("PrivateMessageItem", {
-                            id: item.Id,
-                            message: item,
-                        })
-                    }
-                >
-                    <Row style={{ paddingHorizontal: 20 }}>
-                        <Col style={styles.title}>
-                            <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>{item.Subject}</Label>
-                            <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
-                                {item.ReadDateTimeUtc === null ? "Unread" : "Read"} - Sent on {moment(item.CreatedDateTimeUtc).format("llll")}
-                            </Label>
-                        </Col>
-                        <View
-                            style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                width: 50,
-                                height: 50,
-                                borderRadius: 50,
-                            }}
-                        >
-                            <Icon name="chevron-right" size={30} />
-                        </View>
-                    </Row>
-                </Card>
+                <View style={{ paddingHorizontal: 20 }}>
+                    <Card
+                        key={item.Id}
+                        onPress={() =>
+                            navigation.navigate("PrivateMessageItem", {
+                                id: item.Id,
+                                message: item,
+                            })
+                        }
+                    >
+                        <Row>
+                            <Col style={styles.title}>
+                                <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>{item.Subject}</Label>
+                                <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
+                                    {item.ReadDateTimeUtc === null ? "Unread" : "Read"} - Sent on {moment(item.CreatedDateTimeUtc).format("llll")}
+                                </Label>
+                            </Col>
+                            <View
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 50,
+                                }}
+                            >
+                                <Icon name="chevron-right" size={30} />
+                            </View>
+                        </Row>
+                    </Card>
+                </View>
             )}
         />
     );

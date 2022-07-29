@@ -16,7 +16,7 @@ export const Card: FC<CardProps> = ({ children, onPress, onLongPress }) => {
             style={[styles.container, appStyles.shadow, { backgroundColor: theme.background }]}
             onPress={onPress}
             onLongPress={onLongPress}
-            disabled={onPress === undefined || onLongPress === undefined}
+            disabled={onPress === undefined && onLongPress === undefined}
         >
             <View style={styles.main}>{children}</View>
         </TouchableOpacity>
