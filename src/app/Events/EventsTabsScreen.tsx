@@ -12,7 +12,7 @@ import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchHasResults } from "../../components/Searching/EventsSearchContext";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
+import { eventDaysSelectors, eventRoomsSelectors, eventsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
@@ -65,6 +65,7 @@ export type EventsTabsScreenProps =
 export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), [t]);
+    const hasFavorites = useAppSelector((state) => eventsSelectors.selectFavorites(state).length > 0);
 
     // Use now with optional time travel.
     const [now] = useNow();
@@ -106,7 +107,7 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     // If the screens require too much performance we should set detach to true again.
     return (
         <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialName}>
-            <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "bookmark" }} component={FavoriteEventsList} />
+            {hasFavorites && <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "bookmark" }} component={FavoriteEventsList} />}
             {/*Tab for searching and filtering*/}
             <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
 
