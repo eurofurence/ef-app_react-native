@@ -14,7 +14,15 @@ export const AnnouncementList = () => {
         <View>
             <Section title={"Announcements"} subtitle={"Live updates from the convention"} icon={"newspaper"} />
 
-            {announcements.length === 0 ? <Label mb={15}>There are currently no active announcements</Label> : announcements.map((it) => <Label mb={15}>{it.Title}</Label>)}
+            {announcements.length === 0 ? (
+                <Label mb={15}>There are currently no active announcements</Label>
+            ) : (
+                announcements.map((it) => (
+                    <Label key={it.Id} mb={15}>
+                        {it.Title}
+                    </Label>
+                ))
+            )}
         </View>
     );
 };

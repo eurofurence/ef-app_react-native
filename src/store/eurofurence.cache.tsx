@@ -89,7 +89,9 @@ export const announcementsAdapter = createEntityAdapter<AnnouncementRecord>({
 
 export const mapsAdapter = createEntityAdapter<EnrichedMapRecord>({
     selectId: (model) => model.Id,
+    sortComparer: (a, b) => a.Order - b.Order,
 });
+
 type EurofurenceCacheState = {
     lastSynchronised: string;
     state: "uninitialized" | "preview" | "refreshing" | string;

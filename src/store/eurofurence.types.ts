@@ -121,6 +121,7 @@ export type MapRecord = RecordMetadata & {
     IsBrowseable: boolean;
     ImageId: RecordId;
     Entries: MapEntryRecord[];
+    Order: number;
 };
 
 export type MapEntryRecord = RecordMetadata & {
