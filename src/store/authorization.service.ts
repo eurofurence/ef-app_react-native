@@ -64,14 +64,14 @@ export const authorizationService = createApi({
         }),
         postSubscribeToTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
             query: (arg) => ({
-                url: `/PushNotifications/SubscribeToTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
-                method: "POST",
+                url: `/PushNotifications/Topics/${arg.Topic}/${arg.DeviceId}`,
+                method: "PUT",
             }),
         }),
         postUnsubscribeFromTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
             query: (arg) => ({
-                url: `/PushNotifications/UnsubscribeFromTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
-                method: "POST",
+                url: `/PushNotifications/Topics/${arg.Topic}/${arg.DeviceId}`,
+                method: "DELETE",
             }),
         }),
         sendPrivateMessage: builder.mutation<string, NewPrivateMessage>({

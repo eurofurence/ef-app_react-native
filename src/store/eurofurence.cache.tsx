@@ -1,10 +1,11 @@
 import { createEntityAdapter, createSlice, EntityAdapter, EntityState, PayloadAction } from "@reduxjs/toolkit";
 import moment from "moment";
 
-import { enrichDealerRecord, enrichEventRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
+import { enrichAnnouncementRecord, enrichDealerRecord, enrichEventRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
     DealerRecord,
+    EnrichedAnnouncementRecord,
     EnrichedDealerRecord,
     EnrichedEventRecord,
     EnrichedImageRecord,
@@ -82,14 +83,16 @@ export const dealersAdapter = createEntityAdapter<EnrichedDealerRecord>({
     selectId: (model) => model.Id,
 });
 
-export const announcementsAdapter = createEntityAdapter<AnnouncementRecord>({
+export const announcementsAdapter = createEntityAdapter<EnrichedAnnouncementRecord>({
     selectId: (model) => model.Id,
     sortComparer: (a, b) => a.ValidUntilDateTimeUtc.localeCompare(b.ValidUntilDateTimeUtc),
 });
 
 export const mapsAdapter = createEntityAdapter<EnrichedMapRecord>({
     selectId: (model) => model.Id,
+    sortComparer: (a, b) => a.Order - b.Order,
 });
+
 type EurofurenceCacheState = {
     lastSynchronised: string;
     state: "uninitialized" | "preview" | "refreshing" | string;
@@ -101,7 +104,7 @@ type EurofurenceCacheState = {
     knowledgeEntries: EntityState<KnowledgeEntryRecord>;
     images: EntityState<EnrichedImageRecord>;
     dealers: EntityState<EnrichedDealerRecord>;
-    announcements: EntityState<AnnouncementRecord>;
+    announcements: EntityState<EnrichedAnnouncementRecord>;
     maps: EntityState<EnrichedMapRecord>;
 };
 
@@ -157,7 +160,7 @@ export const eurofurenceCache = createSlice({
             syncEntities(state.knowledgeEntries, knowledgeEntriesAdapter, action.payload.KnowledgeEntries, undefined);
             syncEntities(state.dealers, dealersAdapter, action.payload.Dealers, enrichDealerRecord);
             syncEntities(state.images, imagesAdapter, action.payload.Images, enrichImageRecord);
-            syncEntities(state.announcements, announcementsAdapter, action.payload.Announcements, undefined);
+            syncEntities(state.announcements, announcementsAdapter, action.payload.Announcements, enrichAnnouncementRecord);
             syncEntities(state.maps, mapsAdapter, action.payload.Maps, enrichMapRecord);
         },
         resetCache: () => {
