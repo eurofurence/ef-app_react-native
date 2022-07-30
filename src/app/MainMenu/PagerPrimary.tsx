@@ -6,9 +6,9 @@ import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { mapsSelectors } from "../../store/eurofurence.selectors";
+import { RecordId } from "../../store/eurofurence.types";
 import { PrivateMessageLinker } from "../PrivateMessages/PrivateMessageLinker";
 
 /**
@@ -23,11 +23,11 @@ export type PagerMenuProps = {
     onMaps?: () => void;
     onAbout?: () => void;
     onSettings?: () => void;
+    onMap?: (id: RecordId) => void;
 };
 
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings }) => {
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings, onMap }) => {
     const { t } = useTranslation("Menu");
-    const navigation = useAppNavigation("Areas");
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
     const maps = useAppSelector(mapsSelectors.selectBrowseableMaps);
 
@@ -44,16 +44,16 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
                 </View>
             )}
             <Grid cols={3} style={{ alignSelf: "stretch" }}>
-                <Tab icon="information-outline" text={t("info")} onPress={() => navigation.navigate("KnowledgeGroups", {})} />
+                <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
                 <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />
                 <Tab icon="book-outline" text={t("services")} onPress={onServices} />
                 <Tab icon="map" text={t("maps")} onPress={onMaps} />
-                <Tab icon="card-account-details-outline" text={t("about")} onPress={() => navigation.navigate("About")} />
-                <Tab icon="cog" text={t("settings")} onPress={() => navigation.navigate("Settings")} />
+                <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
+                <Tab icon="cog" text={t("settings")} onPress={onSettings} />
             </Grid>
             <Col style={{ padding: 30, alignItems: "stretch" }}>
                 {maps.map((it) => (
-                    <Button key={it.Id} style={{ marginVertical: 10 }} icon={"map"} onPress={() => navigation.navigate("Map", { id: it.Id })}>
+                    <Button key={it.Id} style={{ marginVertical: 10 }} icon={"map"} onPress={() => onMap && onMap(it.Id)}>
                         {it.Description}
                     </Button>
                 ))}

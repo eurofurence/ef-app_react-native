@@ -8,10 +8,9 @@ import { useTranslation } from "react-i18next";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useIsEventDone } from "../../hooks/useEventProperties";
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
+import { eventsSelectors } from "../../store/eurofurence.selectors";
 import { EventRoomRecord } from "../../store/eurofurence.types";
 import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
@@ -39,15 +38,13 @@ export type EventsListByRoomScreenProps =
         PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = () => {
-    const route = useAppRoute("Events");
+export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const isEventDone = useIsEventDone();
 
     // Get the room. Use it to resolve events to display.
-    // @ts-expect-error TODO: @lukashaertel pls fix
     const room = "room" in route.params ? route.params?.room : null;
-    const eventsByRoom = useAppSelector((state) => eventsCompleteSelectors.selectByRoom(state, room?.Id ?? ""));
+    const eventsByRoom = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectByRoom(state, room?.Id ?? "")));
     const eventsGroups = useMemo(() => {
         const done = chain(eventsByRoom)
             .filter((event) => isEventDone(event))

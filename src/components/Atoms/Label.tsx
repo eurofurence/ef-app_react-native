@@ -102,8 +102,20 @@ const types = StyleSheet.create({
 
 const variants = StyleSheet.create({
     regular: {},
-    bold: { fontWeight: "bold" },
-    striked: { textDecorationLine: "underline" },
-    underlined: { textDecorationLine: "underline" },
-    middle: { textAlign: "center", textAlignVertical: "center" },
+    narrow: {
+        fontWeight: "300",
+    },
+    bold: {
+        fontWeight: "900",
+    },
+    striked: {
+        textDecorationLine: "underline",
+    },
+    underlined: {
+        textDecorationLine: "underline",
+    },
+    middle: {
+        textAlign: "center",
+        textAlignVertical: "center",
+    },
 });

@@ -2,8 +2,8 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import _ from "lodash";
 import moment from "moment";
 import React, { useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import { SectionList, StyleSheet, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";

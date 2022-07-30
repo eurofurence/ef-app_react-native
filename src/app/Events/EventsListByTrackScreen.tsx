@@ -10,7 +10,7 @@ import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useIsEventDone } from "../../hooks/useEventProperties";
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
+import { eventsSelectors } from "../../store/eurofurence.selectors";
 import { EventTrackRecord } from "../../store/eurofurence.types";
 import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
@@ -43,9 +43,8 @@ export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ rout
     const isEventDone = useIsEventDone();
 
     // Get the track. Use it to resolve events to display.
-    // @ts-expect-error TODO: @lukashaertel pls fix
     const track = "track" in route.params ? route.params?.track : null;
-    const eventsByTrack = useAppSelector((state) => eventsCompleteSelectors.selectByTrack(state, track?.Id ?? ""));
+    const eventsByTrack = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectByTrack(state, track?.Id ?? "")));
     const eventsGroups = useMemo(() => {
         const done = chain(eventsByTrack)
             .filter((event) => isEventDone(event))

@@ -2,16 +2,13 @@ import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import { orderBy } from "lodash";
 import moment from "moment";
-import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { Button } from "../../components/Containers/Button";
-import { Col } from "../../components/Containers/Col";
-import { Row } from "../../components/Containers/Row";
+import { applyDefaultRegion } from "../../i18n";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setAnalytics } from "../../store/settings.slice";
 
@@ -52,15 +49,9 @@ export const UserSettings = () => {
                 }}
             >
                 {languages.map((it) => (
-                    <Picker.Item label={it.name} value={it.code} key={it.code} />
+                    <Picker.Item label={it.name} value={applyDefaultRegion(it.code)} key={applyDefaultRegion(it.code)} />
                 ))}
             </Picker>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    marginBefore: {
-        marginTop: 16,
-    },
-});

@@ -16,6 +16,20 @@ const logger = partial(console.log, "i18next");
 
 const I18NEXT_LANGAGUE_KEY = "i18next";
 
+const defaultRegions: Record<string, string> = {
+    en: "GB",
+    de: "DE",
+    nl: "NL",
+};
+
+export const applyDefaultRegion = <T extends string | null | undefined>(language: T) => {
+    if (typeof language !== "string") return language;
+    if (language.includes("-")) return language;
+    const normalized = language.toLowerCase().trim();
+    const region = defaultRegions[normalized];
+    return region ? `${language}-${region}` : language;
+};
+
 i18next
     .use(initReactI18next)
     .use({
@@ -24,14 +38,16 @@ i18next
         init: noop,
         detect: async (callback: (language: string) => void) => {
             const fallback = Localization.locale.split("-")[0];
+            const fallbackFull = applyDefaultRegion(fallback);
 
-            const savedLanguage = await AsyncStorage.getItem(I18NEXT_LANGAGUE_KEY);
+            const persisted = await AsyncStorage.getItem(I18NEXT_LANGAGUE_KEY);
+            const persistedFull = applyDefaultRegion(persisted);
 
-            logger("Detecting languages", "Saved", savedLanguage, "Fallback", fallback);
+            logger(`Detecting languages, saved: ${persisted} (${persistedFull}), fallback ${fallback} (${fallbackFull})`);
 
             // Set moment locale from detection and invoke callback.
-            moment.locale(savedLanguage ?? fallback);
-            return callback(savedLanguage ?? fallback);
+            moment.locale(persistedFull ?? fallbackFull);
+            return callback(persistedFull ?? fallbackFull);
         },
         cacheUserLanguage: async (lng: string) =>
             AsyncStorage.setItem(I18NEXT_LANGAGUE_KEY, lng)

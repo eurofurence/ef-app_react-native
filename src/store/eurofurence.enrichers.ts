@@ -1,7 +1,7 @@
 import moment, { MomentInput } from "moment";
-import { record } from "zod";
 
 import { apiBase } from "../configuration";
+import { IconNames } from "../types/IconNames";
 import {
     AnnouncementRecord,
     DealerRecord,
@@ -51,11 +51,23 @@ export const enrichImageRecord = (record: ImageRecord): EnrichedImageRecord => (
     ImageUrl: internalCreateImageUrl(record.Id),
 });
 
+const tagsToIcon = (tags?: string[]): IconNames | undefined => {
+    if (!tags) return;
+    if (tags.includes("supersponsors_only")) return "star-circle";
+    if (tags.includes("sponsors_only")) return "star";
+    if (tags.includes("kage")) return "bug";
+    if (tags.includes("art_show")) return "image-frame";
+    if (tags.includes("dealers_den")) return "shopping";
+    if (tags.includes("main_stage")) return "bank";
+    if (tags.includes("photoshoot")) return "camera";
+};
+
 export const enrichEventRecord = (record: EventRecord): EnrichedEventRecord => ({
     ...record,
     PartOfDay: internalCategorizeTime(record.StartDateTimeUtc),
     BannerImageUrl: internalCreateImageUrl(record.BannerImageId),
     PosterImageUrl: internalCreateImageUrl(record.PosterImageId),
+    Glyph: tagsToIcon(record.Tags),
 });
 
 export const enrichAnnouncementRecord = (record: AnnouncementRecord): EnrichedAnnouncementRecord => ({

@@ -81,9 +81,9 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     // Convert given optional type to actual filter type.
     const actualType = useMemo(() => {
         if (hasSearchResults) return "results";
-        // @ts-expect-error TODO: @lukashaertel pls fix
+        // TODO: @lukashaertel pls fix
         return route.params?.filterType ?? "days";
-        // @ts-expect-error TODO: @lukashaertel pls fix
+        // TODO: @lukashaertel pls fix
     }, [hasSearchResults, route.params?.filterType]);
 
     const currentDayName = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Name, [days, now]);

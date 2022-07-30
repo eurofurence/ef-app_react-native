@@ -30,7 +30,7 @@ export function navigateTab<ParamList extends ParamListBase, RouteName extends k
     // If event did not prevent default, dispatch tab jump.
     if (!event.defaultPrevented) {
         navigation.dispatch({
-            // @ts-expect-error TODO: @lukashaertel pls fix
+            // TODO: @lukashaertel pls fix
             ...TabActions.jumpTo(target.name),
             target: state.key,
         });

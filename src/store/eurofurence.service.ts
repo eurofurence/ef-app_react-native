@@ -107,6 +107,7 @@ export const eurofurenceService = createApi({
         getMaps: builder.query<MapRecord[], void>({
             query: () => ({ url: "/Maps" }),
             providesTags: tagsFromList("Map"),
+            transformResponse: (result: MapRecord[]): EnrichedMapRecord[] => result.map(enrichMapRecord),
         }),
         getMapById: builder.query<EnrichedMapRecord, RecordId>({
             query: (args) => ({ url: `/Maps/${args}` }),
