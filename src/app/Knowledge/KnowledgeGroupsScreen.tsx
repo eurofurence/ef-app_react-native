@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -21,6 +22,7 @@ export const KnowledgeListEntry: FC<{ entry: KnowledgeEntryRecord }> = ({ entry 
 };
 
 export const KnowledgeGroupsScreen = () => {
+    const { t } = useTranslation("KnowledgeGroups");
     const synchronizer = useSynchronizer();
     const safe = useSafeAreaInsets();
     const entries = useAppSelector((state) => selectKnowledgeItemsSections(state));
@@ -30,7 +32,7 @@ export const KnowledgeGroupsScreen = () => {
             onRefresh={synchronizer.synchronize}
             refreshing={synchronizer.isSynchronizing}
             contentContainerStyle={[styles.container, safe]}
-            ListHeaderComponent={<Header style={{ marginHorizontal: -20 }}>Info Articles</Header>}
+            ListHeaderComponent={<Header style={{ marginHorizontal: -20 }}>{t("header")}</Header>}
             sections={entries}
             keyExtractor={(item, index) => item.Id + index}
             renderItem={({ item }) => <KnowledgeListEntry entry={item} key={item.Id} />}

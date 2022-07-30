@@ -3,6 +3,7 @@ import _ from "lodash";
 import moment from "moment";
 import React, { useMemo } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
+import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
@@ -17,6 +18,7 @@ import { CommunicationRecord } from "../../store/eurofurence.types";
 import { Query } from "../../types";
 
 export const PrivateMessageListScreen = () => {
+    const { t } = useTranslation("PrivateMessageList");
     const navigation = useAppNavigation("PrivateMessageList");
     const theme = useTheme();
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
@@ -30,7 +32,7 @@ export const PrivateMessageListScreen = () => {
                 .orderBy((it) => it.ReadDateTimeUtc, "desc")
                 .groupBy((it) => it.AuthorName)
                 .map((messages, author) => ({
-                    title: author,
+                    title: author.trim(),
                     data: messages,
                 }))
                 .value(),
@@ -48,7 +50,7 @@ export const PrivateMessageListScreen = () => {
             ListHeaderComponent={<Header>Private Messages</Header>}
             renderSectionHeader={({ section }) => (
                 <Label type={"h2"} style={{ padding: 20, backgroundColor: theme.background }}>
-                    From {_.capitalize(section.title)}
+                    {t("section_title_from", { authorName: _.capitalize(section.title) })}
                 </Label>
             )}
             renderItem={({ item }) => (
@@ -66,7 +68,10 @@ export const PrivateMessageListScreen = () => {
                             <Col style={styles.title}>
                                 <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>{item.Subject}</Label>
                                 <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
-                                    {item.ReadDateTimeUtc === null ? "Unread" : "Read"} - Sent on {moment(item.CreatedDateTimeUtc).format("llll")}
+                                    {t("message_item_subtitle", {
+                                        status: item.ReadDateTimeUtc === null ? "Unread" : "Read",
+                                        time: moment(item.CreatedDateTimeUtc).format("llll"),
+                                    })}
                                 </Label>
                             </Col>
                             <View

@@ -1,6 +1,7 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
@@ -25,6 +26,7 @@ export type ScreenEmptyProps = CompositeScreenProps<TabScreenProps<ScreenAreasPa
  * @constructor
  */
 export const ScreenEmpty: FC<ScreenEmptyProps> = () => {
+    const { t } = useTranslation("EmptyScreen");
     const route = useAppRoute("Areas");
 
     // Indicate loading, as content is not present.
@@ -33,7 +35,7 @@ export const ScreenEmpty: FC<ScreenEmptyProps> = () => {
     return (
         <View style={{ padding: 30, paddingTop: 60 }}>
             <Label type="h1">{route.name}</Label>
-            <Label type="h2">Content not implemented yet</Label>
+            <Label type="h2">{t("notImplemented")}</Label>
         </View>
     );
 };

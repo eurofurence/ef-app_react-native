@@ -10,6 +10,7 @@ import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
 import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment } from "../../store/eurofurence.types";
+import { ScreenEmpty } from "../Common/ScreenEmpty";
 import { LinkItem } from "./LinkItem";
 
 export const MapScreen = () => {
@@ -55,7 +56,7 @@ export const MapScreen = () => {
     );
 
     if (map === undefined || image === undefined) {
-        return <Text>Nothing here but the bees . . .</Text>;
+        return <ScreenEmpty />;
     }
 
     return (

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
@@ -8,6 +9,8 @@ import { eventsSelectors } from "../../store/eurofurence.selectors";
 import { EventCard } from "./EventCard";
 
 export const UpcomingEventsList = () => {
+    const { t } = useTranslation("Events");
+
     const navigation = useAppNavigation("Areas");
     const [now] = useNow();
     const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectUpcomingEvents(state, now)));
@@ -18,7 +21,7 @@ export const UpcomingEventsList = () => {
 
     return (
         <View>
-            <Section title={"Upcoming Events"} subtitle={"These events are starting in the next 30 minutes"} icon={"clock"} />
+            <Section title={t("upcoming_title")} subtitle={t("upcoming_subtitle")} icon={"clock"} />
             {events.map((event) => (
                 <EventCard
                     key={event.Id}

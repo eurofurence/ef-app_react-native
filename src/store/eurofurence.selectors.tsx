@@ -1,6 +1,8 @@
 import { createSelector, Dictionary } from "@reduxjs/toolkit";
+import { TFunction } from "i18next";
 import _, { chain } from "lodash";
 import moment, { Moment } from "moment";
+import { getI18n } from "react-i18next";
 import { SectionListData } from "react-native";
 
 import { conName } from "../configuration";
@@ -51,28 +53,32 @@ const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => s
 
 export const eventDaysSelectors = {
     ...baseEventDaysSelectors,
-    selectCountdownTitle: createSelector([baseEventDaysSelectors.selectAll, (days, now: Moment) => now], (days, now): string => {
-        const firstDay: EventDayRecord | undefined = _.chain(days)
-            .orderBy((it) => it.Date, "asc")
-            .first()
-            .value();
-        const lastDay: EventDayRecord | undefined = _.chain(days)
-            .orderBy((it) => it.Date, "desc")
-            .last()
-            .value();
-        const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(it.Date, "day"));
+    selectCountdownTitle: createSelector(
+        [baseEventDaysSelectors.selectAll, (days, now: Moment) => now, (days, now: Moment, t: TFunction<"Countdown">) => t],
+        (days, now, t): string => {
+            const i18n = getI18n();
+            const firstDay: EventDayRecord | undefined = _.chain(days)
+                .orderBy((it) => it.Date, "asc")
+                .first()
+                .value();
+            const lastDay: EventDayRecord | undefined = _.chain(days)
+                .orderBy((it) => it.Date, "desc")
+                .last()
+                .value();
+            const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(it.Date, "day"));
 
-        if (currentDay) {
-            return currentDay.Name;
-        } else if (firstDay && now.isBefore(firstDay.Date, "day")) {
-            const diff = moment.duration(now.diff(firstDay.Date)).humanize();
-            return `${conName} will start in ${diff}`;
-        } else if (lastDay && now.isAfter(lastDay.Date, "day")) {
-            return "That was it! We hope to see you again next year!";
-        } else {
-            return "";
+            if (currentDay) {
+                return currentDay.Name;
+            } else if (firstDay && now.isBefore(firstDay.Date, "day")) {
+                const diff = moment.duration(now.diff(firstDay.Date)).humanize();
+                return t("before_event", { conName, diff });
+            } else if (lastDay && now.isAfter(lastDay.Date, "day")) {
+                return t("after_event");
+            } else {
+                return "";
+            }
         }
-    }),
+    ),
 };
 /**
  * An event with the external references as required.
