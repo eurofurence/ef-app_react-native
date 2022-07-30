@@ -12,6 +12,7 @@ import "react-native-reanimated";
 // Add locales to make them known for device deployment.
 import "./i18n/index";
 import "moment/locale/de";
+import "moment/locale/en-gb";
 import "moment/locale/nl";
 
 const Index = () => {

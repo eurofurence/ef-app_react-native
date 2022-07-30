@@ -1,14 +1,20 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { FC, ReactNode, useMemo } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity, ViewStyle, StyleProp } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { IconNames } from "../../types/IconNames";
+import { Label } from "../Atoms/Label";
 
 /**
  * Arguments to the tab.
  */
 export type TabProps = {
+    /**
+     * Root container style.
+     */
+    style?: StyleProp<ViewStyle>;
+
     /**
      * The icon to display.
      */
@@ -25,6 +31,11 @@ export type TabProps = {
     active?: boolean;
 
     /**
+     * True if on inverted background.
+     */
+    inverted?: boolean;
+
+    /**
      * If true or node, indicator will be presented over the this tab.
      */
     indicate?: boolean | ReactNode;
@@ -39,15 +50,18 @@ export type TabProps = {
  * Tab is an icon/caption combo intended for use in the bottom-navigation control.
  * @constructor
  */
-export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => {
+export const Tab: FC<TabProps> = ({ style, icon, text, indicate, active = false, inverted = false, onPress }) => {
     const theme = useTheme();
-    const color = useMemo(() => ({ color: active ? theme.secondary : theme.text }), [theme, active]);
+    const color = useMemo(() => {
+        if (inverted) return active ? theme.invImportant : theme.invText;
+        else return active ? theme.secondary : theme.text;
+    }, [theme, active, inverted]);
     const fillNotify = useMemo(() => ({ backgroundColor: theme.notification }), [theme]);
 
     return (
-        <TouchableOpacity style={[styles.container, styles.tab]} onPress={onPress}>
+        <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
             <View style={styles.item}>
-                <Icon name={icon} size={24} color={active ? theme.secondary : theme.text} />
+                <Icon name={icon} size={24} color={color} />
 
                 {!indicate ? null : (
                     <View style={styles.indicatorArea}>
@@ -58,7 +72,9 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
                 )}
             </View>
             <View style={styles.item}>
-                <Text style={[styles.text, color]}>{text}</Text>
+                <Label variant="middle" color={color}>
+                    {text}
+                </Label>
             </View>
         </TouchableOpacity>
     );
@@ -66,17 +82,12 @@ export const Tab: FC<TabProps> = ({ icon, text, indicate, active, onPress }) => 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    tab: {
         alignItems: "center",
         padding: 16,
     },
     item: {
         alignSelf: "stretch",
         alignItems: "center",
-    },
-    text: {
-        textAlign: "center",
     },
     indicatorArea: {
         position: "absolute",

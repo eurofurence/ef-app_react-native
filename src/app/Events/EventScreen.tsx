@@ -1,11 +1,9 @@
-import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
 import { useAppRoute } from "../../hooks/useAppNavigation";
-import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
 import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
 import { EventContent } from "./EventContent";

@@ -1,5 +1,5 @@
-import React, { useMemo, FC } from "react";
-import { Image, ImageSourcePropType, Platform, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
+import React, { useMemo, FC, memo } from "react";
+import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { useTheme } from "../../context/Theme";
@@ -7,53 +7,45 @@ import { appStyles } from "../AppStyles";
 
 export type DealerCardContentProps = {
     avatar?: ImageSourcePropType;
-    preview?: ImageSourcePropType;
     name: string;
+    present: boolean;
     merchandise?: string;
     days?: string;
     onPress?: () => void;
     onLongPress?: () => void;
 };
 
-export const DealerCardContent: FC<DealerCardContentProps> = ({ avatar, preview, name, merchandise, days, onPress, onLongPress }) => {
+export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, name, present, merchandise, days, onPress, onLongPress }) => {
     const theme = useTheme();
-    const blurRadius = Platform.OS === "android" ? 3 : 8;
     const backgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
+    const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: present ? theme.primary : theme.darken }), [present, theme]);
 
     return (
         <TouchableOpacity style={[styles.container, appStyles.shadow, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
-            {!preview ? null : <Image style={styles.background} resizeMode="cover" blurRadius={blurRadius} source={preview} />}
-
             {!avatar ? null : (
-                <View style={styles.avatarContainer}>
-                    <View style={styles.avatarCircle}>
-                        <Image style={styles.avatarImage} source={avatar} resizeMode="cover" />
-                    </View>
+                <View style={[styles.pre, stylePre]}>
+                    <Image style={styles.avatarCircle} source={avatar} resizeMode="contain" />
                 </View>
             )}
 
             <View style={styles.main}>
-                <Label style={styles.title} type="h2">
-                    {name}
-                </Label>
+                <Label type="h3">{name}</Label>
 
-                <View style={styles.subtitleArea}>
-                    {!merchandise ? null : (
-                        <Label style={styles.subtitle} type="caption" ellipsizeMode="tail" numberOfLines={2}>
-                            {merchandise}
-                        </Label>
-                    )}
+                {!merchandise ? null : (
+                    <Label type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+                        {merchandise}
+                    </Label>
+                )}
 
-                    {!days ? null : (
-                        <Label style={styles.tag} type="caption" ellipsizeMode="tail" numberOfLines={2}>
-                            {days}
-                        </Label>
-                    )}
-                </View>
+                {!days ? null : (
+                    <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+                        {days}
+                    </Label>
+                )}
             </View>
         </TouchableOpacity>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -67,29 +59,18 @@ const styles = StyleSheet.create({
         position: "absolute",
         width: undefined,
         height: undefined,
-        left: -10,
-        top: -10,
-        right: -10,
-        bottom: -10,
-        opacity: 0.1,
     },
-    avatarContainer: {
-        paddingLeft: 16,
-        paddingVertical: 16,
+    pre: {
+        overflow: "hidden",
+        width: 80,
         alignItems: "center",
         justifyContent: "center",
     },
     avatarCircle: {
+        position: "absolute",
         width: 70,
         height: 70,
         borderRadius: 35,
-        overflow: "hidden",
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    avatarImage: {
-        width: "100%",
-        height: "100%",
     },
     image: {
         position: "absolute",
@@ -111,20 +92,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
     },
-    head: {},
-    title: {},
-    subtitleArea: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    subtitle: {
-        flex: 2,
-        flexShrink: 1,
-    },
     tag: {
-        flexShrink: 5,
-        flex: 1,
-        fontWeight: "600",
         textAlign: "right",
     },
 });

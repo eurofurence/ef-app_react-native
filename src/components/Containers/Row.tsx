@@ -43,6 +43,9 @@ const types = StyleSheet.create({
 });
 
 const variants = StyleSheet.create({
+    wrap: {
+        flexWrap: "wrap",
+    },
     start: {
         justifyContent: "flex-start",
     },

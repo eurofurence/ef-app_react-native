@@ -19,7 +19,7 @@ describe("useAnalytics", function () {
             },
         });
 
-        result.result.current()("test", { test: 1 });
+        result.result.current("test", { test: 1 });
 
         expect(spy).not.toHaveBeenCalled();
     });
@@ -39,7 +39,7 @@ describe("useAnalytics", function () {
             },
         });
 
-        result.result.current()("test", { test: 1 });
+        result.result.current("test", { test: 1 });
 
         expect(spy).toHaveBeenCalledTimes(1);
     });

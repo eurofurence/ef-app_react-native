@@ -3,7 +3,6 @@ import { StyleSheet, Vibration, View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
-import { conName } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/authorization.service";
 

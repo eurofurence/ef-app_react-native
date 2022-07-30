@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useNow } from "../../hooks/useNow";
 import { DealerWithDetails } from "../../store/eurofurence.selectors";
 import { DealerCardContent } from "./DealerCardContent";
 
@@ -13,14 +14,14 @@ export type DealerCardProps = {
 
 export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }) => {
     const { t } = useTranslation("Dealer");
+    const [now] = useNow();
 
     const avatar = useMemo(() => {
         if (dealer.ArtistThumbnailImageUrl) return { uri: dealer.ArtistThumbnailImageUrl };
         else if (dealer.ArtistImageUrl) return { uri: dealer.ArtistImageUrl };
         else return require("../../../assets/images/dealer_black.png");
     }, [dealer]);
-
-    const preview = useMemo(() => (dealer.ArtPreviewImageUrl ? { uri: dealer.ArtPreviewImageUrl } : undefined), [dealer]);
+    const present = useMemo(() => Boolean(dealer.AttendanceDays.find((day) => now.isSame(day.Date, "day"))), [dealer, now]);
 
     const days = useMemo(
         () =>
@@ -32,5 +33,5 @@ export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }
         [dealer, t]
     );
 
-    return <DealerCardContent avatar={avatar} preview={preview} name={dealer.FullName} merchandise={dealer.Merchandise} days={days} onPress={onPress} onLongPress={onLongPress} />;
+    return <DealerCardContent avatar={avatar} name={dealer.FullName} present={present} merchandise={dealer.Merchandise} days={days} onPress={onPress} onLongPress={onLongPress} />;
 };

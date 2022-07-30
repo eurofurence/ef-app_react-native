@@ -1,27 +1,21 @@
-import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import * as Linking from "expo-linking";
 import { StatusBar } from "expo-status-bar";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { conId } from "../configuration";
 import { NavigationProvider } from "../context/NavigationProvider";
 import { useThemeType } from "../context/Theme";
-import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 import { AboutScreen } from "./About";
 import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
-import { DealersTabsScreenParamsList } from "./Dealers/DealersTabsScreen";
 import { EventScreen } from "./Events/EventScreen";
-import { EventsTabsScreenParamsList } from "./Events/EventsTabsScreen";
 import { KnowledgeEntryScreen } from "./Knowledge/KnowledgeEntryScreen";
 import { KnowledgeGroupsScreen } from "./Knowledge/KnowledgeGroupsScreen";
 import { MapScreen } from "./Maps/MapScreen";
 import { PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
-import { ScreenAreas, ScreenAreasParams, ScreenAreasParamsList } from "./ScreenAreas";
+import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
 import { SettingsScreen } from "./Settings/SettingsScreen";
 
 /**

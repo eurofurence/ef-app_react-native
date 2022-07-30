@@ -5,6 +5,7 @@ import { TabsRef } from "../../components/Containers/Tabs";
 import { useAdditionalServices } from "../../hooks/useAdditionalServices";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useFursuitGames } from "../../hooks/useFursuitGames";
+import { RecordId } from "../../store/eurofurence.types";
 import { PagerLogin } from "./PagerLogin";
 import { PagerPrimary } from "./PagerPrimary";
 
@@ -25,7 +26,10 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 navigation.navigate("PrivateMessageList");
                 return tabs.current?.close();
             },
-            info: () => tabs.current?.close(),
+            info: () => {
+                navigation.navigate("KnowledgeGroups", {});
+                tabs.current?.close();
+            },
             catchEmAll: () => {
                 openFursuitGames();
                 tabs.current?.close();
@@ -39,7 +43,14 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 navigation.navigate("Settings");
                 tabs.current?.close();
             },
-            about: () => tabs.current?.close(),
+            about: () => {
+                navigation.navigate("About");
+                tabs.current?.close();
+            },
+            map: (target: RecordId) => {
+                navigation.navigate("Map", { id: target });
+                tabs.current?.close();
+            },
         }),
         [tabs, pager, openFursuitGames, openAdditionalServices]
     );
@@ -57,6 +68,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                     onMaps={on.maps}
                     onSettings={on.settings}
                     onAbout={on.about}
+                    onMap={on.map}
                 />
             }
             right={<PagerLogin close={on.loginBack} />}

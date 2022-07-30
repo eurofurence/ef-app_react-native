@@ -2,7 +2,7 @@ import Constants from "expo-constants";
 import * as WebBrowser from "expo-web-browser";
 import { capitalize } from "lodash";
 import { FC } from "react";
-import { Image, Platform, StyleSheet, View, ScrollView } from "react-native";
+import { Image, Platform, View, ScrollView } from "react-native";
 // @ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -14,8 +14,6 @@ import { Button } from "../components/Containers/Button";
 import { Col } from "../components/Containers/Col";
 import { Header } from "../components/Containers/Header";
 import { Row } from "../components/Containers/Row";
-import { Scroller } from "../components/Containers/Scroller";
-import { useTopHeaderStyle } from "../hooks/useTopHeaderStyle";
 
 const extraThanksMarkdown = `**Program Management:**
 - Zefiro

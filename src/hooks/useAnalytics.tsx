@@ -9,6 +9,6 @@ export const useAnalytics = () => {
     const enabled = useAppSelector((state) => state.settingsSlice.analytics.enabled);
 
     return useMemo((): LogEvent => {
-        return enabled ? Analytics.logEvent : Promise.resolve;
+        return enabled ? (name, properties) => Analytics.logEvent(name, properties) : () => Promise.resolve();
     }, [enabled]);
 };
