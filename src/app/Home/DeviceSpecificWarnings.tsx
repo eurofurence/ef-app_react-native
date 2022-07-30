@@ -1,11 +1,13 @@
 import * as Device from "expo-device";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Platform, View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 
 export const DeviceSpecificWarnings = () => {
+    const { t } = useTranslation("Home");
     const [scheduledNotificications] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
     const [cacheImages] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
     const pushNotifications = useMemo(() => scheduledNotificications && Device.isDevice, [scheduledNotificications]);
@@ -17,11 +19,11 @@ export const DeviceSpecificWarnings = () => {
 
     return (
         <View>
-            <Section title={"Device Issues"} subtitle={"Due to your device some functionality might not work"} icon={"information"} />
+            <Section title={t("warnings.title")} subtitle={t("warnings.subtitle")} icon={"information"} />
 
-            {!scheduledNotificications && <Label>Your device does not support scheduled notifications. You will not receive reminders about upcoming events.</Label>}
-            {!pushNotifications && <Label>Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.</Label>}
-            {!cacheImages && <Label>Your device cannot cache images. Without an internet connection, images will not be shown.</Label>}
+            {!scheduledNotificications && <Label>{t("warnings.no_notifications")}</Label>}
+            {!pushNotifications && <Label>{t("warnings.no_push_notifications")}</Label>}
+            {!cacheImages && <Label>{t("warnings.no_image_caching")}</Label>}
         </View>
     );
 };

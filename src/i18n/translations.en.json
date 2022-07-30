@@ -5,7 +5,14 @@
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "eventsTitle_zero": "There are no events.",
     "eventsTitle_one": "We have retrieved {{ count }} event.",
-    "eventsTitle_other": "We have retrieved {{ count }} events."
+    "eventsTitle_other": "We have retrieved {{ count }} events.",
+    "warnings": {
+      "title": "Device Issues",
+      "subtitle": "Due to your device some functionality might not work",
+      "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
+      "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
+      "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown."
+    }
   },
   "Menu": {
     "not_logged_in": "You are currently not logged in",
@@ -33,7 +40,15 @@
     "evening": "In the evening",
     "night": "At night",
     "events_count": "{{count}} events",
-    "events_done": "Events concluded"
+    "events_done": "Events concluded",
+    "favorites_title": "Favorite Events",
+    "favorites_subtitle": "You will receive a reminder about these events",
+    "current_title": "Current Events",
+    "current_subtitle": "These events are currently happening",
+    "upcoming_title": "Upcoming Events",
+    "upcoming_subtitle": "These events are starting in the next 30 minutes",
+    "upcoming_favorites_title": "Favorite Events",
+    "upcoming_favorites_subtitle": "You will receive a reminder before this event starts"
   },
   "Event": {
     "view_on_map": "View on map",
@@ -73,11 +88,76 @@
     "reset": "Reset"
   },
   "Settings": {
+    "header": "Settings",
     "timeTravel": "Show time travel settings.",
     "currentLanguage": "Your current language is English!",
-    "changeLanguage":  "Change language",
+    "changeLanguage": "Change language",
     "allowAnalytics": "Allow us to collect analytics events",
-    "settingsSection": "Settings"
+    "settingsSection": "Settings",
+    "developer_settings": {
+      "title": "Developer Settings",
+      "subtitle": "You shouldn't touch these unless you know what you're doing."
+    },
+    "cache": {
+      "title": "Cache Stats",
+      "subtitle": "Last sync: {{ time }}",
+      "cache_state": "Current state: {{ state }}",
+      "cache_item": "There are {{ count }} {{ type }}s",
+      "synchronize": "Synchronize",
+      "reset": "Clear cache",
+      "reset_alert": "To clean the cache you need to long press this button"
+    },
+    "dev_buttons": {
+      "title": "Dev Buttons",
+      "subtitle": "Make the API do something.",
+      "no_auth_alert": "You are not logged in. Stopping.",
+      "test_message_subject": "You have won a grand prize!",
+      "test_message_content": "You have won a grand prize!",
+      "sync_alert_error": "Long hold to activate this function",
+      "sync_alert_done": "Told all devices to synchronize",
+      "sync": "Force Resync {{ status }}",
+      "send_private_message": "Receive Private Message {{ status }}"
+    },
+    "remote_messages": {
+      "title": "Remote Messages",
+      "subtitle": "Messages that we got from FCM",
+      "no_messages": "We have not received any messages from FCM"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "All scheduled notifications on this device",
+      "no_notifications": "There are no scheduled notifications!",
+      "notification_item": "{{ identifier }} scheduled on {{ time }}"
+    }
   },
-  "Todo": {}
+  "Announcements": {
+    "sectionTitle": "Announcements",
+    "sectionSubtitle": "Live updates from the convention",
+    "noAnnouncements": "There are currently no active announcements"
+  },
+  "EmptyScreen": {
+    "notImplemented": "Content is not implemented yet."
+  },
+  "KnowledgeGroups": {
+    "header": "Info Articles"
+  },
+  "PrivateMessageList": {
+    "section_title_from": "From {{authorName}}",
+    "message_item_subtitle": "{{ status }} - Sent on {{ time }}"
+  },
+  "About": {
+    "header": "About",
+    "app_details": {
+      "title": "App Details",
+      "get_help": "Get Help",
+      "report_bug": "Report a Bug"
+    },
+    "developed_by": "Developed by",
+    "extra_thanks": "Extra Thanks"
+  },
+  "Todo": {},
+  "Countdown": {
+    "before_event": "{{conName}} will start in {{diff}}",
+    "after_event": "That was it! We hope to see you again next year!"
+  }
 }

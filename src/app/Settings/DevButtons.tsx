@@ -1,28 +1,29 @@
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Vibration, View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
-import { conName } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/authorization.service";
 
 export const DevButtons = () => {
+    const { t } = useTranslation("Settings", { keyPrefix: "dev_buttons" });
     const [createSync, syncResult] = useCreateSyncRequestMutation();
     const [sendMessage, messageResult] = useSendPrivateMessageMutation();
     const me = useAppSelector((state) => state.authorization.uid);
 
     const onSendMessage = useCallback(() => {
         if (me === undefined) {
-            alert("You are not logged in, not sending a message");
+            alert(t("no_auth_alert"));
             return;
         }
 
         sendMessage({
             RecipientUid: me,
             AuthorName: `tester`,
-            Subject: "You have won a grand prize!",
-            Message: "You get to program more next year! ",
+            Subject: t("test_message_subject"),
+            Message: t("test_message_content"),
         });
 
         alert(`Sent a message to ${me}`);
@@ -30,20 +31,20 @@ export const DevButtons = () => {
 
     return (
         <View>
-            <Section title={"Dev Buttons"} subtitle={"Make the API do something"} />
+            <Section title={t("title")} subtitle={t("subtitle")} />
 
             <Button
                 icon="alert"
                 style={styles.button}
-                onPress={() => alert("Long hold to activate this function")}
+                onPress={() => alert(t("sync_alert_error"))}
                 onLongPress={() => {
                     console.log("Forcing  FCM sync devices");
                     Vibration.vibrate(400);
                     createSync(undefined);
-                    alert("Told all devices to synchronize");
+                    alert(t("sync_alert_done"));
                 }}
             >
-                Force Resync {syncResult.status}
+                {t("sync", { status: syncResult.status })}
             </Button>
 
             <Button
@@ -52,7 +53,7 @@ export const DevButtons = () => {
                     onSendMessage();
                 }}
             >
-                Receive Private Message {messageResult.status}
+                {t("send_private_message", { status: messageResult.status })}
             </Button>
         </View>
     );

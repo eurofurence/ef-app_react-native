@@ -5,7 +5,7 @@ import Markdown from "react-native-easy-markdown";
 
 import { Label } from "../../components/Atoms/Label";
 import { Card } from "../../components/Containers/Card";
-import { AnnouncementRecord, EnrichedAnnouncementRecord } from "../../store/eurofurence.types";
+import { EnrichedAnnouncementRecord } from "../../store/eurofurence.types";
 
 export const AnnouncementItem: FC<{ announcement: EnrichedAnnouncementRecord }> = ({ announcement }) => {
     return (

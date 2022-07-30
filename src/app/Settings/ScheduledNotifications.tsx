@@ -2,6 +2,7 @@ import { isDevice } from "expo-device";
 import { getAllScheduledNotificationsAsync, NotificationRequest } from "expo-notifications";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
@@ -13,6 +14,7 @@ import { withPlatform } from "../../hoc/withPlatform";
  * @constructor
  */
 export const ScheduledNotifications = () => {
+    const { t } = useTranslation("Settings", { keyPrefix: "notifications" });
     const [notifications, setNotifications] = useState<NotificationRequest[]>([]);
 
     useEffect(() => {
@@ -24,12 +26,14 @@ export const ScheduledNotifications = () => {
 
     return (
         <View>
-            <Section title={"Notifications"} subtitle={"All scheduled notifications on this device"} icon="notification-clear-all" />
-            {!notifications.length && <Label mb={15}>There are no scheduled notifications!</Label>}
+            <Section title={t("title")} subtitle={t("subtitle")} icon="notification-clear-all" />
+            {!notifications.length && <Label mb={15}>{t("no_notifications")}</Label>}
 
             {notifications.map((item) => (
-                // @ts-expect-error Value does not really exist yet
-                <Label key={item.identifier} mb={15}>{`${item.identifier} scheduled on ${moment(item.trigger?.value).format("llll")}`}</Label>
+                <Label key={item.identifier} mb={15}>
+                    {/* @ts-expect-error Value does not really exist yet */}
+                    {t("notification_item", { identifier: item.identifier, time: moment(item.trigger?.value).format("llll") })}
+                </Label>
             ))}
         </View>
     );
