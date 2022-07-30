@@ -19,6 +19,7 @@ import {
     DealerRecord,
     EnrichedDealerRecord,
     EnrichedEventRecord,
+    EnrichedEventRoomRecord,
     EnrichedImageRecord,
     EnrichedMapRecord,
     EventDayRecord,
@@ -49,7 +50,7 @@ const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => s
  * An event with the external references as required.
  */
 export type EventWithDetails = EnrichedEventRecord & {
-    ConferenceRoom: EventRoomRecord;
+    ConferenceRoom: EnrichedEventRoomRecord;
     ConferenceDay: EventDayRecord;
     ConferenceTrack: EventTrackRecord;
 };

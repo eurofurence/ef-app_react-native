@@ -14,6 +14,7 @@ export type Theme = Record<string, ColorValue> & {
     notification: ColorValue;
     darken: ColorValue;
     lighten: ColorValue;
+    white: ColorValue;
 };
 
 export const useThemeType = (): "light" | "dark" => "light";
@@ -35,6 +36,7 @@ export const useTheme = (): Theme => {
             notification: "#d91c52",
             darken: "#04001440",
             lighten: "#f7f7f760",
+            white: "#ffffff",
         }),
         []
     );

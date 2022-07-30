@@ -1,6 +1,8 @@
 /**
  * A URL leading to an image.
  */
+import { IconNames } from "../types/IconNames";
+
 export type ImageUrl = string;
 
 /**
@@ -69,6 +71,7 @@ export type EnrichedEventRecord = EventRecord & {
     PartOfDay: PartOfDay;
     PosterImageUrl?: ImageUrl;
     BannerImageUrl?: ImageUrl;
+    Glyph?: IconNames;
 };
 
 export type DealerRecord = RecordMetadata & {
@@ -113,6 +116,10 @@ export type EventTrackRecord = RecordMetadata & {
 
 export type EventRoomRecord = RecordMetadata & {
     Name: string;
+};
+export type EnrichedEventRoomRecord = EventRoomRecord & {
+    LabelPart?: string;
+    LocationPart?: string;
 };
 
 export type MapRecord = RecordMetadata & {

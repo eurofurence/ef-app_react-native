@@ -1,14 +1,19 @@
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { FC, ReactNode, useMemo } from "react";
-import { Image, ImageSourcePropType, Platform, StyleSheet, View, ViewStyle, TouchableOpacity } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet, View, ViewStyle, TouchableOpacity, ColorValue } from "react-native";
 
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
 import { useTheme } from "../../context/Theme";
+import { IconNames } from "../../types/IconNames";
 import { appStyles } from "../AppStyles";
 
+const glyphIconSize = 90;
+
 export type EventCardProps = {
-    background?: ImageSourcePropType;
+    glyph?: IconNames;
     pre: ReactNode;
+    poster?: ImageSourcePropType;
     title?: string;
     subtitle?: string;
     tag?: string;
@@ -18,41 +23,47 @@ export type EventCardProps = {
     onLongPress?: () => void;
 };
 
-export const EventCardContent: FC<EventCardProps> = ({ background, pre, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
-    // TODO: Indicate if happening at the moment.
-
+export const EventCardContent: FC<EventCardProps> = ({ glyph, pre, poster, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
     const theme = useTheme();
-    const blurRadius = Platform.OS === "android" ? 3 : 8;
-    const backgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
-    const preBackgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
-
+    const styleContainer = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
+    const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
+    const colorGlyph = useMemo<ColorValue>(() => (done ? theme.darken : theme.white), [done, theme]);
     return (
-        <TouchableOpacity style={[styles.container, appStyles.shadow, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
-            {!background ? null : <Image style={styles.background} resizeMode="cover" blurRadius={blurRadius} source={background} />}
-
-            {!pre ? null : <View style={[styles.pre, preBackgroundStyle]}>{pre}</View>}
-
-            <View style={styles.main}>
-                {!title ? null : (
-                    <Label style={styles.title} type="h2">
-                        {title}
-                    </Label>
+        <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer]} onPress={onPress} onLongPress={onLongPress}>
+            <View style={[styles.pre, stylePre]}>
+                {!glyph ? null : (
+                    <View style={styles.glyphContainer}>
+                        <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
+                    </View>
                 )}
+                {pre}
+            </View>
 
-                <View style={styles.subtitleArea}>
-                    {!subtitle ? null : (
-                        <Label style={styles.subtitle} type="caption" ellipsizeMode="tail" numberOfLines={2}>
-                            {subtitle}
+            {poster ? (
+                <View style={styles.mainPoster}>
+                    <Image style={StyleSheet.absoluteFill} resizeMode="cover" source={poster} />
+                    <View style={styles.tagArea}>
+                        <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                            {title} {subtitle}
                         </Label>
-                    )}
-
-                    {!tag ? null : (
-                        <Label style={styles.tag} type="caption" ellipsizeMode="tail" numberOfLines={2}>
+                        <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
                             {tag}
                         </Label>
-                    )}
+                    </View>
                 </View>
-            </View>
+            ) : (
+                <View style={styles.mainText}>
+                    <Label style={styles.title} type="h3">
+                        {title}
+                    </Label>
+                    <Label style={styles.subtitle} type="h4" variant="narrow">
+                        {subtitle}
+                    </Label>
+                    <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+                        {tag}
+                    </Label>
+                </View>
+            )}
 
             {!happening ? null : (
                 <View style={styles.indicator}>
@@ -71,23 +82,31 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         flexDirection: "row",
     },
-    pre: {
-        overflow: "hidden",
-        flexBasis: 70,
+    glyphContainer: {
+        position: "absolute",
+        left: -20,
+        top: -20,
+        right: -20,
+        bottom: -20,
         alignItems: "center",
         justifyContent: "center",
     },
-    background: {
-        position: "absolute",
-        width: undefined,
-        height: undefined,
-        left: -10,
-        top: -10,
-        right: -10,
-        bottom: -10,
-        opacity: 0.2,
+    glyph: {
+        opacity: 0.15,
+        transform: [{ skewY: "-15deg" }],
     },
-    main: {
+    pre: {
+        overflow: "hidden",
+        width: 70,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    mainPoster: {
+        height: 120,
+        flex: 1,
+        padding: 16,
+    },
+    mainText: {
         flex: 1,
         padding: 16,
     },
@@ -97,15 +116,21 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
     },
-    subtitle: {
-        flex: 1,
-        flexShrink: 1,
-    },
+    subtitle: {},
     tag: {
-        flexShrink: 5,
-        flex: 1,
-        fontWeight: "600",
         textAlign: "right",
+    },
+    tagArea: {
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        right: 0,
+        backgroundColor: "#000000A0",
+        paddingLeft: 16,
+        paddingBottom: 16,
+        paddingRight: 16,
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
     indicator: {
         position: "absolute",

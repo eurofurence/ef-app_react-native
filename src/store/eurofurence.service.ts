@@ -3,12 +3,13 @@ import _ from "lodash";
 import { REHYDRATE } from "redux-persist";
 
 import { apiBase } from "../configuration";
-import { enrichDealerRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
+import { enrichDealerRecord, enrichImageRecord, enrichMapRecord, enrichRoomRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
     CommunicationRecord,
     DealerRecord,
     EnrichedDealerRecord,
+    EnrichedEventRoomRecord,
     EnrichedImageRecord,
     EnrichedMapRecord,
     EventDayRecord,
@@ -99,14 +100,17 @@ export const eurofurenceService = createApi({
         getEventRooms: builder.query<EventRoomRecord[], void>({
             query: () => ({ url: "/EventConferenceRooms" }),
             providesTags: tagsFromList("EventRoom"),
+            transformResponse: (result: EventRoomRecord[]): EnrichedEventRoomRecord[] => result.map(enrichRoomRecord),
         }),
         getEventRoomById: builder.query<EventRoomRecord, RecordId>({
             query: (args) => ({ url: `/EventConferenceRooms/${args}` }),
             providesTags: tagsFromItem("EventRoom"),
+            transformResponse: enrichRoomRecord,
         }),
         getMaps: builder.query<MapRecord[], void>({
             query: () => ({ url: "/Maps" }),
             providesTags: tagsFromList("Map"),
+            transformResponse: (result: MapRecord[]): EnrichedMapRecord[] => result.map(enrichMapRecord),
         }),
         getMapById: builder.query<EnrichedMapRecord, RecordId>({
             query: (args) => ({ url: `/Maps/${args}` }),
