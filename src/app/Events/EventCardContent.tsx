@@ -1,5 +1,5 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { FC, ReactNode, useMemo } from "react";
+import React, { FC, memo, ReactNode, useMemo } from "react";
 import { Image, ImageSourcePropType, StyleSheet, View, ViewStyle, TouchableOpacity, ColorValue } from "react-native";
 
 import { Indicator } from "../../components/Atoms/Indicator";
@@ -23,7 +23,7 @@ export type EventCardProps = {
     onLongPress?: () => void;
 };
 
-export const EventCardContent: FC<EventCardProps> = ({ glyph, pre, poster, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
+export const EventCardContent: FC<EventCardProps> = memo(({ glyph, pre, poster, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
     const theme = useTheme();
     const styleContainer = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
     const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
@@ -53,10 +53,8 @@ export const EventCardContent: FC<EventCardProps> = ({ glyph, pre, poster, title
                 </View>
             ) : (
                 <View style={styles.mainText}>
-                    <Label style={styles.title} type="h3">
-                        {title}
-                    </Label>
-                    <Label style={styles.subtitle} type="h4" variant="narrow">
+                    <Label type="h3">{title}</Label>
+                    <Label type="h4" variant="narrow">
                         {subtitle}
                     </Label>
                     <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
@@ -72,7 +70,7 @@ export const EventCardContent: FC<EventCardProps> = ({ glyph, pre, poster, title
             )}
         </TouchableOpacity>
     );
-};
+});
 
 const styles = StyleSheet.create({
     container: {
@@ -92,8 +90,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     glyph: {
-        opacity: 0.15,
-        transform: [{ skewY: "-15deg" }],
+        opacity: 0.2,
+        transform: [{ rotate: "-15deg" }],
     },
     pre: {
         overflow: "hidden",
@@ -110,13 +108,10 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
     },
-    head: {},
-    title: {},
     subtitleArea: {
         flexDirection: "row",
         justifyContent: "space-between",
     },
-    subtitle: {},
     tag: {
         textAlign: "right",
     },

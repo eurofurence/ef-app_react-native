@@ -1,6 +1,5 @@
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
-import * as Analytics from "expo-firebase-analytics";
 import * as Linking from "expo-linking";
 import { FC, useCallback } from "react";
 

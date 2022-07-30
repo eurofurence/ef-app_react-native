@@ -142,7 +142,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
                     icon: descriptors[route.key].options.icon,
                     text: descriptors[route.key].options.title,
                     onPress: () => {
-                        // @ts-expect-error todo: @lukashaertel pls fix
+                        // todo: @lukashaertel pls fix
                         navigateTab(navigation, route);
                         tabs.current?.close();
                     },

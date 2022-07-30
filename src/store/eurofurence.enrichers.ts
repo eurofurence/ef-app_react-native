@@ -1,5 +1,4 @@
 import moment, { MomentInput } from "moment";
-import { record } from "zod";
 
 import { apiBase } from "../configuration";
 import { IconNames } from "../types/IconNames";
@@ -9,11 +8,9 @@ import {
     EnrichedAnnouncementRecord,
     EnrichedDealerRecord,
     EnrichedEventRecord,
-    EnrichedEventRoomRecord,
     EnrichedImageRecord,
     EnrichedMapRecord,
     EventRecord,
-    EventRoomRecord,
     ImageRecord,
     ImageUrl,
     MapRecord,
@@ -44,18 +41,6 @@ export const enrichDealerRecord = (record: DealerRecord): EnrichedDealerRecord =
     FullName: record.DisplayName || record.AttendeeNickname,
 });
 
-const matchRoomRecordParts = /(\P{Pd}+)\p{Pd}(\P{Pd}+)/u;
-
-export const enrichRoomRecord = (record: EventRoomRecord): EnrichedEventRoomRecord => {
-    const match = matchRoomRecordParts.exec(record.Name);
-    const labelPart = match ? match[1].trim() : undefined;
-    const locationPart = match ? match[2].trim() : undefined;
-    return {
-        ...record,
-        LabelPart: labelPart,
-        LocationPart: locationPart,
-    };
-};
 export const enrichMapRecord = (record: MapRecord): EnrichedMapRecord => ({
     ...record,
     ImageUrl: internalCreateImageUrl(record.ImageId),

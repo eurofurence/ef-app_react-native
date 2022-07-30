@@ -21,7 +21,6 @@ import {
     DealerRecord,
     EnrichedDealerRecord,
     EnrichedEventRecord,
-    EnrichedEventRoomRecord,
     EnrichedImageRecord,
     EnrichedMapRecord,
     EventDayRecord,
@@ -79,7 +78,7 @@ export const eventDaysSelectors = {
  * An event with the external references as required.
  */
 export type EventWithDetails = EnrichedEventRecord & {
-    ConferenceRoom: EnrichedEventRoomRecord;
+    ConferenceRoom: EventRoomRecord;
     ConferenceDay: EventDayRecord;
     ConferenceTrack: EventTrackRecord;
 };

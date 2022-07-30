@@ -57,7 +57,7 @@ export const NotificationManager = () => {
                 // There is no token we can report yet.
                 return;
             }
-            const topics = [`${conId}-android`, `${conId}-expo`, `${conId},`];
+            const topics = [`${conId}-android`, `${conId}-expo`, `${conId}`];
             console.debug("NotificationManager", "Registering device with the API", expoPushToken, topics);
 
             await registerDevice({

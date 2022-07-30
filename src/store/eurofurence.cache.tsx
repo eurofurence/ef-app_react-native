@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice, EntityAdapter, EntityState, PayloadAction } from "@reduxjs/toolkit";
 import moment from "moment";
 
-import { enrichAnnouncementRecord, enrichDealerRecord, enrichEventRecord, enrichImageRecord, enrichMapRecord, enrichRoomRecord } from "./eurofurence.enrichers";
+import { enrichAnnouncementRecord, enrichDealerRecord, enrichEventRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
     DealerRecord,
@@ -154,7 +154,7 @@ export const eurofurenceCache = createSlice({
 
             syncEntities(state.events, eventsAdapter, action.payload.Events, enrichEventRecord);
             syncEntities(state.eventDays, eventDaysAdapter, action.payload.EventConferenceDays, undefined);
-            syncEntities(state.eventRooms, eventRoomsAdapter, action.payload.EventConferenceRooms, enrichRoomRecord);
+            syncEntities(state.eventRooms, eventRoomsAdapter, action.payload.EventConferenceRooms, undefined);
             syncEntities(state.eventTracks, eventTracksAdapter, action.payload.EventConferenceTracks, undefined);
             syncEntities(state.knowledgeGroups, knowledgeGroupsAdapter, action.payload.KnowledgeGroups, undefined);
             syncEntities(state.knowledgeEntries, knowledgeEntriesAdapter, action.payload.KnowledgeEntries, undefined);

@@ -120,10 +120,7 @@ export type EventTrackRecord = RecordMetadata & {
 
 export type EventRoomRecord = RecordMetadata & {
     Name: string;
-};
-export type EnrichedEventRoomRecord = EventRoomRecord & {
-    LabelPart?: string;
-    LocationPart?: string;
+    ShortName?: string;
 };
 
 export type MapRecord = RecordMetadata & {

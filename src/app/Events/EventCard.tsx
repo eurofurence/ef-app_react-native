@@ -64,7 +64,7 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
             poster={event.BannerImageUrl ? { uri: event.BannerImageUrl } : undefined}
             title={event.Title}
             subtitle={event.SubTitle}
-            tag={event.ConferenceRoom.LabelPart ?? event.ConferenceRoom.Name}
+            tag={event.ConferenceRoom.ShortName ?? event.ConferenceRoom.Name}
             happening={happening}
             done={done}
             onPress={onPress}

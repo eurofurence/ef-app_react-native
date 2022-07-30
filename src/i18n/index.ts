@@ -22,7 +22,7 @@ const defaultRegions: Record<string, string> = {
     nl: "NL",
 };
 
-const applyDefaultRegion = <T extends string | null | undefined>(language: T) => {
+export const applyDefaultRegion = <T extends string | null | undefined>(language: T) => {
     if (typeof language !== "string") return language;
     if (language.includes("-")) return language;
     const normalized = language.toLowerCase().trim();

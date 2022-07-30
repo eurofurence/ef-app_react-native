@@ -48,20 +48,21 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
 
     const theme = useTheme();
     const border = useMemo<ViewStyle>(() => ({ borderBottomColor: theme.text }), [theme]);
+    const roundedStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary }), [theme]);
     return (
         <Floater>
             <View style={styles.end}>
-                <Row style={[styles.categories, border]}>
-                    <Tab icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
-                    <Tab icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
-                    <Tab icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
-                </Row>
                 <View style={styles.searchArea}>
                     <Text>Enter your query</Text>
                     <TextInput style={[styles.searchField, border]} value={search} onChangeText={setSearch} placeholder="Enter query" />
 
                     {!results ? null : <Button onPress={() => navigation.jumpTo("Results")}>View all {results.length} results</Button>}
                 </View>
+                <Row style={styles.categories} variant="spaced">
+                    <Tab style={[styles.rounded, roundedStyle]} inverted icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
+                    <Tab style={[styles.rounded, styles.rowCenter, roundedStyle]} inverted icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
+                    <Tab style={[styles.rounded, roundedStyle]} inverted icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
+                </Row>
             </View>
         </Floater>
     );
@@ -75,7 +76,6 @@ const styles = StyleSheet.create({
     categories: {
         paddingBottom: 20,
         marginBottom: 30,
-        borderBottomWidth: 1,
     },
     searchArea: {
         height: 160,
@@ -84,5 +84,12 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         borderBottomWidth: 1,
         marginVertical: 25,
+    },
+    rounded: {
+        margin: 10,
+        borderRadius: 10,
+    },
+    rowCenter: {
+        marginHorizontal: 16,
     },
 });

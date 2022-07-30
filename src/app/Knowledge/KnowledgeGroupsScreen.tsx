@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { SectionList, StyleSheet, View } from "react-native";
+import { SectionList, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Section } from "../../components/Atoms/Section";
@@ -7,7 +7,6 @@ import { Button } from "../../components/Containers/Button";
 import { Header } from "../../components/Containers/Header";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
-import { useTopHeaderStyle } from "../../hooks/useTopHeaderStyle";
 import { useAppSelector } from "../../store";
 import { selectKnowledgeItemsSections } from "../../store/eurofurence.selectors";
 import { KnowledgeEntryRecord } from "../../store/eurofurence.types";

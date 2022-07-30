@@ -1,12 +1,11 @@
-import React, { useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Header } from "../../components/Containers/Header";
-import { Scroller } from "../../components/Containers/Scroller";
 import { CacheStats } from "./CacheStats";
 import { DevButtons } from "./DevButtons";
 import { RemoteMessages } from "./RemoteMessages";
