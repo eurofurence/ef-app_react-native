@@ -1,14 +1,13 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import { FC, RefObject, useMemo } from "react";
+import React, { FC, RefObject, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { TabsRef } from "../components/Containers/Tabs";
 import { createTabNavigator, TabScreenProps } from "../components/Navigators/TabsNavigator";
-import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealersTabsScreen, DealersTabsScreenParams } from "./Dealers/DealersTabsScreen";
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { HomeScreen, ScreenHomeParams } from "./Home/HomeScreen";
@@ -33,11 +32,6 @@ export type ScreenAreasParamsList = {
      * Dealers list.
      */
     Dealers: DealersTabsScreenParams;
-
-    /**
-     * Settings Screen.
-     */
-    Settings: ScreenEmptyParams;
 };
 
 /**
@@ -57,7 +51,7 @@ export type ScreenAreasProps =
     // Route carrying from start screen at "Areas", navigation via own parameter list and parent.
     CompositeScreenProps<StackScreenProps<ScreenStartParamsList, "Areas">, TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>>;
 
-export const ScreenAreas: FC<ScreenAreasProps> = () => {
+export const ScreenAreas: FC<ScreenAreasProps> = React.memo(() => {
     const { t } = useTranslation("Menu");
 
     // Compute safe inset at the bottom and convert to style.
@@ -73,4 +67,4 @@ export const ScreenAreas: FC<ScreenAreasProps> = () => {
             </AreasNavigator.Navigator>
         </View>
     );
-};
+});

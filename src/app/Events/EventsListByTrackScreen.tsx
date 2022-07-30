@@ -38,11 +38,12 @@ export type EventsListByTrackScreenProps =
         PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ navigation, route }) => {
+export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const isEventDone = useIsEventDone();
 
     // Get the track. Use it to resolve events to display.
+    // @ts-expect-error TODO: @lukashaertel pls fix
     const track = "track" in route.params ? route.params?.track : null;
     const eventsByTrack = useAppSelector((state) => eventsCompleteSelectors.selectByTrack(state, track?.Id ?? ""));
     const eventsGroups = useMemo(() => {
@@ -77,7 +78,6 @@ export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ navi
 
     return (
         <EventsSectionedListGeneric
-            navigation={navigation}
             eventsGroups={eventsGroups}
             leader={
                 <Label type="h1" variant="middle" mt={30}>

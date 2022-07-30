@@ -21,6 +21,7 @@ import { EventsListByRoomScreen, EventsListByRoomScreenParams } from "./EventsLi
 import { EventsListByTrackScreen, EventsListByTrackScreenParams } from "./EventsListByTrackScreen";
 import { EventsListSearchResultsScreen, EventsListSearchResultsScreenParams } from "./EventsListSearchResultsScreen";
 import { EventsSearchScreen, EventsSearchScreenParams } from "./EventsSearchScreen";
+import { FavoriteEventsList } from "./FavoriteEventsList";
 
 // TODO: Might have an distinction between days, tracks, rooms as param.
 
@@ -28,6 +29,7 @@ import { EventsSearchScreen, EventsSearchScreenParams } from "./EventsSearchScre
  * Available routes.
  */
 export type EventsTabsScreenParamsList = {
+    Favorites: object;
     Search: EventsSearchScreenParams;
 
     Results: EventsListSearchResultsScreenParams;
@@ -78,7 +80,9 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     // Convert given optional type to actual filter type.
     const actualType = useMemo(() => {
         if (hasSearchResults) return "results";
+        // @ts-expect-error TODO: @lukashaertel pls fix
         return route.params?.filterType ?? "days";
+        // @ts-expect-error TODO: @lukashaertel pls fix
     }, [hasSearchResults, route.params?.filterType]);
 
     const currentDayName = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Name, [days, now]);
@@ -102,6 +106,7 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     // If the screens require too much performance we should set detach to true again.
     return (
         <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialName}>
+            <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "bookmark" }} component={FavoriteEventsList} />
             {/*Tab for searching and filtering*/}
             <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
 

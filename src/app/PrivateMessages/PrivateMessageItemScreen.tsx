@@ -1,23 +1,14 @@
-import { StackScreenProps } from "@react-navigation/stack";
-import { FC, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
+import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useMarkCommunicationReadMutation } from "../../store/eurofurence.service";
-import { CommunicationRecord, RecordId } from "../../store/eurofurence.types";
-import { ScreenStartParamsList } from "../ScreenStart";
 
-export type PrivateMessageItemParams = {
-    id: RecordId;
-    message: CommunicationRecord;
-};
-
-export type PrivateMessageItemProps = StackScreenProps<ScreenStartParamsList, "PrivateMessageItem">;
-
-export const PrivateMessageItemScreen: FC<PrivateMessageItemProps> = ({ route }) => {
-    const params = route.params;
+export const PrivateMessageItemScreen = () => {
+    const { params } = useAppRoute("PrivateMessageItem");
     const [markRead] = useMarkCommunicationReadMutation();
     const top = useSafeAreaInsets()?.top;
     const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);

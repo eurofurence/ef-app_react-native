@@ -1,17 +1,27 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import * as Linking from "expo-linking";
 import { StatusBar } from "expo-status-bar";
-import { FC } from "react";
+import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
+import { conId } from "../configuration";
+import { NavigationProvider } from "../context/NavigationProvider";
 import { useThemeType } from "../context/Theme";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
-import { ScreenEmpty, ScreenEmptyParams } from "./Common/ScreenEmpty";
+import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
+import { AboutScreen } from "./About";
+import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
-import { EventScreen, EventScreenParams } from "./Events/EventScreen";
-import { PrivateMessageItemParams, PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
+import { DealersTabsScreenParamsList } from "./Dealers/DealersTabsScreen";
+import { EventScreen } from "./Events/EventScreen";
+import { EventsTabsScreenParamsList } from "./Events/EventsTabsScreen";
+import { KnowledgeEntryScreen } from "./Knowledge/KnowledgeEntryScreen";
+import { KnowledgeGroupsScreen } from "./Knowledge/KnowledgeGroupsScreen";
+import { MapScreen } from "./Maps/MapScreen";
+import { PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
-import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
+import { ScreenAreas, ScreenAreasParams, ScreenAreasParamsList } from "./ScreenAreas";
 import { SettingsScreen } from "./Settings/SettingsScreen";
 
 /**
@@ -26,21 +36,28 @@ export type ScreenStartParamsList = {
     /**
      * Detail screen for events.
      */
-    Event: EventScreenParams;
+    Event: {
+        id: string;
+    };
 
     /**
      * Detail screen for dealer.
      */
     Dealer: DealerScreenParams;
-
-    /**
-     * About page.
-     */
-    About: ScreenEmptyParams;
-
     Settings: ScreenEmptyParams;
     PrivateMessageList: ScreenEmptyParams;
-    PrivateMessageItem: PrivateMessageItemParams;
+    PrivateMessageItem: {
+        id: RecordId;
+        message: CommunicationRecord;
+    };
+    KnowledgeGroups: object;
+    KnowledgeEntry: {
+        id: RecordId;
+    };
+    Map: {
+        id: RecordId;
+    };
+    About: undefined;
 };
 
 const ScreenStartNavigator = createStackNavigator<ScreenStartParamsList>();
@@ -51,20 +68,11 @@ const ScreenStartNavigator = createStackNavigator<ScreenStartParamsList>();
  */
 export type ScreenStartProps = object;
 
-export const ScreenStart: FC<ScreenStartProps> = () => {
+export const ScreenStart: FC<ScreenStartProps> = React.memo(() => {
     // Get the theme type for status bar configuration.
     const themeType = useThemeType();
-
-    // Get navigation state from persistence.
-    const [isReady, initialState, onStateChange] = useNavigationStatePersistence();
-
-    // If not yet loaded, skip rendering.
-    if (!isReady) {
-        return null;
-    }
-
     return (
-        <NavigationContainer initialState={initialState} onStateChange={onStateChange}>
+        <NavigationProvider>
             <StatusBar style={themeType === "light" ? "dark" : "light"} />
 
             <View style={[StyleSheet.absoluteFill, { backgroundColor: "green" }]}>
@@ -72,12 +80,15 @@ export const ScreenStart: FC<ScreenStartProps> = () => {
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
                     <ScreenStartNavigator.Screen name="Event" component={EventScreen} />
                     <ScreenStartNavigator.Screen name="Dealer" component={DealerScreen} />
-                    <ScreenStartNavigator.Screen name="About" component={ScreenEmpty} />
                     <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />
                     <ScreenStartNavigator.Screen name="PrivateMessageItem" component={PrivateMessageItemScreen} />
+                    <ScreenStartNavigator.Screen name="KnowledgeGroups" component={KnowledgeGroupsScreen} />
+                    <ScreenStartNavigator.Screen name="KnowledgeEntry" component={KnowledgeEntryScreen} />
+                    <ScreenStartNavigator.Screen name="Map" component={MapScreen} />
+                    <ScreenStartNavigator.Screen name="About" component={AboutScreen} />
                 </ScreenStartNavigator.Navigator>
             </View>
-        </NavigationContainer>
+        </NavigationProvider>
     );
-};
+});

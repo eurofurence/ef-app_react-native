@@ -16,8 +16,6 @@ type PrivateMessageLinkerProps = {
 export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMessages }) => {
     const { t } = useTranslation("Menu");
     const { unread } = useGetCommunicationsQuery(undefined, {
-        // TODO: We need to react to FCM PM notifications.
-        // pollingInterval: 10000,
         refetchOnFocus: true,
         selectFromResult: (query) => ({
             ...query,

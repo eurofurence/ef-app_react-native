@@ -37,10 +37,11 @@ export type DealersListByDayScreenProps =
         PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ navigation, route }) => {
+export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route }) => {
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
+    // @ts-expect-error TODO: @lukashaertel pls fix
     const day = route.params?.day;
     const dealers = useAppSelector((state) => dealersCompleteSelectors.selectByDayName(state, day));
     const dealersGroups = useMemo(() => {
@@ -72,7 +73,6 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ naviga
 
     return (
         <DealersSectionedListGeneric
-            navigation={navigation}
             dealersGroups={dealersGroups}
             leader={
                 <Label type="h1" variant="middle" mt={30}>

@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ScreenStart } from "./app/ScreenStart";
+import { AnalyticsManager } from "./components/Managers/AnalyticsManager";
 import { PlatformNotificationManager } from "./components/Managers/NotificationManager";
 import { EventsSearchProvider } from "./components/Searching/EventsSearchContext";
 import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
@@ -19,6 +20,7 @@ export default function App() {
                         <ScreenStart />
 
                         <PlatformNotificationManager />
+                        <AnalyticsManager />
                     </EventsSearchProvider>
                 </SynchronizationProvider>
             </BottomSheetModalProvider>

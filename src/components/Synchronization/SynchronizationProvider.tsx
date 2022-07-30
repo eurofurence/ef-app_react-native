@@ -5,6 +5,7 @@ import { Vibration } from "react-native";
 import { apiBase } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
+import { selectIsSynchronized } from "../../store/eurofurence.selectors";
 import { PlatformImageSynchronizer } from "./ImageSynchronizer";
 
 type SynchronizationProviderProps = {
@@ -64,5 +65,12 @@ export const SynchronizationProvider: FC = ({ children }) => {
 };
 
 export const useSynchronizer = () => {
-    return useContext(SynchronizationContext);
+    const { synchronize, clear } = useContext(SynchronizationContext);
+    const isSynchronizing = useAppSelector(selectIsSynchronized);
+
+    return {
+        synchronize,
+        clear,
+        isSynchronizing,
+    };
 };

@@ -31,7 +31,7 @@ export type DealersListAllScreenProps =
         PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const DealersListAllScreen: FC<DealersListAllScreenProps> = ({ navigation }) => {
+export const DealersListAllScreen: FC<DealersListAllScreenProps> = () => {
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
@@ -51,7 +51,6 @@ export const DealersListAllScreen: FC<DealersListAllScreenProps> = ({ navigation
 
     return (
         <DealersSectionedListGeneric
-            navigation={navigation}
             dealersGroups={dealersGroups}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
