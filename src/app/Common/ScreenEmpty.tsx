@@ -1,15 +1,10 @@
-import { CompositeScreenProps } from "@react-navigation/core";
-import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
-import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useSignalLoading } from "../../context/LoadingContext";
 import { useAppRoute } from "../../hooks/useAppNavigation";
-import { ScreenAreasParamsList } from "../ScreenAreas";
-import { ScreenStartParamsList } from "../ScreenStart";
 
 /**
  * Params handled by the screen in route.
@@ -19,7 +14,7 @@ export type ScreenEmptyParams = undefined;
 /**
  * The properties to the screen as a component.
  */
-export type ScreenEmptyProps = CompositeScreenProps<TabScreenProps<ScreenAreasParamsList, "Dealers">, StackScreenProps<ScreenStartParamsList>>;
+export type ScreenEmptyProps = object;
 
 /**
  * Placeholder screen.

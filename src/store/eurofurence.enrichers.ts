@@ -62,12 +62,18 @@ const tagsToIcon = (tags?: string[]): IconNames | undefined => {
     if (tags.includes("photoshoot")) return "camera";
 };
 
+const superSponsorOnly = (tags?: string[]) => Boolean(tags?.includes("supersponsors_only"));
+
+const sponsorOnly = (tags?: string[]) => Boolean(tags?.includes("sponsors_only"));
+
 export const enrichEventRecord = (record: EventRecord): EnrichedEventRecord => ({
     ...record,
     PartOfDay: internalCategorizeTime(record.StartDateTimeUtc),
     BannerImageUrl: internalCreateImageUrl(record.BannerImageId),
     PosterImageUrl: internalCreateImageUrl(record.PosterImageId),
     Glyph: tagsToIcon(record.Tags),
+    SuperSponsorOnly: superSponsorOnly(record.Tags),
+    SponsorOnly: sponsorOnly(record.Tags),
 });
 
 export const enrichAnnouncementRecord = (record: AnnouncementRecord): EnrichedAnnouncementRecord => ({

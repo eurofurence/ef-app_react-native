@@ -51,6 +51,8 @@
     "upcoming_favorites_subtitle": "You will receive a reminder before this event starts"
   },
   "Event": {
+    "supersponsor_event":"Supersponsor event",
+    "sponsor_event":"Sponsor event",
     "view_on_map": "View on map",
     "when": "{{day}}, {{start}} until {{finish}}."
   },

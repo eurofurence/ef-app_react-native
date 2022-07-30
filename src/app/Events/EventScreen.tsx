@@ -2,7 +2,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
-import { Scroller } from "../../components/Containers/Scroller";
+import { Scroller, scrollerPadding } from "../../components/Containers/Scroller";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
@@ -26,7 +26,7 @@ export const EventScreen = () => {
     return (
         <ScrollView style={safe} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{event?.Title ?? "Viewing event"}</Header>
-            <Scroller>{!event ? null : <EventContent event={event} />}</Scroller>
+            <Scroller>{!event ? null : <EventContent event={event} parentPad={scrollerPadding.horizontal} />}</Scroller>
         </ScrollView>
     );
 };

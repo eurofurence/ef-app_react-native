@@ -76,6 +76,8 @@ export type EnrichedEventRecord = EventRecord & {
     PosterImageUrl?: ImageUrl;
     BannerImageUrl?: ImageUrl;
     Glyph?: IconNames;
+    SuperSponsorOnly: boolean;
+    SponsorOnly: boolean;
 };
 
 export type DealerRecord = RecordMetadata & {

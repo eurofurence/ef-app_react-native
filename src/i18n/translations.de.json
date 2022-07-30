@@ -28,6 +28,8 @@
     "events_done": "Bereits zu Ende"
   },
   "Event": {
+    "supersponsor_event":"Supersponsor-Event",
+    "sponsor_event":"Sponsor-Event",
     "when": "{{ day }}, {{ start }} bis {{ finish }}.",
     "view_on_map": "Auf der Karte ansehen"
   },

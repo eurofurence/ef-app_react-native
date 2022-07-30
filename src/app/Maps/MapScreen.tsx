@@ -1,7 +1,7 @@
 import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import _ from "lodash";
 import { useCallback, useRef, useState } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";

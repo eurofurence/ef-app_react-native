@@ -1,7 +1,7 @@
 import moment from "moment";
-import React, { FC, useCallback } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Share, StyleSheet } from "react-native";
+import { Share, StyleSheet, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
@@ -9,6 +9,7 @@ import { Button } from "../../components/Containers/Button";
 import { ImageExButton } from "../../components/Containers/ImageButton";
 import { Row } from "../../components/Containers/Row";
 import { appBase, conAbbr } from "../../configuration";
+import { useTheme } from "../../context/Theme";
 import { useEventReminder } from "../../hooks/useEventReminder";
 import { useAppSelector } from "../../store";
 import { EventWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
@@ -18,24 +19,24 @@ import { EventWithDetails, mapsCompleteSelectors } from "../../store/eurofurence
  */
 export type EventContentProps = {
     /**
-     * True if favorited. TODO: This should not be given fixed but resolved and changable.
-     */
-    isFavorited?: boolean;
-
-    /**
      * The event to display.
      */
     event: EventWithDetails;
+
+    /**
+     * The padding used by the parent horizontally.
+     */
+    parentPad?: number;
 };
 
-export const EventContent: FC<EventContentProps> = ({ event }) => {
+export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) => {
     const { t } = useTranslation("Event");
     const { isFavorited, toggleReminder } = useEventReminder(event);
 
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
-
+    event.Tags?.includes("");
     const mapLink = useAppSelector((state) => mapsCompleteSelectors.selectValidLinksByTarget(state, room.Id));
 
     const shareEvent = useCallback(() => {
@@ -49,9 +50,31 @@ export const EventContent: FC<EventContentProps> = ({ event }) => {
         );
     }, [event]);
 
+    const theme = useTheme();
+    const styleSuperSponsor = useMemo<ViewStyle>(() => ({ backgroundColor: theme.superSponsor }), [theme]);
+    const styleSponsor = useMemo<ViewStyle>(() => ({ backgroundColor: theme.sponsor }), [theme]);
+    const styleInvPad = useMemo<ViewStyle>(() => ({ marginHorizontal: -parentPad }), [parentPad]);
+    const styleRePad = useMemo<ViewStyle>(() => ({ paddingHorizontal: parentPad }), [parentPad]);
+
     return (
         <>
-            <Section icon={isFavorited ? "heart" : "calendar"} title={event.Title ?? ""} subtitle={event.SubTitle} />
+            {!event.SuperSponsorOnly ? null : (
+                <View style={[styleInvPad, styleSuperSponsor]}>
+                    <Label style={[styles.sponsorship, styleRePad]} color={theme.superSponsorText} ml={10} type="h3" variant="middle">
+                        {t("supersponsor_event")}
+                    </Label>
+                </View>
+            )}
+
+            {!event.SponsorOnly ? null : (
+                <View style={[styleInvPad, styleSponsor]}>
+                    <Label style={[styles.sponsorship, styleRePad]} color={theme.sponsorText} ml={10} type="h3" variant="middle">
+                        {t("sponsor_event")}
+                    </Label>
+                </View>
+            )}
+
+            <Section icon={isFavorited ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
             <Label type="para" mb={20}>
                 {event.Abstract}
             </Label>
@@ -103,6 +126,9 @@ export const EventContent: FC<EventContentProps> = ({ event }) => {
 };
 
 const styles = StyleSheet.create({
+    sponsorship: {
+        paddingVertical: 10,
+    },
     rowLeft: {
         flex: 1,
         marginRight: 8,
