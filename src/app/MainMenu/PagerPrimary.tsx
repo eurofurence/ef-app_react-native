@@ -6,7 +6,9 @@ import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
+import { mapsSelectors } from "../../store/eurofurence.selectors";
 import { PrivateMessageLinker } from "../PrivateMessages/PrivateMessageLinker";
 
 /**
@@ -25,7 +27,9 @@ export type PagerMenuProps = {
 
 export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings }) => {
     const { t } = useTranslation("Menu");
+    const navigation = useAppNavigation("Areas");
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
+    const maps = useAppSelector(mapsSelectors.selectBrowseableMaps);
 
     return (
         <Col type="stretch">
@@ -40,13 +44,20 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
                 </View>
             )}
             <Grid cols={3} style={{ alignSelf: "stretch" }}>
-                <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
+                <Tab icon="information-outline" text={t("info")} onPress={() => navigation.navigate("KnowledgeGroups", {})} />
                 <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />
                 <Tab icon="book-outline" text={t("services")} onPress={onServices} />
                 <Tab icon="map" text={t("maps")} onPress={onMaps} />
-                <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
-                <Tab icon="cog" text={t("settings")} onPress={onSettings} />
+                <Tab icon="card-account-details-outline" text={t("about")} onPress={() => navigation.navigate("About")} />
+                <Tab icon="cog" text={t("settings")} onPress={() => navigation.navigate("Settings")} />
             </Grid>
+            <Col style={{ padding: 30, alignItems: "stretch" }}>
+                {maps.map((it) => (
+                    <Button key={it.Id} style={{ marginVertical: 10 }} icon={"map"} onPress={() => navigation.navigate("Map", { id: it.Id })}>
+                        {it.Description}
+                    </Button>
+                ))}
+            </Col>
         </Col>
     );
 };

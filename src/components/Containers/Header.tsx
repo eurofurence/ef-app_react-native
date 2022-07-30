@@ -39,7 +39,7 @@ export const Header: FC<HeaderProps> = ({ style, children }) => {
 const styles = StyleSheet.create({
     container: {
         borderBottomWidth: 1,
-        paddingTop: 30,
+        paddingTop: 15,
         paddingHorizontal: 15,
         paddingBottom: 15,
     },

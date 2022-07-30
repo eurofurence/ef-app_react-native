@@ -1,15 +1,12 @@
 import { FC, ReactNode, useCallback, useState } from "react";
 import { SectionList, StyleSheet, Vibration, View } from "react-native";
 
+import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { EventWithDetails } from "../../store/eurofurence.selectors";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
-import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
-import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
-import { EventsListByTrackScreenProps } from "./EventsListByTrackScreen";
-import { EventsListSearchResultsScreenProps } from "./EventsListSearchResultsScreen";
-import { EventsSearchScreenProps } from "./EventsSearchScreen";
 
 export type EventsSectionedListItem = EventSectionProps & {
     data: EventWithDetails[];
@@ -19,31 +16,26 @@ export type EventsSectionedListItem = EventSectionProps & {
  * The properties to the component.
  */
 export type EventsSectionedListGenericProps = {
-    /**
-     * Navigation type. Copied from the screens rendering this component.
-     */
-    navigation:
-        | EventsSearchScreenProps["navigation"]
-        | EventsListSearchResultsScreenProps["navigation"]
-        | EventsListByDayScreenProps["navigation"]
-        | EventsListByRoomScreenProps["navigation"]
-        | EventsListByTrackScreenProps["navigation"];
     leader?: ReactNode;
     eventsGroups: EventsSectionedListItem[];
     trailer?: ReactNode;
     cardType?: "duration" | "time";
 };
 
-export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ navigation, leader, eventsGroups, trailer, cardType = "duration" }) => {
+export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ leader, eventsGroups, trailer, cardType = "duration" }) => {
+    const navigation = useAppNavigation("Areas");
     // Set event for action sheet
     const [selectedEvent, setSelectedEvent] = useState<EventWithDetails | undefined>(undefined);
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback((event) => navigation.push("Event", { id: event.Id }), [navigation]);
+    const synchronizer = useSynchronizer();
 
     return (
         <View style={StyleSheet.absoluteFill}>
             <SectionList
+                refreshing={synchronizer.isSynchronizing}
+                onRefresh={synchronizer.synchronize}
                 style={styles.list}
                 contentContainerStyle={styles.container}
                 scrollEnabled={true}

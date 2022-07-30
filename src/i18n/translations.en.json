@@ -75,6 +75,8 @@
   "Settings": {
     "timeTravel": "Show time travel settings.",
     "currentLanguage": "Your current language is English!",
+    "changeLanguage":  "Change language",
+    "allowAnalytics": "Allow us to collect analytics events",
     "settingsSection": "Settings"
   },
   "Todo": {}

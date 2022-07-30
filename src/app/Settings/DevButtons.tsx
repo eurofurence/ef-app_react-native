@@ -20,7 +20,7 @@ export const DevButtons = () => {
 
         sendMessage({
             RecipientUid: me,
-            AuthorName: `${conName} React Native Dev Menu`,
+            AuthorName: `tester`,
             Subject: "You have won a grand prize!",
             Message: "You get to program more next year! ",
         });

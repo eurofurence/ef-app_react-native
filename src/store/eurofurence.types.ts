@@ -39,7 +39,11 @@ export type AnnouncementRecord = RecordMetadata & {
     Author: string;
     Title: string;
     Content: string;
-    ImageId: RecordId;
+    ImageId?: RecordId;
+};
+
+export type EnrichedAnnouncementRecord = AnnouncementRecord & {
+    ImageUrl?: ImageUrl;
 };
 
 export type EventRecord = RecordMetadata & {
@@ -128,6 +132,7 @@ export type MapRecord = RecordMetadata & {
     IsBrowseable: boolean;
     ImageId: RecordId;
     Entries: MapEntryRecord[];
+    Order: number;
 };
 
 export type MapEntryRecord = RecordMetadata & {
@@ -162,6 +167,8 @@ export type KnowledgeEntryRecord = RecordMetadata & {
     Text: string;
     Order: number;
     KnowledgeGroupId: RecordId;
+    Links: LinkFragment[];
+    ImageIds: RecordId[];
 };
 
 export type ImageRecord = RecordMetadata & {

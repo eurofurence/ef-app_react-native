@@ -1,9 +1,12 @@
 import moment, { MomentInput } from "moment";
+import { record } from "zod";
 
 import { apiBase } from "../configuration";
 import { IconNames } from "../types/IconNames";
 import {
+    AnnouncementRecord,
     DealerRecord,
+    EnrichedAnnouncementRecord,
     EnrichedDealerRecord,
     EnrichedEventRecord,
     EnrichedEventRoomRecord,
@@ -82,6 +85,10 @@ export const enrichEventRecord = (record: EventRecord): EnrichedEventRecord => (
     Glyph: tagsToIcon(record.Tags),
 });
 
+export const enrichAnnouncementRecord = (record: AnnouncementRecord): EnrichedAnnouncementRecord => ({
+    ...record,
+    ImageUrl: internalCreateImageUrl(record.ImageId),
+});
 /**
  * @deprecated Do not export and use this. Enrich a record here instead.
  */

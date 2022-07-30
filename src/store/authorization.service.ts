@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { apiBase } from "../configuration";
+import { Query } from "../types";
 import { TokenRegSysRequest, TokenRegSysResponse, TokenWhoAmIResponse } from "./authorization.types";
 import { RecordId, RecordMetadata } from "./eurofurence.types";
 
@@ -63,14 +64,14 @@ export const authorizationService = createApi({
         }),
         postSubscribeToTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
             query: (arg) => ({
-                url: `/PushNotifications/SubscribeToTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
-                method: "POST",
+                url: `/PushNotifications/Topics/${arg.Topic}/${arg.DeviceId}`,
+                method: "PUT",
             }),
         }),
         postUnsubscribeFromTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
             query: (arg) => ({
-                url: `/PushNotifications/UnsubscribeFromTopic?deviceId=${arg.DeviceId}&topic=${arg.Topic}`,
-                method: "POST",
+                url: `/PushNotifications/Topics/${arg.Topic}/${arg.DeviceId}`,
+                method: "DELETE",
             }),
         }),
         sendPrivateMessage: builder.mutation<string, NewPrivateMessage>({
@@ -91,7 +92,7 @@ export const selectById =
         record: T | undefined;
     } => ({
         ...query,
-        record: query.data?.find((record) => record.Id === id),
+        record: query.data?.find((record: RecordMetadata) => record.Id === id),
     });
 
 export const filterByIds =
@@ -102,7 +103,7 @@ export const filterByIds =
         records: T[];
     } => ({
         ...query,
-        records: query.data?.filter((it) => it.Id in ids) ?? [],
+        records: query.data?.filter((it: RecordMetadata) => it.Id in ids) ?? [],
     });
 
 export const {

@@ -1,4 +1,4 @@
-import { CompositeScreenProps, useRoute } from "@react-navigation/core";
+import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
 import { View } from "react-native";
@@ -6,6 +6,7 @@ import { View } from "react-native";
 import { Label } from "../../components/Atoms/Label";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useSignalLoading } from "../../context/LoadingContext";
+import { useAppRoute } from "../../hooks/useAppNavigation";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 
@@ -24,7 +25,7 @@ export type ScreenEmptyProps = CompositeScreenProps<TabScreenProps<ScreenAreasPa
  * @constructor
  */
 export const ScreenEmpty: FC<ScreenEmptyProps> = () => {
-    const route = useRoute();
+    const route = useAppRoute("Areas");
 
     // Indicate loading, as content is not present.
     useSignalLoading(true);

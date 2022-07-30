@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 /**
  * A helper type to make RTK Query types more explicit
  */
@@ -19,9 +21,13 @@ type Query<DataType = unknown, ArgsType = unknown> = {
     isError: boolean;
 };
 
-type Route<ParamProps extends object, RouteName extends string> = {
+type CustomRoute<ParamProps extends object, RouteName extends string> = {
     key: string;
     name: RouteName;
     path?: string;
     params: Readonly<ParamProps>;
 };
+
+declare module "react-native-easy-markdown" {
+    export default Markdown = FC;
+}

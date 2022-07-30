@@ -1,55 +1,92 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { useNavigation } from "@react-navigation/core";
+import _ from "lodash";
 import moment from "moment";
 import React, { useMemo } from "react";
-import { RefreshControl, StyleSheet, View, TouchableOpacity } from "react-native";
+import { RefreshControl, SectionList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
+import { Card } from "../../components/Containers/Card";
 import { Col } from "../../components/Containers/Col";
 import { Header } from "../../components/Containers/Header";
+import { Row } from "../../components/Containers/Row";
 import { Scroller } from "../../components/Containers/Scroller";
+import { useTheme } from "../../context/Theme";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 import { CommunicationRecord } from "../../store/eurofurence.types";
+import { Query } from "../../types";
 
 export const PrivateMessageListScreen = () => {
-    const navigation = useNavigation();
+    const navigation = useAppNavigation("PrivateMessageList");
+    const theme = useTheme();
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
-        // TODO: We need to react to FCM PM notifications.
-        // pollingInterval: 10000,
         refetchOnFocus: true,
     });
+    const inserts = useSafeAreaInsets();
 
-    const top = useSafeAreaInsets()?.top;
-    const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
+    const sectionedData = useMemo(
+        () =>
+            _.chain(data)
+                .orderBy((it) => it.ReadDateTimeUtc, "desc")
+                .groupBy((it) => it.AuthorName)
+                .map((messages, author) => ({
+                    title: author,
+                    data: messages,
+                }))
+                .value(),
+        [data]
+    );
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>Private Messages</Header>
-            <Scroller refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}>
-                {data?.map((message) => (
-                    <TouchableOpacity
-                        style={styles.container}
-                        key={message.Id}
+        <SectionList
+            style={[inserts]}
+            sections={sectionedData}
+            keyExtractor={(item, index) => item.Id + index}
+            stickySectionHeadersEnabled
+            onRefresh={refetch}
+            refreshing={isFetching}
+            ListHeaderComponent={<Header>Private Messages</Header>}
+            renderSectionHeader={({ section }) => (
+                <Label type={"h2"} style={{ padding: 20, backgroundColor: theme.background }}>
+                    From {_.capitalize(section.title)}
+                </Label>
+            )}
+            renderItem={({ item }) => (
+                <View style={{ paddingHorizontal: 20 }}>
+                    <Card
+                        key={item.Id}
                         onPress={() =>
-                            // @ts-expect-error nav typing
                             navigation.navigate("PrivateMessageItem", {
-                                id: message.Id,
-                                message,
+                                id: item.Id,
+                                message: item,
                             })
                         }
                     >
-                        <Col style={styles.title}>
-                            <Label type={"h4"}>{message.Subject}</Label>
-                            <Label>
-                                {message.ReadDateTimeUtc === null ? "Unread" : "Read"} - Sent on {moment(message.CreatedDateTimeUtc).format("llll")}
-                            </Label>
-                        </Col>
-                        <Icon name="chevron-right" />
-                    </TouchableOpacity>
-                ))}
-            </Scroller>
-        </View>
+                        <Row>
+                            <Col style={styles.title}>
+                                <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>{item.Subject}</Label>
+                                <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
+                                    {item.ReadDateTimeUtc === null ? "Unread" : "Read"} - Sent on {moment(item.CreatedDateTimeUtc).format("llll")}
+                                </Label>
+                            </Col>
+                            <View
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    width: 50,
+                                    height: 50,
+                                    borderRadius: 50,
+                                }}
+                            >
+                                <Icon name="chevron-right" size={30} />
+                            </View>
+                        </Row>
+                    </Card>
+                </View>
+            )}
+        />
     );
 };
 
@@ -58,6 +95,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "baseline",
         marginVertical: 15,
+        paddingHorizontal: 20,
     },
     title: {
         flex: 6,

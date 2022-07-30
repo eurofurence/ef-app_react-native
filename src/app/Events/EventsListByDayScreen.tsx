@@ -1,7 +1,7 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
-import { FC, useMemo } from "react";
+import { FC, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { Label } from "../../components/Atoms/Label";
@@ -36,10 +36,11 @@ export type EventsListByDayScreenProps =
         PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigation, route }) => {
+export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ route }) => {
     const { t } = useTranslation("Events");
 
     // Get the day. Use it to resolve events to display.
+    // @ts-expect-error TODO: @lukashaertel pls fix
     const day = "day" in route.params ? route.params?.day : null;
     const eventsByDay = useAppSelector((state) => eventsCompleteSelectors.selectByDay(state, day?.Id ?? ""));
     const eventsGroups = useMemo(() => {
@@ -62,7 +63,6 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigati
 
     return (
         <EventsSectionedListGeneric
-            navigation={navigation}
             eventsGroups={eventsGroups}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
@@ -71,4 +71,4 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ navigati
             }
         />
     );
-};
+});
