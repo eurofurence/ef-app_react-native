@@ -1,8 +1,7 @@
 import { createSelector, Dictionary } from "@reduxjs/toolkit";
-import { TFunction } from "i18next";
 import _, { chain } from "lodash";
 import moment, { Moment } from "moment";
-import { getI18n } from "react-i18next";
+import { TFunction } from "react-i18next";
 import { SectionListData } from "react-native";
 
 import { conName } from "../configuration";
@@ -54,9 +53,8 @@ const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => s
 export const eventDaysSelectors = {
     ...baseEventDaysSelectors,
     selectCountdownTitle: createSelector(
-        [baseEventDaysSelectors.selectAll, (days, now: Moment) => now, (days, now: Moment, t: TFunction<"Countdown">) => t],
+        [baseEventDaysSelectors.selectAll, (state, now: Moment) => now, (state, now: Moment, t: TFunction<"Countdown">) => t],
         (days, now, t): string => {
-            const i18n = getI18n();
             const firstDay: EventDayRecord | undefined = _.chain(days)
                 .orderBy((it) => it.Date, "asc")
                 .first()
@@ -65,7 +63,7 @@ export const eventDaysSelectors = {
                 .orderBy((it) => it.Date, "desc")
                 .last()
                 .value();
-            const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(it.Date, "day"));
+            const currentDay: EventDayRecord | undefined = days.find((it: EventDayRecord) => now.isSame(it.Date, "day"));
 
             if (currentDay) {
                 return currentDay.Name;

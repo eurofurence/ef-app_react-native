@@ -15,6 +15,10 @@ export type Theme = Record<string, ColorValue> & {
     darken: ColorValue;
     lighten: ColorValue;
     white: ColorValue;
+    superSponsor: ColorValue;
+    superSponsorText: ColorValue;
+    sponsor: ColorValue;
+    sponsorText: ColorValue;
 };
 
 export const useThemeType = (): "light" | "dark" => "light";
@@ -37,6 +41,10 @@ export const useTheme = (): Theme => {
             darken: "#04001440",
             lighten: "#f7f7f760",
             white: "#ffffff",
+            superSponsor: "#5300ff",
+            superSponsorText: "#fff7f0",
+            sponsor: "#ffd700",
+            sponsorText: "#323034",
         }),
         []
     );

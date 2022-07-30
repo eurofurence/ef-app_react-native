@@ -2,6 +2,11 @@ import { FC, ReactElement, useMemo } from "react";
 import { RefreshControlProps, StyleSheet, View, ViewStyle } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+export const scrollerPadding = {
+    horizontal: 30,
+    bottom: 100,
+};
+
 /**
  * Props to the scroller.
  */
@@ -34,8 +39,8 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     container: {
-        paddingHorizontal: 30,
-        paddingBottom: 100,
+        paddingHorizontal: scrollerPadding.horizontal,
+        paddingBottom: scrollerPadding.bottom,
     },
     arranger: {
         flex: 1,
