@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
@@ -22,21 +23,20 @@ export const KnowledgeListEntry: FC<{ entry: KnowledgeEntryRecord }> = ({ entry 
 
 export const KnowledgeGroupsScreen = () => {
     const synchronizer = useSynchronizer();
-    const headerStyle = useTopHeaderStyle();
+    const safe = useSafeAreaInsets();
     const entries = useAppSelector((state) => selectKnowledgeItemsSections(state));
+
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>Info Articles</Header>
-            <SectionList
-                onRefresh={synchronizer.synchronize}
-                refreshing={synchronizer.isSynchronizing}
-                contentContainerStyle={styles.container}
-                sections={entries}
-                keyExtractor={(item, index) => item.Id + index}
-                renderItem={({ item }) => <KnowledgeListEntry entry={item} key={item.Id} />}
-                renderSectionHeader={({ section }) => <Section title={section.Name} subtitle={section.Description} />}
-            />
-        </View>
+        <SectionList
+            onRefresh={synchronizer.synchronize}
+            refreshing={synchronizer.isSynchronizing}
+            contentContainerStyle={[styles.container, safe]}
+            ListHeaderComponent={<Header style={{ marginHorizontal: -20 }}>Info Articles</Header>}
+            sections={entries}
+            keyExtractor={(item, index) => item.Id + index}
+            renderItem={({ item }) => <KnowledgeListEntry entry={item} key={item.Id} />}
+            renderSectionHeader={({ section }) => <Section title={section.Name} subtitle={section.Description} />}
+        />
     );
 };
 

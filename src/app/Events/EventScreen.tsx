@@ -1,4 +1,6 @@
 import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
 import { Scroller } from "../../components/Containers/Scroller";
@@ -19,14 +21,14 @@ export type EventScreenParams = {
 };
 
 export const EventScreen = () => {
+    const safe = useSafeAreaInsets();
     const route = useAppRoute("Event");
     const event = useAppSelector((state) => eventsCompleteSelectors.selectById(state, route.params.id));
-    const headerStyle = useTopHeaderStyle();
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>{event?.Title ?? "Viewing event"}</Header>
+        <ScrollView style={safe} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+            <Header>{event?.Title ?? "Viewing event"}</Header>
             <Scroller>{!event ? null : <EventContent event={event} />}</Scroller>
-        </View>
+        </ScrollView>
     );
 };
