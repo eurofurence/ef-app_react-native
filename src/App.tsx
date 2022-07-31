@@ -1,5 +1,6 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { StyleSheet } from "react-native";
+import Constants from "expo-constants";
+import { Platform, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Sentry from "sentry-expo";
 
@@ -12,6 +13,7 @@ import { SynchronizationProvider } from "./components/Synchronization/Synchroniz
 Sentry.init({
     dsn: "https://ecd1c4bfa6bc4545a855be74136b7528@o1339312.ingest.sentry.io/6614918",
     enableInExpoDevelopment: false,
+    release: Platform.OS === "android" ? `${Constants.manifest?.version}-(${Constants.manifest?.android?.versionCode})` : Constants.manifest?.version,
     debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
 });
 
