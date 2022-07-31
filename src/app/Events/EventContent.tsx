@@ -1,15 +1,17 @@
 import moment from "moment";
-import React, { FC, useCallback, useMemo } from "react";
+import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Share, StyleSheet, View, ViewStyle } from "react-native";
+import { Share, StyleSheet } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
+import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
 import { Button } from "../../components/Containers/Button";
 import { ImageExButton } from "../../components/Containers/ImageButton";
 import { Row } from "../../components/Containers/Row";
 import { appBase, conAbbr } from "../../configuration";
 import { useTheme } from "../../context/Theme";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useEventReminder } from "../../hooks/useEventReminder";
 import { useAppSelector } from "../../store";
 import { EventWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
@@ -30,8 +32,11 @@ export type EventContentProps = {
 };
 
 export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) => {
+    const navigation = useAppNavigation("Areas");
+
     const { t } = useTranslation("Event");
     const { isFavorited, toggleReminder } = useEventReminder(event);
+    const theme = useTheme();
 
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
@@ -50,28 +55,18 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
         );
     }, [event]);
 
-    const theme = useTheme();
-    const styleSuperSponsor = useMemo<ViewStyle>(() => ({ backgroundColor: theme.superSponsor }), [theme]);
-    const styleSponsor = useMemo<ViewStyle>(() => ({ backgroundColor: theme.sponsor }), [theme]);
-    const styleInvPad = useMemo<ViewStyle>(() => ({ marginHorizontal: -parentPad }), [parentPad]);
-    const styleRePad = useMemo<ViewStyle>(() => ({ paddingHorizontal: parentPad }), [parentPad]);
-
     return (
         <>
             {!event.SuperSponsorOnly ? null : (
-                <View style={[styleInvPad, styleSuperSponsor]}>
-                    <Label style={[styles.sponsorship, styleRePad]} color={theme.superSponsorText} ml={10} type="h3" variant="middle">
-                        {t("supersponsor_event")}
-                    </Label>
-                </View>
+                <BadgeInvPad padding={parentPad} badgeColor={theme.superSponsor} textColor={theme.superSponsorText}>
+                    {t("supersponsor_event")}
+                </BadgeInvPad>
             )}
 
             {!event.SponsorOnly ? null : (
-                <View style={[styleInvPad, styleSponsor]}>
-                    <Label style={[styles.sponsorship, styleRePad]} color={theme.sponsorText} ml={10} type="h3" variant="middle">
-                        {t("sponsor_event")}
-                    </Label>
-                </View>
+                <BadgeInvPad padding={parentPad} badgeColor={theme.sponsor} textColor={theme.sponsorText}>
+                    {t("sponsor_event")}
+                </BadgeInvPad>
             )}
 
             <Section icon={isFavorited ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
@@ -113,10 +108,13 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 {room?.Name || " "}
             </Label>
 
-            {mapLink.map(({ map, entry }, i) => (
-                <ImageExButton key={i} image={map.Image} target={{ x: entry.X, y: entry.Y, size: 400 }}>
-                    {t("view_on_map")}
-                </ImageExButton>
+            {mapLink.map(({ map, entry, link }, i) => (
+                <ImageExButton
+                    key={i}
+                    image={map.Image}
+                    target={{ x: entry.X, y: entry.Y, size: 400 }}
+                    onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
+                />
             ))}
 
             <Section icon="information" title="More about the event" />
@@ -126,7 +124,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
 };
 
 const styles = StyleSheet.create({
-    sponsorship: {
+    content: {
         paddingVertical: 10,
     },
     rowLeft: {

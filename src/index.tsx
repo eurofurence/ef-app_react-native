@@ -1,4 +1,5 @@
 import { registerRootComponent } from "expo";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider as StoreProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
@@ -17,15 +18,17 @@ import "moment/locale/nl";
 
 const Index = () => {
     return (
-        <StoreProvider store={store}>
-            <AppErrorBoundary>
-                <PersistGate persistor={persistor}>
-                    <LoadingContextProvider>
-                        <App />
-                    </LoadingContextProvider>
-                </PersistGate>
-            </AppErrorBoundary>
-        </StoreProvider>
+        <SafeAreaProvider>
+            <StoreProvider store={store}>
+                <AppErrorBoundary>
+                    <PersistGate persistor={persistor}>
+                        <LoadingContextProvider>
+                            <App />
+                        </LoadingContextProvider>
+                    </PersistGate>
+                </AppErrorBoundary>
+            </StoreProvider>
+        </SafeAreaProvider>
     );
 };
 

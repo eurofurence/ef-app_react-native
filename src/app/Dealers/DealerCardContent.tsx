@@ -1,4 +1,5 @@
 import React, { useMemo, FC, memo } from "react";
+import { useTranslation } from "react-i18next";
 import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
@@ -10,12 +11,13 @@ export type DealerCardContentProps = {
     name: string;
     present: boolean;
     merchandise?: string;
-    days?: string;
+    offDays?: string;
     onPress?: () => void;
     onLongPress?: () => void;
 };
 
-export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, name, present, merchandise, days, onPress, onLongPress }) => {
+export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, name, present, merchandise, offDays, onPress, onLongPress }) => {
+    const { t } = useTranslation("Dealers");
     const theme = useTheme();
     const backgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
     const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: present ? theme.primary : theme.darken }), [present, theme]);
@@ -37,9 +39,9 @@ export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, nam
                     </Label>
                 )}
 
-                {!days ? null : (
+                {!offDays ? null : (
                     <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-                        {days}
+                        {t("not_attending_on", { offDays })}
                     </Label>
                 )}
             </View>

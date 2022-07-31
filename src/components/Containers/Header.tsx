@@ -1,6 +1,6 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
-import { FC, useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { StyleSheet, View, ViewProps, TouchableOpacity } from "react-native";
 
 import { useTheme } from "../../context/Theme";

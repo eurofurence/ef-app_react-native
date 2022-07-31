@@ -11,4 +11,18 @@ export const appStyles = StyleSheet.create({
         shadowRadius: 3.84,
         elevation: 5,
     },
+
+    /**
+     * Absolute positioning only, use in conjuction with insets.
+     */
+    abs: {
+        position: "absolute",
+    },
+
+    /**
+     * Adds sufficient trailer space as padding.
+     */
+    trailer: {
+        paddingBottom: 100,
+    },
 });

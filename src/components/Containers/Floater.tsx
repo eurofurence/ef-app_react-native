@@ -1,26 +1,31 @@
-import { FC, useMemo } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { FC } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+
+export const padFloater = 20;
 
 /**
  * Props to the Floater.
  */
 export type FloaterProps = {
     /**
-     * The width to limit the content to.
+     * Style of the container view.
      */
-    limitWidth?: number;
+    containerStyle?: StyleProp<ViewStyle>;
+    /**
+     * Style of the content view.
+     */
+    contentStyle?: StyleProp<ViewStyle>;
 };
 
 /**
  * A scrolling content with a child that has a maximum width.
  * @constructor
  */
-export const Floater: FC<FloaterProps> = ({ limitWidth = 600, children }) => {
-    const limitStyle = useMemo<ViewStyle>(() => ({ maxWidth: limitWidth }), [limitWidth]);
+export const Floater: FC<FloaterProps> = ({ containerStyle, contentStyle, children }) => {
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, containerStyle]}>
             <View style={styles.arranger}>
-                <View style={[styles.content, limitStyle]}>{children}</View>
+                <View style={[styles.content, contentStyle]}>{children}</View>
             </View>
         </View>
     );
@@ -29,7 +34,7 @@ export const Floater: FC<FloaterProps> = ({ limitWidth = 600, children }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingHorizontal: 30,
+        paddingHorizontal: padFloater,
     },
     arranger: {
         flex: 1,
@@ -40,5 +45,6 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         alignSelf: "stretch",
+        maxWidth: 600,
     },
 });

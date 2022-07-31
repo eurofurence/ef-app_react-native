@@ -1,7 +1,7 @@
 import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
 import _ from "lodash";
 import { useCallback, useRef, useState } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Header } from "../../components/Containers/Header";
@@ -10,6 +10,7 @@ import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
 import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment } from "../../store/eurofurence.types";
+import { appStyles } from "../AppStyles";
 import { ScreenEmpty } from "../Common/ScreenEmpty";
 import { LinkItem } from "./LinkItem";
 
@@ -60,7 +61,7 @@ export const MapScreen = () => {
     }
 
     return (
-        <View style={[StyleSheet.absoluteFill, safe]}>
+        <View style={[appStyles.abs, safe]}>
             <Header>{map.Description}</Header>
             <InteractiveImage image={image} maxScale={10} onBoundsUpdated={filterEntries} />
             {/* Apparently we cannot render this in a browser */}

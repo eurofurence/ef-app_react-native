@@ -1,36 +1,36 @@
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { ImageBackground, StyleSheet, View } from "react-native";
+import { ImageBackground, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { conId } from "../../configuration";
-import { useTheme } from "../../context/Theme";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence.selectors";
 
-export const CountdownHeader = () => {
+export type CountdownHeaderProps = {
+    style?: StyleProp<ViewStyle>;
+};
+
+export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
     const { t } = useTranslation("Countdown");
-    const theme = useTheme();
     const [now] = useNow();
 
     const subtitle = useAppSelector((state) => eventDaysSelectors.selectCountdownTitle(state, now, t));
     return (
-        <View>
-            <ImageBackground source={require("../../../assets/images/banner_2022_no_logo.png")} style={styles.background} resizeMode={"cover"}></ImageBackground>
-            <Section
-                style={{ marginTop: 0, marginBottom: 0, paddingVertical: 15, paddingHorizontal: 20, backgroundColor: theme.background }}
-                title={conId}
-                icon={"alarm"}
-                subtitle={subtitle}
-            />
+        <View style={[styles.container, style]}>
+            <ImageBackground style={StyleSheet.absoluteFill} source={require("../../../assets/images/banner_2022_no_logo.png")} resizeMode="cover" />
+
+            <Section title={conId} icon="alarm" subtitle={subtitle} titleColor="white" subtitleColor="white" titleVariant="shadow" subtitleVariant="shadow" />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    background: {
+    container: {
         height: 180,
-        flexDirection: "column",
-        justifyContent: "flex-end",
+        paddingTop: 15,
+        paddingHorizontal: 15,
+        flexDirection: "column-reverse",
     },
 });

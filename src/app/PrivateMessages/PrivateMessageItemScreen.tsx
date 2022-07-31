@@ -2,10 +2,11 @@ import { useEffect, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { Floater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
-import { Scroller } from "../../components/Containers/Scroller";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useMarkCommunicationReadMutation } from "../../store/eurofurence.service";
+import { appStyles } from "../AppStyles";
 
 export const PrivateMessageItemScreen = () => {
     const { params } = useAppRoute("PrivateMessageItem");
@@ -23,9 +24,9 @@ export const PrivateMessageItemScreen = () => {
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>{params.message.Subject}</Header>
-            <Scroller>
+            <Floater contentStyle={appStyles.trailer}>
                 <Text>{params.message.Message}</Text>
-            </Scroller>
+            </Floater>
         </View>
     );
 };

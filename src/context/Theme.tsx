@@ -1,24 +1,24 @@
 import { useMemo } from "react";
-import { ColorValue } from "react-native";
 
-export type Theme = Record<string, ColorValue> & {
-    primary: ColorValue;
-    secondary: ColorValue;
-    background: ColorValue;
-    surface: ColorValue;
-    inverted: ColorValue;
-    text: ColorValue;
-    important: ColorValue;
-    invText: ColorValue;
-    invImportant: ColorValue;
-    notification: ColorValue;
-    darken: ColorValue;
-    lighten: ColorValue;
-    white: ColorValue;
-    superSponsor: ColorValue;
-    superSponsorText: ColorValue;
-    sponsor: ColorValue;
-    sponsorText: ColorValue;
+export type Theme = Record<string, string> & {
+    primary: string;
+    secondary: string;
+    background: string;
+    surface: string;
+    inverted: string;
+    text: string;
+    important: string;
+    invText: string;
+    invImportant: string;
+    warning: string;
+    notification: string;
+    darken: string;
+    lighten: string;
+    white: string;
+    superSponsor: string;
+    superSponsorText: string;
+    sponsor: string;
+    sponsorText: string;
 };
 
 export const useThemeType = (): "light" | "dark" => "light";
@@ -37,9 +37,10 @@ export const useTheme = (): Theme => {
             important: "#000000",
             invText: "#fff7f0",
             invImportant: "#ffffff",
+            warning: "#ee5e22",
             notification: "#d91c52",
             darken: "#04001440",
-            lighten: "#f7f7f760",
+            lighten: "#f7f7f7a0",
             white: "#ffffff",
             superSponsor: "#5300ff",
             superSponsorText: "#fff7f0",
@@ -49,3 +50,5 @@ export const useTheme = (): Theme => {
         []
     );
 };
+
+export const useThemeColor = (color: keyof Theme) => useTheme()[color];

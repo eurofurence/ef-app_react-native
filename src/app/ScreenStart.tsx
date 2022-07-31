@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { NavigationProvider } from "../context/NavigationProvider";
-import { useThemeType } from "../context/Theme";
+import { useTheme, useThemeType } from "../context/Theme";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 import { AboutScreen } from "./About";
 import { ScreenEmptyParams } from "./Common/ScreenEmpty";
@@ -50,6 +50,8 @@ export type ScreenStartParamsList = {
     };
     Map: {
         id: RecordId;
+        // TODO: initial zoom on.
+        target?: RecordId;
     };
     About: undefined;
 };
@@ -64,12 +66,14 @@ export type ScreenStartProps = object;
 
 export const ScreenStart: FC<ScreenStartProps> = React.memo(() => {
     // Get the theme type for status bar configuration.
+    const theme = useTheme();
     const themeType = useThemeType();
+
     return (
         <NavigationProvider>
-            <StatusBar style={themeType === "light" ? "dark" : "light"} />
+            <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
 
-            <View style={[StyleSheet.absoluteFill, { backgroundColor: "green" }]}>
+            <View style={StyleSheet.absoluteFill}>
                 <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
                     <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
                     <ScreenStartNavigator.Screen name="Event" component={EventScreen} />

@@ -1,11 +1,12 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
+import { Theme, useTheme } from "../../context/Theme";
 import { IconNames } from "../../types/IconNames";
 import { Col } from "../Containers/Col";
 import { Row } from "../Containers/Row";
-import { Label } from "./Label";
+import { Label, LabelProps } from "./Label";
 
 const iconSize = 32; // Matches H1 font size.
 
@@ -32,14 +33,21 @@ export type SectionProps = {
      * The subtitle, displayed after the text.
      */
     subtitle?: string;
+
+    titleColor?: keyof Theme;
+    subtitleColor?: keyof Theme;
+    titleVariant?: LabelProps["variant"];
+    subtitleVariant?: LabelProps["variant"];
 };
 
-export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark", title, subtitle }) => {
+export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark", title, subtitle, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
+    const theme = useTheme();
+    const iconColor = useMemo(() => theme[titleColor ?? "important"], [theme, titleColor]);
     return (
         <Col style={[styles.container, style]}>
             <Row type="center">
-                {!icon ? <View style={styles.placeholder} /> : <Icon style={styles.icon} name={icon} size={iconSize} />}
-                <Label style={styles.containerFill} type="h1" color="important" ellipsizeMode="tail">
+                {!icon ? <View style={styles.placeholder} /> : <Icon color={iconColor} style={styles.icon} name={icon} size={iconSize} />}
+                <Label style={styles.containerFill} type="h1" variant={titleVariant} color={titleColor ?? "important"} ellipsizeMode="tail">
                     {title}
                 </Label>
             </Row>
@@ -47,7 +55,7 @@ export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark",
             {!subtitle ? null : (
                 <Row type="center">
                     <View style={styles.placeholder} />
-                    <Label style={styles.containerFill} type="h3" ellipsizeMode="tail">
+                    <Label style={styles.containerFill} type="h3" variant={subtitleVariant} color={subtitleColor ?? "text"} ellipsizeMode="tail">
                         {subtitle}
                     </Label>
                 </Row>

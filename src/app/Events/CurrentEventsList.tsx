@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
@@ -20,7 +19,7 @@ export const CurrentEventList = () => {
     }
 
     return (
-        <View>
+        <>
             <Section title={t("current_title")} subtitle={t("current_subtitle")} icon={"clock"} />
             {events.map((event) => (
                 <EventCard
@@ -34,6 +33,6 @@ export const CurrentEventList = () => {
                     }
                 />
             ))}
-        </View>
+        </>
     );
 };

@@ -16,6 +16,7 @@ import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 import { CommunicationRecord } from "../../store/eurofurence.types";
 import { Query } from "../../types";
+import { appStyles } from "../AppStyles";
 
 export const PrivateMessageListScreen = () => {
     const { t } = useTranslation("PrivateMessageList");
@@ -24,7 +25,7 @@ export const PrivateMessageListScreen = () => {
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
         refetchOnFocus: true,
     });
-    const inserts = useSafeAreaInsets();
+    const safe = useSafeAreaInsets();
 
     const sectionedData = useMemo(
         () =>
@@ -41,7 +42,7 @@ export const PrivateMessageListScreen = () => {
 
     return (
         <SectionList
-            style={[inserts]}
+            style={[appStyles.abs, safe]}
             sections={sectionedData}
             keyExtractor={(item, index) => item.Id + index}
             stickySectionHeadersEnabled

@@ -118,4 +118,9 @@ const variants = StyleSheet.create({
         textAlign: "center",
         textAlignVertical: "center",
     },
+    shadow: {
+        textShadowColor: "#000000",
+        textShadowRadius: 2,
+        textShadowOffset: { width: 0.5, height: 1 },
+    },
 });

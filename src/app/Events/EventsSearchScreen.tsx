@@ -58,7 +58,7 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
 
                     {!results ? null : <Button onPress={() => navigation.jumpTo("Results")}>View all {results.length} results</Button>}
                 </View>
-                <Row style={styles.categories} variant="spaced">
+                <Row style={styles.categories} type="stretch" variant="spaced">
                     <Tab style={[styles.rounded, roundedStyle]} inverted icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
                     <Tab style={[styles.rounded, styles.rowCenter, roundedStyle]} inverted icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
                     <Tab style={[styles.rounded, roundedStyle]} inverted icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     rowCenter: {
-        marginHorizontal: 16,
+        marginHorizontal: 8,
     },
 });
