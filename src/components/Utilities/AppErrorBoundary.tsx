@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import * as Sentry from "sentry-expo";
 
 import { AppErrorContent } from "./AppErrorContent";
 
@@ -13,6 +14,8 @@ export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode 
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+        Sentry.Native.captureException(error);
+
         console.error(error, errorInfo);
     }
 
