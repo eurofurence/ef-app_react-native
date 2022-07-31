@@ -87,7 +87,10 @@
   },
   "PrivateMessageList": {
     "section_title_from": "Van {{authorName}}",
-    "message_item_subtitle": "{{ status }} - Verstuurd op {{ time }}"
+    "message_item_subtitle": "{{ status }} - Verstuurd op {{ time }}",
+    "unread": "Ongelezen",
+    "read": "Gelezen",
+    "author_unknown": "onbekende auteur"
   },
   "About": {
     "header": "Over",

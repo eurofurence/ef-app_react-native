@@ -27,18 +27,29 @@ export const PrivateMessageListScreen = () => {
     });
     const safe = useSafeAreaInsets();
 
-    const sectionedData = useMemo(
-        () =>
-            _.chain(data)
-                .orderBy((it) => it.ReadDateTimeUtc, "desc")
-                .groupBy((it) => it.AuthorName)
-                .map((messages, author) => ({
-                    title: author.trim(),
-                    data: messages,
-                }))
-                .value(),
-        [data]
-    );
+    const sectionedData = useMemo(() => {
+        const [unread, read] = _.partition(data, (it) => it.ReadDateTimeUtc === null);
+
+        const readSections = _.chain(read)
+            .orderBy(["AuthorName", "SentDateTimeUtc"], ["asc", "desc"])
+            .groupBy((it) => it.AuthorName?.trim() ?? t("author_unknown"))
+            .map((messages, author) => ({
+                title: author,
+                data: messages,
+            }))
+            .value();
+
+        const unreadSections = _.isEmpty(unread)
+            ? []
+            : [
+                  {
+                      title: t("unread"),
+                      data: unread,
+                  },
+              ];
+
+        return [...unreadSections, ...readSections];
+    }, [data]);
 
     return (
         <SectionList
@@ -70,7 +81,7 @@ export const PrivateMessageListScreen = () => {
                                 <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>{item.Subject}</Label>
                                 <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
                                     {t("message_item_subtitle", {
-                                        status: item.ReadDateTimeUtc === null ? "Unread" : "Read",
+                                        status: item.ReadDateTimeUtc === null ? t("unread") : t("read"),
                                         time: moment(item.CreatedDateTimeUtc).format("llll"),
                                     })}
                                 </Label>
