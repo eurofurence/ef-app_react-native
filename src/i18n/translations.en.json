@@ -39,6 +39,7 @@
     "afternoon": "In the afternoon",
     "evening": "In the evening",
     "night": "At night",
+    "finished": "Finished",
     "events_count": "{{count}} events",
     "events_done": "Events concluded",
     "favorites_title": "Favorite Events",

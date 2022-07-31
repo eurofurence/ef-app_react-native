@@ -13,7 +13,8 @@
     }
   },
   "Events": {
-    "when": "{{ day }}, van {{ start }} tot {{ finish }}."
+    "when": "{{ day }}, van {{ start }} tot {{ finish }}.",
+    "finished": "Afgelopen"
   },
   "Dealer": {
     "attends_thu": "Donderdag",
