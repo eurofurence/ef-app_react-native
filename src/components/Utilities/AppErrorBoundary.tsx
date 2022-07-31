@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import * as Sentry from "sentry-expo";
 
 export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode }, { hasError: boolean }> {
     constructor(props: { children: ReactNode }) {
@@ -12,6 +13,8 @@ export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode 
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+        Sentry.Native.captureException(error);
+
         console.error(error, errorInfo);
     }
 
