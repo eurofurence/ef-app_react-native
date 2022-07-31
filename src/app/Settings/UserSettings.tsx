@@ -8,7 +8,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { applyDefaultRegion } from "../../i18n";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setAnalytics } from "../../store/settings.slice";
 
@@ -18,9 +17,9 @@ type Language = {
 };
 const languages = orderBy(
     [
-        { code: "en-GB", name: "🇬🇧 English" },
-        { code: "de-DE", name: "🇩🇪 Deutsch" },
-        { code: "nl-NL", name: "🇳🇱 Nederlands" },
+        { code: "en", name: "🇬🇧 English" },
+        { code: "de", name: "🇩🇪 Deutsch" },
+        { code: "nl", name: "🇳🇱 Nederlands" },
     ] as Language[],
     (value) => value.code,
     "asc"
@@ -49,7 +48,7 @@ export const UserSettings = () => {
                 }}
             >
                 {languages.map((it) => (
-                    <Picker.Item label={it.name} value={applyDefaultRegion(it.code)} key={applyDefaultRegion(it.code)} />
+                    <Picker.Item label={it.name} value={it.code} key={it.code} />
                 ))}
             </Picker>
         </View>
