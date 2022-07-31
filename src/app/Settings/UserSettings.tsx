@@ -18,9 +18,9 @@ type Language = {
 };
 const languages = orderBy(
     [
-        { code: "en-GB", name: "🇬🇧 English" },
-        { code: "de-DE", name: "🇩🇪 Deutsch" },
-        { code: "nl-NL", name: "🇳🇱 Nederlands" },
+        { code: "en", name: "🇬🇧 English" },
+        { code: "de", name: "🇩🇪 Deutsch" },
+        { code: "nl", name: "🇳🇱 Nederlands" },
     ] as Language[],
     (value) => value.code,
     "asc"

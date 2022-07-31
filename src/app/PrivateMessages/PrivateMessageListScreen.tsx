@@ -32,7 +32,7 @@ export const PrivateMessageListScreen = () => {
 
         const readSections = _.chain(read)
             .orderBy(["AuthorName", "SentDateTimeUtc"], ["asc", "desc"])
-            .groupBy((it) => it.AuthorName?.trim() ?? t("author_unknown"))
+            .groupBy((it) => (it.AuthorName ? t("from", { author: it.AuthorName?.trim() }) : t("from_unknown")))
             .map((messages, author) => ({
                 title: author,
                 data: messages,
@@ -62,7 +62,7 @@ export const PrivateMessageListScreen = () => {
             ListHeaderComponent={<Header>Private Messages</Header>}
             renderSectionHeader={({ section }) => (
                 <Label type={"h2"} style={{ padding: 20, backgroundColor: theme.background }}>
-                    {t("section_title_from", { authorName: _.capitalize(section.title) })}
+                    {_.startCase(section.title)}
                 </Label>
             )}
             renderItem={({ item }) => (

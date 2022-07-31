@@ -150,7 +150,8 @@
     "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
     "unread": "Unread",
     "read": "Read",
-    "author_unknown": "unknown author"
+    "from": "From {{ author }}",
+    "from_unknown": "From unknown author"
   },
   "About": {
     "header": "About",
