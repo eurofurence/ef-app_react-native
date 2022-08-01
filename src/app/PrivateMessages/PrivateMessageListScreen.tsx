@@ -16,6 +16,7 @@ import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 import { CommunicationRecord } from "../../store/eurofurence.types";
 import { Query } from "../../types";
+import { appStyles } from "../AppStyles";
 
 export const PrivateMessageListScreen = () => {
     const { t } = useTranslation("PrivateMessageList");
@@ -24,24 +25,35 @@ export const PrivateMessageListScreen = () => {
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
         refetchOnFocus: true,
     });
-    const inserts = useSafeAreaInsets();
+    const safe = useSafeAreaInsets();
 
-    const sectionedData = useMemo(
-        () =>
-            _.chain(data)
-                .orderBy((it) => it.ReadDateTimeUtc, "desc")
-                .groupBy((it) => it.AuthorName)
-                .map((messages, author) => ({
-                    title: author.trim(),
-                    data: messages,
-                }))
-                .value(),
-        [data]
-    );
+    const sectionedData = useMemo(() => {
+        const [unread, read] = _.partition(data, (it) => it.ReadDateTimeUtc === null);
+
+        const readSections = _.chain(read)
+            .orderBy(["AuthorName", "SentDateTimeUtc"], ["asc", "desc"])
+            .groupBy((it) => (it.AuthorName ? t("from", { author: it.AuthorName?.trim() }) : t("from_unknown")))
+            .map((messages, author) => ({
+                title: author,
+                data: messages,
+            }))
+            .value();
+
+        const unreadSections = _.isEmpty(unread)
+            ? []
+            : [
+                  {
+                      title: t("unread"),
+                      data: unread,
+                  },
+              ];
+
+        return [...unreadSections, ...readSections];
+    }, [data]);
 
     return (
         <SectionList
-            style={[inserts]}
+            style={[appStyles.abs, safe]}
             sections={sectionedData}
             keyExtractor={(item, index) => item.Id + index}
             stickySectionHeadersEnabled
@@ -50,7 +62,7 @@ export const PrivateMessageListScreen = () => {
             ListHeaderComponent={<Header>Private Messages</Header>}
             renderSectionHeader={({ section }) => (
                 <Label type={"h2"} style={{ padding: 20, backgroundColor: theme.background }}>
-                    {t("section_title_from", { authorName: _.capitalize(section.title) })}
+                    {_.startCase(section.title)}
                 </Label>
             )}
             renderItem={({ item }) => (
@@ -69,7 +81,7 @@ export const PrivateMessageListScreen = () => {
                                 <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>{item.Subject}</Label>
                                 <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
                                     {t("message_item_subtitle", {
-                                        status: item.ReadDateTimeUtc === null ? "Unread" : "Read",
+                                        status: item.ReadDateTimeUtc === null ? t("unread") : t("read"),
                                         time: moment(item.CreatedDateTimeUtc).format("llll"),
                                     })}
                                 </Label>

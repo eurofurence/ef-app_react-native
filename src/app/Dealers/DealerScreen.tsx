@@ -1,12 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { Floater, padFloater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
+import { appStyles } from "../AppStyles";
 import { DealerContent } from "./DealerContent";
 
 /**
@@ -26,9 +27,9 @@ export const DealerScreen = () => {
     const safe = useSafeAreaInsets();
 
     return (
-        <ScrollView style={safe} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{dealer?.FullName ?? t("viewing_dealer")}</Header>
-            <View style={{ paddingHorizontal: 20, paddingBottom: 100 }}>{!dealer ? null : <DealerContent dealer={dealer} />}</View>
+            <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} />}</Floater>
         </ScrollView>
     );
 };

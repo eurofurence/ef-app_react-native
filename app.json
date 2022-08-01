@@ -26,7 +26,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 408,
+      "versionCode": 414,
       "package": "org.eurofurence.connavigator",
       "googleServicesFile": "./android/google-services.json",
       "splash": {
@@ -76,6 +76,9 @@
           "measurementId": "G-83EP75M02N"
         }
       }
-    }
+    },
+    "plugins": [
+      "sentry-expo"
+    ]
   }
 }

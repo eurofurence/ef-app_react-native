@@ -1,10 +1,9 @@
-import { FC, ReactNode, useMemo } from "react";
+import { FC, useMemo } from "react";
 import * as React from "react";
 import { ImageStyle, StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { ImageEx, ImageExProps } from "../Atoms/ImageEx";
-import { Label } from "../Atoms/Label";
 
 /**
  * Arguments to the button.
@@ -26,11 +25,6 @@ export type ImageButtonProps = {
     target: ImageExProps["target"];
 
     /**
-     * The text of the button.
-     */
-    children?: ReactNode;
-
-    /**
      * If given, invoked on button press.
      */
     onPress?: () => void;
@@ -50,10 +44,6 @@ export const ImageExButton: FC<ImageButtonProps> = ({ style, image, target, chil
     return (
         <TouchableOpacity style={[styles.container, styleBackground, style]} onPress={onPress} onLongPress={onLongPress}>
             <ImageEx style={styleImage} image={image} target={target} />
-
-            <Label style={styles.text} type="h2" color="invImportant" variant="middle">
-                {children}
-            </Label>
         </TouchableOpacity>
     );
 };
@@ -66,15 +56,5 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-    },
-    text: {
-        position: "absolute",
-        alignSelf: "flex-end",
-        left: 0,
-        right: 0,
-        textShadowColor: "black",
-        textShadowOffset: { width: 0, height: 0 },
-        textShadowRadius: 3,
-        marginBottom: 6,
     },
 });

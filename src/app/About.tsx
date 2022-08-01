@@ -3,7 +3,7 @@ import * as WebBrowser from "expo-web-browser";
 import { capitalize } from "lodash";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, Platform, ScrollView, View } from "react-native";
+import { Image, Platform, ScrollView } from "react-native";
 // @ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -13,8 +13,10 @@ import { Label } from "../components/Atoms/Label";
 import { Section } from "../components/Atoms/Section";
 import { Button } from "../components/Containers/Button";
 import { Col } from "../components/Containers/Col";
+import { Floater } from "../components/Containers/Floater";
 import { Header } from "../components/Containers/Header";
 import { Row } from "../components/Containers/Row";
+import { appStyles } from "./AppStyles";
 
 const extraThanksMarkdown = `**Program Management:**
 - Zefiro
@@ -65,9 +67,9 @@ export const AboutScreen = () => {
     const { t } = useTranslation("About");
     const safe = useSafeAreaInsets();
     return (
-        <ScrollView stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll style={safe}>
+        <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>
-            <View style={{ paddingHorizontal: 20 }}>
+            <Floater contentStyle={appStyles.trailer}>
                 <Section
                     title={t("app_details.title")}
                     subtitle={`${capitalize(Platform.OS)} ${Constants.manifest?.version} ${Platform.OS === "android" ? Constants.manifest?.android?.versionCode : ""}`}
@@ -87,7 +89,7 @@ export const AboutScreen = () => {
                 <Credit uri={"https://avatars.githubusercontent.com/u/12624320"} name={"Shez"} role={"iOS Development"} />
                 <Section title={t("extra_thanks")} icon={"heart-outline"} />
                 <Markdown>{extraThanksMarkdown}</Markdown>
-            </View>
+            </Floater>
         </ScrollView>
     );
 };

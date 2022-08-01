@@ -1,5 +1,4 @@
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
@@ -20,7 +19,7 @@ export const UpcomingFavoriteEventsList = () => {
     }
 
     return (
-        <View>
+        <>
             <Section title={t("upcoming_favorites_title")} subtitle={t("upcoming_favorites_subtitle")} icon={"book-marker"} />
             {events.map((event) => (
                 <EventCard
@@ -34,6 +33,6 @@ export const UpcomingFavoriteEventsList = () => {
                     }
                 />
             ))}
-        </View>
+        </>
     );
 };

@@ -9,26 +9,25 @@ import de from "./translations.de.json";
 import en from "./translations.en.json";
 import nl from "./translations.nl.json";
 
-// Set for datetimes
-moment.locale(Localization.locale);
+/**
+ * Only to be used for moment's locale. When english is given without a
+ * specified locale, use en-GB, as it presents in the euro-centric time format.
+ * @param language The language to transform.
+ */
+export const localeForMoment = (language: string) => {
+    // Change when only given as en.
+    if (language.toLowerCase() === "en") return "en-gb";
+
+    // Leave others unchanged.
+    return language;
+};
+
+// Set for date times
+moment.locale(localeForMoment(Localization.locale));
 
 const logger = partial(console.log, "i18next");
 
 const I18NEXT_LANGAGUE_KEY = "i18next";
-
-const defaultRegions: Record<string, string> = {
-    en: "GB",
-    de: "DE",
-    nl: "NL",
-};
-
-export const applyDefaultRegion = <T extends string | null | undefined>(language: T) => {
-    if (typeof language !== "string") return language;
-    if (language.includes("-")) return language;
-    const normalized = language.toLowerCase().trim();
-    const region = defaultRegions[normalized];
-    return region ? `${language}-${region}` : language;
-};
 
 i18next
     .use(initReactI18next)
@@ -37,17 +36,16 @@ i18next
         async: true,
         init: noop,
         detect: async (callback: (language: string) => void) => {
+            // Get fallback and selected from localization and storage.
             const fallback = Localization.locale.split("-")[0];
-            const fallbackFull = applyDefaultRegion(fallback);
-
             const persisted = await AsyncStorage.getItem(I18NEXT_LANGAGUE_KEY);
-            const persistedFull = applyDefaultRegion(persisted);
 
-            logger(`Detecting languages, saved: ${persisted} (${persistedFull}), fallback ${fallback} (${fallbackFull})`);
+            // Log what was detected and stored.
+            logger(`Detecting languages, saved: ${persisted}, fallback ${fallback}`);
 
-            // Set moment locale from detection and invoke callback.
-            moment.locale(persistedFull ?? fallbackFull);
-            return callback(persistedFull ?? fallbackFull);
+            // Set moment locale with applied reasonable defaults, run callback with actual.
+            moment.locale(localeForMoment(persisted ?? fallback));
+            return callback(persisted ?? fallback);
         },
         cacheUserLanguage: async (lng: string) =>
             AsyncStorage.setItem(I18NEXT_LANGAGUE_KEY, lng)

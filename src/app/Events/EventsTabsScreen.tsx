@@ -144,7 +144,7 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
                           key={room.Id}
                           name={room.Name}
                           component={EventsListByRoomScreen}
-                          options={{ title: room.Name }}
+                          options={{ title: room.ShortName ?? room.Name }}
                           initialParams={{ room: clone(room) }}
                       />
                   ))}

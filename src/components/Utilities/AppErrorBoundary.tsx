@@ -1,36 +1,28 @@
 import React, { ReactNode } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import * as Sentry from "sentry-expo";
 
-export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode }, { hasError: boolean }> {
+import { AppErrorContent } from "./AppErrorContent";
+
+export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
     constructor(props: { children: ReactNode }) {
         super(props);
-        this.state = { hasError: false };
+        this.state = { hasError: false, error: null };
     }
 
-    static getDerivedStateFromError() {
-        return { hasError: true };
+    static getDerivedStateFromError(error: Error) {
+        return { hasError: true, error };
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+        Sentry.Native.captureException(error);
+
         console.error(error, errorInfo);
     }
 
     render() {
         if (this.state.hasError) {
-            return (
-                <View style={styles.container}>
-                    <Text style={{ fontSize: 20 }}>Something went terribly wrong . . .</Text>
-                </View>
-            );
+            return <AppErrorContent error={this.state.error} />;
         }
         return this.props.children;
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-    },
-});

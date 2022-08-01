@@ -1,13 +1,15 @@
-import { Image, View } from "react-native";
+import { Image } from "react-native";
 //@ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { Floater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { knowledgeEntriesSelectors, selectImagesById } from "../../store/eurofurence.selectors";
+import { appStyles } from "../AppStyles";
 import { LinkItem } from "../Maps/LinkItem";
 
 export const KnowledgeEntryScreen = () => {
@@ -16,9 +18,9 @@ export const KnowledgeEntryScreen = () => {
     const images = useAppSelector((state) => selectImagesById(state, entry?.ImageIds ?? []));
     const safe = useSafeAreaInsets();
     return (
-        <ScrollView stickyHeaderIndices={[0]} style={safe} stickyHeaderHiddenOnScroll>
+        <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{entry?.Title}</Header>
-            <View style={{ paddingHorizontal: 20, paddingTop: 20, paddingBottom: 100 }}>
+            <Floater contentStyle={appStyles.trailer}>
                 <Markdown>{entry?.Text ?? ""}</Markdown>
                 {entry?.Links.map((link) => (
                     <LinkItem link={link} key={link.Target} />
@@ -26,7 +28,7 @@ export const KnowledgeEntryScreen = () => {
                 {images.map((it) => (
                     <Image source={{ uri: it.ImageUrl, height: 400 }} key={it.Id} resizeMode={"contain"} />
                 ))}
-            </View>
+            </Floater>
         </ScrollView>
     );
 };

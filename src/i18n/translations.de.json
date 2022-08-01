@@ -38,7 +38,8 @@
     "dealers_on_this_day": "Dealer an diesem Tag",
     "dealers_on_day": "Dealer am {{day}}",
     "dealers_at_convention": "Dealer an der Eurofurence",
-    "dealers_count": "{{count}} Dealer"
+    "dealers_count": "{{count}} Dealer",
+    "not_attending_on": "Nicht da am {{offDays}}"
   },
   "Dealer": {
     "viewing_dealer": "Betrachte Dealer",
@@ -53,11 +54,15 @@
     "after_dark": "After Dark",
     "in_after_dark": "Im After Dark Bereich",
     "categories": "Kategorien",
-    "attends_today": "Dealer ist Heute anwesend",
+    "not_attending": "Heute nicht anwesend",
     "view_on_map": "Auf der Karte ansehen"
   },
   "Settings": {
     "currentLanguage": "Ihre sprache ist Deutsch!",
     "settingsSection": "Einstellungen"
+  },
+  "Countdown": {
+    "before_event": "{{conName}} beginnt in {{diff}}",
+    "after_event": "Das war's! Wir hoffen, dich nächstes Jahr wieder zu sehen!"
   }
 }

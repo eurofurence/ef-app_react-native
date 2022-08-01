@@ -39,6 +39,7 @@
     "afternoon": "In the afternoon",
     "evening": "In the evening",
     "night": "At night",
+    "finished": "Finished",
     "events_count": "{{count}} events",
     "events_done": "Events concluded",
     "favorites_title": "Favorite Events",
@@ -61,7 +62,8 @@
     "dealers_on_this_day": "Dealers on this day",
     "dealers_on_day": "Dealers on {{day}}",
     "dealers_at_convention": "Dealers at {{convention}}",
-    "dealers_count": "{{count}} dealers"
+    "dealers_count": "{{count}} dealers",
+    "not_attending_on": "Not in on {{offDays}}"
   },
   "Dealer": {
     "viewing_dealer": "Viewing dealer",
@@ -76,7 +78,7 @@
     "after_dark": "After dark",
     "in_after_dark": "Located in the after dark section",
     "categories": "Categories",
-    "attends_today": "Dealer is attending today",
+    "not_attending": "Not attending today",
     "view_on_map": "View on map"
   },
   "TimeTravel": {
@@ -145,7 +147,11 @@
   },
   "PrivateMessageList": {
     "section_title_from": "From {{authorName}}",
-    "message_item_subtitle": "{{ status }} - Sent on {{ time }}"
+    "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
+    "unread": "Unread",
+    "read": "Read",
+    "from": "From {{ author }}",
+    "from_unknown": "From unknown author"
   },
   "About": {
     "header": "About",

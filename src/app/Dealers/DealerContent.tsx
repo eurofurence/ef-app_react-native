@@ -6,7 +6,10 @@ import { StyleSheet, View, Image } from "react-native";
 import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
+import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
 import { ImageExButton } from "../../components/Containers/ImageButton";
+import { useTheme } from "../../context/Theme";
+import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { DealerWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
@@ -17,11 +20,18 @@ import { appStyles } from "../AppStyles";
  */
 export type DealerContentProps = {
     dealer: DealerWithDetails;
+
+    /**
+     * The padding used by the parent horizontally.
+     */
+    parentPad?: number;
 };
 
-export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
+export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 }) => {
+    const navigation = useAppNavigation("Areas");
     const { t } = useTranslation("Dealer");
     const [now] = useNow();
+    const theme = useTheme();
 
     const mapLink = useAppSelector((state) => mapsCompleteSelectors.selectValidLinksByTarget(state, dealer.Id));
 
@@ -35,11 +45,22 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
         [dealer, t]
     );
 
-    // Check if in attendance today.
-    const attendsToday = useMemo(() => Boolean(dealer.AttendanceDays.find((day) => moment(day.Date).isSame(now, "day"))), [dealer]);
+    // Check if not-attending warning should be marked.
+    const markNotAttending = useMemo(() => {
+        if (now.day() === 4 && !dealer.AttendsOnThursday) return true;
+        else if (now.day() === 5 && !dealer.AttendsOnFriday) return true;
+        else if (now.day() === 6 && !dealer.AttendsOnSaturday) return true;
+        return false;
+    }, [now, dealer]);
 
     return (
         <>
+            {!markNotAttending ? null : (
+                <BadgeInvPad padding={parentPad} badgeColor={theme.warning} textColor={theme.invText}>
+                    {t("not_attending")}
+                </BadgeInvPad>
+            )}
+
             {!dealer.ArtistImageUrl ? null : (
                 <View style={[appStyles.shadow, styles.avatarCircle]}>
                     <Image resizeMode="cover" style={styles.avatarImage} source={{ uri: dealer.ArtistImageUrl }} />
@@ -47,12 +68,6 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
             )}
 
             <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
-
-            {!attendsToday ? null : (
-                <Label type="caption" variant="middle" mb={20}>
-                    {t("attends_today")}
-                </Label>
-            )}
 
             <Label type="para">{dealer.ShortDescription}</Label>
 
@@ -85,10 +100,13 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer }) => {
                 </>
             )}
 
-            {mapLink.map(({ map, entry }, i) => (
-                <ImageExButton key={i} image={map.Image} target={{ x: entry.X, y: entry.Y, size: 400 }}>
-                    {t("view_on_map")}
-                </ImageExButton>
+            {mapLink.map(({ map, entry, link }, i) => (
+                <ImageExButton
+                    key={i}
+                    image={map.Image}
+                    target={{ x: entry.X, y: entry.Y, size: 400 }}
+                    onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
+                />
             ))}
 
             {!dealer.AboutTheArtText && !dealer.ArtPreviewImageUrl ? null : (

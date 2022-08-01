@@ -8,7 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { applyDefaultRegion } from "../../i18n";
+import { localeForMoment } from "../../i18n";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setAnalytics } from "../../store/settings.slice";
 
@@ -45,11 +45,11 @@ export const UserSettings = () => {
                 prompt={t("changeLanguage")}
                 onValueChange={(it) => {
                     i18n.changeLanguage(it);
-                    moment.locale(it);
+                    moment.locale(localeForMoment(it));
                 }}
             >
                 {languages.map((it) => (
-                    <Picker.Item label={it.name} value={applyDefaultRegion(it.code)} key={applyDefaultRegion(it.code)} />
+                    <Picker.Item label={it.name} value={it.code} key={it.code} />
                 ))}
             </Picker>
         </View>
