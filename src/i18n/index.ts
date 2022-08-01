@@ -16,7 +16,7 @@ import nl from "./translations.nl.json";
  */
 export const localeForMoment = (language: string) => {
     // Change when only given as en.
-    if (language.toLowerCase() === "en") return "en-GB";
+    if (language.toLowerCase() === "en") return "en-gb";
 
     // Leave others unchanged.
     return language;
