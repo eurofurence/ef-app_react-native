@@ -26,7 +26,7 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 413,
+      "versionCode": 414,
       "package": "org.eurofurence.connavigator",
       "googleServicesFile": "./android/google-services.json",
       "splash": {
