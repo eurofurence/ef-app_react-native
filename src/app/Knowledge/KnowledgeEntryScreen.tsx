@@ -21,12 +21,12 @@ export const KnowledgeEntryScreen = () => {
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{entry?.Title}</Header>
             <Floater contentStyle={appStyles.trailer}>
+                {images.map((it) => (
+                    <Image source={{ uri: it.ImageUrl, height: 400 }} key={it.Id} resizeMode={"contain"} />
+                ))}
                 <Markdown>{entry?.Text ?? ""}</Markdown>
                 {entry?.Links.map((link) => (
                     <LinkItem link={link} key={link.Target} />
-                ))}
-                {images.map((it) => (
-                    <Image source={{ uri: it.ImageUrl, height: 400 }} key={it.Id} resizeMode={"contain"} />
                 ))}
             </Floater>
         </ScrollView>
