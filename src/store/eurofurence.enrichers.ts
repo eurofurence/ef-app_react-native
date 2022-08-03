@@ -62,9 +62,19 @@ const tagsToIcon = (tags?: string[]): IconNames | undefined => {
     if (tags.includes("photoshoot")) return "camera";
 };
 
+const tagsToBadges = (tags?: string[]) : IconNames[] | undefined => {
+    if (!tags) return [];
+
+    let badges: Array<IconNames> =[];
+    if (tags.includes("mask_required")) badges.push("face-mask");
+    return badges;
+};
+
 const superSponsorOnly = (tags?: string[]) => Boolean(tags?.includes("supersponsors_only"));
 
 const sponsorOnly = (tags?: string[]) => Boolean(tags?.includes("sponsors_only"));
+
+const maskRequired = (tags?: string[]) => Boolean(tags?.includes("mask_required"));
 
 export const enrichEventRecord = (record: EventRecord): EnrichedEventRecord => ({
     ...record,
@@ -72,8 +82,10 @@ export const enrichEventRecord = (record: EventRecord): EnrichedEventRecord => (
     BannerImageUrl: internalCreateImageUrl(record.BannerImageId),
     PosterImageUrl: internalCreateImageUrl(record.PosterImageId),
     Glyph: tagsToIcon(record.Tags),
+    Badges: tagsToBadges(record.Tags),
     SuperSponsorOnly: superSponsorOnly(record.Tags),
     SponsorOnly: sponsorOnly(record.Tags),
+    MaskRequired: maskRequired(record.Tags)
 });
 
 export const enrichAnnouncementRecord = (record: AnnouncementRecord): EnrichedAnnouncementRecord => ({

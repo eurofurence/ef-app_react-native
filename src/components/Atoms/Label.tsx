@@ -1,6 +1,9 @@
 import { FC, useMemo } from "react";
 import { ColorValue, StyleProp, StyleSheet, Text, TextProps, TextStyle } from "react-native";
 
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { IconNames } from "../../types/IconNames";
+
 import { Theme, useTheme } from "../../context/Theme";
 
 /**
@@ -20,6 +23,11 @@ export type LabelProps = TextProps & {
      * The color name, a value from the theme.
      */
     color?: keyof Theme | ColorValue;
+
+    /**
+     * The icon to be displayed next to the label.
+     */
+    icon?: IconNames;
 
     /**
      * Margin left.
@@ -42,7 +50,7 @@ export type LabelProps = TextProps & {
     mb?: number;
 };
 
-export const Label: FC<LabelProps> = ({ style, type, variant, color = "text", ml, mt, mr, mb, children, ...props }) => {
+export const Label: FC<LabelProps> = ({ style, type, variant, color = "text", icon, ml, mt, mr, mb, children, ...props }) => {
     // Get theme for resolution.
     const theme = useTheme();
 
@@ -59,10 +67,14 @@ export const Label: FC<LabelProps> = ({ style, type, variant, color = "text", ml
         if (typeof mb === "number") result.marginBottom = mb;
         return result;
     }, [ml, mt, mr, mb, theme, color]);
+    
+    const iconStyle: StyleProp<TextStyle> = { marginRight: 8, textAlignVertical: "bottom" };
+    const iconSize = StyleSheet.flatten(resType).fontSize * 2;
 
     // Return styled text.
     return (
         <Text style={[resType, resVariant, marginColor, style]} {...props}>
+            {!icon ? null : (<Icon name={icon} style={iconStyle} size={iconSize} />)}
             {children}
         </Text>
     );

@@ -54,6 +54,7 @@
   "Event": {
     "supersponsor_event":"Supersponsor event",
     "sponsor_event":"Sponsor event",
+    "mask_required": "Face masks are mandatory for this event",
     "view_on_map": "View on map",
     "when": "{{day}}, {{start}} until {{finish}}."
   },

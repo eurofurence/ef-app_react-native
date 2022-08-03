@@ -9,8 +9,10 @@ import { IconNames } from "../../types/IconNames";
 import { appStyles } from "../AppStyles";
 
 const glyphIconSize = 90;
+const badgeIconSize = 20;
 
 export type EventCardProps = {
+    badges?: IconNames[];
     glyph?: IconNames;
     pre: ReactNode;
     poster?: ImageSourcePropType;
@@ -23,10 +25,12 @@ export type EventCardProps = {
     onLongPress?: () => void;
 };
 
-export const EventCardContent: FC<EventCardProps> = memo(({ glyph, pre, poster, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
+export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, poster, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
     const theme = useTheme();
     const styleContainer = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
     const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
+    const styleBadgeFrame = useMemo<ViewStyle>(() => ({ backgroundColor : theme.secondary }),  [theme]);
+    const colorBadge = useMemo<ColorValue>(() => (theme.white),  [theme]);
     const colorGlyph = useMemo<ColorValue>(() => (done ? theme.darken : theme.white), [done, theme]);
     return (
         <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer]} onPress={onPress} onLongPress={onLongPress}>
@@ -63,6 +67,16 @@ export const EventCardContent: FC<EventCardProps> = memo(({ glyph, pre, poster, 
                 </View>
             )}
 
+            {!badges ? null : (
+                <View style={styles.badgeContainer}>
+                    {badges.map((icon) => (
+                        <View style={[styles.badgeFrame, styleBadgeFrame]}>
+                            <Icon name={icon} color={colorBadge} size={badgeIconSize} />
+                        </View>
+                    ))}
+                </View>
+            )}        
+
             {!happening ? null : (
                 <View style={styles.indicator}>
                     <Indicator color={done ? theme.important : theme.invText} />
@@ -92,6 +106,18 @@ const styles = StyleSheet.create({
     glyph: {
         opacity: 0.2,
         transform: [{ rotate: "-15deg" }],
+    },
+    badgeContainer: {
+        position: "absolute",
+        top: 0,
+        right: 0,
+        flexDirection: "row",
+    },
+    badgeFrame: {
+        borderRadius: 16,
+        flex: 1,
+        padding: 4,
+        margin: 8,
     },
     pre: {
         overflow: "hidden",
