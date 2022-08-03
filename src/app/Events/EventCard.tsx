@@ -59,6 +59,7 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
 
     return (
         <EventCardContent
+            badges={event.Badges}
             glyph={event.Glyph}
             pre={pre}
             poster={event.BannerImageUrl ? { uri: event.BannerImageUrl } : undefined}

@@ -75,9 +75,11 @@ export type EnrichedEventRecord = EventRecord & {
     PartOfDay: PartOfDay;
     PosterImageUrl?: ImageUrl;
     BannerImageUrl?: ImageUrl;
+    Badges?: IconNames[];
     Glyph?: IconNames;
     SuperSponsorOnly: boolean;
     SponsorOnly: boolean;
+    MaskRequired: boolean;
 };
 
 export type DealerRecord = RecordMetadata & {
