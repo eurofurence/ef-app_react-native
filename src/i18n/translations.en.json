@@ -56,7 +56,17 @@
     "sponsor_event":"Sponsor event",
     "mask_required": "Face masks are mandatory for this event",
     "view_on_map": "View on map",
-    "when": "{{day}}, {{start}} until {{finish}}."
+    "when": "{{day}}, {{start}} until {{finish}}.",
+    "add_favorite": "Favorite",
+    "remove_favorite": "Unfavorite",
+    "give_feedback": "Give Feedback",
+    "about_title": "About",
+    "share": "Share this event",
+    "label_event_panelhosts": "Hosted by",
+    "label_event_when": "When",
+    "label_event_track": "Track",
+    "label_event_room": "Room",
+    "label_event_description": "More about the event"
   },
   "Dealers": {
     "all": "All",

@@ -83,34 +83,34 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
 
             <Row>
                 <Button style={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
-                    {isFavorited ? "Unfavorite" : "Favorite"}
+                    {isFavorited ? t("remove_favorite") : t("add_favorite" )}
                 </Button>
                 <Button style={styles.rowRight} icon="pencil">
-                    Give feedback
+                    {t("give_feedback")}
                 </Button>
             </Row>
 
             <Button style={styles.share} icon={"share"} onPress={shareEvent}>
-                Share this event
+                {t("share")}
             </Button>
 
-            <Section icon="directions-fork" title="About" />
-            <Label type="caption">Hosted by</Label>
+            <Section icon="directions-fork" title={t("about_title")} />
+            <Label type="caption">{t("label_event_panelhosts")}</Label>
             <Label type="h3" mb={20}>
                 {event.PanelHosts}
             </Label>
 
-            <Label type="caption">When</Label>
+            <Label type="caption">{t("label_event_when")}</Label>
             <Label type="h3" mb={20}>
                 {t("when", { day: day && moment(day.Date).format("dddd"), start: moment(event.StartDateTimeUtc).format("LT"), finish: moment(event.EndDateTimeUtc).format("LT") })}
             </Label>
 
-            <Label type="caption">Track</Label>
+            <Label type="caption">{t("label_event_track")}</Label>
             <Label type="h3" mb={20}>
                 {track?.Name || " "}
             </Label>
 
-            <Label type="caption">Room</Label>
+            <Label type="caption">{t("label_event_room")}</Label>
             <Label type="h3" mb={20}>
                 {room?.Name || " "}
             </Label>
@@ -124,7 +124,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 />
             ))}
 
-            <Section icon="information" title="More about the event" />
+            <Section icon="information" title={t("label_event_description")} />
             <Label type="para">{event.Description}</Label>
         </>
     );
