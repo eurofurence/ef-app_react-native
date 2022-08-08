@@ -28,7 +28,7 @@
     "android": {
       "versionCode": 414,
       "package": "org.eurofurence.connavigator",
-      "googleServicesFile": "./android/google-services.json",
+      "googleServicesFile": "./assets/android/google-services.json",
       "splash": {
         "resizeMode": "native"
       },

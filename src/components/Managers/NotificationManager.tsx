@@ -85,9 +85,11 @@ export const NotificationManager = () => {
     }, []);
 
     useEffectOnce(() => {
+        // Register all the notification handlers
         registerForPushNotifications().then((token) => setExpoPushToken(token));
 
         const notificationHandlerSubscription = Notifications.addNotificationReceivedListener(handleNotification);
+        Notifications.registerTaskAsync(BACKGROUND_NOTIFICATION_TASK);
 
         return () => {
             Notifications.removeNotificationSubscription(notificationHandlerSubscription);
@@ -162,7 +164,7 @@ const BACKGROUND_NOTIFICATION_TASK = "BACKGROUND_NOTIFICATION_TASK";
 // This seems to be the best kind of implementation.
 // https://github.com/expo/fyi/blob/main/presenting-notifications-deprecated.md
 TaskManager.defineTask(BACKGROUND_NOTIFICATION_TASK, ({ data, error, executionInfo }: TaskManagerTaskBody<NotificationData>) => {
-    console.debug("received data in the background", data);
+    console.debug("received data in the background", data, error, executionInfo);
 
     return match(data)
         .with({ event: "Announcement" }, (res) => {
