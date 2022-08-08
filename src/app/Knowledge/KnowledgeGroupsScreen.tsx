@@ -2,8 +2,8 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionList, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Label } from "../../components/Atoms/Label";
 
+import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Card } from "../../components/Containers/Card";
 import { Header } from "../../components/Containers/Header";
@@ -13,7 +13,6 @@ import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { selectKnowledgeItemsSections } from "../../store/eurofurence.selectors";
 import { KnowledgeEntryRecord } from "../../store/eurofurence.types";
-
 import { appStyles } from "../AppStyles";
 
 export const KnowledgeListEntry: FC<{ entry: KnowledgeEntryRecord }> = ({ entry }) => {
@@ -21,10 +20,7 @@ export const KnowledgeListEntry: FC<{ entry: KnowledgeEntryRecord }> = ({ entry 
 
     return (
         <View style={{ paddingHorizontal: 20 }}>
-            <Card
-                style={styles.card}
-                onPress={() => navigation.navigate("KnowledgeEntry", { id: entry.Id })}
-            >
+            <Card style={styles.card} onPress={() => navigation.navigate("KnowledgeEntry", { id: entry.Id })}>
                 <Label>{entry.Title}</Label>
             </Card>
         </View>
@@ -48,7 +44,9 @@ export const KnowledgeGroupsScreen = () => {
             stickySectionHeadersEnabled
             keyExtractor={(item, index) => item.Id + index}
             renderItem={({ item }) => <KnowledgeListEntry entry={item} key={item.Id} />}
-            renderSectionHeader={({ section }) => <Section title={section.Name} subtitle={section.Description} style={{ padding: 20, marginTop: 0, backgroundColor: theme.background }} />}
+            renderSectionHeader={({ section }) => (
+                <Section title={section.Name} subtitle={section.Description} style={{ padding: 20, marginTop: 0, backgroundColor: theme.background }} />
+            )}
             renderSectionFooter={() => <View style={styles.footer} />}
         />
     );

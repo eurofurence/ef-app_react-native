@@ -29,8 +29,8 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
     const theme = useTheme();
     const styleContainer = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
     const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
-    const styleBadgeFrame = useMemo<ViewStyle>(() => ({ backgroundColor : theme.secondary }),  [theme]);
-    const colorBadge = useMemo<ColorValue>(() => (theme.white),  [theme]);
+    const styleBadgeFrame = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary }), [theme]);
+    const colorBadge = useMemo<ColorValue>(() => theme.white, [theme]);
     const colorGlyph = useMemo<ColorValue>(() => (done ? theme.darken : theme.white), [done, theme]);
     return (
         <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer]} onPress={onPress} onLongPress={onLongPress}>
@@ -75,7 +75,7 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
                         </View>
                     ))}
                 </View>
-            )}        
+            )}
 
             {!happening ? null : (
                 <View style={styles.indicator}>

@@ -134,12 +134,12 @@ moment.defineLocale("nl", {
         }
     },
 
-    monthsRegex: monthsRegex,
+    monthsRegex,
     monthsShortRegex: monthsRegex,
     monthsStrictRegex: /^(januari|februari|maart|april|mei|ju[nl]i|augustus|september|oktober|november|december)/i,
     monthsShortStrictRegex: /^(jan\.?|feb\.?|mrt\.?|apr\.?|mei|ju[nl]\.?|aug\.?|sep\.?|okt\.?|nov\.?|dec\.?)/i,
 
-    monthsParse: monthsParse,
+    monthsParse,
     longMonthsParse: monthsParse,
     shortMonthsParse: monthsParse,
 

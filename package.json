@@ -52,6 +52,7 @@
     "expo-localization": "~13.0.0",
     "expo-notifications": "^0.15.4",
     "expo-status-bar": "~1.3.0",
+    "expo-task-manager": "~10.2.1",
     "expo-updates": "~0.13.3",
     "expo-web-browser": "~10.2.1",
     "firebase": "^9.9.1",

@@ -69,12 +69,11 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 </BadgeInvPad>
             )}
 
-           
             <Section icon={isFavorited ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
             <Label type="para" mb={20}>
                 {event.Abstract}
             </Label>
-            
+
             {!event.MaskRequired ? null : (
                 <Label type="para" icon="face-mask" mb={20} color={theme.secondary}>
                     {t("mask_required")}
