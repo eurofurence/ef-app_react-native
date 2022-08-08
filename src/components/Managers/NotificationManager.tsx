@@ -45,29 +45,37 @@ export const NotificationManager = () => {
                 );
                 const castData = notification.request.content.data as NotificationData;
 
-                // todo: this might actually block any type of notification so beware.
-                return match(castData)
+                // Handle the different types of messages
+                match(castData)
                     .with({ event: "Sync" }, (res) => {
                         synchronize();
-                        return { shouldShowAlert: false, shouldSetBadge: false, shouldPlaySound: false };
                     })
                     .with({ event: "Announcement" }, (res) => {
-                        notification.request.content.title = res.title;
-                        notification.request.content.body = res.text;
-
-                        return { shouldShowAlert: true, shouldSetBadge: true, shouldPlaySound: true };
+                        Notifications.scheduleNotificationAsync({
+                            content: {
+                                title: res.title,
+                                subtitle: `Breaking news from ${conName}`, // todo not very professional
+                                body: res.text,
+                            },
+                            trigger: null,
+                            identifier: res.relatedId,
+                        });
                     })
                     .with({ event: "Notification" }, (res) => {
-                        notification.request.content.title = res.title;
-                        notification.request.content.body = res.text;
-
-                        return { shouldShowAlert: true, shouldSetBadge: true, shouldPlaySound: true };
+                        Notifications.scheduleNotificationAsync({
+                            content: {
+                                title: res.title,
+                                subtitle: "You have received a private message",
+                                body: res.message,
+                            },
+                            trigger: null,
+                            identifier: res.relatedId,
+                        });
                     })
-                    .otherwise(() => ({
-                        shouldShowAlert: false,
-                        shouldSetBadge: false,
-                        shouldPlaySound: false,
-                    }));
+                    // Ensure that we must handle ALL message types
+                    .exhaustive();
+
+                return { shouldShowAlert: notification.request.content.title !== null, shouldSetBadge: false, shouldPlaySound: false };
             },
         });
     });
