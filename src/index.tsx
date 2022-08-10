@@ -12,7 +12,9 @@ import "react-native-reanimated";
 
 // Add locales to make them known for device deployment.
 import "./i18n/momentLocales";
-import "./i18n/index";
+
+// Import background notification connector.
+import "./components/Managers/NotificationManager.global";
 
 const Index = () => {
     return (

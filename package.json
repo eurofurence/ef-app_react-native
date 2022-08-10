@@ -30,7 +30,9 @@
     "lint": "eslint ./src --ext js,ts,jsx,tsx",
     "test": "jest",
     "bundle:android": "yarn tsc --noEmit && yarn lint && expo build:android -t app-bundle",
-    "local:android": "npx eas build --platform android --profile preview --local"
+    "local:android": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile preview --local",
+    "local:android:preview": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile preview --local",
+    "local:android:production": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile production --local"
   },
   "resolutions": {
     "@types/react": "^17"
