@@ -107,7 +107,7 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     // If the screens require too much performance we should set detach to true again.
     return (
         <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialName}>
-            {hasFavorites && <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "bookmark" }} component={FavoriteEventsList} />}
+            {hasFavorites && <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "heart" }} component={FavoriteEventsList} />}
             {/*Tab for searching and filtering*/}
             <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
 

@@ -84,14 +84,16 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 <Button style={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
                     {isFavorited ? "Unfavorite" : "Favorite"}
                 </Button>
-                <Button style={styles.rowRight} icon="pencil">
-                    Give feedback
+                <Button style={styles.rowRight} icon={"share"} onPress={shareEvent}>
+                    Share this event
                 </Button>
             </Row>
 
-            <Button style={styles.share} icon={"share"} onPress={shareEvent}>
-                Share this event
-            </Button>
+            {event.IsAcceptingFeedback && (
+                <Button style={styles.share} icon="pencil">
+                    Give feedback
+                </Button>
+            )}
 
             <Section icon="directions-fork" title="About" />
             <Label type="caption">Hosted by</Label>

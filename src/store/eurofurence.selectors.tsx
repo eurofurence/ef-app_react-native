@@ -112,10 +112,7 @@ export const eventsSelectors = {
     selectByTrack: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceTrackId === itemId)),
     selectByDay: createSelector([baseEventsSelector.selectAll, (state, itemId: RecordId) => itemId], (events, itemId) => events.filter((it) => it?.ConferenceDayId === itemId)),
     selectUpcomingEvents: createSelector([baseEventsSelector.selectAll, (events, now: Moment) => now], (events, now) =>
-        events.filter((it) => {
-            const startMoment = moment(it.StartDateTimeUtc);
-            return now.isBetween(startMoment.subtract(30, "minutes"), startMoment);
-        })
+        events.filter((it) => now.isBetween(moment(it.StartDateTimeUtc).subtract(30, "minute"), it.StartDateTimeUtc, "minutes"))
     ),
     selectCurrentEvents: createSelector([baseEventsSelector.selectAll, (events, now: Moment) => now], (events, now) =>
         events.filter((it) => {
