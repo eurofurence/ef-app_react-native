@@ -27,13 +27,20 @@ export const MapScreen = () => {
 
     const filterEntries = useCallback(
         (bounds: VisibleViewBounds) => {
+            const middleX = (bounds.left + bounds.right) / 2;
+            const middleY = (bounds.bottom + bounds.top) / 2;
+
             setIsFiltering(true);
             console.log("Filtering map entries", bounds);
 
-            const filteredEntries = _.filter(map?.Entries, (it) => _.inRange(it.X, bounds.left, bounds.right) && _.inRange(it.Y, bounds.top, bounds.bottom)).map((it, index) => ({
-                title: it.Id + index,
-                data: it.Links,
-            }));
+            const filteredEntries = _.chain(map?.Entries)
+                .filter((it) => _.inRange(it.X, bounds.left, bounds.right) && _.inRange(it.Y, bounds.top, bounds.bottom))
+                .orderBy((it) => Math.sqrt(Math.pow(it.X + middleX, 2) + Math.pow(it.Y + middleY, 2)), "asc")
+                .map((it, index) => ({
+                    title: it.Id + index,
+                    data: it.Links,
+                }))
+                .value();
 
             setVisibleEntries(filteredEntries ?? []);
             console.log("Filtered entries", filteredEntries?.length);
