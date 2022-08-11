@@ -70,7 +70,7 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
             {!badges ? null : (
                 <View style={styles.badgeContainer}>
                     {badges.map((icon) => (
-                        <View style={[styles.badgeFrame, styleBadgeFrame]}>
+                        <View key={icon} style={[styles.badgeFrame, styleBadgeFrame]}>
                             <Icon name={icon} color={colorBadge} size={badgeIconSize} />
                         </View>
                     ))}
