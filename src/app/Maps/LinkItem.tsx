@@ -1,5 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import { FC } from "react";
+import { Linking } from "react-native";
 import { match } from "ts-pattern";
 
 import { Button } from "../../components/Containers/Button";
@@ -26,7 +27,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
     return (
-        <Button style={{ marginVertical: 5 }} onPress={() => WebBrowser.openBrowserAsync(link.Target)}>
+        <Button style={{ marginVertical: 5 }} onPress={() => Linking.openURL(link.Target)}>
             {link.Name}
         </Button>
     );
