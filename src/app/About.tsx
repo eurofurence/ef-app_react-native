@@ -18,10 +18,23 @@ import { Row } from "../components/Containers/Row";
 import { useAppSelector } from "../store";
 import { appStyles } from "./AppStyles";
 
-const extraThanksMarkdown = `**Program Management:**
+const extraThanksMarkdown = `
+# Tooling
+
+React-Native and Expo for making this version possible
+
+Firebase provides us with cloud messaging and analytics
+
+Sentry, who provide us with exception tracking and handling
+
+# People
+
+## Program Management
+
 - Zefiro
 
-**Special Thanks:**
+## Other Special People
+
 - Akulatraxas
 - Aragon Tigerseye
 - Atkelar
@@ -35,11 +48,30 @@ const extraThanksMarkdown = `**Program Management:**
 - StreifiGreif
 - Xil
 - IceTiger
+s
+## English Translations
 
-**Made with**
-- React-Native
+- Luchs
+- Pazuzu
+- Requinard
 
-**Disclaimer**
+## German Translations
+
+- Luchs
+- Pazuzu
+- Requinard
+
+## Dutch Translations
+
+- Pazuzu
+- Requinard
+
+## Italian Translations
+
+- Siepnir
+
+# Disclaimer
+
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.`;
 
 export const Credit: FC<{ uri: string; name: string; role: string; onPress?: () => void }> = ({ uri, name, role, onPress }) => (
@@ -104,7 +136,7 @@ export const AboutScreen = () => {
                 <Credit uri={"https://avatars.githubusercontent.com/u/5929561"} name={"Pazuzu"} role={"React Development and UI design"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/5537850"} name={"Requinard"} role={"React Development and app mechanics"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/12624320"} name={"Shez"} role={"iOS Development"} />
-                <Section title={t("extra_thanks")} icon={"heart-outline"} />
+                {/*<Section title={t("extra_thanks")} icon={"heart-outline"} />*/}
                 <Markdown>{extraThanksMarkdown}</Markdown>
             </Floater>
         </ScrollView>

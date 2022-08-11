@@ -48,8 +48,8 @@
     "current_subtitle": "These events are currently happening",
     "upcoming_title": "Upcoming Events",
     "upcoming_subtitle": "These events are starting in the next 30 minutes",
-    "upcoming_favorites_title": "Favorite Events",
-    "upcoming_favorites_subtitle": "You will receive a reminder before this event starts"
+    "upcoming_favorites_title": "Your Schedule",
+    "upcoming_favorites_subtitle": "Favorite events that are happening today"
   },
   "Event": {
     "supersponsor_event": "Supersponsor event",

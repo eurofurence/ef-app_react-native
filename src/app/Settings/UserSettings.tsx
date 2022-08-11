@@ -23,6 +23,7 @@ const languages = orderBy(
         { code: "en", name: "🇬🇧 English" },
         { code: "de", name: "🇩🇪 Deutsch" },
         { code: "nl", name: "🇳🇱 Nederlands" },
+        { code: "it", name: "🇮🇹 Italiano" },
     ] as Language[],
     (value) => value.code,
     "asc"
