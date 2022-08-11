@@ -1,9 +1,8 @@
 import Constants from "expo-constants";
-import * as WebBrowser from "expo-web-browser";
 import { capitalize } from "lodash";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, Platform, ScrollView } from "react-native";
+import { Image, Linking, Platform, ScrollView } from "react-native";
 // @ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -16,6 +15,7 @@ import { Col } from "../components/Containers/Col";
 import { Floater } from "../components/Containers/Floater";
 import { Header } from "../components/Containers/Header";
 import { Row } from "../components/Containers/Row";
+import { useAppSelector } from "../store";
 import { appStyles } from "./AppStyles";
 
 const extraThanksMarkdown = `**Program Management:**
@@ -63,25 +63,42 @@ export const Credit: FC<{ uri: string; name: string; role: string; onPress?: () 
     </TouchableOpacity>
 );
 
+const useVersionTitle = () => {
+    const showDevMenu = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
+
+    return useMemo(() => {
+        if (showDevMenu) {
+            return "DEVELOPMENT";
+        } else if (Platform.OS === "android") {
+            return `${capitalize(Platform.OS)} ${Constants.manifest?.version} build ${Constants.manifest?.android?.versionCode}`;
+        } else {
+            return `${capitalize(Platform.OS)} ${Constants.manifest?.version}`;
+        }
+    }, [showDevMenu]);
+};
+
 export const AboutScreen = () => {
     const { t } = useTranslation("About");
     const safe = useSafeAreaInsets();
+    const version = useVersionTitle();
+    const showHelpButtons = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
     return (
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                <Section
-                    title={t("app_details.title")}
-                    subtitle={`${capitalize(Platform.OS)} ${Constants.manifest?.version} ${Platform.OS === "android" ? Constants.manifest?.android?.versionCode : ""}`}
-                    icon={"cellphone"}
-                />
+                <Section title={t("app_details.title")} subtitle={version} icon={"cellphone"} />
 
-                <Button style={{ marginVertical: 10 }} onPress={() => WebBrowser.openBrowserAsync("https://t.me/+lAYTadnRKdY2NDBk")} icon={"help"}>
-                    {t("app_details.get_help")}
-                </Button>
-                <Button style={{ marginVertical: 10 }} onPress={() => WebBrowser.openBrowserAsync("https://github.com/eurofurence/ef-app_react-native/issues")} icon={"bug"}>
-                    {t("app_details.report_bug")}
-                </Button>
+                {!showHelpButtons && (
+                    <>
+                        <Button style={{ marginVertical: 10 }} onPress={() => Linking.openURL("https://t.me/+lAYTadnRKdY2NDBk")} icon={"help"}>
+                            {t("app_details.get_help")}
+                        </Button>
+                        <Button style={{ marginVertical: 10 }} onPress={() => Linking.openURL("https://github.com/eurofurence/ef-app_react-native/issues")} icon={"bug"}>
+                            {t("app_details.report_bug")}
+                        </Button>
+                    </>
+                )}
+
                 <Section title={t("developed_by")} icon={"code-json"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/13329381"} name={"Luchs"} role={"Project management and getting us to move our butts in gear"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/5929561"} name={"Pazuzu"} role={"React Development and UI design"} />

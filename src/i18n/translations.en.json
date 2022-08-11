@@ -98,8 +98,17 @@
     "currentLanguage": "Your current language is English!",
     "changeLanguage": "Change language",
     "allowAnalytics": "Allow us to collect analytics events",
+    "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
     "settingsSection": "Settings",
+    "developer_settings_alert": {
+      "title": "Dev Settings Menu",
+      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
+      "enable": "Enable",
+      "disable": "Disable",
+      "cancel": "Cancel"
+    },
     "developer_settings": {
+
       "title": "Developer Settings",
       "subtitle": "You shouldn't touch these unless you know what you're doing."
     },
