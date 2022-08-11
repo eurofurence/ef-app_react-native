@@ -38,9 +38,9 @@ export const HomeScreen: FC<ScreenHomeProps> = () => {
             <Floater contentStyle={appStyles.trailer}>
                 <DeviceSpecificWarnings />
                 <AnnouncementList />
-                <CurrentEventList />
                 <UpcomingEventsList />
                 <UpcomingFavoriteEventsList />
+                <CurrentEventList />
             </Floater>
         </ScrollView>
     );
