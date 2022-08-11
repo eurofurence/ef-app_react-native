@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { registerTaskAsync, setNotificationHandler } from "expo-notifications";
 import { defineTask, TaskManagerTaskBody } from "expo-task-manager";
+import { match, P } from "ts-pattern";
 
 import { BG_NOTIFICATIONS_NAME, BG_SYNC_REQUEST, scheduleAnnouncement, scheduleNotification } from "./NotificationManager.common";
 import { isAnnouncement, isNotification, isPayload, isSync } from "./NotificationManager.types";
@@ -56,11 +57,18 @@ registerTaskAsync(BG_NOTIFICATIONS_NAME).then(
 // Set general notification handling strategies, needed both in background and
 // in foreground.
 setNotificationHandler({
-    handleNotification: async () => {
-        return {
-            shouldShowAlert: true,
-            shouldPlaySound: false,
-            shouldSetBadge: false,
-        };
-    },
+    handleNotification: async (notification) =>
+        match(notification.request.content)
+            .with({ title: P.string }, () => ({
+                // If there is a title, show the alert
+                shouldShowAlert: true,
+                shouldPlaySound: false,
+                shouldSetBadge: false,
+            }))
+            .otherwise(() => ({
+                // Base case, show nothing
+                shouldShowAlert: false,
+                shouldPlaySound: false,
+                shouldSetBadge: false,
+            })),
 });
