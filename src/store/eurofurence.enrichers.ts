@@ -62,10 +62,10 @@ const tagsToIcon = (tags?: string[]): IconNames | undefined => {
     if (tags.includes("photoshoot")) return "camera";
 };
 
-const tagsToBadges = (tags?: string[]) : IconNames[] | undefined => {
+const tagsToBadges = (tags?: string[]): IconNames[] | undefined => {
     if (!tags) return [];
 
-    let badges: Array<IconNames> =[];
+    const badges: IconNames[] = [];
     if (tags.includes("mask_required")) badges.push("face-mask");
     return badges;
 };
@@ -85,7 +85,7 @@ export const enrichEventRecord = (record: EventRecord): EnrichedEventRecord => (
     Badges: tagsToBadges(record.Tags),
     SuperSponsorOnly: superSponsorOnly(record.Tags),
     SponsorOnly: sponsorOnly(record.Tags),
-    MaskRequired: maskRequired(record.Tags)
+    MaskRequired: maskRequired(record.Tags),
 });
 
 export const enrichAnnouncementRecord = (record: AnnouncementRecord): EnrichedAnnouncementRecord => ({

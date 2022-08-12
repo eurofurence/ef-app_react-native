@@ -79,7 +79,10 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value?.toString()}
+                        autoComplete={"username"}
                         autoCapitalize={"none"}
+                        textContentType={"username"}
+                        keyboardType={"numeric"}
                     />
                 )}
             />
@@ -92,15 +95,20 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
                 rules={{
                     required: true,
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({ field: { onChange, onBlur, value, ...field } }) => (
                     <TextInput
+                        {...field}
                         style={[styles.marginAfter, styles.input]}
+                        selectTextOnFocus
                         placeholder="Your password"
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
+                        autoComplete={"password"}
                         secureTextEntry
                         autoCapitalize={"none"}
+                        textContentType={"password"}
+                        contextMenuHidden={false}
                     />
                 )}
             />
@@ -124,6 +132,7 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     input: {
+        width: "100%",
         borderBottomColor: "black",
         borderBottomWidth: 1,
         paddingVertical: 8,

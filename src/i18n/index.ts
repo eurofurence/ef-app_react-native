@@ -29,7 +29,10 @@ const logger = partial(console.log, "i18next");
 
 const I18NEXT_LANGAGUE_KEY = "i18next";
 
-i18next
+/**
+ * Initialized promise to the i18next translate function.
+ */
+export const i18t = i18next
     .use(initReactI18next)
     .use({
         type: "languageDetector",
@@ -66,4 +69,8 @@ i18next
             useSuspense: false,
         },
     });
+
+/**
+ * Re-export i18next.
+ */
 export default i18next;

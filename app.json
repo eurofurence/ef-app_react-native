@@ -26,9 +26,9 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 414,
+      "versionCode": 417,
       "package": "org.eurofurence.connavigator",
-      "googleServicesFile": "./android/google-services.json",
+      "googleServicesFile": "./assets/android/google-services.json",
       "splash": {
         "resizeMode": "native"
       },
@@ -59,9 +59,6 @@
         "WRITE_EXTERNAL_STORAGE"
       ]
     },
-    "androidStatusBar": {
-      "backgroundColor": "#006459"
-    },
     "web": {
       "favicon": "./assets/images/playstore.png",
       "config": {
@@ -78,7 +75,14 @@
       }
     },
     "plugins": [
-      "sentry-expo"
+      "sentry-expo",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification.png",
+          "color": "#006459"
+        }
+      ]
     ]
   }
 }
