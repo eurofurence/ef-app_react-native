@@ -1,72 +1,72 @@
 {
-  "Menu": {
-    "not_logged_in": "Du bist nicht angemeldet",
-    "logged_in_now": "Jetzt anmelden",
-    "info": "Infoartikel",
-    "catch_em": "Catch-em-all",
-    "services": "Services",
-    "maps": "Karten",
-    "about": "Über uns",
-    "settings": "Einstellungen",
-    "messages": "Du hast {{count}} neue Nachrichten",
-    "open_messages": "Nachrichten öffnen",
-    "home": "Start",
-    "events": "Events",
-    "dealers": "Dealer",
-    "more": "Mehr",
-    "less": "Zuklappen"
-  },
-  "Events": {
-    "filter_by_day": "Tage ansehen",
-    "filter_by_track": "Kategorien ansehen",
-    "filter_by_room": "Räume ansehen",
-    "morning": "Morgens",
-    "afternoon": "Nachmittags",
-    "evening": "Am Abend",
-    "night": "In der Nacht",
-    "events_count": "{{count}} Events",
-    "events_done": "Bereits zu Ende"
-  },
-  "Event": {
-    "supersponsor_event": "Supersponsor-Event",
-    "sponsor_event": "Sponsor-Event",
-    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
-    "view_on_map": "Auf der Karte ansehen"
-  },
-  "Dealers": {
-    "all": "Alle",
-    "dealers_on_this_day": "Dealer an diesem Tag",
-    "dealers_on_day": "Dealer am {{day}}",
-    "dealers_at_convention": "Dealer an der Eurofurence",
-    "dealers_count": "{{count}} Dealer",
-    "not_attending_on": "Nicht da am {{offDays}}"
+  "Countdown": {
+    "after_event": "Das war's! Wir hoffen, dich nächstes Jahr wieder zu sehen!",
+    "before_event": "{{conName}} beginnt in {{diff}}"
   },
   "Dealer": {
-    "viewing_dealer": "Betrachte Dealer",
-    "attends_thu": "Donnerstag",
-    "attends_fri": "Freitag",
-    "attends_sat": "Samstag",
     "about": "Infos",
     "about_the_art": "Über das Angebot",
     "about_the_artist": "Über {{name}}",
-    "attends": "Anwesend",
-    "merchandise": "Angebot",
     "after_dark": "After Dark",
-    "in_after_dark": "Im After Dark Bereich",
+    "attends": "Anwesend",
+    "attends_fri": "Freitag",
+    "attends_sat": "Samstag",
+    "attends_thu": "Donnerstag",
     "categories": "Kategorien",
+    "in_after_dark": "Im After Dark Bereich",
+    "merchandise": "Angebot",
     "not_attending": "Heute nicht anwesend",
-    "view_on_map": "Auf der Karte ansehen"
+    "view_on_map": "Auf der Karte ansehen",
+    "viewing_dealer": "Betrachte Dealer"
   },
-  "Settings": {
-    "currentLanguage": "Ihre sprache ist Deutsch!",
-    "settingsSection": "Einstellungen"
+  "Dealers": {
+    "all": "Alle",
+    "dealers_at_convention": "Dealer an der Eurofurence",
+    "dealers_count": "{{count}} Dealer",
+    "dealers_on_day": "Dealer am {{day}}",
+    "dealers_on_this_day": "Dealer an diesem Tag",
+    "not_attending_on": "Nicht da am {{offDays}}"
   },
-  "Countdown": {
-    "before_event": "{{conName}} beginnt in {{diff}}",
-    "after_event": "Das war's! Wir hoffen, dich nächstes Jahr wieder zu sehen!"
+  "Event": {
+    "sponsor_event": "Sponsor-Event",
+    "supersponsor_event": "Supersponsor-Event",
+    "view_on_map": "Auf der Karte ansehen",
+    "when": "{{ day }}, {{ start }} bis {{ finish }}."
+  },
+  "Events": {
+    "afternoon": "Nachmittags",
+    "evening": "Am Abend",
+    "events_count": "{{count}} Events",
+    "events_done": "Bereits zu Ende",
+    "filter_by_day": "Tage ansehen",
+    "filter_by_room": "Räume ansehen",
+    "filter_by_track": "Kategorien ansehen",
+    "morning": "Morgens",
+    "night": "In der Nacht"
+  },
+  "Menu": {
+    "about": "Über uns",
+    "catch_em": "Catch-em-all",
+    "dealers": "Dealer",
+    "events": "Events",
+    "home": "Start",
+    "info": "Infoartikel",
+    "less": "Zuklappen",
+    "logged_in_now": "Jetzt anmelden",
+    "maps": "Karten",
+    "messages": "Du hast {{count}} neue Nachrichten",
+    "more": "Mehr",
+    "not_logged_in": "Du bist nicht angemeldet",
+    "open_messages": "Nachrichten öffnen",
+    "services": "Services",
+    "settings": "Einstellungen"
   },
   "Notification": {
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",
     "private_message": "Du hast eine Nachricht erhalten"
+  },
+  "Settings": {
+    "currentLanguage": "Ihre sprache ist Deutsch!",
+    "settingsSection": "Einstellungen"
   }
 }

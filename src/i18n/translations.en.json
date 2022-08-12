@@ -1,190 +1,190 @@
 {
-  "Home": {
-    "announcementsTitle_zero": "There are no announcements.",
-    "announcementsTitle_one": "There is {{ count }} announcements.",
-    "announcementsTitle_other": "There are {{ count }} announcements.",
-    "eventsTitle_zero": "There are no events.",
-    "eventsTitle_one": "We have retrieved {{ count }} event.",
-    "eventsTitle_other": "We have retrieved {{ count }} events.",
-    "warnings": {
-      "title": "Device Issues",
-      "subtitle": "Due to your device some functionality might not work",
-      "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
-      "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
-      "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown."
-    }
+  "About": {
+    "app_details": {
+      "get_help": "Get Help",
+      "report_bug": "Report a Bug",
+      "title": "App Details"
+    },
+    "developed_by": "Developed by",
+    "extra_thanks": "Extra Thanks",
+    "header": "About"
   },
-  "Menu": {
-    "not_logged_in": "You are currently not logged in",
-    "logged_in_now": "Log-in now",
-    "info": "Info articles",
-    "catch_em": "Catch-em-all",
-    "services": "Services",
-    "maps": "Maps",
-    "about": "About",
-    "settings": "Settings",
-    "messages": "You have {{count}} new messages",
-    "open_messages": "Open messages",
-    "home": "Home",
-    "events": "Events",
-    "dealers": "Dealers",
-    "more": "More",
-    "less": "Less"
+  "Announcements": {
+    "noAnnouncements": "There are currently no active announcements",
+    "sectionSubtitle": "Live updates from the convention",
+    "sectionTitle": "Announcements"
   },
-  "Events": {
-    "filter_by_day": "Browse days",
-    "filter_by_track": "Browse tracks",
-    "filter_by_room": "Browse rooms",
-    "morning": "In the morning",
-    "afternoon": "In the afternoon",
-    "evening": "In the evening",
-    "night": "At night",
-    "finished": "Finished",
-    "events_count": "{{count}} events",
-    "events_done": "Events concluded",
-    "favorites_title": "Favorite Events",
-    "favorites_subtitle": "You will receive a reminder about these events",
-    "current_title": "Current Events",
-    "current_subtitle": "These events are currently happening",
-    "upcoming_title": "Upcoming Events",
-    "upcoming_subtitle": "These events are starting in the next 30 minutes",
-    "upcoming_favorites_title": "Your Schedule",
-    "upcoming_favorites_subtitle": "Favorite events that are happening today"
-  },
-  "Event": {
-    "supersponsor_event": "Supersponsor event",
-    "sponsor_event": "Sponsor event",
-    "mask_required": "Face masks are mandatory for this event",
-    "view_on_map": "View on map",
-    "when": "{{day}}, {{start}} until {{finish}}."
-  },
-  "Dealers": {
-    "all": "All",
-    "dealers_on_this_day": "Dealers on this day",
-    "dealers_on_day": "Dealers on {{day}}",
-    "dealers_at_convention": "Dealers at {{convention}}",
-    "dealers_count": "{{count}} dealers",
-    "not_attending_on": "Not in on {{offDays}}"
+  "Countdown": {
+    "after_event": "That was it! We hope to see you again next year!",
+    "before_event": "{{conName}} will start in {{diff}}"
   },
   "Dealer": {
-    "viewing_dealer": "Viewing dealer",
-    "attends_thu": "Thursday",
-    "attends_fri": "Friday",
-    "attends_sat": "Saturday",
     "about": "About",
     "about_the_art": "About the art",
     "about_the_artist": "About the artist",
-    "attends": "Attends on",
-    "merchandise": "Merchandise",
     "after_dark": "After dark",
-    "in_after_dark": "Located in the after dark section",
+    "attends": "Attends on",
+    "attends_fri": "Friday",
+    "attends_sat": "Saturday",
+    "attends_thu": "Thursday",
     "categories": "Categories",
+    "in_after_dark": "Located in the after dark section",
+    "merchandise": "Merchandise",
     "not_attending": "Not attending today",
-    "view_on_map": "View on map"
+    "view_on_map": "View on map",
+    "viewing_dealer": "Viewing dealer"
   },
-  "TimeTravel": {
-    "title": "Time Travel",
-    "subtitle": "Adjust time settings for testing and debugging",
-    "originalTime": "Original: {{ time }}",
-    "currentTime": "Current: {{ time }}",
-    "difference": "Your time difference is {{ diff }}",
-    "enable": "Enable",
-    "disable": "Disable",
-    "reset": "Reset"
-  },
-  "Settings": {
-    "header": "Settings",
-    "timeTravel": "Show time travel settings.",
-    "currentLanguage": "Your current language is English!",
-    "changeLanguage": "Change language",
-    "allowAnalytics": "Allow us to collect analytics events",
-    "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
-    "settingsSection": "Settings",
-    "login": {
-      "logged_in_as": "You are logged in as {{username}}",
-      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "logout": "Logout",
-      "login": "Login"
-    },
-    "developer_settings_alert": {
-      "title": "Dev Settings Menu",
-      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
-      "enable": "Enable",
-      "disable": "Disable",
-      "cancel": "Cancel"
-    },
-    "developer_settings": {
-      "title": "Developer Settings",
-      "subtitle": "You shouldn't touch these unless you know what you're doing."
-    },
-    "cache": {
-      "title": "Cache Stats",
-      "subtitle": "Last sync: {{ time }}",
-      "cache_state": "Current state: {{ state }}",
-      "cache_item": "There are {{ count }} {{ type }}s",
-      "synchronize": "Synchronize",
-      "reset": "Clear cache",
-      "reset_alert": "To clean the cache you need to long press this button"
-    },
-    "dev_buttons": {
-      "title": "Dev Buttons",
-      "subtitle": "Make the API do something.",
-      "no_auth_alert": "You are not logged in. Stopping.",
-      "test_message_subject": "You have won a grand prize!",
-      "test_message_content": "You have won a grand prize!",
-      "sync_alert_error": "Long hold to activate this function",
-      "sync_alert_done": "Told all devices to synchronize",
-      "sync": "Force Resync {{ status }}",
-      "send_private_message": "Receive Private Message {{ status }}"
-    },
-    "remote_messages": {
-      "title": "Remote Messages",
-      "subtitle": "Messages that we got from FCM",
-      "no_messages": "We have not received any messages from FCM"
-    },
-    "notifications": {
-      "title": "Notifications",
-      "subtitle": "All scheduled notifications on this device",
-      "no_notifications": "There are no scheduled notifications!",
-      "notification_item": "{{ identifier }} scheduled on {{ time }}"
-    }
-  },
-  "Announcements": {
-    "sectionTitle": "Announcements",
-    "sectionSubtitle": "Live updates from the convention",
-    "noAnnouncements": "There are currently no active announcements"
+  "Dealers": {
+    "all": "All",
+    "dealers_at_convention": "Dealers at {{convention}}",
+    "dealers_count": "{{count}} dealers",
+    "dealers_on_day": "Dealers on {{day}}",
+    "dealers_on_this_day": "Dealers on this day",
+    "not_attending_on": "Not in on {{offDays}}"
   },
   "EmptyScreen": {
     "notImplemented": "Content is not implemented yet."
   },
+  "Event": {
+    "mask_required": "Face masks are mandatory for this event",
+    "sponsor_event": "Sponsor event",
+    "supersponsor_event": "Supersponsor event",
+    "view_on_map": "View on map",
+    "when": "{{day}}, {{start}} until {{finish}}."
+  },
+  "Events": {
+    "afternoon": "In the afternoon",
+    "current_subtitle": "These events are currently happening",
+    "current_title": "Current Events",
+    "evening": "In the evening",
+    "events_count": "{{count}} events",
+    "events_done": "Events concluded",
+    "favorites_subtitle": "You will receive a reminder about these events",
+    "favorites_title": "Favorite Events",
+    "filter_by_day": "Browse days",
+    "filter_by_room": "Browse rooms",
+    "filter_by_track": "Browse tracks",
+    "finished": "Finished",
+    "morning": "In the morning",
+    "night": "At night",
+    "upcoming_favorites_subtitle": "Favorite events that are happening today",
+    "upcoming_favorites_title": "Your Schedule",
+    "upcoming_subtitle": "These events are starting in the next 30 minutes",
+    "upcoming_title": "Upcoming Events"
+  },
+  "Home": {
+    "announcementsTitle_one": "There is {{ count }} announcements.",
+    "announcementsTitle_other": "There are {{ count }} announcements.",
+    "announcementsTitle_zero": "There are no announcements.",
+    "eventsTitle_one": "We have retrieved {{ count }} event.",
+    "eventsTitle_other": "We have retrieved {{ count }} events.",
+    "eventsTitle_zero": "There are no events.",
+    "warnings": {
+      "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown.",
+      "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
+      "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
+      "subtitle": "Due to your device some functionality might not work",
+      "title": "Device Issues"
+    }
+  },
   "KnowledgeGroups": {
     "header": "Info Articles"
   },
-  "PrivateMessageList": {
-    "section_title_from": "From {{authorName}}",
-    "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
-    "unread": "Unread",
-    "read": "Read",
-    "from": "From {{ author }}",
-    "from_unknown": "From unknown author"
-  },
-  "About": {
-    "header": "About",
-    "app_details": {
-      "title": "App Details",
-      "get_help": "Get Help",
-      "report_bug": "Report a Bug"
-    },
-    "developed_by": "Developed by",
-    "extra_thanks": "Extra Thanks"
-  },
-  "Todo": {},
-  "Countdown": {
-    "before_event": "{{conName}} will start in {{diff}}",
-    "after_event": "That was it! We hope to see you again next year!"
+  "Menu": {
+    "about": "About",
+    "catch_em": "Catch-em-all",
+    "dealers": "Dealers",
+    "events": "Events",
+    "home": "Home",
+    "info": "Info articles",
+    "less": "Less",
+    "logged_in_now": "Log-in now",
+    "maps": "Maps",
+    "messages": "You have {{count}} new messages",
+    "more": "More",
+    "not_logged_in": "You are currently not logged in",
+    "open_messages": "Open messages",
+    "services": "Services",
+    "settings": "Settings"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",
     "private_message": "You received a new private message"
-  }
+  },
+  "PrivateMessageList": {
+    "from": "From {{ author }}",
+    "from_unknown": "From unknown author",
+    "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
+    "read": "Read",
+    "section_title_from": "From {{authorName}}",
+    "unread": "Unread"
+  },
+  "Settings": {
+    "allowAnalytics": "Allow us to collect analytics events",
+    "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
+    "cache": {
+      "cache_item": "There are {{ count }} {{ type }}s",
+      "cache_state": "Current state: {{ state }}",
+      "reset": "Clear cache",
+      "reset_alert": "To clean the cache you need to long press this button",
+      "subtitle": "Last sync: {{ time }}",
+      "synchronize": "Synchronize",
+      "title": "Cache Stats"
+    },
+    "changeLanguage": "Change language",
+    "currentLanguage": "Your current language is English!",
+    "dev_buttons": {
+      "no_auth_alert": "You are not logged in. Stopping.",
+      "send_private_message": "Receive Private Message {{ status }}",
+      "subtitle": "Make the API do something.",
+      "sync": "Force Resync {{ status }}",
+      "sync_alert_done": "Told all devices to synchronize",
+      "sync_alert_error": "Long hold to activate this function",
+      "test_message_content": "You have won a grand prize!",
+      "test_message_subject": "You have won a grand prize!",
+      "title": "Dev Buttons"
+    },
+    "developer_settings": {
+      "subtitle": "You shouldn't touch these unless you know what you're doing.",
+      "title": "Developer Settings"
+    },
+    "developer_settings_alert": {
+      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
+      "cancel": "Cancel",
+      "disable": "Disable",
+      "enable": "Enable",
+      "title": "Dev Settings Menu"
+    },
+    "header": "Settings",
+    "login": {
+      "logged_in_as": "You are logged in as {{username}}",
+      "login": "Login",
+      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
+      "logout": "Logout"
+    },
+    "notifications": {
+      "no_notifications": "There are no scheduled notifications!",
+      "notification_item": "{{ identifier }} scheduled on {{ time }}",
+      "subtitle": "All scheduled notifications on this device",
+      "title": "Notifications"
+    },
+    "remote_messages": {
+      "no_messages": "We have not received any messages from FCM",
+      "subtitle": "Messages that we got from FCM",
+      "title": "Remote Messages"
+    },
+    "settingsSection": "Settings",
+    "timeTravel": "Show time travel settings."
+  },
+  "TimeTravel": {
+    "currentTime": "Current: {{ time }}",
+    "difference": "Your time difference is {{ diff }}",
+    "disable": "Disable",
+    "enable": "Enable",
+    "originalTime": "Original: {{ time }}",
+    "reset": "Reset",
+    "subtitle": "Adjust time settings for testing and debugging",
+    "title": "Time Travel"
+  },
+  "Todo": {}
 }
