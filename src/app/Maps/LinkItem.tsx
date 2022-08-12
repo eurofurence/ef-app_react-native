@@ -1,4 +1,3 @@
-import * as WebBrowser from "expo-web-browser";
 import { FC } from "react";
 import { Linking } from "react-native";
 import { match } from "ts-pattern";

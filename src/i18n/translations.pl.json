@@ -67,8 +67,8 @@
     "finished": "Finished",
     "morning": "In the morning",
     "night": "At night",
-    "upcoming_favorites_subtitle": "Favorite events that are happening today",
-    "upcoming_favorites_title": "Your Schedule",
+    "upcoming_favorites_subtitle": "You will receive a reminder before this event starts",
+    "upcoming_favorites_title": "Favorite Events",
     "upcoming_subtitle": "These events are starting in the next 30 minutes",
     "upcoming_title": "Upcoming Events"
   },
@@ -156,12 +156,6 @@
       "title": "Dev Settings Menu"
     },
     "header": "Settings",
-    "login": {
-      "logged_in_as": "You are logged in as {{username}}",
-      "login": "Login",
-      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "logout": "Logout"
-    },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
       "notification_item": "{{ identifier }} scheduled on {{ time }}",

@@ -1,3 +1,4 @@
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import moment from "moment";
 import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -75,9 +76,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
             </Label>
 
             {!event.MaskRequired ? null : (
-                <Label type="para" icon="face-mask" mb={20} color={theme.secondary}>
-                    {t("mask_required")}
-                </Label>
+                <Row variant={"center"} style={{ marginBottom: 20 }}>
+                    <Icon name={"face-mask"} style={{ flexGrow: 1 }} size={20} color={theme.secondary} />
+                    <Label type="para" style={{ flexGrow: 9 }} color={theme.secondary}>
+                        {t("mask_required")}
+                    </Label>
+                </Row>
             )}
 
             <Row>
