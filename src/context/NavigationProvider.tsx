@@ -52,6 +52,7 @@ const areasLinking: LinkingConfig<ScreenAreasParamsList> = {
  * Configure deep linking
  */
 const linking: LinkingOptions<ScreenStartParamsList> = {
+    // TODO: Use configuration constants here.
     prefixes: [Linking.createURL(`/`), Linking.createURL(`/${conId}/Web/`), `https://app.eurofurence.org`],
     config: {
         initialRouteName: "Areas",

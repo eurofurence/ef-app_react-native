@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Section } from "../../components/Atoms/Section";
 import { Floater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { useAppSelector } from "../../store";
