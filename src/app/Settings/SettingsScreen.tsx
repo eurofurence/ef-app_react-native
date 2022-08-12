@@ -28,8 +28,6 @@ export const SettingsScreen = () => {
 
                 {showDevMenu && (
                     <>
-                        <Section title={t("developer_settings.title")} subtitle={t("developer_settings.subtitle")} icon={"bug"} />
-
                         <CacheStats />
                         <TimeTravel />
                         <PlatformScheduledNotifications />

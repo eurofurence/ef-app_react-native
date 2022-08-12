@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
     },
     button: {
         flex: 1,
-        paddingHorizontal: 5,
+        marginHorizontal: 5,
     },
 });

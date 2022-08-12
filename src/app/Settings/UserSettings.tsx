@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
-import { capitalize, orderBy } from "lodash";
+import { capitalize, noop, orderBy } from "lodash";
 import moment from "moment";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -74,7 +74,7 @@ export const UserSettings = () => {
                         Alert.alert(t("developer_settings_alert.title"), t("developer_settings_alert.body"), [
                             {
                                 text: t("developer_settings_alert.cancel"),
-                                onPress: () => dispatch(toggleDevMenu()),
+                                onPress: noop,
                                 style: "cancel",
                             },
                             {
@@ -89,7 +89,7 @@ export const UserSettings = () => {
                             },
                         ])
                     }
-                    delayLongPress={5000}
+                    delayLongPress={1000}
                 >
                     <Col style={{ flex: 1 }}>
                         <Label variant={"bold"}>{t("allowAnalytics")}</Label>
