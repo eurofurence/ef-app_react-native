@@ -100,6 +100,12 @@
     "allowAnalytics": "Allow us to collect analytics events",
     "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
     "settingsSection": "Settings",
+    "login": {
+      "logged_in_as": "You are logged in as {{username}}",
+      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
+      "logout": "Logout",
+      "login": "Login"
+    },
     "developer_settings_alert": {
       "title": "Dev Settings Menu",
       "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
@@ -108,7 +114,6 @@
       "cancel": "Cancel"
     },
     "developer_settings": {
-
       "title": "Developer Settings",
       "subtitle": "You shouldn't touch these unless you know what you're doing."
     },

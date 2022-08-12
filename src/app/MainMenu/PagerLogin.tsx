@@ -17,7 +17,7 @@ const loginSchema = z.object({
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
-export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
+export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
     const {
         control,
         handleSubmit,
@@ -37,12 +37,13 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
     };
 
     useEffect(() => {
-        if (result.isSuccess) {
+        if (result.isSuccess && close) {
             close();
         }
-    }, [result]);
+    }, [result, close]);
+
     return (
-        <View style={{ padding: 30 }}>
+        <View>
             <Text>Enter your username</Text>
             {errors.username?.message && <Text style={styles.error}>{errors.username?.message}</Text>}
             <Controller
@@ -114,15 +115,24 @@ export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
             />
             {result.error && <Text style={styles.error}>Something went wrong during login. Please try again</Text>}
             {result.isLoading && <Text>Logging in . . .</Text>}
-            {/* {errors && <Text>{JSON.stringify(Object.keys(errors))}</Text>} */}
             <Row style={styles.marginBefore}>
-                <Button style={styles.rowLeft} outline icon="chevron-left" onPress={close}>
-                    Back
-                </Button>
+                {close && (
+                    <Button style={styles.rowLeft} outline icon="chevron-left" onPress={close}>
+                        Back
+                    </Button>
+                )}
                 <Button style={styles.rowRight} outline={false} icon="login" onPress={handleSubmit(onSubmit)}>
                     Log-in
                 </Button>
             </Row>
+        </View>
+    );
+};
+
+export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
+    return (
+        <View style={{ padding: 30 }}>
+            <LoginForm close={close} />
         </View>
     );
 };

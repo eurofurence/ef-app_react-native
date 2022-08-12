@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
-import { orderBy } from "lodash";
+import { capitalize, orderBy } from "lodash";
 import moment from "moment";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,10 +9,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
+import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
+import { conName } from "../../configuration";
 import { localeForMoment } from "../../i18n";
 import { useAppDispatch, useAppSelector } from "../../store";
+import { logout } from "../../store/authorization.slice";
 import { setAnalytics, toggleDevMenu } from "../../store/settings.slice";
+import { LoginForm } from "../MainMenu/PagerLogin";
 
 type Language = {
     code: string;
@@ -28,6 +32,32 @@ const languages = orderBy(
     (value) => value.code,
     "asc"
 );
+
+const LoginSettings = () => {
+    const { t } = useTranslation("Settings", { keyPrefix: "login" });
+    const auth = useAppSelector((state) => state.authorization);
+    const dispatch = useAppDispatch();
+
+    if (!auth.isLoggedIn) {
+        return (
+            <>
+                <Label variant={"bold"}>{t("login")}</Label>
+                <LoginForm />
+            </>
+        );
+    }
+
+    return (
+        <>
+            <Label variant={"bold"}>{t("logged_in_as", { username: capitalize(auth.username) })}</Label>
+            <Label variant={"narrow"}>{t("login_description", { conName })}</Label>
+            <Button onPress={() => dispatch(logout())} style={{ marginTop: 15 }}>
+                {t("logout")}
+            </Button>
+        </>
+    );
+};
+
 export const UserSettings = () => {
     const { t, i18n } = useTranslation("Settings");
     const dispatch = useAppDispatch();
@@ -84,6 +114,9 @@ export const UserSettings = () => {
                         <Picker.Item label={it.name} value={it.code} key={it.code} />
                     ))}
                 </Picker>
+            </SettingItem>
+            <SettingItem>
+                <LoginSettings />
             </SettingItem>
         </View>
     );
