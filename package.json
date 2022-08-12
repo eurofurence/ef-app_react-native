@@ -34,7 +34,8 @@
     "bundle:android": "yarn tsc --noEmit && yarn lint && expo build:android -t app-bundle",
     "local:android": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile preview --local",
     "local:android:preview": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile preview --local",
-    "local:android:production": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile production --local"
+    "local:android:production": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile production --local",
+    "logcat": "adb logcat \\*:S ce.connavigato:\\* ReactNativeJS:\\* -e \"^(?!.*(Invalid ID))\""
   },
   "resolutions": {
     "@types/react": "^17"
