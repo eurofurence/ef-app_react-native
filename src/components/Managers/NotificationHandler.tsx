@@ -1,5 +1,7 @@
 import { setNotificationHandler } from "expo-notifications";
 
+import { captureNotificationException } from "../../sentryHelpers";
+
 // Import globally at index, this code runs the method on import.
 
 // Set general notification handling strategy.
@@ -21,6 +23,6 @@ setNotificationHandler({
     },
     handleError: (id, error) => {
         // Log error.
-        console.error(`Handling notification failed, assigned ID: ${id}`, error);
+        captureNotificationException(`Handling notification failed, assigned ID: ${id}`, error);
     },
 });

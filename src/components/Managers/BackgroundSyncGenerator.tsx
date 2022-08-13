@@ -1,7 +1,9 @@
 import { registerTaskAsync } from "expo-notifications";
 import { defineTask, TaskManagerTaskBody } from "expo-task-manager";
+import { Browser } from "sentry-expo";
 
 import { conId } from "../../configuration";
+import { captureEvent, captureException, captureNotificationException } from "../../sentryHelpers";
 import { requestSyncFromBackground } from "./BackgroundSyncManager";
 
 // Import globally at index, this code runs the method on import.
@@ -15,7 +17,7 @@ const BG_NOTIFICATIONS_NAME = "background_notifications";
 defineTask(BG_NOTIFICATIONS_NAME, ({ data, error, executionInfo }: TaskManagerTaskBody<{ notification?: any }>) => {
     // Skip method if error was given to be handled.
     if (error) {
-        console.error("An error occurred while processing notifications in background", error);
+        captureEvent(error);
         return;
     }
 
@@ -34,7 +36,7 @@ defineTask(BG_NOTIFICATIONS_NAME, ({ data, error, executionInfo }: TaskManagerTa
         // Is sync, request synchronization.
         requestSyncFromBackground().then(
             () => console.log("Sync marked requested"),
-            (e) => console.error("Could not mark sync as requested", e)
+            (e) => captureNotificationException("Could not mark sync as requested", e)
         );
     }
 });
@@ -42,5 +44,5 @@ defineTask(BG_NOTIFICATIONS_NAME, ({ data, error, executionInfo }: TaskManagerTa
 // Connect to notifications.
 registerTaskAsync(BG_NOTIFICATIONS_NAME).then(
     () => console.log("Successfully connected for background notifications"),
-    (e) => console.error("Unable to connect for background notifications", e)
+    (e) => captureNotificationException("Unable to connect for background notifications", e)
 );

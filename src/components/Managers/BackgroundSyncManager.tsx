@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { AppState } from "react-native";
+import { Browser } from "sentry-expo";
 
 import { withPlatform } from "../../hoc/withPlatform";
+import { captureNotificationException } from "../../sentryHelpers";
 import { useSynchronizer } from "../Synchronization/SynchronizationProvider";
 
 const STORAGE_TAG_NAME = "background_sync_requested";
@@ -44,7 +46,7 @@ export const BackgroundSyncManager = () => {
                 }
             })().then(
                 (r) => console.log("Sync request checked, requested:", r),
-                (e) => console.error("Sync request could not be checked", e)
+                (e) => captureNotificationException("Sync request could not be checked", e)
             );
         });
 
