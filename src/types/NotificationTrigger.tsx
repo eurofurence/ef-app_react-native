@@ -21,18 +21,29 @@ export type FirebaseDataTrigger = FirebaseMessageTrigger & { remoteMessage: { da
 export const isTrigger = (object: any): object is NotificationTrigger => typeof object?.type === "string";
 
 /**
- * Asserts remote message is notification.
+ * Asserts remote message is notification, checks that type is push and
+ * that trigger.remoteMessage.notification is a non-null object.
  * @param trigger The trigger to assert.
  */
-export const isTriggerWithNotification = (trigger: NotificationTrigger): trigger is FirebaseNotificationTrigger => {
-    return trigger.type === "push" && "remoteMessage" in trigger && "notification" in trigger.remoteMessage;
-};
+export const isTriggerWithNotification = (trigger: NotificationTrigger): trigger is FirebaseNotificationTrigger =>
+    // Is push trigger.
+    trigger.type === "push" &&
+    // Is for android.
+    "remoteMessage" in trigger &&
+    // Has non-null notification.
+    typeof trigger.remoteMessage.notification === "object" &&
+    trigger.remoteMessage.notification !== null;
 
 /**
- * Asserts remote message is data.
+ * Asserts remote message is data, checks that type is push and
+ * that trigger.remoteMessage.data is a non-null object.
  * @param trigger The trigger to assert.
  */
-
-export const isTriggerWithData = (trigger: NotificationTrigger): trigger is FirebaseDataTrigger => {
-    return trigger.type === "push" && "remoteMessage" in trigger && "data" in trigger.remoteMessage;
-};
+export const isTriggerWithData = (trigger: NotificationTrigger): trigger is FirebaseDataTrigger =>
+    // Is push trigger.
+    trigger.type === "push" &&
+    // Is for android.
+    "remoteMessage" in trigger &&
+    // Has non-null data.
+    typeof trigger.remoteMessage.data === "object" &&
+    trigger.remoteMessage.data !== null;
