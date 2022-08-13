@@ -1,4 +1,4 @@
-modulde.exports = () => ({
+module.exports = () => ({
     expo: {
         entryPoint: "./src/index.tsx",
         name: "Eurofurence",
