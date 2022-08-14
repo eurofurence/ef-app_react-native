@@ -82,7 +82,7 @@ module.exports = () => ({
                 env.SENTRY_TOKEN && {
                     file: "sentry-expo/upload-sourcemaps",
                     config: {
-                        organization: "requinard",
+                        organization: "eurofurence",
                         project: "ef-app_react-native",
                         authToken: env.SENTRY_TOKEN,
                     },
