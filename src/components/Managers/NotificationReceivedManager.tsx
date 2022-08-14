@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { conId } from "../../configuration";
 import { withPlatform } from "../../hoc/withPlatform";
+import { captureNotificationException } from "../../sentryHelpers";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background.slice";
 import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "../../types/NotificationTrigger";
@@ -70,13 +71,13 @@ export const NotificationReceivedManager = () => {
                     // Schedule it.
                     scheduleNotificationFromTrigger(trigger).then(
                         () => console.log("Announcement scheduled"),
-                        (e) => console.error("Unable to schedule announcement", e)
+                        (e) => captureNotificationException("Unable to schedule announcement", e)
                     );
                 } else if (event === "Notification" && isTriggerWithNotification(trigger)) {
                     // Schedule it.
                     scheduleNotificationFromTrigger(trigger).then(
                         () => console.log("Personal message scheduled"),
-                        (e) => console.error("Unable to schedule personal message", e)
+                        (e) => captureNotificationException("Unable to schedule personal message", e)
                     );
                 }
             }

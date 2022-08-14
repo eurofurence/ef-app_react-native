@@ -5,6 +5,7 @@ import { Platform } from "react-native";
 
 import { conId } from "../../configuration";
 import { withPlatform } from "../../hoc/withPlatform";
+import { captureNotificationException } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 import { usePostDeviceRegistrationMutation, usePostSubscribeToTopicMutation } from "../../store/authorization.service";
 
@@ -85,7 +86,7 @@ export const TokenManager = () => {
             return true;
         })().then(
             (r) => console.log("Registration and subscription, performed:", r),
-            (e) => console.error("Could not register and subscribe", e)
+            (e) => captureNotificationException("Could not register and subscribe", e)
         );
     }, [authToken /* Remote methods depend on token implicitly. */]);
 
