@@ -1,9 +1,8 @@
 import { registerTaskAsync } from "expo-notifications";
 import { defineTask, TaskManagerTaskBody } from "expo-task-manager";
-import { Browser } from "sentry-expo";
 
 import { conId } from "../../configuration";
-import { captureEvent, captureException, captureNotificationException } from "../../sentryHelpers";
+import { captureEvent, captureNotificationException } from "../../sentryHelpers";
 import { requestSyncFromBackground } from "./BackgroundSyncManager";
 
 // Import globally at index, this code runs the method on import.

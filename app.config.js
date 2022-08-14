@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-undef
+const env = process.env;
+
 module.exports = () => ({
     expo: {
         entryPoint: "./src/index.tsx",
@@ -23,7 +26,7 @@ module.exports = () => ({
             supportsTablet: true,
         },
         android: {
-            versionCode: 420,
+            versionCode: 421,
             package: "org.eurofurence.connavigator",
             googleServicesFile: "./assets/android/google-services.json",
             splash: {
@@ -76,15 +79,15 @@ module.exports = () => ({
         ],
         hooks: {
             postPublish: [
-                {
+                env.SENTRY_TOKEN && {
                     file: "sentry-expo/upload-sourcemaps",
                     config: {
                         organization: "requinard",
                         project: "ef-app_react-native",
-                        authToken: process.env.SENTRY_TOKEN, // eslint-disable-line
+                        authToken: env.SENTRY_TOKEN,
                     },
                 },
-            ],
+            ].filter(Boolean),
         },
     },
 });

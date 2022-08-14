@@ -113,16 +113,22 @@
     "typescript": "~4.3.5"
   },
   "eslintConfig": {
-    "extends": ["universe", "plugin:i18n-json/recommended" ],
+    "extends": [
+      "universe",
+      "plugin:i18n-json/recommended"
+    ],
     "plugins": [
       "testing-library"
     ],
     "rules": {
       "import/namespace": "off",
       "i18n-json/valid-message-syntax": "off",
-      "i18n-json/identical-keys": [1, {
-        "filePath": "../../../../src/i18n/translations.en.json"
-      }]
+      "i18n-json/identical-keys": [
+        1,
+        {
+          "filePath": "../../../../src/i18n/translations.en.json"
+        }
+      ]
     }
   },
   "jest": {

@@ -1,7 +1,7 @@
 import { FC, ReactNode, useCallback, useState } from "react";
 import { FlatList, StyleSheet, Vibration, View } from "react-native";
 
-import { EventWithDetails } from "../../store/eurofurence.selectors";
+import { EventDetails } from "../../store/eurofurence.types";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
@@ -24,18 +24,18 @@ export type EventsListGenericProps = {
         | EventsListByRoomScreenProps["navigation"]
         | EventsListByTrackScreenProps["navigation"];
     leader?: ReactNode;
-    events: EventWithDetails[];
+    events: EventDetails[];
     trailer?: ReactNode;
     cardType?: "duration" | "time";
 };
 
 export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer, cardType = "duration" }) => {
     // Set event for action sheet
-    const [selectedEvent, setSelectedEvent] = useState<EventWithDetails | undefined>(undefined);
+    const [selectedEvent, setSelectedEvent] = useState<EventDetails | undefined>(undefined);
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(
-        (event: EventWithDetails) =>
+        (event: EventDetails) =>
             navigation.push("Event", {
                 id: event.Id,
             }),
@@ -54,7 +54,7 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
                 keyExtractor={(item) => item.Id}
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
-                renderItem={(entry: { item: EventWithDetails }) => (
+                renderItem={(entry: { item: EventDetails }) => (
                     <EventCard
                         key={entry.item.Id}
                         event={entry.item}

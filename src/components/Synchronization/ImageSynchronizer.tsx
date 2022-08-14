@@ -12,7 +12,7 @@ export const ImageSynchronizer = () => {
 
     useEffect(() => {
         const fetchImages = async () => {
-            const imageUrls = images.map((it) => it.ImageUrl).filter((it): it is string => it !== undefined);
+            const imageUrls = images.map((it) => it.FullUrl).filter((it): it is string => it !== undefined);
             // @ts-expect-error this method seemingly might not exist?
             const cachedImages = await Image.queryCache(imageUrls);
 

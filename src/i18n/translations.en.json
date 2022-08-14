@@ -76,6 +76,7 @@
     "announcementsTitle_one": "There is {{ count }} announcements.",
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "announcementsTitle_zero": "There are no announcements.",
+    "content_untranslated": "",
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",

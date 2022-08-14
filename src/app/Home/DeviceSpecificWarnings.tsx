@@ -8,11 +8,11 @@ import { Section } from "../../components/Atoms/Section";
 
 export const DeviceSpecificWarnings = () => {
     const { t } = useTranslation("Home");
-    const [scheduledNotificications] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
+    const [scheduledNotifications] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
     const [cacheImages] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
-    const pushNotifications = useMemo(() => scheduledNotificications && Device.isDevice, [scheduledNotificications]);
+    const pushNotifications = useMemo(() => scheduledNotifications && Device.isDevice, [scheduledNotifications]);
 
-    if (scheduledNotificications && pushNotifications && cacheImages) {
+    if (scheduledNotifications && pushNotifications && cacheImages) {
         // If we can do all things, do not return any warnings
         return null;
     }
@@ -21,9 +21,9 @@ export const DeviceSpecificWarnings = () => {
         <>
             <Section title={t("warnings.title")} subtitle={t("warnings.subtitle")} icon={"information"} />
 
-            {!scheduledNotificications && <Label>{t("warnings.no_notifications")}</Label>}
-            {!pushNotifications && <Label>{t("warnings.no_push_notifications")}</Label>}
-            {!cacheImages && <Label>{t("warnings.no_image_caching")}</Label>}
+            {!scheduledNotifications && <Label mt={10}>{t("warnings.no_notifications")}</Label>}
+            {!pushNotifications && <Label mt={10}>{t("warnings.no_push_notifications")}</Label>}
+            {!cacheImages && <Label mt={10}>{t("warnings.no_image_caching")}</Label>}
         </>
     );
 };

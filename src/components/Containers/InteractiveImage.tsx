@@ -4,14 +4,14 @@ import { Dimensions } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { EnrichedImageRecord } from "../../store/eurofurence.types";
+import { ImageDetails } from "../../store/eurofurence.types";
 
 export type VisibleViewBounds = { left: number; top: number; right: number; bottom: number };
 type InteractiveImageProps = {
     /**
      * The image you want to render
      */
-    image: EnrichedImageRecord;
+    image: ImageDetails;
 
     /**
      * A callback that is fired when a user interacts with the image. It represents the visible part of the `image` prop
@@ -179,7 +179,7 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
     const doubleTapGesture = Gesture.Tap()
         .maxDuration(250)
         .numberOfTaps(2)
-        .onEnd((event) => {
+        .onEnd(() => {
             if (scale.value >= maxScale) {
                 debug && console.log("zoom", "resetting to 1");
                 // If we're zoomed in, reset
@@ -209,7 +209,7 @@ export const InteractiveImage: FC<InteractiveImageProps> = ({ image, onBoundsUpd
 
     return (
         <GestureDetector gesture={composed}>
-            <Animated.Image source={{ uri: image.ImageUrl }} style={[{ flex: 1 }, animatedStyles]} resizeMode={"contain"} />
+            <Animated.Image source={{ uri: image.FullUrl }} style={[{ flex: 1 }, animatedStyles]} resizeMode={"contain"} />
         </GestureDetector>
     );
 };

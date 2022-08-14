@@ -22,7 +22,7 @@ export const KnowledgeEntryScreen = () => {
             <Header>{entry?.Title}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 {images.map((it) => (
-                    <Image source={{ uri: it.ImageUrl, height: 400 }} key={it.Id} resizeMode={"contain"} />
+                    <Image source={{ uri: it.FullUrl, height: 400 }} key={it.Id} resizeMode={"contain"} />
                 ))}
                 <Markdown>{entry?.Text ?? ""}</Markdown>
                 {entry?.Links.map((link) => (

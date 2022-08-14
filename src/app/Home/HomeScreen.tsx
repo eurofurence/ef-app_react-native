@@ -4,7 +4,7 @@ import React, { FC } from "react";
 import { RefreshControl, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Floater } from "../../components/Containers/Floater";
+import { Floater, padFloater } from "../../components/Containers/Floater";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { AnnouncementList } from "../Announcements/AnnouncementList";
@@ -16,6 +16,7 @@ import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { CountdownHeader } from "./CountdownHeader";
 import { DeviceSpecificWarnings } from "./DeviceSpecificWarnings";
+import { LanguageWarnings } from "./LanguageWarnings";
 
 /**
  * Params handled by the screen in route, nothing so far.
@@ -36,6 +37,7 @@ export const HomeScreen: FC<ScreenHomeProps> = () => {
             <CountdownHeader />
 
             <Floater contentStyle={appStyles.trailer}>
+                <LanguageWarnings parentPad={padFloater} />
                 <DeviceSpecificWarnings />
                 <AnnouncementList />
                 <UpcomingEventsList />

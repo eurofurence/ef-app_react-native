@@ -3,14 +3,10 @@ import _ from "lodash";
 import { REHYDRATE } from "redux-persist";
 
 import { apiBase } from "../configuration";
-import { enrichDealerRecord, enrichImageRecord, enrichMapRecord } from "./eurofurence.enrichers";
 import {
     AnnouncementRecord,
     CommunicationRecord,
     DealerRecord,
-    EnrichedDealerRecord,
-    EnrichedImageRecord,
-    EnrichedMapRecord,
     EventDayRecord,
     EventRecord,
     EventRoomRecord,
@@ -70,15 +66,13 @@ export const eurofurenceService = createApi({
             query: (args) => ({ url: `/Events/${args}` }),
             providesTags: tagsFromItem("Event"),
         }),
-        getDealers: builder.query<EnrichedDealerRecord[], void>({
+        getDealers: builder.query<DealerRecord[], void>({
             query: () => ({ url: "/Dealers" }),
             providesTags: tagsFromList("Dealer"),
-            transformResponse: (result: DealerRecord[]): EnrichedDealerRecord[] => result.map(enrichDealerRecord),
         }),
-        getDealerById: builder.query<EnrichedDealerRecord, RecordId>({
+        getDealerById: builder.query<DealerRecord, RecordId>({
             query: (args) => ({ url: `/Dealers/${args}` }),
             providesTags: tagsFromItem("Dealer"),
-            transformResponse: enrichDealerRecord,
         }),
         getEventDays: builder.query<EventDayRecord[], void>({
             query: () => ({ url: "/EventConferenceDays" }),
@@ -107,12 +101,10 @@ export const eurofurenceService = createApi({
         getMaps: builder.query<MapRecord[], void>({
             query: () => ({ url: "/Maps" }),
             providesTags: tagsFromList("Map"),
-            transformResponse: (result: MapRecord[]): EnrichedMapRecord[] => result.map(enrichMapRecord),
         }),
-        getMapById: builder.query<EnrichedMapRecord, RecordId>({
+        getMapById: builder.query<MapRecord, RecordId>({
             query: (args) => ({ url: `/Maps/${args}` }),
             providesTags: tagsFromItem("Map"),
-            transformResponse: enrichMapRecord,
         }),
         getKnowledgeGroups: builder.query<KnowledgeGroupRecord[], void>({
             query: () => ({ url: "/KnowledgeGroups" }),
@@ -130,10 +122,9 @@ export const eurofurenceService = createApi({
             query: (args) => ({ url: `/KnowledgeEntries/${args}` }),
             providesTags: tagsFromItem("KnowledgeEntry"),
         }),
-        getImages: builder.query<EnrichedImageRecord[], void>({
+        getImages: builder.query<ImageRecord[], void>({
             query: () => ({ url: `/Images` }),
             providesTags: tagsFromList("Image"),
-            transformResponse: (result: ImageRecord[]) => result.map(enrichImageRecord),
         }),
         getCommunications: builder.query<CommunicationRecord[], void>({
             query: () => "/Communication/PrivateMessages",

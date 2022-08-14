@@ -1,4 +1,4 @@
-import { CaptureContext, ScopeContext } from "@sentry/types/dist/scope";
+import { ScopeContext } from "@sentry/types/dist/scope";
 import { Browser } from "sentry-expo";
 
 export const captureEvent = Browser.captureEvent;
