@@ -15,7 +15,8 @@ import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useEventReminder } from "../../hooks/useEventReminder";
 import { useAppSelector } from "../../store";
-import { EventWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
+import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
+import { EventDetails } from "../../store/eurofurence.types";
 
 /**
  * Props to the content.
@@ -24,7 +25,7 @@ export type EventContentProps = {
     /**
      * The event to display.
      */
-    event: EventWithDetails;
+    event: EventDetails;
 
     /**
      * The padding used by the parent horizontally.
@@ -43,7 +44,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
     event.Tags?.includes("");
-    const mapLink = useAppSelector((state) => mapsCompleteSelectors.selectValidLinksByTarget(state, room.Id));
+    const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
 
     const shareEvent = useCallback(() => {
         Share.share(
@@ -120,14 +121,16 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 {room?.Name || " "}
             </Label>
 
-            {mapLink.map(({ map, entry, link }, i) => (
-                <ImageExButton
-                    key={i}
-                    image={map.Image}
-                    target={{ x: entry.X, y: entry.Y, size: 400 }}
-                    onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
-                />
-            ))}
+            {!mapLink
+                ? null
+                : mapLink.map(({ map, entry, link }, i) => (
+                      <ImageExButton
+                          key={i}
+                          image={map.Image}
+                          target={{ x: entry.X, y: entry.Y, size: 400 }}
+                          onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
+                      />
+                  ))}
 
             <Section icon="information" title="More about the event" />
             <Label type="para">{event.Description}</Label>

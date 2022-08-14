@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { AppState } from "react-native";
-import { Browser } from "sentry-expo";
 
 import { withPlatform } from "../../hoc/withPlatform";
 import { captureNotificationException } from "../../sentryHelpers";

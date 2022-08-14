@@ -44,6 +44,9 @@
     "morning": "Morgens",
     "night": "In der Nacht"
   },
+  "Home": {
+    "content_untranslated": "Du nutzt die Applikation in einer anderen Sprache als Englisch. Bitte beachte dass Namen und Texte von sämtlichen dynamischen Inhalten ausschliesslich auf Englisch angezeigt werden."
+  },
   "Menu": {
     "about": "Über uns",
     "catch_em": "Catch-em-all",

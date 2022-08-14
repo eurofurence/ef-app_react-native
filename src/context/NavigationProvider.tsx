@@ -1,7 +1,7 @@
 import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
 import * as Linking from "expo-linking";
-import { FC, useCallback } from "react";
+import { FC, useCallback, useMemo } from "react";
 
 import { DealersTabsScreenParamsList } from "../app/Dealers/DealersTabsScreen";
 import { EventsTabsScreenParamsList } from "../app/Events/EventsTabsScreen";
@@ -10,6 +10,9 @@ import { ScreenStartParamsList } from "../app/ScreenStart";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
+import { useAppSelector } from "../store";
+import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
+import { RecordId } from "../store/eurofurence.types";
 
 type LinkingConfig<ParamsList> = {
     initialRouteName?: keyof ParamsList;
@@ -20,53 +23,61 @@ type LinkingConfig<ParamsList> = {
     stringify?: Record<string, (value: any) => string>;
 };
 
-// TODO: @lukashaertel With this config I can deeplink to predefined items in the events screen but never to any details
-const eventsLinking: LinkingConfig<EventsTabsScreenParamsList> = {
-    initialRouteName: "Events",
-    screens: {
-        Favorites: "Areas/Events/Favorites",
-        Results: "Areas/Events/Results",
-        Search: "Areas/Events/Search",
-    },
-};
-
-const dealersLinking: LinkingConfig<DealersTabsScreenParamsList> = {
-    initialRouteName: "All",
-    screens: {
-        All: "Areas/Dealers",
-        Thu: "Areas/Dealers/Thu",
-        Fri: "Areas/Dealers/Fri",
-        Sat: "Areas/Dealers/Sat",
-    },
-};
-const areasLinking: LinkingConfig<ScreenAreasParamsList> = {
-    initialRouteName: "Home",
-    screens: {
-        Home: "Areas/Home",
-        Events: eventsLinking,
-        Dealers: dealersLinking,
-    },
-};
-
 /**
  * Configure deep linking
  */
-const linking: LinkingOptions<ScreenStartParamsList> = {
-    // TODO: Use configuration constants here.
-    prefixes: [Linking.createURL(`/`), Linking.createURL(`/${conId}/Web/`), `https://app.eurofurence.org`],
-    config: {
-        initialRouteName: "Areas",
+const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): LinkingOptions<ScreenStartParamsList> => {
+    // Dynamically create dynamic parts.
+    const eventsLinking: LinkingConfig<EventsTabsScreenParamsList> = {
+        initialRouteName: "Events",
         screens: {
-            Areas: areasLinking,
-            Event: "Events/:id",
-            Dealer: "Dealers/:id",
-            KnowledgeGroups: "Knowledge",
-            KnowledgeEntry: "Knowledge/:id",
-            Settings: "Settings",
-            Map: "Map/:id",
-            About: "About",
+            Favorites: "Areas/Events/Favorites",
+            Results: "Areas/Events/Results",
+            Search: "Areas/Events/Search",
+
+            ...Object.fromEntries(days.map((id) => [id, `Areas/Events/Days/${id}`])),
+            ...Object.fromEntries(tracks.map((id) => [id, `Areas/Events/Tracks/${id}`])),
+            ...Object.fromEntries(rooms.map((id) => [id, `Areas/Events/Rooms/${id}`])),
         },
-    } as any,
+    };
+
+    const dealersLinking: LinkingConfig<DealersTabsScreenParamsList> = {
+        initialRouteName: "All",
+        screens: {
+            All: "Areas/Dealers",
+            Thu: "Areas/Dealers/Thu",
+            Fri: "Areas/Dealers/Fri",
+            Sat: "Areas/Dealers/Sat",
+        },
+    };
+
+    const areasLinking: LinkingConfig<ScreenAreasParamsList> = {
+        initialRouteName: "Home",
+        screens: {
+            Home: "Areas/Home",
+            Events: eventsLinking,
+            Dealers: dealersLinking,
+        },
+    };
+
+    // TODO: Use configuration constants here.
+    // Return the composed linking object.
+    return {
+        prefixes: [Linking.createURL(`/`), Linking.createURL(`/${conId}/Web/`), `https://app.eurofurence.org`],
+        config: {
+            initialRouteName: "Areas",
+            screens: {
+                Areas: areasLinking,
+                Event: "Events/:id",
+                Dealer: "Dealers/:id",
+                KnowledgeGroups: "Knowledge",
+                KnowledgeEntry: "Knowledge/:id",
+                Settings: "Settings",
+                Map: "Map/:id",
+                About: "About",
+            },
+        },
+    };
 };
 
 export const NavigationProvider: FC = ({ children }) => {
@@ -86,6 +97,12 @@ export const NavigationProvider: FC = ({ children }) => {
         },
         [logEvent]
     );
+
+    const days = useAppSelector(eventDaysSelectors.selectIds);
+    const tracks = useAppSelector(eventTracksSelectors.selectIds);
+    const rooms = useAppSelector(eventRoomsSelectors.selectIds);
+
+    const linking = useMemo(() => linkingFrom(days, tracks, rooms), [days, tracks, rooms]);
 
     if (!isReady) {
         return null;

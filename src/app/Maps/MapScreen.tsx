@@ -9,7 +9,7 @@ import { InteractiveImage, VisibleViewBounds } from "../../components/Containers
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
-import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment } from "../../store/eurofurence.types";
+import { ImageDetails, LinkFragment, MapDetails } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
 import { ScreenEmpty } from "../Common/ScreenEmpty";
 import { LinkItem } from "./LinkItem";
@@ -22,8 +22,8 @@ export const MapScreen = () => {
     const [visibleEntries, setVisibleEntries] = useState<{ title: string; data: LinkFragment[] }[]>([]);
     const [isFiltering, setIsFiltering] = useState(false);
 
-    const map = useAppSelector((state): EnrichedMapRecord | undefined => mapsSelectors.selectById(state, route2.params.id));
-    const image = useAppSelector((state): EnrichedImageRecord | undefined => (map?.ImageId ? imagesSelectors.selectById(state, map?.ImageId) : undefined));
+    const map = useAppSelector((state): MapDetails | undefined => mapsSelectors.selectById(state, route2.params.id));
+    const image = useAppSelector((state): ImageDetails | undefined => (map?.ImageId ? imagesSelectors.selectById(state, map?.ImageId) : undefined));
 
     const filterEntries = useCallback(
         (bounds: VisibleViewBounds) => {

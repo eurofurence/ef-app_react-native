@@ -2,7 +2,7 @@ import { FC, useMemo, useState } from "react";
 import * as React from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { EnrichedImageRecord } from "../../store/eurofurence.types";
+import { ImageDetails } from "../../store/eurofurence.types";
 
 const initialSize = { width: 400, height: 300 };
 
@@ -21,7 +21,7 @@ export type ImageExProps = {
     /**
      * The source image object.
      */
-    image: EnrichedImageRecord;
+    image?: ImageDetails;
 
     /**
      * The targeted point and the dimension to make visible.
@@ -48,6 +48,8 @@ export const ImageEx: FC<ImageExProps> = ({ style, image, target }) => {
     }, [target]);
 
     const imageStyle = useMemo<ImageStyle>(() => {
+        if (!image) return {};
+
         // Unscaled if no section given.
         if (!target) {
             return {
@@ -71,10 +73,13 @@ export const ImageEx: FC<ImageExProps> = ({ style, image, target }) => {
         };
     }, [size, image, target]);
 
+    // Do not render if nothing given.
+    if (!image) return null;
+
     return (
         <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>
             <View style={arrangerStyle}>
-                <Image style={imageStyle} resizeMode={undefined} source={{ uri: image.ImageUrl }} />
+                <Image style={imageStyle} resizeMode={undefined} source={{ uri: image.FullUrl }} />
             </View>
         </View>
     );

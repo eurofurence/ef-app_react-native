@@ -10,8 +10,7 @@ import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useIsEventDone } from "../../hooks/useEventProperties";
 import { useAppSelector } from "../../store";
-import { eventsSelectors } from "../../store/eurofurence.selectors";
-import { EventRoomRecord } from "../../store/eurofurence.types";
+import { eventRoomsSelectors, selectEventsByRoom } from "../../store/eurofurence.selectors";
 import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
@@ -21,12 +20,7 @@ import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 /**
  * Params handled by the screen in route.
  */
-export type EventsListByRoomScreenParams = {
-    /**
-     * The room that's events are listed.
-     */
-    room: EventRoomRecord;
-};
+export type EventsListByRoomScreenParams = object;
 
 /**
  * The properties to the screen as a component. TODO: Unify and verify types.
@@ -43,8 +37,8 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ route 
     const isEventDone = useIsEventDone();
 
     // Get the room. Use it to resolve events to display.
-    const room = "room" in route.params ? route.params?.room : null;
-    const eventsByRoom = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectByRoom(state, room?.Id ?? "")));
+    const room = useAppSelector((state) => eventRoomsSelectors.selectById(state, route.name));
+    const eventsByRoom = useAppSelector((state) => selectEventsByRoom(state, room?.Id ?? ""));
     const eventsGroups = useMemo(() => {
         const done = chain(eventsByRoom)
             .filter((event) => isEventDone(event))
@@ -54,7 +48,7 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ route 
         return chain(eventsByRoom)
             .filter((event) => !isEventDone(event))
             .orderBy("StartDateTimeUtc")
-            .groupBy((event) => event.ConferenceDay.Date)
+            .groupBy((event) => event.ConferenceDay?.Date)
             .entries()
             .map(([date, events]) => ({
                 title: moment(date).format("dddd"),

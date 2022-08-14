@@ -6,20 +6,20 @@ import { useTranslation } from "react-i18next";
 import { Label } from "../../components/Atoms/Label";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventsSelectors } from "../../store/eurofurence.selectors";
+import { selectFavoriteEvents } from "../../store/eurofurence.selectors";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 
 export const FavoriteEventsList = () => {
     const { t } = useTranslation("Events");
     const [now] = useNow();
-    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectFavorites(state)));
+    const events = useAppSelector(selectFavoriteEvents);
 
     const sections = useMemo(() => {
         const [past, upcoming] = _.partition(events, (it) => now.isAfter(it.EndDateTimeUtc, "minutes"));
 
         const upcomingSections = _.chain(upcoming)
             .orderBy((it) => moment(it.StartDateTimeUtc).valueOf(), "asc")
-            .groupBy((it) => it.ConferenceDay.Name)
+            .groupBy((it) => it.ConferenceDay?.Name)
             .map((items, day) => ({
                 title: day,
                 data: items,

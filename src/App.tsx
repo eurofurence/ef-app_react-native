@@ -14,7 +14,7 @@ import { SynchronizationProvider } from "./components/Synchronization/Synchroniz
 import { NavigationProvider } from "./context/NavigationProvider";
 
 Sentry.init({
-    dsn: "https://ecd1c4bfa6bc4545a855be74136b7528@o1339312.ingest.sentry.io/6614918",
+    dsn: "https://f3baa5424fef43dfa5e2e881b37c13de@o1343479.ingest.sentry.io/6647748",
     enableInExpoDevelopment: false,
     debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
 });

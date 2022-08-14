@@ -3,12 +3,12 @@ import { SectionList, StyleSheet, View } from "react-native";
 
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
-import { DealerWithDetails } from "../../store/eurofurence.selectors";
+import { DealerDetails } from "../../store/eurofurence.types";
 import { DealerCard } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
 
 export type DealersSectionedListItem = DealerSectionProps & {
-    data: DealerWithDetails[];
+    data: DealerDetails[];
 };
 
 /**
@@ -39,7 +39,7 @@ export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> =
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
                 renderSectionHeader={({ section }) => <DealerSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
-                renderItem={(entry: { item: DealerWithDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={() => navigateTo(entry.item)} />}
+                renderItem={(entry: { item: DealerDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={() => navigateTo(entry.item)} />}
             />
         </View>
     );

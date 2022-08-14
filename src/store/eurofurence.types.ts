@@ -3,8 +3,6 @@
  */
 import { IconNames } from "../types/IconNames";
 
-export type ImageUrl = string;
-
 /**
  * Time categorized in part of day.
  */
@@ -42,8 +40,8 @@ export type AnnouncementRecord = RecordMetadata & {
     ImageId?: RecordId;
 };
 
-export type EnrichedAnnouncementRecord = AnnouncementRecord & {
-    ImageUrl?: ImageUrl;
+export type AnnouncementDetails = AnnouncementRecord & {
+    Image?: ImageDetails;
 };
 
 export type EventRecord = RecordMetadata & {
@@ -71,15 +69,18 @@ export type EventRecord = RecordMetadata & {
     Tags?: string[];
 };
 
-export type EnrichedEventRecord = EventRecord & {
+export type EventDetails = EventRecord & {
     PartOfDay: PartOfDay;
-    PosterImageUrl?: ImageUrl;
-    BannerImageUrl?: ImageUrl;
+    Poster?: ImageDetails;
+    Banner?: ImageDetails;
     Badges?: IconNames[];
     Glyph?: IconNames;
     SuperSponsorOnly: boolean;
     SponsorOnly: boolean;
     MaskRequired: boolean;
+    ConferenceRoom?: EventRoomDetails;
+    ConferenceDay?: EventDayDetails;
+    ConferenceTrack?: EventTrackDetails;
 };
 
 export type DealerRecord = RecordMetadata & {
@@ -106,10 +107,12 @@ export type DealerRecord = RecordMetadata & {
     Categories?: string[];
 };
 
-export type EnrichedDealerRecord = DealerRecord & {
-    ArtistImageUrl?: ImageUrl;
-    ArtistThumbnailImageUrl?: ImageUrl;
-    ArtPreviewImageUrl?: ImageUrl;
+export type DealerDetails = DealerRecord & {
+    AttendanceDays: EventDayDetails[];
+    AttendanceDayNames: string[];
+    Artist?: ImageDetails;
+    ArtistThumbnail?: ImageDetails;
+    ArtPreview?: ImageDetails;
     FullName: string;
 };
 
@@ -118,14 +121,20 @@ export type EventDayRecord = RecordMetadata & {
     Date: string;
 };
 
+export type EventDayDetails = EventDayRecord & object;
+
 export type EventTrackRecord = RecordMetadata & {
     Name: string;
 };
+
+export type EventTrackDetails = EventTrackRecord & object;
 
 export type EventRoomRecord = RecordMetadata & {
     Name: string;
     ShortName?: string;
 };
+
+export type EventRoomDetails = EventRoomRecord & object;
 
 export type MapRecord = RecordMetadata & {
     // TODO: Verify nullability.
@@ -136,6 +145,11 @@ export type MapRecord = RecordMetadata & {
     Order: number;
 };
 
+export type MapDetails = MapRecord & {
+    Image?: ImageDetails;
+    Entries: MapEntryDetails[];
+};
+
 export type MapEntryRecord = RecordMetadata & {
     // TODO: Verify nullability.
     X: number;
@@ -144,15 +158,13 @@ export type MapEntryRecord = RecordMetadata & {
     Links: LinkFragment[];
 };
 
+export type MapEntryDetails = MapEntryRecord & object;
+
 export type LinkFragment = {
     // TODO: Verify nullability.
     FragmentType: "WebExternal" | "MapExternal" | "MapEntry" | "DealerDetail" | "EventConferenceRoom";
     Name: string;
     Target: string;
-};
-
-export type EnrichedMapRecord = MapRecord & {
-    ImageUrl: ImageUrl;
 };
 
 export type KnowledgeGroupRecord = RecordMetadata & {
@@ -163,6 +175,8 @@ export type KnowledgeGroupRecord = RecordMetadata & {
     FontAwesomeIconCharacterUnicodeAddress?: string;
 };
 
+export type KnowledgeGroupDetails = KnowledgeGroupRecord & object;
+
 export type KnowledgeEntryRecord = RecordMetadata & {
     Title: string;
     Text: string;
@@ -172,6 +186,8 @@ export type KnowledgeEntryRecord = RecordMetadata & {
     ImageIds: RecordId[];
 };
 
+export type KnowledgeEntryDetails = KnowledgeEntryRecord & object;
+
 export type ImageRecord = RecordMetadata & {
     ContentHashSha1: string;
 
@@ -180,8 +196,8 @@ export type ImageRecord = RecordMetadata & {
     Height: number;
 };
 
-export type EnrichedImageRecord = ImageRecord & {
-    ImageUrl: ImageUrl;
+export type ImageDetails = ImageRecord & {
+    FullUrl: string;
 };
 
 export type CommunicationRecord = RecordMetadata & {
