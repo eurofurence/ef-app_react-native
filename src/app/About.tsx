@@ -48,7 +48,7 @@ Sentry, who provide us with exception tracking and handling
 - StreifiGreif
 - Xil
 - IceTiger
-s
+
 ## English Translations
 
 - Luchs
@@ -69,6 +69,10 @@ s
 ## Italian Translations
 
 - Siepnir
+
+## Polish Translations
+
+- Lemurr
 
 # Disclaimer
 
