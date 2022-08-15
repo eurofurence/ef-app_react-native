@@ -1,184 +1,184 @@
 {
   "About": {
     "app_details": {
-      "get_help": "Get Help",
-      "report_bug": "Report a Bug",
-      "title": "App Details"
+      "get_help": "Pomoc",
+      "report_bug": "Zgłoś błąd",
+      "title": "Szczegóły aplikacji"
     },
-    "developed_by": "Developed by",
-    "extra_thanks": "Extra Thanks",
-    "header": "About"
+    "developed_by": "Zaprogramowane przez",
+    "extra_thanks": "Szczególne podziękowania",
+    "header": "O aplikacji"
   },
   "Announcements": {
-    "noAnnouncements": "There are currently no active announcements",
-    "sectionSubtitle": "Live updates from the convention",
-    "sectionTitle": "Announcements"
+    "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",
+    "sectionSubtitle": "Ogłoszenia na żywo z konwentu",
+    "sectionTitle": "Ogłoszenia"
   },
   "Countdown": {
-    "after_event": "That was it! We hope to see you again next year!",
-    "before_event": "{{conName}} will start in {{diff}}"
+    "after_event": "I to na tyle! Do zobaczenia w przyszłym roku!",
+    "before_event": "{{conName}} zacznie się za {{diff}}"
   },
   "Dealer": {
-    "about": "About",
-    "about_the_art": "About the art",
-    "about_the_artist": "About the artist",
+    "about": "Krótkie info",
+    "about_the_art": "O sztuce",
+    "about_the_artist": "O artyście",
     "after_dark": "After dark",
-    "attends": "Attends on",
-    "attends_fri": "Friday",
-    "attends_sat": "Saturday",
-    "attends_thu": "Thursday",
-    "categories": "Categories",
-    "in_after_dark": "Located in the after dark section",
-    "merchandise": "Merchandise",
-    "not_attending": "Not attending today",
-    "view_on_map": "View on map",
-    "viewing_dealer": "Viewing dealer"
+    "attends": "Bierze udział w",
+    "attends_fri": "Piątek",
+    "attends_sat": "Sobota",
+    "attends_thu": "Czwartek",
+    "categories": "Kategorie",
+    "in_after_dark": "Znajduje się w sekcji after dark",
+    "merchandise": "Oferowane rzeczy",
+    "not_attending": "Dziś nie bierze udziału",
+    "view_on_map": "Zobacz na mapie",
+    "viewing_dealer": "Przeglądany wystawca"
   },
   "Dealers": {
-    "all": "All",
-    "dealers_at_convention": "Dealers at {{convention}}",
-    "dealers_count": "{{count}} dealers",
-    "dealers_on_day": "Dealers on {{day}}",
-    "dealers_on_this_day": "Dealers on this day",
-    "not_attending_on": "Not in on {{offDays}}"
+    "all": "Wszyscy",
+    "dealers_at_convention": "Wystawcy na {{convention}}",
+    "dealers_count": "{{count}} wystawców",
+    "dealers_on_day": "Wystawcy w {{day}}",
+    "dealers_on_this_day": "Dzisiejsi wystawcy",
+    "not_attending_on": "Nie biorą udziału w {{offDays}}"
   },
   "EmptyScreen": {
-    "notImplemented": "Content is not implemented yet."
+    "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
   },
   "Event": {
-    "mask_required": "Face masks are mandatory for this event",
-    "sponsor_event": "Sponsor event",
-    "supersponsor_event": "Supersponsor event",
-    "view_on_map": "View on map",
-    "when": "{{day}}, {{start}} until {{finish}}."
+    "mask_required": "Maseczki są obowiązkowe podczas tego punktu programu",
+    "sponsor_event": "Punkt programu dla sponsorów",
+    "supersponsor_event": "Punkt programu dla supersponsorów",
+    "view_on_map": "Pokaż na mapie",
+    "when": "{{day}}, {{start}} do {{finish}}."
   },
   "Events": {
-    "afternoon": "In the afternoon",
-    "current_subtitle": "These events are currently happening",
-    "current_title": "Current Events",
-    "evening": "In the evening",
-    "events_count": "{{count}} events",
-    "events_done": "Events concluded",
-    "favorites_subtitle": "You will receive a reminder about these events",
-    "favorites_title": "Favorite Events",
-    "filter_by_day": "Browse days",
-    "filter_by_room": "Browse rooms",
-    "filter_by_track": "Browse tracks",
-    "finished": "Finished",
-    "morning": "In the morning",
-    "night": "At night",
-    "upcoming_favorites_subtitle": "You will receive a reminder before this event starts",
-    "upcoming_favorites_title": "Favorite Events",
-    "upcoming_subtitle": "These events are starting in the next 30 minutes",
-    "upcoming_title": "Upcoming Events"
+    "afternoon": "Po południu",
+    "current_subtitle": "Te punkty programu odbywają się w tej chwili",
+    "current_title": "Bieżące punkty programu",
+    "evening": "Wieczorem",
+    "events_count": "{{count}} punktów programu",
+    "events_done": "Punkt programu zakończył się",
+    "favorites_subtitle": "Otrzymasz powiadomienie o tym wydarzeniu",
+    "favorites_title": "Ulubione punkty programu",
+    "filter_by_day": "Przeglądaj wg. dni",
+    "filter_by_room": "Przeglądaj wg. sal",
+    "filter_by_track": "Przeglądaj wg. ścieżek",
+    "finished": "Zakończony",
+    "morning": "Rano",
+    "night": "W nocy",
+    "upcoming_favorites_subtitle": "Otrzymasz powiadomienie kiedy wydarzenie się rozpocznie",
+    "upcoming_favorites_title": "Ulubione punkty programu",
+    "upcoming_subtitle": "Te punkty programu zaczną się w przeciągu 30 minut",
+    "upcoming_title": "Nadchodzące wydarzenia"
   },
   "Home": {
-    "announcementsTitle_one": "There is {{ count }} announcements.",
-    "announcementsTitle_other": "There are {{ count }} announcements.",
-    "announcementsTitle_zero": "There are no announcements.",
-    "eventsTitle_one": "We have retrieved {{ count }} event.",
-    "eventsTitle_other": "We have retrieved {{ count }} events.",
-    "eventsTitle_zero": "There are no events.",
+    "announcementsTitle_one": "Jest {{ count }} ogłoszenie.",
+    "announcementsTitle_other": "Jest {{ count }} ogłoszeń.",
+    "announcementsTitle_zero": "Brak ogłoszeń.",
+    "eventsTitle_one": "Pobraliśmy {{ count }} wydarzenie.",
+    "eventsTitle_other": "Pobraliśmy {{ count }} wydarzeń.",
+    "eventsTitle_zero": "Brak wydarzeń.",
     "warnings": {
-      "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown.",
-      "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
-      "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
-      "subtitle": "Due to your device some functionality might not work",
-      "title": "Device Issues"
+      "no_image_caching": "Twoje urządzenie nie może przechowywać obrazów w pamieci podręcznej. Bez połączenia z internetem grafiki nie będą pokazywane.",
+      "no_notifications": "Twoje urządzenie nie wspiera planowanych powiadomień. Nie będziesz otrzymywał komunikatów o nadchodzących wydarzeniach.",
+      "no_push_notifications": "Twoje urządzenie nie wspiera powiadomień push. Nie będziesz powiadamiany o ogłoszeniach ani o prywatnych wiadomościach.",
+      "subtitle": "Z powodu ograniczeń twojego urządzenia część funkcjonalności może nie działać",
+      "title": "Problemy z urządzeniem"
     }
   },
   "KnowledgeGroups": {
-    "header": "Info Articles"
+    "header": "Podstawowe informacje"
   },
   "Menu": {
-    "about": "About",
+    "about": "O aplikacji",
     "catch_em": "Catch-em-all",
-    "dealers": "Dealers",
-    "events": "Events",
-    "home": "Home",
-    "info": "Info articles",
-    "less": "Less",
-    "logged_in_now": "Log-in now",
-    "maps": "Maps",
-    "messages": "You have {{count}} new messages",
-    "more": "More",
-    "not_logged_in": "You are currently not logged in",
-    "open_messages": "Open messages",
-    "services": "Services",
-    "settings": "Settings"
+    "dealers": "Wystawcy",
+    "events": "Punkty programu",
+    "home": "Strona główna",
+    "info": "Podstawowe informacje",
+    "less": "Mniej",
+    "logged_in_now": "Zaloguj się",
+    "maps": "Mapy",
+    "messages": "Masz {{count}} nowych wiadomości",
+    "more": "Więcej",
+    "not_logged_in": "Nie jesteś zalogowany",
+    "open_messages": "Otwórz wiadomości",
+    "services": "Usługi",
+    "settings": "Ustawienia"
   },
   "Notification": {
-    "announcement": "There is an announcement from {{conName}}",
-    "private_message": "You received a new private message"
+    "announcement": "Nowe ogłoszenie od {{conName}}",
+    "private_message": "Dostałeś nową prywatną wiadomość"
   },
   "PrivateMessageList": {
-    "from": "From {{ author }}",
-    "from_unknown": "From unknown author",
-    "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
-    "read": "Read",
-    "section_title_from": "From {{authorName}}",
-    "unread": "Unread"
+    "from": "Od {{ author }}",
+    "from_unknown": "Od nieznanego nadawcy",
+    "message_item_subtitle": "{{ status }} - Wysłane o {{ time }}",
+    "read": "Odczytaj",
+    "section_title_from": "Od {{authorName}}",
+    "unread": "Nieprzeczytane"
   },
   "Settings": {
-    "allowAnalytics": "Allow us to collect analytics events",
-    "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
+    "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
+    "allowAnalyticsSubtitle": "Pozwalajac nam gromadzić dane analityczne pomagasz nam udoskonalać tę aplikacją. Analiza jest udostępniona poprzez Firebase i nie jest udostępniana stronom trzecim",
     "cache": {
-      "cache_item": "There are {{ count }} {{ type }}s",
-      "cache_state": "Current state: {{ state }}",
-      "reset": "Clear cache",
-      "reset_alert": "To clean the cache you need to long press this button",
-      "subtitle": "Last sync: {{ time }}",
-      "synchronize": "Synchronize",
-      "title": "Cache Stats"
+      "cache_item": "Jest {{ count }} {{ type }}ów",
+      "cache_state": "Aktualny stan: {{ state }}",
+      "reset": "Wyczyść pamięć podręczną",
+      "reset_alert": "Aby wyczyścić pamięć podręczną musisz przytrzymać ten przycisk",
+      "subtitle": "Ostatnia synchronizacja: {{ time }}",
+      "synchronize": "Synchronizuj",
+      "title": "Pamięć podręczna - statystyki"
     },
-    "changeLanguage": "Change language",
-    "currentLanguage": "Your current language is English!",
+    "changeLanguage": "Zmień język",
+    "currentLanguage": "Twój aktualnie używany język to polski! 🥟",
     "dev_buttons": {
-      "no_auth_alert": "You are not logged in. Stopping.",
-      "send_private_message": "Receive Private Message {{ status }}",
-      "subtitle": "Make the API do something.",
-      "sync": "Force Resync {{ status }}",
-      "sync_alert_done": "Told all devices to synchronize",
-      "sync_alert_error": "Long hold to activate this function",
-      "test_message_content": "You have won a grand prize!",
-      "test_message_subject": "You have won a grand prize!",
-      "title": "Dev Buttons"
+      "no_auth_alert": "Nie jesteś zalogowany - zatrzymywanie...",
+      "send_private_message": "Odbierz prywatną wiadomość {{ status }}",
+      "subtitle": "Zmuś API żeby coś zrobiło.",
+      "sync": "Wymuszona synchronizacja {{ status }}",
+      "sync_alert_done": "Wszystkie urządzenia zsynchronizowane",
+      "sync_alert_error": "Przytrzymaj aby aktywować tę funkcję",
+      "test_message_content": "Właśnie wygrałeś mega nagrodę!",
+      "test_message_subject": "Właśnie wygrałeś mega nagrodę!",
+      "title": "Guziczki deweloperów"
     },
     "developer_settings": {
-      "subtitle": "You shouldn't touch these unless you know what you're doing.",
-      "title": "Developer Settings"
+      "subtitle": "Nie powinieneś tego ruszać o ile wiesz co robisz.",
+      "title": "Ustawienia deweloperskie"
     },
     "developer_settings_alert": {
-      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
-      "cancel": "Cancel",
-      "disable": "Disable",
-      "enable": "Enable",
-      "title": "Dev Settings Menu"
+      "body": "Czy chcesz włączyć ustawienia deweloperskie? Zrób to tylko jeśli wiesz co robisz i jeśli jesteś w stanie posprzątać po sobie ten cały bałagan.",
+      "cancel": "Anuluj",
+      "disable": "Wyłącz",
+      "enable": "Włącz",
+      "title": "Menu ustawień deweloperskich"
     },
-    "header": "Settings",
+    "header": "Ustawienia",
     "notifications": {
-      "no_notifications": "There are no scheduled notifications!",
-      "notification_item": "{{ identifier }} scheduled on {{ time }}",
-      "subtitle": "All scheduled notifications on this device",
-      "title": "Notifications"
+      "no_notifications": "Brak zaplanowanych powiadomień!",
+      "notification_item": "{{ identifier }} zaplanowane na {{ time }}",
+      "subtitle": "Wszystkie zaplanowane powiadomienia na tym urządzeniu",
+      "title": "Powiadomienia"
     },
     "remote_messages": {
-      "no_messages": "We have not received any messages from FCM",
-      "subtitle": "Messages that we got from FCM",
-      "title": "Remote Messages"
+      "no_messages": "Nie otrzymaliśmy żadnych wiadomości od FCM",
+      "subtitle": "Wiadomości otrzymane z FCM",
+      "title": "Wiadomości sdalne"
     },
-    "settingsSection": "Settings",
-    "timeTravel": "Show time travel settings."
+    "settingsSection": "Ustawienia",
+    "timeTravel": "Pokaż ustawienia podróży w czasie."
   },
   "TimeTravel": {
-    "currentTime": "Current: {{ time }}",
-    "difference": "Your time difference is {{ diff }}",
-    "disable": "Disable",
-    "enable": "Enable",
-    "originalTime": "Original: {{ time }}",
-    "reset": "Reset",
-    "subtitle": "Adjust time settings for testing and debugging",
-    "title": "Time Travel"
+    "currentTime": "Bieżący: {{ time }}",
+    "difference": "Różnica w czasie wynosi {{ diff }}",
+    "disable": "Wyłącz",
+    "enable": "Włącz",
+    "originalTime": "Oryginalny: {{ time }}",
+    "reset": "Resetuj",
+    "subtitle": "Dostosuj czas dla testów i debugowania",
+    "title": "Podróże w czasie"
   },
   "Todo": {}
 }
