@@ -21,11 +21,11 @@ import { appStyles } from "./AppStyles";
 const extraThanksMarkdown = `
 # Tooling
 
-React-Native and Expo for making this version possible
+We use React-Native and Expo to make this experience possible.
 
-Firebase provides us with cloud messaging and analytics
+Firebase provides us with cloud messaging and analytics.
 
-Sentry, who provide us with exception tracking and handling
+And Sentry helps us out with exception tracing.
 
 # People
 
@@ -73,6 +73,10 @@ Sentry, who provide us with exception tracking and handling
 ## Polish Translations
 
 - Lemurr
+
+## Danish Translations
+
+- Wovaka
 
 # Disclaimer
 

@@ -6,10 +6,12 @@ import moment from "moment";
 import { initReactI18next } from "react-i18next";
 
 import de from "./translations.de.json";
+import dk from "./translations.dk.json";
 import en from "./translations.en.json";
 import it from "./translations.it.json";
 import nl from "./translations.nl.json";
 import pl from "./translations.pl.json";
+
 /**
  * Only to be used for moment's locale. When english is given without a
  * specified locale, use en-GB, as it presents in the euro-centric time format.
@@ -67,6 +69,7 @@ export const i18t = i18next
             de,
             it,
             pl,
+            dk,
         },
         react: {
             useSuspense: false,
