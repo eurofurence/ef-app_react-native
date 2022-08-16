@@ -20,7 +20,12 @@ Sentry.init({
     tracesSampleRate: 0.2,
     integrations: [
         new Sentry.Native.ReactNativeTracing({
-            tracingOrigins: ["localhost", "app.eurofurence.org"],
+            traceFetch: true,
+            enableAppStartTracking: true,
+            enableNativeFramesTracking: true,
+            traceXHR: true,
+            enableStallTracking: true,
+            tracingOrigins: ["localhost", "app.eurofurence.org", /^\//],
             routingInstrumentation: sentryRoutingInstrumentation,
         }),
     ],
