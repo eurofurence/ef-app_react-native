@@ -1,7 +1,8 @@
-import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
 import * as Linking from "expo-linking";
-import { FC, useCallback, useMemo } from "react";
+import { FC, useCallback, useMemo, useRef } from "react";
+import { Native } from "sentry-expo";
 
 import { DealersTabsScreenParamsList } from "../app/Dealers/DealersTabsScreen";
 import { EventsTabsScreenParamsList } from "../app/Events/EventsTabsScreen";
@@ -13,6 +14,8 @@ import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersis
 import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
 import { RecordId } from "../store/eurofurence.types";
+
+export const sentryRoutingInstrumentation = new Native.ReactNavigationInstrumentation();
 
 type LinkingConfig<ParamsList> = {
     initialRouteName?: keyof ParamsList;
@@ -81,6 +84,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
 };
 
 export const NavigationProvider: FC = ({ children }) => {
+    const navigation = useRef<NavigationContainerRef<any> | null>(null);
     // Get navigation state from persistence.
     const [isReady, initialState, onStateChange] = useNavigationStatePersistence();
     const logEvent = useAnalytics();
@@ -109,8 +113,12 @@ export const NavigationProvider: FC = ({ children }) => {
     }
     return (
         <NavigationContainer
+            ref={navigation}
             linking={linking}
             initialState={initialState}
+            onReady={() => {
+                sentryRoutingInstrumentation.registerNavigationContainer(navigation.current);
+            }}
             onStateChange={(state) => {
                 onStateChange(state);
                 logAnalytics(state);

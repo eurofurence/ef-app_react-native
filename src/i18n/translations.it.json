@@ -49,21 +49,21 @@
     "when": "{{day}}, {{start}} fino alle {{finish}}."
   },
   "Events": {
-    "afternoon": "Nel pomeriggio",
-    "current_subtitle": "Questi eventi stanno prendendo luogo in questo momento",
-    "current_title": "Eventi correnti",
+    "afternoon": "Al pomeriggio",
+    "current_subtitle": "Questi eventi si stanno svolgendo ora",
+    "current_title": "Eventi in corso",
     "evening": "Alla sera",
     "events_count": "{{count}} eventi",
     "events_done": "Eventi conclusi",
-    "favorites_subtitle": "Riceverai un promemoria di questi eventi",
+    "favorites_subtitle": "Riceverai un promemoria per questi eventi",
     "favorites_title": "Eventi preferiti",
     "filter_by_day": "Organizza per giorni",
     "filter_by_room": "Organizza per stanze",
     "filter_by_track": "Organizza per tracciati",
     "finished": "Conclusi",
     "morning": "Al mattino",
-    "night": "Nella notte",
-    "upcoming_favorites_subtitle": "Eventi preferiti che prenderanno luogo oggi",
+    "night": "Alla notte",
+    "upcoming_favorites_subtitle": "Eventi preferiti che si svolgeranno oggi",
     "upcoming_favorites_title": "La tua agenda",
     "upcoming_subtitle": "Questi eventi inizieranno nei prossimi 30 minuti",
     "upcoming_title": "Eventi in arrivo"
@@ -74,10 +74,10 @@
     "announcementsTitle_zero": "Non ci sono annunci.",
     "eventsTitle_zero": "Non ci sono eventi.",
     "warnings": {
-      "no_image_caching": "Il dispositivo non può salvare le immagini nella cache. Senza una connessione internet, le immagini non saranno visualizzate .",
-      "no_notifications": "Il dispositivo non supporta le notifiche pianificate. Non riceverai i promemoria dei prossimi eventi.",
+      "no_image_caching": "Il dispositivo non può salvare le immagini nella cache. Senza una connessione internet, le immagini non saranno visualizzate.",
+      "no_notifications": "Il dispositivo non supporta le notifiche pianificate. Non riceverai i promemoria per i prossimi eventi.",
       "no_push_notifications": "Il dispositivo non supporta le notifiche push. Non verrai automaticamente notificato di Annunci o Messaggi Privati.",
-      "subtitle": "A causa del tuo dispositivo alcune funzioni potrebbero non funzionare",
+      "subtitle": "A causa del tuo dispositivo alcune funzioni potrebbero non essere disponibili",
       "title": "Problemi con il dispositivo."
     }
   },
@@ -98,7 +98,7 @@
     "not_logged_in": "Non hai effettuato l'accesso",
     "open_messages": "Apri i messaggi",
     "services": "Servizi",
-    "settings": "Settings"
+    "settings": "Impostazioni"
   },
   "Notification": {
     "announcement": "C'è un annuncio da {{conName}}",
@@ -113,7 +113,7 @@
   },
   "Settings": {
     "allowAnalytics": "Permetti la raccolta di dati analitici",
-    "allowAnalyticsSubtitle": "Abilitando la raccolta di dati analitici permetterai di migliorare le funzionalità dell'applicazione. I dati sono forniti da Firebase e non sono condivisi con terze parti.",
+    "allowAnalyticsSubtitle": "Abilitando la raccolta di dati analitici permetterai di migliorare le funzionalità dell'applicazione. I dati sono forniti da Firebase e non sono condivisi con altre terze parti.",
     "changeLanguage": "Cambia lingua",
     "currentLanguage": "La tua lingua è Italiano 🤌",
     "header": "Impostazioni",

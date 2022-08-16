@@ -5,11 +5,22 @@ import { noop, partial } from "lodash";
 import moment from "moment";
 import { initReactI18next } from "react-i18next";
 
+// Translation files
+import da from "./translations.da.json";
 import de from "./translations.de.json";
 import en from "./translations.en.json";
 import it from "./translations.it.json";
 import nl from "./translations.nl.json";
 import pl from "./translations.pl.json";
+
+// Moment Locale
+import "moment/locale/pl";
+import "moment/locale/it";
+import "moment/locale/da";
+import "moment/locale/de";
+import "moment/locale/en-gb";
+import "moment/locale/nl";
+
 /**
  * Only to be used for moment's locale. When english is given without a
  * specified locale, use en-GB, as it presents in the euro-centric time format.
@@ -67,6 +78,7 @@ export const i18t = i18next
             de,
             it,
             pl,
+            da,
         },
         react: {
             useSuspense: false,
