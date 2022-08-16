@@ -1,5 +1,7 @@
-import { useEffect, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
+// @ts-expect-error
+import Markdown from "react-native-easy-markdown";
+import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Floater } from "../../components/Containers/Floater";
@@ -10,9 +12,8 @@ import { appStyles } from "../AppStyles";
 
 export const PrivateMessageItemScreen = () => {
     const { params } = useAppRoute("PrivateMessageItem");
+    const safe = useSafeAreaInsets();
     const [markRead] = useMarkCommunicationReadMutation();
-    const top = useSafeAreaInsets()?.top;
-    const headerStyle = useMemo(() => ({ paddingTop: 30 + top }), [top]);
 
     useEffect(() => {
         if (params.message.ReadDateTimeUtc === null) {
@@ -22,11 +23,11 @@ export const PrivateMessageItemScreen = () => {
     }, [params.message]);
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Header style={headerStyle}>{params.message.Subject}</Header>
+        <ScrollView style={[safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+            <Header>{params.message.Subject}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                <Text>{params.message.Message}</Text>
+                <Markdown>{params.message.Message}</Markdown>
             </Floater>
-        </View>
+        </ScrollView>
     );
 };

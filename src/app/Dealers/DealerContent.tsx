@@ -1,12 +1,14 @@
+import * as Linking from "expo-linking";
 import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View, Image } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
+import { Button } from "../../components/Containers/Button";
 import { ImageExButton } from "../../components/Containers/ImageButton";
 import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
@@ -15,6 +17,7 @@ import { useAppSelector } from "../../store";
 import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
 import { DealerDetails } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
+import { LinkItem } from "../Maps/LinkItem";
 
 /**
  * Props to the content.
@@ -101,6 +104,23 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 </>
             )}
 
+            {dealer.Links.map((it) => (
+                <View style={styles.button}>
+                    <LinkItem link={it} key={it.Target} />
+                </View>
+            ))}
+
+            {dealer.TelegramHandle && (
+                <Button style={styles.button} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)} icon={"telegram"}>
+                    Telegram: {dealer.TelegramHandle}
+                </Button>
+            )}
+            {dealer.TwitterHandle && (
+                <Button style={styles.button} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon={"twitter"}>
+                    Twitter: {dealer.TwitterHandle}
+                </Button>
+            )}
+
             {mapLink.map(({ map, entry, link }, i) => (
                 <ImageExButton
                     key={i}
@@ -167,5 +187,8 @@ const styles = StyleSheet.create({
     },
     image: {
         alignSelf: "stretch",
+    },
+    button: {
+        marginBottom: 20,
     },
 });
