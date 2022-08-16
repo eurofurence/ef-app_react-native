@@ -53,7 +53,7 @@ const LoginSettings = () => {
         <>
             <Label variant={"bold"}>{t("logged_in_as", { username: capitalize(auth.username) })}</Label>
             <Label variant={"narrow"}>{t("login_description", { conName })}</Label>
-            <Button onPress={() => dispatch(logout())} style={{ marginTop: 15 }}>
+            <Button icon="logout" onPress={() => dispatch(logout())} style={{ marginTop: 15 }}>
                 {t("logout")}
             </Button>
         </>

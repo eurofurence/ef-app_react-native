@@ -162,6 +162,13 @@
       "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
       "logout": "Wyloguj się"
     },
+    "header": "Settings",
+    "login": {
+      "logged_in_as": "You are logged in as {{username}}",
+      "login": "Login",
+      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
+      "logout": "Logout"
+    },
     "notifications": {
       "no_notifications": "Brak zaplanowanych powiadomień!",
       "notification_item": "{{ identifier }} zaplanowane na {{ time }}",

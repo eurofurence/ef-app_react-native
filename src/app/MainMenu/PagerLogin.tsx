@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { z } from "zod";
 
+import { Label } from "../../components/Atoms/Label";
 import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
 import { usePostTokenMutation } from "../../store/authorization.service";
@@ -18,6 +20,7 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>;
 
 export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
+    const { t } = useTranslation("Settings", { keyPrefix: "login" });
     const {
         control,
         handleSubmit,
@@ -125,6 +128,9 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
                     Log-in
                 </Button>
             </Row>
+            <Label mt={15} variant={"narrow"}>
+                {t("login_hint")}
+            </Label>
         </View>
     );
 };

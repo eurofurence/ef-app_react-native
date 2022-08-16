@@ -12,7 +12,7 @@ export const RemoteMessages = () => {
 
     return (
         <View>
-            <Section title={"Remote Messages"} subtitle={"Messages that we got from FMC"} icon="message-flash" />
+            <Section title={t("title")} subtitle={t("subtitle")} icon="message-flash" />
 
             {messages.length === 0 && <Label mb={15}>{t("no_messages")}</Label>}
 
