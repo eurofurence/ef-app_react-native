@@ -24,6 +24,11 @@ export const timeTravelSlice = createSlice({
         travelBackward: (state, action: PayloadAction<number>) => {
             state.amount -= action.payload;
         },
+        travelToDate: (state, action: PayloadAction<string>) => {
+            const now = moment().startOf("day");
+            const target = moment(action.payload).startOf("day");
+            state.amount = target.diff(now, "milliseconds");
+        },
         resetTravel: (state) => {
             state.amount = 0;
         },
@@ -36,7 +41,7 @@ export const timeTravelSlice = createSlice({
     },
 });
 
-export const { travelForward, travelBackward, resetTravel, enableTimeTravel, showTimeTravel } = timeTravelSlice.actions;
+export const { travelForward, travelBackward, travelToDate, resetTravel, enableTimeTravel, showTimeTravel } = timeTravelSlice.actions;
 
 const getTimeInterval = (unit: moment.unitOfTime.DurationConstructor) => moment.duration(1, unit).asMilliseconds();
 export const ONE_MINUTE = getTimeInterval("minute");

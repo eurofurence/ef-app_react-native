@@ -74,6 +74,7 @@
     "filter_by_day": "Tage ansehen",
     "filter_by_room": "Räume ansehen",
     "filter_by_track": "Kategorien ansehen",
+    "finished": "Zu Ende",
     "morning": "Morgens",
     "night": "In der Nacht",
     "upcoming_favorites_subtitle": "Du wirst eine Erinnerung bekommen bevor diese Events beginnen",
@@ -122,11 +123,16 @@
     "private_message": "Du hast eine Nachricht erhalten"
   },
   "PrivateMessageList": {
-    "message_item_subtitle": "{{ status }} - gesendet um {{ time }}",
-    "section_title_from": "Von {{authorName}}"
+    "from": "Von {{ author }}",
+    "from_unknown": "Author unbekannt",
+    "message_item_subtitle": "{{ status }} - Gesendet {{ time }}",
+    "read": "Gelesen",
+    "section_title_from": "Von {{authorName}}",
+    "unread": "Ungelesen"
   },
   "Settings": {
-    "allowAnalytics": "Allow us to collect analytics events",
+    "allowAnalytics": "Erlaube uns, Fehler zu übermitteln",
+    "allowAnalyticsSubtitle": "Wenn Du uns erlaubst Fehler zu übermitteln, können wir die die Stabilität der App verbessern. Fehlerübermittlung wird von Firebase Analytics bereitgestellt, Deine Daten werden nicht mit Drittparteien geteilt.",
     "cache": {
       "cache_item": "{{ count }} Elemente vom Typ \"{{ type }}\"",
       "cache_state": "Aktueller Status: {{ state }}",
@@ -136,17 +142,47 @@
       "synchronize": "Synchronisieren",
       "title": "Cache-Statistiken"
     },
-    "changeLanguage": "Change language",
-    "currentLanguage": "Your current language is English!",
+    "changeLanguage": "Sprache ändern",
+    "currentLanguage": "Deine Sprachauswahl ist Deutsch!",
+    "dev_buttons": {
+      "no_auth_alert": "Du bist nicht angemeldet, kann nicht fortfahren.",
+      "send_private_message": "Private Nachrichten testen  {{ status }}",
+      "subtitle": "Löse API-Funktionen aus.",
+      "sync": "Synchronisierung erzwingen {{ status }}",
+      "sync_alert_done": "Alle verbundenen Geräte wurden Synchronisiert",
+      "sync_alert_error": "Halte den Knopf gedrückt, um die Funktion zu aktivieren",
+      "test_message_content": "You have won a grand prize!",
+      "test_message_subject": "You have won a grand prize!",
+      "title": "Entwickler-Funktionen"
+    },
     "developer_settings": {
       "subtitle": "Du solltest diese besser nicht anfassen wenn Du nicht weisst was Du tust.",
       "title": "Entwickler-Einstellungen"
     },
+    "developer_settings_alert": {
+      "body": "Willst du die Entwickler-Einstellungen anschalten? Tue das nur, wenn du weißt was das Bedeutet und du für die Konsequenzen Verantwortung trägst. ",
+      "cancel": "Abbrechen",
+      "disable": "Ausschalten",
+      "enable": "Anschalten",
+      "title": "Entwickler-Menü"
+    },
     "header": "Einstellungen",
+    "login": {
+      "logged_in_as": "Angemeldet als {{username}}",
+      "login": "Anmeldung",
+      "login_description": "Wenn Du angemeldet bist, kann {{conName}} dir Private Nachrichten in der App zusenden. Außerdem kannst Du bei den Fursuit-Spielen teilnehmen und Dir Tische in der Artist Alley registieren.",
+      "logout": "Abmelden"
+    },
+    "notifications": {
+      "no_notifications": "Aktuell gibt es keine geplanten Benachrichtigungen!",
+      "notification_item": "{{ identifier }} geplant für {{ time }}",
+      "subtitle": "Geplante Benachrichtigungen für einen späteren Zeitpunkt",
+      "title": "Benachrichtigungen"
+    },
     "remote_messages": {
-      "no_messages": "We have not received any messages from FCM",
-      "subtitle": "Messages that we got from FCM",
-      "title": "Remote Messages"
+      "no_messages": "Wir haben keine Nachrichten von FCM empfangen",
+      "subtitle": "Diese Nachrichten wurden empfangen",
+      "title": "FCM-Benachrichtigungen"
     },
     "settingsSection": "Einstellungen",
     "timeTravel": "Zeitreise-Einstellungen anzeigen."
@@ -159,7 +195,9 @@
     "originalTime": "Original: {{ time }}",
     "reset": "Zurücksetzen",
     "subtitle": "Ändere die Zeit zum testen und debuggen",
-    "title": "Zeitreise"
+    "title": "Zeitreise",
+    "week_after": "Eine Woche nach {{conName}}",
+    "week_before": "Eine Woche vor {{conName}}"
   },
   "Todo": {}
 }
