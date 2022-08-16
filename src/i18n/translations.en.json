@@ -62,6 +62,17 @@
     "view_on_map": "View on map",
     "when": "{{day}}, {{start}} until {{finish}}."
   },
+  "EventFeedback": {
+    "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
+    "header": "Feedback: {{ eventTitle }}",
+    "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
+    "message_title": "Feedback message",
+    "rating_title": "How much did you like this event?",
+    "submit": "Submit feedback",
+    "submit_failed": "Something went wrong during submitting. Please try again . . .",
+    "submit_in_progress": "Submitting . . .",
+    "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}."
+  },
   "Events": {
     "afternoon": "In the afternoon",
     "current_subtitle": "These events are currently happening",
@@ -171,9 +182,8 @@
       "logged_in_as": "You are logged in as {{username}}",
       "login": "Login",
       "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "logout": "Logout",
-
-      "login_hint": "Your login credentials for the app are the same as for the Eurofurence Registration System.\n\nIf you do not remember or have access to them, you can ask for a PIN code\nto sign in at the registration desk or security office."
+      "login_hint": "Your login credentials for the app are the same as for the Eurofurence Registration System.\n\nIf you do not remember or have access to them, you can ask for a PIN code\nto sign in at the registration desk or security office.",
+      "logout": "Logout"
     },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
@@ -200,17 +210,6 @@
     "title": "Time Travel",
     "week_after": "1 week after {{conName}}",
     "week_before": "1 week before {{conName}}"
-  },
-  "EventFeedback": {
-    "header": "Feedback: {{ eventTitle }}",
-    "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
-    "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}.",
-    "submit": "Submit feedback",
-    "rating_title": "How much did you like this event?",
-    "message_title": "Feedback message",
-    "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
-    "submit_in_progress": "Submitting . . .",
-    "submit_failed": "Something went wrong during submitting. Please try again . . ."
   },
   "Todo": {}
 }

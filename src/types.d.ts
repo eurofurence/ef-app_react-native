@@ -1,5 +1,3 @@
-import { FC } from "react";
-
 /**
  * A helper type to make RTK Query types more explicit
  */

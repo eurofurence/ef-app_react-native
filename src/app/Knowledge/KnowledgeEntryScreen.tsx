@@ -1,4 +1,4 @@
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 //@ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 import { ScrollView } from "react-native-gesture-handler";
@@ -26,7 +26,9 @@ export const KnowledgeEntryScreen = () => {
                 ))}
                 <Markdown>{entry?.Text ?? ""}</Markdown>
                 {entry?.Links.map((link) => (
-                    <LinkItem link={link} key={link.Target} />
+                    <View style={{ marginBottom: 10 }}>
+                        <LinkItem link={link} key={link.Target} />
+                    </View>
                 ))}
             </Floater>
         </ScrollView>

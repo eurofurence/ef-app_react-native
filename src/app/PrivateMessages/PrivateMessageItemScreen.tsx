@@ -1,5 +1,4 @@
-import { useEffect, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
 // @ts-expect-error
 import Markdown from "react-native-easy-markdown";
 import { ScrollView } from "react-native-gesture-handler";
