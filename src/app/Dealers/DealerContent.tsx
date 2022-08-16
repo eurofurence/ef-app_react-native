@@ -12,14 +12,15 @@ import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { DealerWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
+import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
+import { DealerDetails } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
 
 /**
  * Props to the content.
  */
 export type DealerContentProps = {
-    dealer: DealerWithDetails;
+    dealer: DealerDetails;
 
     /**
      * The padding used by the parent horizontally.
@@ -33,7 +34,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
     const [now] = useNow();
     const theme = useTheme();
 
-    const mapLink = useAppSelector((state) => mapsCompleteSelectors.selectValidLinksByTarget(state, dealer.Id));
+    const mapLink = useAppSelector((state) => selectValidLinksByTarget(state, dealer.Id));
 
     const days = useMemo(
         () =>
@@ -61,9 +62,9 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 </BadgeInvPad>
             )}
 
-            {!dealer.ArtistImageUrl ? null : (
+            {!dealer.Artist ? null : (
                 <View style={[appStyles.shadow, styles.avatarCircle]}>
-                    <Image resizeMode="cover" style={styles.avatarImage} source={{ uri: dealer.ArtistImageUrl }} />
+                    <Image resizeMode="cover" style={styles.avatarImage} source={{ uri: dealer.Artist.FullUrl }} />
                 </View>
             )}
 
@@ -109,13 +110,13 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 />
             ))}
 
-            {!dealer.AboutTheArtText && !dealer.ArtPreviewImageUrl ? null : (
+            {!dealer.AboutTheArtText && !dealer.ArtPreview ? null : (
                 <>
                     <Section icon="film" title={t("about_the_art")} />
 
-                    {!dealer.ArtPreviewImageUrl ? null : (
+                    {!dealer.ArtPreview ? null : (
                         <View style={styles.imageLine}>
-                            <AutoScaleImage style={styles.image} source={dealer.ArtPreviewImageUrl} />
+                            <AutoScaleImage style={styles.image} source={dealer.ArtPreview.FullUrl} />
 
                             <Label mt={10} type="caption" numberOfLines={4} ellipsizeMode="tail">
                                 {dealer.ArtPreviewCaption}
@@ -131,9 +132,9 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 <>
                     <Section icon="account-circle-outline" title={t("about_the_artist", { name: dealer.FullName })} />
 
-                    {!dealer.ArtistImageUrl ? null : (
+                    {!dealer.Artist ? null : (
                         <View style={styles.imageLine}>
-                            <AutoScaleImage style={styles.image} source={dealer.ArtistImageUrl} />
+                            <AutoScaleImage style={styles.image} source={dealer.Artist.FullUrl} />
                         </View>
                     )}
 

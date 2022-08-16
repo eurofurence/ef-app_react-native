@@ -1,109 +1,109 @@
 {
-  "About": {
-    "app_details": {
-      "get_help": "Vraag voor Hulp",
-      "report_bug": "Rapporteer een Bug",
-      "title": "App Details"
-    },
-    "developed_by": "Ontwikkeld Door",
-    "extra_thanks": "Extra te danken",
-    "header": "Over"
-  },
-  "Announcements": {
-    "noAnnouncements": "Er zijn op dit moment geen actieve aankondigingen.",
-    "sectionSubtitle": "Live aankondigingen van de conventie!",
-    "sectionTitle": "Aankondigingen"
-  },
-  "Countdown": {
-    "after_event": "En dat was het weer! Tot volgend jaar!",
-    "before_event": "{{conName}} begint over {{diff}}"
-  },
-  "Dealer": {
-    "attends_fri": "Vrijdag",
-    "attends_sat": "Zaterdag",
-    "attends_thu": "Donderdag"
-  },
-  "EmptyScreen": {
-    "notImplemented": "Deze content is niet zichtbaar."
-  },
-  "Events": {
-    "finished": "Afgelopen",
-    "when": "{{ day }}, van {{ start }} tot {{ finish }}."
-  },
-  "Home": {
-    "announcementsTitle_one": "Er is {{ count }} aankondiging.",
-    "announcementsTitle_other": "Er zijn {{ count }} aankondigingen.",
-    "announcementsTitle_zero": "Er zijn geen aankondigingen.",
-    "eventsTitle_one": "We vonden {{ count }} event.",
-    "eventsTitle_other": "We hebben {{ count }} events gevondens.",
-    "eventsTitle_zero": "Er zijn geen events.",
-    "warnings": {
-      "no_notifications": "Jouw apparaat ondersteunt geen notificaties. Je zult geen herrinerringen krijgen voor evenementen.",
-      "subtitle": "Vanwege jouw apparaat zijn sommige functionaliteiten niet beschikbaar",
-      "title": "Problemen met apparaat"
-    }
-  },
-  "KnowledgeGroups": {
-    "header": "Informatie-artikelen"
-  },
-  "PrivateMessageList": {
-    "author_unknown": "onbekende auteur",
-    "message_item_subtitle": "{{ status }} - Verstuurd op {{ time }}",
-    "read": "Gelezen",
-    "section_title_from": "Van {{authorName}}",
-    "unread": "Ongelezen"
-  },
-  "Settings": {
-    "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
-    "cache": {
-      "cache_item": "Er zijn {{ count }} {{ type }}s",
-      "cache_state": "Huidige staat: {{ state }}",
-      "reset": "Leeg opslag",
-      "reset_alert": "Om de opslag te legen moet je de knop lang indrukken.",
-      "subtitle": "Laatst gesynchroniseerd: {{ time }}",
-      "synchronize": "Synchronizeer",
-      "title": "Opslagstatus"
-    },
-    "changeLanguage": "Verander taal",
-    "currentLanguage": "Jouw huidige taal is Nederlands!",
-    "dev_buttons": {
-      "no_auth_alert": "Je bent niet ingelogd. We stoppen nu.",
-      "send_private_message": "Ontvang een privebericht {{ status }}",
-      "subtitle": "Laat de API iets doen.",
-      "sync": "Forceer synchronizatie {{ status }}",
-      "sync_alert_done": "Alle apparaten zijn geinstructeerd om te verversen",
-      "sync_alert_error": "Je moet lang drukjken om deze functie te activeren",
-      "test_message_content": "Volgend jaar mag je meer werk doen!",
-      "test_message_subject": "Je hebt een grote prijs gewonnen!",
-      "title": "Ontwikkelaarsknoppen"
-    },
-    "developer_settings": {
-      "subtitle": "Hier moet je met je tengels vanaf blijven tenzij je weet wat je doet.",
-      "title": "Ontwikkelaarsinstellingen"
-    },
-    "header": "Instellingen",
-    "notifications": {
-      "no_notifications": "Er zijn geen notificaties ingepland!",
-      "notification_item": "{{ identifier }} geplanned voor {{ time }}",
-      "subtitle": "Alle ingeplande notificaties op dit apparaat",
-      "title": "Notificaties"
-    },
-    "remote_messages": {
-      "no_messages": "We hebben geen bericht ontvangen van FCM",
-      "subtitle": "Berichtjes die we hebben ontvangen van FCM",
-      "title": "Afstandsberichtjes"
-    },
-    "settingsSection": "Instellingen",
-    "timeTravel": "Toon tijdreisinstellingen."
-  },
-  "TimeTravel": {
-    "currentTime": "Huidig: {{ time }}",
-    "difference": "Het verschil is ongeveer {{ diff }}",
-    "disable": "Zet uit",
-    "enable": "Zet aan",
-    "originalTime": "Origineel: {{ time }}",
-    "reset": "Reset",
-    "subtitle": "Pas de tijd en datum aan voor het debuggen",
-    "title": "Tijdreizen"
-  }
+	"About": {
+		"app_details": {
+			"get_help": "Vraag voor Hulp",
+			"report_bug": "Rapporteer een Bug",
+			"title": "App Details"
+		},
+		"developed_by": "Ontwikkeld Door",
+		"extra_thanks": "Extra te danken",
+		"header": "Over"
+	},
+	"Announcements": {
+		"noAnnouncements": "Er zijn op dit moment geen actieve aankondigingen.",
+		"sectionSubtitle": "Live aankondigingen van de conventie!",
+		"sectionTitle": "Aankondigingen"
+	},
+	"Countdown": {
+		"after_event": "En dat was het weer! Tot volgend jaar!",
+		"before_event": "{{conName}} begint over {{diff}}"
+	},
+	"Dealer": {
+		"attends_fri": "Vrijdag",
+		"attends_sat": "Zaterdag",
+		"attends_thu": "Donderdag"
+	},
+	"EmptyScreen": {
+		"notImplemented": "Deze content is niet zichtbaar."
+	},
+	"Events": {
+		"finished": "Afgelopen",
+		"when": "{{ day }}, van {{ start }} tot {{ finish }}."
+	},
+	"Home": {
+		"announcementsTitle_one": "Er is {{ count }} aankondiging.",
+		"announcementsTitle_other": "Er zijn {{ count }} aankondigingen.",
+		"announcementsTitle_zero": "Er zijn geen aankondigingen.",
+		"eventsTitle_one": "We vonden {{ count }} event.",
+		"eventsTitle_other": "We hebben {{ count }} events gevondens.",
+		"eventsTitle_zero": "Er zijn geen events.",
+		"warnings": {
+			"no_notifications": "Jouw apparaat ondersteunt geen notificaties. Je zult geen herrinerringen krijgen voor evenementen.",
+			"subtitle": "Vanwege jouw apparaat zijn sommige functionaliteiten niet beschikbaar",
+			"title": "Problemen met apparaat"
+		}
+	},
+	"KnowledgeGroups": {
+		"header": "Informatie-artikelen"
+	},
+	"PrivateMessageList": {
+		"author_unknown": "onbekende auteur",
+		"message_item_subtitle": "{{ status }} - Verstuurd op {{ time }}",
+		"read": "Gelezen",
+		"section_title_from": "Van {{authorName}}",
+		"unread": "Ongelezen"
+	},
+	"Settings": {
+		"allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
+		"cache": {
+			"cache_item": "Er zijn {{ count }} {{ type }}s",
+			"cache_state": "Huidige staat: {{ state }}",
+			"reset": "Leeg opslag",
+			"reset_alert": "Om de opslag te legen moet je de knop lang indrukken.",
+			"subtitle": "Laatst gesynchroniseerd: {{ time }}",
+			"synchronize": "Synchronizeer",
+			"title": "Opslagstatus"
+		},
+		"changeLanguage": "Verander taal",
+		"currentLanguage": "Jouw huidige taal is Nederlands!",
+		"dev_buttons": {
+			"no_auth_alert": "Je bent niet ingelogd. We stoppen nu.",
+			"send_private_message": "Ontvang een privebericht {{ status }}",
+			"subtitle": "Laat de API iets doen.",
+			"sync": "Forceer synchronizatie {{ status }}",
+			"sync_alert_done": "Alle apparaten zijn geinstructeerd om te verversen",
+			"sync_alert_error": "Je moet lang drukjken om deze functie te activeren",
+			"test_message_content": "Volgend jaar mag je meer werk doen!",
+			"test_message_subject": "Je hebt een grote prijs gewonnen!",
+			"title": "Ontwikkelaarsknoppen"
+		},
+		"developer_settings": {
+			"subtitle": "Hier moet je met je tengels vanaf blijven tenzij je weet wat je doet.",
+			"title": "Ontwikkelaarsinstellingen"
+		},
+		"header": "Instellingen",
+		"notifications": {
+			"no_notifications": "Er zijn geen notificaties ingepland!",
+			"notification_item": "{{ identifier }} geplanned voor {{ time }}",
+			"subtitle": "Alle ingeplande notificaties op dit apparaat",
+			"title": "Notificaties"
+		},
+		"remote_messages": {
+			"no_messages": "We hebben geen bericht ontvangen van FCM",
+			"subtitle": "Berichtjes die we hebben ontvangen van FCM",
+			"title": "Afstandsberichtjes"
+		},
+		"settingsSection": "Instellingen",
+		"timeTravel": "Toon tijdreisinstellingen."
+	},
+	"TimeTravel": {
+		"currentTime": "Huidig: {{ time }}",
+		"difference": "Het verschil is ongeveer {{ diff }}",
+		"disable": "Zet uit",
+		"enable": "Zet aan",
+		"originalTime": "Origineel: {{ time }}",
+		"reset": "Reset",
+		"subtitle": "Pas de tijd en datum aan voor het debuggen",
+		"title": "Tijdreizen"
+	}
 }

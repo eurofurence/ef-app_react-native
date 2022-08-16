@@ -89,9 +89,9 @@ export const DealersTabsScreen: FC<DealersTabsScreenProps> = () => {
     return (
         <DealersTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName="All">
             <DealersTabsScreenNavigator.Screen name="All" options={{ title: t("all") }} component={DealersListAllScreen} />
-            <DealersTabsScreenNavigator.Screen name="Thu" options={{ title: thu, highlight: isThu }} component={DealersListByDayScreen} initialParams={{ day: "thu" }} />
-            <DealersTabsScreenNavigator.Screen name="Fri" options={{ title: fri, highlight: isFri }} component={DealersListByDayScreen} initialParams={{ day: "fri" }} />
-            <DealersTabsScreenNavigator.Screen name="Sat" options={{ title: sat, highlight: isSat }} component={DealersListByDayScreen} initialParams={{ day: "sat" }} />
+            <DealersTabsScreenNavigator.Screen name="Thu" options={{ title: thu, highlight: isThu }} component={DealersListByDayScreen} />
+            <DealersTabsScreenNavigator.Screen name="Fri" options={{ title: fri, highlight: isFri }} component={DealersListByDayScreen} />
+            <DealersTabsScreenNavigator.Screen name="Sat" options={{ title: sat, highlight: isSat }} component={DealersListByDayScreen} />
         </DealersTabsScreenNavigator.Navigator>
     );
 };

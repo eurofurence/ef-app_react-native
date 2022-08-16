@@ -2,11 +2,11 @@ import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { FC, useEffect, useRef } from "react";
 import { StyleSheet } from "react-native";
 
-import { EventWithDetails } from "../../store/eurofurence.selectors";
+import { EventDetails } from "../../store/eurofurence.types";
 import { EventContent } from "./EventContent";
 
 type EventActionsSheetProps = {
-    eventRecord: EventWithDetails | undefined;
+    eventRecord: EventDetails | undefined;
     onClose?: () => void;
 };
 

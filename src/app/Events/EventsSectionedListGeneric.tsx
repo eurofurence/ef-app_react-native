@@ -3,13 +3,13 @@ import { SectionList, StyleSheet, Vibration, View } from "react-native";
 
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
-import { EventWithDetails } from "../../store/eurofurence.selectors";
+import { EventDetails } from "../../store/eurofurence.types";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
 
 export type EventsSectionedListItem = EventSectionProps & {
-    data: EventWithDetails[];
+    data: EventDetails[];
 };
 
 /**
@@ -25,7 +25,7 @@ export type EventsSectionedListGenericProps = {
 export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = ({ leader, eventsGroups, trailer, cardType = "duration" }) => {
     const navigation = useAppNavigation("Areas");
     // Set event for action sheet
-    const [selectedEvent, setSelectedEvent] = useState<EventWithDetails | undefined>(undefined);
+    const [selectedEvent, setSelectedEvent] = useState<EventDetails | undefined>(undefined);
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback((event) => navigation.push("Event", { id: event.Id }), [navigation]);
@@ -46,7 +46,7 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
                 renderSectionHeader={({ section }) => <EventSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
-                renderItem={(entry: { item: EventWithDetails }) => (
+                renderItem={(entry: { item: EventDetails }) => (
                     <EventCard
                         key={entry.item.Id}
                         event={entry.item}

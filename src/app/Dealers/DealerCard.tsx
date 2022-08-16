@@ -3,11 +3,11 @@ import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { useNow } from "../../hooks/useNow";
-import { DealerWithDetails } from "../../store/eurofurence.selectors";
+import { DealerDetails } from "../../store/eurofurence.types";
 import { DealerCardContent } from "./DealerCardContent";
 
 export type DealerCardProps = {
-    dealer: DealerWithDetails;
+    dealer: DealerDetails;
     onPress?: () => void;
     onLongPress?: () => void;
 };
@@ -17,8 +17,8 @@ export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }
     const [now] = useNow();
 
     const avatar = useMemo(() => {
-        if (dealer.ArtistThumbnailImageUrl) return { uri: dealer.ArtistThumbnailImageUrl };
-        else if (dealer.ArtistImageUrl) return { uri: dealer.ArtistImageUrl };
+        if (dealer.ArtistThumbnail) return { uri: dealer.ArtistThumbnail.FullUrl };
+        else if (dealer.Artist) return { uri: dealer.Artist.FullUrl };
         else return require("../../../assets/images/dealer_black.png");
     }, [dealer]);
     const present = useMemo(() => Boolean(dealer.AttendanceDays.find((day) => now.isSame(day.Date, "day"))), [dealer, now]);

@@ -7,8 +7,9 @@ import { initReactI18next } from "react-i18next";
 
 import de from "./translations.de.json";
 import en from "./translations.en.json";
+import it from "./translations.it.json";
 import nl from "./translations.nl.json";
-
+import pl from "./translations.pl.json";
 /**
  * Only to be used for moment's locale. When english is given without a
  * specified locale, use en-GB, as it presents in the euro-centric time format.
@@ -29,7 +30,10 @@ const logger = partial(console.log, "i18next");
 
 const I18NEXT_LANGAGUE_KEY = "i18next";
 
-i18next
+/**
+ * Initialized promise to the i18next translate function.
+ */
+export const i18t = i18next
     .use(initReactI18next)
     .use({
         type: "languageDetector",
@@ -61,9 +65,19 @@ i18next
             en,
             nl,
             de,
+            it,
+            pl,
         },
         react: {
             useSuspense: false,
         },
+        parseMissingKeyHandler: (key) => {
+            console.warn("react-i18next", "Key not found.", key);
+            return key;
+        },
     });
+
+/**
+ * Re-export i18next.
+ */
 export default i18next;

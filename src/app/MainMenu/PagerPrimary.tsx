@@ -7,7 +7,7 @@ import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
 import { useAppSelector } from "../../store";
-import { mapsSelectors } from "../../store/eurofurence.selectors";
+import { selectBrowseableMaps } from "../../store/eurofurence.selectors";
 import { RecordId } from "../../store/eurofurence.types";
 import { PrivateMessageLinker } from "../PrivateMessages/PrivateMessageLinker";
 
@@ -29,7 +29,7 @@ export type PagerMenuProps = {
 export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings, onMap }) => {
     const { t } = useTranslation("Menu");
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
-    const maps = useAppSelector(mapsSelectors.selectBrowseableMaps);
+    const maps = useAppSelector(selectBrowseableMaps);
 
     return (
         <Col type="stretch">

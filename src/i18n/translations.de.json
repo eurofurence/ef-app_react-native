@@ -85,6 +85,7 @@
     "announcementsTitle_one": "Es gibt {{ count }} aktuelle Mitteilungen.",
     "announcementsTitle_other": "Es gibt {{ count }} aktuelle Mitteilungen.",
     "announcementsTitle_zero": "Aktuell gibt es keine Mitteilungen.",
+    "content_untranslated": "Du nutzt die Applikation in einer anderen Sprache als Englisch. Bitte beachte dass Namen und Texte von sämtlichen dynamischen Inhalten ausschliesslich auf Englisch angezeigt werden.",
     "eventsTitle_one": "Es wurden {{ count }} Event abgerufen.",
     "eventsTitle_other": "Es wurden {{ count }} Events abgerufen.",
     "eventsTitle_zero": "Keine Events.",
@@ -115,6 +116,10 @@
     "open_messages": "Nachrichten öffnen",
     "services": "Services",
     "settings": "Einstellungen"
+  },
+  "Notification": {
+    "announcement": "Es gibt neue Ankündigungen von {{conName}}",
+    "private_message": "Du hast eine Nachricht erhalten"
   },
   "PrivateMessageList": {
     "message_item_subtitle": "{{ status }} - gesendet um {{ time }}",

@@ -1,7 +1,6 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import { clone } from "lodash";
 import moment from "moment";
 import { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,7 +11,7 @@ import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchHasResults } from "../../components/Searching/EventsSearchContext";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventDaysSelectors, eventRoomsSelectors, eventsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
+import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors, selectFavoriteEvents } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
@@ -65,7 +64,7 @@ export type EventsTabsScreenProps =
 export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), [t]);
-    const hasFavorites = useAppSelector((state) => eventsSelectors.selectFavorites(state).length > 0);
+    const hasFavorites = useAppSelector((state) => selectFavoriteEvents(state).length > 0);
 
     // Use now with optional time travel.
     const [now] = useNow();
@@ -86,14 +85,16 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
         // TODO: @lukashaertel pls fix
     }, [hasSearchResults, route.params?.filterType]);
 
-    const currentDayName = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Name, [days, now]);
+    // Get the current day ID.
+    const currentDayId = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Id, [days, now]);
+
     // Find initial name for selected type.
-    const initialName = useMemo(() => {
+    const initialId = useMemo(() => {
         if (actualType === "results") return "Results";
-        if (actualType === "days") return currentDayName ?? days[0]?.Name;
-        if (actualType === "tracks") return tracks[0]?.Name;
-        if (actualType === "rooms") return rooms[0]?.Name;
-    }, [days, currentDayName, tracks, rooms, now, actualType]);
+        if (actualType === "days") return currentDayId ?? days[0]?.Id;
+        if (actualType === "tracks") return tracks[0]?.Id;
+        if (actualType === "rooms") return rooms[0]?.Id;
+    }, [days, currentDayId, tracks, rooms, now, actualType]);
 
     // Compute the safe area.
     const top = useSafeAreaInsets()?.top;
@@ -106,8 +107,8 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
 
     // If the screens require too much performance we should set detach to true again.
     return (
-        <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialName}>
-            {hasFavorites && <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "bookmark" }} component={FavoriteEventsList} />}
+        <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialId}>
+            {hasFavorites && <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "heart" }} component={FavoriteEventsList} />}
             {/*Tab for searching and filtering*/}
             <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
 
@@ -118,35 +119,20 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
                 : days.map((day) => (
                       <EventsTabsScreenNavigator.Screen
                           key={day.Id}
-                          name={day.Name}
+                          name={day.Id}
                           component={EventsListByDayScreen}
-                          options={{ title: formatDay(day), highlight: day.Name === currentDayName }}
-                          initialParams={{ day: clone(day) }}
+                          options={{ title: formatDay(day), highlight: day.Name === currentDayId }}
                       />
                   ))}
 
             {actualType !== "tracks"
                 ? null
-                : tracks.map((track) => (
-                      <EventsTabsScreenNavigator.Screen
-                          key={track.Id}
-                          name={track.Name}
-                          component={EventsListByTrackScreen}
-                          options={{ title: track.Name }}
-                          initialParams={{ track: clone(track) }}
-                      />
-                  ))}
+                : tracks.map((track) => <EventsTabsScreenNavigator.Screen key={track.Id} name={track.Id} component={EventsListByTrackScreen} options={{ title: track.Name }} />)}
 
             {actualType !== "rooms"
                 ? null
                 : rooms.map((room) => (
-                      <EventsTabsScreenNavigator.Screen
-                          key={room.Id}
-                          name={room.Name}
-                          component={EventsListByRoomScreen}
-                          options={{ title: room.ShortName ?? room.Name }}
-                          initialParams={{ room: clone(room) }}
-                      />
+                      <EventsTabsScreenNavigator.Screen key={room.Id} name={room.Id} component={EventsListByRoomScreen} options={{ title: room.ShortName ?? room.Name }} />
                   ))}
         </EventsTabsScreenNavigator.Navigator>
     );

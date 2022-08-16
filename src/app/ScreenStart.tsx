@@ -3,7 +3,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { NavigationProvider } from "../context/NavigationProvider";
 import { useTheme, useThemeType } from "../context/Theme";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 import { AboutScreen } from "./About";
@@ -70,23 +69,20 @@ export const ScreenStart: FC<ScreenStartProps> = React.memo(() => {
     const themeType = useThemeType();
 
     return (
-        <NavigationProvider>
+        <View style={StyleSheet.absoluteFill}>
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
-
-            <View style={StyleSheet.absoluteFill}>
-                <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
-                    <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
-                    <ScreenStartNavigator.Screen name="Event" component={EventScreen} />
-                    <ScreenStartNavigator.Screen name="Dealer" component={DealerScreen} />
-                    <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
-                    <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />
-                    <ScreenStartNavigator.Screen name="PrivateMessageItem" component={PrivateMessageItemScreen} />
-                    <ScreenStartNavigator.Screen name="KnowledgeGroups" component={KnowledgeGroupsScreen} />
-                    <ScreenStartNavigator.Screen name="KnowledgeEntry" component={KnowledgeEntryScreen} />
-                    <ScreenStartNavigator.Screen name="Map" component={MapScreen} />
-                    <ScreenStartNavigator.Screen name="About" component={AboutScreen} />
-                </ScreenStartNavigator.Navigator>
-            </View>
-        </NavigationProvider>
+            <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
+                <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
+                <ScreenStartNavigator.Screen name="Event" component={EventScreen} />
+                <ScreenStartNavigator.Screen name="Dealer" component={DealerScreen} />
+                <ScreenStartNavigator.Screen name="Settings" component={SettingsScreen} />
+                <ScreenStartNavigator.Screen name="PrivateMessageList" component={PrivateMessageListScreen} />
+                <ScreenStartNavigator.Screen name="PrivateMessageItem" component={PrivateMessageItemScreen} />
+                <ScreenStartNavigator.Screen name="KnowledgeGroups" component={KnowledgeGroupsScreen} />
+                <ScreenStartNavigator.Screen name="KnowledgeEntry" component={KnowledgeEntryScreen} />
+                <ScreenStartNavigator.Screen name="Map" component={MapScreen} />
+                <ScreenStartNavigator.Screen name="About" component={AboutScreen} />
+            </ScreenStartNavigator.Navigator>
+        </View>
     );
 });

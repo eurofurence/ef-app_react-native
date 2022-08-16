@@ -9,7 +9,7 @@ import { InteractiveImage, VisibleViewBounds } from "../../components/Containers
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
-import { EnrichedImageRecord, EnrichedMapRecord, LinkFragment } from "../../store/eurofurence.types";
+import { ImageDetails, LinkFragment, MapDetails } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
 import { ScreenEmpty } from "../Common/ScreenEmpty";
 import { LinkItem } from "./LinkItem";
@@ -22,18 +22,25 @@ export const MapScreen = () => {
     const [visibleEntries, setVisibleEntries] = useState<{ title: string; data: LinkFragment[] }[]>([]);
     const [isFiltering, setIsFiltering] = useState(false);
 
-    const map = useAppSelector((state): EnrichedMapRecord | undefined => mapsSelectors.selectById(state, route2.params.id));
-    const image = useAppSelector((state): EnrichedImageRecord | undefined => (map?.ImageId ? imagesSelectors.selectById(state, map?.ImageId) : undefined));
+    const map = useAppSelector((state): MapDetails | undefined => mapsSelectors.selectById(state, route2.params.id));
+    const image = useAppSelector((state): ImageDetails | undefined => (map?.ImageId ? imagesSelectors.selectById(state, map?.ImageId) : undefined));
 
     const filterEntries = useCallback(
         (bounds: VisibleViewBounds) => {
+            const middleX = (bounds.left + bounds.right) / 2;
+            const middleY = (bounds.bottom + bounds.top) / 2;
+
             setIsFiltering(true);
             console.log("Filtering map entries", bounds);
 
-            const filteredEntries = _.filter(map?.Entries, (it) => _.inRange(it.X, bounds.left, bounds.right) && _.inRange(it.Y, bounds.top, bounds.bottom)).map((it, index) => ({
-                title: it.Id + index,
-                data: it.Links,
-            }));
+            const filteredEntries = _.chain(map?.Entries)
+                .filter((it) => _.inRange(it.X, bounds.left, bounds.right) && _.inRange(it.Y, bounds.top, bounds.bottom))
+                .orderBy((it) => Math.sqrt(Math.pow(it.X + middleX, 2) + Math.pow(it.Y + middleY, 2)), "asc")
+                .map((it, index) => ({
+                    title: it.Id + index,
+                    data: it.Links,
+                }))
+                .value();
 
             setVisibleEntries(filteredEntries ?? []);
             console.log("Filtered entries", filteredEntries?.length);

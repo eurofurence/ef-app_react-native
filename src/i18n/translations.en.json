@@ -86,6 +86,7 @@
     "announcementsTitle_one": "There is {{ count }} announcements.",
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "announcementsTitle_zero": "There are no announcements.",
+    "content_untranslated": "",
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
@@ -117,6 +118,10 @@
     "services": "Services",
     "settings": "Settings"
   },
+  "Notification": {
+    "announcement": "There is an announcement from {{conName}}",
+    "private_message": "You received a new private message"
+  },
   "PrivateMessageList": {
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
@@ -127,6 +132,7 @@
   },
   "Settings": {
     "allowAnalytics": "Allow us to collect analytics events",
+    "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
     "cache": {
       "cache_item": "There are {{ count }} {{ type }}s",
       "cache_state": "Current state: {{ state }}",
@@ -153,7 +159,20 @@
       "subtitle": "You shouldn't touch these unless you know what you're doing.",
       "title": "Developer Settings"
     },
+    "developer_settings_alert": {
+      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
+      "cancel": "Cancel",
+      "disable": "Disable",
+      "enable": "Enable",
+      "title": "Dev Settings Menu"
+    },
     "header": "Settings",
+    "login": {
+      "logged_in_as": "You are logged in as {{username}}",
+      "login": "Login",
+      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
+      "logout": "Logout"
+    },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
       "notification_item": "{{ identifier }} scheduled on {{ time }}",

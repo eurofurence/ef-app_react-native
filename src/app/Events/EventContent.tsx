@@ -1,3 +1,4 @@
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import moment from "moment";
 import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,7 +15,8 @@ import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useEventReminder } from "../../hooks/useEventReminder";
 import { useAppSelector } from "../../store";
-import { EventWithDetails, mapsCompleteSelectors } from "../../store/eurofurence.selectors";
+import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
+import { EventDetails } from "../../store/eurofurence.types";
 
 /**
  * Props to the content.
@@ -23,7 +25,7 @@ export type EventContentProps = {
     /**
      * The event to display.
      */
-    event: EventWithDetails;
+    event: EventDetails;
 
     /**
      * The padding used by the parent horizontally.
@@ -42,7 +44,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
     event.Tags?.includes("");
-    const mapLink = useAppSelector((state) => mapsCompleteSelectors.selectValidLinksByTarget(state, room.Id));
+    const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
 
     const shareEvent = useCallback(() => {
         Share.share(
@@ -69,30 +71,34 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 </BadgeInvPad>
             )}
 
-           
             <Section icon={isFavorited ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
             <Label type="para" mb={20}>
                 {event.Abstract}
             </Label>
-            
+
             {!event.MaskRequired ? null : (
-                <Label type="para" icon="face-mask" mb={20} color={theme.secondary}>
-                    {t("mask_required")}
-                </Label>
+                <Row variant={"center"} style={{ marginBottom: 20 }}>
+                    <Icon name={"face-mask"} style={{ flexGrow: 1 }} size={20} color={theme.secondary} />
+                    <Label type="para" style={{ flexGrow: 9 }} color={theme.secondary}>
+                        {t("mask_required")}
+                    </Label>
+                </Row>
             )}
 
             <Row>
                 <Button style={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
                     {isFavorited ? t("remove_favorite") : t("add_favorite" )}
                 </Button>
-                <Button style={styles.rowRight} icon="pencil">
-                    {t("give_feedback")}
+                <Button style={styles.rowRight} icon={"share"} onPress={shareEvent}>
+                    {t("share")}
                 </Button>
             </Row>
 
-            <Button style={styles.share} icon={"share"} onPress={shareEvent}>
-                {t("share")}
-            </Button>
+            {event.IsAcceptingFeedback && (
+                <Button style={styles.share} icon="pencil">
+                    {t("give_feedback")}
+                </Button>
+            )}
 
             <Section icon="directions-fork" title={t("about_title")} />
             <Label type="caption">{t("label_event_panelhosts")}</Label>
@@ -115,14 +121,16 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 {room?.Name || " "}
             </Label>
 
-            {mapLink.map(({ map, entry, link }, i) => (
-                <ImageExButton
-                    key={i}
-                    image={map.Image}
-                    target={{ x: entry.X, y: entry.Y, size: 400 }}
-                    onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
-                />
-            ))}
+            {!mapLink
+                ? null
+                : mapLink.map(({ map, entry, link }, i) => (
+                      <ImageExButton
+                          key={i}
+                          image={map.Image}
+                          target={{ x: entry.X, y: entry.Y, size: 400 }}
+                          onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
+                      />
+                  ))}
 
             <Section icon="information" title={t("label_event_description")} />
             <Label type="para">{event.Description}</Label>

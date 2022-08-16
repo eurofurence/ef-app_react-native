@@ -4,7 +4,7 @@ import { Section } from "../../components/Atoms/Section";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventsSelectors } from "../../store/eurofurence.selectors";
+import { selectUpcomingFavoriteEvents } from "../../store/eurofurence.selectors";
 import { EventCard } from "./EventCard";
 
 export const UpcomingFavoriteEventsList = () => {
@@ -12,7 +12,7 @@ export const UpcomingFavoriteEventsList = () => {
 
     const [now] = useNow();
     const navigation = useAppNavigation("Areas");
-    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectUpcomingFavorites(state, now)));
+    const events = useAppSelector((state) => selectUpcomingFavoriteEvents(state, now));
 
     if (events.length === 0) {
         return null;

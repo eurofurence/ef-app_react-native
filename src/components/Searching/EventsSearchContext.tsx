@@ -1,12 +1,13 @@
 import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
 
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelectors, EventWithDetails } from "../../store/eurofurence.selectors";
+import { eventsSelector } from "../../store/eurofurence.selectors";
+import { EventDetails } from "../../store/eurofurence.types";
 
 export type EventsSearchContextType = {
     search: string;
     setSearch: (results: string) => void;
-    results: null | EventWithDetails[];
+    results: null | EventDetails[];
 };
 
 export const EventsSearchContext = createContext<EventsSearchContextType>({
@@ -17,11 +18,11 @@ export const EventsSearchContext = createContext<EventsSearchContextType>({
 
 export const EventsSearchProvider: FC = ({ children }) => {
     // Source of all events.
-    const events = useAppSelector(eventsCompleteSelectors.selectAll);
+    const events = useAppSelector(eventsSelector.selectAll);
 
     // State of query and results.
     const [search, setSearch] = useState<string>("");
-    const [results, setResults] = useState<null | EventWithDetails[]>(null);
+    const [results, setResults] = useState<null | EventDetails[]>(null);
 
     // Perform search.
     useEffect(() => {

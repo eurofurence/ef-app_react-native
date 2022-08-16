@@ -5,9 +5,9 @@ import Markdown from "react-native-easy-markdown";
 
 import { Label } from "../../components/Atoms/Label";
 import { Card } from "../../components/Containers/Card";
-import { EnrichedAnnouncementRecord } from "../../store/eurofurence.types";
+import { AnnouncementDetails } from "../../store/eurofurence.types";
 
-export const AnnouncementItem: FC<{ announcement: EnrichedAnnouncementRecord }> = ({ announcement }) => {
+export const AnnouncementItem: FC<{ announcement: AnnouncementDetails }> = ({ announcement }) => {
     return (
         <Card>
             <View style={{ marginBottom: 5 }}>
@@ -19,7 +19,7 @@ export const AnnouncementItem: FC<{ announcement: EnrichedAnnouncementRecord }> 
 
             <Markdown>{announcement.Content}</Markdown>
 
-            {announcement.ImageUrl && <Image source={{ uri: announcement.ImageUrl }} style={{ width: "100%", height: "auto" }} />}
+            {announcement.Image && <Image source={{ uri: announcement.Image.FullUrl }} style={{ width: "100%", height: "auto" }} />}
         </Card>
     );
 };

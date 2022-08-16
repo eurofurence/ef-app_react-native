@@ -9,7 +9,7 @@ import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useAppSelector } from "../../store";
-import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
+import { selectDealersByDayName } from "../../store/eurofurence.selectors";
 import { AttendanceDay } from "../../store/eurofurence.types";
 import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
@@ -20,12 +20,7 @@ import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
 /**
  * Params handled by the screen in route.
  */
-export type DealersListByDayScreenParams = {
-    /**
-     * The day that's dealers are listed.
-     */
-    day: AttendanceDay;
-};
+export type DealersListByDayScreenParams = object;
 
 /**
  * The properties to the screen as a component.
@@ -42,8 +37,8 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route 
 
     // Get the day. Use it to resolve events to display.
     // TODO: @lukashaertel pls fix
-    const day = route.params?.day;
-    const dealers = useAppSelector((state) => dealersCompleteSelectors.selectByDayName(state, day));
+    const day = route.name.toLowerCase() as AttendanceDay;
+    const dealers = useAppSelector((state) => selectDealersByDayName(state, day));
     const dealersGroups = useMemo(() => {
         return chain(dealers)
             .orderBy("FullName")
