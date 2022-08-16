@@ -171,7 +171,9 @@
       "logged_in_as": "You are logged in as {{username}}",
       "login": "Login",
       "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "logout": "Logout"
+      "logout": "Logout",
+
+      "login_hint": "Your login credentials for the app are the same as for the Eurofurence Registration System.\n\nIf you do not remember or have access to them, you can ask for a PIN code\nto sign in at the registration desk or security office."
     },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
