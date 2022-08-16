@@ -29,7 +29,7 @@
     "eject": "expo eject",
     "lint": "yarn lint:code && yarn lint:translations",
     "lint:code": "eslint ./src --ext js,ts,jsx,tsx",
-    "lint:translations": "eslint --ext json  --format node_modules/eslint-plugin-i18n-json/formatter.js ./src/i18n ",
+    "lint:translations": "eslint --rule 'prettier/prettier: off' --ext json --format node_modules/eslint-plugin-i18n-json/formatter.js ./src/i18n",
     "test": "jest",
     "bundle:android": "yarn tsc --noEmit && yarn lint && expo build:android -t app-bundle",
     "local:android": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile preview --local",

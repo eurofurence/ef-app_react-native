@@ -38,8 +38,8 @@ export const DevButtons = () => {
             <Section title={t("title")} subtitle={t("subtitle")} />
 
             <Button
-                icon="alert"
                 style={styles.button}
+                icon="alert"
                 onPress={() => alert(t("sync_alert_error"))}
                 onLongPress={() => {
                     console.log("Forcing  FCM sync devices");
@@ -53,6 +53,7 @@ export const DevButtons = () => {
 
             <Button
                 style={styles.button}
+                icon="message-alert"
                 onPress={() => {
                     onSendMessage();
                 }}

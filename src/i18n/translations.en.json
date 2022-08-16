@@ -46,7 +46,17 @@
     "notImplemented": "Content is not implemented yet."
   },
   "Event": {
+    "about_title": "About",
+    "add_favorite": "Favorite",
+    "give_feedback": "Give Feedback",
+    "label_event_description": "More about the event",
+    "label_event_panelhosts": "Hosted by",
+    "label_event_room": "Room",
+    "label_event_track": "Track",
+    "label_event_when": "When",
     "mask_required": "Face masks are mandatory for this event",
+    "remove_favorite": "Unfavorite",
+    "share": "Share this event",
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
@@ -67,8 +77,8 @@
     "finished": "Finished",
     "morning": "In the morning",
     "night": "At night",
-    "upcoming_favorites_subtitle": "Favorite events that are happening today",
-    "upcoming_favorites_title": "Your Schedule",
+    "upcoming_favorites_subtitle": "You will receive a reminder before this event starts",
+    "upcoming_favorites_title": "Favorite Events",
     "upcoming_subtitle": "These events are starting in the next 30 minutes",
     "upcoming_title": "Upcoming Events"
   },
@@ -160,7 +170,7 @@
     "login": {
       "logged_in_as": "You are logged in as {{username}}",
       "login": "Login",
-      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
+      "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
       "logout": "Logout"
     },
     "notifications": {
@@ -185,7 +195,9 @@
     "originalTime": "Original: {{ time }}",
     "reset": "Reset",
     "subtitle": "Adjust time settings for testing and debugging",
-    "title": "Time Travel"
+    "title": "Time Travel",
+    "week_after": "1 week after {{conName}}",
+    "week_before": "1 week before {{conName}}"
   },
   "Todo": {}
 }

@@ -65,7 +65,7 @@
       "title": "Opslagstatus"
     },
     "changeLanguage": "Verander taal",
-    "currentLanguage": "Jouw huidige taal is Nederlands, lekker bezig pik!",
+    "currentLanguage": "Jouw huidige taal is Nederlands!",
     "dev_buttons": {
       "no_auth_alert": "Je bent niet ingelogd. We stoppen nu.",
       "send_private_message": "Ontvang een privebericht {{ status }}",
