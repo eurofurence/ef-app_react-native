@@ -95,7 +95,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
             </Row>
 
             {event.IsAcceptingFeedback && (
-                <Button style={styles.share} icon="pencil">
+                <Button style={styles.share} icon="pencil" onPress={() => navigation.navigate("EventFeedback", { id: event.Id })}>
                     {t("give_feedback")}
                 </Button>
             )}

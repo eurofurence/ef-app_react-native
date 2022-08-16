@@ -201,5 +201,16 @@
     "week_after": "1 week after {{conName}}",
     "week_before": "1 week before {{conName}}"
   },
+  "EventFeedback": {
+    "header": "Feedback: {{ eventTitle }}",
+    "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
+    "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}.",
+    "submit": "Submit feedback",
+    "rating_title": "How much did you like this event?",
+    "message_title": "Feedback message",
+    "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
+    "submit_in_progress": "Submitting . . .",
+    "submit_failed": "Something went wrong during submitting. Please try again . . ."
+  },
   "Todo": {}
 }
