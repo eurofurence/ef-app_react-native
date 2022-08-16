@@ -46,7 +46,17 @@
     "notImplemented": "Content is not implemented yet."
   },
   "Event": {
+    "about_title": "About",
+    "add_favorite": "Favorite",
+    "give_feedback": "Give Feedback",
+    "label_event_description": "More about the event",
+    "label_event_panelhosts": "Hosted by",
+    "label_event_room": "Room",
+    "label_event_track": "Track",
+    "label_event_when": "When",
     "mask_required": "Face masks are mandatory for this event",
+    "remove_favorite": "Unfavorite",
+    "share": "Share this event",
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
@@ -76,6 +86,7 @@
     "announcementsTitle_one": "There is {{ count }} announcements.",
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "announcementsTitle_zero": "There are no announcements.",
+    "content_untranslated": "",
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
@@ -156,6 +167,12 @@
       "title": "Dev Settings Menu"
     },
     "header": "Settings",
+    "login": {
+      "logged_in_as": "You are logged in as {{username}}",
+      "login": "Login",
+      "login_description": "Being logged allows {{conName}} to send you personalized messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
+      "logout": "Logout"
+    },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
       "notification_item": "{{ identifier }} scheduled on {{ time }}",
