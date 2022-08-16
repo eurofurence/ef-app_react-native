@@ -27,15 +27,10 @@ export const TimeTravel = () => {
             <Label mb={5}>{t("currentTime", { time: now.format("llll") })}</Label>
             <Label mb={5}>{t("difference", { diff: moment.duration(amount, "millisecond").humanize() })}</Label>
             <Row>
-                <Button style={styles.button} outline={enabled} onPress={() => dispatch(enableTimeTravel(!enabled))}>
-                    Enable
-                </Button>
-                <Button style={styles.button} onPress={() => dispatch(resetTravel())}>
-                    {t("reset")}
-                </Button>
-            </Row>
-            <Row>
-                <Col>
+                <Col type={"stretch"} style={{ flexGrow: 1 }}>
+                    <Button style={styles.button} outline={enabled} onPress={() => dispatch(enableTimeTravel(!enabled))}>
+                        Enable
+                    </Button>
                     <Button style={styles.button} onPress={() => dispatch(travelForward(ONE_MINUTE))}>
                         +1 minute
                     </Button>
@@ -52,7 +47,10 @@ export const TimeTravel = () => {
                         +1 month
                     </Button>
                 </Col>
-                <Col>
+                <Col style={{ flexGrow: 1 }} type={"stretch"}>
+                    <Button style={styles.button} onPress={() => dispatch(resetTravel())}>
+                        {t("reset")}
+                    </Button>
                     <Button style={styles.button} onPress={() => dispatch(travelBackward(ONE_MINUTE))}>
                         -1 minute
                     </Button>
@@ -78,5 +76,6 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         margin: 5,
+        flexGrow: 1,
     },
 });

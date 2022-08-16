@@ -1,37 +1,49 @@
+import _ from "lodash";
+import moment from "moment";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { View } from "react-native";
 
-import { Section } from "../../components/Atoms/Section";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
+import { Label } from "../../components/Atoms/Label";
+import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventsSelectors } from "../../store/eurofurence.selectors";
-import { EventCard } from "./EventCard";
+import { selectFavoriteEvents } from "../../store/eurofurence.selectors";
+import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 
 export const FavoriteEventsList = () => {
     const { t } = useTranslation("Events");
-    const navigation = useAppNavigation("Areas");
-    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectFavorites(state)));
+    const [now] = useNow();
+    const events = useAppSelector(selectFavoriteEvents);
 
-    if (events.length === 0) {
-        return null;
-    }
+    const sections = useMemo(() => {
+        const [past, upcoming] = _.partition(events, (it) => now.isAfter(it.EndDateTimeUtc, "minutes"));
 
-    // TODO: move this to a nice sectioned list
+        const upcomingSections = _.chain(upcoming)
+            .orderBy((it) => moment(it.StartDateTimeUtc).valueOf(), "asc")
+            .groupBy((it) => it.ConferenceDay?.Name)
+            .map((items, day) => ({
+                title: day,
+                data: items,
+            }))
+            .value();
+
+        return [
+            ...upcomingSections,
+            {
+                title: t("events_done"),
+                data: past,
+            },
+        ];
+    }, [events]);
+
     return (
-        <View style={{ paddingHorizontal: 20, paddingBottom: 100 }}>
-            <Section title={t("favorites_title")} subtitle={t("favorites_subtitle")} icon={"bookmark"} />
-            {events.map((event) => (
-                <EventCard
-                    key={event.Id}
-                    event={event}
-                    type={"time"}
-                    onPress={() =>
-                        navigation.navigate("Event", {
-                            id: event.Id,
-                        })
-                    }
-                />
-            ))}
-        </View>
+        <EventsSectionedListGeneric
+            eventsGroups={sections}
+            cardType={"time"}
+            leader={
+                <Label type="h1" variant="middle" mt={30}>
+                    {t("favorites_title")}
+                </Label>
+            }
+        />
     );
 };

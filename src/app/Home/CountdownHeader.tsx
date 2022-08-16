@@ -6,7 +6,7 @@ import { Section } from "../../components/Atoms/Section";
 import { conId } from "../../configuration";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventDaysSelectors } from "../../store/eurofurence.selectors";
+import { selectCountdownTitle } from "../../store/eurofurence.selectors";
 
 export type CountdownHeaderProps = {
     style?: StyleProp<ViewStyle>;
@@ -16,7 +16,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
     const { t } = useTranslation("Countdown");
     const [now] = useNow();
 
-    const subtitle = useAppSelector((state) => eventDaysSelectors.selectCountdownTitle(state, now, t));
+    const subtitle = useAppSelector((state) => selectCountdownTitle(state, now, t));
     return (
         <View style={[styles.container, style]}>
             <ImageBackground style={StyleSheet.absoluteFill} source={require("../../../assets/images/banner_2022_no_logo.png")} resizeMode="cover" />

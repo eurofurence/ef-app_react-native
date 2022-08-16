@@ -5,7 +5,7 @@ import { Floater, padFloater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { eventsCompleteSelectors } from "../../store/eurofurence.selectors";
+import { eventsSelector } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
 import { EventContent } from "./EventContent";
 
@@ -22,7 +22,7 @@ export type EventScreenParams = {
 export const EventScreen = () => {
     const safe = useSafeAreaInsets();
     const route = useAppRoute("Event");
-    const event = useAppSelector((state) => eventsCompleteSelectors.selectById(state, route.params.id));
+    const event = useAppSelector((state) => eventsSelector.selectById(state, route.params.id));
 
     return (
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>

@@ -13,6 +13,7 @@ export type Notification = {
 export type FCMMessage = {
     dateReceived: string;
     content: object;
+    trigger: object;
     identifier: string;
 };
 type NotificationState = {

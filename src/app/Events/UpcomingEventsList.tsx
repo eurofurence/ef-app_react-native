@@ -4,7 +4,7 @@ import { Section } from "../../components/Atoms/Section";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventsSelectors } from "../../store/eurofurence.selectors";
+import { selectUpcomingEvents } from "../../store/eurofurence.selectors";
 import { EventCard } from "./EventCard";
 
 export const UpcomingEventsList = () => {
@@ -12,7 +12,7 @@ export const UpcomingEventsList = () => {
 
     const navigation = useAppNavigation("Areas");
     const [now] = useNow();
-    const events = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectUpcomingEvents(state, now)));
+    const events = useAppSelector((state) => selectUpcomingEvents(state, now));
 
     if (events.length === 0) {
         return null;

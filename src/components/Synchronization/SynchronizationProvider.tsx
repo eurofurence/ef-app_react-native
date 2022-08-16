@@ -12,7 +12,7 @@ type SynchronizationProviderProps = {
     /**
      * Call this function to trigger a synchronization step.
      */
-    synchronize: () => void;
+    synchronize: (vibrate?: boolean) => void;
 
     /**
      * Clear the entire cache and start over again.
@@ -42,9 +42,9 @@ export const SynchronizationProvider: FC = ({ children }) => {
         synchronize();
     }, [dispatch]);
 
-    const synchronize = useCallback(() => {
+    const synchronize = useCallback((vibrate: boolean = true) => {
         dispatch(startCacheSync());
-        Vibration.vibrate(150);
+        if (vibrate) Vibration.vibrate(150);
         setCount((c) => c + 1);
     }, []);
 

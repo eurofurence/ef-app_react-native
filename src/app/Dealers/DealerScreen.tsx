@@ -6,7 +6,7 @@ import { Floater, padFloater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
+import { dealersSelectors } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
 import { DealerContent } from "./DealerContent";
 
@@ -23,7 +23,7 @@ export type DealerScreenParams = {
 export const DealerScreen = () => {
     const { t } = useTranslation("Dealer");
     const route = useAppRoute("Dealer");
-    const dealer = useAppSelector((state) => dealersCompleteSelectors.selectById(state, route.params.id));
+    const dealer = useAppSelector((state) => dealersSelectors.selectById(state, route.params.id));
     const safe = useSafeAreaInsets();
 
     return (

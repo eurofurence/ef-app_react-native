@@ -40,6 +40,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
                 ignoredPaths: [eurofurenceCache.name, eurofurenceService.reducerPath],
+                warnAfter: 200,
             },
         }).concat(eurofurenceService.middleware, authorizationService.middleware);
 

@@ -1,11 +1,11 @@
-import * as WebBrowser from "expo-web-browser";
 import { FC } from "react";
+import { Linking } from "react-native";
 import { match } from "ts-pattern";
 
 import { Button } from "../../components/Containers/Button";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
+import { dealersSelectors } from "../../store/eurofurence.selectors";
 import { LinkFragment } from "../../store/eurofurence.types";
 import { DealerCard } from "../Dealers/DealerCard";
 
@@ -15,7 +15,7 @@ type LinkItemProps = {
 
 const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     const navigation = useAppNavigation("Areas");
-    const dealer = useAppSelector((state) => dealersCompleteSelectors.selectById(state, link.Target));
+    const dealer = useAppSelector((state) => dealersSelectors.selectById(state, link.Target));
 
     if (dealer === undefined) {
         return null;
@@ -26,7 +26,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
     return (
-        <Button style={{ marginVertical: 5 }} onPress={() => WebBrowser.openBrowserAsync(link.Target)}>
+        <Button style={{ marginVertical: 5 }} onPress={() => Linking.openURL(link.Target)}>
             {link.Name}
         </Button>
     );

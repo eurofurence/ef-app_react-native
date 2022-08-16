@@ -9,7 +9,7 @@ import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { conName } from "../../configuration";
 import { useAppSelector } from "../../store";
-import { dealersCompleteSelectors } from "../../store/eurofurence.selectors";
+import { dealersSelectors } from "../../store/eurofurence.selectors";
 import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
@@ -35,7 +35,7 @@ export const DealersListAllScreen: FC<DealersListAllScreenProps> = () => {
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
-    const dealers = useAppSelector(dealersCompleteSelectors.selectAll);
+    const dealers = useAppSelector(dealersSelectors.selectAll);
     const dealersGroups = useMemo(() => {
         return chain(dealers)
             .orderBy("FullName")

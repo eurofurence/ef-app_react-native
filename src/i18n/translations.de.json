@@ -1,160 +1,165 @@
 {
-  "Home": {
-    "announcementsTitle_zero": "Aktuell gibt es keine Mitteilungen.",
-    "announcementsTitle_one": "Es gibt {{ count }} aktuelle Mitteilungen.",
-    "announcementsTitle_other": "Es gibt {{ count }} aktuelle Mitteilungen.",
-    "eventsTitle_zero": "Keine Events.",
-    "eventsTitle_one": "Es wurden {{ count }} Event abgerufen.",
-    "eventsTitle_other": "Es wurden {{ count }} Events abgerufen.",
-    "warnings": {
-      "title": "Kompatibilitätsprobleme",
-      "subtitle": "Gewisse Funktionen werden von deinem Gerät nicht unterstützt",
-      "no_notifications": "Dein Gerät unterstützt keine zeitgesteuerten Benachrichtigungen. Du wirst keine Benachrichtigungen für anstehende Events erhalten.",
-      "no_push_notifications": "Dein Gerät unterstützt keine Push-Nachrichten. Du wirst nicht automatisch über neue Mitteilungen oder persönliche Nachrichten informiert.",
-      "no_image_caching": "Dein Gerät unterstützt kein Zwischenspeichern von Bildern. Ohne aktive Internetverbindung werden dir keine Bilder angezeigt."
-    }
+  "About": {
+    "app_details": {
+      "get_help": "Hilfe erhalten",
+      "report_bug": "Ein Problem melden",
+      "title": "App Details"
+    },
+    "developed_by": "Entwickelt von",
+    "extra_thanks": "Besonderen Dank",
+    "header": "Über uns"
   },
-  "Menu": {
-    "not_logged_in": "Du bist nicht angemeldet",
-    "logged_in_now": "Jetzt anmelden",
-    "info": "Wissenswertes",
-    "catch_em": "Catch-em-all",
-    "services": "Services",
-    "maps": "Karten",
-    "about": "Über uns",
-    "settings": "Einstellungen",
-    "messages": "Du hast {{count}} neue Nachrichten",
-    "open_messages": "Nachrichten öffnen",
-    "home": "Start",
-    "events": "Events",
-    "dealers": "Dealer",
-    "more": "Mehr",
-    "less": "Zuklappen"
+  "Announcements": {
+    "noAnnouncements": "Momentan gibt es keine Mitteilungen",
+    "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
+    "sectionTitle": "Mitteilungen"
   },
-  "Events": {
-    "filter_by_day": "Tage ansehen",
-    "filter_by_track": "Kategorien ansehen",
-    "filter_by_room": "Räume ansehen",
-    "morning": "Morgens",
-    "afternoon": "Nachmittags",
-    "evening": "Am Abend",
-    "night": "In der Nacht",
-    "events_count": "{{count}} Events",
-    "events_done": "Bereits zu Ende",
-    "favorites_title": "Favorisierte Events",
-    "favorites_subtitle": "Du wirst an diese Events erinnert werden",
-    "current_title": "Aktuelle Events",
-    "current_subtitle": "Diese Events finden gerade jetzt statt",
-    "upcoming_title": "Anstehende Events",
-    "upcoming_subtitle": "Diese Events beginnenn in den nächsten 30 Minuten",
-    "upcoming_favorites_title": "Favorisierte Events",
-    "upcoming_favorites_subtitle": "Du wirst eine Erinnerung bekommen bevor diese Events beginnen"    
-  },
-  "Event": {
-    "supersponsor_event":"Supersponsor-Event",
-    "sponsor_event":"Sponsor-Event",
-    "mask_required": "Auf diesem Event ist eine Mund-Nasen-Maske verpflichtend zu tragen",
-    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
-    "view_on_map": "Auf der Karte ansehen",
-    "add_favorite": "Favorit hinzufügen",
-    "remove_favorite": "Favorit entfernen",
-    "give_feedback": "Feedback geben",
-    "about_title": "Details",
-    "share": "Teile dieses Event",
-    "label_event_panelhosts": "Moderiert von",
-    "label_event_when": "Zeit",
-    "label_event_track": "Kategorie",
-    "label_event_room": "Raum",
-    "label_event_description": "Mehr zu diesem Event"
-  },
-  "Dealers": {
-    "all": "Alle",
-    "dealers_on_this_day": "Dealer an diesem Tag",
-    "dealers_on_day": "Dealer am {{day}}",
-    "dealers_at_convention": "Dealer an der Eurofurence",
-    "dealers_count": "{{count}} Dealer",
-    "not_attending_on": "Nicht da am {{offDays}}"
+  "Countdown": {
+    "after_event": "Das war's! Wir hoffen wir sehen dich nächstes Jahr wieder!",
+    "before_event": "{{conName}} beginnt in {{diff}}(n)"
   },
   "Dealer": {
-    "viewing_dealer": "Betrachte Dealer",
-    "attends_thu": "Donnerstag",
-    "attends_fri": "Freitag",
-    "attends_sat": "Samstag",
     "about": "Infos",
     "about_the_art": "Über das Angebot",
     "about_the_artist": "Über {{name}}",
-    "attends": "Anwesend",
-    "merchandise": "Angebot",
     "after_dark": "After Dark",
-    "in_after_dark": "Im After Dark Bereich",
+    "attends": "Anwesend",
+    "attends_fri": "Freitag",
+    "attends_sat": "Samstag",
+    "attends_thu": "Donnerstag",
     "categories": "Kategorien",
+    "in_after_dark": "Im After Dark Bereich",
+    "merchandise": "Angebot",
     "not_attending": "Heute nicht anwesend",
-    "view_on_map": "Auf der Karte ansehen"
+    "view_on_map": "Auf der Karte ansehen",
+    "viewing_dealer": "Betrachte Dealer"
   },
-  "TimeTravel": {
-    "title": "Zeitreise",
-    "subtitle": "Ändere die Zeit zum testen und debuggen",
-    "originalTime": "Original: {{ time }}",
-    "currentTime": "Aktuell: {{ time }}",
-    "dif0rence": "Die Zeitdifferent beträgt {{ diff }}",
-    "enable": "Einschalten",
-    "disable": "Ausschalten",
-    "reset": "Zurücksetzen"
-  },
-  "Settings": {
-    "header": "Einstellungen",
-    "timeTravel": "Zeitreise-Einstellungen anzeigen.",
-    "currentLanguage": "Your current language is English!",
-    "changeLanguage": "Change language",
-    "allowAnalytics": "Allow us to collect analytics events",
-    "settingsSection": "Einstellungen",
-    "developer_settings": {
-      "title": "Entwickler-Einstellungen",
-      "subtitle": "Du solltest diese besser nicht anfassen wenn Du nicht weisst was Du tust."
-    },
-    "cache": {
-      "title": "Cache-Statistiken",
-      "subtitle": "Letzter Datenabgleich: {{ time }}",
-      "cache_state": "Aktueller Status: {{ state }}",
-      "cache_item": "{{ count }} Elemente vom Typ \"{{ type }}\"",
-      "synchronize": "Synchronisieren",
-      "reset": "Cache leeren",
-      "reset_alert": "Um den Cache zu leeren musst Du die Schaltfläche einen Moment gedrückt halten"
-    },
-    "remote_messages": {
-      "title": "Remote Messages",
-      "subtitle": "Messages that we got from FCM",
-      "no_messages": "We have not received any messages from FCM"
-    }
-  },
-  "Announcements": {
-    "sectionTitle": "Mitteilungen",
-    "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
-    "noAnnouncements": "Momentan gibt es keine Mitteilungen"
+  "Dealers": {
+    "all": "Alle",
+    "dealers_at_convention": "Dealer an der Eurofurence",
+    "dealers_count": "{{count}} Dealer",
+    "dealers_on_day": "Dealer am {{day}}",
+    "dealers_on_this_day": "Dealer an diesem Tag",
+    "not_attending_on": "Nicht da am {{offDays}}"
   },
   "EmptyScreen": {
     "notImplemented": "Inhalt noch nicht implementiert."
   },
+  "Event": {
+    "about_title": "Details",
+    "add_favorite": "Favorit hinzufügen",
+    "give_feedback": "Feedback geben",
+    "label_event_description": "Mehr zu diesem Event",
+    "label_event_panelhosts": "Moderiert von",
+    "label_event_room": "Raum",
+    "label_event_track": "Kategorie",
+    "label_event_when": "Zeit",
+    "mask_required": "Auf diesem Event ist eine Mund-Nasen-Maske verpflichtend zu tragen",
+    "remove_favorite": "Favorit entfernen",
+    "share": "Teile dieses Event",
+    "sponsor_event": "Sponsor-Event",
+    "supersponsor_event": "Supersponsor-Event",
+    "view_on_map": "Auf der Karte ansehen",
+    "when": "{{ day }}, {{ start }} bis {{ finish }}."
+  },
+  "Events": {
+    "afternoon": "Nachmittags",
+    "current_subtitle": "Diese Events finden gerade jetzt statt",
+    "current_title": "Aktuelle Events",
+    "evening": "Am Abend",
+    "events_count": "{{count}} Events",
+    "events_done": "Bereits zu Ende",
+    "favorites_subtitle": "Du wirst an diese Events erinnert werden",
+    "favorites_title": "Favorisierte Events",
+    "filter_by_day": "Tage ansehen",
+    "filter_by_room": "Räume ansehen",
+    "filter_by_track": "Kategorien ansehen",
+    "morning": "Morgens",
+    "night": "In der Nacht",
+    "upcoming_favorites_subtitle": "Du wirst eine Erinnerung bekommen bevor diese Events beginnen",
+    "upcoming_favorites_title": "Favorisierte Events",
+    "upcoming_subtitle": "Diese Events beginnenn in den nächsten 30 Minuten",
+    "upcoming_title": "Anstehende Events"
+  },
+  "Home": {
+    "announcementsTitle_one": "Es gibt {{ count }} aktuelle Mitteilungen.",
+    "announcementsTitle_other": "Es gibt {{ count }} aktuelle Mitteilungen.",
+    "announcementsTitle_zero": "Aktuell gibt es keine Mitteilungen.",
+    "content_untranslated": "Du nutzt die Applikation in einer anderen Sprache als Englisch. Bitte beachte dass Namen und Texte von sämtlichen dynamischen Inhalten ausschliesslich auf Englisch angezeigt werden.",
+    "eventsTitle_one": "Es wurden {{ count }} Event abgerufen.",
+    "eventsTitle_other": "Es wurden {{ count }} Events abgerufen.",
+    "eventsTitle_zero": "Keine Events.",
+    "warnings": {
+      "no_image_caching": "Dein Gerät unterstützt kein Zwischenspeichern von Bildern. Ohne aktive Internetverbindung werden dir keine Bilder angezeigt.",
+      "no_notifications": "Dein Gerät unterstützt keine zeitgesteuerten Benachrichtigungen. Du wirst keine Benachrichtigungen für anstehende Events erhalten.",
+      "no_push_notifications": "Dein Gerät unterstützt keine Push-Nachrichten. Du wirst nicht automatisch über neue Mitteilungen oder persönliche Nachrichten informiert.",
+      "subtitle": "Gewisse Funktionen werden von deinem Gerät nicht unterstützt",
+      "title": "Kompatibilitätsprobleme"
+    }
+  },
   "KnowledgeGroups": {
     "header": "Wissenswertes"
   },
-  "PrivateMessageList": {
-    "section_title_from": "Von {{authorName}}",
-    "message_item_subtitle": "{{ status }} - gesendet um {{ time }}"
-  },  
-  "About": {
-    "header": "Über uns",
-    "app_details": {
-      "title": "App Details",
-      "get_help": "Hilfe erhalten",
-      "report_bug": "Ein Problem melden"
-    },
-    "developed_by": "Entwickelt von",
-    "extra_thanks": "Besonderen Dank"
+  "Menu": {
+    "about": "Über uns",
+    "catch_em": "Catch-em-all",
+    "dealers": "Dealer",
+    "events": "Events",
+    "home": "Start",
+    "info": "Wissenswertes",
+    "less": "Zuklappen",
+    "logged_in_now": "Jetzt anmelden",
+    "maps": "Karten",
+    "messages": "Du hast {{count}} neue Nachrichten",
+    "more": "Mehr",
+    "not_logged_in": "Du bist nicht angemeldet",
+    "open_messages": "Nachrichten öffnen",
+    "services": "Services",
+    "settings": "Einstellungen"
   },
-  "Todo": {},
-  "Countdown": {
-    "before_event": "{{conName}} beginnt in {{diff}}(n)",
-    "after_event": "Das war's! Wir hoffen wir sehen dich nächstes Jahr wieder!"
-  }
+  "Notification": {
+    "announcement": "Es gibt neue Ankündigungen von {{conName}}",
+    "private_message": "Du hast eine Nachricht erhalten"
+  },
+  "PrivateMessageList": {
+    "message_item_subtitle": "{{ status }} - gesendet um {{ time }}",
+    "section_title_from": "Von {{authorName}}"
+  },
+  "Settings": {
+    "allowAnalytics": "Allow us to collect analytics events",
+    "cache": {
+      "cache_item": "{{ count }} Elemente vom Typ \"{{ type }}\"",
+      "cache_state": "Aktueller Status: {{ state }}",
+      "reset": "Cache leeren",
+      "reset_alert": "Um den Cache zu leeren musst Du die Schaltfläche einen Moment gedrückt halten",
+      "subtitle": "Letzter Datenabgleich: {{ time }}",
+      "synchronize": "Synchronisieren",
+      "title": "Cache-Statistiken"
+    },
+    "changeLanguage": "Change language",
+    "currentLanguage": "Your current language is English!",
+    "developer_settings": {
+      "subtitle": "Du solltest diese besser nicht anfassen wenn Du nicht weisst was Du tust.",
+      "title": "Entwickler-Einstellungen"
+    },
+    "header": "Einstellungen",
+    "remote_messages": {
+      "no_messages": "We have not received any messages from FCM",
+      "subtitle": "Messages that we got from FCM",
+      "title": "Remote Messages"
+    },
+    "settingsSection": "Einstellungen",
+    "timeTravel": "Zeitreise-Einstellungen anzeigen."
+  },
+  "TimeTravel": {
+    "currentTime": "Aktuell: {{ time }}",
+    "difference": "Die Zeitdifferent beträgt {{ diff }}",
+    "disable": "Ausschalten",
+    "enable": "Einschalten",
+    "originalTime": "Original: {{ time }}",
+    "reset": "Zurücksetzen",
+    "subtitle": "Ändere die Zeit zum testen und debuggen",
+    "title": "Zeitreise"
+  },
+  "Todo": {}
 }

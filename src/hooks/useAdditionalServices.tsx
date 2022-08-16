@@ -1,5 +1,5 @@
-import * as WebBrowser from "expo-web-browser";
 import { useCallback } from "react";
+import { Linking } from "react-native";
 
 import { appBase } from "../configuration";
 import { useAppSelector } from "../store";
@@ -12,6 +12,6 @@ export const useAdditionalServices = () => {
             alert("You are not logged in.");
             return;
         }
-        WebBrowser.openBrowserAsync(`${appBase}/companion/#/login?embedded=false&returnPath=/&token=${token}`).catch(console.error);
+        Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/&token=${token}`).catch(console.error);
     }, [token]);
 };

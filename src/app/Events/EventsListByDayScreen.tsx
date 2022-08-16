@@ -9,8 +9,8 @@ import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventsSelectors, EventWithDetails } from "../../store/eurofurence.selectors";
-import { EventDayRecord, PartOfDay } from "../../store/eurofurence.types";
+import { eventDaysSelectors, selectEventsByDay } from "../../store/eurofurence.selectors";
+import { EventDetails, PartOfDay } from "../../store/eurofurence.types";
 import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
@@ -20,12 +20,7 @@ import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 /**
  * Params handled by the screen in route.
  */
-export type EventsListByDayScreenParams = {
-    /**
-     * The day that's events are listed.
-     */
-    day: EventDayRecord;
-};
+export type EventsListByDayScreenParams = object;
 
 /**
  * The properties to the screen as a component.
@@ -42,8 +37,8 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ rou
     const [now] = useNow();
     // Get the day. Use it to resolve events to display.
     // TODO: @lukashaertel pls fix
-    const day = "day" in route.params ? route.params?.day : null;
-    const eventsByDay: EventWithDetails[] = useAppSelector((state) => eventsSelectors.selectEnrichedEvents(state, eventsSelectors.selectByDay(state, day?.Id ?? "")));
+    const day = useAppSelector((state) => eventDaysSelectors.selectById(state, route.name));
+    const eventsByDay: EventDetails[] = useAppSelector((state) => selectEventsByDay(state, day?.Id ?? ""));
     const eventsGroups = useMemo(() => {
         const [upcoming, passed] = partition(eventsByDay, (it) => (now.isSame(it.StartDateTimeUtc, "days") ? now.isBefore(it.EndDateTimeUtc) : true));
 

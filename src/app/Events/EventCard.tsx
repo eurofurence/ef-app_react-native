@@ -6,12 +6,12 @@ import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
 import { useTheme } from "../../context/Theme";
 import { useEventIsDone, useEventIsHappening } from "../../hooks/useEventProperties";
-import { EventWithDetails } from "../../store/eurofurence.selectors";
+import { EventDetails } from "../../store/eurofurence.types";
 import { EventCardContent } from "./EventCardContent";
 
 export type EventCardProps = {
     type?: "duration" | "time";
-    event: EventWithDetails;
+    event: EventDetails;
     onPress?: () => void;
     onLongPress?: () => void;
 };
@@ -62,10 +62,10 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
             badges={event.Badges}
             glyph={event.Glyph}
             pre={pre}
-            poster={event.BannerImageUrl ? { uri: event.BannerImageUrl } : undefined}
+            poster={event.Banner ? { uri: event.Banner.FullUrl } : undefined}
             title={event.Title}
             subtitle={event.SubTitle}
-            tag={event.ConferenceRoom.ShortName ?? event.ConferenceRoom.Name}
+            tag={event.ConferenceRoom?.ShortName ?? event.ConferenceRoom?.Name}
             happening={happening}
             done={done}
             onPress={onPress}
