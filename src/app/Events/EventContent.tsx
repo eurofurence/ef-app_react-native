@@ -43,7 +43,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
-    event.Tags?.includes("");
+
     const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
 
     const shareEvent = useCallback(() => {
@@ -87,7 +87,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
 
             <Row>
                 <Button style={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
-                    {isFavorited ? t("remove_favorite") : t("add_favorite" )}
+                    {isFavorited ? t("remove_favorite") : t("add_favorite")}
                 </Button>
                 <Button style={styles.rowRight} icon={"share"} onPress={shareEvent}>
                     {t("share")}
