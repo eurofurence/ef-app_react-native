@@ -5,13 +5,13 @@
       "report_bug": "Zgłoś błąd",
       "title": "Szczegóły aplikacji"
     },
-    "developed_by": "Zaprogramowane przez",
+    "developed_by": "Stworzone przez",
     "extra_thanks": "Szczególne podziękowania",
     "header": "O aplikacji"
   },
   "Announcements": {
     "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",
-    "sectionSubtitle": "Ogłoszenia na żywo z konwentu",
+    "sectionSubtitle": "Na żywo z konwentu",
     "sectionTitle": "Ogłoszenia"
   },
   "Countdown": {
@@ -19,17 +19,17 @@
     "before_event": "{{conName}} zacznie się za {{diff}}"
   },
   "Dealer": {
-    "about": "Krótkie info",
-    "about_the_art": "O sztuce",
+    "about": "Podsumowanie",
+    "about_the_art": "Opis oferty",
     "about_the_artist": "O artyście",
     "after_dark": "After dark",
-    "attends": "Bierze udział w",
+    "attends": "Bierze udział w dniach",
     "attends_fri": "Piątek",
-    "attends_sat": "Sobota",
+    "attends_sat": "Sobotę",
     "attends_thu": "Czwartek",
     "categories": "Kategorie",
     "in_after_dark": "Znajduje się w sekcji after dark",
-    "merchandise": "Oferowane rzeczy",
+    "merchandise": "Oferuje",
     "not_attending": "Dziś nie bierze udziału",
     "view_on_map": "Zobacz na mapie",
     "viewing_dealer": "Przeglądany wystawca"
@@ -38,7 +38,7 @@
     "all": "Wszyscy",
     "dealers_at_convention": "Wystawcy na {{convention}}",
     "dealers_count": "{{count}} wystawców",
-    "dealers_on_day": "Wystawcy w {{day}}",
+    "dealers_on_day": "Wystawcy w: {{day}}",
     "dealers_on_this_day": "Dzisiejsi wystawcy",
     "not_attending_on": "Nie biorą udziału w {{offDays}}"
   },
@@ -57,7 +57,7 @@
     "current_subtitle": "Te punkty programu odbywają się w tej chwili",
     "current_title": "Bieżące punkty programu",
     "evening": "Wieczorem",
-    "events_count": "{{count}} punktów programu",
+    "events_count": "",
     "events_done": "Punkt programu zakończył się",
     "favorites_subtitle": "Otrzymasz powiadomienie o tym wydarzeniu",
     "favorites_title": "Ulubione punkty programu",
@@ -80,7 +80,7 @@
     "eventsTitle_other": "Pobraliśmy {{ count }} wydarzeń.",
     "eventsTitle_zero": "Brak wydarzeń.",
     "warnings": {
-      "no_image_caching": "Twoje urządzenie nie może przechowywać obrazów w pamieci podręcznej. Bez połączenia z internetem grafiki nie będą pokazywane.",
+      "no_image_caching": "Twoje urządzenie nie może przechowywać obrazów w pamięci podręcznej. Bez połączenia z internetem grafiki nie będą pokazywane.",
       "no_notifications": "Twoje urządzenie nie wspiera planowanych powiadomień. Nie będziesz otrzymywał komunikatów o nadchodzących wydarzeniach.",
       "no_push_notifications": "Twoje urządzenie nie wspiera powiadomień push. Nie będziesz powiadamiany o ogłoszeniach ani o prywatnych wiadomościach.",
       "subtitle": "Z powodu ograniczeń twojego urządzenia część funkcjonalności może nie działać",
@@ -94,16 +94,16 @@
     "about": "O aplikacji",
     "catch_em": "Catch-em-all",
     "dealers": "Wystawcy",
-    "events": "Punkty programu",
-    "home": "Strona główna",
-    "info": "Podstawowe informacje",
-    "less": "Mniej",
+    "events": "Program",
+    "home": "Start",
+    "info": "Informacje",
+    "less": "Ukryj",
     "logged_in_now": "Zaloguj się",
     "maps": "Mapy",
     "messages": "Masz {{count}} nowych wiadomości",
-    "more": "Więcej",
+    "more": "Menu",
     "not_logged_in": "Nie jesteś zalogowany",
-    "open_messages": "Otwórz wiadomości",
+    "open_messages": "Otwórz prywatne wiadomości",
     "services": "Usługi",
     "settings": "Ustawienia"
   },
@@ -114,14 +114,14 @@
   "PrivateMessageList": {
     "from": "Od {{ author }}",
     "from_unknown": "Od nieznanego nadawcy",
-    "message_item_subtitle": "{{ status }} - Wysłane o {{ time }}",
-    "read": "Odczytaj",
+    "message_item_subtitle": "{{ status }} - Wysłana: {{ time }}",
+    "read": "Wyświetl wiadomość",
     "section_title_from": "Od {{authorName}}",
     "unread": "Nieprzeczytane"
   },
   "Settings": {
     "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
-    "allowAnalyticsSubtitle": "Pozwalajac nam gromadzić dane analityczne pomagasz nam udoskonalać tę aplikacją. Analiza jest udostępniona poprzez Firebase i nie jest udostępniana stronom trzecim",
+    "allowAnalyticsSubtitle": "Pozwalajac nam gromadzić dane analityczne pomagasz nam udoskonalać tę aplikację. Analiza jest udostępniona poprzez Firebase i nie jest udostępniana stronom trzecim.",
     "cache": {
       "cache_item": "Jest {{ count }} {{ type }}ów",
       "cache_state": "Aktualny stan: {{ state }}",
@@ -156,6 +156,12 @@
       "title": "Menu ustawień deweloperskich"
     },
     "header": "Ustawienia",
+	"login": {
+      "logged_in_as": "Jesteś zalogowany jako {{username}}",
+      "login": "Zaloguj się",
+      "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
+      "logout": "Wyloguj się"
+    },
     "notifications": {
       "no_notifications": "Brak zaplanowanych powiadomień!",
       "notification_item": "{{ identifier }} zaplanowane na {{ time }}",
@@ -167,7 +173,7 @@
       "subtitle": "Wiadomości otrzymane z FCM",
       "title": "Wiadomości sdalne"
     },
-    "settingsSection": "Ustawienia",
+    "settingsSection": "Ustawienia aplikacji",
     "timeTravel": "Pokaż ustawienia podróży w czasie."
   },
   "TimeTravel": {
