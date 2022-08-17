@@ -1,7 +1,6 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import * as Sentry from "sentry-expo";
 
 import { ScreenStart } from "./app/ScreenStart";
 import { AnalyticsManager } from "./components/Managers/AnalyticsManager";
@@ -11,30 +10,12 @@ import { PlatformNotificationRespondedManager } from "./components/Managers/Noti
 import { PlatformTokenManager } from "./components/Managers/TokenManager";
 import { EventsSearchProvider } from "./components/Searching/EventsSearchContext";
 import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
-import { NavigationProvider, sentryRoutingInstrumentation } from "./context/NavigationProvider";
-
-Sentry.init({
-    dsn: "https://f3baa5424fef43dfa5e2e881b37c13de@o1343479.ingest.sentry.io/6647748",
-    enableInExpoDevelopment: false,
-    debug: false, // If `true`, Sentry will try to print out useful debugging information if something goes wrong with sending the event. Set it to `false` in production
-    tracesSampleRate: 0.2,
-    integrations: [
-        new Sentry.Native.ReactNativeTracing({
-            traceFetch: true,
-            enableAppStartTracking: true,
-            enableNativeFramesTracking: true,
-            traceXHR: true,
-            enableStallTracking: true,
-            tracingOrigins: ["localhost", "app.eurofurence.org", /^\//],
-            routingInstrumentation: sentryRoutingInstrumentation,
-        }),
-    ],
-});
+import { NavigationProvider } from "./context/NavigationProvider";
 
 /**
  * Base App. Handles all ui related layout stuff. Context providers go in index.tsx. Actual UI content should be in screens or components
  */
-function App() {
+export default function App() {
     return (
         <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
             <BottomSheetModalProvider>
@@ -68,5 +49,3 @@ const styles = StyleSheet.create({
         overflow: "hidden",
     },
 });
-
-export default Sentry.Native.wrap(App);

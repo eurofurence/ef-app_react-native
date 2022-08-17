@@ -1,7 +1,7 @@
 /**
  * A helper type to make RTK Query types more explicit
  */
-type Query<DataType = unknown, ArgsType = unknown> = {
+export type Query<DataType = unknown, ArgsType = unknown> = {
     originalArgs?: ArgsType;
     data?: DataType;
     currentData?: DataType;
@@ -19,7 +19,7 @@ type Query<DataType = unknown, ArgsType = unknown> = {
     isError: boolean;
 };
 
-type CustomRoute<ParamProps extends object, RouteName extends string> = {
+export type CustomRoute<ParamProps extends object, RouteName extends string> = {
     key: string;
     name: RouteName;
     path?: string;
