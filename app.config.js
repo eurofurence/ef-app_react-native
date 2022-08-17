@@ -76,17 +76,5 @@ module.exports = () => ({
                 },
             ],
         ],
-        hooks: {
-            postPublish: [
-                {
-                    file: "sentry-expo/upload-sourcemaps",
-                    config: {
-                        organization: "eurofurence",
-                        project: "ef-app_react-native",
-                        authToken: env.SENTRY_TOKEN,
-                    },
-                },
-            ].filter(Boolean),
-        },
     },
 });
