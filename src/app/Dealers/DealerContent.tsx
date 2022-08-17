@@ -104,11 +104,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 </>
             )}
 
-            {dealer.Links.map((it) => (
-                <View style={styles.button}>
-                    <LinkItem link={it} key={it.Target} />
-                </View>
-            ))}
+            {dealer.Links &&
+                dealer.Links.map((it) => (
+                    <View style={styles.button} key={it.Name}>
+                        <LinkItem link={it} />
+                    </View>
+                ))}
 
             {dealer.TelegramHandle && (
                 <Button style={styles.button} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}>

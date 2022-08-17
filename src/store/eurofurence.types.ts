@@ -99,7 +99,7 @@ export type DealerRecord = RecordMetadata & {
     AboutTheArtText?: string;
     TwitterHandle?: string;
     TelegramHandle?: string;
-    Links: LinkFragment[];
+    Links: LinkFragment[] | null;
     AttendsOnThursday?: boolean;
     AttendsOnFriday?: boolean;
     AttendsOnSaturday?: boolean;
