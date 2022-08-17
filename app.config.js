@@ -26,7 +26,11 @@ module.exports = () => ({
             supportsTablet: true,
         },
         android: {
+<<<<<<< Updated upstream
             versionCode: 423,
+=======
+            versionCode: 424,
+>>>>>>> Stashed changes
             package: "org.eurofurence.connavigator",
             googleServicesFile: "./assets/android/google-services.json",
             splash: {

@@ -1,5 +1,5 @@
 import { ScopeContext } from "@sentry/types/dist/scope";
-import { Browser } from "sentry-expo";
+import { Browser, Native } from "sentry-expo";
 
 export const captureEvent = Browser.captureEvent;
 export const captureException = Browser.captureException;
@@ -14,3 +14,5 @@ export const captureNotificationException = (message: string, error: Error, cont
         ...context,
     });
 };
+
+export const useSentryProfiler = Native.useProfiler;

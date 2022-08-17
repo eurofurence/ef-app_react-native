@@ -9,6 +9,7 @@ import { z } from "zod";
 import { Label } from "../../components/Atoms/Label";
 import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
+import { useSentryProfiler } from "../../sentryHelpers";
 import { usePostTokenMutation } from "../../store/authorization.service";
 
 const loginSchema = z.object({
@@ -21,6 +22,8 @@ type LoginSchema = z.infer<typeof loginSchema>;
 
 export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
     const { t } = useTranslation("Settings", { keyPrefix: "login" });
+    useSentryProfiler("LoginForm");
+
     const {
         control,
         handleSubmit,

@@ -7,6 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Header } from "../../components/Containers/Header";
 import { InteractiveImage, VisibleViewBounds } from "../../components/Containers/InteractiveImage";
 import { useAppRoute } from "../../hooks/useAppNavigation";
+import { useSentryProfiler } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 import { imagesSelectors, mapsSelectors } from "../../store/eurofurence.selectors";
 import { ImageDetails, LinkFragment, MapDetails } from "../../store/eurofurence.types";
@@ -15,6 +16,7 @@ import { ScreenEmpty } from "../Common/ScreenEmpty";
 import { LinkItem } from "./LinkItem";
 
 export const MapScreen = () => {
+    useSentryProfiler("MapScreen");
     const safe = useSafeAreaInsets();
     const sheetRef = useRef<BottomSheet>(null);
     const previousFiltered = useRef<any[]>([]);
