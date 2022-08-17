@@ -111,7 +111,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
             ))}
 
             {dealer.TelegramHandle && (
-                <Button style={styles.button} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)} icon={"telegram"}>
+                <Button style={styles.button} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}>
                     Telegram: {dealer.TelegramHandle}
                 </Button>
             )}

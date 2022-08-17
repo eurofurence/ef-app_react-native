@@ -26,11 +26,6 @@ module.exports = () => ({
             supportsTablet: true,
         },
         android: {
-<<<<<<< Updated upstream
-            versionCode: 423,
-=======
-            versionCode: 424,
->>>>>>> Stashed changes
             package: "org.eurofurence.connavigator",
             googleServicesFile: "./assets/android/google-services.json",
             splash: {
@@ -83,7 +78,7 @@ module.exports = () => ({
         ],
         hooks: {
             postPublish: [
-                env.SENTRY_TOKEN && {
+                {
                     file: "sentry-expo/upload-sourcemaps",
                     config: {
                         organization: "eurofurence",

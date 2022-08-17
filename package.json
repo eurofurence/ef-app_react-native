@@ -31,11 +31,13 @@
     "lint:code": "eslint ./src --ext js,ts,jsx,tsx",
     "lint:translations": "eslint --rule 'prettier/prettier: off' --ext json --format node_modules/eslint-plugin-i18n-json/formatter.js ./src/i18n",
     "test": "jest",
-    "bundle:android": "yarn tsc --noEmit && yarn lint && expo build:android -t app-bundle",
+    "bundle:android": "eas build --platform android --profile production",
+    "submit:android": "eas submit --platform android",
     "local:android": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile preview --local",
     "local:android:preview": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile preview --local",
     "local:android:production": "yarn tsc --noEmit && yarn lint && npx eas build --platform android --profile production --local",
-    "logcat": "adb logcat \\*:S ce.connavigato:\\* ReactNativeJS:\\* -e \"^(?!.*(Invalid ID))\""
+    "logcat": "adb logcat \\*:S ce.connavigato:\\* ReactNativeJS:\\* -e \"^(?!.*(Invalid ID))\"",
+    "do": "eas --help"
   },
   "resolutions": {
     "@types/react": "^17"
@@ -103,6 +105,7 @@
     "@types/react-native": "~0.67.6",
     "@types/react-test-renderer": "^18",
     "@types/redux-logger": "^3",
+    "eas-cli": "^0.60.0",
     "eslint": "^8.19.0",
     "eslint-config-universe": "^11.0.0",
     "eslint-plugin-i18n-json": "^3.1.0",
