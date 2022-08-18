@@ -98,6 +98,14 @@ const types = StyleSheet.create({
         fontSize: 17,
         fontWeight: "bold",
     },
+    h5: {
+        fontSize: 15,
+        fontWeight: "bold",
+    },
+    h6: {
+        fontSize: 14,
+        fontWeight: "bold",
+    },
     caption: {
         fontSize: 14,
         fontWeight: "600",
@@ -105,9 +113,25 @@ const types = StyleSheet.create({
     regular: {
         fontSize: 14,
     },
+    strong: {
+        fontSize: 14,
+        fontWeight: "900",
+    },
     para: {
         fontSize: 14,
         lineHeight: 24,
+    },
+    del: {
+        fontSize: 14,
+        textDecorationLine: "line-through",
+    },
+    em: {
+        fontSize: 14,
+        fontStyle: "italic",
+    },
+    u: {
+        fontSize: 14,
+        textDecorationLine: "underline",
     },
 });
 

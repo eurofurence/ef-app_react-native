@@ -101,6 +101,9 @@
   "KnowledgeGroups": {
     "header": "Wissenswertes"
   },
+  "Maps": {
+    "filtering": "Durchsuche Ansicht"
+  },
   "Menu": {
     "about": "Über uns",
     "catch_em": "Catch-em-all",

@@ -1,7 +1,8 @@
 import { useEffect, useMemo } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
 import { Floater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
@@ -25,7 +26,7 @@ export const PrivateMessageItemScreen = () => {
         <View style={StyleSheet.absoluteFill}>
             <Header style={headerStyle}>{params.message.Subject}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                <Text>{params.message.Message}</Text>
+                <MarkdownContent>{params.message.Message}</MarkdownContent>
             </Floater>
         </View>
     );

@@ -3,12 +3,11 @@ import { capitalize } from "lodash";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, Linking, Platform, ScrollView } from "react-native";
-// @ts-expect-error untyped module
-import Markdown from "react-native-easy-markdown";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../components/Atoms/Label";
+import { MarkdownContent } from "../components/Atoms/MarkdownContent";
 import { Section } from "../components/Atoms/Section";
 import { Button } from "../components/Containers/Button";
 import { Col } from "../components/Containers/Col";
@@ -137,7 +136,7 @@ export const AboutScreen = () => {
                 <Credit uri={"https://avatars.githubusercontent.com/u/5537850"} name={"Requinard"} role={"React Development and app mechanics"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/12624320"} name={"Shez"} role={"iOS Development"} />
                 {/*<Section title={t("extra_thanks")} icon={"heart-outline"} />*/}
-                <Markdown>{extraThanksMarkdown}</Markdown>
+                <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
             </Floater>
         </ScrollView>
     );

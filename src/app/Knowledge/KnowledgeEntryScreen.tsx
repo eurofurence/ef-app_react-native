@@ -1,9 +1,8 @@
 import { Image } from "react-native";
-//@ts-expect-error untyped module
-import Markdown from "react-native-easy-markdown";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
 import { Floater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
@@ -24,7 +23,7 @@ export const KnowledgeEntryScreen = () => {
                 {images.map((it) => (
                     <Image source={{ uri: it.FullUrl, height: 400 }} key={it.Id} resizeMode={"contain"} />
                 ))}
-                <Markdown>{entry?.Text ?? ""}</Markdown>
+                <MarkdownContent>{entry?.Text ?? ""}</MarkdownContent>
                 {entry?.Links.map((link) => (
                     <LinkItem link={link} key={link.Target} />
                 ))}

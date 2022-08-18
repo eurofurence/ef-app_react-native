@@ -101,6 +101,9 @@
   "KnowledgeGroups": {
     "header": "Info Articles"
   },
+  "Maps": {
+    "filtering": "Searching viewed area"
+  },
   "Menu": {
     "about": "About",
     "catch_em": "Catch-em-all",

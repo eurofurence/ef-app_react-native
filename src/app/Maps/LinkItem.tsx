@@ -6,10 +6,12 @@ import { Button } from "../../components/Containers/Button";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence.selectors";
-import { LinkFragment } from "../../store/eurofurence.types";
+import { LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";
 import { DealerCard } from "../Dealers/DealerCard";
 
 type LinkItemProps = {
+    map?: MapDetails;
+    entry?: MapEntryDetails;
     link: LinkFragment;
 };
 
@@ -32,19 +34,30 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
     );
 };
 
-const MapEntryLinkItem: FC<LinkItemProps> = ({ link }) => {
+const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
     const navigation = useAppNavigation("Areas");
-    return (
-        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: link.Target })}>
+    return !map || !entry ? null : (
+        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id })}>
             {link.Name}
         </Button>
     );
 };
 
-export const LinkItem: FC<LinkItemProps> = ({ link }) => {
+const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
+    const navigation = useAppNavigation("Areas");
+    // () => navigation.navigate("Areas", { screen: "Events", params: { filterType: "rooms", screen: link.Target, params: {} } })
+    return !map || !entry ? null : (
+        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id })}>
+            {link.Name}
+        </Button>
+    );
+};
+
+export const LinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
     return match(link.FragmentType)
-        .with("DealerDetail", () => <DealerLinkItem link={link} />)
-        .with("WebExternal", () => <WebExternalLinkItem link={link} />)
-        .with("MapEntry", () => <MapEntryLinkItem link={link} />)
+        .with("DealerDetail", () => <DealerLinkItem map={map} entry={entry} link={link} />)
+        .with("WebExternal", () => <WebExternalLinkItem map={map} entry={entry} link={link} />)
+        .with("MapEntry", () => <MapEntryLinkItem map={map} entry={entry} link={link} />)
+        .with("EventConferenceRoom", () => <EventConferenceRoomLinkItem map={map} entry={entry} link={link} />)
         .otherwise(() => null);
 };

@@ -49,8 +49,7 @@ export type ScreenStartParamsList = {
     };
     Map: {
         id: RecordId;
-        // TODO: initial zoom on.
-        target?: RecordId;
+        entryId?: RecordId;
     };
     About: undefined;
 };

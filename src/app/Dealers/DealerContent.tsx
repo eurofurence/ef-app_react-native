@@ -3,7 +3,7 @@ import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image } from "react-native";
 
-import { AutoScaleImage } from "../../components/Atoms/AutoScaleImage";
+import { Banner } from "../../components/Atoms/Banner";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
@@ -105,8 +105,8 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 <ImageExButton
                     key={i}
                     image={map.Image}
-                    target={{ x: entry.X, y: entry.Y, size: 400 }}
-                    onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
+                    target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
+                    onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id })}
                 />
             ))}
 
@@ -115,8 +115,8 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                     <Section icon="film" title={t("about_the_art")} />
 
                     {!dealer.ArtPreview ? null : (
-                        <View style={styles.imageLine}>
-                            <AutoScaleImage style={styles.image} source={dealer.ArtPreview.FullUrl} />
+                        <View style={styles.posterLine}>
+                            <Banner image={dealer.ArtPreview} />
 
                             <Label mt={10} type="caption" numberOfLines={4} ellipsizeMode="tail">
                                 {dealer.ArtPreviewCaption}
@@ -133,8 +133,8 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                     <Section icon="account-circle-outline" title={t("about_the_artist", { name: dealer.FullName })} />
 
                     {!dealer.Artist ? null : (
-                        <View style={styles.imageLine}>
-                            <AutoScaleImage style={styles.image} source={dealer.Artist.FullUrl} />
+                        <View style={styles.posterLine}>
+                            <Banner image={dealer.Artist} />
                         </View>
                     )}
 
@@ -161,11 +161,8 @@ const styles = StyleSheet.create({
     aboutLine: {
         marginBottom: 20,
     },
-    imageLine: {
+    posterLine: {
         marginBottom: 20,
         alignItems: "center",
-    },
-    image: {
-        alignSelf: "stretch",
     },
 });

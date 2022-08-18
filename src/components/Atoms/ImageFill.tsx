@@ -6,13 +6,13 @@ import { ImageDetails } from "../../store/eurofurence.types";
 
 const initialSize = { width: 400, height: 300 };
 
-export type ImageExTarget = {
+export type ImageFillTarget = {
     x: number;
     y: number;
     size: number;
 };
 
-export type ImageExProps = {
+export type ImageFillProps = {
     /**
      * The style button.
      */
@@ -26,10 +26,10 @@ export type ImageExProps = {
     /**
      * The targeted point and the dimension to make visible.
      */
-    target?: ImageExTarget;
+    target?: ImageFillTarget;
 };
 
-export const ImageEx: FC<ImageExProps> = ({ style, image, target }) => {
+export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
     const [size, setSize] = useState<{ width: number; height: number }>(initialSize);
 
     const arrangerStyle = useMemo<ViewStyle>(() => {
