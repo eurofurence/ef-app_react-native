@@ -4,6 +4,7 @@ import i18next from "i18next";
 import { noop, partial } from "lodash";
 import moment from "moment";
 import { initReactI18next } from "react-i18next";
+import { match, P } from "ts-pattern";
 
 // Translation files
 import da from "./translations.da.json";
@@ -22,20 +23,23 @@ import "moment/locale/en-gb";
 import "moment/locale/nl";
 
 /**
- * Only to be used for moment's locale. When english is given without a
- * specified locale, use en-GB, as it presents in the euro-centric time format.
- * @param language The language to transform.
+ * The translations we provide.
  */
-export const localeForMoment = (language: string) => {
-    // Change when only given as en.
-    if (language.toLowerCase() === "en") return "en-gb";
+export type Translations = "en" | "nl" | "pl" | "it" | "da" | "de";
 
-    // Leave others unchanged.
-    return language;
-};
+/**
+ * Set the locale in a managed way.
+ *
+ * Provided translations resolve. English is set to en-gb and all other values are always en-gb
+ */
+export const setMomentLocale = (language: Translations | string) =>
+    match(language)
+        .with("it", "nl", "da", "de", "pl", (it) => moment.locale(it))
+        .with("en", () => moment.locale("en-gb"))
+        .with(P.string, () => moment.locale("en-gb"))
+        .exhaustive();
 
-// Set for date times
-moment.locale(localeForMoment(Localization.locale));
+setMomentLocale(Localization.locale);
 
 const logger = partial(console.log, "i18next");
 
@@ -59,7 +63,7 @@ export const i18t = i18next
             logger(`Detecting languages, saved: ${persisted}, fallback ${fallback}`);
 
             // Set moment locale with applied reasonable defaults, run callback with actual.
-            moment.locale(localeForMoment(persisted ?? fallback));
+            setMomentLocale(persisted ?? fallback);
             return callback(persisted ?? fallback);
         },
         cacheUserLanguage: async (lng: string) =>

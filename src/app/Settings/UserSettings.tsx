@@ -1,7 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import { capitalize, noop, orderBy } from "lodash";
-import moment from "moment";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, View } from "react-native";
@@ -12,16 +11,17 @@ import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { conName } from "../../configuration";
-import { localeForMoment } from "../../i18n";
+import { setMomentLocale, Translations } from "../../i18n";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { logout } from "../../store/authorization.slice";
 import { setAnalytics, toggleDevMenu } from "../../store/settings.slice";
 import { LoginForm } from "../MainMenu/PagerLogin";
 
 type Language = {
-    code: string;
+    code: Translations;
     name: string;
 };
+
 const languages = orderBy(
     [
         { code: "en", name: "🇬🇧 English" },
@@ -109,7 +109,7 @@ export const UserSettings = () => {
                     prompt={t("changeLanguage")}
                     onValueChange={(it) => {
                         i18n.changeLanguage(it);
-                        moment.locale(localeForMoment(it));
+                        setMomentLocale(it);
                     }}
                 >
                     {languages.map((it) => (
