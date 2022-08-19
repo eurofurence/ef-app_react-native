@@ -4,7 +4,7 @@ const env = process.env;
 module.exports = () => ({
     expo: {
         runtimeVersion: {
-            policy: "nativeVersion",
+            policy: "appVersion",
         },
         entryPoint: "./src/index.tsx",
         name: "Eurofurence",

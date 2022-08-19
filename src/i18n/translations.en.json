@@ -88,12 +88,12 @@
     "finished": "Finished",
     "morning": "In the morning",
     "night": "At night",
+    "schedule_title": "Your Schedule",
+    "today_schedule_subtitle": "You will receive a reminder before this event starts",
+    "today_schedule_title": "Today's schedule",
     "upcoming_favorites_title": "Favorite Events",
     "upcoming_subtitle": "These events are starting in the next 30 minutes",
-    "upcoming_title": "Upcoming Events",
-    "schedule_title": "Your Schedule",
-    "today_schedule_title": "Today's schedule",
-    "today_schedule_subtitle": "You will receive a reminder before this event starts"
+    "upcoming_title": "Upcoming Events"
   },
   "Home": {
     "announcementsTitle_one": "There is {{ count }} announcements.",

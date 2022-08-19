@@ -1,4 +1,4 @@
-import { nativeApplicationVersion } from "expo-application";
+import { nativeApplicationVersion, nativeBuildVersion } from "expo-application";
 import Constants from "expo-constants";
 import { runtimeVersion } from "expo-updates";
 import { capitalize } from "lodash";
@@ -113,7 +113,7 @@ export const AboutScreen = () => {
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                <Section title={t("app_details.title")} subtitle={runtimeVersion ? runtimeVersion : undefined} icon={"cellphone"} />
+                <Section title={t("app_details.title")} subtitle={`${nativeApplicationVersion} - ${nativeBuildVersion}`} icon={"cellphone"} />
 
                 {!showHelpButtons && (
                     <>
