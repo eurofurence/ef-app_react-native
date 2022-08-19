@@ -1,6 +1,8 @@
 import { FC, RefObject, useMemo, useRef } from "react";
+import { Linking } from "react-native";
 
 import { Pager, PagerRef } from "../../components/Containers/Pager";
+import { Tab } from "../../components/Containers/Tab";
 import { TabsRef } from "../../components/Containers/Tabs";
 import { useAdditionalServices } from "../../hooks/useAdditionalServices";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
@@ -69,7 +71,9 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                     onSettings={on.settings}
                     onAbout={on.about}
                     onMap={on.map}
-                />
+                >
+                    <Tab icon={"twitter"} text={"Twitter"} onPress={() => Linking.openURL("https://twitter.com/eurofurence")} />
+                </PagerPrimary>
             }
             right={<PagerLogin close={on.loginBack} />}
         />
