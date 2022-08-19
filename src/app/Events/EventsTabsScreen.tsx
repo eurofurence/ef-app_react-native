@@ -20,7 +20,7 @@ import { EventsListByRoomScreen, EventsListByRoomScreenParams } from "./EventsLi
 import { EventsListByTrackScreen, EventsListByTrackScreenParams } from "./EventsListByTrackScreen";
 import { EventsListSearchResultsScreen, EventsListSearchResultsScreenParams } from "./EventsListSearchResultsScreen";
 import { EventsSearchScreen, EventsSearchScreenParams } from "./EventsSearchScreen";
-import { FavoriteEventsList } from "./FavoriteEventsList";
+import { PersonalScheduleList } from "./PersonalScheduleList";
 
 // TODO: Might have an distinction between days, tracks, rooms as param.
 
@@ -108,9 +108,10 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     // If the screens require too much performance we should set detach to true again.
     return (
         <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialId}>
-            {hasFavorites && <EventsTabsScreenNavigator.Screen name={"Favorites"} options={{ icon: "heart" }} component={FavoriteEventsList} />}
             {/*Tab for searching and filtering*/}
             <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
+
+            <EventsTabsScreenNavigator.Screen name={"Your Schedule"} options={{ icon: "calendar" }} component={PersonalScheduleList} />
 
             {actualType !== "results" ? null : <EventsTabsScreenNavigator.Screen name="Results" options={{ icon: "view-list" }} component={EventsListSearchResultsScreen} />}
 
