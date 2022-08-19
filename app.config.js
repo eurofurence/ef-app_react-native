@@ -3,6 +3,9 @@ const env = process.env;
 
 module.exports = () => ({
     expo: {
+        runtimeVersion: {
+            policy: "nativeVersion",
+        },
         entryPoint: "./src/index.tsx",
         name: "Eurofurence",
         slug: "ef-app-react-native",

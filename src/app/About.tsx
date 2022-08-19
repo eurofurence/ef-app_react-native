@@ -1,4 +1,6 @@
+import { nativeApplicationVersion } from "expo-application";
 import Constants from "expo-constants";
+import { runtimeVersion } from "expo-updates";
 import { capitalize } from "lodash";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -103,30 +105,15 @@ export const Credit: FC<{ uri: string; name: string; role: string; onPress?: () 
     </TouchableOpacity>
 );
 
-const useVersionTitle = () => {
-    const showDevMenu = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
-
-    return useMemo(() => {
-        if (showDevMenu) {
-            return "DEVELOPMENT";
-        } else if (Platform.OS === "android") {
-            return `${capitalize(Platform.OS)} ${Constants.manifest?.version} build ${Constants.manifest?.android?.versionCode}`;
-        } else {
-            return `${capitalize(Platform.OS)} ${Constants.manifest?.version}`;
-        }
-    }, [showDevMenu]);
-};
-
 export const AboutScreen = () => {
     const { t } = useTranslation("About");
     const safe = useSafeAreaInsets();
-    const version = useVersionTitle();
     const showHelpButtons = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
     return (
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                <Section title={t("app_details.title")} subtitle={version} icon={"cellphone"} />
+                <Section title={t("app_details.title")} subtitle={runtimeVersion ? runtimeVersion : undefined} icon={"cellphone"} />
 
                 {!showHelpButtons && (
                     <>
