@@ -11,6 +11,7 @@ import { Card } from "../../components/Containers/Card";
 import { Col } from "../../components/Containers/Col";
 import { Header } from "../../components/Containers/Header";
 import { Row } from "../../components/Containers/Row";
+import { NoData } from "../../components/Utilities/NoData";
 import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
@@ -59,6 +60,7 @@ export const PrivateMessageListScreen = () => {
             stickySectionHeadersEnabled
             onRefresh={refetch}
             refreshing={isFetching}
+            ListEmptyComponent={<NoData />}
             ListHeaderComponent={<Header>Private Messages</Header>}
             renderSectionHeader={({ section }) => (
                 <Label type={"h2"} style={{ padding: 20, backgroundColor: theme.background }}>
