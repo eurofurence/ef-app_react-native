@@ -17,6 +17,8 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMess
     const { t } = useTranslation("Menu");
     const { unread } = useGetCommunicationsQuery(undefined, {
         refetchOnFocus: true,
+        refetchOnMountOrArgChange: true,
+        refetchOnReconnect: true,
         selectFromResult: (query) => ({
             ...query,
             unread: query.data?.filter((it) => it.ReadDateTimeUtc === null),
