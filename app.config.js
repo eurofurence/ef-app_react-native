@@ -3,6 +3,9 @@ const env = process.env;
 
 module.exports = () => ({
     expo: {
+        runtimeVersion: {
+            policy: "appVersion",
+        },
         entryPoint: "./src/index.tsx",
         name: "Eurofurence",
         slug: "ef-app-react-native",
@@ -26,7 +29,6 @@ module.exports = () => ({
             supportsTablet: true,
         },
         android: {
-            versionCode: 423,
             package: "org.eurofurence.connavigator",
             googleServicesFile: "./assets/android/google-services.json",
             splash: {
@@ -77,17 +79,5 @@ module.exports = () => ({
                 },
             ],
         ],
-        hooks: {
-            postPublish: [
-                env.SENTRY_TOKEN && {
-                    file: "sentry-expo/upload-sourcemaps",
-                    config: {
-                        organization: "eurofurence",
-                        project: "ef-app_react-native",
-                        authToken: env.SENTRY_TOKEN,
-                    },
-                },
-            ].filter(Boolean),
-        },
     },
 });

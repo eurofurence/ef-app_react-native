@@ -10,8 +10,8 @@ import { useSynchronizer } from "../../components/Synchronization/Synchronizatio
 import { AnnouncementList } from "../Announcements/AnnouncementList";
 import { appStyles } from "../AppStyles";
 import { CurrentEventList } from "../Events/CurrentEventsList";
+import { TodayScheduleList } from "../Events/TodayScheduleList";
 import { UpcomingEventsList } from "../Events/UpcomingEventsList";
-import { UpcomingFavoriteEventsList } from "../Events/UpcomingFavoriteEventsList";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { CountdownHeader } from "./CountdownHeader";
@@ -41,7 +41,7 @@ export const HomeScreen: FC<ScreenHomeProps> = () => {
                 <DeviceSpecificWarnings />
                 <AnnouncementList />
                 <UpcomingEventsList />
-                <UpcomingFavoriteEventsList />
+                <TodayScheduleList />
                 <CurrentEventList />
             </Floater>
         </ScrollView>

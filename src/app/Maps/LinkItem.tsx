@@ -28,8 +28,8 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
     return (
-        <Button style={{ marginVertical: 5 }} onPress={() => Linking.openURL(link.Target)}>
-            {link.Name}
+        <Button onPress={() => Linking.openURL(link.Target)} icon={"web"}>
+            {link.Name ? link.Name : link.Target}
         </Button>
     );
 };

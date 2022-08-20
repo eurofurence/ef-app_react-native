@@ -9,7 +9,7 @@ import { useAppSelector } from "../../store";
 import { selectFavoriteEvents } from "../../store/eurofurence.selectors";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 
-export const FavoriteEventsList = () => {
+export const PersonalScheduleList = () => {
     const { t } = useTranslation("Events");
     const [now] = useNow();
     const events = useAppSelector(selectFavoriteEvents);
@@ -26,13 +26,14 @@ export const FavoriteEventsList = () => {
             }))
             .value();
 
-        return [
-            ...upcomingSections,
-            {
-                title: t("events_done"),
+        if (past.length > 0) {
+            upcomingSections.push({
+                title: t("finished"),
                 data: past,
-            },
-        ];
+            });
+        }
+
+        return upcomingSections;
     }, [events]);
 
     return (
@@ -41,7 +42,7 @@ export const FavoriteEventsList = () => {
             cardType={"time"}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
-                    {t("favorites_title")}
+                    {t("schedule_title")}
                 </Label>
             }
         />

@@ -46,32 +46,11 @@
     "notImplemented": "Content is not implemented yet."
   },
   "Event": {
-    "about_title": "About",
-    "add_favorite": "Favorite",
-    "give_feedback": "Give Feedback",
-    "label_event_description": "More about the event",
-    "label_event_panelhosts": "Hosted by",
-    "label_event_room": "Room",
-    "label_event_track": "Track",
-    "label_event_when": "When",
     "mask_required": "Face masks are mandatory for this event",
-    "remove_favorite": "Unfavorite",
-    "share": "Share this event",
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
     "when": "{{day}}, {{start}} until {{finish}}."
-  },
-  "EventFeedback": {
-    "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
-    "header": "Feedback: {{ eventTitle }}",
-    "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
-    "message_title": "Feedback message",
-    "rating_title": "How much did you like this event?",
-    "submit": "Submit feedback",
-    "submit_failed": "Something went wrong during submitting. Please try again . . .",
-    "submit_in_progress": "Submitting . . .",
-    "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}."
   },
   "Events": {
     "afternoon": "In the afternoon",
@@ -88,9 +67,7 @@
     "finished": "Finished",
     "morning": "In the morning",
     "night": "At night",
-    "schedule_title": "Your Schedule",
-    "today_schedule_subtitle": "You will receive a reminder before this event starts",
-    "today_schedule_title": "Today's schedule",
+    "upcoming_favorites_subtitle": "You will receive a reminder before this event starts",
     "upcoming_favorites_title": "Favorite Events",
     "upcoming_subtitle": "These events are starting in the next 30 minutes",
     "upcoming_title": "Upcoming Events"
@@ -99,7 +76,6 @@
     "announcementsTitle_one": "There is {{ count }} announcements.",
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "announcementsTitle_zero": "There are no announcements.",
-    "content_untranslated": "",
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
@@ -113,9 +89,6 @@
   },
   "KnowledgeGroups": {
     "header": "Info Articles"
-  },
-  "Maps": {
-    "filtering": "Searching viewed area"
   },
   "Menu": {
     "about": "About",
@@ -183,13 +156,6 @@
       "title": "Dev Settings Menu"
     },
     "header": "Settings",
-    "login": {
-      "logged_in_as": "You are logged in as {{username}}",
-      "login": "Login",
-      "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "login_hint": "Your login credentials for the app are the same as for the Eurofurence Registration System.\n\nIf you do not remember or have access to them, you can ask for a PIN code\nto sign in at the registration desk or security office.",
-      "logout": "Logout"
-    },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
       "notification_item": "{{ identifier }} scheduled on {{ time }}",
@@ -212,9 +178,7 @@
     "originalTime": "Original: {{ time }}",
     "reset": "Reset",
     "subtitle": "Adjust time settings for testing and debugging",
-    "title": "Time Travel",
-    "week_after": "1 week after {{conName}}",
-    "week_before": "1 week before {{conName}}"
+    "title": "Time Travel"
   },
   "Todo": {}
 }

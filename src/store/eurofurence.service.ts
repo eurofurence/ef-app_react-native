@@ -143,6 +143,17 @@ export const eurofurenceService = createApi({
             }),
             invalidatesTags: (result, error, arg) => (result ? [{ type: "Communication", id: arg }] : []),
         }),
+        submitEventFeedback: builder.mutation<void, { eventId: RecordId; rating: number; message?: string }>({
+            query: (args) => ({
+                url: "/EventFeedback",
+                method: "POST",
+                body: {
+                    EventId: args.eventId,
+                    Rating: args.rating,
+                    Message: args.message,
+                },
+            }),
+        }),
     }),
 });
 
@@ -160,4 +171,5 @@ export const {
     useGetEventRoomByIdQuery,
     useGetCommunicationsQuery,
     useMarkCommunicationReadMutation,
+    useSubmitEventFeedbackMutation,
 } = eurofurenceService;

@@ -9,6 +9,7 @@ import { AboutScreen } from "./About";
 import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen } from "./Events/EventScreen";
+import { FeedbackScreen } from "./Events/FeedbackScreen";
 import { KnowledgeEntryScreen } from "./Knowledge/KnowledgeEntryScreen";
 import { KnowledgeGroupsScreen } from "./Knowledge/KnowledgeGroupsScreen";
 import { MapScreen } from "./Maps/MapScreen";
@@ -30,6 +31,10 @@ export type ScreenStartParamsList = {
      * Detail screen for events.
      */
     Event: {
+        id: string;
+    };
+
+    EventFeedback: {
         id: string;
     };
 
@@ -81,6 +86,7 @@ export const ScreenStart: FC<ScreenStartProps> = React.memo(() => {
                 <ScreenStartNavigator.Screen name="KnowledgeEntry" component={KnowledgeEntryScreen} />
                 <ScreenStartNavigator.Screen name="Map" component={MapScreen} />
                 <ScreenStartNavigator.Screen name="About" component={AboutScreen} />
+                <ScreenStartNavigator.Screen name="EventFeedback" component={FeedbackScreen} />
             </ScreenStartNavigator.Navigator>
         </View>
     );

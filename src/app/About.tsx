@@ -1,4 +1,6 @@
+import { nativeApplicationVersion, nativeBuildVersion } from "expo-application";
 import Constants from "expo-constants";
+import { runtimeVersion } from "expo-updates";
 import { capitalize } from "lodash";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -20,11 +22,11 @@ import { appStyles } from "./AppStyles";
 const extraThanksMarkdown = `
 # Tooling
 
-React-Native and Expo for making this version possible
+We use React-Native and Expo to make this experience possible.
 
-Firebase provides us with cloud messaging and analytics
+Firebase provides us with cloud messaging and analytics.
 
-Sentry, who provide us with exception tracking and handling
+And Sentry helps us out with exception tracing.
 
 # People
 
@@ -47,7 +49,7 @@ Sentry, who provide us with exception tracking and handling
 - StreifiGreif
 - Xil
 - IceTiger
-s
+
 ## English Translations
 
 - Luchs
@@ -68,6 +70,14 @@ s
 ## Italian Translations
 
 - Siepnir
+
+## Polish Translations
+
+- Lemurr
+
+## Danish Translations
+
+- Wovaka
 
 # Disclaimer
 
@@ -94,30 +104,15 @@ export const Credit: FC<{ uri: string; name: string; role: string; onPress?: () 
     </TouchableOpacity>
 );
 
-const useVersionTitle = () => {
-    const showDevMenu = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
-
-    return useMemo(() => {
-        if (showDevMenu) {
-            return "DEVELOPMENT";
-        } else if (Platform.OS === "android") {
-            return `${capitalize(Platform.OS)} ${Constants.manifest?.version} build ${Constants.manifest?.android?.versionCode}`;
-        } else {
-            return `${capitalize(Platform.OS)} ${Constants.manifest?.version}`;
-        }
-    }, [showDevMenu]);
-};
-
 export const AboutScreen = () => {
     const { t } = useTranslation("About");
     const safe = useSafeAreaInsets();
-    const version = useVersionTitle();
     const showHelpButtons = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
     return (
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                <Section title={t("app_details.title")} subtitle={version} icon={"cellphone"} />
+                <Section title={t("app_details.title")} subtitle={`${nativeApplicationVersion} - ${nativeBuildVersion}`} icon={"cellphone"} />
 
                 {!showHelpButtons && (
                     <>
@@ -135,7 +130,7 @@ export const AboutScreen = () => {
                 <Credit uri={"https://avatars.githubusercontent.com/u/5929561"} name={"Pazuzu"} role={"React Development and UI design"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/5537850"} name={"Requinard"} role={"React Development and app mechanics"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/12624320"} name={"Shez"} role={"iOS Development"} />
-                {/*<Section title={t("extra_thanks")} icon={"heart-outline"} />*/}
+                <Credit uri={"https://avatars.githubusercontent.com/u/3359222"} name={"Fenrikur"} role={"iOS Development"} />
                 <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
             </Floater>
         </ScrollView>

@@ -1,4 +1,4 @@
-import { Image } from "react-native";
+import { Image, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -25,7 +25,9 @@ export const KnowledgeEntryScreen = () => {
                 ))}
                 <MarkdownContent>{entry?.Text ?? ""}</MarkdownContent>
                 {entry?.Links.map((link) => (
-                    <LinkItem link={link} key={link.Target} />
+                    <View style={{ marginBottom: 10 }}>
+                        <LinkItem link={link} key={link.Target} />
+                    </View>
                 ))}
             </Floater>
         </ScrollView>

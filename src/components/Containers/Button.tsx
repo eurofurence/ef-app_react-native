@@ -46,16 +46,18 @@ export type ButtonProps = {
     onPress?: () => void;
 
     onLongPress?: () => void;
+
+    disabled?: boolean;
 };
 
-export const Button: FC<ButtonProps> = ({ style, outline, icon, iconRight, children, onPress, onLongPress }) => {
+export const Button: FC<ButtonProps> = ({ style, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
     // Computed styles.
     const theme = useTheme();
     const base = useMemo(() => (outline ? styles.containerOutline : styles.containerFill), [outline]);
     const fill = useMemo(() => ({ backgroundColor: outline ? theme.background : theme.inverted }), [outline, theme]);
 
     return (
-        <TouchableOpacity style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress}>
+        <TouchableOpacity style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
             {!icon ? <View style={styles.placeholder} /> : <Icon name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>
