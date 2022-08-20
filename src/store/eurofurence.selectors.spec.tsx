@@ -1,101 +1,77 @@
 import moment from "moment";
 
-import { selectActiveAnnouncements, selectBrowseableMaps } from "./eurofurence.selectors";
-import { AnnouncementRecord, ImageRecord, MapRecord, RecordId, RecordMetadata } from "./eurofurence.types";
-
-const normalizeEntities = <T extends RecordMetadata>(items: T[]) => ({
-    ids: items.map((it) => it.Id),
-    entities: items.reduce((prev, curr) => {
-        prev[curr.Id] = curr;
-        return prev;
-    }, {} as Record<RecordId, T>),
-});
+import { filterActiveAnnouncements, filterBrowseableMaps, filterCurrentEvents, filterUpcomingEvents } from "./eurofurence.selectors";
 
 describe("eurofurence.selectors", function () {
-    describe("selectActiveAnnouncements", () => {
-        it("returns empty on empty", () => {
-            const result = selectActiveAnnouncements(
-                {
-                    eurofurenceCache: {
-                        announcements: normalizeEntities([]),
-                    },
-                } as any,
-                moment()
-            );
-
-            expect(result).toHaveLength(0);
-        });
+    describe("filterActiveAnnouncements", () => {
         it("returns active announcements", () => {
-            const announcements: Partial<AnnouncementRecord>[] = [
-                { Id: "test", Area: "test", ValidFromDateTimeUtc: moment("2022-01-01").toISOString(), ValidUntilDateTimeUtc: moment("2022-02-01").toISOString() },
-            ];
-            const result = selectActiveAnnouncements(
-                {
-                    eurofurenceCache: {
-                        announcements: normalizeEntities(announcements as AnnouncementRecord[]),
-                    },
-                } as any,
-                moment("2022-01-15")
-            );
+            const announcements = [{ Id: "test", ValidFromDateTimeUtc: moment("2022-01-01").toISOString(), ValidUntilDateTimeUtc: moment("2022-02-01").toISOString() }];
+            const result = filterActiveAnnouncements(announcements, moment("2022-01-15"));
 
             expect(result).toHaveLength(1);
         });
         it("filters out inactive announcements", () => {
-            const announcements: Partial<AnnouncementRecord>[] = [
+            const announcements = [
                 { Id: "test", Area: "test", ValidFromDateTimeUtc: moment("2022-01-01").toISOString(), ValidUntilDateTimeUtc: moment("2022-02-01").toISOString() },
             ];
-            const result = selectActiveAnnouncements(
-                {
-                    eurofurenceCache: {
-                        announcements: normalizeEntities(announcements as AnnouncementRecord[]),
-                    },
-                } as any,
-                moment("2022-03-01")
-            );
+            const result = filterActiveAnnouncements(announcements, moment("2022-03-01"));
 
             expect(result).toHaveLength(0);
         });
     });
 
-    describe("selectBrowseableMaps", () => {
-        it("selects browseable maps", () => {
-            const images: Partial<ImageRecord>[] = [{ Id: "Test", ContentHashSha1: "no" }];
-            const maps: Partial<MapRecord>[] = [
-                {
-                    Id: "Test",
-                    IsBrowseable: true,
-                    ImageId: "no",
-                    Entries: [],
-                },
-            ];
-
-            const result = selectBrowseableMaps({
-                eurofurenceCache: {
-                    maps: normalizeEntities(maps as MapRecord[]),
-                    images: normalizeEntities(images as ImageRecord[]),
-                },
-            } as any);
+    describe("filterBrowseableMaps", () => {
+        it("Selects browserable maps", () => {
+            const maps = [{ Id: "1", IsBrowseable: true }];
+            const result = filterBrowseableMaps(maps);
 
             expect(result).toHaveLength(1);
         });
-        it("does not select unbrowseable maps", () => {
-            const images: Partial<ImageRecord>[] = [{ Id: "Test", ContentHashSha1: "no" }];
+        it("Does not select unbrowserable maps", () => {
+            const maps = [{ Id: "1", IsBrowseable: false }];
+            const result = filterBrowseableMaps(maps);
 
-            const maps: Partial<MapRecord>[] = [
-                {
-                    Id: "Test",
-                    IsBrowseable: false,
-                    ImageId: "no",
-                    Entries: [],
-                },
-            ];
+            expect(result).toHaveLength(0);
+        });
+    });
 
-            const result = selectBrowseableMaps({
-                eurofurenceCache: {
-                    maps: normalizeEntities(maps as MapRecord[]),
-                    images: normalizeEntities(images as ImageRecord[]),
-                },
-            } as any);
+    describe("filterUpcomingEvents", () => {
+        it("can filter upcoming events", () => {
+            const result = filterUpcomingEvents([{ StartDateTimeUtc: moment().add(10, "minutes").toISOString() }], moment());
+
+            expect(result).toHaveLength(1);
+        });
+        it("does not show an event more than 30 minutes in the future", () => {
+            const result = filterUpcomingEvents([{ StartDateTimeUtc: moment().add(40, "minutes").toISOString() }], moment());
+
+            expect(result).toHaveLength(0);
+        });
+        it("does not show an event in the past", () => {
+            const result = filterUpcomingEvents([{ StartDateTimeUtc: moment().subtract(10, "minutes").toISOString() }], moment());
+
+            expect(result).toHaveLength(0);
+        });
+    });
+
+    describe("filterCurrentEvents", function () {
+        it("selects event that are happening", () => {
+            const result = filterCurrentEvents(
+                [{ StartDateTimeUtc: moment().subtract(10, "minute").toISOString(), EndDateTimeUtc: moment().add(10, "minute").toISOString() }],
+                moment()
+            );
+
+            expect(result).toHaveLength(1);
+        });
+        it("does not select events in the past", () => {
+            const result = filterCurrentEvents(
+                [{ StartDateTimeUtc: moment().subtract(10, "minute").toISOString(), EndDateTimeUtc: moment().subtract(5, "minute").toISOString() }],
+                moment()
+            );
+
+            expect(result).toHaveLength(0);
+        });
+        it("does not select events in the future", () => {
+            const result = filterCurrentEvents([{ StartDateTimeUtc: moment().add(5, "minute").toISOString(), EndDateTimeUtc: moment().add(10, "minute").toISOString() }], moment());
 
             expect(result).toHaveLength(0);
         });
