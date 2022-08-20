@@ -36,7 +36,6 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 openFursuitGames();
                 tabs.current?.close();
             },
-            maps: () => tabs.current?.close(),
             services: () => {
                 openAdditionalServices();
                 return tabs.current?.close();
@@ -67,7 +66,6 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                     onInfo={on.info}
                     onCatchEmAll={on.catchEmAll}
                     onServices={on.services}
-                    onMaps={on.maps}
                     onSettings={on.settings}
                     onAbout={on.about}
                     onMap={on.map}

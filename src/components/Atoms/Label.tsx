@@ -113,6 +113,9 @@ const types = StyleSheet.create({
     regular: {
         fontSize: 14,
     },
+    minor: {
+        fontSize: 10,
+    },
     strong: {
         fontSize: 14,
         fontWeight: "900",

@@ -127,7 +127,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                     key={i}
                     image={map.Image}
                     target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
-                    onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id })}
+                    onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) })}
                 />
             ))}
 

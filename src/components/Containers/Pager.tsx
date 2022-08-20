@@ -99,7 +99,12 @@ export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, r
 });
 
 const styles = StyleSheet.create({
-    pages: { flexDirection: "row", left: 0, width: "200%" },
+    pages: {
+        flexDirection: "row",
+        left: 0,
+        width: "200%",
+        alignItems: "flex-end",
+    },
     equal: {
         flex: 1,
     },

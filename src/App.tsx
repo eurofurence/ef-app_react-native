@@ -1,6 +1,4 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { StyleSheet } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { ScreenStart } from "./app/ScreenStart";
 import { AnalyticsManager } from "./components/Managers/AnalyticsManager";
@@ -17,35 +15,27 @@ import { NavigationProvider } from "./context/NavigationProvider";
  */
 export default function App() {
     return (
-        <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
-            <BottomSheetModalProvider>
-                <SynchronizationProvider>
-                    <EventsSearchProvider>
-                        <NavigationProvider>
-                            <ScreenStart />
+        <BottomSheetModalProvider>
+            <SynchronizationProvider>
+                <EventsSearchProvider>
+                    <NavigationProvider>
+                        <ScreenStart />
 
-                            {/* Handle device token acquisition. */}
-                            <PlatformTokenManager />
+                        {/* Handle device token acquisition. */}
+                        <PlatformTokenManager />
 
-                            {/* Handle handling notifications in foreground. */}
-                            <PlatformNotificationReceivedManager />
-                            <PlatformNotificationRespondedManager />
+                        {/* Handle handling notifications in foreground. */}
+                        <PlatformNotificationReceivedManager />
+                        <PlatformNotificationRespondedManager />
 
-                            {/* Handle notifications in background. */}
-                            <PlatformBackgroundSyncManager />
+                        {/* Handle notifications in background. */}
+                        <PlatformBackgroundSyncManager />
 
-                            {/* Set up analytics. */}
-                            <AnalyticsManager />
-                        </NavigationProvider>
-                    </EventsSearchProvider>
-                </SynchronizationProvider>
-            </BottomSheetModalProvider>
-        </GestureHandlerRootView>
+                        {/* Set up analytics. */}
+                        <AnalyticsManager />
+                    </NavigationProvider>
+                </EventsSearchProvider>
+            </SynchronizationProvider>
+        </BottomSheetModalProvider>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        overflow: "hidden",
-    },
-});

@@ -37,7 +37,7 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
 const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
     const navigation = useAppNavigation("Areas");
     return !map || !entry ? null : (
-        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id })}>
+        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) })}>
             {link.Name}
         </Button>
     );
@@ -45,9 +45,8 @@ const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
 
 const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
     const navigation = useAppNavigation("Areas");
-    // () => navigation.navigate("Areas", { screen: "Events", params: { filterType: "rooms", screen: link.Target, params: {} } })
     return !map || !entry ? null : (
-        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id })}>
+        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) })}>
             {link.Name}
         </Button>
     );

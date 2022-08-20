@@ -55,6 +55,7 @@ export type ScreenStartParamsList = {
     Map: {
         id: RecordId;
         entryId?: RecordId;
+        linkId?: number;
     };
     About: undefined;
 };

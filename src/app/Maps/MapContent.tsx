@@ -28,9 +28,10 @@ type FilterResult = {
 export type MapContentProps = {
     map: MapDetails & { Image: ImageDetails };
     entry?: MapEntryDetails;
+    link?: LinkFragment;
 };
 
-export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
+export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
     const { t } = useTranslation("Maps");
     const refHandle = useRef<any>([0, 0]);
     const refZoom = useRef<ZoomableView>(null);
