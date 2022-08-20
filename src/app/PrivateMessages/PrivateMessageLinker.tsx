@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
+import { Label } from "../../components/Atoms/Label";
 import { Button } from "../../components/Containers/Button";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 
@@ -26,7 +27,7 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMess
     });
     return (
         <View style={{ padding: 30 }}>
-            <Text style={styles.marginBefore}>{t("messages", { count: unread?.length ?? 0 })}</Text>
+            <Label style={styles.marginBefore}>{t("messages", { count: unread?.length ?? 0 })}</Label>
             <Button style={styles.marginBefore} icon={unread?.length ? "email-multiple-outline" : "email-open-multiple-outline"} onPress={onOpenMessages}>
                 {t("open_messages")}
             </Button>

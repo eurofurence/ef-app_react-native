@@ -84,7 +84,7 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
 
             {!happening ? null : (
                 <View style={styles.indicator}>
-                    <Indicator color={done ? theme.important : theme.invText} />
+                    <Indicator color={theme.white} />
                 </View>
             )}
         </TouchableOpacity>
