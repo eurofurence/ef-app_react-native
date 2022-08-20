@@ -25,7 +25,7 @@ export const BadgeInvPad: FC<BadgeInvPadProps> = ({ padding, badgeColor, textCol
     return (
         <View style={styleContainer}>
             <Row style={[styles.content, styleContent]}>
-                {!icon ? null : <Icon name={icon} size={iconSize} />}
+                {!icon ? null : <Icon name={icon} size={iconSize} color={textColor} />}
                 <Label style={styles.text} color={textColor} ml={10} type={textType} variant={textVariant}>
                     {children}
                 </Label>

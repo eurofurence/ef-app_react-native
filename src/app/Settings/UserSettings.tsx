@@ -11,6 +11,7 @@ import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { conName } from "../../configuration";
+import { useTheme } from "../../context/Theme";
 import { setMomentLocale, Translations } from "../../i18n";
 import { captureException } from "../../sentryHelpers";
 import { useAppDispatch, useAppSelector } from "../../store";
@@ -63,6 +64,7 @@ const LoginSettings = () => {
 
 export const UserSettings = () => {
     const { t, i18n } = useTranslation("Settings");
+    const theme = useTheme();
     const dispatch = useAppDispatch();
     const analyticsEnabled = useAppSelector((state) => state.settingsSlice.analytics.enabled);
 
@@ -107,6 +109,7 @@ export const UserSettings = () => {
                 <Label variant={"narrow"}>{t("currentLanguage")}</Label>
                 <Picker<string>
                     selectedValue={i18n.language}
+                    style={{ color: theme.text }}
                     prompt={t("changeLanguage")}
                     onValueChange={(it: string) => {
                         i18n.changeLanguage(it).catch(captureException);
