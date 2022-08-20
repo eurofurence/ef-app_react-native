@@ -28,7 +28,10 @@ export const useEventReminder = (event: EventRecord) => {
                     title: event.Title,
                     subtitle: "This event is starting soon!",
                 },
-                trigger: scheduleDate.toDate(),
+                trigger: {
+                    date: scheduleDate.toDate(),
+                    channelId: "event_reminders",
+                },
             });
         }
 
