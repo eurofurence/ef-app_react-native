@@ -47,7 +47,7 @@ export const useTheme = (): Theme => {
             superSponsorText: "#fff7f0",
             sponsor: "#ffd700",
             sponsorText: "#323034",
-            marker: "#ffcf55",
+            marker: "#ff2f66",
         }),
         []
     );

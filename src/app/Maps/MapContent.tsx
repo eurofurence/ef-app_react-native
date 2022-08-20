@@ -1,4 +1,4 @@
-import BottomSheet, { BottomSheetSectionList } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { ReactNativeZoomableView as ZoomableView, ZoomableViewEvent } from "@openspacelabs/react-native-zoomable-view";
 import { chain, clamp } from "lodash";
 import * as React from "react";
@@ -8,13 +8,21 @@ import { Image, Platform, StyleSheet, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Marker } from "../../components/Atoms/Marker";
-import { ImageDetails, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";
+import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";
 import { LinkItem } from "./LinkItem";
 
+const distSq = (hx: number, hy: number) => hx * hx + hy * hy;
 const circleTouches = (x1: number, y1: number, x2: number, y2: number, x: number, y: number, r: number) => {
     const ix = clamp(x, x1, x2);
     const iy = clamp(y, y1, y2);
-    return Math.hypot(ix - x, iy - y) < r;
+    return distSq(ix - x, iy - y) < r * r;
+};
+
+type FilterResult = {
+    key: string;
+    map: MapDetails;
+    entry: MapEntryDetails;
+    link: LinkFragment;
 };
 
 export type MapContentProps = {
@@ -28,7 +36,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
     const refZoom = useRef<ZoomableView>(null);
     const refSheet = useRef<BottomSheet>(null);
 
-    const [results, setResults] = useState<MapEntryDetails[]>(map.Entries);
+    const [results, setResults] = useState<FilterResult[]>([]);
     const onTransform = useCallback((event: ZoomableViewEvent) => {
         clearTimeout(refHandle.current);
 
@@ -48,11 +56,12 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
             const centerX = (x1 + x2) / 2;
             const centerY = (y1 + y2) / 2;
 
-            // Filter all that touch the view.
+            // Filter all that touch the view. Order ascending by square distance and then add all their links.
             setResults(
                 chain(map?.Entries)
                     .filter((entry) => circleTouches(x1, y1, x2, y2, entry.X, entry.Y, entry.TapRadius))
-                    .orderBy((entry) => Math.hypot(entry.X - centerX, entry.Y - centerY), "asc")
+                    .orderBy((entry) => distSq(entry.X - centerX, entry.Y - centerY), "asc")
+                    .flatMap((entry) => entry.Links.map((link, i) => ({ key: `${map.Id}/${entry.Id}#${i}`, map, entry, link })))
                     .value()
             );
         }, 350);
@@ -63,24 +72,21 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
         if (entry) refSheet.current.collapse();
     }, [entry]);
 
-    const sections = useMemo(
-        () =>
-            results.map((entry, i) => ({
-                title: `${entry.Id}/${i}`,
-                data: entry.Links.map((link) => ({ map, entry, link })),
-            })),
-        [results]
-    );
+    // On change of entry, move to new location.
+    useEffect(() => {
+        if (!entry) return;
+        if (!refZoom.current) return;
+        // Get arguments from current status..
+        const current = refZoom.current._getZoomableViewEventObject();
+        const offsetX = current.offsetX;
+        const offsetY = current.offsetY;
+        const zoom = current.zoomLevel;
 
-    // TODO: I cannot figure out how to get the target offset from the entry.
-    // useEffect(() => {
-    //     if (!entry) return;
-    //     const handle = setTimeout(() => {
-    //         if (!ref.current) return;
-    //         ref.current._zoomToLocation(entry.X * zoom, entry.Y * zoom, 1).catch(() => undefined);
-    //     }, 1000);
-    //     return () => clearTimeout(handle);
-    // }, [entry, ref, zoom, sourceWidth, sourceHeight]);
+        // Get change to current center.
+        const diffX = entry.X - (map.Image.Width / 2 - offsetX);
+        const diffY = entry.Y - (map.Image.Height / 2 - offsetY);
+        refZoom.current.moveBy(diffX * zoom, diffY * zoom).catch(() => undefined);
+    }, [entry, refZoom]);
 
     // Compute containers.
     const styleContainer = useMemo<ViewStyle>(() => ({ width: map.Image.Width, height: map.Image.Height }), [map]);
@@ -97,7 +103,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
                     maxZoom={maxZoom}
                     minZoom={minZoom}
                     zoomStep={maxZoom - minZoom}
-                    initialZoom={minZoom}
+                    initialZoom={entry ? 1.5 : minZoom}
                     bindToBorders={true}
                     onTransform={onTransform}
                 >
@@ -116,12 +122,12 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
                             {t("filtering")}
                         </Label>
                     ) : (
-                        <BottomSheetSectionList
+                        <BottomSheetFlatList
                             initialNumToRender={2}
                             maxToRenderPerBatch={1}
-                            sections={sections}
-                            keyExtractor={(item, i) => `${item.map.Id}/${item.entry.Id}:${i}`}
-                            renderItem={({ item }) => <LinkItem map={item.map} entry={item.entry} link={item.link} />}
+                            data={results}
+                            keyExtractor={({ key }) => key}
+                            renderItem={({ item: { map, entry, link } }) => <LinkItem map={map} entry={entry} link={link} />}
                             contentContainerStyle={{ paddingHorizontal: 15 }}
                         />
                     )}
