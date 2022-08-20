@@ -1,9 +1,11 @@
-import { FC, useMemo } from "react";
 import * as React from "react";
-import { ImageStyle, StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import { FC, useMemo } from "react";
+import { ColorValue, StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 
-import { useTheme } from "../../context/Theme";
-import { ImageEx, ImageExProps } from "../Atoms/ImageEx";
+import { Theme, useTheme } from "../../context/Theme";
+import { IconNames } from "../../types/IconNames";
+import { ImageFill, ImageFillProps } from "../Atoms/ImageFill";
+import { Marker } from "../Atoms/Marker";
 
 /**
  * Arguments to the button.
@@ -17,12 +19,20 @@ export type ImageButtonProps = {
     /**
      * The source image object.
      */
-    image: ImageExProps["image"];
+    image: ImageFillProps["image"];
 
     /**
      * The targeted point and the dimension to make visible.
      */
-    target: ImageExProps["target"];
+    target: ImageFillProps["target"];
+
+    /**
+     * True if no indicator should be displayed.
+     */
+    noMarker?: boolean;
+    markerColor?: keyof Theme | ColorValue;
+    markerType?: IconNames;
+    markerSize?: number;
 
     /**
      * If given, invoked on button press.
@@ -35,26 +45,30 @@ export type ImageButtonProps = {
     onLongPress?: () => void;
 };
 
-export const ImageExButton: FC<ImageButtonProps> = ({ style, image, target, children, onPress, onLongPress }) => {
+export const ImageExButton: FC<ImageButtonProps> = ({ style, image, target, noMarker = false, markerColor, markerType, markerSize, onPress, onLongPress }) => {
     const theme = useTheme();
 
     const styleBackground = useMemo<ViewStyle>(() => ({ backgroundColor: theme.inverted }), [theme]);
-    const styleImage = useMemo<ImageStyle>(() => ({ opacity: children ? 0.7 : 1.0 }), [children]);
 
     return (
         <TouchableOpacity style={[styles.container, styleBackground, style]} onPress={onPress} onLongPress={onLongPress}>
-            <ImageEx style={styleImage} image={image} target={target} />
+            <ImageFill image={image} target={target} />
+            {noMarker ? null : <Marker style={styles.marker} markerColor={markerColor} markerType={markerType} markerSize={markerSize} />}
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        minHeight: 120,
+        minHeight: 160,
         borderRadius: 16,
         overflow: "hidden",
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+    },
+    marker: {
+        left: "50%",
+        top: "50%",
     },
 });

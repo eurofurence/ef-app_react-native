@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FC, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { z } from "zod";
 
@@ -11,6 +11,7 @@ import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
 import { useSentryProfiler } from "../../sentryHelpers";
 import { usePostTokenMutation } from "../../store/authorization.service";
+import { useTheme } from "../../context/Theme";
 
 const loginSchema = z.object({
     regno: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number().positive()),
@@ -20,8 +21,14 @@ const loginSchema = z.object({
 
 type LoginSchema = z.infer<typeof loginSchema>;
 
-export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
+export type LoginFormProps = {
+    style?: ViewStyle;
+    close?: () => void;
+};
+
+export const LoginForm: FC<LoginFormProps> = ({ style, close }) => {
     const { t } = useTranslation("Settings", { keyPrefix: "login" });
+    const theme = useTheme();
     useSentryProfiler("LoginForm");
 
     const {
@@ -49,9 +56,13 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
     }, [result, close]);
 
     return (
-        <View>
-            <Text>Enter your username</Text>
-            {errors.username?.message && <Text style={styles.error}>{errors.username?.message}</Text>}
+        <View style={style}>
+            <Label type="caption">{t("enter_username")}</Label>
+            {errors.username?.message && (
+                <Label type="minor" color="warning">
+                    {errors.username?.message}
+                </Label>
+            )}
             <Controller
                 control={control}
                 name={"username"}
@@ -61,7 +72,8 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
                         style={[styles.marginAfter, styles.input]}
-                        placeholder="Your username"
+                        placeholder={t("hint_username")}
+                        placeholderTextColor={theme.darken}
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
@@ -70,8 +82,12 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
                 )}
             />
 
-            <Text>Enter your registration number</Text>
-            {errors.regno?.message && <Text style={styles.error}>{errors.regno?.message}</Text>}
+            <Label type="caption">{t("enter_reg")}</Label>
+            {errors.regno?.message && (
+                <Label type="minor" color="warning">
+                    {errors.regno?.message}
+                </Label>
+            )}
 
             <Controller
                 control={control}
@@ -82,7 +98,8 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
                 render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
                         style={[styles.marginAfter, styles.input]}
-                        placeholder="Your registration number"
+                        placeholder={t("hint_reg")}
+                        placeholderTextColor={theme.darken}
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value?.toString()}
@@ -93,8 +110,12 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
                     />
                 )}
             />
-            <Text>Enter your password</Text>
-            {errors.password?.message && <Text style={styles.error}>{errors.password?.message}</Text>}
+            <Label type="caption">{t("enter_password")}</Label>
+            {errors.password?.message && (
+                <Label type="minor" color="warning">
+                    {errors.password?.message}
+                </Label>
+            )}
 
             <Controller
                 control={control}
@@ -107,7 +128,8 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
                         {...field}
                         style={[styles.marginAfter, styles.input]}
                         selectTextOnFocus
-                        placeholder="Your password"
+                        placeholder={t("hint_password")}
+                        placeholderTextColor={theme.darken}
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
@@ -119,19 +141,23 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
                     />
                 )}
             />
-            {result.error && <Text style={styles.error}>Something went wrong during login. Please try again</Text>}
-            {result.isLoading && <Text>Logging in . . .</Text>}
+            {result.error && (
+                <Label type="minor" color="warning">
+                    {t("login_error")}
+                </Label>
+            )}
+            {result.isLoading && <Label>{t("logging_in")}</Label>}
             <Row style={styles.marginBefore}>
                 {close && (
                     <Button style={styles.rowLeft} outline icon="chevron-left" onPress={close}>
-                        Back
+                        {t("back_button")}
                     </Button>
                 )}
                 <Button style={styles.rowRight} outline={false} icon="login" onPress={handleSubmit(onSubmit)}>
-                    Log-in
+                    {t("login_button")}
                 </Button>
             </Row>
-            <Label mt={15} variant={"narrow"}>
+            <Label mt={15} variant="narrow">
                 {t("login_hint")}
             </Label>
         </View>
@@ -140,13 +166,16 @@ export const LoginForm: FC<{ close?: () => void }> = ({ close }) => {
 
 export const PagerLogin: FC<{ close: () => void }> = ({ close }) => {
     return (
-        <View style={{ padding: 30 }}>
+        <View style={styles.container}>
             <LoginForm close={close} />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        padding: 30,
+    },
     marginAfter: {
         marginBottom: 16,
     },
@@ -155,10 +184,6 @@ const styles = StyleSheet.create({
         borderBottomColor: "black",
         borderBottomWidth: 1,
         paddingVertical: 8,
-    },
-    error: {
-        fontSize: 10,
-        color: "#a01010",
     },
     marginBefore: {
         marginTop: 16,

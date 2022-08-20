@@ -1,8 +1,12 @@
 import { ScopeContext } from "@sentry/types";
 import { Browser, Native } from "sentry-expo";
 
-export const captureEvent = Browser.captureEvent;
-export const captureException = Browser.captureException;
+/**
+ * Holds either browser or native sentry.
+ */
+export const PlatformSentry = Native ?? Browser;
+export const captureEvent = PlatformSentry.captureEvent;
+export const captureException = PlatformSentry.captureException;
 
 export const captureNotificationException = (message: string, error: Error, context: Partial<ScopeContext> = {}) => {
     console.error(message, error);
@@ -15,4 +19,4 @@ export const captureNotificationException = (message: string, error: Error, cont
     });
 };
 
-export const useSentryProfiler = Native.useProfiler;
+export const useSentryProfiler = "useProfiler" in PlatformSentry ? PlatformSentry.useProfiler : () => {};

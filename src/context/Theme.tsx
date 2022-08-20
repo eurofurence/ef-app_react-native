@@ -19,6 +19,7 @@ export type Theme = Record<string, string> & {
     superSponsorText: string;
     sponsor: string;
     sponsorText: string;
+    marker: string;
 };
 
 export const useThemeType = (): "light" | "dark" => "light";
@@ -46,6 +47,7 @@ export const useTheme = (): Theme => {
             superSponsorText: "#fff7f0",
             sponsor: "#ffd700",
             sponsorText: "#323034",
+            marker: "#ff2f66",
         }),
         []
     );

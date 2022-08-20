@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { Image, View } from "react-native";
-//@ts-expect-error untyped module
-import Markdown from "react-native-easy-markdown";
 
 import { Label } from "../../components/Atoms/Label";
+import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
 import { Card } from "../../components/Containers/Card";
 import { AnnouncementDetails } from "../../store/eurofurence.types";
 
@@ -17,7 +16,7 @@ export const AnnouncementItem: FC<{ announcement: AnnouncementDetails }> = ({ an
                 </Label>
             </View>
 
-            <Markdown>{announcement.Content}</Markdown>
+            <MarkdownContent>{announcement.Content}</MarkdownContent>
 
             {announcement.Image && <Image source={{ uri: announcement.Image.FullUrl }} style={{ width: "100%", height: "auto" }} />}
         </Card>

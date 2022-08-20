@@ -1,5 +1,5 @@
-import { setNotificationChannelAsync } from "expo-notifications";
 import * as Notifications from "expo-notifications";
+import { setNotificationChannelAsync } from "expo-notifications";
 
 import { captureNotificationException } from "../../sentryHelpers";
 

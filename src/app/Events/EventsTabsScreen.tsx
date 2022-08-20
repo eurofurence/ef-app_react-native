@@ -11,7 +11,7 @@ import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useEventsSearchHasResults } from "../../components/Searching/EventsSearchContext";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
-import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors, selectFavoriteEvents } from "../../store/eurofurence.selectors";
+import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
@@ -64,7 +64,6 @@ export type EventsTabsScreenProps =
 export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), [t]);
-    const hasFavorites = useAppSelector((state) => selectFavoriteEvents(state).length > 0);
 
     // Use now with optional time travel.
     const [now] = useNow();

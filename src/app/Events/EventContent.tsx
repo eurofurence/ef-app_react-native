@@ -2,9 +2,11 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import moment from "moment";
 import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Share, StyleSheet } from "react-native";
+import { Share, StyleSheet, View } from "react-native";
 
+import { Banner } from "../../components/Atoms/Banner";
 import { Label } from "../../components/Atoms/Label";
+import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
 import { Section } from "../../components/Atoms/Section";
 import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
 import { Button } from "../../components/Containers/Button";
@@ -71,10 +73,16 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 </BadgeInvPad>
             )}
 
+            {!event.Poster ? null : (
+                <View style={styles.posterLine}>
+                    <Banner image={event.Poster} />
+                </View>
+            )}
+
             <Section icon={isFavorited ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
-            <Label type="para" mb={20}>
+            <MarkdownContent defaultType="para" mb={20}>
                 {event.Abstract}
-            </Label>
+            </MarkdownContent>
 
             {!event.MaskRequired ? null : (
                 <Row variant={"center"} style={{ marginBottom: 20 }}>
@@ -127,21 +135,18 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                       <ImageExButton
                           key={i}
                           image={map.Image}
-                          target={{ x: entry.X, y: entry.Y, size: 400 }}
-                          onPress={() => navigation.navigate("Map", { id: map.Id, target: link.Target })}
+                          target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
+                          onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) })}
                       />
                   ))}
 
             <Section icon="information" title={t("label_event_description")} />
-            <Label type="para">{event.Description}</Label>
+            <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
         </>
     );
 };
 
 const styles = StyleSheet.create({
-    content: {
-        paddingVertical: 10,
-    },
     rowLeft: {
         flex: 1,
         marginRight: 8,
@@ -152,5 +157,9 @@ const styles = StyleSheet.create({
     },
     share: {
         marginVertical: 15,
+    },
+    posterLine: {
+        marginTop: 20,
+        alignItems: "center",
     },
 });

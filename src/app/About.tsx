@@ -1,16 +1,12 @@
 import { nativeApplicationVersion, nativeBuildVersion } from "expo-application";
-import Constants from "expo-constants";
-import { runtimeVersion } from "expo-updates";
-import { capitalize } from "lodash";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, Linking, Platform, ScrollView } from "react-native";
-// @ts-expect-error untyped module
-import Markdown from "react-native-easy-markdown";
+import { Image, Linking, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../components/Atoms/Label";
+import { MarkdownContent } from "../components/Atoms/MarkdownContent";
 import { Section } from "../components/Atoms/Section";
 import { Button } from "../components/Containers/Button";
 import { Col } from "../components/Containers/Col";
@@ -132,7 +128,7 @@ export const AboutScreen = () => {
                 <Credit uri={"https://avatars.githubusercontent.com/u/5537850"} name={"Requinard"} role={"React Development and app mechanics"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/12624320"} name={"Shez"} role={"iOS Development"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/3359222"} name={"Fenrikur"} role={"iOS Development"} />
-                <Markdown>{extraThanksMarkdown}</Markdown>
+                <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
             </Floater>
         </ScrollView>
     );

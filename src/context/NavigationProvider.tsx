@@ -2,7 +2,6 @@ import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@re
 import { NavigationState } from "@react-navigation/routers";
 import * as Linking from "expo-linking";
 import { FC, useCallback, useMemo, useRef } from "react";
-import { Native } from "sentry-expo";
 
 import { DealersTabsScreenParamsList } from "../app/Dealers/DealersTabsScreen";
 import { EventsTabsScreenParamsList } from "../app/Events/EventsTabsScreen";
@@ -11,11 +10,12 @@ import { ScreenStartParamsList } from "../app/ScreenStart";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
+import { PlatformSentry } from "../sentryHelpers";
 import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
 import { RecordId } from "../store/eurofurence.types";
 
-export const sentryRoutingInstrumentation = new Native.ReactNavigationInstrumentation();
+export const sentryRoutingInstrumentation = "ReactNavigationInstrumentation" in PlatformSentry ? new PlatformSentry.ReactNavigationInstrumentation() : undefined;
 
 type LinkingConfig<ParamsList> = {
     initialRouteName?: keyof ParamsList;
@@ -117,7 +117,7 @@ export const NavigationProvider: FC = ({ children }) => {
             linking={linking}
             initialState={initialState}
             onReady={() => {
-                sentryRoutingInstrumentation.registerNavigationContainer(navigation.current);
+                sentryRoutingInstrumentation?.registerNavigationContainer(navigation.current);
             }}
             onStateChange={(state) => {
                 onStateChange(state);

@@ -1,5 +1,5 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { Label } from "../Atoms/Label";
 

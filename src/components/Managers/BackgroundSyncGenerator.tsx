@@ -1,5 +1,6 @@
 import { registerTaskAsync } from "expo-notifications";
 import { defineTask, TaskManagerTaskBody } from "expo-task-manager";
+import { Platform } from "react-native";
 
 import { conId } from "../../configuration";
 import { captureEvent, captureNotificationException } from "../../sentryHelpers";
@@ -40,8 +41,10 @@ defineTask(BG_NOTIFICATIONS_NAME, ({ data, error, executionInfo }: TaskManagerTa
     }
 });
 
-// Connect to notifications.
-registerTaskAsync(BG_NOTIFICATIONS_NAME).then(
-    () => console.log("Successfully connected for background notifications"),
-    (e) => captureNotificationException("Unable to connect for background notifications", e)
-);
+// Connect to notification on supported platforms.
+if (Platform.OS === "android" || Platform.OS === "ios")
+    registerTaskAsync(BG_NOTIFICATIONS_NAME).then(
+        () => console.log("Successfully connected for background notifications"),
+        (e) => captureNotificationException("Unable to connect for background notifications", e)
+    );
+else console.log("Skipping registration of sync generator, unsupported on web.");

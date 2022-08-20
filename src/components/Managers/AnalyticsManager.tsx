@@ -1,9 +1,8 @@
 import Constants from "expo-constants";
 import * as Analytics from "expo-firebase-analytics";
 import { useEffect } from "react";
-import * as Sentry from "sentry-expo";
 
-import { captureException } from "../../sentryHelpers";
+import { PlatformSentry, captureException } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 
 export const AnalyticsManager = () => {
@@ -15,7 +14,7 @@ export const AnalyticsManager = () => {
     }, [enabled]);
 
     useEffect(() => {
-        Sentry.Native.setUser(
+        PlatformSentry.setUser(
             user
                 ? {
                       id: user.uid,
@@ -23,7 +22,7 @@ export const AnalyticsManager = () => {
                   }
                 : null
         );
-        Sentry.Native.setTag("appVersionCode", Constants.manifest?.android?.versionCode);
+        PlatformSentry.setTag("appVersionCode", Constants.manifest?.android?.versionCode);
 
         Analytics.setUserId(user?.uid ?? null).catch(captureException);
         Analytics.setUserProperty("username", user?.username ?? null).catch(captureException);

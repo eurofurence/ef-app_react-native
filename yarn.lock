@@ -3751,6 +3751,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@openspacelabs/react-native-zoomable-view@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@openspacelabs/react-native-zoomable-view@npm:2.0.4"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16.8.0"
+    react-native: ">=0.54.0"
+  checksum: 65dd0e7bf14e68739503f9bb781de444f0219537b1fc3d113b25e5360f14d07dfb7ddb3f1c9592557134a86346b22d48278dc04a74e19a391d30a8ae3088412b
+  languageName: node
+  linkType: hard
+
 "@protobufjs/aspromise@npm:^1.1.1, @protobufjs/aspromise@npm:^1.1.2":
   version: 1.1.2
   resolution: "@protobufjs/aspromise@npm:1.1.2"
@@ -8669,6 +8681,7 @@ __metadata:
     "@expo/webpack-config": ^0.17.0
     "@gorhom/bottom-sheet": ^4.4.2
     "@hookform/resolvers": ^2.9.3
+    "@openspacelabs/react-native-zoomable-view": ^2.0.4
     "@react-native-async-storage/async-storage": ~1.17.3
     "@react-native-picker/picker": 2.4.2
     "@react-navigation/core": ^6.2.2
