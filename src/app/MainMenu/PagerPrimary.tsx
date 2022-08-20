@@ -1,7 +1,8 @@
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
+import { Label } from "../../components/Atoms/Label";
 import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
@@ -21,13 +22,12 @@ export type PagerMenuProps = {
     onInfo?: () => void;
     onCatchEmAll?: () => void;
     onServices?: () => void;
-    onMaps?: () => void;
     onAbout?: () => void;
     onSettings?: () => void;
     onMap?: (id: RecordId) => void;
 };
 
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings, onMap, children }) => {
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onAbout, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
     const maps = useAppSelector(selectBrowseableMaps);
@@ -39,7 +39,9 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
                 <PrivateMessageLinker onOpenMessages={onMessages} open={tabs.isOpen} />
             ) : (
                 <View style={{ padding: 30 }}>
-                    <Text style={styles.marginBefore}>{t("not_logged_in")}</Text>
+                    <Label style={styles.marginBefore} type="caption">
+                        {t("not_logged_in")}
+                    </Label>
                     <Button style={styles.marginBefore} icon="login" onPress={onLogin}>
                         {t("logged_in_now")}
                     </Button>

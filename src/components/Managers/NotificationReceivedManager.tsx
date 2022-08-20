@@ -9,8 +9,9 @@ import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background.slice";
 import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "../../types/NotificationTrigger";
 import { useSynchronizer } from "../Synchronization/SynchronizationProvider";
+import { NotificationChannels } from "./NotificationChannel";
 
-const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger) =>
+const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger, channelId: NotificationChannels = "default") =>
     scheduleNotificationAsync({
         identifier: source.remoteMessage.messageId ?? undefined,
         content: {
@@ -18,7 +19,9 @@ const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger) =>
             body: source.remoteMessage.notification.body ?? undefined,
             data: source.remoteMessage.data,
         },
-        trigger: null,
+        trigger: {
+            channelId,
+        },
     });
 
 /**
@@ -69,13 +72,13 @@ export const NotificationReceivedManager = () => {
                     console.log("Synchronized for remote Sync request");
                 } else if (event === "Announcement" && isTriggerWithNotification(trigger)) {
                     // Schedule it.
-                    scheduleNotificationFromTrigger(trigger).then(
+                    scheduleNotificationFromTrigger(trigger, "announcements").then(
                         () => console.log("Announcement scheduled"),
                         (e) => captureNotificationException("Unable to schedule announcement", e)
                     );
                 } else if (event === "Notification" && isTriggerWithNotification(trigger)) {
                     // Schedule it.
-                    scheduleNotificationFromTrigger(trigger).then(
+                    scheduleNotificationFromTrigger(trigger, "private_messages").then(
                         () => console.log("Personal message scheduled"),
                         (e) => captureNotificationException("Unable to schedule personal message", e)
                     );

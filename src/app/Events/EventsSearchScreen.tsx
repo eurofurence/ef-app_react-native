@@ -2,9 +2,10 @@ import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Keyboard, StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Keyboard, StyleSheet, View, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
+import { Label } from "../../components/Atoms/Label";
 import { Button } from "../../components/Containers/Button";
 import { Floater } from "../../components/Containers/Floater";
 import { Row } from "../../components/Containers/Row";
@@ -53,7 +54,7 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
         <Floater>
             <View style={styles.end}>
                 <View style={styles.searchArea}>
-                    <Text>Enter your query</Text>
+                    <Label type="caption">Enter your query</Label>
                     <TextInput style={[styles.searchField, border]} value={search} onChangeText={setSearch} placeholder="Enter query" />
 
                     {!results ? null : <Button onPress={() => navigation.jumpTo("Results")}>View all {results.length} results</Button>}

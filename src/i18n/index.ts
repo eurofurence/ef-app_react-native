@@ -6,6 +6,9 @@ import moment from "moment";
 import { initReactI18next } from "react-i18next";
 import { match, P } from "ts-pattern";
 
+// Polyfill for Plural Rules
+import "intl-pluralrules";
+
 // Translation files
 import da from "./translations.da.json";
 import de from "./translations.de.json";
@@ -72,7 +75,6 @@ export const i18t = i18next
                 .catch((e) => logger("Failed to save language", lng, e)),
     })
     .init({
-        compatibilityJSON: "v3",
         fallbackLng: "en",
         initImmediate: true,
         defaultNS: "Home",

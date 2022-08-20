@@ -9,9 +9,9 @@ import { z } from "zod";
 import { Label } from "../../components/Atoms/Label";
 import { Button } from "../../components/Containers/Button";
 import { Row } from "../../components/Containers/Row";
+import { useTheme } from "../../context/Theme";
 import { useSentryProfiler } from "../../sentryHelpers";
 import { usePostTokenMutation } from "../../store/authorization.service";
-import { useTheme } from "../../context/Theme";
 
 const loginSchema = z.object({
     regno: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number().positive()),
@@ -73,7 +73,7 @@ export const LoginForm: FC<LoginFormProps> = ({ style, close }) => {
                     <TextInput
                         style={[styles.marginAfter, styles.input]}
                         placeholder={t("hint_username")}
-                        placeholderTextColor={theme.darken}
+                        placeholderTextColor={theme.soften}
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
@@ -99,7 +99,7 @@ export const LoginForm: FC<LoginFormProps> = ({ style, close }) => {
                     <TextInput
                         style={[styles.marginAfter, styles.input]}
                         placeholder={t("hint_reg")}
-                        placeholderTextColor={theme.darken}
+                        placeholderTextColor={theme.soften}
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value?.toString()}
@@ -129,7 +129,7 @@ export const LoginForm: FC<LoginFormProps> = ({ style, close }) => {
                         style={[styles.marginAfter, styles.input]}
                         selectTextOnFocus
                         placeholder={t("hint_password")}
-                        placeholderTextColor={theme.darken}
+                        placeholderTextColor={theme.soften}
                         onChangeText={onChange}
                         onBlur={onBlur}
                         value={value}
