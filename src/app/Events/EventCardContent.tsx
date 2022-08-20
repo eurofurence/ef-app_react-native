@@ -1,6 +1,6 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { FC, memo, ReactNode, useMemo } from "react";
-import { Image, ImageSourcePropType, StyleSheet, View, ViewStyle, TouchableOpacity, ColorValue } from "react-native";
+import { Image, ImageSourcePropType, StyleSheet, View, ViewStyle, TouchableOpacity, ColorValue, ImageBackground } from "react-native";
 
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
@@ -45,15 +45,20 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
 
             {poster ? (
                 <View style={styles.mainPoster}>
-                    <Image style={StyleSheet.absoluteFill} resizeMode="cover" source={poster} />
-                    <View style={styles.tagArea}>
-                        <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
-                            {title} {subtitle}
-                        </Label>
-                        <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
-                            {tag}
-                        </Label>
-                    </View>
+                    <ImageBackground source={poster} resizeMode={"cover"} style={StyleSheet.absoluteFill}>
+                        <View style={styles.tagArea2}>
+                            <View style={styles.tagAreaInner}>
+                                <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                                    {title} {subtitle}
+                                </Label>
+                                {tag && (
+                                    <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                                        {tag}
+                                    </Label>
+                                )}
+                            </View>
+                        </View>
+                    </ImageBackground>
                 </View>
             ) : (
                 <View style={styles.mainText}>
@@ -150,8 +155,26 @@ const styles = StyleSheet.create({
         paddingLeft: 16,
         paddingBottom: 16,
         paddingRight: 16,
+        paddingTop: 32,
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "flex-end",
+    },
+    tagArea2: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-end",
+        alignContent: "flex-start",
+        alignItems: "stretch",
+
+        height: "100%",
+    },
+    tagAreaInner: {
+        backgroundColor: "#000000A0",
+        padding: 8,
+        justifyContent: "space-between",
+        flexDirection: "row",
+        flexWrap: "wrap",
     },
     indicator: {
         position: "absolute",

@@ -26,7 +26,7 @@ export type PagerMenuProps = {
     onMap?: (id: RecordId) => void;
 };
 
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings, onMap }) => {
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onMaps, onAbout, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
     const maps = useAppSelector(selectBrowseableMaps);
@@ -47,9 +47,9 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
                 <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />
                 <Tab icon="book-outline" text={t("services")} onPress={onServices} />
-                <Tab icon="map" text={t("maps")} onPress={onMaps} />
                 <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
                 <Tab icon="cog" text={t("settings")} onPress={onSettings} />
+                {children}
             </Grid>
             <Col style={{ padding: 30, alignItems: "stretch" }}>
                 {maps.map((it) => (

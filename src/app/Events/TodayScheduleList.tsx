@@ -7,7 +7,7 @@ import { useAppSelector } from "../../store";
 import { selectUpcomingFavoriteEvents } from "../../store/eurofurence.selectors";
 import { EventCard } from "./EventCard";
 
-export const UpcomingFavoriteEventsList = () => {
+export const TodayScheduleList = () => {
     const { t } = useTranslation("Events");
 
     const [now] = useNow();
@@ -20,7 +20,7 @@ export const UpcomingFavoriteEventsList = () => {
 
     return (
         <>
-            <Section title={t("upcoming_favorites_title")} subtitle={t("upcoming_favorites_subtitle")} icon={"book-marker"} />
+            <Section title={t("today_schedule_title")} subtitle={t("today_schedule_subtitle")} icon={"book-marker"} />
             {events.map((event) => (
                 <EventCard
                     key={event.Id}
