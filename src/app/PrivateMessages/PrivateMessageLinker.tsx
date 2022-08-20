@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -7,6 +7,7 @@ import { Button } from "../../components/Containers/Button";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 
 type PrivateMessageLinkerProps = {
+    open?: boolean;
     onOpenMessages?: () => void;
 };
 
@@ -14,20 +15,28 @@ type PrivateMessageLinkerProps = {
  * Creates a link to the private messages screen
  * @constructor
  */
-export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMessages }) => {
+export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMessages, open }) => {
+    const prevOpen = useRef(open);
     const { t } = useTranslation("Menu");
-    const { unread } = useGetCommunicationsQuery(undefined, {
-        refetchOnFocus: true,
-        refetchOnMountOrArgChange: true,
-        refetchOnReconnect: true,
+    const { unread, refetch } = useGetCommunicationsQuery(undefined, {
         selectFromResult: (query) => ({
             ...query,
             unread: query.data?.filter((it) => it.ReadDateTimeUtc === null),
         }),
     });
+
+    useEffect(() => {
+        if (open === true && prevOpen.current !== open) {
+            console.debug("Fetching new private messages");
+            refetch();
+        }
+        prevOpen.current = open;
+        console.debug("Tab open has changed status", open);
+    }, [open]);
+
     return (
         <View style={{ padding: 30 }}>
-            <Label style={styles.marginBefore}>{t("messages", { count: unread?.length ?? 0 })}</Label>
+            <Label variant={unread?.length ? "bold" : undefined}>{t("messages", { count: unread?.length ?? 0 })}</Label>
             <Button style={styles.marginBefore} icon={unread?.length ? "email-multiple-outline" : "email-open-multiple-outline"} onPress={onOpenMessages}>
                 {t("open_messages")}
             </Button>

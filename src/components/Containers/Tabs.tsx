@@ -1,4 +1,5 @@
-import { forwardRef, ReactNode, useCallback, useImperativeHandle, useMemo, useState } from "react";
+import { noop } from "lodash";
+import { createContext, forwardRef, ReactNode, useCallback, useContext, useImperativeHandle, useMemo, useState } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
@@ -97,6 +98,21 @@ export type TabsRef = {
      */
     closeImmediately(): void;
 };
+
+/**
+ * Allow components in tabs to get access to the Tab properties.
+ */
+const TabsContext = createContext<TabsRef & { isOpen: boolean }>({
+    close: noop,
+    open: noop,
+    closeImmediately: noop,
+    isOpen: false,
+});
+
+/**
+ * Expose the Tabs Context as a hook
+ */
+export const useTabs = () => useContext(TabsContext);
 
 /**
  * A row of tabs and a "more" button.
@@ -203,7 +219,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
     // TODO: Integration with back button.
 
     return (
-        <>
+        <TabsContext.Provider value={{ close, open, closeImmediately, isOpen: offset.value > 0 }}>
             {/* Dismissal area. */}
             <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
                 <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
@@ -227,7 +243,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
                     </View>
                 </Animated.View>
             </GestureDetector>
-        </>
+        </TabsContext.Provider>
     );
 });
 

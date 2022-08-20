@@ -1,4 +1,4 @@
-import { addNotificationReceivedListener, Notification, NotificationChannel, removeNotificationSubscription, scheduleNotificationAsync } from "expo-notifications";
+import { addNotificationReceivedListener, Notification, removeNotificationSubscription, scheduleNotificationAsync } from "expo-notifications";
 import moment from "moment";
 import { useEffect } from "react";
 
