@@ -21,7 +21,7 @@ export const Header: FC<HeaderProps> = ({ style, children }) => {
 
     return (
         <Row style={[styles.container, containerStyle, style]} type="center" variant="spaced">
-            <Icon name="chevron-left" size={iconSize} />
+            <Icon name="chevron-left" size={iconSize} color={theme.text} />
 
             <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
                 {children}

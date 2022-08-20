@@ -45,7 +45,7 @@ export const KnowledgeGroupsScreen = () => {
             keyExtractor={(item, index) => item.Id + index}
             renderItem={({ item }) => <KnowledgeListEntry entry={item} key={item.Id} />}
             renderSectionHeader={({ section }) => (
-                <Section title={section.Name} subtitle={section.Description} style={{ padding: 20, marginTop: 0, backgroundColor: theme.background }} />
+                <Section title={section.Name} subtitle={section.Description} style={{ padding: 20, marginTop: 0, backgroundColor: theme.surface }} />
             )}
             renderSectionFooter={() => <View style={styles.footer} />}
         />
