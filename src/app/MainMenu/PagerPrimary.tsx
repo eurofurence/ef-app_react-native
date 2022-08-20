@@ -6,6 +6,7 @@ import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
+import { useTabs } from "../../components/Containers/Tabs";
 import { useAppSelector } from "../../store";
 import { selectBrowseableMaps } from "../../store/eurofurence.selectors";
 import { RecordId } from "../../store/eurofurence.types";
@@ -30,11 +31,12 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
     const { t } = useTranslation("Menu");
     const loggedIn = useAppSelector((state) => state.authorization.isLoggedIn);
     const maps = useAppSelector(selectBrowseableMaps);
+    const tabs = useTabs();
 
     return (
         <Col type="stretch">
             {loggedIn ? (
-                <PrivateMessageLinker onOpenMessages={onMessages} />
+                <PrivateMessageLinker onOpenMessages={onMessages} open={tabs.isOpen} />
             ) : (
                 <View style={{ padding: 30 }}>
                     <Text style={styles.marginBefore}>{t("not_logged_in")}</Text>
