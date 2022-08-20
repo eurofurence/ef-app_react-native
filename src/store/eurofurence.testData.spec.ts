@@ -184,7 +184,7 @@ export default {
             "ff66800a-5817-4acd-aa28-5938f94336fa",
             "db66d940-7f38-4729-9b51-5e98351b68ef",
             "3deb62a6-0ff9-4b2a-91fd-ebffce2ed692",
-            "76430fe0-ece7-48c9-b8e6-fdbc3974ff64",
+            "76430fe0-ece7-48c9-b8e6-fdbc3974ff64"
         ],
         entities: {
             "76430fe0-ece7-48c9-b8e6-fdbc3974ff64": {
@@ -215,7 +215,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "3deb62a6-0ff9-4b2a-91fd-ebffce2ed692": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.619Z",
@@ -247,7 +247,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "db66d940-7f38-4729-9b51-5e98351b68ef": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.017Z",
@@ -279,7 +279,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "ff66800a-5817-4acd-aa28-5938f94336fa": {
                 LastChangeDateTimeUtc: "2022-08-08T16:00:06.407Z",
@@ -311,7 +311,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "d7676a70-bc1e-4fde-9891-8060cb9f291a": {
                 LastChangeDateTimeUtc: "2022-07-11T18:30:05.614Z",
@@ -341,7 +341,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "60e0d249-a030-4493-9ff6-d17eb2db66f5": {
                 LastChangeDateTimeUtc: "2022-07-27T00:00:06.644Z",
@@ -372,7 +372,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "c54cb9f1-602b-47b4-849c-6c448a909cd1": {
                 LastChangeDateTimeUtc: "2022-07-14T21:00:06.888Z",
@@ -402,7 +402,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "f571925d-f636-49e3-b23c-cb20d87f675c": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.138Z",
@@ -434,7 +434,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "93166cea-9016-4cb8-aad1-0f8a356dc96f": {
                 LastChangeDateTimeUtc: "2022-07-27T00:00:06.668Z",
@@ -465,7 +465,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "3017968c-4804-4474-ba01-867a140916c9": {
                 LastChangeDateTimeUtc: "2022-08-11T09:00:06.716Z",
@@ -495,7 +495,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "f43e6808-b8ed-43a3-8836-ad9493b53d11": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.410Z",
@@ -525,7 +525,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "06d8a4bd-6211-463c-9737-4b87588c0ab0": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.749Z",
@@ -557,7 +557,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "24dc3035-ccf4-4f20-bd8e-f81d441d6fb0": {
                 LastChangeDateTimeUtc: "2022-08-10T12:30:05.852Z",
@@ -590,7 +590,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "813fee3d-f2ab-4ee1-9422-907657fbdff9": {
                 LastChangeDateTimeUtc: "2022-08-10T12:30:06.013Z",
@@ -623,7 +623,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "b08a31da-aeae-4da4-ba2c-6f11c3e72259": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.418Z",
@@ -632,12 +632,12 @@ export default {
                 Title: "Fursuit Photoshoot Registration",
                 SubTitle: "Block 1",
                 Abstract:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 ConferenceDayId: "572ca56c-c473-4ca7-b4ec-c6498c077dda",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "d485995d-4550-40b7-a729-1a19f5a373a6",
                 Description:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 Duration: "01:00:00",
                 StartTime: "19:00:00",
                 EndTime: "20:00:00",
@@ -654,7 +654,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "ff714ae4-a165-4cbd-a0e1-74773620203a": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.678Z",
@@ -687,7 +687,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "a592d43f-76c1-43d7-adc0-a737291d768b": {
                 LastChangeDateTimeUtc: "2022-07-14T21:00:06.899Z",
@@ -717,7 +717,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "9b88ae43-c4b6-49ca-b105-34e3f00ffc03": {
                 LastChangeDateTimeUtc: "2022-08-09T21:30:05.368Z",
@@ -749,7 +749,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "17d75af8-d23a-4378-be9b-4a9ab0492da5": {
                 LastChangeDateTimeUtc: "2022-08-10T21:30:05.255Z",
@@ -780,7 +780,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "073fc7b1-8165-413c-b028-db802c360bcf": {
                 LastChangeDateTimeUtc: "2022-08-06T17:30:05.106Z",
@@ -789,12 +789,12 @@ export default {
                 Title: "Cheese & Wine",
                 SubTitle: "Furry Mixer",
                 Abstract:
-                    'This is the casual "Furry Mixer" meet-up! Talk to people you know, and meet and\r\nget to know new people over a glass of wine and some cheese and crackers!',
+                    "This is the casual \"Furry Mixer\" meet-up! Talk to people you know, and meet and\r\nget to know new people over a glass of wine and some cheese and crackers!",
                 ConferenceDayId: "572ca56c-c473-4ca7-b4ec-c6498c077dda",
                 ConferenceTrackId: "9c0c41ab-c937-4299-a0a4-20daa6d77458",
                 ConferenceRoomId: "9ebc2135-aa51-4042-ba92-670bd118c6f3",
                 Description:
-                    'This is a furry "mixer" event: Say hello to old friends and new ones, and have a\r\nbit of conversation! You are welcome to bring your favorite bottle of wine and\r\ntaste it with the others! And I, the Scottish Gryphon, will bring cheese and\r\ncrackers for you to nibble on! Everyone is welcome at this reception, in or out of\r\nfursuit! Long straws will be provided.',
+                    "This is a furry \"mixer\" event: Say hello to old friends and new ones, and have a\r\nbit of conversation! You are welcome to bring your favorite bottle of wine and\r\ntaste it with the others! And I, the Scottish Gryphon, will bring cheese and\r\ncrackers for you to nibble on! Everyone is welcome at this reception, in or out of\r\nfursuit! Long straws will be provided.",
                 Duration: "02:00:00",
                 StartTime: "21:00:00",
                 EndTime: "23:00:00",
@@ -812,7 +812,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "3405d0da-4dda-4444-8ce8-07997dd0d5b8": {
                 LastChangeDateTimeUtc: "2022-08-12T22:00:06.124Z",
@@ -844,7 +844,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "0d7817c3-03c4-48a7-bcf9-5cd690e86368": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.595Z",
@@ -875,7 +875,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "573582e9-158d-4c7b-851e-946bb1f03812": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.146Z",
@@ -907,7 +907,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "f1435c7b-49eb-4fd7-b28b-fc088def8da4": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.150Z",
@@ -939,7 +939,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "5a8122bd-8364-483e-bff8-0f174181d208": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.751Z",
@@ -971,7 +971,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "cb30731c-a616-403a-9d19-a0d6717010bc": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.761Z",
@@ -1003,7 +1003,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "4346541a-e906-43fe-b691-62618de4f455": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.176Z",
@@ -1035,7 +1035,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "dd278ad2-65df-47c3-8fd2-8171456a6a53": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.428Z",
@@ -1044,12 +1044,12 @@ export default {
                 Title: "Fursuit Photoshoot Registration",
                 SubTitle: "Block 2",
                 Abstract:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 ConferenceDayId: "7f69f120-3c8a-49bf-895a-20c2adade161",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "d485995d-4550-40b7-a729-1a19f5a373a6",
                 Description:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 Duration: "01:00:00",
                 StartTime: "11:00:00",
                 EndTime: "12:00:00",
@@ -1066,7 +1066,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "37e2ffaf-a281-47f8-bbac-a483ea2c5bc3": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.430Z",
@@ -1096,7 +1096,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "8a021ffe-4efc-40c4-b2dc-5542329fbb8b": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.763Z",
@@ -1129,7 +1129,7 @@ export default {
                 SuperSponsorOnly: true,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "6a74d47f-b139-46c2-88c5-1532306c6d2c": {
                 LastChangeDateTimeUtc: "2022-08-11T09:00:06.720Z",
@@ -1159,7 +1159,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "27b6219d-2e09-462c-b06d-b222c2099163": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.597Z",
@@ -1192,7 +1192,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "2fd1d2be-4993-443f-b16f-a225674c2dfa": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.198Z",
@@ -1200,12 +1200,12 @@ export default {
                 Slug: "fursuit_photoshoot_thu_1",
                 Title: "Fursuit Photoshoot",
                 SubTitle: "Block 1",
-                Abstract: 'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                Abstract: "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 ConferenceDayId: "7f69f120-3c8a-49bf-895a-20c2adade161",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
                 Description:
-                    'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                    "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 Duration: "04:00:00",
                 StartTime: "12:00:00",
                 EndTime: "16:00:00",
@@ -1224,7 +1224,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "5f4b052c-b8c3-4c42-826a-e5e602f74ca9": {
                 LastChangeDateTimeUtc: "2022-08-06T20:00:06.258Z",
@@ -1256,7 +1256,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "9f2950b4-9bf4-4bab-bd42-3c7a8830cde3": {
                 LastChangeDateTimeUtc: "2022-08-10T21:00:06.275Z",
@@ -1286,7 +1286,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "746ecd5f-3a5f-4471-a023-2c17be0900f0": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.600Z",
@@ -1319,7 +1319,7 @@ export default {
                 SuperSponsorOnly: true,
                 SponsorOnly: true,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "dd63ce35-736b-4d9a-b551-978098b9c038": {
                 LastChangeDateTimeUtc: "2022-08-10T14:00:05.850Z",
@@ -1352,7 +1352,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "576469f4-2d1a-4531-b203-71dd63079665": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.204Z",
@@ -1385,7 +1385,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "ac7224e4-a8ec-4efa-bbb7-8afbb62918d3": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.831Z",
@@ -1418,7 +1418,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "de2fa514-01b5-44f2-a96e-bd725a2d946a": {
                 LastChangeDateTimeUtc: "2022-08-07T04:00:05.154Z",
@@ -1450,7 +1450,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "943ffc78-3175-4461-847f-e52c50e641bf": {
                 LastChangeDateTimeUtc: "2022-08-10T14:00:06.017Z",
@@ -1482,7 +1482,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "c292f7fc-dd75-4f9d-892e-5b9b9cf64c75": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.207Z",
@@ -1490,12 +1490,12 @@ export default {
                 Slug: "fursuit_photoshoot_thu_2",
                 Title: "Fursuit Photoshoot",
                 SubTitle: "Block 2",
-                Abstract: 'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                Abstract: "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 ConferenceDayId: "7f69f120-3c8a-49bf-895a-20c2adade161",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
                 Description:
-                    'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                    "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 Duration: "04:00:00",
                 StartTime: "16:00:00",
                 EndTime: "20:00:00",
@@ -1514,7 +1514,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "a8b49c09-00bc-415c-bb31-0c3424a300ca": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.834Z",
@@ -1547,7 +1547,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "015533eb-b570-488c-ac0b-fb5f29fff856": {
                 LastChangeDateTimeUtc: "2022-07-14T21:00:06.931Z",
@@ -1576,7 +1576,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "b70777c7-fd08-40f4-bf23-d10acadff724": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.002Z",
@@ -1605,7 +1605,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "1adcbba8-dfec-445a-abd4-955ac6927d29": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.837Z",
@@ -1635,7 +1635,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "c034bc46-92a7-413c-93a6-d430ce621844": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.771Z",
@@ -1667,7 +1667,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "89f94d5b-fd27-489d-b4f6-d201a852539b": {
                 LastChangeDateTimeUtc: "2022-07-25T18:00:06.523Z",
@@ -1680,7 +1680,7 @@ export default {
                 ConferenceTrackId: "1af389c5-7e1c-4524-8db2-ce7551b3c4eb",
                 ConferenceRoomId: "979f4ecf-66bd-4c83-ac3c-c3636ff82a81",
                 Description:
-                    'During a spectacular two-hour show, contestants from all over the world\r\ncompete to show their skills on the dance floor to a cheering audience.\r\nPerformances can vary from sensual belly dancing to contemporary\r\ndance, hip hop, improv, original styles and even a mix of all of the above\r\ncombined. Each contestant\'s performance is judged by a jury\r\nwho will rate each contestant on style,\r\noriginality and overall performance.\r\n\r\nCome and be blown away by dedicated and skilled dancers that have\r\nmastered the art of popping and locking, tutting, contemporary dance,\r\nmixed krumping with Krav Maga and Aztec Warfare. Or maybe they just know every\r\nmove from "Dance Central" and "Just Dance" by heart!\r\n\r\n**Cheer them on as they… Enter the Arena.**',
+                    "During a spectacular two-hour show, contestants from all over the world\r\ncompete to show their skills on the dance floor to a cheering audience.\r\nPerformances can vary from sensual belly dancing to contemporary\r\ndance, hip hop, improv, original styles and even a mix of all of the above\r\ncombined. Each contestant's performance is judged by a jury\r\nwho will rate each contestant on style,\r\noriginality and overall performance.\r\n\r\nCome and be blown away by dedicated and skilled dancers that have\r\nmastered the art of popping and locking, tutting, contemporary dance,\r\nmixed krumping with Krav Maga and Aztec Warfare. Or maybe they just know every\r\nmove from \"Dance Central\" and \"Just Dance\" by heart!\r\n\r\n**Cheer them on as they… Enter the Arena.**",
                 Duration: "00:30:00",
                 StartTime: "18:00:00",
                 EndTime: "18:30:00",
@@ -1697,7 +1697,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "bank",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "b8c89721-0f77-4fd9-a0e4-ce2fbfd0e51b": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.008Z",
@@ -1710,7 +1710,7 @@ export default {
                 ConferenceTrackId: "1af389c5-7e1c-4524-8db2-ce7551b3c4eb",
                 ConferenceRoomId: "979f4ecf-66bd-4c83-ac3c-c3636ff82a81",
                 Description:
-                    'During a spectacular two-hour show, contestants from all over the world\r\ncompete to show their skills on the dance floor to a cheering audience.\r\nPerformances can vary from sensual belly dancing to contemporary\r\ndance, hip hop, improv, original styles and even a mix of all of the above\r\ncombined. Each contestant\'s performance is judged by a jury\r\nwho will rate each contestant on style,\r\noriginality and overall performance.\r\n\r\nCome and be blown away by dedicated and skilled dancers that have\r\nmastered the art of popping and locking, tutting, contemporary dance,\r\nmixed krumping with Krav Maga and Aztec Warfare. Or maybe they just know every\r\nmove from "Dance Central" and "Just Dance" by heart!\r\n\r\n**Cheer them on as they… Enter the Arena.**',
+                    "During a spectacular two-hour show, contestants from all over the world\r\ncompete to show their skills on the dance floor to a cheering audience.\r\nPerformances can vary from sensual belly dancing to contemporary\r\ndance, hip hop, improv, original styles and even a mix of all of the above\r\ncombined. Each contestant's performance is judged by a jury\r\nwho will rate each contestant on style,\r\noriginality and overall performance.\r\n\r\nCome and be blown away by dedicated and skilled dancers that have\r\nmastered the art of popping and locking, tutting, contemporary dance,\r\nmixed krumping with Krav Maga and Aztec Warfare. Or maybe they just know every\r\nmove from \"Dance Central\" and \"Just Dance\" by heart!\r\n\r\n**Cheer them on as they… Enter the Arena.**",
                 Duration: "02:30:00",
                 StartTime: "18:30:00",
                 EndTime: "21:00:00",
@@ -1727,7 +1727,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "bank",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "740d2ffa-5c5d-4ca4-bf26-3034138740eb": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.447Z",
@@ -1736,12 +1736,12 @@ export default {
                 Title: "Fursuit Photoshoot Registration",
                 SubTitle: "Block 3",
                 Abstract:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 ConferenceDayId: "7f69f120-3c8a-49bf-895a-20c2adade161",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "d485995d-4550-40b7-a729-1a19f5a373a6",
                 Description:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 Duration: "01:00:00",
                 StartTime: "19:00:00",
                 EndTime: "20:00:00",
@@ -1758,7 +1758,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "f36aab1e-c350-4a76-803a-082bdf9453f9": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.009Z",
@@ -1767,7 +1767,7 @@ export default {
                 Title: "The e621 Gameshow",
                 SubTitle: "",
                 Abstract:
-                    'How much do you know about e621? If the answer is "more than anyone should", then\r\nwhy not prove it in The e621 Gameshow – guaranteed to be embarrassing whether you\r\nwin OR lose!',
+                    "How much do you know about e621? If the answer is \"more than anyone should\", then\r\nwhy not prove it in The e621 Gameshow – guaranteed to be embarrassing whether you\r\nwin OR lose!",
                 ConferenceDayId: "7f69f120-3c8a-49bf-895a-20c2adade161",
                 ConferenceTrackId: "0b80cc7b-b5b2-4fab-8b74-078f2b5e366e",
                 ConferenceRoomId: "9ebc2135-aa51-4042-ba92-670bd118c6f3",
@@ -1788,7 +1788,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "08eff996-e673-480c-9236-716b8204fd6a": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.841Z",
@@ -1820,7 +1820,7 @@ export default {
                 SuperSponsorOnly: true,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "ab70e75d-5256-46ac-98e0-2cdacf8c9c2f": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.775Z",
@@ -1829,7 +1829,7 @@ export default {
                 Title: "Dealers' Den & Art Show Party",
                 SubTitle: "Dealers, artists and staff only!",
                 Abstract:
-                    'PARTY! Dealers\' Den and Art Show will hold their reception, where we open the doors between these two rooms for all the artists, dealers and staff members to get together, chat about art and other things over a beer or a glass of "tea".',
+                    "PARTY! Dealers' Den and Art Show will hold their reception, where we open the doors between these two rooms for all the artists, dealers and staff members to get together, chat about art and other things over a beer or a glass of \"tea\".",
                 ConferenceDayId: "7f69f120-3c8a-49bf-895a-20c2adade161",
                 ConferenceTrackId: "675c3a7c-ad93-441c-8b66-d15f3f3609e4",
                 ConferenceRoomId: "3465b19a-fe53-45fd-b3ee-e6df1be71e15",
@@ -1852,7 +1852,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "0760ae30-25e3-4a94-9a89-fb460c8df3b3": {
                 LastChangeDateTimeUtc: "2022-08-09T21:30:05.477Z",
@@ -1884,7 +1884,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "4a90c95f-dac0-4ca0-9f6d-a7839845ba36": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.601Z",
@@ -1916,7 +1916,7 @@ export default {
                 SponsorOnly: false,
                 Glyph: "bank",
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "716695c1-ebac-453c-a766-67b3a27bdb86": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.011Z",
@@ -1945,7 +1945,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "ccb69846-2280-4859-9deb-4905d2b6b5a4": {
                 LastChangeDateTimeUtc: "2022-08-10T14:30:05.127Z",
@@ -1977,7 +1977,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "72bbddf0-aef3-4069-8a6b-e6ccbe3742ad": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.014Z",
@@ -2006,7 +2006,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "d2fd4617-2be2-49d4-b819-5e99dfc2d3be": {
                 LastChangeDateTimeUtc: "2022-08-10T12:00:05.967Z",
@@ -2038,7 +2038,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "6a12a47a-9281-457a-bccf-7b419a8fdff4": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.218Z",
@@ -2070,7 +2070,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "33928c4a-e430-49bd-9d24-051253aab719": {
                 LastChangeDateTimeUtc: "2022-08-08T16:00:06.633Z",
@@ -2102,7 +2102,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "97f7e608-ea79-41e0-aa6e-2cc1133fc2f9": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.223Z",
@@ -2134,7 +2134,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "37e08649-807f-4c2e-a83f-58e31cf29bc9": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.453Z",
@@ -2143,12 +2143,12 @@ export default {
                 Title: "Fursuit Photoshoot Registration",
                 SubTitle: "Block 4",
                 Abstract:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 ConferenceDayId: "bea15e67-4775-49fc-84e4-6c20a30a1943",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "d485995d-4550-40b7-a729-1a19f5a373a6",
                 Description:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 Duration: "01:00:00",
                 StartTime: "11:00:00",
                 EndTime: "12:00:00",
@@ -2165,7 +2165,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "7f951a44-641e-45fb-b4a2-cf7f0faa349f": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.779Z",
@@ -2197,7 +2197,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "dfb30f1a-5753-496f-94d2-7d0f2be13496": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.456Z",
@@ -2227,7 +2227,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "902efa40-e682-401a-97d8-9c791bb2a508": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.242Z",
@@ -2260,7 +2260,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "79eb1ad9-c736-4971-b0a9-fe5f7f34c099": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.019Z",
@@ -2288,7 +2288,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "d818445a-688d-4bae-b7fb-df3400f8cee1": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.237Z",
@@ -2321,7 +2321,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "c69f7e79-f64e-47bb-985b-9a9199569315": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.461Z",
@@ -2329,12 +2329,12 @@ export default {
                 Slug: "fursuit_photoshoot_fri_1",
                 Title: "Fursuit Photoshoot",
                 SubTitle: "Block 3",
-                Abstract: 'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                Abstract: "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 ConferenceDayId: "bea15e67-4775-49fc-84e4-6c20a30a1943",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
                 Description:
-                    'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                    "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 Duration: "04:00:00",
                 StartTime: "12:00:00",
                 EndTime: "16:00:00",
@@ -2351,7 +2351,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "cde4eeb1-17ef-43d7-828d-2368255ca17f": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.021Z",
@@ -2381,7 +2381,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "f927a6f2-1d2b-4028-a586-3630f5ee59a8": {
                 LastChangeDateTimeUtc: "2022-07-29T11:30:05.453Z",
@@ -2412,7 +2412,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "81aa6207-4c33-4bac-b0cf-57f64a2013f3": {
                 LastChangeDateTimeUtc: "2022-08-06T20:00:06.429Z",
@@ -2444,7 +2444,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "d3ca7864-1c50-4b07-b19c-8da489b3da25": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.842Z",
@@ -2476,7 +2476,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "0204a7fd-00f9-4a4c-a6ba-ca8def81d09e": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.028Z",
@@ -2506,7 +2506,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "36c095fb-e3ed-43e9-8214-d6e47ae2605b": {
                 LastChangeDateTimeUtc: "2022-07-14T21:00:06.946Z",
@@ -2536,7 +2536,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "97cfc5f7-75c0-4a70-8274-db39ed29a337": {
                 LastChangeDateTimeUtc: "2022-07-10T00:30:05.589Z",
@@ -2564,7 +2564,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "dca7118f-7255-47a8-9cba-eca5527db274": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.467Z",
@@ -2572,12 +2572,12 @@ export default {
                 Slug: "fursuit_photoshoot_fri_2",
                 Title: "Fursuit Photoshoot",
                 SubTitle: "Block 4",
-                Abstract: 'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                Abstract: "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 ConferenceDayId: "bea15e67-4775-49fc-84e4-6c20a30a1943",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
                 Description:
-                    'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                    "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 Duration: "04:00:00",
                 StartTime: "16:00:00",
                 EndTime: "20:00:00",
@@ -2594,7 +2594,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "35118ab8-1813-4d5a-81c4-17dd1744a7ac": {
                 LastChangeDateTimeUtc: "2022-07-10T00:30:05.734Z",
@@ -2622,7 +2622,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "d584ad27-9a05-4a6e-9803-83c3934d870f": {
                 LastChangeDateTimeUtc: "2022-08-09T21:30:05.482Z",
@@ -2654,7 +2654,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "260fb0b6-55d6-4358-b0bd-30b6c881fd94": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.789Z",
@@ -2686,7 +2686,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "3254af2b-53af-455c-bbdd-f22f21b692ff": {
                 LastChangeDateTimeUtc: "2022-08-13T08:00:07.230Z",
@@ -2717,7 +2717,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "c250abf1-df26-4d42-bdbe-55133aaf8c27": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.252Z",
@@ -2750,7 +2750,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "291c1f93-927c-4afb-b434-b59bb833fba4": {
                 LastChangeDateTimeUtc: "2022-08-13T08:00:07.454Z",
@@ -2783,7 +2783,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "106391b0-6cb9-4bf9-b120-1d4e778d2148": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.474Z",
@@ -2792,12 +2792,12 @@ export default {
                 Title: "Fursuit Photoshoot Registration",
                 SubTitle: "Block 5",
                 Abstract:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 ConferenceDayId: "bea15e67-4775-49fc-84e4-6c20a30a1943",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "d485995d-4550-40b7-a729-1a19f5a373a6",
                 Description:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 Duration: "01:00:00",
                 StartTime: "19:00:00",
                 EndTime: "20:00:00",
@@ -2814,7 +2814,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "4ccc0f62-a16e-49fa-93bf-5f23c85c4fb5": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.605Z",
@@ -2846,7 +2846,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "c6184eda-5bf1-41fb-8487-330ddcdece20": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.030Z",
@@ -2875,7 +2875,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "e4f2be1a-6a76-41dd-bec3-9020f90d87f2": {
                 LastChangeDateTimeUtc: "2022-08-06T20:00:06.433Z",
@@ -2907,7 +2907,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "7fb3653f-d369-41e2-b8d3-847c8da48c39": {
                 LastChangeDateTimeUtc: "2022-08-06T20:00:06.436Z",
@@ -2938,7 +2938,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "fc4de5ac-a543-4fea-9150-9feaeeb09130": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.256Z",
@@ -2970,7 +2970,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "e013890c-ac9a-4631-91c4-55aa6852bcc4": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.034Z",
@@ -2999,7 +2999,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "85e6cf20-998b-4104-8c12-d9e82f83f801": {
                 LastChangeDateTimeUtc: "2022-07-14T21:00:06.955Z",
@@ -3029,7 +3029,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "9a467f40-85c0-46f7-908f-6e8b688338eb": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.257Z",
@@ -3061,7 +3061,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "47636b36-84ec-4567-a16f-31f22d22948f": {
                 LastChangeDateTimeUtc: "2022-08-10T16:30:05.781Z",
@@ -3094,7 +3094,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "752951d7-c790-452c-9f40-06ed958bd160": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.259Z",
@@ -3127,7 +3127,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "ab371ad2-a08f-4c67-b053-09cc64597f77": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.483Z",
@@ -3136,12 +3136,12 @@ export default {
                 Title: "Fursuit Photoshoot Registration",
                 SubTitle: "Block 6",
                 Abstract:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 ConferenceDayId: "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "d485995d-4550-40b7-a729-1a19f5a373a6",
                 Description:
-                    'Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; "Block 2" registration is only for "Block 2" openings! Once all slots for a block are taken, registration is closed again. So the "registration end time" is more of an "approximately up until" time. Due to the large demand for time slots, we prioritize people who didn\'t get a chance the year before. You can still apply, but you might get turned down.',
+                    "Registration takes place at the ConOps Office (Estrel Hall B), first come, first served. Each block in the schedule has its own registration time; \"Block 2\" registration is only for \"Block 2\" openings! Once all slots for a block are taken, registration is closed again. So the \"registration end time\" is more of an \"approximately up until\" time. Due to the large demand for time slots, we prioritize people who didn't get a chance the year before. You can still apply, but you might get turned down.",
                 Duration: "01:00:00",
                 StartTime: "11:00:00",
                 EndTime: "12:00:00",
@@ -3158,7 +3158,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "7b4f06d6-9122-4b35-b4d4-9ab94052c2b1": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.795Z",
@@ -3190,7 +3190,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "719cf54a-3ef3-456d-a9db-39b78070017f": {
                 LastChangeDateTimeUtc: "2022-08-10T16:30:05.782Z",
@@ -3223,7 +3223,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "31baf63b-20d4-49b7-9d0b-896e14c89d6f": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.844Z",
@@ -3256,7 +3256,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "6082efc1-852c-47e8-b3b3-aac88fb4438d": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.266Z",
@@ -3289,7 +3289,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "ce38d55d-932a-445e-a739-221a24334bb1": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.048Z",
@@ -3317,7 +3317,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "7b616093-df43-4273-99fd-6fb182ff3bd2": {
                 LastChangeDateTimeUtc: "2022-07-11T19:00:06.485Z",
@@ -3325,12 +3325,12 @@ export default {
                 Slug: "fursuit_photoshoot_sat_1",
                 Title: "Fursuit Photoshoot",
                 SubTitle: "Block 5",
-                Abstract: 'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                Abstract: "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 ConferenceDayId: "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
                 Description:
-                    'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                    "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 Duration: "04:00:00",
                 StartTime: "12:00:00",
                 EndTime: "16:00:00",
@@ -3347,7 +3347,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "9cf3f7e5-84f8-445d-8634-69bb83ab6077": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.050Z",
@@ -3377,7 +3377,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "2c3e71b5-2c78-4252-ab6f-af03b946efd5": {
                 LastChangeDateTimeUtc: "2022-07-29T11:30:05.459Z",
@@ -3408,7 +3408,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "fa4331ce-d93f-4384-bfcb-a50c0f66b5d9": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.908Z",
@@ -3436,7 +3436,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "d5aa49df-6749-49b0-ba38-4a03345e37dd": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.282Z",
@@ -3469,7 +3469,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "1baefff3-fb42-4855-a6c4-00e1c45c9f0c": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.912Z",
@@ -3497,7 +3497,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "88fe241b-743d-4713-8fcc-57918e6a7853": {
                 LastChangeDateTimeUtc: "2022-08-11T15:00:05.847Z",
@@ -3530,7 +3530,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "f087043d-8293-49d4-9db0-6242019c9040": {
                 LastChangeDateTimeUtc: "2022-08-10T12:00:06.182Z",
@@ -3562,7 +3562,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "9f7cf97e-9c3f-4625-99b7-eb807dd317da": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.054Z",
@@ -3570,12 +3570,12 @@ export default {
                 Slug: "fursuit_photoshoot_sat_2",
                 Title: "Fursuit Photoshoot",
                 SubTitle: "Block 6",
-                Abstract: 'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                Abstract: "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 ConferenceDayId: "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7",
                 ConferenceTrackId: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
                 ConferenceRoomId: "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
                 Description:
-                    'The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the "Fursuit Photoshoot Registration" event for details!',
+                    "The Fursuit Photoshoot is run on a tight schedule. Please see the registration information in the \"Fursuit Photoshoot Registration\" event for details!",
                 Duration: "04:00:00",
                 StartTime: "16:00:00",
                 EndTime: "20:00:00",
@@ -3592,7 +3592,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "camera",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "f229eec4-fb4d-4fea-a98e-228e2f656eaf": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.055Z",
@@ -3601,12 +3601,12 @@ export default {
                 Title: "Pawpet Show & Closing Ceremony",
                 SubTitle: "Seating",
                 Abstract:
-                    'Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow "The Signal". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.',
+                    "Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow \"The Signal\". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.",
                 ConferenceDayId: "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7",
                 ConferenceTrackId: "1af389c5-7e1c-4524-8db2-ce7551b3c4eb",
                 ConferenceRoomId: "979f4ecf-66bd-4c83-ac3c-c3636ff82a81",
                 Description:
-                    'Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow "The Signal". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.',
+                    "Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow \"The Signal\". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.",
                 Duration: "00:30:00",
                 StartTime: "17:00:00",
                 EndTime: "17:30:00",
@@ -3623,7 +3623,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "bank",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "b7788c8c-730f-498a-85e7-1bb6e3cf894a": {
                 LastChangeDateTimeUtc: "2022-07-05T19:30:05.754Z",
@@ -3654,7 +3654,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "bank",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "86ab4649-5d88-4695-b456-7b506fb12ae5": {
                 LastChangeDateTimeUtc: "2022-08-03T16:30:05.188Z",
@@ -3686,7 +3686,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "7004c067-55c5-4a6b-8d33-099b3e004961": {
                 LastChangeDateTimeUtc: "2022-07-01T14:00:06.348Z",
@@ -3695,12 +3695,12 @@ export default {
                 Title: "Eurofurence Pawpet Show - The Signal",
                 SubTitle: "",
                 Abstract:
-                    'Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow "The Signal". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.',
+                    "Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow \"The Signal\". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.",
                 ConferenceDayId: "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7",
                 ConferenceTrackId: "1af389c5-7e1c-4524-8db2-ce7551b3c4eb",
                 ConferenceRoomId: "979f4ecf-66bd-4c83-ac3c-c3636ff82a81",
                 Description:
-                    'Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow "The Signal". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.',
+                    "Honeyberry and Professor Blackwood are crossing the\r\ngreat white plains of the arctic to follow \"The Signal\". Their only lead is a voice from\r\nthe distant past, an echo of a long forgotten civilization, invisible ghosts in the\r\nblinding storms and bone-chilling nights.",
                 Duration: "03:30:00",
                 StartTime: "18:00:00",
                 EndTime: "21:30:00",
@@ -3717,7 +3717,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "bank",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "e8d82ebf-d60e-4e7f-9163-cc0254ed1343": {
                 LastChangeDateTimeUtc: "2022-07-27T00:00:06.684Z",
@@ -3746,7 +3746,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "bff04d0d-b179-430c-9407-dc8efc7511c1": {
                 LastChangeDateTimeUtc: "2022-08-09T21:30:05.484Z",
@@ -3778,7 +3778,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "8768ff83-defe-4451-836f-1e4e8be831de": {
                 LastChangeDateTimeUtc: "2022-07-11T19:30:06.058Z",
@@ -3807,7 +3807,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "a4541cbd-909f-4fb4-85e0-d71b308fb254": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.290Z",
@@ -3838,7 +3838,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "35a2e937-8b37-4c37-abe1-6e22520bec46": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.291Z",
@@ -3870,7 +3870,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "46c59831-012e-4e4b-8e15-a6de1aca3ad4": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.607Z",
@@ -3901,7 +3901,7 @@ export default {
                 SponsorOnly: false,
                 Glyph: "bank",
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "073c1cac-9cc7-4769-bd72-e930712c34ae": {
                 LastChangeDateTimeUtc: "2022-07-27T08:30:05.911Z",
@@ -3930,7 +3930,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "c3245e27-1877-4977-8ec9-38a0e8b21b43": {
                 LastChangeDateTimeUtc: "2022-07-14T21:00:06.960Z",
@@ -3960,7 +3960,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "1036669b-39a9-47f1-8b4e-0f52546827b5": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.295Z",
@@ -3992,7 +3992,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "82918e17-e841-4687-895a-c80788e8847b": {
                 LastChangeDateTimeUtc: "2022-07-28T22:30:04.988Z",
@@ -4022,7 +4022,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "d3e5252b-8521-42ab-bd1a-d67f58c0f10f": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.610Z",
@@ -4052,7 +4052,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "71cc9d19-864c-43d1-b995-460f332bc7d9": {
                 LastChangeDateTimeUtc: "2022-08-11T17:30:05.709Z",
@@ -4065,7 +4065,7 @@ export default {
                 ConferenceTrackId: "9c0c41ab-c937-4299-a0a4-20daa6d77458",
                 ConferenceRoomId: "9ebc2135-aa51-4042-ba92-670bd118c6f3",
                 Description:
-                    'Meet other fans of My Little Pony, no matter if you are a "Friendship is Magic" enthusiast or\r\nGeneration 5 newcomer. Talk, discuss and share experiences with friends and new people.\r\nDon\'t forget to bring your plushies.',
+                    "Meet other fans of My Little Pony, no matter if you are a \"Friendship is Magic\" enthusiast or\r\nGeneration 5 newcomer. Talk, discuss and share experiences with friends and new people.\r\nDon't forget to bring your plushies.",
                 Duration: "01:30:00",
                 StartTime: "19:00:00",
                 EndTime: "20:30:00",
@@ -4083,7 +4083,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "4d5fb685-2945-45f7-9c2d-1975b7ec9440": {
                 LastChangeDateTimeUtc: "2022-07-11T20:00:06.629Z",
@@ -4113,7 +4113,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "3a5e68c9-548e-4e5d-ad97-26ade7215ba4": {
                 LastChangeDateTimeUtc: "2022-07-11T20:00:06.806Z",
@@ -4143,7 +4143,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "88ed8426-c2a0-42da-bcd1-4409657599b7": {
                 LastChangeDateTimeUtc: "2022-07-03T22:00:06.366Z",
@@ -4173,7 +4173,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "db4a2537-5e9b-41c0-9c2c-3a1cfc513b5c": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.782Z",
@@ -4206,7 +4206,7 @@ export default {
                 SuperSponsorOnly: true,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "18ab1606-506e-4b7c-b1db-4d3dad0e7c20": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.603Z",
@@ -4239,7 +4239,7 @@ export default {
                 SuperSponsorOnly: true,
                 SponsorOnly: true,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "3842fa46-49cb-4a56-9396-05bb7cbc5904": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.757Z",
@@ -4271,7 +4271,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "a657b29c-c86b-4873-bdb5-1c30e88cfb85": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.765Z",
@@ -4304,7 +4304,7 @@ export default {
                 SuperSponsorOnly: true,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "9f72c4d8-d6d6-4cbf-bafc-f1becdd0a6de": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.769Z",
@@ -4337,7 +4337,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "796df08a-a0c3-4132-9a1b-faff900fe2a2": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.206Z",
@@ -4370,7 +4370,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "2d8907a8-7496-495a-9eeb-e2739eba65b8": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.772Z",
@@ -4402,7 +4402,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "8dcd2e5a-d95c-42b3-a09d-c267987ca386": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.780Z",
@@ -4434,7 +4434,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "eed1c022-5326-4924-a6fb-2b3dffaae509": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.784Z",
@@ -4467,7 +4467,7 @@ export default {
                 SuperSponsorOnly: true,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "ec49e295-4415-4b16-9857-61e5a70fb699": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.787Z",
@@ -4500,7 +4500,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "819ebebf-3f94-4fc2-b2b9-bac1c2a4cabd": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.244Z",
@@ -4533,7 +4533,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "c8fd1926-f3b1-4f88-b2c8-b6604713c5e5": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.792Z",
@@ -4565,7 +4565,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "a4dfc735-58fe-44b4-b4df-25e421ef1276": {
                 LastChangeDateTimeUtc: "2022-08-02T15:30:05.797Z",
@@ -4597,7 +4597,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "4cc9e6d8-4bc4-428c-9437-02da74955e6b": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.269Z",
@@ -4630,7 +4630,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "849e4c22-8019-4f62-85b7-c4868bc62a52": {
                 LastChangeDateTimeUtc: "2022-08-03T16:30:05.308Z",
@@ -4662,7 +4662,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: ["face-mask"],
-                MaskRequired: true,
+                MaskRequired: true
             },
             "6112f88e-47a9-49d2-a67f-b7dddcbd6e3f": {
                 LastChangeDateTimeUtc: "2022-08-06T06:30:05.606Z",
@@ -4694,7 +4694,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "0f502e78-406a-4efd-901b-fb32d65ea217": {
                 LastChangeDateTimeUtc: "2022-07-11T20:00:06.818Z",
@@ -4722,7 +4722,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "27dda191-8dd8-4579-860d-d33cac5b3038": {
                 LastChangeDateTimeUtc: "2022-08-08T17:00:06.039Z",
@@ -4754,7 +4754,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "0343a9f3-616f-4126-8ca6-087d4e4273d6": {
                 LastChangeDateTimeUtc: "2022-07-10T00:00:06.828Z",
@@ -4783,7 +4783,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "bank",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "52438eeb-6406-4b11-975f-cfd817ca1f5d": {
                 LastChangeDateTimeUtc: "2022-07-16T22:00:06.489Z",
@@ -4814,7 +4814,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "bank",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "be7be8e7-0635-4e77-9565-968f1dde1375": {
                 LastChangeDateTimeUtc: "2022-08-12T22:00:06.229Z",
@@ -4846,7 +4846,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "0efa2fb7-a089-444f-b6e2-365bff466589": {
                 LastChangeDateTimeUtc: "2022-07-14T21:30:05.249Z",
@@ -4876,7 +4876,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "edd9526b-c107-4caf-8d31-b5f0606bdee2": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.209Z",
@@ -4908,7 +4908,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "c5ff6368-2631-4621-9358-b3c55bf04ef5": {
                 LastChangeDateTimeUtc: "2022-08-10T16:30:05.774Z",
@@ -4940,7 +4940,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "88ebf660-9190-4fd1-a3ab-a9e3979cc834": {
                 LastChangeDateTimeUtc: "2022-08-08T17:30:05.949Z",
@@ -4971,7 +4971,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "04d93d18-965c-4416-91fb-3cc323d4b5c8": {
                 LastChangeDateTimeUtc: "2022-08-08T17:00:06.311Z",
@@ -5003,7 +5003,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "679638d6-6079-481e-a435-1ec172c24bfc": {
                 LastChangeDateTimeUtc: "2022-07-24T13:00:06.673Z",
@@ -5032,7 +5032,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "06298ffb-fe0a-44b3-8dc7-9d28c1ae6090": {
                 LastChangeDateTimeUtc: "2022-08-06T08:00:05.776Z",
@@ -5063,7 +5063,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "ac72801b-bf65-40ee-8d00-965a989aedbb": {
                 LastChangeDateTimeUtc: "2022-07-24T23:30:05.559Z",
@@ -5093,7 +5093,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "34f3289c-e9d6-4b57-8cb1-c9605829b720": {
                 LastChangeDateTimeUtc: "2022-07-24T23:30:05.692Z",
@@ -5122,7 +5122,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "63dc66e7-1116-4498-ae82-1fd19078cbd7": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.229Z",
@@ -5152,7 +5152,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "d1a2fa56-cb23-4508-aecb-6dfe2bc638aa": {
                 LastChangeDateTimeUtc: "2022-07-27T00:30:05.902Z",
@@ -5182,7 +5182,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "9de926a1-09f6-4ae5-a3bd-d5bc98d59fbd": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:05.961Z",
@@ -5214,7 +5214,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "1e9ca818-d404-4736-84e6-b1f310b568b5": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.198Z",
@@ -5246,7 +5246,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "3b1595ed-70fc-44f5-99dc-10d9d8830223": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.203Z",
@@ -5278,7 +5278,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "1261cd47-341d-4e3d-aa83-d06c28486566": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.220Z",
@@ -5310,7 +5310,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "4eb7260a-5333-4381-8a03-9c2b62cc1d9f": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.227Z",
@@ -5342,7 +5342,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "f5b041fd-695e-41fe-9226-47ae4e453baf": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.229Z",
@@ -5374,7 +5374,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "548ec81e-963a-4db4-b952-1d535f453a5b": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.237Z",
@@ -5406,7 +5406,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "bb55eaac-926e-4a8d-866f-443cb9e41b13": {
                 LastChangeDateTimeUtc: "2022-08-06T07:00:06.239Z",
@@ -5438,7 +5438,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "2bb89f2d-62d9-47a2-b28e-238ec819f494": {
                 LastChangeDateTimeUtc: "2022-07-28T22:30:04.979Z",
@@ -5468,7 +5468,7 @@ export default {
                 BannerImageUrl: null,
                 PosterImageUrl: null,
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "a303c7aa-3485-4c49-9cb7-dfaf0ab201b7": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.148Z",
@@ -5500,7 +5500,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "9ab8c3f0-ec9c-43b3-8cbb-5ee33a157e05": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.219Z",
@@ -5532,7 +5532,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "f8a2fc1b-6df4-4bc9-bcd5-85ce8e3aeb73": {
                 LastChangeDateTimeUtc: "2022-07-29T11:00:06.900Z",
@@ -5563,7 +5563,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "5657060a-d614-43d8-86ee-9fee2bce9340": {
                 LastChangeDateTimeUtc: "2022-07-29T11:00:07.176Z",
@@ -5594,7 +5594,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "b128adb6-4a0a-4fd8-8bb5-af951c608fdf": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.254Z",
@@ -5626,7 +5626,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "4556880c-7099-4249-aafc-2d0181a19bb2": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.287Z",
@@ -5658,7 +5658,7 @@ export default {
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
                 Badges: [],
-                MaskRequired: false,
+                MaskRequired: false
             },
             "195d9cad-ad99-484e-8164-0858beb68a2b": {
                 LastChangeDateTimeUtc: "2022-07-29T11:30:05.345Z",
@@ -5689,7 +5689,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "0239670a-fd48-4f66-89e3-5088b0a13289": {
                 LastChangeDateTimeUtc: "2022-07-29T11:30:05.457Z",
@@ -5720,7 +5720,7 @@ export default {
                 PosterImageUrl: null,
                 Glyph: "shopping",
                 SuperSponsorOnly: false,
-                SponsorOnly: false,
+                SponsorOnly: false
             },
             "f9ffb582-2cfd-417f-b0aa-48c8f714188c": {
                 LastChangeDateTimeUtc: "2022-08-10T22:30:05.072Z",
@@ -5752,7 +5752,7 @@ export default {
                 Badges: [],
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
-                MaskRequired: false,
+                MaskRequired: false
             },
             "1fc44446-3e77-481b-8321-7fac31cc9a65": {
                 LastChangeDateTimeUtc: "2022-08-02T14:50:29.273Z",
@@ -5784,7 +5784,7 @@ export default {
                 Badges: [],
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
-                MaskRequired: false,
+                MaskRequired: false
             },
             "774d8bc7-e0a9-4cd7-9df1-f8b5a4ecc670": {
                 LastChangeDateTimeUtc: "2022-08-12T22:30:05.457Z",
@@ -5815,7 +5815,7 @@ export default {
                 Badges: [],
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
-                MaskRequired: false,
+                MaskRequired: false
             },
             "3d71a141-1ee0-47ac-8b93-bb6c7fd08bda": {
                 LastChangeDateTimeUtc: "2022-08-12T21:30:05.320Z",
@@ -5845,9 +5845,9 @@ export default {
                 Badges: [],
                 SuperSponsorOnly: false,
                 SponsorOnly: false,
-                MaskRequired: false,
-            },
-        },
+                MaskRequired: false
+            }
+        }
     },
     eventDays: {
         ids: [
@@ -5856,46 +5856,46 @@ export default {
             "7f69f120-3c8a-49bf-895a-20c2adade161",
             "bea15e67-4775-49fc-84e4-6c20a30a1943",
             "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7",
-            "88fc8d21-f80e-4b73-8a85-e9a263a801d6",
+            "88fc8d21-f80e-4b73-8a85-e9a263a801d6"
         ],
         entities: {
             "db6e0b07-3300-4d58-adfd-84c145e36242": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.424Z",
                 Id: "db6e0b07-3300-4d58-adfd-84c145e36242",
                 Name: "Early Arrival",
-                Date: "2022-08-23T00:00:00.000Z",
+                Date: "2022-08-23T00:00:00.000Z"
             },
             "572ca56c-c473-4ca7-b4ec-c6498c077dda": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.429Z",
                 Id: "572ca56c-c473-4ca7-b4ec-c6498c077dda",
                 Name: "Official Con Start/Con Day 1",
-                Date: "2022-08-24T00:00:00.000Z",
+                Date: "2022-08-24T00:00:00.000Z"
             },
             "7f69f120-3c8a-49bf-895a-20c2adade161": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.431Z",
                 Id: "7f69f120-3c8a-49bf-895a-20c2adade161",
                 Name: "Con Day 2",
-                Date: "2022-08-25T00:00:00.000Z",
+                Date: "2022-08-25T00:00:00.000Z"
             },
             "bea15e67-4775-49fc-84e4-6c20a30a1943": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.432Z",
                 Id: "bea15e67-4775-49fc-84e4-6c20a30a1943",
                 Name: "Con Day 3",
-                Date: "2022-08-26T00:00:00.000Z",
+                Date: "2022-08-26T00:00:00.000Z"
             },
             "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.433Z",
                 Id: "b15cef00-d4b9-4c2a-8e31-7bcb75e21fc7",
                 Name: "Con Day 4",
-                Date: "2022-08-27T00:00:00.000Z",
+                Date: "2022-08-27T00:00:00.000Z"
             },
             "88fc8d21-f80e-4b73-8a85-e9a263a801d6": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.435Z",
                 Id: "88fc8d21-f80e-4b73-8a85-e9a263a801d6",
                 Name: "Last Day/Con Day 5",
-                Date: "2022-08-28T00:00:00.000Z",
-            },
-        },
+                Date: "2022-08-28T00:00:00.000Z"
+            }
+        }
     },
     eventRooms: {
         ids: [
@@ -5923,160 +5923,160 @@ export default {
             "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
             "496fa438-9917-46b0-8f44-0fbeb05b3821",
             "c137717f-f297-4c3d-bc0e-542cbb032135",
-            "d6efe16f-9fd2-4f21-8e5e-b5cc5cc46c66",
+            "d6efe16f-9fd2-4f21-8e5e-b5cc5cc46c66"
         ],
         entities: {
             "2d5d9a98-aaca-4434-959d-99d20e675d3a": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.775Z",
                 Id: "2d5d9a98-aaca-4434-959d-99d20e675d3a",
                 Name: "Art Show — Convention Hall Section D",
-                ShortName: "Art Show",
+                ShortName: "Art Show"
             },
             "4fdf6f0b-adf0-49b8-801f-70b026733538": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.777Z",
                 Id: "4fdf6f0b-adf0-49b8-801f-70b026733538",
                 Name: "Artist Lounge — Foyer Estrel Hall",
-                ShortName: "Artist Lounge",
+                ShortName: "Artist Lounge"
             },
             "51bb19cb-a658-4cd5-b7cf-b655355040bf": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.779Z",
                 Id: "51bb19cb-a658-4cd5-b7cf-b655355040bf",
                 Name: "Club Stage — Estrel Hall A",
-                ShortName: "Club Stage",
+                ShortName: "Club Stage"
             },
             "f48c3415-907d-4ebe-9483-3033e2539563": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.782Z",
                 Id: "f48c3415-907d-4ebe-9483-3033e2539563",
                 Name: "ConOps | Frontoffice — Estrel Hall B",
-                ShortName: "ConOps | Frontoffice",
+                ShortName: "ConOps | Frontoffice"
             },
             "3465b19a-fe53-45fd-b3ee-e6df1be71e15": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.784Z",
                 Id: "3465b19a-fe53-45fd-b3ee-e6df1be71e15",
                 Name: "Dealers' Den — Convention Hall Section C",
-                ShortName: "Dealers' Den",
+                ShortName: "Dealers' Den"
             },
             "61c6d51a-a0f4-46ba-a719-d09d859afa26": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.789Z",
                 Id: "61c6d51a-a0f4-46ba-a719-d09d859afa26",
                 Name: "ECC Room 1",
-                ShortName: "ECC Room 1",
+                ShortName: "ECC Room 1"
             },
             "52b9576a-48b5-47ec-b295-de6fc895bb71": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.790Z",
                 Id: "52b9576a-48b5-47ec-b295-de6fc895bb71",
                 Name: "ECC Room 4",
-                ShortName: "ECC Room 4",
+                ShortName: "ECC Room 4"
             },
             "9ebc2135-aa51-4042-ba92-670bd118c6f3": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.792Z",
                 Id: "9ebc2135-aa51-4042-ba92-670bd118c6f3",
                 Name: "ECC Room 5",
-                ShortName: "ECC Room 5",
+                ShortName: "ECC Room 5"
             },
             "7fe3490e-bab8-4651-bea5-83d5b545919c": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.793Z",
                 Id: "7fe3490e-bab8-4651-bea5-83d5b545919c",
                 Name: "Entrance Rotunda",
-                ShortName: "Entrance Rotunda",
+                ShortName: "Entrance Rotunda"
             },
             "193d8ce2-6d9a-43f0-93de-05c35e3e010f": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.795Z",
                 Id: "193d8ce2-6d9a-43f0-93de-05c35e3e010f",
                 Name: "Estrel Beergarden",
-                ShortName: "Estrel Beergarden",
+                ShortName: "Estrel Beergarden"
             },
             "e2ff4cbf-1ed8-494b-b6a0-67f19d503769": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.797Z",
                 Id: "e2ff4cbf-1ed8-494b-b6a0-67f19d503769",
                 Name: "Fursuit Lounge — ECC Room 3",
-                ShortName: "Fursuit Lounge",
+                ShortName: "Fursuit Lounge"
             },
             "d485995d-4550-40b7-a729-1a19f5a373a6": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.799Z",
                 Id: "d485995d-4550-40b7-a729-1a19f5a373a6",
                 Name: "Fursuit Photoshoot Registration — Estrel Hall B",
-                ShortName: "Fursuit Photoshoot Registration",
+                ShortName: "Fursuit Photoshoot Registration"
             },
             "face6d3a-6db0-463a-9cf4-432cdd7d6757": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.800Z",
                 Id: "face6d3a-6db0-463a-9cf4-432cdd7d6757",
                 Name: "Lyon",
-                ShortName: "Lyon",
+                ShortName: "Lyon"
             },
             "979f4ecf-66bd-4c83-ac3c-c3636ff82a81": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.802Z",
                 Id: "979f4ecf-66bd-4c83-ac3c-c3636ff82a81",
                 Name: "Main Stage — Convention Hall Section A",
-                ShortName: "Main Stage",
+                ShortName: "Main Stage"
             },
             "1a181eac-fd0d-4144-8339-c4000904d84d": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.805Z",
                 Id: "1a181eac-fd0d-4144-8339-c4000904d84d",
                 Name: "Office Passage",
-                ShortName: "Office Passage",
+                ShortName: "Office Passage"
             },
             "9c28630f-a667-40da-960c-c12500c653a1": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.807Z",
                 Id: "9c28630f-a667-40da-960c-c12500c653a1",
                 Name: "Open Stage — ECC Foyer 1",
-                ShortName: "Open Stage",
+                ShortName: "Open Stage"
             },
             "62060c43-76a8-49de-8389-511790f52917": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.808Z",
                 Id: "62060c43-76a8-49de-8389-511790f52917",
                 Name: "Paris",
-                ShortName: "Paris",
+                ShortName: "Paris"
             },
             "b321418c-cf44-47a7-a7e9-3281bd6a7bd2": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.810Z",
                 Id: "b321418c-cf44-47a7-a7e9-3281bd6a7bd2",
                 Name: "Photoshooting — Convention Hall Section D",
-                ShortName: "Photoshooting",
+                ShortName: "Photoshooting"
             },
             "496fa438-9917-46b0-8f44-0fbeb05b3821": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.813Z",
                 Id: "496fa438-9917-46b0-8f44-0fbeb05b3821",
                 Name: "Registration — Estrel Hall C",
-                ShortName: "Registration",
+                ShortName: "Registration"
             },
             "c137717f-f297-4c3d-bc0e-542cbb032135": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.814Z",
                 Id: "c137717f-f297-4c3d-bc0e-542cbb032135",
                 Name: "Registration, Con Shop — Paris",
-                ShortName: "Registration, Con Shop",
+                ShortName: "Registration, Con Shop"
             },
             "d6efe16f-9fd2-4f21-8e5e-b5cc5cc46c66": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.816Z",
                 Id: "d6efe16f-9fd2-4f21-8e5e-b5cc5cc46c66",
                 Name: "Straßburg",
-                ShortName: "Straßburg",
+                ShortName: "Straßburg"
             },
             "4d64ba76-8a9b-4dd1-9b78-c159e38c5292": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.658Z",
                 Id: "4d64ba76-8a9b-4dd1-9b78-c159e38c5292",
                 Name: "AD Dealers' Den — Convention Hall Section C Level 1",
-                ShortName: "AD Dealers' Den",
+                ShortName: "AD Dealers' Den"
             },
             "8e9a2236-c83b-4206-aff8-fe73880e796a": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.803Z",
                 Id: "8e9a2236-c83b-4206-aff8-fe73880e796a",
                 Name: "Nizza",
-                ShortName: "Nizza",
+                ShortName: "Nizza"
             },
             "4b63218d-e78d-4127-9b75-bcbb585b8703": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.786Z",
                 Id: "4b63218d-e78d-4127-9b75-bcbb585b8703",
                 Name: "ECC Foyer 2 — VR Portal",
-                ShortName: "ECC Foyer 2",
+                ShortName: "ECC Foyer 2"
             },
             "6366daef-34fc-47b1-98a6-3b6f4f24bde2": {
                 LastChangeDateTimeUtc: "2022-07-30T11:14:50.787Z",
                 Id: "6366daef-34fc-47b1-98a6-3b6f4f24bde2",
                 Name: "ECC Foyer 3 — Artist Alley",
-                ShortName: "ECC Foyer 3",
-            },
-        },
+                ShortName: "ECC Foyer 3"
+            }
+        }
     },
     eventTracks: {
         ids: [
@@ -6095,90 +6095,90 @@ export default {
             "621e6ab9-cc7f-41fc-810a-4f78dfa59c74",
             "1af389c5-7e1c-4524-8db2-ce7551b3c4eb",
             "4acb394d-c8e3-4f65-8a17-b67c77f33cc2",
-            "c1cec323-1562-4958-97c0-36448d18b1cb",
+            "c1cec323-1562-4958-97c0-36448d18b1cb"
         ],
         entities: {
             "f23cc7f6-34c1-48d5-8acb-0ec10c353403": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.205Z",
                 Id: "f23cc7f6-34c1-48d5-8acb-0ec10c353403",
-                Name: "Art Show",
+                Name: "Art Show"
             },
             "38ef060d-06e1-46dd-8b15-989c35158f86": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.344Z",
                 Id: "38ef060d-06e1-46dd-8b15-989c35158f86",
-                Name: "Charity",
+                Name: "Charity"
             },
             "cb63dd74-6143-45f1-917c-8648082f96fe": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.346Z",
                 Id: "cb63dd74-6143-45f1-917c-8648082f96fe",
-                Name: "Creating Art",
+                Name: "Creating Art"
             },
             "675c3a7c-ad93-441c-8b66-d15f3f3609e4": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.347Z",
                 Id: "675c3a7c-ad93-441c-8b66-d15f3f3609e4",
-                Name: "Dealers' Den",
+                Name: "Dealers' Den"
             },
             "f0ada704-c876-42a1-8da4-59cbcf7ab413": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.349Z",
                 Id: "f0ada704-c876-42a1-8da4-59cbcf7ab413",
-                Name: "Fursuit",
+                Name: "Fursuit"
             },
             "9c0c41ab-c937-4299-a0a4-20daa6d77458": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.350Z",
                 Id: "9c0c41ab-c937-4299-a0a4-20daa6d77458",
-                Name: "Games | Social",
+                Name: "Games | Social"
             },
             "7d50ac56-9485-4211-a0b0-146a5f5a8fe3": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.352Z",
                 Id: "7d50ac56-9485-4211-a0b0-146a5f5a8fe3",
-                Name: "Guest of Honor",
+                Name: "Guest of Honor"
             },
             "98aba1f3-da78-4b06-8916-979d8719cf3b": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.353Z",
                 Id: "98aba1f3-da78-4b06-8916-979d8719cf3b",
-                Name: "Lobby and Outdoor",
+                Name: "Lobby and Outdoor"
             },
             "0b80cc7b-b5b2-4fab-8b74-078f2b5e366e": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.356Z",
                 Id: "0b80cc7b-b5b2-4fab-8b74-078f2b5e366e",
-                Name: "Misc.",
+                Name: "Misc."
             },
             "de678a6d-4a07-47c3-84c7-ea7aa70f3f55": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.358Z",
                 Id: "de678a6d-4a07-47c3-84c7-ea7aa70f3f55",
-                Name: "Music",
+                Name: "Music"
             },
             "621e6ab9-cc7f-41fc-810a-4f78dfa59c74": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.359Z",
                 Id: "621e6ab9-cc7f-41fc-810a-4f78dfa59c74",
-                Name: "Performance",
+                Name: "Performance"
             },
             "1af389c5-7e1c-4524-8db2-ce7551b3c4eb": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.361Z",
                 Id: "1af389c5-7e1c-4524-8db2-ce7551b3c4eb",
-                Name: "Stage",
+                Name: "Stage"
             },
             "4acb394d-c8e3-4f65-8a17-b67c77f33cc2": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.363Z",
                 Id: "4acb394d-c8e3-4f65-8a17-b67c77f33cc2",
-                Name: "Supersponsor Event",
+                Name: "Supersponsor Event"
             },
             "c1cec323-1562-4958-97c0-36448d18b1cb": {
                 LastChangeDateTimeUtc: "2022-06-23T08:18:09.365Z",
                 Id: "c1cec323-1562-4958-97c0-36448d18b1cb",
-                Name: "Writing",
+                Name: "Writing"
             },
             "c038266c-3f9c-4806-ba9d-6f7bb2027edd": {
                 LastChangeDateTimeUtc: "2022-07-16T23:00:05.510Z",
                 Id: "c038266c-3f9c-4806-ba9d-6f7bb2027edd",
-                Name: "Animation",
+                Name: "Animation"
             },
             "dac39c38-da16-4b18-9e90-d17b785ee5a8": {
                 LastChangeDateTimeUtc: "2022-08-03T10:30:05.169Z",
                 Id: "dac39c38-da16-4b18-9e90-d17b785ee5a8",
-                Name: "Dance",
-            },
-        },
+                Name: "Dance"
+            }
+        }
     },
     knowledgeGroups: {
         ids: [
@@ -6190,7 +6190,7 @@ export default {
             "6f91eaf9-68dc-4744-9da8-1bfc7d0052af",
             "9bf9b01f-e655-bec2-35ae-d72ebe38c245",
             "72cdaaba-e980-fa1a-ce94-7a1cc19d0f79",
-            "92cdf214-7e9f-6bfa-0370-dfadd5e76493",
+            "92cdf214-7e9f-6bfa-0370-dfadd5e76493"
         ],
         entities: {
             "92cdf214-7e9f-6bfa-0370-dfadd5e76493": {
@@ -6200,7 +6200,7 @@ export default {
                 Description: "Our departments and what they do",
                 Order: 9,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f0c0",
+                FontAwesomeIconCharacterUnicodeAddress: "f0c0"
             },
             "9bf9b01f-e655-bec2-35ae-d72ebe38c245": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.210Z",
@@ -6209,7 +6209,7 @@ export default {
                 Description: "Helpful things & addresses",
                 Order: 6,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f0f2",
+                FontAwesomeIconCharacterUnicodeAddress: "f0f2"
             },
             "6232ae2f-4e9d-fcf4-6341-f1751b405e45": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.239Z",
@@ -6218,7 +6218,7 @@ export default {
                 Description: "Tips for staying safe during the convention",
                 Order: 1,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f132",
+                FontAwesomeIconCharacterUnicodeAddress: "f132"
             },
             "66e14f56-743c-1ece-a50c-b691143a3f93": {
                 LastChangeDateTimeUtc: "2022-07-16T10:37:30.323Z",
@@ -6227,7 +6227,7 @@ export default {
                 Description: "JoJoe (Artist) & Fox Amoore (Musician)",
                 Order: 3,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f2be",
+                FontAwesomeIconCharacterUnicodeAddress: "f2be"
             },
             "72cdaaba-e980-fa1a-ce94-7a1cc19d0f79": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.328Z",
@@ -6236,7 +6236,7 @@ export default {
                 Description: "Where to leave your car",
                 Order: 8,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f1b9",
+                FontAwesomeIconCharacterUnicodeAddress: "f1b9"
             },
             "ec031cbf-d8d0-825d-4c36-b782ed8d19d8": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.363Z",
@@ -6245,7 +6245,7 @@ export default {
                 Description: "Helpful things all about and around the convention",
                 Order: 0,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f129",
+                FontAwesomeIconCharacterUnicodeAddress: "f129"
             },
             "3f733bc5-d41f-e233-3cae-1df9ee5c39b6": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.394Z",
@@ -6254,7 +6254,7 @@ export default {
                 Description: "Relevant information for our suiters",
                 Order: 2,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f1ae",
+                FontAwesomeIconCharacterUnicodeAddress: "f1ae"
             },
             "d3c10dde-0c9b-1111-1a61-33b76a562a3c": {
                 LastChangeDateTimeUtc: "2022-07-01T19:03:54.147Z",
@@ -6263,7 +6263,7 @@ export default {
                 Description: "The Cheetah Preservation Foundation",
                 Order: 4,
                 ShowInHamburgerMenu: false,
-                FontAwesomeIconCharacterUnicodeAddress: "f0fa",
+                FontAwesomeIconCharacterUnicodeAddress: "f0fa"
             },
             "6f91eaf9-68dc-4744-9da8-1bfc7d0052af": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.465Z",
@@ -6272,9 +6272,9 @@ export default {
                 Description: "Digital Downloads",
                 Order: 5,
                 ShowInHamburgerMenu: true,
-                FontAwesomeIconCharacterUnicodeAddress: "f1ea",
-            },
-        },
+                FontAwesomeIconCharacterUnicodeAddress: "f1ea"
+            }
+        }
     },
     knowledgeEntries: {
         ids: [
@@ -6338,7 +6338,7 @@ export default {
             "dac69932-41b0-4525-9446-a9f6d7cad4a5",
             "0b7eb5ef-524e-4753-9a29-0930e219053c",
             "5278a361-8835-4771-b15e-8560b54893ef",
-            "5f1e00af-8520-4920-915f-bfc0a39f1ea2",
+            "5f1e00af-8520-4920-915f-bfc0a39f1ea2"
         ],
         entities: {
             "920a440f-112b-b851-dff8-653af3c040d8": {
@@ -6352,10 +6352,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "web@eurofurence.org",
-                        Target: "mailto:web@eurofurence.org",
-                    },
+                        Target: "mailto:web@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "6b6d4917-a930-4bef-a85d-77fcb9727ddf": {
                 LastChangeDateTimeUtc: "2022-07-14T15:36:50.419Z",
@@ -6365,7 +6365,7 @@ export default {
                 Text: "## About Summerboat\n\nAN EXCLUSIVE BOAT PARTY DEPARTING FROM THE ESTREL\nSummerbo.at: All Paw on Deck is an exclusive party on a large boat. From the Estrel dock to the Spree and back, through the German Capital, take in the sunset and mingle on the outdoor deck, retreat to the lounge and dancefloor with live DJs.\n\n### Fursuits\nFursuits are very welcome onboard of our ship. Please keep in mind that space is limited. Do not bring all your suits if you do not plan on suiting in all of them. In the fursuitlounge we will provide water and fans for cooling down.\n\n## Rules\nYou can find our rules on summerbo.at!\nThe terms and conditions of Eurofurence also apply during the party. \n\n\n## Timetable\n\n### DJ Sets\n* 19:00 @ Mayk Live DJ Set\n* 20:15 @ Big Blue Fox Live DJ Set\n* 21:30 @ Gorsh Live DJ Set\n\n\n### Events\n* 19:00 @ MS Alexander von Humboldt: Boarding!\n* 19:00 --> 20:45 @ Outdoor Deck: Photos.\n* 20:00 @ Sunset Group Photos\n* 23:00 @ Return to Estrel\n \n\n**What is Summerboat exactly?**\nSummerboat is the one and only pre-party to start Eurofurence the right way! What started as a small plan to get some fursuiters, rent a boat and just enjoy Berlin from the water, has been grown from a boat to a ship, from a few fursuiters to almost 200 and over 300 attendees with DJ's and events.\n\n**Our Team**\nThe team consists of 5 staff members and 7 wonderful crew members. Together we make sure that you can party hard and enjoy the night! Onboard we also have EF Security to make sure no fursuiters fall overboard and of course the team from Stern & Kreis to make sure the boat will float.\n\n\n",
                 Order: 999,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "329ac21a-6acd-bea1-5d18-3cd34bb03e54": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.583Z",
@@ -6378,20 +6378,20 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Glympse Interactive Map @ EF 25",
-                        Target: "https://www.eurofurence.org/EF25/glympse",
+                        Target: "https://www.eurofurence.org/EF25/glympse"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "!Eurofurence Group on Glympse.com",
-                        Target: "http://glympse.com/!Eurofurence",
+                        Target: "http://glympse.com/!Eurofurence"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Get the Glympse app",
-                        Target: "http://glympse.com/get-glympse",
-                    },
+                        Target: "http://glympse.com/get-glympse"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "d54a7222-777c-4f97-4f79-64848169d448": {
                 LastChangeDateTimeUtc: "2022-07-11T16:10:20.458Z",
@@ -6404,20 +6404,20 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Pre-register your donation",
-                        Target: "https://charity.eurofurence.org",
-                    },
+                        Target: "https://charity.eurofurence.org"
+                    }
                 ],
-                ImageIds: ["5605b5dd-4270-48b3-b5c1-842c878ec807"],
+                ImageIds: ["5605b5dd-4270-48b3-b5c1-842c878ec807"]
             },
             "5f36ae23-87ff-6f71-93b4-c823da6fb27e": {
                 LastChangeDateTimeUtc: "2022-07-28T13:00:50.462Z",
                 Id: "5f36ae23-87ff-6f71-93b4-c823da6fb27e",
                 KnowledgeGroupId: "ec031cbf-d8d0-825d-4c36-b782ed8d19d8",
                 Title: "Artist Alley",
-                Text: 'You are an artist, but never thought about applying for the Dealers\' Den? Then the Alley might be yours to start with. No applying, just catch a table: "First come, first served".\n\nWhenever there is an empty table, feel free to sit down and offer your service with sketches, badges, prints and a smile. If you don\'t feel like it any more or got enough work to do to fill some time, another artist might be interested in the table. Please also check bulletins for updated information.\n\nOnly disadvantage: due to German law, **selling adult material in public areas is strictly forbidden.**\n\n* **Opening times:** Wed 11:00 till Sat 18:00\n* **Breakdown:** Sat: after 18:00\n\n---\n\n#### "Self-Promotion" / Table Registration ####\n\nIf you claimed a table in the Artist Alley, you can announce your presence on our official Telegram and Twitter feeds! If you wish to do this:\n\n  1. Install Eurofurence Mobile App if you haven\'t done so yet. (If you\'re reading this within the app right now, you can obviously skip this step!)\n  2. Login with your registration details.\n  3. Tap on "**More**" in the menu/navigation bar.\n  4. Tap on "**Services**".\n  5. Tap on "**Artist Alley**", then on "**Table Registration**".\n  6. Fill out the registration form and provide a picture (if you don\'t have one you can also just take one right on the spot!), and submit it. Done!\n\nAfter being reviewed, your presence in the Artist Alley will be announced on our official Telegram channel, using the information and image you provided. If you claim a table again on any other day of the convention, you can easily just re-submit your last registration again for another signal boost!\n',
+                Text: "You are an artist, but never thought about applying for the Dealers' Den? Then the Alley might be yours to start with. No applying, just catch a table: \"First come, first served\".\n\nWhenever there is an empty table, feel free to sit down and offer your service with sketches, badges, prints and a smile. If you don't feel like it any more or got enough work to do to fill some time, another artist might be interested in the table. Please also check bulletins for updated information.\n\nOnly disadvantage: due to German law, **selling adult material in public areas is strictly forbidden.**\n\n* **Opening times:** Wed 11:00 till Sat 18:00\n* **Breakdown:** Sat: after 18:00\n\n---\n\n#### \"Self-Promotion\" / Table Registration ####\n\nIf you claimed a table in the Artist Alley, you can announce your presence on our official Telegram and Twitter feeds! If you wish to do this:\n\n  1. Install Eurofurence Mobile App if you haven't done so yet. (If you're reading this within the app right now, you can obviously skip this step!)\n  2. Login with your registration details.\n  3. Tap on \"**More**\" in the menu/navigation bar.\n  4. Tap on \"**Services**\".\n  5. Tap on \"**Artist Alley**\", then on \"**Table Registration**\".\n  6. Fill out the registration form and provide a picture (if you don't have one you can also just take one right on the spot!), and submit it. Done!\n\nAfter being reviewed, your presence in the Artist Alley will be announced on our official Telegram channel, using the information and image you provided. If you claim a table again on any other day of the convention, you can easily just re-submit your last registration again for another signal boost!\n",
                 Order: 8,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "725ed724-299e-45a3-914c-867891601061": {
                 LastChangeDateTimeUtc: "2022-07-28T21:41:35.344Z",
@@ -6427,7 +6427,7 @@ export default {
                 Text: "**Did you know?**\n\nEurofurence Security has a large crew of highly qualified and furry-friendly paramedics on-site at all times. They can take care of anything from a minor scratch to a life-threatening injury. They have been our resident crew for many years and have seen everything furries can do to themselves. Don't be shy, they are legally bound to discretion.\n\n*Please note, that due to German law they are not allowed to hand out medication e.g. painkillers. Contact us if you need any medical support.*",
                 Order: 4,
                 Links: [],
-                ImageIds: ["2ffe3196-6eba-439c-8153-be15baeb2eb6"],
+                ImageIds: ["2ffe3196-6eba-439c-8153-be15baeb2eb6"]
             },
             "3988c33d-6e5a-9711-5296-9f5aea951f4d": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.768Z",
@@ -6440,10 +6440,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "EF Prime on Twitter",
-                        Target: "https://twitter.com/ef_prime",
-                    },
+                        Target: "https://twitter.com/ef_prime"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "923cae43-1362-c0c0-c77c-5a0f86ed784c": {
                 LastChangeDateTimeUtc: "2022-07-28T21:39:37.399Z",
@@ -6453,7 +6453,7 @@ export default {
                 Text: "**Did you know?**\n\nSome of our Security Crew members will be out and about, wearing blue high-visibility vests, hydration backpacks and handheld blo-\nwers. These Water Carriers give out free water to fursuiting attendees - especially around major events. If you spot one, just wave at them to receive as much water as you'd like without the need to walk to the Headless Lounge or take off your head in public.",
                 Order: 3,
                 Links: [],
-                ImageIds: ["2513aa0a-48a0-49cf-807e-8a57cf5306f8"],
+                ImageIds: ["2513aa0a-48a0-49cf-807e-8a57cf5306f8"]
             },
             "4521b344-3c98-c48f-443c-63a82c3004a7": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.834Z",
@@ -6466,51 +6466,51 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "luxen@furry.ch",
-                        Target: "mailto:luxen@furry.ch",
-                    },
+                        Target: "mailto:luxen@furry.ch"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "f940ab48-7777-45a4-a8ed-e810021dd4f8": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.866Z",
                 Id: "f940ab48-7777-45a4-a8ed-e810021dd4f8",
                 KnowledgeGroupId: "3f733bc5-d41f-e233-3cae-1df9ee5c39b6",
                 Title: "Collect'em All!",
-                Text: 'Do you have what it takes to catch the most creatures at Eurofurence?\n\nParticipating is really easy, download the Eurofurence App and go to "Collect\'em all". Enter the five digit codes you can find on fursuiter badges to catch them.The attendee with the most catches at the end of the convention will be getting a certifcate showing their collection prowess.\n\n**Stop by the fursuit registration desk for any questions or if you want to register your fursuit for participation!**',
+                Text: "Do you have what it takes to catch the most creatures at Eurofurence?\n\nParticipating is really easy, download the Eurofurence App and go to \"Collect'em all\". Enter the five digit codes you can find on fursuiter badges to catch them.The attendee with the most catches at the end of the convention will be getting a certifcate showing their collection prowess.\n\n**Stop by the fursuit registration desk for any questions or if you want to register your fursuit for participation!**",
                 Order: 999,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "9e3ebe4b-21dd-ac7d-b50e-303865aec655": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.896Z",
                 Id: "9e3ebe4b-21dd-ac7d-b50e-303865aec655",
                 KnowledgeGroupId: "ec031cbf-d8d0-825d-4c36-b782ed8d19d8",
                 Title: "Group Photo",
-                Text: '**Show the world that you were here! Everybody join in to form the largest (European) crowd of furries (and friends)!**\n\n* **Location:** Outdoor\n* **Time:** Wed - Official Con Start/Con Day 1 - 18:00\n\nDon\'t miss out on the chance of your lifetime! We put the group picture directly after the opening ceremony to streamline the process as much as possible: When the opening ends, security will guide you to the group picture!\n\n**IMPORTANT:** Be there when the time slot starts! We will start the lineup, close off entry a few minutes afterwards and are going to take the picture as soon as everybody is lined up; which should be some minutes after the official starting time! We therefore cannot give a precise "shot time" and if you are not there when the event starts, you might not get in! We should be finished well before the announced ending time, so upcoming events should be easy to reach for everybody!\n\nYou can wear your human clothes or your fursuit at your own discretion, nude humans however will be dealt with by our trusted security members! The code of conduct applies here like with any public event!\n\nThe exact number of participants will be announced after the con, when we had time to count!',
+                Text: "**Show the world that you were here! Everybody join in to form the largest (European) crowd of furries (and friends)!**\n\n* **Location:** Outdoor\n* **Time:** Wed - Official Con Start/Con Day 1 - 18:00\n\nDon't miss out on the chance of your lifetime! We put the group picture directly after the opening ceremony to streamline the process as much as possible: When the opening ends, security will guide you to the group picture!\n\n**IMPORTANT:** Be there when the time slot starts! We will start the lineup, close off entry a few minutes afterwards and are going to take the picture as soon as everybody is lined up; which should be some minutes after the official starting time! We therefore cannot give a precise \"shot time\" and if you are not there when the event starts, you might not get in! We should be finished well before the announced ending time, so upcoming events should be easy to reach for everybody!\n\nYou can wear your human clothes or your fursuit at your own discretion, nude humans however will be dealt with by our trusted security members! The code of conduct applies here like with any public event!\n\nThe exact number of participants will be announced after the con, when we had time to count!",
                 Order: 2,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "b815c24d-dfe1-0736-ae78-3047c53362b2": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:23.925Z",
                 Id: "b815c24d-dfe1-0736-ae78-3047c53362b2",
                 KnowledgeGroupId: "92cdf214-7e9f-6bfa-0370-dfadd5e76493",
                 Title: "IT Team",
-                Text: 'A lot of hard-working, dedicated people make Eurofurence what it is: a great event full of creativity, color, fur, stage shows and inpromptu-fursuit artists. Behind the scenes, this requires a lot of planning, preparation, coordination and general "making the magic work". Thus there\'s barely a spot where IT systems don\'t play a role in the background. While, traditionally, each department builds and operates their own system tailored to their specific needs, more structure and knowledge has become vital over the years.\n\nThe Eurofurence IT department fills this role of a central coordinator and service team for every department that needs IT services before, during or after EF. Among those are the operation of the EF server, which hosts our website including the Daily EF archives, forums, a multitude of internal systems like wiki, etherpad, kanboard, otrs and so on. We help to coordinate the main registration system for EF, for fursuit badges, art show and dealers den. New systems are installed or custom-crafted for special purposes, like an electronic "stage rider" for stage events.\n\nOn-site we coordinate with the Estrel IT to get the internet connectivity working; for instance, this included last year\'s live-stream of our "big party" to the outside, running the IT infrastructure like DHCP/DNS, provide hardware (PCs, scanners, switches, etc.) for departments which don\'t have their own and run our staff wifi.\n\nThe most visible part for attendees is our very own "Eurofurence app". It\'s completely custom-built by us, with a high-performance cloud backend and native on iOS, Android and even Windows Phone. Close cooperation between departments is needed here to get all information from event programming, dealers enlistings, general information and more into the app.\n\nSince our work is so specialized and diverse, we don\'t usually have open job postings. However, if you\'re good at IT maintenance, administration and especially programming and would like to help primarily outside the actual convention days, feel free to contact Zefiro. You might soon become part of a ninja team dedicated to keep things running. \n\nIf you want to be a part of the IT team, contact Zefiro via mail or Telegram.',
+                Text: "A lot of hard-working, dedicated people make Eurofurence what it is: a great event full of creativity, color, fur, stage shows and inpromptu-fursuit artists. Behind the scenes, this requires a lot of planning, preparation, coordination and general \"making the magic work\". Thus there's barely a spot where IT systems don't play a role in the background. While, traditionally, each department builds and operates their own system tailored to their specific needs, more structure and knowledge has become vital over the years.\n\nThe Eurofurence IT department fills this role of a central coordinator and service team for every department that needs IT services before, during or after EF. Among those are the operation of the EF server, which hosts our website including the Daily EF archives, forums, a multitude of internal systems like wiki, etherpad, kanboard, otrs and so on. We help to coordinate the main registration system for EF, for fursuit badges, art show and dealers den. New systems are installed or custom-crafted for special purposes, like an electronic \"stage rider\" for stage events.\n\nOn-site we coordinate with the Estrel IT to get the internet connectivity working; for instance, this included last year's live-stream of our \"big party\" to the outside, running the IT infrastructure like DHCP/DNS, provide hardware (PCs, scanners, switches, etc.) for departments which don't have their own and run our staff wifi.\n\nThe most visible part for attendees is our very own \"Eurofurence app\". It's completely custom-built by us, with a high-performance cloud backend and native on iOS, Android and even Windows Phone. Close cooperation between departments is needed here to get all information from event programming, dealers enlistings, general information and more into the app.\n\nSince our work is so specialized and diverse, we don't usually have open job postings. However, if you're good at IT maintenance, administration and especially programming and would like to help primarily outside the actual convention days, feel free to contact Zefiro. You might soon become part of a ninja team dedicated to keep things running. \n\nIf you want to be a part of the IT team, contact Zefiro via mail or Telegram.",
                 Order: 3,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "it@eurofurence.org",
-                        Target: "mailto:it@eurofurence.org",
+                        Target: "mailto:it@eurofurence.org"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "@ZefiroDragon",
-                        Target: "https://telegram.me/ZefiroDragon",
-                    },
+                        Target: "https://telegram.me/ZefiroDragon"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "ad3a1b4f-4fe5-d0f4-3926-d81e0703260b": {
                 LastChangeDateTimeUtc: "2022-06-26T11:12:11.320Z",
@@ -6523,15 +6523,15 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Eurofurence on Twitter",
-                        Target: "https://twitter.com/Eurofurence",
+                        Target: "https://twitter.com/Eurofurence"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Eurofurence Website",
-                        Target: "https://www.eurofurence.org",
-                    },
+                        Target: "https://www.eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "d7a2b750-370e-647c-68cb-5bb14d2df701": {
                 LastChangeDateTimeUtc: "2022-07-11T16:23:06.808Z",
@@ -6544,10 +6544,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Read More",
-                        Target: "https://www.eurofurence.org/EF26/charity",
-                    },
+                        Target: "https://www.eurofurence.org/EF26/charity"
+                    }
                 ],
-                ImageIds: ["fe6f5b5d-d29f-4bfe-b533-7d90f9bc5ec9"],
+                ImageIds: ["fe6f5b5d-d29f-4bfe-b533-7d90f9bc5ec9"]
             },
             "d4917161-adcb-fed8-dd13-dbf55b350e59": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.023Z",
@@ -6560,10 +6560,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Information site of the Senate Department for Urban Development",
-                        Target: "http://www.stadtentwicklung.berlin.de/umwelt/luftqualitaet/umweltzone/en/gebiet.shtml",
-                    },
+                        Target: "http://www.stadtentwicklung.berlin.de/umwelt/luftqualitaet/umweltzone/en/gebiet.shtml"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "7e952d63-6dd3-fd02-9263-c40daaabbcec": {
                 LastChangeDateTimeUtc: "2022-06-25T12:19:26.680Z",
@@ -6573,23 +6573,23 @@ export default {
                 Text: "**Netto Marken-Discount**\n\n* **Type:** Discount supermarket\n* **Location:** Sonnenallee 215, 12059 Berlin (300m from the hotel)\n* **Opening Hours:** Mon – Sat, 07:00-22:00\n\n**Rossmann**\n\n* **Type:** Drugstore\n* **Location:** Grenzallee 4M, 12057 Berlin (450m from the hotel)\n* **Opening Hours:** Mon – Sat, 07:00-21:00\n\n**ALDI**\n\n* **Type:** Discount supermarket\n* **Location:** Grenzallee 4L, 12057 Berlin (500m from the hotel)\n* **Opening Hours:** Mon – Sat, 07:00-21:00\n\n**Lidl**\n\n* **Type:** Discount Supermarket\n* **Location:** Sonnenallee 192, 12059 Berlin (550m from the hotel)\n* **Opening Hours:** Mon – Sat, 08:00-22:00\n\n**EDEKA Center Neukölln**\n\n* **Type:** Supermarket\n* **Location:** Grenzallee 4-6, 12057 Berlin (600m from the hotel)\n* **Opening Hours:** Mon – Sat, 07:00-21:00\n\n**Sonnenblumen-Apotheke**\n\n* **Type:** Pharmacy\n* **Location:** Grenzallee 4A/4B, 12057 Berlin (600m from the hotel)\n* **Opening Hours:** Mon – Fri, 08:30-19:00 (Sat 08:30 – 14:00)",
                 Order: 16,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "62359f63-816a-2599-ea7f-07c80e3bd9cb": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.085Z",
                 Id: "62359f63-816a-2599-ea7f-07c80e3bd9cb",
                 KnowledgeGroupId: "92cdf214-7e9f-6bfa-0370-dfadd5e76493",
                 Title: "Fursuit Gameshow",
-                Text: 'The gameshow department is responsible for planning and operating the fursuit gameshow at EF. This involves finding new and revamped games for the suiters to play, building props, testing the games, communicating with the involved departments (programming, stage, security) to get all the locations and timeslots sorted out.\n\nThe main idea is to add the "show" to the "games". Most conventions only are doing "fursuit games", which is fun but usually only mildly entertaining to watch. We strive to add some interesting aspects to all games that we are putting on stage. The best ideas however sometimes fail in reality, even after trying them out several times. The show is a "one-off" kind of a deal, so we always expect some "issues" which require fast troubleshooting capabilities.\n\nWe are usually looking for helpers in the backstage area: moving props on and off stage, getting fursuiters ready for their cue and sometimes helping during a game - as spotters and/or "living props", depending on the game.\n\nWe are planning everything out way before the convention and need helpers who will be available online at least some weeks before EF so we can go through the show and games and everybody knows the props, games and can start to learn their cues. We don\'t get rehearsal time at EF!\n\nIf you are interested in helping out, please contact: Atkelar via fsgs@eurofurence.org.',
+                Text: "The gameshow department is responsible for planning and operating the fursuit gameshow at EF. This involves finding new and revamped games for the suiters to play, building props, testing the games, communicating with the involved departments (programming, stage, security) to get all the locations and timeslots sorted out.\n\nThe main idea is to add the \"show\" to the \"games\". Most conventions only are doing \"fursuit games\", which is fun but usually only mildly entertaining to watch. We strive to add some interesting aspects to all games that we are putting on stage. The best ideas however sometimes fail in reality, even after trying them out several times. The show is a \"one-off\" kind of a deal, so we always expect some \"issues\" which require fast troubleshooting capabilities.\n\nWe are usually looking for helpers in the backstage area: moving props on and off stage, getting fursuiters ready for their cue and sometimes helping during a game - as spotters and/or \"living props\", depending on the game.\n\nWe are planning everything out way before the convention and need helpers who will be available online at least some weeks before EF so we can go through the show and games and everybody knows the props, games and can start to learn their cues. We don't get rehearsal time at EF!\n\nIf you are interested in helping out, please contact: Atkelar via fsgs@eurofurence.org.",
                 Order: 6,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "fsgs@eurofurence.org",
-                        Target: "mailto:fsgs@eurofurence.org",
-                    },
+                        Target: "mailto:fsgs@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "6905fb65-b212-4180-b1c1-efb42480d858": {
                 LastChangeDateTimeUtc: "2022-07-16T19:50:25.019Z",
@@ -6599,7 +6599,7 @@ export default {
                 Text: "Some scoundrels call the After Dark Dealers' Den on the Eurofurence shady and even notorious, but they sure be wrong on both counts! Located high up in the crow's nest overlooking the regular Dealer's Den down below, they who set up shop here in our exclusive little safe haven are all honest traders and crafters.\n\nHere you can find all the wares you may have been searching for in vain below. There (most likely) won't be any fancy home-made jam or little, handcrafted amulets to hang about ye scrawny necks. This be more the kind of place to go if you wish to… indulge your wild side, be it with something to hang your walls with and feast your hungry eyes on — or something that is more hands-on.\n\nBut, no matter what it is you've come for: be sure to keep your paws, claws, fingers and such where they belong and adhere to all the same rules that be law all around the main Dealers' Den, as well as aboard the entire Eurofurence and the town of Tortuga she's currently moored at, lest ye want Davy Jones sent after your soul in person!\n\n**Dealer Setup:**\n\n* Wednesday: 18:30 to 20:00\n* Thursday: 10:00 to 12:00\n* Friday: 11:00 to 12:00\n* Saturday: 11:00 to 12:00\n\n**Opening times:**\n\n* Thursday & Friday: 12:00 to 13:00 (supersponsors only & all attendees with **special mobility needs**)\n* Thursday & Friday: 13:00 to 14:00 (sponsors & supersponsors only & all attendees with **special mobility needs**)\n* Thursday & Friday: 14:00 to 18:00 (regular)\n* Saturday: 12:00 to 18:00 (regular)\n\n**Dealer Teardown:**\n* Saturday: 18:00 to 20:00\n\n",
                 Order: 5,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "f0cdc068-6f26-11e8-1619-e0333064dcb9": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.145Z",
@@ -6609,23 +6609,23 @@ export default {
                 Text: "Yo gearheads! Do you crave the righteous roar of a boss engine? The purr of a sick Jaguar? The squeal of burning rubber? Then you need to book it to the Motorfurs meeting - where all car junkies are welcomed to show off their outrageous wheels, take a peek at what other road rashers drive, and talk with like-minded motor furs.\n\n* **When:** Saturday from 13:00 till 15:00\n* **Location:** Outdoors\n\nDue to the nature of the event and the location off-site, there are a few event specific rules that must be adhered to:\n\n  * No dangerous stunts – Anyone deemed to be driving dangerously will be asked to remove themselves and their vehicle from the event.\n  * No burnouts – Once again, offenders will be asked to leave.\n  * No damage to other cars/the car park/attendees – Please take care when parking and maneuvering and also be mindful of paintwork when looking through open windows.\n  * No wheel/tyre markings to be left on the road surface.\n  * No unnecessary noise – i.e. keep stereo equipment to tolerable levels, and no lengthy revving of engines.\n  * If you wish to look closer inside someone's vehicle, ask the owner. Do not just open the door and get in.\n  * Most of all, stay safe and enjoy the event! Please check the Conbook for details!\n",
                 Order: 18,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "88b2d972-e052-a8ab-621b-017fbbbdc678": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.181Z",
                 Id: "88b2d972-e052-a8ab-621b-017fbbbdc678",
                 KnowledgeGroupId: "92cdf214-7e9f-6bfa-0370-dfadd5e76493",
                 Title: "Photography",
-                Text: 'The Eurofurence Photography department takes care of all official con photography that is directly related to the attendees:\n\n* The fursuit photo shoot\n* The fursuit group photo\n* The regular group photo\n* Any requested event documentation\n* *New:* The media catalogue\n\nHistorically, the Daily-EF has their own photographers as well as several department internal photography that might be required. Our responsibilities are directly connected with the convention attendees and involve post-processing of the images we take after EF is over. Thus - by definition - pictures that are needed during the convention are not part of our responsibilities.\n\nOur department consists of photographers and assistants.\n\nThe photographers:\n\n* Share some hours per day on the photo shoot location, using rented equipment.\n* Take turns covering various events for the media catalogue using their own camera (i.e. a halfway decent DSLR with RAW images is a must-have)\n\nThe assistants:\n\n* Help some hours per day on the photo shoot location. This involves handling props, fursuiters and/or operating the registration system computer on location. There will be two assistants in parallel.\n* If needed, help the photographers at other locations by holding up props, directing people or carrying equipment.\n\nBoth duties involve keeping to a schedule that will be discussed and up for fine tuning within the team as soon as the EF timetable is available, so usually nobody has to miss out on "must go" events.\n\nThe fursuit photo shoot might be amongst the more stressful tasks that EF has to offer, but the chance to meet lots of suiters up close and personal makes for a good reward. Also, we try to minimize the hours per day by using enough people to divide the workload.\n\nIf you are interested in helping out, contact Atkelar or ShortyDragon, using photo@eurofurence.org before the convention.\n\nThere are a few prerequisites for helping:\n\nWe might need a few helping hands during setup and tear down of the photo shoot location and the group photo spot that are able to carry some delicate equipment when directed to do so.\n\nFor actual team members...\n\n...the photographers need to:\n\n  * Have some studio experience (preferably also with fursuiters as subjects)\n  * Have experience with fursuiters (either as spotters or themselves)\n  * Be good at coming up with some funny ideas for poses\n  * Be on time\n\n...the assistants need to:\n\n  * Have experience with fursuiters (either as spotters or themselves)\n  * Preferably be good at coming up with some funny ideas for poses to help the photographer and suiter in case of a block\n  * Be on time',
+                Text: "The Eurofurence Photography department takes care of all official con photography that is directly related to the attendees:\n\n* The fursuit photo shoot\n* The fursuit group photo\n* The regular group photo\n* Any requested event documentation\n* *New:* The media catalogue\n\nHistorically, the Daily-EF has their own photographers as well as several department internal photography that might be required. Our responsibilities are directly connected with the convention attendees and involve post-processing of the images we take after EF is over. Thus - by definition - pictures that are needed during the convention are not part of our responsibilities.\n\nOur department consists of photographers and assistants.\n\nThe photographers:\n\n* Share some hours per day on the photo shoot location, using rented equipment.\n* Take turns covering various events for the media catalogue using their own camera (i.e. a halfway decent DSLR with RAW images is a must-have)\n\nThe assistants:\n\n* Help some hours per day on the photo shoot location. This involves handling props, fursuiters and/or operating the registration system computer on location. There will be two assistants in parallel.\n* If needed, help the photographers at other locations by holding up props, directing people or carrying equipment.\n\nBoth duties involve keeping to a schedule that will be discussed and up for fine tuning within the team as soon as the EF timetable is available, so usually nobody has to miss out on \"must go\" events.\n\nThe fursuit photo shoot might be amongst the more stressful tasks that EF has to offer, but the chance to meet lots of suiters up close and personal makes for a good reward. Also, we try to minimize the hours per day by using enough people to divide the workload.\n\nIf you are interested in helping out, contact Atkelar or ShortyDragon, using photo@eurofurence.org before the convention.\n\nThere are a few prerequisites for helping:\n\nWe might need a few helping hands during setup and tear down of the photo shoot location and the group photo spot that are able to carry some delicate equipment when directed to do so.\n\nFor actual team members...\n\n...the photographers need to:\n\n  * Have some studio experience (preferably also with fursuiters as subjects)\n  * Have experience with fursuiters (either as spotters or themselves)\n  * Be good at coming up with some funny ideas for poses\n  * Be on time\n\n...the assistants need to:\n\n  * Have experience with fursuiters (either as spotters or themselves)\n  * Preferably be good at coming up with some funny ideas for poses to help the photographer and suiter in case of a block\n  * Be on time",
                 Order: 5,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "photo@eurofurence.org",
-                        Target: "mailto:photo@eurofurence.org",
-                    },
+                        Target: "mailto:photo@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "5c153574-836d-8ccb-0ddd-5b16b57251c9": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.212Z",
@@ -6635,17 +6635,17 @@ export default {
                 Text: "**This year's Art Show again presents a multitude of international artists. See your favorites, bid on whatever you like, and buy art for your home!**\n\nA separate registration is needed for bidding to get bid stickers.\n\nYou will have a final chance at bidding in the Art Show closing. Here it will be determined who will make the final offer on a piece of art - or whether, perhaps, a contested piece goes to auction.\n**Important:** The closing is a fast and decisive event. You need to have bid stickers at hand to participate, so we can avoid crowding the show area with spectators. Bid stickers will only be available until 30 minutes before the closing. During the closing, we will not hand out new stickers, so make sure you have enough to place your final bids.\n\nIn the voice auction, you will have to defend your selection against other prospective buyers. Please note that this year's auction starts earlier than in previous years.\n\nBids must be placed in Euros, and paid in cash on site.\n\nLook out for more information at the Art Show and read the bulletin boards for last-minute details!\n\n**Setup times (artists only):**\n\n* Wed: 16:00 to 22:00\n* Thu: 10:00 to 12:00\n\n**Opening times:**\n\n* Thu: 12:00 to 20:00 (regular)\n* Fri: 12:00 to 18:30 (regular)\n\n**Closing:**\n\n* Fri: 18:30 to 20:30\n\n**Art & Charity auction**  (Main stage): \n\n* Sat: 11:00 to 13:30 (seating starts at 10:30)\n\n**Art pickup:**  \n\n* Sat: 14:00 to 17:00\n\n**Artists' Payout**\n\n* Sat: 22:00 - 01:00",
                 Order: 3,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "77304774-8843-3d1e-f7f4-2c903b775cc8": {
                 LastChangeDateTimeUtc: "2022-07-28T21:35:27.863Z",
                 Id: "77304774-8843-3d1e-f7f4-2c903b775cc8",
                 KnowledgeGroupId: "6232ae2f-4e9d-fcf4-6341-f1751b405e45",
                 Title: "Our Security & Medic Crew",
-                Text: 'Your safety is important to Eurofurence, so our Security & Medic Crew is on duty for you 24 hours a day, throughout the entire convention. We provide qualified medical and security service to all attendees. If you need any help, have concerns, need assistance or simply have a question: do not hesitate to contact us! If you are more comfortable talking to a security operative or medic of a specific gender, just ask.\n\nPlease always report issues as soon as possible and not after the convention - we would rather reassure attendees in the case of a false alarm than miss incidents!\n\n**How to recognize us**\n\nAll members of the Security Crew wear either a shirt or an armband with our official "Eurofurence Security" or "Convention Security" logos. Additionally, they have an official security badge on a blue lanyard reading "Eurofurence Security". Anyone without this combination is not a member of our crew.\n\nOur security operatives roam the convention and are on stationary duty at many locations around the hotel, such as the Art Show or the Camp Fire and they will be glad to be there for you, being helpful furries themselves. They take their job seriously, not themselves!\n\n*So don\'t be shy - come and say hi!*',
+                Text: "Your safety is important to Eurofurence, so our Security & Medic Crew is on duty for you 24 hours a day, throughout the entire convention. We provide qualified medical and security service to all attendees. If you need any help, have concerns, need assistance or simply have a question: do not hesitate to contact us! If you are more comfortable talking to a security operative or medic of a specific gender, just ask.\n\nPlease always report issues as soon as possible and not after the convention - we would rather reassure attendees in the case of a false alarm than miss incidents!\n\n**How to recognize us**\n\nAll members of the Security Crew wear either a shirt or an armband with our official \"Eurofurence Security\" or \"Convention Security\" logos. Additionally, they have an official security badge on a blue lanyard reading \"Eurofurence Security\". Anyone without this combination is not a member of our crew.\n\nOur security operatives roam the convention and are on stationary duty at many locations around the hotel, such as the Art Show or the Camp Fire and they will be glad to be there for you, being helpful furries themselves. They take their job seriously, not themselves!\n\n*So don't be shy - come and say hi!*",
                 Order: 1,
                 Links: [],
-                ImageIds: ["8ae7d323-b56d-4155-8a88-6b418bcfd057"],
+                ImageIds: ["8ae7d323-b56d-4155-8a88-6b418bcfd057"]
             },
             "ab44c284-000c-416f-4d70-b84a5b1bb024": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.274Z",
@@ -6658,10 +6658,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "media@eurofurence.org",
-                        Target: "mailto:media@eurofurence.org",
-                    },
+                        Target: "mailto:media@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "61217686-cd28-1bd4-4df0-cc53d5b3cdfe": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.307Z",
@@ -6674,10 +6674,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "www.estrel.com",
-                        Target: "https://www.estrel.com/en/",
-                    },
+                        Target: "https://www.estrel.com/en/"
+                    }
                 ],
-                ImageIds: ["37bfdabe-796d-43ab-b69e-b507c1322da2"],
+                ImageIds: ["37bfdabe-796d-43ab-b69e-b507c1322da2"]
             },
             "4cdb7187-a323-01db-1374-eddfdff05b81": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.366Z",
@@ -6687,7 +6687,7 @@ export default {
                 Text: "Did you enjoy Eurofurence? Have some words of praise for us? Or some complaints which we really should know? We'd like to hear about it. There are various ways to provide feedback:\n\n  * You can leave anonymous feedback in the Conops office. Just write it on a paper and feed our \"Feedback Fox\" - we'll make sure that it's distributed to all staffers, and if possible, taken into account for next year.\n  * You can use the Eurofurence Mobile App to provide feedback on some (not all!) events. Just open the event details; there'll be a button for you to tap if the event is accepting feedback via the app. This, too, is completely anonymous.\n  * You can attend the \"Feedback Gathering\" panel which takes place on **Sunday, 12:00 to 14:00 in Room Paris** where we'll be taking feedback directly from everyone who wishes to speak up!",
                 Order: 25,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "8799298e-460c-fcba-d7b9-67d6f8122d69": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.397Z",
@@ -6697,7 +6697,7 @@ export default {
                 Text: "The Videoteam at Eurofurence is responsible for the live broadcast and recording of events at the con. We produce the official con highlights video. Our work begins 3 months before the con with acquiring materials for broadcast, planning, testing and scheduling, and ends two months after the con with the release of the highlights video.\n\nDuring events on the main stage, three cameramen, a live editor and a remote operator work closely together to create a live feed for the big projection screens so even the people in the back rows can see what is happening on the stage, even if it's just monitoring how much wine is left in Uncle Kage's bottle - we will make it visible for you. For this, we operate professional grade HD studio cameras as well as remote controlled ceiling cameras (So-called PTZ cameras) or even GoPro cameras.\n\nDidn't make it down to the stage in time for the event? Worry not, stay in your room and watch the event on your TV. We also broadcast stage events to the hotel TVs on our very own TV station, EF Prime. You can find us on Channel 1. And when there are no stage events going on, tune in anyway. We provide you with fun and entertainment 24/7 during the con.\n\nAnother of our tasks is to collect footage from all corners of the con and we mean it. Look under your seat, look above you, one of our cameras may be there. After the convention, we get busy producing the convention highlights video that will be free to download for everyone.",
                 Order: 12,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "323c5a8e-d134-d783-6a54-853e6dfc7373": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.430Z",
@@ -6710,31 +6710,31 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "artshow@eurofurence.org",
-                        Target: "mailto:artshow@eurofurence.org",
-                    },
+                        Target: "mailto:artshow@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "b8e55190-37f7-681c-5a55-6b8d9129d738": {
                 LastChangeDateTimeUtc: "2022-07-21T11:30:06.128Z",
                 Id: "b8e55190-37f7-681c-5a55-6b8d9129d738",
                 KnowledgeGroupId: "92cdf214-7e9f-6bfa-0370-dfadd5e76493",
                 Title: "Security Service",
-                Text: 'Calling ourselves the "Eurofurence Security Crew", we as a Department of about 95 furries, not few of them professionals in fields like EMS (Emergency Medical Service), the Fire Department or the Police, see the safety and enjoyment of all convention attendees as our ultimate goal. While being responsible as well for security relevant aspects during the Convention preparation, as for security operations during the running Convention, most of you will normally not see or hear much of us, unless it becomes really necessary.\n\nPrior to a Convention, or rather in between two of them, several administrative tasks in preparation fall into our business. These tasks vary from authoring a legal safety concept together with the Eurofurence Paramedic Crew and local safety authorities to advising and supporting other Department directors in regards to fire and safety regulations. During the convention our Security and Paramedic Crew ensures health and safety of all our attendees, while silently enforcing the rules. Those rules are not limited to the RoC (Rules of Conduct) but include venue policies, fire safety, legal regulations, laws and many more. Furthermore we setup and run checkpoints on key areas such as the Art Show or the Campfire.\n\nIn all of our work, we strive to hold up our fundamental rules:\n\n  * We treat everyone with respect and never forget that we ourselves are members of the furry community\n  * We abide by the law and we do not raise ourselves above others\n  * We condemn intolerance and treat everyone equal\n  * We understand our duty to be a service to all attendees\n  * We set the safety and enjoyment of everyone involved with our convention as our highest goal\n  * We believe in a defensive and emphatic approach to any problem\n  * We strive to always stay fair and unbiased\n\nThe Security Crew is led by the Eurofurence Security Directors Treyfane Dingo, KittehBit, Venture, FireDawgAT and Kazookie. Together they form the Security Board and are responsible for the organization in advance and hold the final OnSite authority in security matters. Especially qualified Group Leaders manage dedicated Security Groups for their assigned CheckPoints such as the Art Show.\n\nThe tactical management on site is carried out 24/7 by a dispatcher, a shift supervisor and an on-duty member of the Security Board. Dispatch also ensures a permanent and direct point of contact for all staff, the hotel and (via dedicated phone lines or exclusive Eurofurence call boxes) all attendees. Check-in of (dangerous) items and the Ove Night Fursuit Locker Service is handled by the shift supervisor in the OnSite security office. Incident coordination is also the responsibility of the dispatcher, which they carry out following a clear catalog of procedures and an internal alert and response order. The dispatcher is the information and communication backbone for the entire Security Crew.\n\nMembers of the Security Crew are selected for reliability, distinctive social skills, calm demeanour and experience gathered at previous conventions. Their application requirements are the strictest but in return the crew has great team spirit. Ensuring the quality of security service in an environment as dynamic and demanding as a furry convention requires extensive communication skills. The Security Crew is currently able to communicate in more than twelve different languages without external personnel.\n\nSecurity support can be requested from the dispatcher by any Staff Member, telephone (+49 3222 2133812), through any of our CallBoxes (found in various areas of the hotel) or in person in the security office at all times during the convention. Of course female officers are available as well as private meeting rooms for confidential talks.\n\nIn case of any questions before or during the convention, the Security Board will gladly be there to support you. If any advice or assistance regarding security or safety for an event or panel is needed, feel free to contact the Security Board at security@eurofurence.org.\n\nWe are constantly open for applications for new Security Crew Members! If you want to contribute in the biggest Team at Eurofurence, feel free to contact us at security_hr@eurofurence.org.',
+                Text: "Calling ourselves the \"Eurofurence Security Crew\", we as a Department of about 95 furries, not few of them professionals in fields like EMS (Emergency Medical Service), the Fire Department or the Police, see the safety and enjoyment of all convention attendees as our ultimate goal. While being responsible as well for security relevant aspects during the Convention preparation, as for security operations during the running Convention, most of you will normally not see or hear much of us, unless it becomes really necessary.\n\nPrior to a Convention, or rather in between two of them, several administrative tasks in preparation fall into our business. These tasks vary from authoring a legal safety concept together with the Eurofurence Paramedic Crew and local safety authorities to advising and supporting other Department directors in regards to fire and safety regulations. During the convention our Security and Paramedic Crew ensures health and safety of all our attendees, while silently enforcing the rules. Those rules are not limited to the RoC (Rules of Conduct) but include venue policies, fire safety, legal regulations, laws and many more. Furthermore we setup and run checkpoints on key areas such as the Art Show or the Campfire.\n\nIn all of our work, we strive to hold up our fundamental rules:\n\n  * We treat everyone with respect and never forget that we ourselves are members of the furry community\n  * We abide by the law and we do not raise ourselves above others\n  * We condemn intolerance and treat everyone equal\n  * We understand our duty to be a service to all attendees\n  * We set the safety and enjoyment of everyone involved with our convention as our highest goal\n  * We believe in a defensive and emphatic approach to any problem\n  * We strive to always stay fair and unbiased\n\nThe Security Crew is led by the Eurofurence Security Directors Treyfane Dingo, KittehBit, Venture, FireDawgAT and Kazookie. Together they form the Security Board and are responsible for the organization in advance and hold the final OnSite authority in security matters. Especially qualified Group Leaders manage dedicated Security Groups for their assigned CheckPoints such as the Art Show.\n\nThe tactical management on site is carried out 24/7 by a dispatcher, a shift supervisor and an on-duty member of the Security Board. Dispatch also ensures a permanent and direct point of contact for all staff, the hotel and (via dedicated phone lines or exclusive Eurofurence call boxes) all attendees. Check-in of (dangerous) items and the Ove Night Fursuit Locker Service is handled by the shift supervisor in the OnSite security office. Incident coordination is also the responsibility of the dispatcher, which they carry out following a clear catalog of procedures and an internal alert and response order. The dispatcher is the information and communication backbone for the entire Security Crew.\n\nMembers of the Security Crew are selected for reliability, distinctive social skills, calm demeanour and experience gathered at previous conventions. Their application requirements are the strictest but in return the crew has great team spirit. Ensuring the quality of security service in an environment as dynamic and demanding as a furry convention requires extensive communication skills. The Security Crew is currently able to communicate in more than twelve different languages without external personnel.\n\nSecurity support can be requested from the dispatcher by any Staff Member, telephone (+49 3222 2133812), through any of our CallBoxes (found in various areas of the hotel) or in person in the security office at all times during the convention. Of course female officers are available as well as private meeting rooms for confidential talks.\n\nIn case of any questions before or during the convention, the Security Board will gladly be there to support you. If any advice or assistance regarding security or safety for an event or panel is needed, feel free to contact the Security Board at security@eurofurence.org.\n\nWe are constantly open for applications for new Security Crew Members! If you want to contribute in the biggest Team at Eurofurence, feel free to contact us at security_hr@eurofurence.org.",
                 Order: 15,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Volunteer Application",
-                        Target: "mailto:security_hr@eurofurence.org",
+                        Target: "mailto:security_hr@eurofurence.org"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Contact the Security Board",
-                        Target: "mailto:security@eurofurence.org",
-                    },
+                        Target: "mailto:security@eurofurence.org"
+                    }
                 ],
-                ImageIds: ["8ae7d323-b56d-4155-8a88-6b418bcfd057"],
+                ImageIds: ["8ae7d323-b56d-4155-8a88-6b418bcfd057"]
             },
             "7df4c691-ed18-919e-ece1-382a2a2892e4": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.495Z",
@@ -6747,10 +6747,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "operations@eurofurence.org",
-                        Target: "mailto:operations@eurofurence.org",
-                    },
+                        Target: "mailto:operations@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "816a7298-0bda-4769-9982-260faa76cd59": {
                 LastChangeDateTimeUtc: "2022-07-14T15:40:13.391Z",
@@ -6763,30 +6763,30 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Website",
-                        Target: "https://www.summerbo.at",
+                        Target: "https://www.summerbo.at"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Twitter",
-                        Target: "https://www.twitter.com/summerbo_at",
+                        Target: "https://www.twitter.com/summerbo_at"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Telegram",
-                        Target: "https://t.me/summerboat",
+                        Target: "https://t.me/summerboat"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Telegram Info Channel",
-                        Target: "https://t.me/summerboatinfo",
+                        Target: "https://t.me/summerboatinfo"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Spotify Playlist",
-                        Target: "https://open.spotify.com/user/1131941723/playlist/08YOlrMp5pIcpdrQjEwfig",
-                    },
+                        Target: "https://open.spotify.com/user/1131941723/playlist/08YOlrMp5pIcpdrQjEwfig"
+                    }
                 ],
-                ImageIds: ["3b9d4776-4ffc-4d56-8cb2-103aec41a904"],
+                ImageIds: ["3b9d4776-4ffc-4d56-8cb2-103aec41a904"]
             },
             "9dcd059a-6a90-40ff-a2eb-7564668858f2": {
                 LastChangeDateTimeUtc: "2022-07-28T21:45:41.550Z",
@@ -6796,7 +6796,7 @@ export default {
                 Text: "**Are you a fursuiter but you didn't get a room in the Estrel?**\n\nDid you know we offer overnight safeguarding of your fursuit if you are not staying in the Estrel? Just bring your fursuit to the Security Office (SecOps) in Estrel Hall C when you leave the Estrel for the night. You can pick it up again at any time.",
                 Order: 5,
                 Links: [],
-                ImageIds: ["e1f118ba-9530-4e14-aad0-8c6af1a087bf"],
+                ImageIds: ["e1f118ba-9530-4e14-aad0-8c6af1a087bf"]
             },
             "01f4cc9a-f41d-2fd3-e4e3-41ecbee75efe": {
                 LastChangeDateTimeUtc: "2022-07-16T19:50:44.739Z",
@@ -6806,23 +6806,23 @@ export default {
                 Text: "In the Dealers' Den artists and dealers from all over the world sell all kinds of furry related art, prints, sketches, books, comics, t-shirts, and all different kinds of merchandise for your daily furry life. They also offer various other goods like selfmade liqueur, honey, sweet treats, jewelry, leather crafts, or searched the world for great books and comics to bring to Eurofurence. Meet your favorite artist or just roam around and get yourself inspired.\n\nPlease note that some artists offer theme-related or Eurofurence-exclusive goods that you may not be able to obtain anywhere else.\n\nAt our Eurofurence Shop you can get old EF Shirts and other leftovers. Missed a design? Ask what sizes are still in stock.  \n\n**Dealer Setup:**\n\n* Wednesday: 18:30 to 20:00\n* Thursday: 10:00 to 12:00\n* Friday: 11:00 to 12:00\n* Saturday: 11:00 to 12:00\n\n**Opening times:**\n\n* Thursday & Friday: 12:00 to 13:00 (supersponsors only)\n* Thursday & Friday: 13:00 to 14:00 (sponsors & supersponsors only)\n* Thursday & Friday: 14:00 to 18:00 (regular)\n* Saturday: 12:00 to 18:00 (regular)\n\n**Dealer Teardown:**\n* Saturday: 18:00 to 20:00\n\n**Den/Artshow Party**\n\nPARTY! Dealers' Den and Art Show will hold their reception, where we open the doors between these two rooms for all the artists, dealers, and staff members to get together and chat about art and other things over a beer or a glass of \"tea\". You are invited to take a look around in the Dealers' Den and the Art Show unhurriedly.\n\n  * Thursday: 20:00 to 22:00 (artists, dealers & staff only)",
                 Order: 4,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "cffff4a5-bddf-42eb-8626-95990b0373f5": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.647Z",
                 Id: "cffff4a5-bddf-42eb-8626-95990b0373f5",
                 KnowledgeGroupId: "6f91eaf9-68dc-4744-9da8-1bfc7d0052af",
                 Title: "Sunday August 18th 2019",
-                Text: 'Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Sunday issue here:\n\n- "They will not change us! ", a critique on the amazing Pawpet Show.\n- "Don’t be afraid", looking at the medics at EF.\n- "The party’s not over"\n- "OwO what’s this? *notices your car*"\n- Photographers\'s Choice\n- and of course the Daily Comic Strip',
+                Text: "Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Sunday issue here:\n\n- \"They will not change us! \", a critique on the amazing Pawpet Show.\n- \"Don’t be afraid\", looking at the medics at EF.\n- \"The party’s not over\"\n- \"OwO what’s this? *notices your car*\"\n- Photographers's Choice\n- and of course the Daily Comic Strip",
                 Order: 5,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Download issue 48",
-                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.18_sunday_issue.48.pdf",
-                    },
+                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.18_sunday_issue.48.pdf"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "2f8d96aa-4c13-195f-695c-9e27b7de788c": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.711Z",
@@ -6835,10 +6835,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "stage@eurofurence.org",
-                        Target: "mailto:stage@eurofurence.org",
-                    },
+                        Target: "mailto:stage@eurofurence.org"
+                    }
                 ],
-                ImageIds: ["7d08e513-23e0-404d-a56a-94171a3107d8"],
+                ImageIds: ["7d08e513-23e0-404d-a56a-94171a3107d8"]
             },
             "0ea049b5-a154-bd4c-8ef7-0683f4cdf311": {
                 LastChangeDateTimeUtc: "2022-07-16T19:54:32.206Z",
@@ -6851,20 +6851,20 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "dealers@eurofurence.org",
-                        Target: "mailto:dealers@eurofurence.org",
-                    },
+                        Target: "mailto:dealers@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "cf1616ba-36f6-4c24-b57b-a8a038f5c5ce": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.807Z",
                 Id: "cf1616ba-36f6-4c24-b57b-a8a038f5c5ce",
                 KnowledgeGroupId: "3f733bc5-d41f-e233-3cae-1df9ee5c39b6",
                 Title: "Fursuit Group Photo",
-                Text: '**Help us create magic! Take part in the (hopefully) largest fursuit group picture of Europe!**\n\nWe would like to invite you to join our lineup of what is the largest fursuit gathering in Europe! This is the opportunity to be part of the crowd and still get seen afterwards! Please note that we are doing a FURSUIT picture here, the ground rule being: no blank human skin! Not even worn as a war trophy! Half-Suits are OK if the clothing covers your human features. Kigus are OK if they can count as clothing for a half suit at least. We have a Photoshop license and know how to use it, so if you sneak in without a fursuit, you only succeed in annoying us.\n\nLike the regular group photo, we shall start lining up everybody as soon as possible; we will block entrance to the area a few minutes after the official start time and once the lineup has completed, we will take the picture. A precise "shot" time can not be announced up front, but it will be over well within the announced half hour! Water carriers and fan service will be available!\n\nThe precise number of suiters in the picture will be announced after the convention, when we had time to count!\n\n* **Location**: Convention Hall II\n* **Time**: Thursday, 16:30',
+                Text: "**Help us create magic! Take part in the (hopefully) largest fursuit group picture of Europe!**\n\nWe would like to invite you to join our lineup of what is the largest fursuit gathering in Europe! This is the opportunity to be part of the crowd and still get seen afterwards! Please note that we are doing a FURSUIT picture here, the ground rule being: no blank human skin! Not even worn as a war trophy! Half-Suits are OK if the clothing covers your human features. Kigus are OK if they can count as clothing for a half suit at least. We have a Photoshop license and know how to use it, so if you sneak in without a fursuit, you only succeed in annoying us.\n\nLike the regular group photo, we shall start lining up everybody as soon as possible; we will block entrance to the area a few minutes after the official start time and once the lineup has completed, we will take the picture. A precise \"shot\" time can not be announced up front, but it will be over well within the announced half hour! Water carriers and fan service will be available!\n\nThe precise number of suiters in the picture will be announced after the convention, when we had time to count!\n\n* **Location**: Convention Hall II\n* **Time**: Thursday, 16:30",
                 Order: 4,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "1a5844c0-ada0-f677-4ae3-10600a43ec4c": {
                 LastChangeDateTimeUtc: "2022-07-28T21:56:57.894Z",
@@ -6877,47 +6877,47 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Call Security (Phone)",
-                        Target: "tel:+4932222133812",
-                    },
+                        Target: "tel:+4932222133812"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "24a84bc2-3bee-cd48-cef5-ff1adea9fcd7": {
                 LastChangeDateTimeUtc: "2022-06-25T12:07:36.391Z",
                 Id: "24a84bc2-3bee-cd48-cef5-ff1adea9fcd7",
                 KnowledgeGroupId: "9bf9b01f-e655-bec2-35ae-d72ebe38c245",
                 Title: "Public transport tickets",
-                Text: 'In 2022, we recommend the **9-Euro-Ticket**. This is a personalised ticket valid for one person in the month of August on all local trains and public transport services in the whole of Germany. The ticket is available from the usual outlets for **€9.00**. If you already have a monthly season pass from anywhere else in Germany, it will also be valid in Berlin.\n\nYou can purchase tickets at the BVG service counters, the BVG ticket vending machines located in the S-Bahn and U-Bahn stations or on busses directly from the driver (please have change ready for bus drivers), as well as in the BVG app available for Android and iOS called "FahrInfo Plus".',
+                Text: "In 2022, we recommend the **9-Euro-Ticket**. This is a personalised ticket valid for one person in the month of August on all local trains and public transport services in the whole of Germany. The ticket is available from the usual outlets for **€9.00**. If you already have a monthly season pass from anywhere else in Germany, it will also be valid in Berlin.\n\nYou can purchase tickets at the BVG service counters, the BVG ticket vending machines located in the S-Bahn and U-Bahn stations or on busses directly from the driver (please have change ready for bus drivers), as well as in the BVG app available for Android and iOS called \"FahrInfo Plus\".",
                 Order: 3,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Website of the BVG (Berlin's public transport company)",
-                        Target: "http://www.bvg.de/index.php/en/index.html",
+                        Target: "http://www.bvg.de/index.php/en/index.html"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "BVG App for Mobile Tickets (Android & iOS)",
-                        Target: "https://www.bvg.de/en/Tickets/Mobile",
-                    },
+                        Target: "https://www.bvg.de/en/Tickets/Mobile"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "414cafc7-bfe0-4dcb-8006-8bdb5f81b736": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.898Z",
                 Id: "414cafc7-bfe0-4dcb-8006-8bdb5f81b736",
                 KnowledgeGroupId: "6f91eaf9-68dc-4744-9da8-1bfc7d0052af",
                 Title: "Friday August 16th 2019 ",
-                Text: 'Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Friday issue here:\n\n- "Keeping it cool", a deeper look at EF\'s Fursuit Support department.\n- "Making Accommodations ", how furs deal with the shortage of rooms in the Estrel hotel.\n- "Have fun and act responsibly "\n- "Victorious at his first attempt"\n- "If you lose hope, you lose everything"\n-  and of course the Daily Comic Strip',
+                Text: "Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Friday issue here:\n\n- \"Keeping it cool\", a deeper look at EF's Fursuit Support department.\n- \"Making Accommodations \", how furs deal with the shortage of rooms in the Estrel hotel.\n- \"Have fun and act responsibly \"\n- \"Victorious at his first attempt\"\n- \"If you lose hope, you lose everything\"\n-  and of course the Daily Comic Strip",
                 Order: 2,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Download Issue 46",
-                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.16_friday_issue.46.pdf",
-                    },
+                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.16_friday_issue.46.pdf"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "aed35ccb-2528-9b82-c163-bcb44c860b65": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.928Z",
@@ -6930,26 +6930,26 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "conbook@eurofurence.org",
-                        Target: "mailto:conbook@eurofurence.org",
-                    },
+                        Target: "mailto:conbook@eurofurence.org"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "1c994bcc-c8aa-4d00-969b-9c78cfb1ef79": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.958Z",
                 Id: "1c994bcc-c8aa-4d00-969b-9c78cfb1ef79",
                 KnowledgeGroupId: "6f91eaf9-68dc-4744-9da8-1bfc7d0052af",
                 Title: "Thursday August 15th 2019",
-                Text: 'Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Thursday issue here:\n\n- "The Cruise will be back in 2020", covering EF\'s first boat cruise ever.\n- "Minor fractures in time", including attendee statistics for 2019.\n-  "Furries are very respectful guests",\n-  "The Daily goes Digital",\n- "Hella Who?",\n- and of course the Daily Comic Strip!',
+                Text: "Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Thursday issue here:\n\n- \"The Cruise will be back in 2020\", covering EF's first boat cruise ever.\n- \"Minor fractures in time\", including attendee statistics for 2019.\n-  \"Furries are very respectful guests\",\n-  \"The Daily goes Digital\",\n- \"Hella Who?\",\n- and of course the Daily Comic Strip!",
                 Order: 1,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Download Issue 45",
-                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.15_thursday_issue.45.pdf",
-                    },
+                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.15_thursday_issue.45.pdf"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "e2e71ccf-5745-0d50-966f-c815d1f51090": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:24.988Z",
@@ -6959,7 +6959,7 @@ export default {
                 Text: "The Estrel offers free WiFi access on its premises to everyone (you do not need to have a room in the Estrel to use this).\n\nEurofurence does **not** provide its guests with Internet access.\n",
                 Order: 1,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "294be7d4-6ffa-747e-b9e3-bf58017fc691": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.019Z",
@@ -6972,52 +6972,52 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "cheetah@tigress.com",
-                        Target: "mailto:cheetah@tigress.com",
-                    },
+                        Target: "mailto:cheetah@tigress.com"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "be402ad7-b135-866c-1187-a333219a0924": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.048Z",
                 Id: "be402ad7-b135-866c-1187-a333219a0924",
                 KnowledgeGroupId: "3f733bc5-d41f-e233-3cae-1df9ee5c39b6",
                 Title: "Fursuit Photoshoot",
-                Text: 'Registration is done at the Fursuit Photoshoot registration desk at ConOps, first come first serve. **Each block in the schedule has its own registration time**, "Block 2" registration is only for "Block 2" openings etc.! Once all slots for a block are taken, registration for that block is closed.\n\nDue to the large request for timeslots, we need to prefer those who didn\'t get a chance the year before. You can still apply, but you might get turned back. \n\n  * Individual slot (one or two suiters) are **10 minutes**.\n  * Group slots (three to eight suiters) are **15 minutes**.\n\n**Registration (Estrel Hall B - ConOps):**\n\n* block 1: Wed 19:00\n* block 2: Thu 11:00\n* block 3: Thu 19:00\n* block 4: Fri 11:00\n* block 5: Fri 19:00\n* block 6: Sat 11:00\n\n**Photoshootings (Convention Hall - Section D):**\n\n* block 1: Thu 12:00\n* block 2: Thu 16:00\n* block 3: Fri 12:00\n* block 4: Fri 16:00\n* block 5: Sat 12:00\n* block 6: Sat 16:00',
+                Text: "Registration is done at the Fursuit Photoshoot registration desk at ConOps, first come first serve. **Each block in the schedule has its own registration time**, \"Block 2\" registration is only for \"Block 2\" openings etc.! Once all slots for a block are taken, registration for that block is closed.\n\nDue to the large request for timeslots, we need to prefer those who didn't get a chance the year before. You can still apply, but you might get turned back. \n\n  * Individual slot (one or two suiters) are **10 minutes**.\n  * Group slots (three to eight suiters) are **15 minutes**.\n\n**Registration (Estrel Hall B - ConOps):**\n\n* block 1: Wed 19:00\n* block 2: Thu 11:00\n* block 3: Thu 19:00\n* block 4: Fri 11:00\n* block 5: Fri 19:00\n* block 6: Sat 11:00\n\n**Photoshootings (Convention Hall - Section D):**\n\n* block 1: Thu 12:00\n* block 2: Thu 16:00\n* block 3: Fri 12:00\n* block 4: Fri 16:00\n* block 5: Sat 12:00\n* block 6: Sat 16:00",
                 Order: 3,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "8012efd9-8e2a-c092-a7b6-849dc06c0ef2": {
                 LastChangeDateTimeUtc: "2022-07-20T12:15:57.597Z",
                 Id: "8012efd9-8e2a-c092-a7b6-849dc06c0ef2",
                 KnowledgeGroupId: "6232ae2f-4e9d-fcf4-6341-f1751b405e45",
                 Title: "Rules of Conduct",
-                Text: 'Eurofurence likes to present itself as a professional convention of friendly, respectful and open-minded members of the furry community and their friends. As a condition of membership, all Eurofurence attendees are required to abide by these rules of conduct for the entire duration of their stay, even prior to opening or after closing of the convention. When in doubt about any of these rules, please don\'t be afraid to ask - we will gladly answer all your questions. However, please understand that we will not debate these rules with you during the convention. The rules of conduct are enforced by the Eurofurence Security Crew who will be clearly identified as such on site. If you have any problem with any action taken by a staff member you may take the matter up at the Security Office or with the Chairman.\n\n**General Rules**\n\nAny action or behavior that causes significant interference with convention operations, excessive discomfort to other attendees, or adversely affects Eurofurence\'s relationship with its guests, its venues or the public is strictly forbidden and may result in permanent suspension of membership. This general rule supersedes all others listed below and may be invoked at any time.\n\n* Please treat each other respectfully.\n* You are liable for any damage you might cause.\n* Always follow the directions by convention staff and Eurofurence Security Crew Members.\n* Harassment of any kind, including physical assault, battery, deliberate intimidation, stalking, or unwelcome physical attentions, will not be tolerated.\n\nPlease be aware that the atrium, the Beer Garden and the restaurants are public areas, and that there may be regular hotel guests around who are not taking part in our convention. Please help us give them the best possible impression of our fandom!\n\n**Registration and Badges**\n\nAttendees are required to have their badge on display in the hotel\'s public and convention exclusive areas at all times. Fursuiters are not required to wear their badge openly but must have it with them.\n\n* You must be at least 18 years old by the first day of the convention.\n* Eurofurence convention exclusive areas are open only to registered attendees.\n* Attendees are identified by their personal membership badge.\n* A badge is valid only for the person to whom it was issued and may not be shared.\n* Badges must be presented and / or surrendered to Security Crew Members upon request.\n* Changing or obscuring information on your badge is not allowed.\n* The lanyards issued with your badge must not be changed to one of a different color.\n\n**Hotel Rules**\n\n* The consumption of food or drink purchased from outside of the hotel is not permitted on the premises of the Estrel hotel, with the exception of your private room and around the campfire.\n* Smoking is not permitted inside the Estrel Hotel, the Convention Center and in the direct vicinity of the front entrances.\n* It is strictly forbidden to throw/dangle/hang anything out of any windows, balconies or any other elevated location.\n* Attendees may not enter the service areas of the hotel. This includes backstage areas, service elevators, rooftops, emergency exits and all areas marked as "Staff Only".\n* Disabling or deliberately triggering fire-protection devices (such as smoke detectors, sprinklers or door alarms) is strictly prohibited.\n* The sale of any kind of merchandise outside the official Dealers\' Den requires explicit permission by the Eurofurence Board of Directors.\n* No sleeping in the lobby, the hallways or the meeting rooms. Get a room, please!\n* For safety reasons it is not allowed to bring dogs, cats or other animals into your hotel room or any of the convention event areas.\n\nGas cylinders or any other high pressure containers, regardless of content or size, are not permitted anywhere on the hotel premise without written authorization by the Eurofurence Security Service. This does not apply to deodorant / hair sprays or medication.\n\nOperating large electrical appliances in your private room, including any form of heating / cooling devices or industrial fans, is not allowed. Small fans to dry out costumes, regular (CE marked) chargers for smartphones, tablets or laptops are deemed okay but must not be operated without supervision. All other electrical appliances must be checked in and tested at the Security Office.\n\n* Personal music players such as bluetooth speakers or boom boxes may not be used in a way that may disturb any bystanders.\n\nPortable music players can be a fun addition to all kinds of social activities. However, music that is played too loud can be a serious nuisance, and it\'s easy to forget how far your sound may carry. Pretending to be a one man fursuit dance may be fun to you, but sitting in the middle of a cacophony of conflicting music styles can be very stressful for your environment. Please turn down your volume, switch off your device when there is already playing music in the area, and avoid walking around with your music still playing.\n\n**Parties and Gatherings**\n\nGatherings in hotel rooms must not generate any noise that can be heard in neighboring rooms during nighttime hours. Hotel room doors must be kept shut during such gatherings and guests are not permitted to congregate in the hotel corridors.\n\n* Parties that are deemed too loud will be given a single warning. Subsequent complaints will lead to the party being shut down and possibly further consequences for the individuals involved.\n* Eurofurence Security Service is required to clear out overcrowded rooms. For your own safety, we recommend keeping the occupancy below 10 in a regular room, or below 20 in a junior suite.\n\nAll room occupants are equally responsible for cleaning up after a party. Trash must be put into bags. Don\'t leave a mess for housekeeping. Do not leave empty bottles, glasses or other trash behind. Please clean up after yourself.\n\n**Clothing and Decency**\n\n* Wearing costumes, accessories or displaying items made out of real fur is not allowed.\n* When in public areas of the Estrel Hotel and Convention Center, attendees may not wear clothing or accessories which are overly revealing, inappropriate to the atmosphere of the convention, or likely to draw reasonable complaint or offense.\n* To prevent damage to costumes and hotel property, body paint requires an individual permission to be obtained at the Security Office. Face makeup does not require permission, but please be careful!\n* Public displays of affection beyond what is appropriate for polite company are non-desirable. Please express your devotion to your significant other either in less conspicuous ways, or in private.\n* Display of fetish gear is not permitted in public areas.\n* Display of adult materials (such as room signs, flyers, business cards, posters and drawings on public message boards) is not permitted in public areas.\n\nThe limit for "adult themed" materials is the equivalent of a German FSK16 rating. When in doubt, please contact us either by email before the convention (security@eurofurence.org) or ask at the Security Office during the convention.\n\nWhen used as part of a costume (fursuit), the following items are usually allowed:\n\n* Collars\n* Decorative Wristbands\n* Harnesses\n\nThe following items are explicitly not allowed in public:\n\n* Full-body rubber or vinyl gear\n* Costumes that are visibly "anatomically correct" or indecently revealing the wearers own private anatomy\n* Costumes or accessories related to age-play, pet-play or BDSM\n\n**Alcohol and other Substances**\n\nYou are expected to drink responsibly. You will be held accountable for what you do, under the influence or not. Persons who are intoxicated to the point of incapacity will be escorted to their room, and may consequentially be expelled from the convention.\n\n* Any individual found to be in possession of or distributing illegal or controlled substances will be expelled from the convention and reported to the local authorities.\n* The use of "legal highs" or the abuse of substances like glue, nitrous oxide (laughing gas), alkyl nitrites (poppers) and others is strictly prohibited.\n\n**Weapons**\n\nYou may not carry any weapons anywhere on the premises of the hotel or the convention center at any time. In this context, any object which is, according to its nature, suitable for inflicting injuries to persons or animals or to do damage to property will be considered a weapon. This includes items which are legal according to German weapon laws like i.e. Kubotans, pepper / cs spray, alarm guns (even with permit) and any other object deemed too dangerous by Eurofurence Security Service.\n\n* All weapon look-alikes, LARP props, replicas, tools and weapon like toys must be checked and approved in the Security Office immediately after your registration on site.\n* Eurofurence Security Service may require your weapon to be peace-bond. Tampering with the peace bonding will invalidate the clearance immediately.\n* Water pistols, silly string, or any thrown or projectile-type toy may not be used inside the Estrel Hotel or Convention Center.\n\nMock fights, swordplay, fire breathing or similarly dangerous activities are not allowed. Exceptions for staged events may be granted by Eurofurence Security Service. Please inquire ahead of time, preferably before the convention.\n\n**Hate Speech and Symbols**\n\nSpeech in any form that promotes or encourages discrimination, harassment, or violence based on race, ethnicity, gender identity, sexual orientation, age, religion, or nationality is strictly prohibited.\n\nYou are not allowed to wear, display or otherwise propagate symbols of forbidden organizations according to §86 and §86a of the German Penal Code (StGB) or symbols relating to groups associated with the "alt furry" movement.\n\nThe ban includes any sign or icon embodied in a physical object but also optical and acoustical symbols qualified to give an unbiased third party the impression of being a distinctive mark of any of the organizations mentioned above. It furthermore applies to variations or modifications similar enough to be mistaken for those symbols or intentionally obscured renderings of those symbols.\n\n**Photography and Video**\n\nEurofurence e.V. reserves all rights to video and photo material gathered at the convention with the exception of footage from private rooms. Eurofurence e.V. grants you the right to use videos and photos you have taken at the convention for private and/or non-commercial purposes.\n\n* Publication in for-profit media requires written permission by the Board of Directors.\n\nOfficial Eurofurence camera teams (identified by a "Eurofurence Media" badge) may record video and take photos in all areas of the convention and during events to be used for publication. You agree that videos and pictures taken of you can be used in such publications without release or compensation. A release will only be required for material filmed in situations where a reasonable expectation of privacy exists.\n\n* Photography and filming is not allowed in the Art Show, the Fursuit Lounge and other "headlesss fursuiter" areas.\n* Further restrictions and rules may apply for certain events, as posted on location.\n\n**The Bottom Line**\n\nMany of the above rules involve "worst-case" scenarios and are put into place to ensure the safety and comfort of our attendees. Since most of them are common sense, there is usually not much need to enforce them. However, we are prepared to deal with any or all of the above scenarios in a rapid and efficient manner, should they occur. We thank our attendees for their past cooperation and for their continued assistance in keeping Eurofurence a safe and enjoyable experience for everyone.\n\nHave fun, be nice to each other, and we will all have a great time!',
+                Text: "Eurofurence likes to present itself as a professional convention of friendly, respectful and open-minded members of the furry community and their friends. As a condition of membership, all Eurofurence attendees are required to abide by these rules of conduct for the entire duration of their stay, even prior to opening or after closing of the convention. When in doubt about any of these rules, please don't be afraid to ask - we will gladly answer all your questions. However, please understand that we will not debate these rules with you during the convention. The rules of conduct are enforced by the Eurofurence Security Crew who will be clearly identified as such on site. If you have any problem with any action taken by a staff member you may take the matter up at the Security Office or with the Chairman.\n\n**General Rules**\n\nAny action or behavior that causes significant interference with convention operations, excessive discomfort to other attendees, or adversely affects Eurofurence's relationship with its guests, its venues or the public is strictly forbidden and may result in permanent suspension of membership. This general rule supersedes all others listed below and may be invoked at any time.\n\n* Please treat each other respectfully.\n* You are liable for any damage you might cause.\n* Always follow the directions by convention staff and Eurofurence Security Crew Members.\n* Harassment of any kind, including physical assault, battery, deliberate intimidation, stalking, or unwelcome physical attentions, will not be tolerated.\n\nPlease be aware that the atrium, the Beer Garden and the restaurants are public areas, and that there may be regular hotel guests around who are not taking part in our convention. Please help us give them the best possible impression of our fandom!\n\n**Registration and Badges**\n\nAttendees are required to have their badge on display in the hotel's public and convention exclusive areas at all times. Fursuiters are not required to wear their badge openly but must have it with them.\n\n* You must be at least 18 years old by the first day of the convention.\n* Eurofurence convention exclusive areas are open only to registered attendees.\n* Attendees are identified by their personal membership badge.\n* A badge is valid only for the person to whom it was issued and may not be shared.\n* Badges must be presented and / or surrendered to Security Crew Members upon request.\n* Changing or obscuring information on your badge is not allowed.\n* The lanyards issued with your badge must not be changed to one of a different color.\n\n**Hotel Rules**\n\n* The consumption of food or drink purchased from outside of the hotel is not permitted on the premises of the Estrel hotel, with the exception of your private room and around the campfire.\n* Smoking is not permitted inside the Estrel Hotel, the Convention Center and in the direct vicinity of the front entrances.\n* It is strictly forbidden to throw/dangle/hang anything out of any windows, balconies or any other elevated location.\n* Attendees may not enter the service areas of the hotel. This includes backstage areas, service elevators, rooftops, emergency exits and all areas marked as \"Staff Only\".\n* Disabling or deliberately triggering fire-protection devices (such as smoke detectors, sprinklers or door alarms) is strictly prohibited.\n* The sale of any kind of merchandise outside the official Dealers' Den requires explicit permission by the Eurofurence Board of Directors.\n* No sleeping in the lobby, the hallways or the meeting rooms. Get a room, please!\n* For safety reasons it is not allowed to bring dogs, cats or other animals into your hotel room or any of the convention event areas.\n\nGas cylinders or any other high pressure containers, regardless of content or size, are not permitted anywhere on the hotel premise without written authorization by the Eurofurence Security Service. This does not apply to deodorant / hair sprays or medication.\n\nOperating large electrical appliances in your private room, including any form of heating / cooling devices or industrial fans, is not allowed. Small fans to dry out costumes, regular (CE marked) chargers for smartphones, tablets or laptops are deemed okay but must not be operated without supervision. All other electrical appliances must be checked in and tested at the Security Office.\n\n* Personal music players such as bluetooth speakers or boom boxes may not be used in a way that may disturb any bystanders.\n\nPortable music players can be a fun addition to all kinds of social activities. However, music that is played too loud can be a serious nuisance, and it's easy to forget how far your sound may carry. Pretending to be a one man fursuit dance may be fun to you, but sitting in the middle of a cacophony of conflicting music styles can be very stressful for your environment. Please turn down your volume, switch off your device when there is already playing music in the area, and avoid walking around with your music still playing.\n\n**Parties and Gatherings**\n\nGatherings in hotel rooms must not generate any noise that can be heard in neighboring rooms during nighttime hours. Hotel room doors must be kept shut during such gatherings and guests are not permitted to congregate in the hotel corridors.\n\n* Parties that are deemed too loud will be given a single warning. Subsequent complaints will lead to the party being shut down and possibly further consequences for the individuals involved.\n* Eurofurence Security Service is required to clear out overcrowded rooms. For your own safety, we recommend keeping the occupancy below 10 in a regular room, or below 20 in a junior suite.\n\nAll room occupants are equally responsible for cleaning up after a party. Trash must be put into bags. Don't leave a mess for housekeeping. Do not leave empty bottles, glasses or other trash behind. Please clean up after yourself.\n\n**Clothing and Decency**\n\n* Wearing costumes, accessories or displaying items made out of real fur is not allowed.\n* When in public areas of the Estrel Hotel and Convention Center, attendees may not wear clothing or accessories which are overly revealing, inappropriate to the atmosphere of the convention, or likely to draw reasonable complaint or offense.\n* To prevent damage to costumes and hotel property, body paint requires an individual permission to be obtained at the Security Office. Face makeup does not require permission, but please be careful!\n* Public displays of affection beyond what is appropriate for polite company are non-desirable. Please express your devotion to your significant other either in less conspicuous ways, or in private.\n* Display of fetish gear is not permitted in public areas.\n* Display of adult materials (such as room signs, flyers, business cards, posters and drawings on public message boards) is not permitted in public areas.\n\nThe limit for \"adult themed\" materials is the equivalent of a German FSK16 rating. When in doubt, please contact us either by email before the convention (security@eurofurence.org) or ask at the Security Office during the convention.\n\nWhen used as part of a costume (fursuit), the following items are usually allowed:\n\n* Collars\n* Decorative Wristbands\n* Harnesses\n\nThe following items are explicitly not allowed in public:\n\n* Full-body rubber or vinyl gear\n* Costumes that are visibly \"anatomically correct\" or indecently revealing the wearers own private anatomy\n* Costumes or accessories related to age-play, pet-play or BDSM\n\n**Alcohol and other Substances**\n\nYou are expected to drink responsibly. You will be held accountable for what you do, under the influence or not. Persons who are intoxicated to the point of incapacity will be escorted to their room, and may consequentially be expelled from the convention.\n\n* Any individual found to be in possession of or distributing illegal or controlled substances will be expelled from the convention and reported to the local authorities.\n* The use of \"legal highs\" or the abuse of substances like glue, nitrous oxide (laughing gas), alkyl nitrites (poppers) and others is strictly prohibited.\n\n**Weapons**\n\nYou may not carry any weapons anywhere on the premises of the hotel or the convention center at any time. In this context, any object which is, according to its nature, suitable for inflicting injuries to persons or animals or to do damage to property will be considered a weapon. This includes items which are legal according to German weapon laws like i.e. Kubotans, pepper / cs spray, alarm guns (even with permit) and any other object deemed too dangerous by Eurofurence Security Service.\n\n* All weapon look-alikes, LARP props, replicas, tools and weapon like toys must be checked and approved in the Security Office immediately after your registration on site.\n* Eurofurence Security Service may require your weapon to be peace-bond. Tampering with the peace bonding will invalidate the clearance immediately.\n* Water pistols, silly string, or any thrown or projectile-type toy may not be used inside the Estrel Hotel or Convention Center.\n\nMock fights, swordplay, fire breathing or similarly dangerous activities are not allowed. Exceptions for staged events may be granted by Eurofurence Security Service. Please inquire ahead of time, preferably before the convention.\n\n**Hate Speech and Symbols**\n\nSpeech in any form that promotes or encourages discrimination, harassment, or violence based on race, ethnicity, gender identity, sexual orientation, age, religion, or nationality is strictly prohibited.\n\nYou are not allowed to wear, display or otherwise propagate symbols of forbidden organizations according to §86 and §86a of the German Penal Code (StGB) or symbols relating to groups associated with the \"alt furry\" movement.\n\nThe ban includes any sign or icon embodied in a physical object but also optical and acoustical symbols qualified to give an unbiased third party the impression of being a distinctive mark of any of the organizations mentioned above. It furthermore applies to variations or modifications similar enough to be mistaken for those symbols or intentionally obscured renderings of those symbols.\n\n**Photography and Video**\n\nEurofurence e.V. reserves all rights to video and photo material gathered at the convention with the exception of footage from private rooms. Eurofurence e.V. grants you the right to use videos and photos you have taken at the convention for private and/or non-commercial purposes.\n\n* Publication in for-profit media requires written permission by the Board of Directors.\n\nOfficial Eurofurence camera teams (identified by a \"Eurofurence Media\" badge) may record video and take photos in all areas of the convention and during events to be used for publication. You agree that videos and pictures taken of you can be used in such publications without release or compensation. A release will only be required for material filmed in situations where a reasonable expectation of privacy exists.\n\n* Photography and filming is not allowed in the Art Show, the Fursuit Lounge and other \"headlesss fursuiter\" areas.\n* Further restrictions and rules may apply for certain events, as posted on location.\n\n**The Bottom Line**\n\nMany of the above rules involve \"worst-case\" scenarios and are put into place to ensure the safety and comfort of our attendees. Since most of them are common sense, there is usually not much need to enforce them. However, we are prepared to deal with any or all of the above scenarios in a rapid and efficient manner, should they occur. We thank our attendees for their past cooperation and for their continued assistance in keeping Eurofurence a safe and enjoyable experience for everyone.\n\nHave fun, be nice to each other, and we will all have a great time!",
                 Order: 0,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Eurofurence Rules of Conduct (Online)",
-                        Target: "https://help.eurofurence.org/legal/roc",
-                    },
+                        Target: "https://help.eurofurence.org/legal/roc"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "f01453dc-0595-396c-e57e-f4abf789f904": {
                 LastChangeDateTimeUtc: "2022-07-10T14:21:04.050Z",
                 Id: "f01453dc-0595-396c-e57e-f4abf789f904",
                 KnowledgeGroupId: "92cdf214-7e9f-6bfa-0370-dfadd5e76493",
                 Title: "Fursuit Support",
-                Text: '**What is the FURSUIT SUPPORT TEAM?**\n\nIf you have ever been to a furry convention, you will have likely found yourself surrounded by cute fursuiters posing for photos and offering hugs. And while the furry fandom thrives on the wide range of creativity and different art forms; fursuiters are often the most prominent phenomenon on site. These giant fuzzy critters are bringing their anthropomorphic fantasies into the living world.\n\nFursuiting is a whole lot of fun. However, it is also an extremely warm and exhausting thing to do. Imagine, if you will, running around in a thick whole body winter coat in the middle of summer. Your vision is limited, your breathing is muffled and your sense of touch is greatly reduced. It\'s not the most pleasant situation to be in for a long period of time. This said, fursuiters brave these harsh conditions to bring smiles to people, entertain and have fun.\n\n**Here is where Fursuit Support comes in.**\n\nWe love to see these critters around as much as possible. And the better we take care of their needs and wellbeing, the more often we get to see them performing. The work we do is unseen by most attendees, but we are there when fursuiters hide from the public eye to break character to recover.\n\nWe get paid in hugs and thank yous from people who can fursuit twice as long now rather than dying of heatstroke or dehydration. Seeing that Eurofurence is praised for its fursuit friendly services and having one of the highest fursuiter quotas of all conventions fills us with great pride.\n\n**So what does the Fursuit Support team actually do?**\n\nBy far our biggest job at the convention is running the "Fursuit Lounge". A large hall filled with cooling blower arrays, self-constructed costume drying systems, a fursuit repair center, dozens of drink supply stations and lots of storage space. Once set up, we constantly have to keep all this clean, stocked, and looked after. We are, of course, always there to lend a helping hand, answer questions, check on people\'s health, and ensure a fursuiter\'s "character-privacy" is respected.\n\nWe also provide these services to panels and events. If a panel or dance involves fursuiters, then we ensure there are wind machines and a backstage area with water and snacks for them.\n\nFursuiters also get their own convention badges that need to be produced and handed out by a whole team of dedicated volunteers.\n\nMany of our tasks may seem menial, such as refilling water, cleaning areas, carrying things around etc. But even these small tasks can mean the world to an exhausted fursuiter who needs nothing more than some fresh air and water.\n\n**Would you like to help?**\n\nEvery year the Fursuit Lounge is among the first permanent service running and is usually the last to close down at the end of the convention. This is a lot of time to cover and a lot of suiters to keep happy. If you would like to join our team and help us keep our fursuiters suiting, here is what we are looking for in a volunteer:\n\n* You feel that assisting fursuiters and giving them a safe space is important,\n* You are willing to help for about an hour per volunteer shift, preferably more than once during the convention,\n* Ideally you are able to help with building up the Fursuit Lounge before, and breaking it down after, the convention,\n* You are capable of communicating in basic English,\n* You can handle heavy water kegs without breaking them or yourself, or know how to use a badge printer to help with the fursuit badges.\n* Last but not least, fursuiters need us the most when they are out having fun and exhausting themselves. We are at our busiest during these times and will need all the help we can get often late into the night to cover the fursuit dances.\n\n\n**Have questions or want to help?**\n\nWe would love to hear from you at fursuit-team@eurofurence.org !',
+                Text: "**What is the FURSUIT SUPPORT TEAM?**\n\nIf you have ever been to a furry convention, you will have likely found yourself surrounded by cute fursuiters posing for photos and offering hugs. And while the furry fandom thrives on the wide range of creativity and different art forms; fursuiters are often the most prominent phenomenon on site. These giant fuzzy critters are bringing their anthropomorphic fantasies into the living world.\n\nFursuiting is a whole lot of fun. However, it is also an extremely warm and exhausting thing to do. Imagine, if you will, running around in a thick whole body winter coat in the middle of summer. Your vision is limited, your breathing is muffled and your sense of touch is greatly reduced. It's not the most pleasant situation to be in for a long period of time. This said, fursuiters brave these harsh conditions to bring smiles to people, entertain and have fun.\n\n**Here is where Fursuit Support comes in.**\n\nWe love to see these critters around as much as possible. And the better we take care of their needs and wellbeing, the more often we get to see them performing. The work we do is unseen by most attendees, but we are there when fursuiters hide from the public eye to break character to recover.\n\nWe get paid in hugs and thank yous from people who can fursuit twice as long now rather than dying of heatstroke or dehydration. Seeing that Eurofurence is praised for its fursuit friendly services and having one of the highest fursuiter quotas of all conventions fills us with great pride.\n\n**So what does the Fursuit Support team actually do?**\n\nBy far our biggest job at the convention is running the \"Fursuit Lounge\". A large hall filled with cooling blower arrays, self-constructed costume drying systems, a fursuit repair center, dozens of drink supply stations and lots of storage space. Once set up, we constantly have to keep all this clean, stocked, and looked after. We are, of course, always there to lend a helping hand, answer questions, check on people's health, and ensure a fursuiter's \"character-privacy\" is respected.\n\nWe also provide these services to panels and events. If a panel or dance involves fursuiters, then we ensure there are wind machines and a backstage area with water and snacks for them.\n\nFursuiters also get their own convention badges that need to be produced and handed out by a whole team of dedicated volunteers.\n\nMany of our tasks may seem menial, such as refilling water, cleaning areas, carrying things around etc. But even these small tasks can mean the world to an exhausted fursuiter who needs nothing more than some fresh air and water.\n\n**Would you like to help?**\n\nEvery year the Fursuit Lounge is among the first permanent service running and is usually the last to close down at the end of the convention. This is a lot of time to cover and a lot of suiters to keep happy. If you would like to join our team and help us keep our fursuiters suiting, here is what we are looking for in a volunteer:\n\n* You feel that assisting fursuiters and giving them a safe space is important,\n* You are willing to help for about an hour per volunteer shift, preferably more than once during the convention,\n* Ideally you are able to help with building up the Fursuit Lounge before, and breaking it down after, the convention,\n* You are capable of communicating in basic English,\n* You can handle heavy water kegs without breaking them or yourself, or know how to use a badge printer to help with the fursuit badges.\n* Last but not least, fursuiters need us the most when they are out having fun and exhausting themselves. We are at our busiest during these times and will need all the help we can get often late into the night to cover the fursuit dances.\n\n\n**Have questions or want to help?**\n\nWe would love to hear from you at fursuit-team@eurofurence.org !",
                 Order: 13,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "fursuit-team@eurofurence.org",
-                        Target: "mailto:fursuit-team@eurofurence.org",
-                    },
+                        Target: "mailto:fursuit-team@eurofurence.org"
+                    }
                 ],
-                ImageIds: ["0cb0251e-3947-4474-a66d-ff90153c4b9a"],
+                ImageIds: ["0cb0251e-3947-4474-a66d-ff90153c4b9a"]
             },
             "7dddc2dd-c0af-128c-8b30-6b4753fbeeb7": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.179Z",
@@ -7030,10 +7030,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "r.burkhardt@weserbild.de",
-                        Target: "mailto:r.burkhardt@weserbild.de",
-                    },
+                        Target: "mailto:r.burkhardt@weserbild.de"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "28b153de-4797-99b6-ab80-f1f851dd2bde": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.211Z",
@@ -7046,10 +7046,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Info Site (German)",
-                        Target: "https://www.mein-contipark.de/parkplatz-finden/parken-in-berlin/parkhaus-neukoelln-arcaden-berlin--ci3cp11881",
-                    },
+                        Target: "https://www.mein-contipark.de/parkplatz-finden/parken-in-berlin/parkhaus-neukoelln-arcaden-berlin--ci3cp11881"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "5d4dcbe1-1064-1c3f-b821-e823a35f2652": {
                 LastChangeDateTimeUtc: "2022-07-28T23:19:08.306Z",
@@ -7059,7 +7059,7 @@ export default {
                 Text: "**Like every year, EF has a dedicated Fursuit Lounge, intended for fursuiters only. It's mostly used as a changing room, but also to take a short rest, rehydrate, dry/clean/brush fursuits, or simply have a chat with fellow fursuiters.**\n\nSo, are you tired after a long fursuiting session? Come visit the Fursuit Lounge to cool down and refresh!\n\n###  Locations: ###\n\nWe actually have two locations; first is the mini lounge with limited resources for people who need a quick break and don’t want to walk all the way to the big lounge. You can find more info on this in the ‘Mini lounge’ section below. But if you want the real deal, come find the main Fursuit Lounge further north in the “**ECC ROOM (2 &) 3**”!\n\nFrom the Estrel hotel lobby, go north past the mini lounge, **past the checkerboard pattern** (“The Rotunda”), and **go down**. There is an elevator, but please only use this when necessary; we suggest taking the left staircase instead. Then go straight through the (mostly glass) wall and **keep going straight** until you reach the far wall, and with it, your destination! \n\n### Services: ###\n\nExact services vary slightly per year, depending on availability and what our team has come up with (we always try to find new ways to help!). Below you can find a short summary of what you can expect:\n\n#### Blowers and Dryers ####\n\nPlease take a seat or a stand in front of our fans to cool off. If it is crowded, please keep some distance and share the breeze. Likewise, please don’t jump in front of people already using them from slightly further away. For outfits, please (only) use the dryers instead! The long tables of pipes are for drying heads (short stubs) and handpaws (longer sticks), while the airborne pipes in wooden construction are for drying bodysuits. Try not to keep your stuff on there too long, as space is limited and demand is high. We might need to move your things for you otherwise!\n\n#### Drinks and Snacks ####\n\nWe always have lots of water, some flavoured, most cooled with ice, to keep you optimally hydrated. Feel free to grab some, for free! Please just make sure you deposit your cup in one of the trashcans afterwards? We also try to provide some sugary and salty snacks, so you can leave with more energy than you came!\n\n#### Helpers ####\n\nOur trusty staff is always happy to help you out! Whether it’s getting in or out of suit, grabbing a drink (we know it can be tricky with claws or hooves), or answering questions, please feel free to ask us and we’ll do our best to get you what you need!\n\n### Rules: ###\n\nWhile we hate to emphasise the negative, sadly we’re afraid we need to be a bit strict about a few things. Rest assured there’s a good reason for each and every one of these rules, so please don’t try to get creative to get around them so we have to make them even more detailed:\n\n* **Fursuiters only.**\n  * You are allowed to take 1 (non-fursuiter) assistant with you, but please make sure that our door stewards can see you are together.\n  * If you want to get into the lounge while not in suit, you will be asked to show your **fursuiter badge** (not your con badge!) to enter. Please don’t forget to bring it, and do not leave it inside!\n* **No glass is allowed in the fursuit lounge.**\n  * People come here to stretch their legs, not to cut them open on shards!\n  * Eye glasses (to see with) are obviously allowed.\n* **No blocking of the backs of fans.**\n  * We know this is a popular and effective way of drying your gloves and head cloths, but please consider that all sweat that is being extracted this way is now being blown straight into the faces of anyone sitting on the other side. And balaclavas getting sucked in can block the fans and do serious damage to the motors inside.\n* **No photo or video recording.**\n  * People come here to relax, not to be wary of anyone taking record of their half-clothed bodies and sweaty faces. If you want to take pictures, go elsewhere. No exceptions.\n\nPlease don’t argue with our staff if they ask you to follow these simple rules. If you ignore any of these rules, *we might be required to move your things for you*, and *we will not be responsible for you finding them back*.\n\n### Mini lounge: ###\n\nAs always, there is a small lounge with some basic services (mostly blowers and water), in case you are afraid you will not reach the big fursuit lounge. You can find it between the Rotunda and the hotel lobby. We may not always be there to assist you, but you’re free to use what is available to you here. The same rules apply, though!\n\n### Opening times ###\n\nThe main Fursuit Lounge will be locked at night. The Fursuit Lounge is open every convention day from **09:00** to **02:00** the next day, or whenever in the morning the last event of the day ends. The mini lounge will be accessible around the clock while the convention lasts.\n\nPlease be aware we can't promise we will be able to provide the full (or any) service on early arrival or dead-dog day. Especially while building up and breaking down we might be required to disallow bringing fursuits into the lounge, to prevent us from damaging your prized possessions as we are carrying around heavy materials. **On Sunday please remove all your costumes from the fursuit dryers by noon, as we are going to break everything down in the afternoon.**",
                 Order: 0,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "31966ae4-73f2-7afc-1bb3-71e64d597a8a": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.273Z",
@@ -7072,10 +7072,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Hotel Info Site",
-                        Target: "https://www.estrel.com/en/location-directions.html",
-                    },
+                        Target: "https://www.estrel.com/en/location-directions.html"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "ec98cde7-9429-5754-2482-46e1e1db52bd": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.303Z",
@@ -7085,7 +7085,7 @@ export default {
                 Text: "Do you like spending your evening around other artists, drawing and chatting about techniques, supplies and other themes? Then this social event, taking place every day, is the right place for you to be creative and get to know each other!\n\nCome sit with other artists and watch, chat, and have a good time together while being productive on your convention commissions. This is the perfect opportunity to use your time effectively, get critique and help on your work, and relax from your working day at the Dealers' Den or Artist Alley.\n\n**This year the lounge is located in the Estrel Hall Foyer (right outside the ConOps and Security office) and is open 24/7.**",
                 Order: 10,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "72b7ebee-0cbb-79f1-8221-eb41181d5d0e": {
                 LastChangeDateTimeUtc: "2022-06-25T12:15:14.630Z",
@@ -7095,7 +7095,7 @@ export default {
                 Text: "\n**Airport Berlin-Brandenburg Willy Brandt (BER)**\n\nThe train station can be found below Terminals 1 and 2. You have three different choices:\n* Take regional trains **RE7, RE14, FEX** to Ostkreuz and change there for S41 trains.\n* Take **S9** trains to Treptower Park and change there for S41 trains.\n* Take the **S45** train to Köllnische Heide station, which is about 700m away from the Estrel.\n\n**Travelling times:**\n\n  * Public transport journey duration: approx. 30-40 minutes\n  * Taxi journey duration: approx. 15 minutes\n  * Taxi price: roughly between 25 € and 30 €\n\n**Please note that Terminal 5 remains closed for now. All flights are handled at Terminal 1.**",
                 Order: 1,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "c7837af3-89ed-2772-eeba-586fd3bda878": {
                 LastChangeDateTimeUtc: "2022-07-16T19:23:28.752Z",
@@ -7108,31 +7108,31 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "events@eurofurence.org",
-                        Target: "mailto:events@eurofurence.org",
+                        Target: "mailto:events@eurofurence.org"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "Event Submission Form",
-                        Target: "https://help.eurofurence.org/contact/programming/submission",
-                    },
+                        Target: "https://help.eurofurence.org/contact/programming/submission"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "82ceb1f6-372b-8698-690e-34aaefccc2da": {
                 LastChangeDateTimeUtc: "2022-06-25T12:16:58.917Z",
                 Id: "82ceb1f6-372b-8698-690e-34aaefccc2da",
                 KnowledgeGroupId: "9bf9b01f-e655-bec2-35ae-d72ebe38c245",
                 Title: "Arrival by train",
-                Text: '**Berlin Südkreuz**\n\nTake S42 to Sonnenallee. Trains depart from the upper level of the station.\n\n**Travelling times:**\n\n  * Public transport journey duration: roughly 15 minutes\n  * Taxi journey duration: roughly 10 minutes\n  * Taxi price: roughly 15 €\n\n**Berlin Hauptbahnhof / Central Station**\n\nTake the bus line M41 until you reach the stop "Ziegrastraße".\n\n**Travelling times:**\n\n  * Public transport journey duration: roughly 40 minutes\n  * Taxi journey duration: roughly 20 minutes\n  * Taxi price: roughly 20 €\n  \n',
+                Text: "**Berlin Südkreuz**\n\nTake S42 to Sonnenallee. Trains depart from the upper level of the station.\n\n**Travelling times:**\n\n  * Public transport journey duration: roughly 15 minutes\n  * Taxi journey duration: roughly 10 minutes\n  * Taxi price: roughly 15 €\n\n**Berlin Hauptbahnhof / Central Station**\n\nTake the bus line M41 until you reach the stop \"Ziegrastraße\".\n\n**Travelling times:**\n\n  * Public transport journey duration: roughly 40 minutes\n  * Taxi journey duration: roughly 20 minutes\n  * Taxi price: roughly 20 €\n  \n",
                 Order: 2,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Public transport destinations near the hotel",
-                        Target: "http://www.bvg.de/de/standortplan/9077106",
-                    },
+                        Target: "http://www.bvg.de/de/standortplan/9077106"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "78e164fc-9293-1e93-dede-c1791d101198": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.423Z",
@@ -7142,23 +7142,23 @@ export default {
                 Text: "Your personal fursuit badge is not only a nice souvenir for your character; it is your access key to enter the Fursuit Lounge when not wearing a fursuit. In suit, you can always enter the lounge. You do not need more than one badge, even if you have several suits.\n\nPlease make sure you already checked in at the Eurofurence Registration Desk, before coming to the fursuit badge station. Our desk can be found just outside the room with Registration Desk / before the rotunda and you can pick up your badge during service hours. \n\n**Since there have been cases of people trying to get fursuit badges just to gain access to the fursuit lounge in the past, we will have to ask you to bring the head of your fursuit along when you come to pick up your fursuit badge. That is unless you are coming to pick up your badge in fursuit, of course.**\n\nIf you pre-registered a fursuit badge, your first badge is free and you can use the fast-lane for pick up. If you forgot to pre-register your badge in time, we can also produce your personal fursuit badge on site. For these and all extra badges, we need to charge you a small fee of 2 Euro per badge.\n\n**Service Hours:**\n\n* Tuesday: From when EF-Regdesk opens - 19:00 (pre-reg pickup only!)\n* Wednesday: 12:00 - 17:00\n* Thursday: 11:00 - 13:00 and 16:00 - 18:00\n* Friday: 11:00 - 14:00\n\nOutside our own service hours you will also be able to pick up pre-ordered badges at ConOps (as their opening hours allow).",
                 Order: 2,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "9f46fefc-5353-414f-b52c-d0fb3180585b": {
                 LastChangeDateTimeUtc: "2022-06-23T11:59:25.453Z",
                 Id: "9f46fefc-5353-414f-b52c-d0fb3180585b",
                 KnowledgeGroupId: "6f91eaf9-68dc-4744-9da8-1bfc7d0052af",
                 Title: "Saturday August 17th 2019 ",
-                Text: 'Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Friday issue here:\n\n- "Some of the readers cried", an interview with AlectorFencer, this year\'s Guest of Honor.\n- "Furries under the microscope", how the FurScience team advances furry research.\n- "A furry salute", furries in the military.\n- "Paw’s Law for the Pawpet Show"\n- "Foxes, Peppers ... and Brass?"\n - and of course the Daily Comic Strip',
+                Text: "Not attending EF and still want to be in the know? Do not fret, we got your back. Download your digital copy of the Daily Eurofurence Friday issue here:\n\n- \"Some of the readers cried\", an interview with AlectorFencer, this year's Guest of Honor.\n- \"Furries under the microscope\", how the FurScience team advances furry research.\n- \"A furry salute\", furries in the military.\n- \"Paw’s Law for the Pawpet Show\"\n- \"Foxes, Peppers ... and Brass?\"\n - and of course the Daily Comic Strip",
                 Order: 3,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "Download issue 47",
-                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.17_saturday_issue.47.pdf",
-                    },
+                        Target: "http://archive.eurofurence.org/daily/EF25_2019.08.17_saturday_issue.47.pdf"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "e229d187-dc5f-431c-ac60-af4f421a4397": {
                 LastChangeDateTimeUtc: "2022-07-16T10:41:08.622Z",
@@ -7171,10 +7171,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "JoJoes LinkTree",
-                        Target: "linktr.ee/jojoesart",
-                    },
+                        Target: "linktr.ee/jojoesart"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "dac69932-41b0-4525-9446-a9f6d7cad4a5": {
                 LastChangeDateTimeUtc: "2022-07-16T10:38:56.168Z",
@@ -7187,10 +7187,10 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "Fox Website",
-                        Target: "foxamoore.com",
-                    },
+                        Target: "foxamoore.com"
+                    }
                 ],
-                ImageIds: [],
+                ImageIds: []
             },
             "0b7eb5ef-524e-4753-9a29-0930e219053c": {
                 LastChangeDateTimeUtc: "2022-07-16T19:04:57.144Z",
@@ -7200,7 +7200,7 @@ export default {
                 Text: "The Convention Store offers you the following services:\n- Sale of the current Eurofurence shirt\n- Handout of Sponsor/Supersponsor gifts\n- Sale of shirts from previous years (Dealers' Den only)\n\nUntil Wednesday, you can find the store in the same room as the registration. Starting on Thursday, the shop moves into the Dealers' Den. In both spaces, we mainly follow the opening times of the registration, and later the Den.\n\nIn the Dealers' Den, you might also find the one or other old sponsor gift on our table, which we might give away for a donation to the running Charity. Feel free to ask!",
                 Order: 999,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "5278a361-8835-4771-b15e-8560b54893ef": {
                 LastChangeDateTimeUtc: "2022-07-21T13:18:53.019Z",
@@ -7210,35 +7210,35 @@ export default {
                 Text: "Found a ownerless badge somewhere around the Convention or lost your (Bad) Dragon? You are in the right place ...\n\nYour friendly Eurofurence Security Crew takes care of the Lost & Found items during the Convention. Everything that is reported lost or has been found somewhere around will be available in our Database for you to see.\n\nIf you have found an item or lost something, please check in at the Security Office (SecOps) in Estrel Hall D.\n\nYou can check out out Lost & Found Database in this app, navigating to More → Services → Lost & Found.",
                 Order: 999,
                 Links: [],
-                ImageIds: [],
+                ImageIds: []
             },
             "5f1e00af-8520-4920-915f-bfc0a39f1ea2": {
                 LastChangeDateTimeUtc: "2022-07-28T12:11:08.151Z",
                 Id: "5f1e00af-8520-4920-915f-bfc0a39f1ea2",
                 KnowledgeGroupId: "6232ae2f-4e9d-fcf4-6341-f1751b405e45",
                 Title: "SARS-CoV-2 (COVID-19) Rules & Regulations",
-                Text: '## Eurofurence 26 - "Welcome to Tortuga - On the High Seas" - SARS-CoV-2 (COVID-19) Rules & Regulations\n\nAs per our Rules of Conduct (RoC) to ensure the safety of all attendees, **full vaccination to provide complete immunisation against SARS-CoV-2 (COVID-19) at the time of the convention Eurofurence 26 - "Welcome to Tortuga - On the High Seas" is required.** We will ask for proof upon check in, you will only be able to check-in on site if you are considered to have complete immunisation according to section 22a (1) of the Protection against Infection Act (Infektionsschutzgesetz, IfSG) (EMA-approved vaccines) at that time.\n\n**Attending the Convention in 2022 without complete immunisation against SARS-CoV-2 (COVID-19) is not possible.**\n\nComplete immunisation (until 30 September 2022) according to section 22a (1) of the Protection against Infection Act (Infektionsschutzgesetz, IfSG) consists of:\n\n* two vaccination doses; or\n*  one vaccination dose, provided that\n   * the person concerned can provide proof of a positive antibody test carried out prior to the vaccination, showing that they were infected with the coronavirus before receiving the vaccination; or\n   * the person concerned can provide proof of a positive nucleic acid test (e.g., PCR test) carried out prior to the vaccination, showing that they were infected with the coronavirus before receiving the vaccination; or\n   * the person concerned was infected with the coronavirus after the vaccination and can provide proof of a positive nucleic acid test (e.g., PCR test) carried out after receiving the vaccination and at least 28 days prior to travel.\n\nThe EU authorized vaccines as of today are:\n\n* Comirnaty (Pfizer / BioNTech)\n* Spikevax - COVID-19 Vaccine Moderna\n* COVID-19 Vaccine Janssen (Johnson & Johnson)\n* Vaxzevria - COVID-19 Vaccine AstraZeneca\n* Nuvaxovid\n\nPlease refer to the list of approved vaccines in the EU as stated in the links.\n\n## Proof of vaccination\n\nTo ensure the safety of all attendees, you must, at the time of your check-in on site, present proof of vaccination within the meaning of section 22a (1) of the Protection against Infection Act (Infektionsschutzgesetz, IfSG) that meets the following requirements **in full**: \n\nIt must be an EU Digital COVID Certificate or comparable proof of vaccination in digital or paper form in German, English, French, Italian or Spanish. Photographs of documents in paper form will not be accepted as digital proof. Proof in digital form needs to have been issued electronically by the authorised issuer and transmitted electronically to the authorised holder. \n\n**Proof of vaccination must contain the following information:**\n\n* the personal details of the vaccinated person (at least their given name and family name and the date of birth or the number of the passport or other official photo ID to be presented upon inspection),\n* the date/s of vaccination and number of vaccination doses,\n* the name/s of the vaccine,\n* the name of the disease vaccinated against, and\n* distinctive features which show the identity of the person or institution responsible for administering the vaccination or issuing the certificate (e.g., an official logo or the name of the issuer).\n\nWe will accept your national equivalent (e.g., UK vaccination certificate, CDC card) if it meets the criteria described above. \n\nPlease check the links for additional information about the EU Digital COVID Certificate. \n\nPlease be aware that if you can obtain an EU Digital COVID Certificate we suggest getting one, since this will greatly speed up the check-in waiting time on site for you as all other documents have to be validated manually by our medical staff. The certificate must be technically valid (the technical validity of 365 days can be refreshed within the respective certificate apps) at the time of the check-in.\n\n## Mask mandate\n\n**All attendees are required** to wear a FFP2 / N95 / KN95 face mask (ISO EN 149-2001) or an "OR" type face masks (doctor\'s masks) (ISO EN 14683 Type II) or an uncertified fabric face masks (with or without prints) **in all areas that are marked with a mask mandate**.  The mask must cover mouth and nose. \n\nFursuiters are exempted from wearing a face mask while wearing their fursuit head. \n\n**We urge all attendees to always wear a face mask in all public convention areas.**\n\nIn the event of a deviating legal government regulation existing at the time of the event, which prescribes a general obligation to wear face masks or a specific type of face mask, the legal government regulation applies.\n\n## Test mandate\n\n**A general obligation for the attendees to present a negative PCR test / antigen test at the time of check-in on site does not apply.** All attendees are **required**, however, upon having symptoms indicating an infection with SARS-CoV-2 (COVID-19), to agree to antigen tests (lateral-flow tests), conducted at the discretion of the medical service of the convention. Failure to agree to such a test upon having symptoms will lead to the immediate expulsion of the attendee from the convention. \n\nIn the event of a deviating legal government regulation existing at the time of the event, which prescribes a general obligation for tests, the legal government regulation applies. \n\nPlease also check the travel regulations for travels to Germany which can deviate from the convention rules. ',
+                Text: "## Eurofurence 26 - \"Welcome to Tortuga - On the High Seas\" - SARS-CoV-2 (COVID-19) Rules & Regulations\n\nAs per our Rules of Conduct (RoC) to ensure the safety of all attendees, **full vaccination to provide complete immunisation against SARS-CoV-2 (COVID-19) at the time of the convention Eurofurence 26 - \"Welcome to Tortuga - On the High Seas\" is required.** We will ask for proof upon check in, you will only be able to check-in on site if you are considered to have complete immunisation according to section 22a (1) of the Protection against Infection Act (Infektionsschutzgesetz, IfSG) (EMA-approved vaccines) at that time.\n\n**Attending the Convention in 2022 without complete immunisation against SARS-CoV-2 (COVID-19) is not possible.**\n\nComplete immunisation (until 30 September 2022) according to section 22a (1) of the Protection against Infection Act (Infektionsschutzgesetz, IfSG) consists of:\n\n* two vaccination doses; or\n*  one vaccination dose, provided that\n   * the person concerned can provide proof of a positive antibody test carried out prior to the vaccination, showing that they were infected with the coronavirus before receiving the vaccination; or\n   * the person concerned can provide proof of a positive nucleic acid test (e.g., PCR test) carried out prior to the vaccination, showing that they were infected with the coronavirus before receiving the vaccination; or\n   * the person concerned was infected with the coronavirus after the vaccination and can provide proof of a positive nucleic acid test (e.g., PCR test) carried out after receiving the vaccination and at least 28 days prior to travel.\n\nThe EU authorized vaccines as of today are:\n\n* Comirnaty (Pfizer / BioNTech)\n* Spikevax - COVID-19 Vaccine Moderna\n* COVID-19 Vaccine Janssen (Johnson & Johnson)\n* Vaxzevria - COVID-19 Vaccine AstraZeneca\n* Nuvaxovid\n\nPlease refer to the list of approved vaccines in the EU as stated in the links.\n\n## Proof of vaccination\n\nTo ensure the safety of all attendees, you must, at the time of your check-in on site, present proof of vaccination within the meaning of section 22a (1) of the Protection against Infection Act (Infektionsschutzgesetz, IfSG) that meets the following requirements **in full**: \n\nIt must be an EU Digital COVID Certificate or comparable proof of vaccination in digital or paper form in German, English, French, Italian or Spanish. Photographs of documents in paper form will not be accepted as digital proof. Proof in digital form needs to have been issued electronically by the authorised issuer and transmitted electronically to the authorised holder. \n\n**Proof of vaccination must contain the following information:**\n\n* the personal details of the vaccinated person (at least their given name and family name and the date of birth or the number of the passport or other official photo ID to be presented upon inspection),\n* the date/s of vaccination and number of vaccination doses,\n* the name/s of the vaccine,\n* the name of the disease vaccinated against, and\n* distinctive features which show the identity of the person or institution responsible for administering the vaccination or issuing the certificate (e.g., an official logo or the name of the issuer).\n\nWe will accept your national equivalent (e.g., UK vaccination certificate, CDC card) if it meets the criteria described above. \n\nPlease check the links for additional information about the EU Digital COVID Certificate. \n\nPlease be aware that if you can obtain an EU Digital COVID Certificate we suggest getting one, since this will greatly speed up the check-in waiting time on site for you as all other documents have to be validated manually by our medical staff. The certificate must be technically valid (the technical validity of 365 days can be refreshed within the respective certificate apps) at the time of the check-in.\n\n## Mask mandate\n\n**All attendees are required** to wear a FFP2 / N95 / KN95 face mask (ISO EN 149-2001) or an \"OR\" type face masks (doctor's masks) (ISO EN 14683 Type II) or an uncertified fabric face masks (with or without prints) **in all areas that are marked with a mask mandate**.  The mask must cover mouth and nose. \n\nFursuiters are exempted from wearing a face mask while wearing their fursuit head. \n\n**We urge all attendees to always wear a face mask in all public convention areas.**\n\nIn the event of a deviating legal government regulation existing at the time of the event, which prescribes a general obligation to wear face masks or a specific type of face mask, the legal government regulation applies.\n\n## Test mandate\n\n**A general obligation for the attendees to present a negative PCR test / antigen test at the time of check-in on site does not apply.** All attendees are **required**, however, upon having symptoms indicating an infection with SARS-CoV-2 (COVID-19), to agree to antigen tests (lateral-flow tests), conducted at the discretion of the medical service of the convention. Failure to agree to such a test upon having symptoms will lead to the immediate expulsion of the attendee from the convention. \n\nIn the event of a deviating legal government regulation existing at the time of the event, which prescribes a general obligation for tests, the legal government regulation applies. \n\nPlease also check the travel regulations for travels to Germany which can deviate from the convention rules. ",
                 Order: 999,
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "section 22a (1) of the Protection against Infection Act (Infektionsschutzgesetz, IfSG)",
-                        Target: "http://www.gesetze-im-internet.de/ifsg/__22a.html",
+                        Target: "http://www.gesetze-im-internet.de/ifsg/__22a.html"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "List of approved vaccines in the EU",
-                        Target: "https://ec.europa.eu/info/live-work-travel-eu/coronavirus-response/safe-covid-19-vaccines-europeans_en",
+                        Target: "https://ec.europa.eu/info/live-work-travel-eu/coronavirus-response/safe-covid-19-vaccines-europeans_en"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "EU Digital COVID Certificate",
-                        Target: "http://ec.europa.eu/info/live-work-travel-eu/coronavirus-response/safe-covid-19-vaccines-europeans/eu-digital-covid-certificate_en#recognition-by-the-eu-of-covid-certificates-issued-by-third-non-eu-countries",
-                    },
+                        Target: "http://ec.europa.eu/info/live-work-travel-eu/coronavirus-response/safe-covid-19-vaccines-europeans/eu-digital-covid-certificate_en#recognition-by-the-eu-of-covid-certificates-issued-by-third-non-eu-countries"
+                    }
                 ],
-                ImageIds: [],
-            },
-        },
+                ImageIds: []
+            }
+        }
     },
     maps: {
         ids: ["825c3a3c-7fb6-46aa-ada4-efa597ca6d45", "62a74341-880f-49f1-a52d-0a3f480e81a6", "09d71bd7-833e-48ac-b521-6547e2de47fc"],
@@ -7251,7 +7251,7 @@ export default {
                 Order: 10,
                 IsBrowseable: true,
                 Entries: [],
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d465f419-c7d7-40c7-8c18-55462dcadc6d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d465f419-c7d7-40c7-8c18-55462dcadc6d/Content"
             },
             "62a74341-880f-49f1-a52d-0a3f480e81a6": {
                 LastChangeDateTimeUtc: "2022-07-29T08:20:03.465Z",
@@ -7270,9 +7270,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "895d60b9-1462-4d35-91c5-113ab5aba47c",
-                            },
-                        ],
+                                Target: "895d60b9-1462-4d35-91c5-113ab5aba47c"
+                            }
+                        ]
                     },
                     {
                         Id: "959d2ee7-5c62-4438-a777-5432f1ed34c5",
@@ -7283,9 +7283,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "db3ff932-833c-4261-8866-cf7a9b998de1",
-                            },
-                        ],
+                                Target: "db3ff932-833c-4261-8866-cf7a9b998de1"
+                            }
+                        ]
                     },
                     {
                         Id: "8388a4cf-3457-4287-a430-a26a01eec8a4",
@@ -7296,9 +7296,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "87f6669b-4f2b-4ec9-8e23-4aede54e771b",
-                            },
-                        ],
+                                Target: "87f6669b-4f2b-4ec9-8e23-4aede54e771b"
+                            }
+                        ]
                     },
                     {
                         Id: "08dc1f88-c81d-4896-ba62-c49bdcc6d98d",
@@ -7309,9 +7309,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b6c41786-2b9a-4534-a768-88b3458e41cc",
-                            },
-                        ],
+                                Target: "b6c41786-2b9a-4534-a768-88b3458e41cc"
+                            }
+                        ]
                     },
                     {
                         Id: "4859c3a1-bce8-42f9-93c6-c9e0e0d651a9",
@@ -7322,9 +7322,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "507728f5-a955-4931-8e76-d29ab92c60fb",
-                            },
-                        ],
+                                Target: "507728f5-a955-4931-8e76-d29ab92c60fb"
+                            }
+                        ]
                     },
                     {
                         Id: "257d7f93-7e08-4f32-8bfa-f93e246ffc8a",
@@ -7335,9 +7335,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "73896d14-eaf9-4609-8322-18d075ca0f44",
-                            },
-                        ],
+                                Target: "73896d14-eaf9-4609-8322-18d075ca0f44"
+                            }
+                        ]
                     },
                     {
                         Id: "14a30c14-4754-4900-a659-ffd7ae88f812",
@@ -7348,9 +7348,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6dcae3bc-3767-4748-a767-e9c40e6a67e6",
-                            },
-                        ],
+                                Target: "6dcae3bc-3767-4748-a767-e9c40e6a67e6"
+                            }
+                        ]
                     },
                     {
                         Id: "b5bfff7b-4e4d-4b0e-a9e6-d338f9381afe",
@@ -7361,9 +7361,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "c396621e-362b-4917-b037-5c9bcad90f44",
-                            },
-                        ],
+                                Target: "c396621e-362b-4917-b037-5c9bcad90f44"
+                            }
+                        ]
                     },
                     {
                         Id: "9c6d21b2-32c5-4f52-be30-fc63d09fdfdf",
@@ -7374,9 +7374,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "94c514ab-dc64-4d52-a53d-9f32f05066fb",
-                            },
-                        ],
+                                Target: "94c514ab-dc64-4d52-a53d-9f32f05066fb"
+                            }
+                        ]
                     },
                     {
                         Id: "c0f995b0-e391-48f0-aed1-2b46e01a719f",
@@ -7387,9 +7387,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "f73ac13c-ef51-4c30-b05d-7eb00dc8c14e",
-                            },
-                        ],
+                                Target: "f73ac13c-ef51-4c30-b05d-7eb00dc8c14e"
+                            }
+                        ]
                     },
                     {
                         Id: "6cfed419-9c7c-4d9f-a730-b0800b357b84",
@@ -7400,9 +7400,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "783c5a96-09be-4849-afdc-d93807283834",
-                            },
-                        ],
+                                Target: "783c5a96-09be-4849-afdc-d93807283834"
+                            }
+                        ]
                     },
                     {
                         Id: "d633747c-424b-4ef8-80d2-1fdcdff696f1",
@@ -7413,9 +7413,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "cf4634fc-e923-44eb-9cd5-8894a75994dd",
-                            },
-                        ],
+                                Target: "cf4634fc-e923-44eb-9cd5-8894a75994dd"
+                            }
+                        ]
                     },
                     {
                         Id: "018fb972-1ab7-4bcb-b10b-ecb4327fb1f7",
@@ -7426,9 +7426,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "90f1b326-4e02-4736-b6ed-12fa8d5fd90e",
-                            },
-                        ],
+                                Target: "90f1b326-4e02-4736-b6ed-12fa8d5fd90e"
+                            }
+                        ]
                     },
                     {
                         Id: "2901787e-7b5e-4e6d-b8b2-8949bf9e50ce",
@@ -7439,9 +7439,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "1fb8f16c-1210-4fc3-8d81-1151bc233331",
-                            },
-                        ],
+                                Target: "1fb8f16c-1210-4fc3-8d81-1151bc233331"
+                            }
+                        ]
                     },
                     {
                         Id: "b6398a7c-88b8-47ad-b198-4506c0f4c584",
@@ -7452,9 +7452,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6f9e32f0-cf69-45e0-aacb-61ebb6aa1a4a",
-                            },
-                        ],
+                                Target: "6f9e32f0-cf69-45e0-aacb-61ebb6aa1a4a"
+                            }
+                        ]
                     },
                     {
                         Id: "6140cb46-4013-4b44-a635-fc6107029eb2",
@@ -7465,9 +7465,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "4f1d3d22-16bb-4b86-a1e2-24aa10b0bd21",
-                            },
-                        ],
+                                Target: "4f1d3d22-16bb-4b86-a1e2-24aa10b0bd21"
+                            }
+                        ]
                     },
                     {
                         Id: "f726db12-aade-49fe-8233-f984c8da5822",
@@ -7478,9 +7478,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "e211e066-c11b-4b3c-b267-bc3c7f95b3e5",
-                            },
-                        ],
+                                Target: "e211e066-c11b-4b3c-b267-bc3c7f95b3e5"
+                            }
+                        ]
                     },
                     {
                         Id: "3d8fa637-4d7d-4883-b113-f5354965b144",
@@ -7491,9 +7491,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "96b4c052-78f3-45bb-b46f-f3ebe4639db4",
-                            },
-                        ],
+                                Target: "96b4c052-78f3-45bb-b46f-f3ebe4639db4"
+                            }
+                        ]
                     },
                     {
                         Id: "662d7d2a-3078-472f-869f-20bcd72655aa",
@@ -7504,9 +7504,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "227a70ac-8d7f-4a07-92f4-0d7da525a6e9",
-                            },
-                        ],
+                                Target: "227a70ac-8d7f-4a07-92f4-0d7da525a6e9"
+                            }
+                        ]
                     },
                     {
                         Id: "10f8a69e-8696-4ce9-9e0d-22d2b30f2860",
@@ -7517,9 +7517,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "57620b76-989d-49f5-bd31-367d418af1ad",
-                            },
-                        ],
+                                Target: "57620b76-989d-49f5-bd31-367d418af1ad"
+                            }
+                        ]
                     },
                     {
                         Id: "3702fece-a7d7-44ff-873d-713e51bc7648",
@@ -7530,9 +7530,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "efc3dfcd-a7ee-4c4f-8fca-01dfdc3506a4",
-                            },
-                        ],
+                                Target: "efc3dfcd-a7ee-4c4f-8fca-01dfdc3506a4"
+                            }
+                        ]
                     },
                     {
                         Id: "b79326ce-c66f-4063-84e4-216fe2e0ac50",
@@ -7543,9 +7543,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6ccd5b9e-0836-48d7-9e81-942d796dc658",
-                            },
-                        ],
+                                Target: "6ccd5b9e-0836-48d7-9e81-942d796dc658"
+                            }
+                        ]
                     },
                     {
                         Id: "6ddc488a-b4c2-45e7-8cd1-f92568b074a0",
@@ -7556,9 +7556,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "7e9d63cf-3d20-44fd-94f7-79e614b84203",
-                            },
-                        ],
+                                Target: "7e9d63cf-3d20-44fd-94f7-79e614b84203"
+                            }
+                        ]
                     },
                     {
                         Id: "44cd94af-81a6-41c4-b220-eeaedda51b3e",
@@ -7569,9 +7569,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "ddf3145c-81f3-4e97-840a-58f7f6683884",
-                            },
-                        ],
+                                Target: "ddf3145c-81f3-4e97-840a-58f7f6683884"
+                            }
+                        ]
                     },
                     {
                         Id: "1431adb5-672b-4b02-87cf-ab8e54667f28",
@@ -7582,9 +7582,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "93351b09-49e4-47f8-adb1-c9aa862835da",
-                            },
-                        ],
+                                Target: "93351b09-49e4-47f8-adb1-c9aa862835da"
+                            }
+                        ]
                     },
                     {
                         Id: "99923259-862b-45ba-875d-108377c547b4",
@@ -7595,9 +7595,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "c9d60103-8722-4e13-8a58-dabaf6aa32c5",
-                            },
-                        ],
+                                Target: "c9d60103-8722-4e13-8a58-dabaf6aa32c5"
+                            }
+                        ]
                     },
                     {
                         Id: "3babd056-f7e6-42fe-9a12-18ac35bcf1f9",
@@ -7608,9 +7608,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "18d8e68a-702f-4d4e-b3b4-369ad3f4d883",
-                            },
-                        ],
+                                Target: "18d8e68a-702f-4d4e-b3b4-369ad3f4d883"
+                            }
+                        ]
                     },
                     {
                         Id: "21df587c-4460-4f70-a7ce-f23a08a83e93",
@@ -7621,9 +7621,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "0ad9d5a7-73b9-4b88-8fed-5c9bfc1e0e9a",
-                            },
-                        ],
+                                Target: "0ad9d5a7-73b9-4b88-8fed-5c9bfc1e0e9a"
+                            }
+                        ]
                     },
                     {
                         Id: "5de03219-238e-4f30-95bd-292fa6830035",
@@ -7634,9 +7634,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "d6dc5a4a-86d7-4b42-ad6b-4c18420374f6",
-                            },
-                        ],
+                                Target: "d6dc5a4a-86d7-4b42-ad6b-4c18420374f6"
+                            }
+                        ]
                     },
                     {
                         Id: "fbde4c02-cfda-4aec-9120-e86a07050b7b",
@@ -7647,9 +7647,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "51e120af-2c3f-4f0e-b155-9385832c4a69",
-                            },
-                        ],
+                                Target: "51e120af-2c3f-4f0e-b155-9385832c4a69"
+                            }
+                        ]
                     },
                     {
                         Id: "c07f3ec9-2319-4dd3-8fb4-c643bad47eb1",
@@ -7660,9 +7660,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "cba3701e-9354-4d79-afb4-537b07ca3b6c",
-                            },
-                        ],
+                                Target: "cba3701e-9354-4d79-afb4-537b07ca3b6c"
+                            }
+                        ]
                     },
                     {
                         Id: "bd21bd1c-867c-4efb-90d0-de3cfbfbe848",
@@ -7673,9 +7673,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "da2aa07b-ad02-40cf-a4d1-012b01fe3f80",
-                            },
-                        ],
+                                Target: "da2aa07b-ad02-40cf-a4d1-012b01fe3f80"
+                            }
+                        ]
                     },
                     {
                         Id: "9e4342ee-2a87-45f0-b77d-276e52085e7f",
@@ -7686,9 +7686,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "81d547f7-9550-402b-bae9-d3a0610cfebf",
-                            },
-                        ],
+                                Target: "81d547f7-9550-402b-bae9-d3a0610cfebf"
+                            }
+                        ]
                     },
                     {
                         Id: "1c1f3891-6fcd-433b-83d8-21859dce8825",
@@ -7699,9 +7699,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "3595589a-c54a-463a-a22e-5f60044f236a",
-                            },
-                        ],
+                                Target: "3595589a-c54a-463a-a22e-5f60044f236a"
+                            }
+                        ]
                     },
                     {
                         Id: "336eec62-f060-4df0-9d82-561ff5570604",
@@ -7712,9 +7712,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "7165f6e0-0428-4ec2-8dea-5f2e856d9736",
-                            },
-                        ],
+                                Target: "7165f6e0-0428-4ec2-8dea-5f2e856d9736"
+                            }
+                        ]
                     },
                     {
                         Id: "f2322b88-c2c5-464b-99a2-21c39778ed55",
@@ -7725,9 +7725,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "59ac8857-59a1-468b-8d25-1f5a1a497c1d",
-                            },
-                        ],
+                                Target: "59ac8857-59a1-468b-8d25-1f5a1a497c1d"
+                            }
+                        ]
                     },
                     {
                         Id: "d4361d92-79de-474e-8874-d736f3bd1c3f",
@@ -7738,9 +7738,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "374c29bc-dc32-4dec-ba7c-35cb6426abdb",
-                            },
-                        ],
+                                Target: "374c29bc-dc32-4dec-ba7c-35cb6426abdb"
+                            }
+                        ]
                     },
                     {
                         Id: "d4a58d0d-4ba1-4190-86fa-9a014ac76bab",
@@ -7751,9 +7751,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "1e509aef-2272-42dc-ada3-5094acca4f22",
-                            },
-                        ],
+                                Target: "1e509aef-2272-42dc-ada3-5094acca4f22"
+                            }
+                        ]
                     },
                     {
                         Id: "012f8bbc-f12c-43ad-872b-55d4359620d3",
@@ -7764,9 +7764,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b4c3069e-191d-4863-8235-76a481538e58",
-                            },
-                        ],
+                                Target: "b4c3069e-191d-4863-8235-76a481538e58"
+                            }
+                        ]
                     },
                     {
                         Id: "0563f9f1-684e-4ae4-81fc-c7ad10bac12d",
@@ -7777,9 +7777,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "3bc1e9e0-ff15-4669-ab0f-72d1e33214dd",
-                            },
-                        ],
+                                Target: "3bc1e9e0-ff15-4669-ab0f-72d1e33214dd"
+                            }
+                        ]
                     },
                     {
                         Id: "074675b6-fbd1-42d2-991e-9108dea1c0a3",
@@ -7790,9 +7790,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "daab29db-1ff4-416c-b71d-fc797f3f1156",
-                            },
-                        ],
+                                Target: "daab29db-1ff4-416c-b71d-fc797f3f1156"
+                            }
+                        ]
                     },
                     {
                         Id: "b8bdabcd-3799-451a-8afc-69849d6810b5",
@@ -7803,9 +7803,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "2e21bb32-6234-4fff-ba48-e63c21432537",
-                            },
-                        ],
+                                Target: "2e21bb32-6234-4fff-ba48-e63c21432537"
+                            }
+                        ]
                     },
                     {
                         Id: "8981ce22-799a-4c63-9e7d-5eb399ff7f39",
@@ -7816,9 +7816,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "f5da75dd-5648-40ad-8d12-d930044c9227",
-                            },
-                        ],
+                                Target: "f5da75dd-5648-40ad-8d12-d930044c9227"
+                            }
+                        ]
                     },
                     {
                         Id: "0417c3e3-c3d4-4d93-be7b-c636b9a1e849",
@@ -7829,9 +7829,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "f65f1a48-7bd1-404d-afbb-9c319e00ead5",
-                            },
-                        ],
+                                Target: "f65f1a48-7bd1-404d-afbb-9c319e00ead5"
+                            }
+                        ]
                     },
                     {
                         Id: "cb1f844d-bbf3-443e-b485-cf6a9a3a0a64",
@@ -7842,9 +7842,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "e0ff4a6a-66e6-4440-a9e1-b2f03c383b54",
-                            },
-                        ],
+                                Target: "e0ff4a6a-66e6-4440-a9e1-b2f03c383b54"
+                            }
+                        ]
                     },
                     {
                         Id: "22d698e5-92c8-469e-abab-f3fd67d266e1",
@@ -7855,9 +7855,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "9bfb8ed0-9ab1-452e-8482-1bd65f353709",
-                            },
-                        ],
+                                Target: "9bfb8ed0-9ab1-452e-8482-1bd65f353709"
+                            }
+                        ]
                     },
                     {
                         Id: "58528114-6148-4691-8dce-eaebaeeb6779",
@@ -7868,9 +7868,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "d89cfcf4-aa33-495b-951b-711197bbd4ac",
-                            },
-                        ],
+                                Target: "d89cfcf4-aa33-495b-951b-711197bbd4ac"
+                            }
+                        ]
                     },
                     {
                         Id: "686bc7b5-05c0-4635-a479-feb9c5bf54dd",
@@ -7881,9 +7881,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "bf7ac750-c6c6-4512-89b0-c723f94afbbc",
-                            },
-                        ],
+                                Target: "bf7ac750-c6c6-4512-89b0-c723f94afbbc"
+                            }
+                        ]
                     },
                     {
                         Id: "6c85ce45-3f06-41f7-94a0-a5a2c1394076",
@@ -7894,9 +7894,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "d51e399f-5dc4-4131-a39e-47e9bd0118e4",
-                            },
-                        ],
+                                Target: "d51e399f-5dc4-4131-a39e-47e9bd0118e4"
+                            }
+                        ]
                     },
                     {
                         Id: "c8f0679c-d0c6-4d40-b025-89b68613cc68",
@@ -7907,9 +7907,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "d108c98f-34fd-4a22-911e-03f6f9e97774",
-                            },
-                        ],
+                                Target: "d108c98f-34fd-4a22-911e-03f6f9e97774"
+                            }
+                        ]
                     },
                     {
                         Id: "f10ab86e-f240-4ce9-a9b7-96a535079f07",
@@ -7920,9 +7920,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b0ce2685-bbf6-4576-8142-fddd13832ad1",
-                            },
-                        ],
+                                Target: "b0ce2685-bbf6-4576-8142-fddd13832ad1"
+                            }
+                        ]
                     },
                     {
                         Id: "85df68b0-6f40-4e77-a4fb-152b715cd57d",
@@ -7933,9 +7933,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "03cb4e45-3e47-452d-85c4-1ed39d8399e5",
-                            },
-                        ],
+                                Target: "03cb4e45-3e47-452d-85c4-1ed39d8399e5"
+                            }
+                        ]
                     },
                     {
                         Id: "c92f26b1-24b9-4641-bb78-285737203e66",
@@ -7946,9 +7946,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b2d1ef8a-43fc-414c-b8bb-aa5429800022",
-                            },
-                        ],
+                                Target: "b2d1ef8a-43fc-414c-b8bb-aa5429800022"
+                            }
+                        ]
                     },
                     {
                         Id: "e491c61b-c948-44dd-bdea-c8ca4b15aa18",
@@ -7959,9 +7959,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "f595f349-bfe0-473c-aaef-3de20655e7c8",
-                            },
-                        ],
+                                Target: "f595f349-bfe0-473c-aaef-3de20655e7c8"
+                            }
+                        ]
                     },
                     {
                         Id: "c5a477d4-85c9-4349-aa32-2dea817d25ed",
@@ -7972,9 +7972,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b545f08b-ff6e-43f4-bb5c-711f63f88f60",
-                            },
-                        ],
+                                Target: "b545f08b-ff6e-43f4-bb5c-711f63f88f60"
+                            }
+                        ]
                     },
                     {
                         Id: "134d238c-1316-4c56-91d4-b67a2bdcbfe0",
@@ -7985,9 +7985,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "460397e9-e2b4-45a0-bc96-f6fc0d1a5da6",
-                            },
-                        ],
+                                Target: "460397e9-e2b4-45a0-bc96-f6fc0d1a5da6"
+                            }
+                        ]
                     },
                     {
                         Id: "1aac96d2-c862-43d7-960a-5d9d922a6768",
@@ -7998,9 +7998,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "db593e2e-771f-471c-b903-57f3e5140031",
-                            },
-                        ],
+                                Target: "db593e2e-771f-471c-b903-57f3e5140031"
+                            }
+                        ]
                     },
                     {
                         Id: "411ca0ad-aa47-4e98-ac0e-7c9517333d49",
@@ -8011,9 +8011,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "565151c8-e26f-44aa-b6fa-3e2fe65f41f0",
-                            },
-                        ],
+                                Target: "565151c8-e26f-44aa-b6fa-3e2fe65f41f0"
+                            }
+                        ]
                     },
                     {
                         Id: "4b8e3228-43fa-42d5-b313-7578fda5479d",
@@ -8024,9 +8024,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6fe90fa9-b3ad-40cf-ba24-a8314280f2ab",
-                            },
-                        ],
+                                Target: "6fe90fa9-b3ad-40cf-ba24-a8314280f2ab"
+                            }
+                        ]
                     },
                     {
                         Id: "dffc01cc-d48f-45a7-b80f-aa8cf598905f",
@@ -8037,9 +8037,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "a4e4e91f-6e61-4742-a6d0-a8b8d2c4e21b",
-                            },
-                        ],
+                                Target: "a4e4e91f-6e61-4742-a6d0-a8b8d2c4e21b"
+                            }
+                        ]
                     },
                     {
                         Id: "d93fad1d-79b0-44ec-b7b4-42d90790568c",
@@ -8050,9 +8050,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "96269560-77a6-4172-b4fa-544bc427cc88",
-                            },
-                        ],
+                                Target: "96269560-77a6-4172-b4fa-544bc427cc88"
+                            }
+                        ]
                     },
                     {
                         Id: "72ac79b6-775c-49f6-9cdd-8b3a1f51df1b",
@@ -8063,9 +8063,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "ad38a736-9f83-4091-b749-fba28cc3ea30",
-                            },
-                        ],
+                                Target: "ad38a736-9f83-4091-b749-fba28cc3ea30"
+                            }
+                        ]
                     },
                     {
                         Id: "6758c7f5-2be1-49c0-88e1-aafce5412601",
@@ -8076,9 +8076,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "2ade8b49-48b4-4aee-80de-aacc86c24404",
-                            },
-                        ],
+                                Target: "2ade8b49-48b4-4aee-80de-aacc86c24404"
+                            }
+                        ]
                     },
                     {
                         Id: "19767e55-566f-4d4d-8c92-8b44b4810dcf",
@@ -8089,9 +8089,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "30648b7c-ede8-4184-8066-606b1db93668",
-                            },
-                        ],
+                                Target: "30648b7c-ede8-4184-8066-606b1db93668"
+                            }
+                        ]
                     },
                     {
                         Id: "73f16e83-1273-4d25-be7a-8be8e7355f90",
@@ -8102,9 +8102,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "94f23a30-f29f-40de-b876-6cb495539dab",
-                            },
-                        ],
+                                Target: "94f23a30-f29f-40de-b876-6cb495539dab"
+                            }
+                        ]
                     },
                     {
                         Id: "bbb016dd-453f-48a7-9cd5-5176449588da",
@@ -8115,9 +8115,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "3fce190d-7a5d-4a68-a49b-0af45e49156c",
-                            },
-                        ],
+                                Target: "3fce190d-7a5d-4a68-a49b-0af45e49156c"
+                            }
+                        ]
                     },
                     {
                         Id: "6e45aed6-7d66-49d7-9cf0-7de584583983",
@@ -8128,9 +8128,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "af59d040-8b4c-4198-89be-6249f7a08776",
-                            },
-                        ],
+                                Target: "af59d040-8b4c-4198-89be-6249f7a08776"
+                            }
+                        ]
                     },
                     {
                         Id: "8b0ca66f-9a88-4f3b-8649-760e78035d8c",
@@ -8141,9 +8141,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "bd2fecbe-b28d-49f1-a0b9-9bb1714837d2",
-                            },
-                        ],
+                                Target: "bd2fecbe-b28d-49f1-a0b9-9bb1714837d2"
+                            }
+                        ]
                     },
                     {
                         Id: "0f6dfa63-67eb-43fc-99f8-0c4d7a9f1c4d",
@@ -8154,9 +8154,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "e40fd78a-0633-4e38-bbd1-4c0204b54c89",
-                            },
-                        ],
+                                Target: "e40fd78a-0633-4e38-bbd1-4c0204b54c89"
+                            }
+                        ]
                     },
                     {
                         Id: "3218f68a-cf74-4396-8de0-d1b11d70f683",
@@ -8167,9 +8167,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "51e73486-2c00-448e-b9ce-52d5de7f2a35",
-                            },
-                        ],
+                                Target: "51e73486-2c00-448e-b9ce-52d5de7f2a35"
+                            }
+                        ]
                     },
                     {
                         Id: "f0faed26-11c3-4e8b-afae-1ece5c434cc2",
@@ -8180,9 +8180,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "941d0a97-87bc-459c-8834-7e7112904f95",
-                            },
-                        ],
+                                Target: "941d0a97-87bc-459c-8834-7e7112904f95"
+                            }
+                        ]
                     },
                     {
                         Id: "dc58a6b5-d798-4d33-86e5-99bb5c66eeb9",
@@ -8193,9 +8193,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6b8cdb20-61a3-4a0b-bef4-a347d42bd42e",
-                            },
-                        ],
+                                Target: "6b8cdb20-61a3-4a0b-bef4-a347d42bd42e"
+                            }
+                        ]
                     },
                     {
                         Id: "67cb7072-83db-48d8-b046-2d887ee85291",
@@ -8206,9 +8206,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "c587948a-b1f4-4127-8243-5b69c4cfad13",
-                            },
-                        ],
+                                Target: "c587948a-b1f4-4127-8243-5b69c4cfad13"
+                            }
+                        ]
                     },
                     {
                         Id: "8f803296-5615-47d2-80e1-1dd399d17096",
@@ -8219,9 +8219,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "1ca67ee4-4b3a-42c0-9f52-56a640327858",
-                            },
-                        ],
+                                Target: "1ca67ee4-4b3a-42c0-9f52-56a640327858"
+                            }
+                        ]
                     },
                     {
                         Id: "414fb9e3-d097-4318-a59c-c03f0fe94ce2",
@@ -8232,9 +8232,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "f714a3de-e635-491d-a9ca-d8b659ce62ec",
-                            },
-                        ],
+                                Target: "f714a3de-e635-491d-a9ca-d8b659ce62ec"
+                            }
+                        ]
                     },
                     {
                         Id: "e55af997-f6ae-44ae-85d8-643f0c45582e",
@@ -8245,9 +8245,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "c3dc5595-c67f-4ad8-8dc1-e444cb793549",
-                            },
-                        ],
+                                Target: "c3dc5595-c67f-4ad8-8dc1-e444cb793549"
+                            }
+                        ]
                     },
                     {
                         Id: "6e90ba54-67d5-482d-8b7c-9b7cc621f566",
@@ -8258,9 +8258,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "008f80ee-c178-4ae0-b7c6-f2593b2db58c",
-                            },
-                        ],
+                                Target: "008f80ee-c178-4ae0-b7c6-f2593b2db58c"
+                            }
+                        ]
                     },
                     {
                         Id: "d186cd15-af81-4713-82a7-284a3433e191",
@@ -8271,9 +8271,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "2e74c218-d45e-423b-819d-707bb33fe68a",
-                            },
-                        ],
+                                Target: "2e74c218-d45e-423b-819d-707bb33fe68a"
+                            }
+                        ]
                     },
                     {
                         Id: "9498d079-b09d-41aa-97aa-eadeedca5cc1",
@@ -8284,9 +8284,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "69848271-be0b-4cfd-9f9d-e1ae94973873",
-                            },
-                        ],
+                                Target: "69848271-be0b-4cfd-9f9d-e1ae94973873"
+                            }
+                        ]
                     },
                     {
                         Id: "a5787bde-16ce-4e22-b920-ceb15a8f00a6",
@@ -8297,9 +8297,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "0764b505-c74d-48f3-a460-da9b678a6bb4",
-                            },
-                        ],
+                                Target: "0764b505-c74d-48f3-a460-da9b678a6bb4"
+                            }
+                        ]
                     },
                     {
                         Id: "0226a8d7-a107-4a3e-a2dc-54c38c52a5e2",
@@ -8310,9 +8310,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "e2b04952-7e83-4bc2-ad80-c0d647a7559f",
-                            },
-                        ],
+                                Target: "e2b04952-7e83-4bc2-ad80-c0d647a7559f"
+                            }
+                        ]
                     },
                     {
                         Id: "286d4dbb-e57f-42bc-9fba-c2c0e9a58c77",
@@ -8323,9 +8323,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "5633c99e-2e4e-47e0-9974-230b58d434ca",
-                            },
-                        ],
+                                Target: "5633c99e-2e4e-47e0-9974-230b58d434ca"
+                            }
+                        ]
                     },
                     {
                         Id: "e54f7c97-3bf6-437a-9ae1-048fd9b5d6e0",
@@ -8336,9 +8336,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "af5ea894-aee1-4405-aeac-f97b7ffa7e45",
-                            },
-                        ],
+                                Target: "af5ea894-aee1-4405-aeac-f97b7ffa7e45"
+                            }
+                        ]
                     },
                     {
                         Id: "fee943cd-d08a-450e-b7b1-6cff7a5ba209",
@@ -8349,9 +8349,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "d302eb61-85f6-47e5-bd37-fc7d3146c95d",
-                            },
-                        ],
+                                Target: "d302eb61-85f6-47e5-bd37-fc7d3146c95d"
+                            }
+                        ]
                     },
                     {
                         Id: "eefd81e0-bc57-4da8-8afb-e1ec4befbbf1",
@@ -8362,9 +8362,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "147198aa-f56b-4e99-8548-0ccdea03253a",
-                            },
-                        ],
+                                Target: "147198aa-f56b-4e99-8548-0ccdea03253a"
+                            }
+                        ]
                     },
                     {
                         Id: "9a3fb54a-6d9d-4ac1-a1a2-3f8f0fe9aa7f",
@@ -8375,9 +8375,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "eb4dc0c0-2a87-4c47-bca2-dd8a9009b1d2",
-                            },
-                        ],
+                                Target: "eb4dc0c0-2a87-4c47-bca2-dd8a9009b1d2"
+                            }
+                        ]
                     },
                     {
                         Id: "55d2f07d-98cd-4c95-9807-2e8d3ea04e9b",
@@ -8388,9 +8388,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "c6012f18-f66c-4472-86c5-70a368ea97eb",
-                            },
-                        ],
+                                Target: "c6012f18-f66c-4472-86c5-70a368ea97eb"
+                            }
+                        ]
                     },
                     {
                         Id: "776c06dd-880f-45fc-a8c4-3fbaa5c559f6",
@@ -8401,9 +8401,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "8022265f-141a-430f-997e-6683d5ef96f1",
-                            },
-                        ],
+                                Target: "8022265f-141a-430f-997e-6683d5ef96f1"
+                            }
+                        ]
                     },
                     {
                         Id: "644d2e45-39b1-40e7-a69a-c1580cff4a14",
@@ -8414,9 +8414,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "582e2f46-75a7-4074-81bd-3f09d53fff66",
-                            },
-                        ],
+                                Target: "582e2f46-75a7-4074-81bd-3f09d53fff66"
+                            }
+                        ]
                     },
                     {
                         Id: "896e1319-13e0-4e19-9b56-bb8a49188165",
@@ -8427,9 +8427,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "ad557b05-5046-49af-b7de-2af5b8c1a370",
-                            },
-                        ],
+                                Target: "ad557b05-5046-49af-b7de-2af5b8c1a370"
+                            }
+                        ]
                     },
                     {
                         Id: "4c75cf1b-1d8d-40d5-aa0e-0ab53914b0b3",
@@ -8440,9 +8440,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "8653cf33-f10e-4b32-a60e-c3ae9a6f3133",
-                            },
-                        ],
+                                Target: "8653cf33-f10e-4b32-a60e-c3ae9a6f3133"
+                            }
+                        ]
                     },
                     {
                         Id: "0a8b4c38-5469-4806-917e-8b47757da45a",
@@ -8453,9 +8453,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "47098783-c41b-48cb-9ccc-2c0edf498fed",
-                            },
-                        ],
+                                Target: "47098783-c41b-48cb-9ccc-2c0edf498fed"
+                            }
+                        ]
                     },
                     {
                         Id: "4c9298ac-b88b-4161-8598-04f952deacfc",
@@ -8466,9 +8466,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "59827d77-e460-4630-a11a-ffec159d7fe9",
-                            },
-                        ],
+                                Target: "59827d77-e460-4630-a11a-ffec159d7fe9"
+                            }
+                        ]
                     },
                     {
                         Id: "67e56bb3-5a89-4bc5-95e1-524fe2d06618",
@@ -8479,9 +8479,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "3468754e-501c-4795-ba53-da9dcc90b5b3",
-                            },
-                        ],
+                                Target: "3468754e-501c-4795-ba53-da9dcc90b5b3"
+                            }
+                        ]
                     },
                     {
                         Id: "d3659296-8627-4b4b-a615-e1006ecb10a0",
@@ -8492,9 +8492,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b96ac5cd-e96d-4eb9-bd50-e979b8e3ab9e",
-                            },
-                        ],
+                                Target: "b96ac5cd-e96d-4eb9-bd50-e979b8e3ab9e"
+                            }
+                        ]
                     },
                     {
                         Id: "f3ee1ce0-d86f-434e-bba4-5d41ce39347e",
@@ -8505,9 +8505,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "aa9117b2-6290-43cf-85d6-deadf2251c87",
-                            },
-                        ],
+                                Target: "aa9117b2-6290-43cf-85d6-deadf2251c87"
+                            }
+                        ]
                     },
                     {
                         Id: "e534efca-6dc0-452e-9956-ef718d795be0",
@@ -8518,9 +8518,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "1d37cf6d-adc9-4c41-9a1f-21b03353603f",
-                            },
-                        ],
+                                Target: "1d37cf6d-adc9-4c41-9a1f-21b03353603f"
+                            }
+                        ]
                     },
                     {
                         Id: "dbbd421b-6fd5-4f25-8001-ecb9ccb82560",
@@ -8531,9 +8531,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "d13b232b-4438-4b1d-98de-8b1a9e5e674c",
-                            },
-                        ],
+                                Target: "d13b232b-4438-4b1d-98de-8b1a9e5e674c"
+                            }
+                        ]
                     },
                     {
                         Id: "9bc28a0f-ffb6-49b9-b713-a0638e569abc",
@@ -8544,9 +8544,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "41918cc9-be8f-4e69-976b-308dcbb8c04d",
-                            },
-                        ],
+                                Target: "41918cc9-be8f-4e69-976b-308dcbb8c04d"
+                            }
+                        ]
                     },
                     {
                         Id: "b641adb0-b424-4c36-b3aa-f322c5207297",
@@ -8557,9 +8557,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "92adcd46-856a-4f6c-b8d5-e9bc6fe830ca",
-                            },
-                        ],
+                                Target: "92adcd46-856a-4f6c-b8d5-e9bc6fe830ca"
+                            }
+                        ]
                     },
                     {
                         Id: "5aef1525-eb24-49c2-bd74-6452a6ade9d9",
@@ -8570,9 +8570,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "3dc4766a-fd02-48d2-95a1-06689ca363d5",
-                            },
-                        ],
+                                Target: "3dc4766a-fd02-48d2-95a1-06689ca363d5"
+                            }
+                        ]
                     },
                     {
                         Id: "b807cb98-acc4-4853-83e9-c19078587c4d",
@@ -8583,9 +8583,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "c9a6dc8a-4d29-4755-82e9-8e3b41b16b7b",
-                            },
-                        ],
+                                Target: "c9a6dc8a-4d29-4755-82e9-8e3b41b16b7b"
+                            }
+                        ]
                     },
                     {
                         Id: "49615070-ab99-40c3-aba5-2948123b3096",
@@ -8596,9 +8596,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "3458ea98-0770-4ee6-a456-1cb9d3ba581f",
-                            },
-                        ],
+                                Target: "3458ea98-0770-4ee6-a456-1cb9d3ba581f"
+                            }
+                        ]
                     },
                     {
                         Id: "eed39613-9fa2-4b41-a83c-54db360a2caa",
@@ -8609,9 +8609,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6e443834-0706-484d-8346-189559750422",
-                            },
-                        ],
+                                Target: "6e443834-0706-484d-8346-189559750422"
+                            }
+                        ]
                     },
                     {
                         Id: "93a148b6-6ea1-426a-8614-f6e79b38405f",
@@ -8622,9 +8622,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "8f284153-3e81-42b9-a2eb-2a911faeaa81",
-                            },
-                        ],
+                                Target: "8f284153-3e81-42b9-a2eb-2a911faeaa81"
+                            }
+                        ]
                     },
                     {
                         Id: "8d978017-7d5a-4e4c-94cd-b64640e3591a",
@@ -8635,14 +8635,14 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "151ec7bd-56dc-48ef-92db-c9ff3b3226f7",
+                                Target: "151ec7bd-56dc-48ef-92db-c9ff3b3226f7"
                             },
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "9a9c3983-81af-448d-af3a-12b570036c17",
-                            },
-                        ],
+                                Target: "9a9c3983-81af-448d-af3a-12b570036c17"
+                            }
+                        ]
                     },
                     {
                         Id: "e455b532-30a5-42b0-a924-a9cec0a19330",
@@ -8653,9 +8653,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "a9429ad5-f43a-400d-a83d-a6ffd6be8720",
-                            },
-                        ],
+                                Target: "a9429ad5-f43a-400d-a83d-a6ffd6be8720"
+                            }
+                        ]
                     },
                     {
                         Id: "2a0a9a93-bf91-4cbd-95f0-fa4724215d78",
@@ -8666,9 +8666,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "ae3bb67d-44cb-460d-a43c-594868940731",
-                            },
-                        ],
+                                Target: "ae3bb67d-44cb-460d-a43c-594868940731"
+                            }
+                        ]
                     },
                     {
                         Id: "6dffc316-c363-42b1-bbe7-ab0848f17fc9",
@@ -8679,9 +8679,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6c1375f4-09db-49e1-b54f-f3797a8b0c6f",
-                            },
-                        ],
+                                Target: "6c1375f4-09db-49e1-b54f-f3797a8b0c6f"
+                            }
+                        ]
                     },
                     {
                         Id: "ece4e131-aa9c-42d3-86b5-3988f1db3fa9",
@@ -8692,9 +8692,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "44b5edea-1da4-4f25-89ea-729e0d2e1bdb",
-                            },
-                        ],
+                                Target: "44b5edea-1da4-4f25-89ea-729e0d2e1bdb"
+                            }
+                        ]
                     },
                     {
                         Id: "ebfcd536-c027-4452-9956-b55b7a1ce459",
@@ -8705,9 +8705,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "273cf82b-4914-45fe-affe-f70bfd460984",
-                            },
-                        ],
+                                Target: "273cf82b-4914-45fe-affe-f70bfd460984"
+                            }
+                        ]
                     },
                     {
                         Id: "1d28a668-19cf-4086-a6a4-ea4440f4d809",
@@ -8718,9 +8718,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "94bfe893-77c5-4ec5-9aeb-36585742f4b8",
-                            },
-                        ],
+                                Target: "94bfe893-77c5-4ec5-9aeb-36585742f4b8"
+                            }
+                        ]
                     },
                     {
                         Id: "f50f9a02-fccb-4d83-8838-06e4777c6a7b",
@@ -8731,9 +8731,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "1bacd928-3d93-4616-88b6-bc7600a9bd4e",
-                            },
-                        ],
+                                Target: "1bacd928-3d93-4616-88b6-bc7600a9bd4e"
+                            }
+                        ]
                     },
                     {
                         Id: "e0745cdd-7131-4e8f-9500-26e5d66eee1c",
@@ -8744,9 +8744,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6b8b9767-806f-4f38-881b-cd215c8c7630",
-                            },
-                        ],
+                                Target: "6b8b9767-806f-4f38-881b-cd215c8c7630"
+                            }
+                        ]
                     },
                     {
                         Id: "0702b4cb-412f-4305-8b3d-7f144e4ed464",
@@ -8757,9 +8757,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "e168d757-8e23-4003-863a-8849f0494e3b",
-                            },
-                        ],
+                                Target: "e168d757-8e23-4003-863a-8849f0494e3b"
+                            }
+                        ]
                     },
                     {
                         Id: "f2ffa9b2-8167-4c3a-add0-f938297993d5",
@@ -8770,9 +8770,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "d584cca8-9cee-4f55-b8bb-1e95d20aad75",
-                            },
-                        ],
+                                Target: "d584cca8-9cee-4f55-b8bb-1e95d20aad75"
+                            }
+                        ]
                     },
                     {
                         Id: "8ae3db59-7784-4e98-934e-d125ad52403d",
@@ -8783,9 +8783,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "f4002a75-805b-4ed7-9196-4be10ec8c453",
-                            },
-                        ],
+                                Target: "f4002a75-805b-4ed7-9196-4be10ec8c453"
+                            }
+                        ]
                     },
                     {
                         Id: "fc9b7ddc-03bb-4128-9c0c-fb78d19d4426",
@@ -8796,9 +8796,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "cb31033e-0d64-4c1b-8258-295de51b5724",
-                            },
-                        ],
+                                Target: "cb31033e-0d64-4c1b-8258-295de51b5724"
+                            }
+                        ]
                     },
                     {
                         Id: "555bba56-d840-4fcc-92a6-b5f1049fd072",
@@ -8809,9 +8809,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "f98292f8-211e-4500-b055-e85da9ebc08e",
-                            },
-                        ],
+                                Target: "f98292f8-211e-4500-b055-e85da9ebc08e"
+                            }
+                        ]
                     },
                     {
                         Id: "4bd7b194-6383-4c3d-9c2b-2e3d7334703f",
@@ -8822,9 +8822,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "9423e4f5-6aad-453b-9a6e-84bca367188d",
-                            },
-                        ],
+                                Target: "9423e4f5-6aad-453b-9a6e-84bca367188d"
+                            }
+                        ]
                     },
                     {
                         Id: "bf877f8a-be64-4aea-b966-3098374225d4",
@@ -8835,14 +8835,14 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b2237b4b-347c-4c39-9b3d-447d9d85d5e3",
+                                Target: "b2237b4b-347c-4c39-9b3d-447d9d85d5e3"
                             },
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "34484f73-1ef4-47f9-b5e9-39f0ab92dc3b",
-                            },
-                        ],
+                                Target: "34484f73-1ef4-47f9-b5e9-39f0ab92dc3b"
+                            }
+                        ]
                     },
                     {
                         Id: "1cf0b024-7ccd-45e0-8599-7e81a0ff0343",
@@ -8853,9 +8853,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "37388c7a-72ff-4491-b942-0e960be7cbe7",
-                            },
-                        ],
+                                Target: "37388c7a-72ff-4491-b942-0e960be7cbe7"
+                            }
+                        ]
                     },
                     {
                         Id: "59d29bd4-b739-42c6-812f-ebff1c26f1ef",
@@ -8866,9 +8866,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "7aafdcde-88cf-494e-bd1a-26f0031bb5b6",
-                            },
-                        ],
+                                Target: "7aafdcde-88cf-494e-bd1a-26f0031bb5b6"
+                            }
+                        ]
                     },
                     {
                         Id: "1b1c6645-e61d-462e-a23f-8c57d4e43685",
@@ -8879,9 +8879,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b3a767ed-5da6-4228-88f0-579b38d69937",
-                            },
-                        ],
+                                Target: "b3a767ed-5da6-4228-88f0-579b38d69937"
+                            }
+                        ]
                     },
                     {
                         Id: "215fb9c0-d26f-493f-b535-9712e5e04ac0",
@@ -8892,9 +8892,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "b3a767ed-5da6-4228-88f0-579b38d69937",
-                            },
-                        ],
+                                Target: "b3a767ed-5da6-4228-88f0-579b38d69937"
+                            }
+                        ]
                     },
                     {
                         Id: "69dbe167-6e2b-4e61-9cc8-7b91ad03000c",
@@ -8905,9 +8905,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6e27f88a-fca1-4390-8515-876c341f399e",
-                            },
-                        ],
+                                Target: "6e27f88a-fca1-4390-8515-876c341f399e"
+                            }
+                        ]
                     },
                     {
                         Id: "f2740f5e-070d-4080-9f7a-b58649738795",
@@ -8918,9 +8918,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "42676d53-f37b-4385-b150-e838e7f64a21",
-                            },
-                        ],
+                                Target: "42676d53-f37b-4385-b150-e838e7f64a21"
+                            }
+                        ]
                     },
                     {
                         Id: "c1831063-dcf5-4bcb-b69a-23eaa396eba3",
@@ -8931,9 +8931,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "a62c5eeb-097d-4c56-9658-08d797a89825",
-                            },
-                        ],
+                                Target: "a62c5eeb-097d-4c56-9658-08d797a89825"
+                            }
+                        ]
                     },
                     {
                         Id: "1cf78e69-6f9e-4a4b-89e6-f90818e49d2b",
@@ -8944,9 +8944,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "0d25206d-db8a-40bf-a3b7-c216f068e369",
-                            },
-                        ],
+                                Target: "0d25206d-db8a-40bf-a3b7-c216f068e369"
+                            }
+                        ]
                     },
                     {
                         Id: "267a943f-1a9d-465d-a12e-6bc371e22264",
@@ -8957,9 +8957,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "172ca19c-7e72-4ef1-8c83-78f682277308",
-                            },
-                        ],
+                                Target: "172ca19c-7e72-4ef1-8c83-78f682277308"
+                            }
+                        ]
                     },
                     {
                         Id: "9a469ac7-8fad-47cf-bdb5-a75d66dc7575",
@@ -8970,9 +8970,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "8c042478-b765-4bd2-8f5c-7d9b013e6c1e",
-                            },
-                        ],
+                                Target: "8c042478-b765-4bd2-8f5c-7d9b013e6c1e"
+                            }
+                        ]
                     },
                     {
                         Id: "ee7f8250-7ec6-4ffa-9ebf-9485e0786830",
@@ -8983,9 +8983,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "78275022-12d3-4675-8227-f59e9628952e",
-                            },
-                        ],
+                                Target: "78275022-12d3-4675-8227-f59e9628952e"
+                            }
+                        ]
                     },
                     {
                         Id: "d0967fab-2ad1-4054-81b3-0228d31506a7",
@@ -8996,9 +8996,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "4d75defb-17a9-49fd-8d75-4f5f798976d4",
-                            },
-                        ],
+                                Target: "4d75defb-17a9-49fd-8d75-4f5f798976d4"
+                            }
+                        ]
                     },
                     {
                         Id: "0b7fd62b-8215-4fba-a1da-4968c2f0d69d",
@@ -9009,9 +9009,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "67ef002b-5e1d-472f-a6a3-18ba13489de2",
-                            },
-                        ],
+                                Target: "67ef002b-5e1d-472f-a6a3-18ba13489de2"
+                            }
+                        ]
                     },
                     {
                         Id: "46fe76da-442b-4b38-bde9-c8d8801445b5",
@@ -9022,9 +9022,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "a58d5617-0239-4f73-820f-9ceee6dc6fe0",
-                            },
-                        ],
+                                Target: "a58d5617-0239-4f73-820f-9ceee6dc6fe0"
+                            }
+                        ]
                     },
                     {
                         Id: "348acecd-d047-4d49-8d77-532904208007",
@@ -9035,9 +9035,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "e9ca0f43-9c30-4e0b-b1a1-6f59ceb7f0f7",
-                            },
-                        ],
+                                Target: "e9ca0f43-9c30-4e0b-b1a1-6f59ceb7f0f7"
+                            }
+                        ]
                     },
                     {
                         Id: "2715f624-faaf-420d-88a9-fc4a7d53c834",
@@ -9048,9 +9048,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "6c2c50fe-266f-4b1e-8afe-96d1ed404b21",
-                            },
-                        ],
+                                Target: "6c2c50fe-266f-4b1e-8afe-96d1ed404b21"
+                            }
+                        ]
                     },
                     {
                         Id: "a8c6c6bd-d409-4499-b453-ee5b92ed55cf",
@@ -9061,9 +9061,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "22c43374-06a7-4d2a-a608-3e954a66e123",
-                            },
-                        ],
+                                Target: "22c43374-06a7-4d2a-a608-3e954a66e123"
+                            }
+                        ]
                     },
                     {
                         Id: "4ca2ceb5-13bd-4825-a8f6-d1d121810c59",
@@ -9074,9 +9074,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "2df8f494-9ed0-42a7-87e3-453c6dc3d73f",
-                            },
-                        ],
+                                Target: "2df8f494-9ed0-42a7-87e3-453c6dc3d73f"
+                            }
+                        ]
                     },
                     {
                         Id: "d669afcc-3b15-44c2-b6aa-525ad26b06ce",
@@ -9087,9 +9087,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "53c58b79-f1f8-4046-a6d5-c015af0a9671",
-                            },
-                        ],
+                                Target: "53c58b79-f1f8-4046-a6d5-c015af0a9671"
+                            }
+                        ]
                     },
                     {
                         Id: "9a53d3b6-6a01-4510-9e38-8ea6b70d9c45",
@@ -9100,9 +9100,9 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "45291cf1-edfa-49ec-bb84-50c57b4b6eb7",
-                            },
-                        ],
+                                Target: "45291cf1-edfa-49ec-bb84-50c57b4b6eb7"
+                            }
+                        ]
                     },
                     {
                         Id: "bcd44fe7-c888-4eff-945c-a73a7c036ef8",
@@ -9113,17 +9113,17 @@ export default {
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "946ac3dd-6168-4e84-b638-4817c0fbacbb",
+                                Target: "946ac3dd-6168-4e84-b638-4817c0fbacbb"
                             },
                             {
                                 FragmentType: "DealerDetail",
                                 Name: null,
-                                Target: "100592b8-299e-4904-bd79-93a208834be9",
-                            },
-                        ],
-                    },
+                                Target: "100592b8-299e-4904-bd79-93a208834be9"
+                            }
+                        ]
+                    }
                 ],
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b1d97c97-11bd-4547-95ca-e33d1814daf6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b1d97c97-11bd-4547-95ca-e33d1814daf6/Content"
             },
             "09d71bd7-833e-48ac-b521-6547e2de47fc": {
                 LastChangeDateTimeUtc: "2022-07-29T08:20:13.998Z",
@@ -9133,9 +9133,9 @@ export default {
                 Order: 30,
                 IsBrowseable: true,
                 Entries: [],
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac300b9d-79ea-466d-aa12-7705577b22f9/Content",
-            },
-        },
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac300b9d-79ea-466d-aa12-7705577b22f9/Content"
+            }
+        }
     },
     dealers: {
         ids: [
@@ -9287,7 +9287,7 @@ export default {
             "83e54e6d-27ad-4c83-b352-01907d763361",
             "60edef06-6f4c-4354-a942-87d81dbdfac0",
             "665b3da0-e4d6-4c5a-9798-816a0be0eb0d",
-            "ceac2ce8-9a18-44f8-be25-ad0af02ecae8",
+            "ceac2ce8-9a18-44f8-be25-ad0af02ecae8"
         ],
         entities: {
             "ddf3145c-81f3-4e97-840a-58f7f6683884": {
@@ -9316,7 +9316,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Raptor's Den",
+                FullName: "Raptor's Den"
             },
             "81d547f7-9550-402b-bae9-d3a0610cfebf": {
                 LastChangeDateTimeUtc: "2022-07-08T12:00:09.342Z",
@@ -9333,8 +9333,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://khaosdog.tumblr.com/",
-                    },
+                        Target: "https://khaosdog.tumblr.com/"
+                    }
                 ],
                 TwitterHandle: "khaosdog",
                 TelegramHandle: "Khaosdog",
@@ -9350,7 +9350,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2f7e4970-5113-41d5-ac62-7b06e7429506/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cdd77495-787c-4e5f-8647-687e6df9b157/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45add9a7-7112-4a05-8371-46052112a1f6/Content",
-                FullName: "Khaosdog",
+                FullName: "Khaosdog"
             },
             "73896d14-eaf9-4609-8322-18d075ca0f44": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.071Z",
@@ -9377,7 +9377,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Blackfang Labs",
+                FullName: "Blackfang Labs"
             },
             "8022265f-141a-430f-997e-6683d5ef96f1": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.073Z",
@@ -9404,7 +9404,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Outfoxed !",
+                FullName: "Outfoxed !"
             },
             "96b4c052-78f3-45bb-b46f-f3ebe4639db4": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.075Z",
@@ -9431,7 +9431,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Pan Hesekiel Shiroi",
+                FullName: "Pan Hesekiel Shiroi"
             },
             "e9ca0f43-9c30-4e0b-b1a1-6f59ceb7f0f7": {
                 LastChangeDateTimeUtc: "2022-06-30T15:00:08.356Z",
@@ -9449,8 +9449,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://www.fusselschwarm.net",
-                    },
+                        Target: "http://www.fusselschwarm.net"
+                    }
                 ],
                 TwitterHandle: "Fusselschwarm",
                 TelegramHandle: "FusselschwarmInfosEng",
@@ -9458,7 +9458,7 @@ export default {
                 AttendsOnFriday: true,
                 AttendsOnSaturday: true,
                 ArtPreviewCaption:
-                    '"Welcome to Tortuga"? Check out VOYAGE OF DREAMS the second Art Collection by Reimina Keishana aka Princess Rei full of cute pin-ups, character studies, and pirates, arrr!',
+                    "\"Welcome to Tortuga\"? Check out VOYAGE OF DREAMS the second Art Collection by Reimina Keishana aka Princess Rei full of cute pin-ups, character studies, and pirates, arrr!",
                 ArtistThumbnailImageId: "addaa19f-c0a8-4e07-afa7-eb6515d94807",
                 ArtistImageId: "b1aa616c-b061-4f15-9634-2337ef864f10",
                 ArtPreviewImageId: "edd5336b-955f-4f4e-b85f-5ca6495a8e2b",
@@ -9467,7 +9467,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b1aa616c-b061-4f15-9634-2337ef864f10/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/addaa19f-c0a8-4e07-afa7-eb6515d94807/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/edd5336b-955f-4f4e-b85f-5ca6495a8e2b/Content",
-                FullName: "FUSSELSCHWARM",
+                FullName: "FUSSELSCHWARM"
             },
             "ad38a736-9f83-4091-b749-fba28cc3ea30": {
                 LastChangeDateTimeUtc: "2022-06-29T20:00:08.700Z",
@@ -9485,8 +9485,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/bloodhoundomega/",
-                    },
+                        Target: "https://www.furaffinity.net/user/bloodhoundomega/"
+                    }
                 ],
                 TwitterHandle: "Art_of_Ileyeah",
                 TelegramHandle: "",
@@ -9502,7 +9502,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8523a76a-8570-4b7c-a8cf-822bf23766d3/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/83e31d60-1c08-4fa3-b48a-2ddf9b8078f6/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/55c8f2c1-7691-49e6-98a9-237c57b218ee/Content",
-                FullName: "Bloodhound Omega",
+                FullName: "Bloodhound Omega"
             },
             "b6c41786-2b9a-4534-a768-88b3458e41cc": {
                 LastChangeDateTimeUtc: "2022-06-29T06:00:09.078Z",
@@ -9519,8 +9519,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://yiffy.toys",
-                    },
+                        Target: "https://yiffy.toys"
+                    }
                 ],
                 TwitterHandle: "YiffyToys",
                 TelegramHandle: "",
@@ -9536,7 +9536,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5990b1c9-972e-4db4-aeff-abf16b2ba165/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/809cd869-9228-4ee7-803f-4ab5d343bf67/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "YiffyToys",
+                FullName: "YiffyToys"
             },
             "d13b232b-4438-4b1d-98de-8b1a9e5e674c": {
                 LastChangeDateTimeUtc: "2022-07-04T20:00:10.403Z",
@@ -9554,8 +9554,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.etsy.com/shop/TheAbyssShop",
-                    },
+                        Target: "https://www.etsy.com/shop/TheAbyssShop"
+                    }
                 ],
                 TwitterHandle: "",
                 TelegramHandle: "",
@@ -9571,7 +9571,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/41bbbe45-3701-4d53-8dce-c6e8795dfa3e/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/08021aaa-9b64-46c1-a33d-2f7f1ccb30d4/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "The Abyss Shop",
+                FullName: "The Abyss Shop"
             },
             "96269560-77a6-4172-b4fa-544bc427cc88": {
                 LastChangeDateTimeUtc: "2022-07-02T16:00:09.058Z",
@@ -9588,8 +9588,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://vorndessart.carrd.co/",
-                    },
+                        Target: "https://vorndessart.carrd.co/"
+                    }
                 ],
                 TwitterHandle: "VorndessArt",
                 TelegramHandle: "VorndessArt",
@@ -9605,7 +9605,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/41ec34c2-b527-4f74-b505-fbce4201bf49/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cf39ac46-d91d-4ea9-828f-023a9e957b53/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/04b8fac8-a5b6-4838-9fbb-8d8c0826660d/Content",
-                FullName: "Vorndess",
+                FullName: "Vorndess"
             },
             "6c1375f4-09db-49e1-b54f-f3797a8b0c6f": {
                 LastChangeDateTimeUtc: "2022-07-29T03:00:10.108Z",
@@ -9622,8 +9622,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://buxbi.carrd.co/",
-                    },
+                        Target: "https://buxbi.carrd.co/"
+                    }
                 ],
                 TwitterHandle: "BuxbiArts",
                 TelegramHandle: "",
@@ -9639,7 +9639,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0d422c14-61bf-4d89-9c03-d2bf008b4135/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d75b622-bebd-429a-90d1-f01596dca2ed/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Buxbi",
+                FullName: "Buxbi"
             },
             "460397e9-e2b4-45a0-bc96-f6fc0d1a5da6": {
                 LastChangeDateTimeUtc: "2022-06-14T13:00:08.377Z",
@@ -9655,13 +9655,13 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://twitter.com/Kosseart",
+                        Target: "https://twitter.com/Kosseart"
                     },
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/kosseart/",
-                    },
+                        Target: "https://www.furaffinity.net/user/kosseart/"
+                    }
                 ],
                 TwitterHandle: "kosseart",
                 TelegramHandle: "k0sse",
@@ -9677,7 +9677,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/694f8fd4-3ef4-4d9f-be31-8df7b30b60f9/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/dc007515-b4ee-488e-956d-3862174836ee/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cba7b456-6a85-464f-98af-502c7a2f8148/Content",
-                FullName: "Kosse",
+                FullName: "Kosse"
             },
             "565151c8-e26f-44aa-b6fa-3e2fe65f41f0": {
                 LastChangeDateTimeUtc: "2022-07-07T19:00:09.674Z",
@@ -9694,8 +9694,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/gallery/winterbalg/",
-                    },
+                        Target: "https://www.furaffinity.net/gallery/winterbalg/"
+                    }
                 ],
                 TwitterHandle: "Winterbalg",
                 TelegramHandle: "",
@@ -9711,7 +9711,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45deb6b6-d6d7-41c9-aca6-0683ae24cfea/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/195f1941-5292-47f4-9f12-2315e05768e2/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fd0489fd-7658-422e-bdff-b96e177b6e8b/Content",
-                FullName: "Winterbalg",
+                FullName: "Winterbalg"
             },
             "69848271-be0b-4cfd-9f9d-e1ae94973873": {
                 LastChangeDateTimeUtc: "2022-07-07T10:00:09.835Z",
@@ -9730,8 +9730,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://rudzik.art",
-                    },
+                        Target: "http://rudzik.art"
+                    }
                 ],
                 TwitterHandle: "rudzikfa",
                 TelegramHandle: "",
@@ -9748,7 +9748,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8a56733f-e89b-41b9-8e7a-f27dbfcde8c4/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d91f3fac-ac2c-4572-9e4f-3a0a81ae34de/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/719f1635-740e-43be-a8d9-cdc624268836/Content",
-                FullName: "Rudzik",
+                FullName: "Rudzik"
             },
             "e0ff4a6a-66e6-4440-a9e1-b2f03c383b54": {
                 LastChangeDateTimeUtc: "2022-07-04T10:00:09.003Z",
@@ -9766,8 +9766,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/ultraviolet/",
-                    },
+                        Target: "https://www.furaffinity.net/user/ultraviolet/"
+                    }
                 ],
                 TwitterHandle: "Ukimori",
                 TelegramHandle: "Ukimori",
@@ -9783,7 +9783,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2b059b17-9052-4e13-b707-6adc8d7c0f16/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63ba13dc-2407-4f8a-a19e-e66a9c8383f9/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/176b1641-c44f-4f7b-9ac7-ecd389505493/Content",
-                FullName: "Ultraviolet",
+                FullName: "Ultraviolet"
             },
             "9bfb8ed0-9ab1-452e-8482-1bd65f353709": {
                 LastChangeDateTimeUtc: "2022-07-03T20:00:09.272Z",
@@ -9800,8 +9800,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/vader-san/",
-                    },
+                        Target: "https://www.furaffinity.net/user/vader-san/"
+                    }
                 ],
                 TwitterHandle: "VaderSan",
                 TelegramHandle: "VaderSan",
@@ -9817,7 +9817,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c4850660-4f47-4947-9626-39c6577dc24c/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c76761b1-6342-4fbf-a1f4-a9c7f4db8128/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Vader-San",
+                FullName: "Vader-San"
             },
             "18d8e68a-702f-4d4e-b3b4-369ad3f4d883": {
                 LastChangeDateTimeUtc: "2022-06-28T17:00:08.762Z",
@@ -9836,8 +9836,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://MyGear.Zone",
-                    },
+                        Target: "https://MyGear.Zone"
+                    }
                 ],
                 TwitterHandle: "MyGearZone",
                 TelegramHandle: "MyGearZone",
@@ -9853,7 +9853,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5334e4c5-77e4-4328-b3f2-8bd5efe38793/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5ebeb45b-6ef3-4804-a319-48dbec1859a3/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5998068e-cf2b-407f-bdf0-686a99e8279c/Content",
-                FullName: "MyGear.Zone",
+                FullName: "MyGear.Zone"
             },
             "67ef002b-5e1d-472f-a6a3-18ba13489de2": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.098Z",
@@ -9880,7 +9880,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "FurryFursuitMaker",
+                FullName: "FurryFursuitMaker"
             },
             "3468754e-501c-4795-ba53-da9dcc90b5b3": {
                 LastChangeDateTimeUtc: "2022-07-03T13:00:10.317Z",
@@ -9898,8 +9898,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/grandtaurus/",
-                    },
+                        Target: "https://www.furaffinity.net/user/grandtaurus/"
+                    }
                 ],
                 TwitterHandle: "GrandTaurus",
                 TelegramHandle: "GrimmDrawn",
@@ -9915,7 +9915,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9e83ad9c-e750-48c6-8202-32a97f184d6e/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ce659286-1263-4b38-a4be-fedfeacdd4a9/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/52032876-d10f-459a-a849-25069915c2de/Content",
-                FullName: "GrandTaurus",
+                FullName: "GrandTaurus"
             },
             "da2aa07b-ad02-40cf-a4d1-012b01fe3f80": {
                 LastChangeDateTimeUtc: "2022-06-30T09:00:08.368Z",
@@ -9931,8 +9931,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://twitter.com/ArtD154573r",
-                    },
+                        Target: "https://twitter.com/ArtD154573r"
+                    }
                 ],
                 TwitterHandle: "ArtD154573r",
                 TelegramHandle: "-",
@@ -9948,7 +9948,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/22c16723-cdf1-43e2-a884-a02661189d9a/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/96b50010-c514-497d-a201-f7fdc19cc648/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a28e5d7a-2f64-459a-8e5d-dc2383b1d0b7/Content",
-                FullName: "Tascun",
+                FullName: "Tascun"
             },
             "d302eb61-85f6-47e5-bd37-fc7d3146c95d": {
                 LastChangeDateTimeUtc: "2022-08-10T20:00:09.995Z",
@@ -9968,8 +9968,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/anoroth/",
-                    },
+                        Target: "https://www.furaffinity.net/user/anoroth/"
+                    }
                 ],
                 TwitterHandle: "anoroth_art",
                 TelegramHandle: "anoroth",
@@ -9985,7 +9985,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0b363075-b2e6-4097-8c93-008c75a37cd5/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e827a087-73bb-4c50-b4bb-0fba50cc7ff3/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bd681b3b-9ae8-4fe4-8e99-b3ecb78a78de/Content",
-                FullName: "Anoroth",
+                FullName: "Anoroth"
             },
             "e168d757-8e23-4003-863a-8849f0494e3b": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.108Z",
@@ -10012,7 +10012,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Eli Spencer",
+                FullName: "Eli Spencer"
             },
             "2e74c218-d45e-423b-819d-707bb33fe68a": {
                 LastChangeDateTimeUtc: "2022-06-20T15:00:08.304Z",
@@ -10029,8 +10029,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://yeenoxy.carrd.co/",
-                    },
+                        Target: "https://yeenoxy.carrd.co/"
+                    }
                 ],
                 TwitterHandle: "yeenoxy",
                 TelegramHandle: "YeenoxyART",
@@ -10046,7 +10046,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Yeenoxy",
+                FullName: "Yeenoxy"
             },
             "87f6669b-4f2b-4ec9-8e23-4aede54e771b": {
                 LastChangeDateTimeUtc: "2022-07-11T20:00:10.486Z",
@@ -10063,8 +10063,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://flurb.me",
-                    },
+                        Target: "https://flurb.me"
+                    }
                 ],
                 TwitterHandle: "FlurbMe",
                 TelegramHandle: "FlurbMe",
@@ -10080,7 +10080,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fd4cf342-2510-49a1-bd56-e9e6beda5479/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/88b5f0be-111d-4c38-8cad-7af5f6f7cdb9/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Flurb!",
+                FullName: "Flurb!"
             },
             "ad557b05-5046-49af-b7de-2af5b8c1a370": {
                 LastChangeDateTimeUtc: "2022-07-04T12:00:09.489Z",
@@ -10097,8 +10097,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/redcoatcat/",
-                    },
+                        Target: "https://www.furaffinity.net/user/redcoatcat/"
+                    }
                 ],
                 TwitterHandle: "redcoatcat",
                 TelegramHandle: "redcoatcat",
@@ -10114,7 +10114,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/58c7527b-ece3-485d-a5cc-0a19ff15e71a/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/de5f9efe-e5be-4bdc-a895-44cf5a29e6d0/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bfbcc311-1ae8-4d8f-a314-a068c379cd52/Content",
-                FullName: "RedCoatCat",
+                FullName: "RedCoatCat"
             },
             "94bfe893-77c5-4ec5-9aeb-36585742f4b8": {
                 LastChangeDateTimeUtc: "2022-06-11T10:00:07.877Z",
@@ -10143,7 +10143,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f528c6f3-0217-463a-af80-0e1c31d6b2b4/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/37fbfd6e-f2b7-47ba-9e1f-6d0158f054d8/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Faolan",
+                FullName: "Faolan"
             },
             "44b5edea-1da4-4f25-89ea-729e0d2e1bdb": {
                 LastChangeDateTimeUtc: "2022-07-25T17:00:09.676Z",
@@ -10159,8 +10159,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/wyntersun/",
-                    },
+                        Target: "https://www.furaffinity.net/user/wyntersun/"
+                    }
                 ],
                 TwitterHandle: "whereszoqi",
                 TelegramHandle: "",
@@ -10176,7 +10176,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/513e480e-cdb6-452d-a151-57f0fd4bc0cd/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Wyntersun",
+                FullName: "Wyntersun"
             },
             "d89cfcf4-aa33-495b-951b-711197bbd4ac": {
                 LastChangeDateTimeUtc: "2022-06-30T10:00:08.711Z",
@@ -10192,8 +10192,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/copperroach/",
-                    },
+                        Target: "https://www.furaffinity.net/user/copperroach/"
+                    }
                 ],
                 TwitterHandle: "Flowerdino",
                 TelegramHandle: "",
@@ -10209,7 +10209,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2e03c53d-0524-4f7f-9ae6-e38634b02339/Content",
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Molniya",
+                FullName: "Molniya"
             },
             "51e120af-2c3f-4f0e-b155-9385832c4a69": {
                 LastChangeDateTimeUtc: "2022-06-29T10:00:09.163Z",
@@ -10228,8 +10228,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.instagram.com/hefeletoons/",
-                    },
+                        Target: "https://www.instagram.com/hefeletoons/"
+                    }
                 ],
                 TwitterHandle: "frazzlerat",
                 TelegramHandle: "",
@@ -10246,7 +10246,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cf1b2d9a-b305-4350-a47c-0361dc3563f2/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e54667dd-4562-4758-a691-0d3ed1859c46/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4610f539-c33f-4982-8981-111ca21b8abc/Content",
-                FullName: "Frazzle",
+                FullName: "Frazzle"
             },
             "1bacd928-3d93-4616-88b6-bc7600a9bd4e": {
                 LastChangeDateTimeUtc: "2022-08-14T01:00:09.864Z",
@@ -10264,8 +10264,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/freestyler",
-                    },
+                        Target: "https://www.furaffinity.net/user/freestyler"
+                    }
                 ],
                 TwitterHandle: "FreesthatHD",
                 TelegramHandle: "",
@@ -10281,7 +10281,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/30dfe805-ef55-48b0-b9b9-15f23d5f2338/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f4f3a708-5786-4005-a9f4-1be0c3193792/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "FreesTyler",
+                FullName: "FreesTyler"
             },
             "f4002a75-805b-4ed7-9196-4be10ec8c453": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.123Z",
@@ -10308,7 +10308,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Cat and Cockatoo",
+                FullName: "Cat and Cockatoo"
             },
             "42676d53-f37b-4385-b150-e838e7f64a21": {
                 LastChangeDateTimeUtc: "2022-06-14T16:00:08.698Z",
@@ -10335,7 +10335,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63aa670a-2491-4fdc-95cc-706b0e1eacad/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d35051a5-55ef-4264-9729-79147ac61a74/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Chibeasts!",
+                FullName: "Chibeasts!"
             },
             "1fb8f16c-1210-4fc3-8d81-1151bc233331": {
                 LastChangeDateTimeUtc: "2022-06-24T21:00:08.369Z",
@@ -10353,8 +10353,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/anupap/",
-                    },
+                        Target: "https://www.furaffinity.net/user/anupap/"
+                    }
                 ],
                 TwitterHandle: "AnupapKasook",
                 TelegramHandle: "AnupapKasook",
@@ -10370,7 +10370,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a2655f2e-2c94-442e-ac64-b32e68b87632/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d847042-8c53-4a3e-9150-62f5ed0aa5b5/Content",
-                FullName: "Anupap Kasook",
+                FullName: "Anupap Kasook"
             },
             "b2d1ef8a-43fc-414c-b8bb-aa5429800022": {
                 LastChangeDateTimeUtc: "2022-07-01T16:00:09.111Z",
@@ -10389,8 +10389,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/gallery/jukajo/",
-                    },
+                        Target: "https://www.furaffinity.net/gallery/jukajo/"
+                    }
                 ],
                 TwitterHandle: "JukajoArt",
                 TelegramHandle: "",
@@ -10406,7 +10406,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6bde6424-73f9-493e-ab6e-713c561e79a1/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ee61068-e8ed-4f94-bbad-7d2bd2a2b163/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a90423f7-a359-4f38-9292-69e36cc7189f/Content",
-                FullName: "Jukajo",
+                FullName: "Jukajo"
             },
             "a58d5617-0239-4f73-820f-9ceee6dc6fe0": {
                 LastChangeDateTimeUtc: "2022-08-02T08:00:11.032Z",
@@ -10424,8 +10424,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.schneepardicreations.com/en/",
-                    },
+                        Target: "https://www.schneepardicreations.com/en/"
+                    }
                 ],
                 TwitterHandle: "SchneeCreations",
                 TelegramHandle: "SchneepardiCreationsUpdates",
@@ -10441,7 +10441,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/832124a4-929e-44ae-8b96-4dbf693c9cdc/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ef466b01-5322-46df-9cc8-6449beda2e51/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2fea766c-5406-4710-9450-4bfa814bf3f2/Content",
-                FullName: "Schneepardi Creations",
+                FullName: "Schneepardi Creations"
             },
             "03cb4e45-3e47-452d-85c4-1ed39d8399e5": {
                 LastChangeDateTimeUtc: "2022-07-28T17:00:10.062Z",
@@ -10459,8 +10459,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://Fleeks.art",
-                    },
+                        Target: "https://Fleeks.art"
+                    }
                 ],
                 TwitterHandle: "ArtOfFleeks",
                 TelegramHandle: "Ayvaire",
@@ -10476,7 +10476,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/78cd74be-c940-4aa6-8816-653c278055a0/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e0191af3-5b91-45fb-b013-7127e6ca7717/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Art Of Fleeks",
+                FullName: "Art Of Fleeks"
             },
             "0d25206d-db8a-40bf-a3b7-c216f068e369": {
                 LastChangeDateTimeUtc: "2022-06-11T09:00:07.652Z",
@@ -10494,8 +10494,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.deviantart.com/nerventee/gallery",
-                    },
+                        Target: "https://www.deviantart.com/nerventee/gallery"
+                    }
                 ],
                 TwitterHandle: "nerventee",
                 TelegramHandle: "Nerventee",
@@ -10511,7 +10511,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/36b55819-05ed-4b37-9912-1f31def631da/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4f61fab4-c2c5-48b0-be39-9b9a53b9f09b/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Nerventee",
+                FullName: "Nerventee"
             },
             "41918cc9-be8f-4e69-976b-308dcbb8c04d": {
                 LastChangeDateTimeUtc: "2022-06-30T15:00:08.378Z",
@@ -10530,8 +10530,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://fuzzyfurcreations.com/",
-                    },
+                        Target: "https://fuzzyfurcreations.com/"
+                    }
                 ],
                 TwitterHandle: "FuzzyFurC",
                 TelegramHandle: "",
@@ -10547,7 +10547,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6775a2d9-df98-4a52-a7f0-c4098b10bd69/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/64f7f5e7-8b78-4b7f-9f8a-deca22a6f391/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4f943a26-6f76-40b4-956b-d7b359e286e0/Content",
-                FullName: "FuzzyFurCreations",
+                FullName: "FuzzyFurCreations"
             },
             "b3a767ed-5da6-4228-88f0-579b38d69937": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.136Z",
@@ -10575,7 +10575,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "DireCreatures",
+                FullName: "DireCreatures"
             },
             "f595f349-bfe0-473c-aaef-3de20655e7c8": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.919Z",
@@ -10592,8 +10592,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.instagram.com/la.bete.nwar/",
-                    },
+                        Target: "https://www.instagram.com/la.bete.nwar/"
+                    }
                 ],
                 TwitterHandle: "Pap3rDragon",
                 TelegramHandle: "labetenwar",
@@ -10609,7 +10609,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6ae8b4c-af52-465b-b616-5448c38ed6e9/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/604c9e42-4de4-4e8d-a58e-d8ee1908213d/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/755421d6-1ec4-4766-b1fb-9e6d8090c0fb/Content",
-                FullName: "La bête  Nwar",
+                FullName: "La bête  Nwar"
             },
             "582e2f46-75a7-4074-81bd-3f09d53fff66": {
                 LastChangeDateTimeUtc: "2022-06-30T23:00:09.936Z",
@@ -10628,8 +10628,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://tapapatcreations.com/",
-                    },
+                        Target: "https://tapapatcreations.com/"
+                    }
                 ],
                 TwitterHandle: "TapapatFursuits",
                 TelegramHandle: "",
@@ -10645,7 +10645,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/24ec7b2d-1d46-416e-9c27-c5fc45d826a7/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/26cc1bd1-9747-40c9-9569-a804a781e99a/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1a01533a-1c35-427e-8c4a-ef5f25558c19/Content",
-                FullName: "Tapapat Creations",
+                FullName: "Tapapat Creations"
             },
             "f98292f8-211e-4500-b055-e85da9ebc08e": {
                 LastChangeDateTimeUtc: "2022-06-30T17:00:08.892Z",
@@ -10661,8 +10661,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/kashmere",
-                    },
+                        Target: "https://www.furaffinity.net/user/kashmere"
+                    }
                 ],
                 TwitterHandle: "Kashmere_Art",
                 TelegramHandle: "",
@@ -10678,7 +10678,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/76eaa6ab-f72c-4aac-b563-61d04c237cb8/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5e20552b-8bee-4b57-b8da-6aee70b2d322/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ae469adb-eaba-4320-894f-40eeb1380016/Content",
-                FullName: "Kashmere",
+                FullName: "Kashmere"
             },
             "47098783-c41b-48cb-9ccc-2c0edf498fed": {
                 LastChangeDateTimeUtc: "2022-06-19T14:00:08.768Z",
@@ -10697,8 +10697,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/gallery/ganryu/",
-                    },
+                        Target: "https://www.furaffinity.net/gallery/ganryu/"
+                    }
                 ],
                 TwitterHandle: "GanryuArt",
                 TelegramHandle: "ganryusasaki",
@@ -10714,7 +10714,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8bc8741b-e274-4620-b983-7a323f022f30/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/13c2ffcc-8b6c-40c8-bc2e-56bdf966f8b3/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d0cedbfb-1aa3-412c-9bd8-565507a5f8ec/Content",
-                FullName: "Ganryu",
+                FullName: "Ganryu"
             },
             "b545f08b-ff6e-43f4-bb5c-711f63f88f60": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.144Z",
@@ -10742,7 +10742,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Mlice",
+                FullName: "Mlice"
             },
             "af5ea894-aee1-4405-aeac-f97b7ffa7e45": {
                 LastChangeDateTimeUtc: "2022-06-30T15:00:08.381Z",
@@ -10759,8 +10759,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/gallery/red-izak/",
-                    },
+                        Target: "https://www.furaffinity.net/gallery/red-izak/"
+                    }
                 ],
                 TwitterHandle: "redizak",
                 TelegramHandle: "redizak",
@@ -10776,7 +10776,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/565e158f-1ce9-49a7-a2c8-e13f025a6bba/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4691286e-db05-45a8-ac9c-1a2482be6670/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1c21d262-68d5-4f9f-a8b3-d0cc7f4262aa/Content",
-                FullName: "Red-IzaK",
+                FullName: "Red-IzaK"
             },
             "172ca19c-7e72-4ef1-8c83-78f682277308": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.146Z",
@@ -10803,7 +10803,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Steel",
+                FullName: "Steel"
             },
             "7aafdcde-88cf-494e-bd1a-26f0031bb5b6": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.148Z",
@@ -10831,7 +10831,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "WMW66 Costumes and art of Motomo Wahots",
+                FullName: "WMW66 Costumes and art of Motomo Wahots"
             },
             "e2b04952-7e83-4bc2-ad80-c0d647a7559f": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.936Z",
@@ -10848,8 +10848,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/virensere/",
-                    },
+                        Target: "https://www.furaffinity.net/user/virensere/"
+                    }
                 ],
                 TwitterHandle: "Virensere",
                 TelegramHandle: "Virensere",
@@ -10865,7 +10865,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d0c548e-a816-40fc-9d88-8b4640788da4/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3cfffda5-3e25-4cef-9606-ecac4c8d0c1b/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/47b4dd9d-c424-4fe1-9fca-e75e51cb0d31/Content",
-                FullName: "Virensere",
+                FullName: "Virensere"
             },
             "151ec7bd-56dc-48ef-92db-c9ff3b3226f7": {
                 LastChangeDateTimeUtc: "2022-06-29T21:00:09.074Z",
@@ -10883,8 +10883,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://mixedmonsters.wixsite.com/mixedmonsters",
-                    },
+                        Target: "https://mixedmonsters.wixsite.com/mixedmonsters"
+                    }
                 ],
                 TwitterHandle: "mixedmonsters",
                 TelegramHandle: "",
@@ -10900,7 +10900,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b269bb17-66ce-4d10-b534-05b733bba0b2/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5dd91808-8be1-487b-9372-66e5b375a9e3/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Mixed Monsters",
+                FullName: "Mixed Monsters"
             },
             "eb4dc0c0-2a87-4c47-bca2-dd8a9009b1d2": {
                 LastChangeDateTimeUtc: "2022-07-04T18:00:09.375Z",
@@ -10918,8 +10918,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/herpydragon/",
-                    },
+                        Target: "https://www.furaffinity.net/user/herpydragon/"
+                    }
                 ],
                 TwitterHandle: "Herpydragon",
                 TelegramHandle: "",
@@ -10935,7 +10935,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/56ab369a-1551-49a5-81e1-cc7b1971975e/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f97fe414-e828-4f0a-9d14-1870c48b053e/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Herpydragon",
+                FullName: "Herpydragon"
             },
             "c6012f18-f66c-4472-86c5-70a368ea97eb": {
                 LastChangeDateTimeUtc: "2022-06-10T12:00:07.744Z",
@@ -10952,8 +10952,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.instagram.com/shelby_the_alpha/",
-                    },
+                        Target: "https://www.instagram.com/shelby_the_alpha/"
+                    }
                 ],
                 TwitterHandle: "alpha_shelby",
                 TelegramHandle: "shelbythealpha",
@@ -10969,7 +10969,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/385f3cac-1302-430f-8386-b31257bc07e0/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/894a2011-f93b-42b0-bbae-7502a39d33f6/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5c0d7536-f1e3-40b5-a660-be519e8e5ab1/Content",
-                FullName: "Shelby The Alpha",
+                FullName: "Shelby The Alpha"
             },
             "f73ac13c-ef51-4c30-b05d-7eb00dc8c14e": {
                 LastChangeDateTimeUtc: "2022-06-30T12:00:09.514Z",
@@ -10987,8 +10987,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://www.akifutoys.com",
-                    },
+                        Target: "http://www.akifutoys.com"
+                    }
                 ],
                 TwitterHandle: "Akifu_toys",
                 TelegramHandle: "Fuzzymoordock",
@@ -11004,7 +11004,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac7a0fe3-df02-4787-b170-958325041872/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/88248d5f-3e87-4997-959a-7ec05a7cc33a/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b899b816-b561-4851-9654-392090e1780d/Content",
-                FullName: "Akifu Toys",
+                FullName: "Akifu Toys"
             },
             "7165f6e0-0428-4ec2-8dea-5f2e856d9736": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.156Z",
@@ -11031,7 +11031,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "EosFoxx",
+                FullName: "EosFoxx"
             },
             "efc3dfcd-a7ee-4c4f-8fca-01dfdc3506a4": {
                 LastChangeDateTimeUtc: "2022-08-13T21:00:10.965Z",
@@ -11050,8 +11050,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/varisart/",
-                    },
+                        Target: "https://www.furaffinity.net/user/varisart/"
+                    }
                 ],
                 TwitterHandle: "Varis_Art",
                 TelegramHandle: "VarisArt",
@@ -11067,7 +11067,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/357014e8-cc55-4927-936a-648e17f87b9d/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8c08111b-dfcd-4e1b-b71d-7990841d8c70/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3da397d7-7ff9-4ed4-ac6c-5c9a94e51f1d/Content",
-                FullName: "Varis",
+                FullName: "Varis"
             },
             "57620b76-989d-49f5-bd31-367d418af1ad": {
                 LastChangeDateTimeUtc: "2022-06-28T13:00:07.702Z",
@@ -11085,8 +11085,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://nievaris.art/",
-                    },
+                        Target: "https://nievaris.art/"
+                    }
                 ],
                 TwitterHandle: "Nievaris_Art",
                 TelegramHandle: "Nievaris",
@@ -11102,7 +11102,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/00c57fce-ed9e-4a14-9983-d829465ca349/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d5d203f-d996-420e-8ca0-cace0fdf2597/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5c3b0ce2-cd77-43b8-877a-31b475a5fad0/Content",
-                FullName: "Nievaris",
+                FullName: "Nievaris"
             },
             "8653cf33-f10e-4b32-a60e-c3ae9a6f3133": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.161Z",
@@ -11129,7 +11129,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "TokoKami",
+                FullName: "TokoKami"
             },
             "941d0a97-87bc-459c-8834-7e7112904f95": {
                 LastChangeDateTimeUtc: "2022-06-27T23:00:08.809Z",
@@ -11139,17 +11139,17 @@ export default {
                 DisplayName: "Panthera Comics",
                 Merchandise: "Comics, fine art prints, commissions, badge commissions, stickers, keychains",
                 ShortDescription:
-                    'I am a freelance comic artist and illustrator from Italy, specializing in semi-realistic feral and anthro art. Currently working on my self-published comic book "Africa".\r\nCats rule!',
+                    "I am a freelance comic artist and illustrator from Italy, specializing in semi-realistic feral and anthro art. Currently working on my self-published comic book \"Africa\".\r\nCats rule!",
                 AboutTheArtistText:
                     "I've loved drawing animals ever since I was a child, but life took me in a different direction for a while. I obtained a degree in Pharmacy and worked in the field for a few years, but was really unhappy.\r\nThanks to the support I received online, and especially by the furry community, I had the chance to switch career paths and become an artist full time. It worked wonderfully, and today I write and publish my own comics and create animal and furry-themed illustrations for companies and private clients alike.",
                 AboutTheArtText:
-                    'All the merchandise available at my table!\r\n\r\nCOMIC:\r\n"Africa" is the story of a young leopard mother whose purpose is to raise her two beloved cubs to adulthood. A look at modern family as seen through the eyes of African animals. Bundle available - discounted price for purchasing all three chapters together!\r\n\r\nMERCH:\r\n*** Hybrid animal stickers - mini series featuring funny, cute and cool hybrids of two animals. Collect them all!\r\n*** Furry-themed t-shirts, all sizes available, various animal designs and colors.\r\n*** A4 and postcard-sized prints of my art, featuring various animal designs and subjects, ranging from fantasy to abstract, to realistic.\r\n\r\nCOMMISSIONS: \r\n*** Traditional commissions are available, both black&white and colored sketches. Done in watercolor and ink, one to two characters max. VERY FEW SLOTS to be completed during the convention, available to ship any commissions ordered after the slot cap.\r\n\r\n*** On top of being available for traditional commissions during the convention, my digital commissions will also have a 15% DISCOUNT when ordered during convention days - feel free to ask for a quote! *NOTE: Digital commissions will be started AFTER the convention has ended, and delivered in the weeks following EF.',
+                    "All the merchandise available at my table!\r\n\r\nCOMIC:\r\n\"Africa\" is the story of a young leopard mother whose purpose is to raise her two beloved cubs to adulthood. A look at modern family as seen through the eyes of African animals. Bundle available - discounted price for purchasing all three chapters together!\r\n\r\nMERCH:\r\n*** Hybrid animal stickers - mini series featuring funny, cute and cool hybrids of two animals. Collect them all!\r\n*** Furry-themed t-shirts, all sizes available, various animal designs and colors.\r\n*** A4 and postcard-sized prints of my art, featuring various animal designs and subjects, ranging from fantasy to abstract, to realistic.\r\n\r\nCOMMISSIONS: \r\n*** Traditional commissions are available, both black&white and colored sketches. Done in watercolor and ink, one to two characters max. VERY FEW SLOTS to be completed during the convention, available to ship any commissions ordered after the slot cap.\r\n\r\n*** On top of being available for traditional commissions during the convention, my digital commissions will also have a 15% DISCOUNT when ordered during convention days - feel free to ask for a quote! *NOTE: Digital commissions will be started AFTER the convention has ended, and delivered in the weeks following EF.",
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.deviantart.com/arven92",
-                    },
+                        Target: "https://www.deviantart.com/arven92"
+                    }
                 ],
                 TwitterHandle: "Panthera_Arven",
                 TelegramHandle: "VeraPanthera",
@@ -11165,7 +11165,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/702d3bd7-f9a4-4bb7-a249-a016c56b9714/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d6bc4ac4-f64c-4738-9bcf-f159b98be53d/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2fcdb625-087c-4d55-aa89-25ce13bfd708/Content",
-                FullName: "Panthera Comics",
+                FullName: "Panthera Comics"
             },
             "e40fd78a-0633-4e38-bbd1-4c0204b54c89": {
                 LastChangeDateTimeUtc: "2022-06-28T17:00:08.779Z",
@@ -11181,8 +11181,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/dktorzi/",
-                    },
+                        Target: "https://www.furaffinity.net/user/dktorzi/"
+                    }
                 ],
                 TwitterHandle: "",
                 TelegramHandle: "",
@@ -11198,7 +11198,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/110f9309-4083-4864-b403-ded7cf634c5e/Content",
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6f63a67c-4411-4e94-8182-8acd7983370b/Content",
-                FullName: "Dktorzi",
+                FullName: "Dktorzi"
             },
             "bd2fecbe-b28d-49f1-a0b9-9bb1714837d2": {
                 LastChangeDateTimeUtc: "2022-06-28T18:00:09.061Z",
@@ -11226,7 +11226,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ecbac4ab-8865-4bff-b48b-04f6d7b74de5/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8f97bc57-dea5-4b0f-9a26-2cf214d5a042/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f0fd3aa0-a9e9-4f23-b069-82c6f2ca98ac/Content",
-                FullName: "Rin's Dragon Love",
+                FullName: "Rin's Dragon Love"
             },
             "d6dc5a4a-86d7-4b42-ad6b-4c18420374f6": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.168Z",
@@ -11253,7 +11253,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Dai Toastercat",
+                FullName: "Dai Toastercat"
             },
             "94c514ab-dc64-4d52-a53d-9f32f05066fb": {
                 LastChangeDateTimeUtc: "2022-07-06T23:00:09.755Z",
@@ -11271,8 +11271,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://www.dampfloque.art",
-                    },
+                        Target: "http://www.dampfloque.art"
+                    }
                 ],
                 TwitterHandle: "DampfLoque",
                 TelegramHandle: "",
@@ -11288,7 +11288,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9a7fea08-7678-4ef6-a064-5fdb548d7936/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0258d007-5440-403d-bebf-300a6896e923/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f89cfd12-9378-42ee-8b73-243721bd8305/Content",
-                FullName: "DampfLoque",
+                FullName: "DampfLoque"
             },
             "ae3bb67d-44cb-460d-a43c-594868940731": {
                 LastChangeDateTimeUtc: "2022-06-30T18:00:09.193Z",
@@ -11304,8 +11304,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/inuki/",
-                    },
+                        Target: "https://www.furaffinity.net/user/inuki/"
+                    }
                 ],
                 TwitterHandle: "InukiLovesSteak",
                 TelegramHandle: "",
@@ -11321,7 +11321,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d405bc97-23f8-4368-884f-d1bb17abfb9a/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a34fdf9e-e9c5-4d3a-a606-76dc662f4919/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac5f3d13-5b07-4aeb-8566-595fc8ffee71/Content",
-                FullName: "Inuki",
+                FullName: "Inuki"
             },
             "cba3701e-9354-4d79-afb4-537b07ca3b6c": {
                 LastChangeDateTimeUtc: "2022-07-01T04:00:09.928Z",
@@ -11338,8 +11338,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://gryphonbook.com/",
-                    },
+                        Target: "https://gryphonbook.com/"
+                    }
                 ],
                 TwitterHandle: "Reinbourne",
                 TelegramHandle: "Reinbourne",
@@ -11355,7 +11355,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/87cb1854-f8ee-4b1e-9bfd-128a607d75f9/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6e5b7e7d-4c9e-41df-a1c6-71b9124b5b4a/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "The Gryphon Generation",
+                FullName: "The Gryphon Generation"
             },
             "f5da75dd-5648-40ad-8d12-d930044c9227": {
                 LastChangeDateTimeUtc: "2022-07-30T10:00:10.599Z",
@@ -11373,8 +11373,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://anatoliba.deviantart.com",
-                    },
+                        Target: "http://anatoliba.deviantart.com"
+                    }
                 ],
                 TwitterHandle: "Anaviech?lang=de",
                 TelegramHandle: "",
@@ -11390,7 +11390,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d606b022-7264-451b-97a2-2a00af822856/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d5610abc-40ba-4d14-bd9f-4d36902ee135/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d9d19124-ba49-4ff6-96f9-0b9cf222895b/Content",
-                FullName: "Anatoliba",
+                FullName: "Anatoliba"
             },
             "6dcae3bc-3767-4748-a767-e9c40e6a67e6": {
                 LastChangeDateTimeUtc: "2022-08-09T11:00:10.262Z",
@@ -11403,13 +11403,13 @@ export default {
                 AboutTheArtistText:
                     "Sasha - He/they - GER/ENG \r\n\r\nI've always loved drawing and became enamoured by the idea of creating art for a living, furries made it possible for me! \r\nI bring all kinds of kinks 'n' critters to life, after all I would like to create a space where everyone can live out their little fantasies judgment free :)",
                 AboutTheArtText:
-                    'We have gay bondage focused collab artbooks/zines called "Bound for Glory", stickers, prints, you name it! \r\n\r\nYou might be able to snag a sketch commission or a take-home digital one.\r\n\r\nAny purchase over 20€ gets a free mini zine :)',
+                    "We have gay bondage focused collab artbooks/zines called \"Bound for Glory\", stickers, prints, you name it! \r\n\r\nYou might be able to snag a sketch commission or a take-home digital one.\r\n\r\nAny purchase over 20€ gets a free mini zine :)",
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://snofu.art/",
-                    },
+                        Target: "https://snofu.art/"
+                    }
                 ],
                 TwitterHandle: "snofag",
                 TelegramHandle: "snofu",
@@ -11417,7 +11417,7 @@ export default {
                 AttendsOnFriday: true,
                 AttendsOnSaturday: true,
                 ArtPreviewCaption:
-                    'We have two mini zines up for grabs! "Two Tails Fox" and "Littl\' \'Lotls" \r\n\r\n"Bound for Glory" this is Vol 4! We also have Vol 2, 3 and fresh of the presses Vol 5!',
+                    "We have two mini zines up for grabs! \"Two Tails Fox\" and \"Littl' 'Lotls\" \r\n\r\n\"Bound for Glory\" this is Vol 4! We also have Vol 2, 3 and fresh of the presses Vol 5!",
                 ArtistThumbnailImageId: "63fad434-7874-4a17-a8e3-330aff149ec3",
                 ArtistImageId: "acb1addf-825a-4056-8db3-257024cde2d7",
                 ArtPreviewImageId: "c6d36390-e705-4f10-ba8f-6e0f5cc9b764",
@@ -11426,7 +11426,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/acb1addf-825a-4056-8db3-257024cde2d7/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63fad434-7874-4a17-a8e3-330aff149ec3/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6d36390-e705-4f10-ba8f-6e0f5cc9b764/Content",
-                FullName: "Snofu",
+                FullName: "Snofu"
             },
             "c396621e-362b-4917-b037-5c9bcad90f44": {
                 LastChangeDateTimeUtc: "2022-06-26T14:00:08.217Z",
@@ -11444,8 +11444,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://kyrosh.com",
-                    },
+                        Target: "http://kyrosh.com"
+                    }
                 ],
                 TwitterHandle: "kyrosh00",
                 TelegramHandle: "kyrosh00",
@@ -11461,7 +11461,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6ef56c76-23be-4948-91ed-137ad6306f65/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e922b174-5d85-4c7f-8180-d5edf2655959/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "kyrosh",
+                FullName: "kyrosh"
             },
             "78275022-12d3-4675-8227-f59e9628952e": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.182Z",
@@ -11488,7 +11488,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "EmilyCreative",
+                FullName: "EmilyCreative"
             },
             "f714a3de-e635-491d-a9ca-d8b659ce62ec": {
                 LastChangeDateTimeUtc: "2022-07-12T22:00:09.676Z",
@@ -11507,8 +11507,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://abandonambition.com",
-                    },
+                        Target: "https://abandonambition.com"
+                    }
                 ],
                 TwitterHandle: "AbandonAmbition",
                 TelegramHandle: "AbandonAmbition",
@@ -11525,7 +11525,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ba875b45-7c1d-47f2-b5a5-1b7ce33811ec/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45c99f42-d27d-462b-b50e-ce6bf2a3794d/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e136979a-b0af-4b94-8522-c83a9749ffd4/Content",
-                FullName: "Abandon Ambition",
+                FullName: "Abandon Ambition"
             },
             "9a9c3983-81af-448d-af3a-12b570036c17": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.188Z",
@@ -11552,7 +11552,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Mixed Monsters",
+                FullName: "Mixed Monsters"
             },
             "7e9d63cf-3d20-44fd-94f7-79e614b84203": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.189Z",
@@ -11579,7 +11579,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Avanii",
+                FullName: "Avanii"
             },
             "2ade8b49-48b4-4aee-80de-aacc86c24404": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.190Z",
@@ -11606,7 +11606,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Blue_Panther",
+                FullName: "Blue_Panther"
             },
             "5633c99e-2e4e-47e0-9974-230b58d434ca": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:08.369Z",
@@ -11623,8 +11623,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://t.me/RoyaltyCommissions",
-                    },
+                        Target: "http://t.me/RoyaltyCommissions"
+                    }
                 ],
                 TwitterHandle: "TheRoyalGryphon",
                 TelegramHandle: "RoyalGryphon",
@@ -11640,7 +11640,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/541df440-047b-42a1-ba48-621968d23a40/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/36d3e1a0-8f5c-4a3f-818e-2dfc7641e815/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/00b23efd-331a-45ae-ba36-f999729ecd64/Content",
-                FullName: "Royalty",
+                FullName: "Royalty"
             },
             "895d60b9-1462-4d35-91c5-113ab5aba47c": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.195Z",
@@ -11667,7 +11667,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "AnimasAnimus",
+                FullName: "AnimasAnimus"
             },
             "30648b7c-ede8-4184-8066-606b1db93668": {
                 LastChangeDateTimeUtc: "2022-07-11T18:00:09.543Z",
@@ -11685,8 +11685,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/balorkin/",
-                    },
+                        Target: "https://www.furaffinity.net/user/balorkin/"
+                    }
                 ],
                 TwitterHandle: "baLOrKIn",
                 TelegramHandle: "baLOrKIn",
@@ -11702,7 +11702,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/66a1b80b-8657-4580-854f-eee00dbf22ef/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3f567aae-4e5a-4c09-ba66-b1b7e8bf8dbe/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8aae2e09-4183-4939-a57b-a293b71c5e8e/Content",
-                FullName: "baLOrKIn | INKubus Press",
+                FullName: "baLOrKIn | INKubus Press"
             },
             "daab29db-1ff4-416c-b71d-fc797f3f1156": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.197Z",
@@ -11729,7 +11729,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Katara",
+                FullName: "Katara"
             },
             "2e21bb32-6234-4fff-ba48-e63c21432537": {
                 LastChangeDateTimeUtc: "2022-06-30T20:00:09.303Z",
@@ -11747,8 +11747,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/ashanti/",
-                    },
+                        Target: "https://www.furaffinity.net/user/ashanti/"
+                    }
                 ],
                 TwitterHandle: "www.twitter.com/Art_Shanti",
                 TelegramHandle: "",
@@ -11764,7 +11764,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0f6f4945-bf36-4259-9e94-9ac0ab2fba38/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f8adc2ed-cb09-43a6-a71f-3d9d1c043b35/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Ashanti",
+                FullName: "Ashanti"
             },
             "59827d77-e460-4630-a11a-ffec159d7fe9": {
                 LastChangeDateTimeUtc: "2022-07-03T20:00:09.290Z",
@@ -11777,13 +11777,13 @@ export default {
                 AboutTheArtistText:
                     "Hey I'm chubby-shark and I like to draw characters above all else. Of course I like chubby ones, buff ones, chonky ones, thicc ones, but mostly I like to draw a diversified array of critters, no matter the species. And I'm especially interested in romantic or erotic ... or even kinky interaction :^) \r\n\r\nOver the last year or so I've also developed an interest in fashion and if anyone wants to incorporate that in their comm idea, I'm usually all ears!",
                 AboutTheArtText:
-                    'At EF I\'ll bring my newest comic "Feedee Fantasy", as well as "Breakfast in Bed" and "Benefits", my new artbook "30 Days of Kink", various prints, postcards, stickers, pins and charms.\r\n\r\nI\'ll also offer traditional commissions in pencil, ink and water color. (Prices can be found at my table.)\r\n\r\nAs well as original traditional artwork found in the Art Show.',
+                    "At EF I'll bring my newest comic \"Feedee Fantasy\", as well as \"Breakfast in Bed\" and \"Benefits\", my new artbook \"30 Days of Kink\", various prints, postcards, stickers, pins and charms.\r\n\r\nI'll also offer traditional commissions in pencil, ink and water color. (Prices can be found at my table.)\r\n\r\nAs well as original traditional artwork found in the Art Show.",
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/gallery/chubby-shark/",
-                    },
+                        Target: "https://www.furaffinity.net/gallery/chubby-shark/"
+                    }
                 ],
                 TwitterHandle: "chubby_shark",
                 TelegramHandle: "chubbySharksComms",
@@ -11799,7 +11799,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7fd1ab9d-292d-4939-bb41-4059805f48a5/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/acf8f85c-6c5b-4053-b4a3-50c0198ccf46/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "chubby-shark",
+                FullName: "chubby-shark"
             },
             "507728f5-a955-4931-8e76-d29ab92c60fb": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.938Z",
@@ -11818,8 +11818,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://vaachar.de",
-                    },
+                        Target: "https://vaachar.de"
+                    }
                 ],
                 TwitterHandle: "VaaChar_Toys",
                 TelegramHandle: "vaachar_charrez",
@@ -11835,7 +11835,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4c404a31-21be-4b69-8154-d37f3d1b3c26/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6795d3c8-51d3-436a-b348-680482a71d36/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0c3a4247-1a46-40c6-b085-e7aeb45ce44c/Content",
-                FullName: "VaarChar Toys",
+                FullName: "VaarChar Toys"
             },
             "6e27f88a-fca1-4390-8515-876c341f399e": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.207Z",
@@ -11862,7 +11862,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Leohariart",
+                FullName: "Leohariart"
             },
             "1d37cf6d-adc9-4c41-9a1f-21b03353603f": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.209Z",
@@ -11890,7 +11890,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Lemon-Creme Studios",
+                FullName: "Lemon-Creme Studios"
             },
             "b4c3069e-191d-4863-8235-76a481538e58": {
                 LastChangeDateTimeUtc: "2022-08-12T15:00:11.226Z",
@@ -11907,8 +11907,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://etsy.co.uk/shop/pyritie",
-                    },
+                        Target: "https://etsy.co.uk/shop/pyritie"
+                    }
                 ],
                 TwitterHandle: "pyritie",
                 TelegramHandle: "",
@@ -11924,7 +11924,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/13ae8d15-e27e-4dbf-9f72-5e5e6bac79d6/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ea2ff0cd-fc4d-4045-93ff-9d51300e5562/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/99f65c8d-7c65-4587-bc39-587110f6dd80/Content",
-                FullName: "Pyritie",
+                FullName: "Pyritie"
             },
             "8c042478-b765-4bd2-8f5c-7d9b013e6c1e": {
                 LastChangeDateTimeUtc: "2022-07-20T19:00:09.631Z",
@@ -11937,13 +11937,13 @@ export default {
                 AboutTheArtistText:
                     "I am Nattrim, a long time brewer and craft beer enthusiast from Denmark.\r\n\r\nThe last few years I've gotten myself into more of the professional scene by attending beer festivals where I could share my craft with other people and brewers.\r\n\r\nI am super excited to attend EF as a Dealer this year!",
                 AboutTheArtText:
-                    'At my table you\'ll find a choice selection of different 44cl Canned Craft Drinks this year, the full menu will be available at the Con, and announced on Twitter shortly before we go live!\r\n\r\nOne thing is certain, we are doing a very Special donation beer where all the profits will be donated to the charity! To fit with this years theme, we hope you will enjoy our "Juicy Booty" a deliciously crafted Hazy New England IPA!\r\n\r\nYou will also find merch such as be Charms, Lanyards, Stickers, Bottle openers, Glass wear, Bar mats and many other small goodies.',
+                    "At my table you'll find a choice selection of different 44cl Canned Craft Drinks this year, the full menu will be available at the Con, and announced on Twitter shortly before we go live!\r\n\r\nOne thing is certain, we are doing a very Special donation beer where all the profits will be donated to the charity! To fit with this years theme, we hope you will enjoy our \"Juicy Booty\" a deliciously crafted Hazy New England IPA!\r\n\r\nYou will also find merch such as be Charms, Lanyards, Stickers, Bottle openers, Glass wear, Bar mats and many other small goodies.",
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://sharktorbrewing.dk/",
-                    },
+                        Target: "http://sharktorbrewing.dk/"
+                    }
                 ],
                 TwitterHandle: "Nattrim",
                 TelegramHandle: "Nattrim",
@@ -11959,7 +11959,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e95edc0e-fb67-4d09-bdc2-9c9a376b596e/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fed21ff6-f429-4a3a-af1b-b20da91ecbe1/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/df665938-cbff-4110-b84a-fb74b7e2cf9b/Content",
-                FullName: "Sharktor Brewing.dk",
+                FullName: "Sharktor Brewing.dk"
             },
             "cb31033e-0d64-4c1b-8258-295de51b5724": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.215Z",
@@ -11986,7 +11986,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Emmacreatures",
+                FullName: "Emmacreatures"
             },
             "59ac8857-59a1-468b-8d25-1f5a1a497c1d": {
                 LastChangeDateTimeUtc: "2022-08-11T11:00:09.870Z",
@@ -12005,8 +12005,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://www.geisterwerke.de",
-                    },
+                        Target: "http://www.geisterwerke.de"
+                    }
                 ],
                 TwitterHandle: "geisterwerke",
                 TelegramHandle: "geisterwerkewolf",
@@ -12022,7 +12022,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d73990a0-73c3-47a8-8e13-7fed0629199b/Content",
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d118f9f-33a6-4ac6-a10f-808dea795ab7/Content",
-                FullName: "Geisterwerke & momohoskin",
+                FullName: "Geisterwerke & momohoskin"
             },
             "2df8f494-9ed0-42a7-87e3-453c6dc3d73f": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.217Z",
@@ -12049,7 +12049,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Dori-to",
+                FullName: "Dori-to"
             },
             "51e73486-2c00-448e-b9ce-52d5de7f2a35": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.219Z",
@@ -12076,7 +12076,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Il_filo_di_giada",
+                FullName: "Il_filo_di_giada"
             },
             "1e509aef-2272-42dc-ada3-5094acca4f22": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.220Z",
@@ -12103,7 +12103,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "wylfi",
+                FullName: "wylfi"
             },
             "37388c7a-72ff-4491-b942-0e960be7cbe7": {
                 LastChangeDateTimeUtc: "2022-06-20T16:00:08.945Z",
@@ -12116,13 +12116,13 @@ export default {
                 AboutTheArtistText:
                     "Freelance graphic designer, illustrator and enthusiastic organizer of creative projects. My favourite subjects are mostly animals, original characters and mythological creatures. I am publisher and designer of the Dragon Calendar and admin of ACEOfursXchange trading group. I live and work in Prague, Czech Republic with my husband and our four-legged meowing companions Kraken & Indy.",
                 AboutTheArtText:
-                    'At my table you\'ll find the calendars "DRAGONS 2023" full of beautiful illustrations of dragons from Czech and Slovak artists (including myself!). I also have sketchbooks with great paper for drawing, variety of prints, bookmarks, enamel pins, buttons, stickers and other small merchandise.',
+                    "At my table you'll find the calendars \"DRAGONS 2023\" full of beautiful illustrations of dragons from Czech and Slovak artists (including myself!). I also have sketchbooks with great paper for drawing, variety of prints, bookmarks, enamel pins, buttons, stickers and other small merchandise.",
                 Links: [
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://shop.dragarta.com/",
-                    },
+                        Target: "http://shop.dragarta.com/"
+                    }
                 ],
                 TwitterHandle: "artofdragarta",
                 TelegramHandle: "Dragarta",
@@ -12138,7 +12138,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/636fc12a-ddb3-4e70-a893-50c6e9aad491/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f592e57a-2c32-48a1-bba8-74546717f9ac/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/278f6cba-7a3f-41b6-8976-7f83e193162a/Content",
-                FullName: "Dragarta",
+                FullName: "Dragarta"
             },
             "92adcd46-856a-4f6c-b8d5-e9bc6fe830ca": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.944Z",
@@ -12155,8 +12155,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.eurofurence.org",
-                    },
+                        Target: "https://www.eurofurence.org"
+                    }
                 ],
                 TwitterHandle: "eurofurence",
                 TelegramHandle: "",
@@ -12172,7 +12172,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ed68722-0cfd-4992-944f-612439f3eeba/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d32e5a6c-a792-4bd7-ae1a-844b2b927c40/Content",
-                FullName: "Eurofurence Shop",
+                FullName: "Eurofurence Shop"
             },
             "6e443834-0706-484d-8346-189559750422": {
                 LastChangeDateTimeUtc: "2022-07-14T16:00:09.972Z",
@@ -12190,8 +12190,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://calimdor.de",
-                    },
+                        Target: "https://calimdor.de"
+                    }
                 ],
                 TwitterHandle: "CalimdorArt",
                 TelegramHandle: "CalimdorArt",
@@ -12208,7 +12208,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3df537ed-a0ad-476d-8b8f-e6d39ffa6460/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d3f36e63-0522-4206-8cda-039dd10e85c1/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e6fa4031-db99-4ba9-a724-03591b476c97/Content",
-                FullName: "Calimdor",
+                FullName: "Calimdor"
             },
             "a9429ad5-f43a-400d-a83d-a6ffd6be8720": {
                 LastChangeDateTimeUtc: "2022-07-07T18:00:09.490Z",
@@ -12225,8 +12225,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.mouthmutt.art/",
-                    },
+                        Target: "https://www.mouthmutt.art/"
+                    }
                 ],
                 TwitterHandle: "MouthMutt",
                 TelegramHandle: "MuttMakesArt",
@@ -12242,7 +12242,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/91e04e2d-c6af-4efe-9e3c-2c14477dba02/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8420f0c3-d668-4a1b-ad1a-b5381849da66/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1957c8a1-41d6-4b2f-9e89-bbdb55dc8c40/Content",
-                FullName: "MouthMutt",
+                FullName: "MouthMutt"
             },
             "c9a6dc8a-4d29-4755-82e9-8e3b41b16b7b": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.231Z",
@@ -12269,7 +12269,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Grion FursuitUP",
+                FullName: "Grion FursuitUP"
             },
             "e211e066-c11b-4b3c-b267-bc3c7f95b3e5": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.233Z",
@@ -12296,7 +12296,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Riffuchs' Honey",
+                FullName: "Riffuchs' Honey"
             },
             "8f284153-3e81-42b9-a2eb-2a911faeaa81": {
                 LastChangeDateTimeUtc: "2022-07-20T09:00:09.892Z",
@@ -12314,8 +12314,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://www.dutchcolour.nl",
-                    },
+                        Target: "http://www.dutchcolour.nl"
+                    }
                 ],
                 TwitterHandle: "dutchcolour",
                 TelegramHandle: "Dutchcolour",
@@ -12331,7 +12331,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4d5da0c0-67f3-4b94-8321-55c5a64c6f89/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5ae969cd-00e9-49b1-819e-24d71ebfad61/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4010864f-5477-4468-8217-621f3ec1b8c5/Content",
-                FullName: "Dutchcolour",
+                FullName: "Dutchcolour"
             },
             "6b8b9767-806f-4f38-881b-cd215c8c7630": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.237Z",
@@ -12359,7 +12359,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Tabia Lioness",
+                FullName: "Tabia Lioness"
             },
             "4f1d3d22-16bb-4b86-a1e2-24aa10b0bd21": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.948Z",
@@ -12378,8 +12378,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://foxes.wtf",
-                    },
+                        Target: "http://foxes.wtf"
+                    }
                 ],
                 TwitterHandle: "foxescreations",
                 TelegramHandle: "creepyfoxescreations",
@@ -12395,7 +12395,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/83574e32-6e38-4425-9b10-7faa97910b88/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/319df517-ffb2-46e6-9af7-b8cfeaa46ffb/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/428f4bc0-043b-4276-8b48-f5fc5163f3ab/Content",
-                FullName: "Creepy Foxes Creations",
+                FullName: "Creepy Foxes Creations"
             },
             "147198aa-f56b-4e99-8548-0ccdea03253a": {
                 LastChangeDateTimeUtc: "2022-06-30T22:00:09.764Z",
@@ -12413,8 +12413,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://draakae.crd.co/#",
-                    },
+                        Target: "https://draakae.crd.co/#"
+                    }
                 ],
                 TwitterHandle: "draakae",
                 TelegramHandle: "",
@@ -12430,7 +12430,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b86dc160-98bb-4aa2-8d60-1fc9ab92c512/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/864f3a34-2767-4b85-9eca-4d5676b74e29/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/dda421c0-b61d-4b81-a4c6-e682d056c70a/Content",
-                FullName: "Draakae",
+                FullName: "Draakae"
             },
             "3bc1e9e0-ff15-4669-ab0f-72d1e33214dd": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.241Z",
@@ -12457,7 +12457,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Gideon's Corral",
+                FullName: "Gideon's Corral"
             },
             "af59d040-8b4c-4198-89be-6249f7a08776": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.243Z",
@@ -12484,7 +12484,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "TaniDaReal",
+                FullName: "TaniDaReal"
             },
             "d51e399f-5dc4-4131-a39e-47e9bd0118e4": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.244Z",
@@ -12511,7 +12511,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Jojoe",
+                FullName: "Jojoe"
             },
             "3fce190d-7a5d-4a68-a49b-0af45e49156c": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.246Z",
@@ -12538,7 +12538,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "BlackPaw Productions",
+                FullName: "BlackPaw Productions"
             },
             "0764b505-c74d-48f3-a460-da9b678a6bb4": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:08.377Z",
@@ -12556,8 +12556,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://drangir.com",
-                    },
+                        Target: "http://drangir.com"
+                    }
                 ],
                 TwitterHandle: "drangirart",
                 TelegramHandle: "drangir",
@@ -12573,7 +12573,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f1c6bed9-4ee8-4699-b01a-9aad9143d828/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e61fe4c6-804c-4597-b404-76f5abcbe940/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6315c72e-1102-48b6-926f-301fffc42b5b/Content",
-                FullName: "Drangir",
+                FullName: "Drangir"
             },
             "783c5a96-09be-4849-afdc-d93807283834": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.250Z",
@@ -12600,7 +12600,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Dirty Dogs",
+                FullName: "Dirty Dogs"
             },
             "a4e4e91f-6e61-4742-a6d0-a8b8d2c4e21b": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.251Z",
@@ -12627,7 +12627,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "KaotikJuju",
+                FullName: "KaotikJuju"
             },
             "6fe90fa9-b3ad-40cf-ba24-a8314280f2ab": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.253Z",
@@ -12654,7 +12654,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Kina",
+                FullName: "Kina"
             },
             "db3ff932-833c-4261-8866-cf7a9b998de1": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.254Z",
@@ -12681,7 +12681,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "laserpaints",
+                FullName: "laserpaints"
             },
             "227a70ac-8d7f-4a07-92f4-0d7da525a6e9": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.951Z",
@@ -12698,8 +12698,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/prismboo/",
-                    },
+                        Target: "https://www.furaffinity.net/user/prismboo/"
+                    }
                 ],
                 TwitterHandle: "Prism_bon",
                 TelegramHandle: "",
@@ -12715,7 +12715,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b82151c2-d274-4206-864f-042f4cf47f45/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9822c245-2038-44cc-afeb-8650502ccd41/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d24a863-4b7e-4194-b0b1-f6d325e22fb3/Content",
-                FullName: "BonBon",
+                FullName: "BonBon"
             },
             "374c29bc-dc32-4dec-ba7c-35cb6426abdb": {
                 LastChangeDateTimeUtc: "2022-06-27T17:00:09.230Z",
@@ -12732,8 +12732,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://papercalypso.carrd.co/",
-                    },
+                        Target: "http://papercalypso.carrd.co/"
+                    }
                 ],
                 TwitterHandle: "calypsothedoe",
                 TelegramHandle: "Alex_East",
@@ -12749,7 +12749,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1b4ef6b4-1519-4627-846d-e22460ba338b/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/24ea3d82-c668-4b6c-9c9f-e9f310e6e295/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4a3cb0ac-e736-4058-bac7-4830f1828c20/Content",
-                FullName: "PaperCalypso",
+                FullName: "PaperCalypso"
             },
             "22c43374-06a7-4d2a-a608-3e954a66e123": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.259Z",
@@ -12776,7 +12776,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Screwchaos",
+                FullName: "Screwchaos"
             },
             "45291cf1-edfa-49ec-bb84-50c57b4b6eb7": {
                 LastChangeDateTimeUtc: "2022-07-31T15:00:11.130Z",
@@ -12793,8 +12793,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://www.plushiepalace.com",
-                    },
+                        Target: "http://www.plushiepalace.com"
+                    }
                 ],
                 TwitterHandle: "plushiepalace",
                 TelegramHandle: "zeorkarethran",
@@ -12810,7 +12810,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d857958b-5285-4a30-9f91-f9695e18f654/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/db62ee30-fc55-4466-9fc8-864cc2315bfd/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/21f02cd2-b852-4d50-bc05-a59952b05974/Content",
-                FullName: "Zeor's PlushiePalace",
+                FullName: "Zeor's PlushiePalace"
             },
             "94f23a30-f29f-40de-b876-6cb495539dab": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.262Z",
@@ -12837,7 +12837,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Fox Amoore",
+                FullName: "Fox Amoore"
             },
             "0ad9d5a7-73b9-4b88-8fed-5c9bfc1e0e9a": {
                 LastChangeDateTimeUtc: "2022-07-20T13:00:09.414Z",
@@ -12854,8 +12854,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://inkbunny.net/Mancoin",
-                    },
+                        Target: "https://inkbunny.net/Mancoin"
+                    }
                 ],
                 TwitterHandle: "Foxyverse",
                 TelegramHandle: "",
@@ -12871,7 +12871,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/66945aa8-6cd4-4739-9eb9-fa5301480749/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bca500d6-0f47-48a2-b681-81caa61b2b34/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/277228b7-aeaf-4f9c-abc8-8c4683333c7b/Content",
-                FullName: "Mancoin",
+                FullName: "Mancoin"
             },
             "4d75defb-17a9-49fd-8d75-4f5f798976d4": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.266Z",
@@ -12899,7 +12899,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Clear Eclair",
+                FullName: "Clear Eclair"
             },
             "c3dc5595-c67f-4ad8-8dc1-e444cb793549": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.269Z",
@@ -12926,7 +12926,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Sasha R. Jones",
+                FullName: "Sasha R. Jones"
             },
             "008f80ee-c178-4ae0-b7c6-f2593b2db58c": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.271Z",
@@ -12953,7 +12953,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Jonathan Vair / Stigmata",
+                FullName: "Jonathan Vair / Stigmata"
             },
             "bf7ac750-c6c6-4512-89b0-c723f94afbbc": {
                 LastChangeDateTimeUtc: "2022-07-28T12:00:10.318Z",
@@ -12972,8 +12972,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.instagram.com/umbreonoctie",
-                    },
+                        Target: "https://www.instagram.com/umbreonoctie"
+                    }
                 ],
                 TwitterHandle: "UmbreoNoctie",
                 TelegramHandle: "UmbreoNoctie",
@@ -12989,7 +12989,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4ba12ed7-e5ef-422e-b12c-f123cc32c329/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d593b83d-b2ad-49c4-bf67-b2f19574612d/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/72eba07f-a862-4b52-933b-51ec815dee53/Content",
-                FullName: "UmbreoNoctie",
+                FullName: "UmbreoNoctie"
             },
             "6c2c50fe-266f-4b1e-8afe-96d1ed404b21": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.277Z",
@@ -13017,7 +13017,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Fursonal Suits and Creations",
+                FullName: "Fursonal Suits and Creations"
             },
             "90f1b326-4e02-4736-b6ed-12fa8d5fd90e": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.280Z",
@@ -13044,7 +13044,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Furryratchet",
+                FullName: "Furryratchet"
             },
             "db593e2e-771f-471c-b903-57f3e5140031": {
                 LastChangeDateTimeUtc: "2022-08-13T12:00:10.126Z",
@@ -13071,7 +13071,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Artonis",
+                FullName: "Artonis"
             },
             "d584cca8-9cee-4f55-b8bb-1e95d20aad75": {
                 LastChangeDateTimeUtc: "2022-06-13T20:00:08.171Z",
@@ -13090,8 +13090,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "http://www.juliabeutling.de",
-                    },
+                        Target: "http://www.juliabeutling.de"
+                    }
                 ],
                 TwitterHandle: "JuliaBeutling",
                 TelegramHandle: "",
@@ -13107,7 +13107,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/44fd3177-68e0-4acb-8dc7-4b5555dda79e/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9574b83a-f7fb-4754-bbaa-ec7a9d39ea55/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bd435af1-1ba5-4732-9168-13d72001631b/Content",
-                FullName: "Gnulia",
+                FullName: "Gnulia"
             },
             "d108c98f-34fd-4a22-911e-03f6f9e97774": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.285Z",
@@ -13134,7 +13134,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "AlectorFencer",
+                FullName: "AlectorFencer"
             },
             "273cf82b-4914-45fe-affe-f70bfd460984": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.287Z",
@@ -13161,7 +13161,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "NaysPinClub",
+                FullName: "NaysPinClub"
             },
             "c587948a-b1f4-4127-8243-5b69c4cfad13": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.288Z",
@@ -13188,7 +13188,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "KerpeSamana",
+                FullName: "KerpeSamana"
             },
             "b0ce2685-bbf6-4576-8142-fddd13832ad1": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.290Z",
@@ -13215,7 +13215,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Kebi",
+                FullName: "Kebi"
             },
             "3dc4766a-fd02-48d2-95a1-06689ca363d5": {
                 LastChangeDateTimeUtc: "2022-06-28T14:13:22.178Z",
@@ -13242,7 +13242,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "pawsome_fursuits",
+                FullName: "pawsome_fursuits"
             },
             "6f9e32f0-cf69-45e0-aacb-61ebb6aa1a4a": {
                 LastChangeDateTimeUtc: "2022-07-30T21:00:08.772Z",
@@ -13260,8 +13260,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.madebywhire.com",
-                    },
+                        Target: "https://www.madebywhire.com"
+                    }
                 ],
                 TwitterHandle: "MadebyWhire",
                 TelegramHandle: "Whire",
@@ -13277,7 +13277,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7da15684-d942-4843-a565-5b6a1a28197d/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d8cd19bc-50ca-4bbf-baf0-5c8317c2d8e7/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Made by Whire",
+                FullName: "Made by Whire"
             },
             "cf4634fc-e923-44eb-9cd5-8894a75994dd": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.296Z",
@@ -13304,7 +13304,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Naughty Wolf",
+                FullName: "Naughty Wolf"
             },
             "946ac3dd-6168-4e84-b638-4817c0fbacbb": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.298Z",
@@ -13331,7 +13331,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Ligertier Plushmods & Kinky Kaiju",
+                FullName: "Ligertier Plushmods & Kinky Kaiju"
             },
             "100592b8-299e-4904-bd79-93a208834be9": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.301Z",
@@ -13358,7 +13358,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Ligertier Plushmods & Kinky Kaiju",
+                FullName: "Ligertier Plushmods & Kinky Kaiju"
             },
             "53c58b79-f1f8-4046-a6d5-c015af0a9671": {
                 LastChangeDateTimeUtc: "2022-07-04T19:00:09.947Z",
@@ -13374,8 +13374,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.etsy.com/shop/NerumiPlushies",
-                    },
+                        Target: "https://www.etsy.com/shop/NerumiPlushies"
+                    }
                 ],
                 TwitterHandle: "Pancakelulu",
                 TelegramHandle: "pancakelulu",
@@ -13391,7 +13391,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/32ea1591-3ae9-4532-850e-14dcd45427bb/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ffd95bda-b0c5-4a49-b0b2-7bd1678cee41/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Nerumi Plushies",
+                FullName: "Nerumi Plushies"
             },
             "3595589a-c54a-463a-a22e-5f60044f236a": {
                 LastChangeDateTimeUtc: "2022-06-02T07:37:59.304Z",
@@ -13418,7 +13418,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "EZCooldown",
+                FullName: "EZCooldown"
             },
             "aa9117b2-6290-43cf-85d6-deadf2251c87": {
                 LastChangeDateTimeUtc: "2022-07-28T15:00:09.533Z",
@@ -13434,8 +13434,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/purple-reaper/",
-                    },
+                        Target: "https://www.furaffinity.net/user/purple-reaper/"
+                    }
                 ],
                 TwitterHandle: "moonmeadowwuff",
                 TelegramHandle: "Moonmeadow",
@@ -13451,7 +13451,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/20bd09c5-59e0-4015-b180-50fc45c8046b/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e0b5f135-ecd7-4dab-96c0-f8c892085c5e/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1dca3db9-f21b-4ee3-8940-65e900627e23/Content",
-                FullName: "Moonmeadow",
+                FullName: "Moonmeadow"
             },
             "a62c5eeb-097d-4c56-9658-08d797a89825": {
                 LastChangeDateTimeUtc: "2022-06-28T14:13:22.181Z",
@@ -13480,7 +13480,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5a0223d2-9f93-4e5e-90d4-639156d6894c/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ca8cd72c-9d04-4bc5-8b19-d00d4c888e2c/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "Nana-Yuka",
+                FullName: "Nana-Yuka"
             },
             "6b8cdb20-61a3-4a0b-bef4-a347d42bd42e": {
                 LastChangeDateTimeUtc: "2022-06-10T15:00:08.624Z",
@@ -13500,8 +13500,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.furaffinity.net/user/woolierblueberry",
-                    },
+                        Target: "https://www.furaffinity.net/user/woolierblueberry"
+                    }
                 ],
                 TwitterHandle: "woolierblue",
                 TelegramHandle: "woolier",
@@ -13517,7 +13517,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a10612f4-c863-49b5-893a-be0b964505c4/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fce3ac28-b003-4b8f-83e7-37e3cb48bded/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/15a313f5-cae0-43b7-945f-22d8e4f4ab5b/Content",
-                FullName: "Woolier",
+                FullName: "Woolier"
             },
             "93351b09-49e4-47f8-adb1-c9aa862835da": {
                 LastChangeDateTimeUtc: "2022-06-08T11:00:07.736Z",
@@ -13544,7 +13544,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Wintre Arts",
+                FullName: "Wintre Arts"
             },
             "6ccd5b9e-0836-48d7-9e81-942d796dc658": {
                 LastChangeDateTimeUtc: "2022-06-08T11:00:07.883Z",
@@ -13571,7 +13571,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Tuttibird",
+                FullName: "Tuttibird"
             },
             "9423e4f5-6aad-453b-9a6e-84bca367188d": {
                 LastChangeDateTimeUtc: "2022-07-01T06:00:09.815Z",
@@ -13588,8 +13588,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://twitter.com/varroscreations",
-                    },
+                        Target: "https://twitter.com/varroscreations"
+                    }
                 ],
                 TwitterHandle: "varroscreations",
                 TelegramHandle: "Loupan",
@@ -13605,7 +13605,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d86417f9-676b-44f8-8212-ef3b7234cddf/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/102ba33a-82a9-4250-aff2-c36f163004ef/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/668dcd58-8c8a-4ba2-878a-2c383412199a/Content",
-                FullName: "Varro's Creations",
+                FullName: "Varro's Creations"
             },
             "1ca67ee4-4b3a-42c0-9f52-56a640327858": {
                 LastChangeDateTimeUtc: "2022-06-30T17:00:08.909Z",
@@ -13623,8 +13623,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://shalinka.carrd.co",
-                    },
+                        Target: "https://shalinka.carrd.co"
+                    }
                 ],
                 TwitterHandle: "Shalinkarts",
                 TelegramHandle: "shalinkarts",
@@ -13640,7 +13640,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6d6780f-c376-4632-aa5f-a7f6e1fc9011/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6bcba7d2-71b7-4d55-8d17-08082bbacf5b/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/068b6ad3-1589-4991-acf7-f08db9e543e6/Content",
-                FullName: "Shalinka",
+                FullName: "Shalinka"
             },
             "b96ac5cd-e96d-4eb9-bd50-e979b8e3ab9e": {
                 LastChangeDateTimeUtc: "2022-06-21T11:00:08.818Z",
@@ -13667,7 +13667,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "DogzCrew",
+                FullName: "DogzCrew"
             },
             "c9d60103-8722-4e13-8a58-dabaf6aa32c5": {
                 LastChangeDateTimeUtc: "2022-06-27T10:00:08.497Z",
@@ -13694,7 +13694,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "SoftPauxs",
+                FullName: "SoftPauxs"
             },
             "b2237b4b-347c-4c39-9b3d-447d9d85d5e3": {
                 LastChangeDateTimeUtc: "2022-06-28T10:00:08.689Z",
@@ -13721,7 +13721,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Foslo & Pazur",
+                FullName: "Foslo & Pazur"
             },
             "34484f73-1ef4-47f9-b5e9-39f0ab92dc3b": {
                 LastChangeDateTimeUtc: "2022-06-28T10:00:08.802Z",
@@ -13748,7 +13748,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Foslo & Pazur",
+                FullName: "Foslo & Pazur"
             },
             "f97a05fd-5bf2-4db8-af24-60efa601371e": {
                 LastChangeDateTimeUtc: "2022-07-11T12:00:09.295Z",
@@ -13767,8 +13767,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://www.instagram.com/momohoskin/",
-                    },
+                        Target: "https://www.instagram.com/momohoskin/"
+                    }
                 ],
                 TwitterHandle: "momohoskin",
                 TelegramHandle: "momohoskin",
@@ -13784,7 +13784,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3c821c21-e1e5-4eb5-bf23-7fd69e11c681/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c7309031-481f-41a7-b581-3edceb0f8b27/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/90b82aac-abcb-4e99-85f7-7b7f995516fc/Content",
-                FullName: "momohoskin",
+                FullName: "momohoskin"
             },
             "717bfb01-a912-499d-9bc5-32ac3c449e98": {
                 LastChangeDateTimeUtc: "2022-07-20T19:00:09.647Z",
@@ -13802,8 +13802,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://linktr.ee/OktaviasCreatures",
-                    },
+                        Target: "https://linktr.ee/OktaviasCreatures"
+                    }
                 ],
                 TwitterHandle: "OktaviasCSuits",
                 TelegramHandle: "UnityTheLynx",
@@ -13819,7 +13819,7 @@ export default {
                 ArtistImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f4ca4c1b-3e45-4762-8a3f-7c9e888036b7/Content",
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a0635663-044a-4733-b56c-14b54fb81d33/Content",
                 ArtPreviewImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d9912cdb-35e6-4b8c-9bde-68cc58bf4531/Content",
-                FullName: "Oktavia's Creatures",
+                FullName: "Oktavia's Creatures"
             },
             "23b679f8-29da-470c-9bb2-fda7adda5319": {
                 LastChangeDateTimeUtc: "2022-07-30T21:00:08.792Z",
@@ -13835,8 +13835,8 @@ export default {
                     {
                         FragmentType: "WebExternal",
                         Name: "",
-                        Target: "https://twitter.com/KuraiTora13",
-                    },
+                        Target: "https://twitter.com/KuraiTora13"
+                    }
                 ],
                 TwitterHandle: "KuraiTora13",
                 TelegramHandle: "KuraiTora",
@@ -13852,7 +13852,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ea9b18d1-d9ec-4f09-9c9a-2cbc6cf1ec8e/Content",
                 ArtPreviewImageUrl: null,
-                FullName: "KuraiTora",
+                FullName: "KuraiTora"
             },
             "83e54e6d-27ad-4c83-b352-01907d763361": {
                 LastChangeDateTimeUtc: "2022-07-28T09:00:09.676Z",
@@ -13879,7 +13879,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Rotarr",
+                FullName: "Rotarr"
             },
             "60edef06-6f4c-4354-a942-87d81dbdfac0": {
                 LastChangeDateTimeUtc: "2022-08-02T10:00:09.281Z",
@@ -13906,7 +13906,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Art N Prints",
+                FullName: "Art N Prints"
             },
             "665b3da0-e4d6-4c5a-9798-816a0be0eb0d": {
                 LastChangeDateTimeUtc: "2022-08-01T15:00:09.391Z",
@@ -13933,7 +13933,7 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "NovCraft",
+                FullName: "NovCraft"
             },
             "ceac2ce8-9a18-44f8-be25-ad0af02ecae8": {
                 LastChangeDateTimeUtc: "2022-08-01T15:00:09.262Z",
@@ -13960,9 +13960,9 @@ export default {
                 ArtistImageUrl: null,
                 ArtistThumbnailImageUrl: null,
                 ArtPreviewImageUrl: null,
-                FullName: "Project Weasel",
-            },
-        },
+                FullName: "Project Weasel"
+            }
+        }
     },
     announcements: {
         ids: ["8822b105-a46c-441a-a8db-cd6c084d33c8"],
@@ -13978,9 +13978,9 @@ export default {
                 Content:
                     "Welcome aboard, sailor!\n\nYou're here early. We're still loading up the ship and not quite ready to depart yet, but make yourself comfortable!\n\nPlease keep in mind that **any content** within our mobile apps is still subject to change. \n\nIf you're using this on an **Android device**: Things may look a bit different than they used to in the past. We have rewritten the Android version of our apps from scratch, and while they should be functional, they may not be as polished as they used to be - yet.\n\nIf you have any questions or would like to provide feedback, please do so via our [Telegram Channel](https://t.me/+nzwD387IdnI2NGY0)",
                 ImageId: "2ffe3196-6eba-439c-8153-be15baeb2eb6",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ffe3196-6eba-439c-8153-be15baeb2eb6/Content",
-            },
-        },
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ffe3196-6eba-439c-8153-be15baeb2eb6/Content"
+            }
+        }
     },
     images: {
         ids: [
@@ -14223,7 +14223,7 @@ export default {
             "d73990a0-73c3-47a8-8e13-7fed0629199b",
             "aa9935e0-fbe5-40b0-9413-d671b52d6c2b",
             "f7a3094f-ed08-4661-84fd-641fd6402497",
-            "c42f2ffe-97e2-499b-9030-423eb7db92d7",
+            "c42f2ffe-97e2-499b-9030-423eb7db92d7"
         ],
         entities: {
             "6775a2d9-df98-4a52-a7f0-c4098b10bd69": {
@@ -14235,7 +14235,7 @@ export default {
                 SizeInBytes: 54965,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "HuqDoyZx4eKXKG0ru4bvcVkdIec=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6775a2d9-df98-4a52-a7f0-c4098b10bd69/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6775a2d9-df98-4a52-a7f0-c4098b10bd69/Content"
             },
             "64f7f5e7-8b78-4b7f-9f8a-deca22a6f391": {
                 LastChangeDateTimeUtc: "2022-06-09T15:00:07.894Z",
@@ -14246,7 +14246,7 @@ export default {
                 SizeInBytes: 2517,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "FHE8EIbLAacaIjhSn4BMxGvTsFk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/64f7f5e7-8b78-4b7f-9f8a-deca22a6f391/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/64f7f5e7-8b78-4b7f-9f8a-deca22a6f391/Content"
             },
             "385f3cac-1302-430f-8386-b31257bc07e0": {
                 LastChangeDateTimeUtc: "2022-06-09T15:00:07.946Z",
@@ -14257,7 +14257,7 @@ export default {
                 SizeInBytes: 67783,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "hzKUNiEe2OKMmGtdYoHBa/sZh3c=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/385f3cac-1302-430f-8386-b31257bc07e0/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/385f3cac-1302-430f-8386-b31257bc07e0/Content"
             },
             "894a2011-f93b-42b0-bbae-7502a39d33f6": {
                 LastChangeDateTimeUtc: "2022-06-09T15:00:07.954Z",
@@ -14268,7 +14268,7 @@ export default {
                 SizeInBytes: 7982,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "MbjY1DQ6oIQigMfhPg8HvuuNCvE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/894a2011-f93b-42b0-bbae-7502a39d33f6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/894a2011-f93b-42b0-bbae-7502a39d33f6/Content"
             },
             "5c0d7536-f1e3-40b5-a660-be519e8e5ab1": {
                 LastChangeDateTimeUtc: "2022-06-09T15:00:08.279Z",
@@ -14279,7 +14279,7 @@ export default {
                 SizeInBytes: 720387,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "vV93UAHVNh5y1xlhrx/xtW3858w=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5c0d7536-f1e3-40b5-a660-be519e8e5ab1/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5c0d7536-f1e3-40b5-a660-be519e8e5ab1/Content"
             },
             "702d3bd7-f9a4-4bb7-a249-a016c56b9714": {
                 LastChangeDateTimeUtc: "2022-06-09T16:00:08.107Z",
@@ -14290,7 +14290,7 @@ export default {
                 SizeInBytes: 52914,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "dms43uGbwKblhb2ZWG9hJakBoE0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/702d3bd7-f9a4-4bb7-a249-a016c56b9714/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/702d3bd7-f9a4-4bb7-a249-a016c56b9714/Content"
             },
             "d6bc4ac4-f64c-4738-9bcf-f159b98be53d": {
                 LastChangeDateTimeUtc: "2022-06-28T14:00:07.747Z",
@@ -14301,7 +14301,7 @@ export default {
                 SizeInBytes: 25101,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "zd0fuucByr8CPbv2foxUwvKp5Qc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d6bc4ac4-f64c-4738-9bcf-f159b98be53d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d6bc4ac4-f64c-4738-9bcf-f159b98be53d/Content"
             },
             "2fcdb625-087c-4d55-aa89-25ce13bfd708": {
                 LastChangeDateTimeUtc: "2022-06-27T23:00:07.873Z",
@@ -14312,7 +14312,7 @@ export default {
                 SizeInBytes: 2087700,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "oZa0pg3KBLeEs2lWLb9TuPY80Vk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2fcdb625-087c-4d55-aa89-25ce13bfd708/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2fcdb625-087c-4d55-aa89-25ce13bfd708/Content"
             },
             "41ec34c2-b527-4f74-b505-fbce4201bf49": {
                 LastChangeDateTimeUtc: "2022-07-02T15:00:08.285Z",
@@ -14323,7 +14323,7 @@ export default {
                 SizeInBytes: 19007,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Vw+VjGmMlEVqYAKbJ9Kg5VAtSHc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/41ec34c2-b527-4f74-b505-fbce4201bf49/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/41ec34c2-b527-4f74-b505-fbce4201bf49/Content"
             },
             "cf39ac46-d91d-4ea9-828f-023a9e957b53": {
                 LastChangeDateTimeUtc: "2022-07-02T15:00:08.385Z",
@@ -14334,7 +14334,7 @@ export default {
                 SizeInBytes: 1669,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "8F4y10NTZcBDcXkKFJvnHl59lhc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cf39ac46-d91d-4ea9-828f-023a9e957b53/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cf39ac46-d91d-4ea9-828f-023a9e957b53/Content"
             },
             "04b8fac8-a5b6-4838-9fbb-8d8c0826660d": {
                 LastChangeDateTimeUtc: "2022-07-02T15:00:08.398Z",
@@ -14345,7 +14345,7 @@ export default {
                 SizeInBytes: 35527,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "x1h0WM2OmUMFRZXYt7wJZLlrsOI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/04b8fac8-a5b6-4838-9fbb-8d8c0826660d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/04b8fac8-a5b6-4838-9fbb-8d8c0826660d/Content"
             },
             "d8cd19bc-50ca-4bbf-baf0-5c8317c2d8e7": {
                 LastChangeDateTimeUtc: "2022-06-09T18:00:07.732Z",
@@ -14356,7 +14356,7 @@ export default {
                 SizeInBytes: 4101,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "evm5fIPAyBtHyL41xi4rbG0HBeQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d8cd19bc-50ca-4bbf-baf0-5c8317c2d8e7/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d8cd19bc-50ca-4bbf-baf0-5c8317c2d8e7/Content"
             },
             "63fad434-7874-4a17-a8e3-330aff149ec3": {
                 LastChangeDateTimeUtc: "2022-06-10T12:00:07.382Z",
@@ -14367,7 +14367,7 @@ export default {
                 SizeInBytes: 18795,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "HUwYjdBbmHXhi1rRbnVgNHVnNrg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63fad434-7874-4a17-a8e3-330aff149ec3/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63fad434-7874-4a17-a8e3-330aff149ec3/Content"
             },
             "6ef56c76-23be-4948-91ed-137ad6306f65": {
                 LastChangeDateTimeUtc: "2022-06-10T13:00:08.315Z",
@@ -14378,7 +14378,7 @@ export default {
                 SizeInBytes: 23408,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "0vxXsmkuaB2hgKIZq8gEggEGE4E=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6ef56c76-23be-4948-91ed-137ad6306f65/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6ef56c76-23be-4948-91ed-137ad6306f65/Content"
             },
             "e922b174-5d85-4c7f-8180-d5edf2655959": {
                 LastChangeDateTimeUtc: "2022-06-10T13:00:08.433Z",
@@ -14389,7 +14389,7 @@ export default {
                 SizeInBytes: 2695,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "kbkRiOfra5Vghur8zaoQI20zwn8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e922b174-5d85-4c7f-8180-d5edf2655959/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e922b174-5d85-4c7f-8180-d5edf2655959/Content"
             },
             "45c99f42-d27d-462b-b50e-ce6bf2a3794d": {
                 LastChangeDateTimeUtc: "2022-06-10T14:00:07.973Z",
@@ -14400,7 +14400,7 @@ export default {
                 SizeInBytes: 2855,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ANbiNoKM1qgxgE6tN6haEf2olpQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45c99f42-d27d-462b-b50e-ce6bf2a3794d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45c99f42-d27d-462b-b50e-ce6bf2a3794d/Content"
             },
             "b1aa616c-b061-4f15-9634-2337ef864f10": {
                 LastChangeDateTimeUtc: "2022-06-10T17:00:07.425Z",
@@ -14411,7 +14411,7 @@ export default {
                 SizeInBytes: 49632,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "wuSt7LnR7abmjXj91kfcQtVt6Cg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b1aa616c-b061-4f15-9634-2337ef864f10/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b1aa616c-b061-4f15-9634-2337ef864f10/Content"
             },
             "addaa19f-c0a8-4e07-afa7-eb6515d94807": {
                 LastChangeDateTimeUtc: "2022-06-10T15:00:08.207Z",
@@ -14422,7 +14422,7 @@ export default {
                 SizeInBytes: 13599,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "0M/xsPURg3l3QgmpQCTLR1uxf38=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/addaa19f-c0a8-4e07-afa7-eb6515d94807/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/addaa19f-c0a8-4e07-afa7-eb6515d94807/Content"
             },
             "edd5336b-955f-4f4e-b85f-5ca6495a8e2b": {
                 LastChangeDateTimeUtc: "2022-06-30T15:00:07.610Z",
@@ -14433,7 +14433,7 @@ export default {
                 SizeInBytes: 142424,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "J6gWQmM7MyyEoeIodEj1a8choP4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/edd5336b-955f-4f4e-b85f-5ca6495a8e2b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/edd5336b-955f-4f4e-b85f-5ca6495a8e2b/Content"
             },
             "a10612f4-c863-49b5-893a-be0b964505c4": {
                 LastChangeDateTimeUtc: "2022-06-10T15:00:08.354Z",
@@ -14444,7 +14444,7 @@ export default {
                 SizeInBytes: 40648,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "v8G1XNdepsv9kmKl8UZzQWx9gKk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a10612f4-c863-49b5-893a-be0b964505c4/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a10612f4-c863-49b5-893a-be0b964505c4/Content"
             },
             "fce3ac28-b003-4b8f-83e7-37e3cb48bded": {
                 LastChangeDateTimeUtc: "2022-06-10T15:00:08.358Z",
@@ -14455,7 +14455,7 @@ export default {
                 SizeInBytes: 3666,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "WT5yZPA5OTZeFaPH1tWUZmzNDrs=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fce3ac28-b003-4b8f-83e7-37e3cb48bded/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fce3ac28-b003-4b8f-83e7-37e3cb48bded/Content"
             },
             "15a313f5-cae0-43b7-945f-22d8e4f4ab5b": {
                 LastChangeDateTimeUtc: "2022-06-10T15:00:08.372Z",
@@ -14466,7 +14466,7 @@ export default {
                 SizeInBytes: 36904,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Jkvj1vyoxtjgLYm6WO96ZgU3qsE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/15a313f5-cae0-43b7-945f-22d8e4f4ab5b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/15a313f5-cae0-43b7-945f-22d8e4f4ab5b/Content"
             },
             "30dfe805-ef55-48b0-b9b9-15f23d5f2338": {
                 LastChangeDateTimeUtc: "2022-06-10T22:00:07.248Z",
@@ -14477,7 +14477,7 @@ export default {
                 SizeInBytes: 35130,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "N9WwqAAob3jaP3NEr/KJbTCFBWw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/30dfe805-ef55-48b0-b9b9-15f23d5f2338/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/30dfe805-ef55-48b0-b9b9-15f23d5f2338/Content"
             },
             "f4f3a708-5786-4005-a9f4-1be0c3193792": {
                 LastChangeDateTimeUtc: "2022-06-10T22:00:07.366Z",
@@ -14488,7 +14488,7 @@ export default {
                 SizeInBytes: 3474,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "KWOZZYymk+qdS4xmVHiIogTE7ng=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f4f3a708-5786-4005-a9f4-1be0c3193792/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f4f3a708-5786-4005-a9f4-1be0c3193792/Content"
             },
             "36b55819-05ed-4b37-9912-1f31def631da": {
                 LastChangeDateTimeUtc: "2022-06-11T09:00:07.267Z",
@@ -14499,7 +14499,7 @@ export default {
                 SizeInBytes: 28605,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "4vU5++m0r3BZJTvJWwPeZ51fR6U=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/36b55819-05ed-4b37-9912-1f31def631da/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/36b55819-05ed-4b37-9912-1f31def631da/Content"
             },
             "4f61fab4-c2c5-48b0-be39-9b9a53b9f09b": {
                 LastChangeDateTimeUtc: "2022-06-11T09:00:07.362Z",
@@ -14510,7 +14510,7 @@ export default {
                 SizeInBytes: 2747,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "dsxz7yoeLLS8KUW1z/f6P0FOezc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4f61fab4-c2c5-48b0-be39-9b9a53b9f09b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4f61fab4-c2c5-48b0-be39-9b9a53b9f09b/Content"
             },
             "f528c6f3-0217-463a-af80-0e1c31d6b2b4": {
                 LastChangeDateTimeUtc: "2022-06-11T10:00:07.476Z",
@@ -14521,7 +14521,7 @@ export default {
                 SizeInBytes: 78178,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "IkbY537YY7mEHGwi1Svv9TDdPE0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f528c6f3-0217-463a-af80-0e1c31d6b2b4/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f528c6f3-0217-463a-af80-0e1c31d6b2b4/Content"
             },
             "37fbfd6e-f2b7-47ba-9e1f-6d0158f054d8": {
                 LastChangeDateTimeUtc: "2022-06-11T10:00:07.584Z",
@@ -14532,7 +14532,7 @@ export default {
                 SizeInBytes: 3587,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "UrUcrbUxhq3E3UM7w4PSSOiRWdE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/37fbfd6e-f2b7-47ba-9e1f-6d0158f054d8/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/37fbfd6e-f2b7-47ba-9e1f-6d0158f054d8/Content"
             },
             "d91f3fac-ac2c-4572-9e4f-3a0a81ae34de": {
                 LastChangeDateTimeUtc: "2022-06-11T21:00:08.089Z",
@@ -14543,7 +14543,7 @@ export default {
                 SizeInBytes: 243052,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "7i8EmILdvMUaQ7vnuu0gXrjKtr4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d91f3fac-ac2c-4572-9e4f-3a0a81ae34de/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d91f3fac-ac2c-4572-9e4f-3a0a81ae34de/Content"
             },
             "8c08111b-dfcd-4e1b-b71d-7990841d8c70": {
                 LastChangeDateTimeUtc: "2022-06-12T11:00:06.968Z",
@@ -14554,7 +14554,7 @@ export default {
                 SizeInBytes: 2674,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "5zrrT+8F4vyMjBxIVPzxORzUuCc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8c08111b-dfcd-4e1b-b71d-7990841d8c70/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8c08111b-dfcd-4e1b-b71d-7990841d8c70/Content"
             },
             "83574e32-6e38-4425-9b10-7faa97910b88": {
                 LastChangeDateTimeUtc: "2022-06-12T21:00:08.156Z",
@@ -14565,7 +14565,7 @@ export default {
                 SizeInBytes: 51131,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "oHpmRTHJ8PMDy9IoMXg4lfkG2vA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/83574e32-6e38-4425-9b10-7faa97910b88/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/83574e32-6e38-4425-9b10-7faa97910b88/Content"
             },
             "319df517-ffb2-46e6-9af7-b8cfeaa46ffb": {
                 LastChangeDateTimeUtc: "2022-06-12T21:00:08.254Z",
@@ -14576,7 +14576,7 @@ export default {
                 SizeInBytes: 2846,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "sZwVFsfv2zj4VxFD4uC4G/CgXm4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/319df517-ffb2-46e6-9af7-b8cfeaa46ffb/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/319df517-ffb2-46e6-9af7-b8cfeaa46ffb/Content"
             },
             "d606b022-7264-451b-97a2-2a00af822856": {
                 LastChangeDateTimeUtc: "2022-07-29T22:00:09.055Z",
@@ -14587,7 +14587,7 @@ export default {
                 SizeInBytes: 69792,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "oi6suaYByLNgXCOqYAMkLHf6VzU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d606b022-7264-451b-97a2-2a00af822856/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d606b022-7264-451b-97a2-2a00af822856/Content"
             },
             "d5610abc-40ba-4d14-bd9f-4d36902ee135": {
                 LastChangeDateTimeUtc: "2022-06-12T22:00:07.767Z",
@@ -14598,7 +14598,7 @@ export default {
                 SizeInBytes: 2807,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "v2oPzwNieTMq/OO6ruSI7YhRqXk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d5610abc-40ba-4d14-bd9f-4d36902ee135/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d5610abc-40ba-4d14-bd9f-4d36902ee135/Content"
             },
             "ce659286-1263-4b38-a4be-fedfeacdd4a9": {
                 LastChangeDateTimeUtc: "2022-06-13T12:00:08.166Z",
@@ -14609,7 +14609,7 @@ export default {
                 SizeInBytes: 2571,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "2g2RweQN2ABUXZIKvcH7Hvzjpk0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ce659286-1263-4b38-a4be-fedfeacdd4a9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ce659286-1263-4b38-a4be-fedfeacdd4a9/Content"
             },
             "52032876-d10f-459a-a849-25069915c2de": {
                 LastChangeDateTimeUtc: "2022-07-03T13:00:09.255Z",
@@ -14620,7 +14620,7 @@ export default {
                 SizeInBytes: 54601,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "XSAvvnthrzXX6hmO3vqaZq+XOi8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/52032876-d10f-459a-a849-25069915c2de/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/52032876-d10f-459a-a849-25069915c2de/Content"
             },
             "428f4bc0-043b-4276-8b48-f5fc5163f3ab": {
                 LastChangeDateTimeUtc: "2022-06-13T20:00:07.758Z",
@@ -14631,7 +14631,7 @@ export default {
                 SizeInBytes: 54090,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "uNxZz89KzxBaM4a9G4ecXKHeMjs=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/428f4bc0-043b-4276-8b48-f5fc5163f3ab/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/428f4bc0-043b-4276-8b48-f5fc5163f3ab/Content"
             },
             "44fd3177-68e0-4acb-8dc7-4b5555dda79e": {
                 LastChangeDateTimeUtc: "2022-06-13T20:00:07.891Z",
@@ -14642,7 +14642,7 @@ export default {
                 SizeInBytes: 64997,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "x88b+NSzL6N7zeX5IqvopFomJmw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/44fd3177-68e0-4acb-8dc7-4b5555dda79e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/44fd3177-68e0-4acb-8dc7-4b5555dda79e/Content"
             },
             "9574b83a-f7fb-4754-bbaa-ec7a9d39ea55": {
                 LastChangeDateTimeUtc: "2022-06-13T20:00:07.900Z",
@@ -14653,7 +14653,7 @@ export default {
                 SizeInBytes: 2216,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "n2I0a8os/kOkmUpSwg1hItOm9bI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9574b83a-f7fb-4754-bbaa-ec7a9d39ea55/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9574b83a-f7fb-4754-bbaa-ec7a9d39ea55/Content"
             },
             "bd435af1-1ba5-4732-9168-13d72001631b": {
                 LastChangeDateTimeUtc: "2022-06-13T20:00:07.917Z",
@@ -14664,7 +14664,7 @@ export default {
                 SizeInBytes: 50566,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "XteqnbSTAhnqhnpm6HrF20ke6rA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bd435af1-1ba5-4732-9168-13d72001631b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bd435af1-1ba5-4732-9168-13d72001631b/Content"
             },
             "e95edc0e-fb67-4d09-bdc2-9c9a376b596e": {
                 LastChangeDateTimeUtc: "2022-06-14T09:00:08.035Z",
@@ -14675,7 +14675,7 @@ export default {
                 SizeInBytes: 86820,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "eEubEL5EwFfLv95KWy8FhNau1yo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e95edc0e-fb67-4d09-bdc2-9c9a376b596e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e95edc0e-fb67-4d09-bdc2-9c9a376b596e/Content"
             },
             "fed21ff6-f429-4a3a-af1b-b20da91ecbe1": {
                 LastChangeDateTimeUtc: "2022-06-14T09:00:08.166Z",
@@ -14686,7 +14686,7 @@ export default {
                 SizeInBytes: 1966,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ZYVtBHLu/tJxC0DX7djAXLo8FNA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fed21ff6-f429-4a3a-af1b-b20da91ecbe1/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fed21ff6-f429-4a3a-af1b-b20da91ecbe1/Content"
             },
             "df665938-cbff-4110-b84a-fb74b7e2cf9b": {
                 LastChangeDateTimeUtc: "2022-06-14T09:00:08.232Z",
@@ -14697,7 +14697,7 @@ export default {
                 SizeInBytes: 171448,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Dn55ojjL/r6WFemf9qE95VKbpBc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/df665938-cbff-4110-b84a-fb74b7e2cf9b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/df665938-cbff-4110-b84a-fb74b7e2cf9b/Content"
             },
             "694f8fd4-3ef4-4d9f-be31-8df7b30b60f9": {
                 LastChangeDateTimeUtc: "2022-06-14T13:00:07.830Z",
@@ -14708,7 +14708,7 @@ export default {
                 SizeInBytes: 32616,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ugJfLTjTEYjb8EtBXPXSkuoCzWo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/694f8fd4-3ef4-4d9f-be31-8df7b30b60f9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/694f8fd4-3ef4-4d9f-be31-8df7b30b60f9/Content"
             },
             "dc007515-b4ee-488e-956d-3862174836ee": {
                 LastChangeDateTimeUtc: "2022-06-14T13:00:07.947Z",
@@ -14719,7 +14719,7 @@ export default {
                 SizeInBytes: 3349,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "P/OP8U1Er9VNuWwO4IWncj2zNFQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/dc007515-b4ee-488e-956d-3862174836ee/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/dc007515-b4ee-488e-956d-3862174836ee/Content"
             },
             "cba7b456-6a85-464f-98af-502c7a2f8148": {
                 LastChangeDateTimeUtc: "2022-06-14T13:00:07.965Z",
@@ -14730,7 +14730,7 @@ export default {
                 SizeInBytes: 43603,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Im5koj7+NnFdUMeBvSmzF8lNpSE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cba7b456-6a85-464f-98af-502c7a2f8148/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cba7b456-6a85-464f-98af-502c7a2f8148/Content"
             },
             "5a0223d2-9f93-4e5e-90d4-639156d6894c": {
                 LastChangeDateTimeUtc: "2022-06-14T13:00:08.108Z",
@@ -14741,7 +14741,7 @@ export default {
                 SizeInBytes: 66608,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "vLDU7zEXsRqu6JIDKHenz7gvzKE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5a0223d2-9f93-4e5e-90d4-639156d6894c/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5a0223d2-9f93-4e5e-90d4-639156d6894c/Content"
             },
             "ca8cd72c-9d04-4bc5-8b19-d00d4c888e2c": {
                 LastChangeDateTimeUtc: "2022-06-14T13:00:08.115Z",
@@ -14752,7 +14752,7 @@ export default {
                 SizeInBytes: 3435,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "YBVIoo5d2MFQe+gtaoUvkiLBX4w=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ca8cd72c-9d04-4bc5-8b19-d00d4c888e2c/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ca8cd72c-9d04-4bc5-8b19-d00d4c888e2c/Content"
             },
             "c6ae8b4c-af52-465b-b616-5448c38ed6e9": {
                 LastChangeDateTimeUtc: "2022-06-14T14:00:06.913Z",
@@ -14763,7 +14763,7 @@ export default {
                 SizeInBytes: 46902,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "BeV37tfWsheRkylua8f+/sH/7go=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6ae8b4c-af52-465b-b616-5448c38ed6e9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6ae8b4c-af52-465b-b616-5448c38ed6e9/Content"
             },
             "604c9e42-4de4-4e8d-a58e-d8ee1908213d": {
                 LastChangeDateTimeUtc: "2022-06-14T14:00:07.023Z",
@@ -14774,7 +14774,7 @@ export default {
                 SizeInBytes: 3324,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "e3GlsBHiQk101gwi/VNS4bCknFY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/604c9e42-4de4-4e8d-a58e-d8ee1908213d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/604c9e42-4de4-4e8d-a58e-d8ee1908213d/Content"
             },
             "755421d6-1ec4-4766-b1fb-9e6d8090c0fb": {
                 LastChangeDateTimeUtc: "2022-06-14T14:00:07.039Z",
@@ -14785,7 +14785,7 @@ export default {
                 SizeInBytes: 71189,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "sZ8MZcENw3+US82edGW72lf6f2w=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/755421d6-1ec4-4766-b1fb-9e6d8090c0fb/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/755421d6-1ec4-4766-b1fb-9e6d8090c0fb/Content"
             },
             "63aa670a-2491-4fdc-95cc-706b0e1eacad": {
                 LastChangeDateTimeUtc: "2022-06-14T16:00:08.248Z",
@@ -14796,7 +14796,7 @@ export default {
                 SizeInBytes: 89338,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "a3B9FVTvX1veqG2wIiJWrvZausc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63aa670a-2491-4fdc-95cc-706b0e1eacad/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63aa670a-2491-4fdc-95cc-706b0e1eacad/Content"
             },
             "d35051a5-55ef-4264-9729-79147ac61a74": {
                 LastChangeDateTimeUtc: "2022-06-14T16:00:08.353Z",
@@ -14807,7 +14807,7 @@ export default {
                 SizeInBytes: 2169,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ychN/L1Y4KmdtGeH65CmxpS51VI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d35051a5-55ef-4264-9729-79147ac61a74/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d35051a5-55ef-4264-9729-79147ac61a74/Content"
             },
             "b82151c2-d274-4206-864f-042f4cf47f45": {
                 LastChangeDateTimeUtc: "2022-06-16T12:00:07.853Z",
@@ -14818,7 +14818,7 @@ export default {
                 SizeInBytes: 45636,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "k8fcM/BdFSf1Cm4LQzD+PVe0GPo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b82151c2-d274-4206-864f-042f4cf47f45/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b82151c2-d274-4206-864f-042f4cf47f45/Content"
             },
             "9822c245-2038-44cc-afeb-8650502ccd41": {
                 LastChangeDateTimeUtc: "2022-06-16T12:00:07.994Z",
@@ -14829,7 +14829,7 @@ export default {
                 SizeInBytes: 3203,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "PBOIvsgzmqIni54kh0xu9S0Q14o=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9822c245-2038-44cc-afeb-8650502ccd41/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9822c245-2038-44cc-afeb-8650502ccd41/Content"
             },
             "9d24a863-4b7e-4194-b0b1-f6d325e22fb3": {
                 LastChangeDateTimeUtc: "2022-06-16T12:00:08.130Z",
@@ -14840,7 +14840,7 @@ export default {
                 SizeInBytes: 459292,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "IAjRGinBvmxazCZK6Op9Dw+mNFM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d24a863-4b7e-4194-b0b1-f6d325e22fb3/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d24a863-4b7e-4194-b0b1-f6d325e22fb3/Content"
             },
             "102ba33a-82a9-4250-aff2-c36f163004ef": {
                 LastChangeDateTimeUtc: "2022-06-17T10:00:08.258Z",
@@ -14851,7 +14851,7 @@ export default {
                 SizeInBytes: 3245,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "LIXQHp2M+/XQUBTl0KzF5/7XvDA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/102ba33a-82a9-4250-aff2-c36f163004ef/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/102ba33a-82a9-4250-aff2-c36f163004ef/Content"
             },
             "6bcba7d2-71b7-4d55-8d17-08082bbacf5b": {
                 LastChangeDateTimeUtc: "2022-06-30T17:00:08.654Z",
@@ -14862,7 +14862,7 @@ export default {
                 SizeInBytes: 3278,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "qrqT0Caxhjt59/n9oYhJQ5EsLqI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6bcba7d2-71b7-4d55-8d17-08082bbacf5b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6bcba7d2-71b7-4d55-8d17-08082bbacf5b/Content"
             },
             "8bc8741b-e274-4620-b983-7a323f022f30": {
                 LastChangeDateTimeUtc: "2022-06-19T14:00:08.178Z",
@@ -14873,7 +14873,7 @@ export default {
                 SizeInBytes: 46109,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "oVmDUaNPggRnXIIA/cl0YnB7m+c=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8bc8741b-e274-4620-b983-7a323f022f30/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8bc8741b-e274-4620-b983-7a323f022f30/Content"
             },
             "13c2ffcc-8b6c-40c8-bc2e-56bdf966f8b3": {
                 LastChangeDateTimeUtc: "2022-06-19T14:00:08.297Z",
@@ -14884,7 +14884,7 @@ export default {
                 SizeInBytes: 2141,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "L0jTFLYSH/GQLRrzCXryDb8vGSU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/13c2ffcc-8b6c-40c8-bc2e-56bdf966f8b3/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/13c2ffcc-8b6c-40c8-bc2e-56bdf966f8b3/Content"
             },
             "d0cedbfb-1aa3-412c-9bd8-565507a5f8ec": {
                 LastChangeDateTimeUtc: "2022-06-19T14:00:08.315Z",
@@ -14895,7 +14895,7 @@ export default {
                 SizeInBytes: 46692,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "rixdRfQMG4TogQTqeplaL8BbGn4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d0cedbfb-1aa3-412c-9bd8-565507a5f8ec/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d0cedbfb-1aa3-412c-9bd8-565507a5f8ec/Content"
             },
             "636fc12a-ddb3-4e70-a893-50c6e9aad491": {
                 LastChangeDateTimeUtc: "2022-06-20T16:00:08.504Z",
@@ -14906,7 +14906,7 @@ export default {
                 SizeInBytes: 62092,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "qK9/EiODjWEmzswxRhY41mfHlzE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/636fc12a-ddb3-4e70-a893-50c6e9aad491/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/636fc12a-ddb3-4e70-a893-50c6e9aad491/Content"
             },
             "f592e57a-2c32-48a1-bba8-74546717f9ac": {
                 LastChangeDateTimeUtc: "2022-06-20T16:00:08.618Z",
@@ -14917,7 +14917,7 @@ export default {
                 SizeInBytes: 2896,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "1GATaeUH2qIlnCEwUBgLvZJaXnk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f592e57a-2c32-48a1-bba8-74546717f9ac/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f592e57a-2c32-48a1-bba8-74546717f9ac/Content"
             },
             "278f6cba-7a3f-41b6-8976-7f83e193162a": {
                 LastChangeDateTimeUtc: "2022-06-20T16:00:08.637Z",
@@ -14928,7 +14928,7 @@ export default {
                 SizeInBytes: 68693,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "hrsR61ue+TA21UobcN+hWdO/Gt0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/278f6cba-7a3f-41b6-8976-7f83e193162a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/278f6cba-7a3f-41b6-8976-7f83e193162a/Content"
             },
             "2ed68722-0cfd-4992-944f-612439f3eeba": {
                 LastChangeDateTimeUtc: "2022-06-22T21:00:07.872Z",
@@ -14939,7 +14939,7 @@ export default {
                 SizeInBytes: 2918,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "BgaznBRC8ewHBFTxJZ+5XPtpejc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ed68722-0cfd-4992-944f-612439f3eeba/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ed68722-0cfd-4992-944f-612439f3eeba/Content"
             },
             "d32e5a6c-a792-4bd7-ae1a-844b2b927c40": {
                 LastChangeDateTimeUtc: "2022-06-22T21:00:08.056Z",
@@ -14950,7 +14950,7 @@ export default {
                 SizeInBytes: 154266,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "fRXkWVt+uB/1pS/jFzhdYl0pq+I=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d32e5a6c-a792-4bd7-ae1a-844b2b927c40/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d32e5a6c-a792-4bd7-ae1a-844b2b927c40/Content"
             },
             "2513aa0a-48a0-49cf-807e-8a57cf5306f8": {
                 LastChangeDateTimeUtc: "2018-08-10T18:24:52.851Z",
@@ -14961,7 +14961,7 @@ export default {
                 SizeInBytes: 127026,
                 MimeType: "image/png",
                 ContentHashSha1: "E+TY2arRBNG0vRZsgt4n5Jus/O4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2513aa0a-48a0-49cf-807e-8a57cf5306f8/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2513aa0a-48a0-49cf-807e-8a57cf5306f8/Content"
             },
             "7d08e513-23e0-404d-a56a-94171a3107d8": {
                 LastChangeDateTimeUtc: "2018-06-05T07:30:26.042Z",
@@ -14972,7 +14972,7 @@ export default {
                 SizeInBytes: 108353,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "XE9A9qfEs4TW3fWX9xxvgYmWH6A=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d08e513-23e0-404d-a56a-94171a3107d8/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d08e513-23e0-404d-a56a-94171a3107d8/Content"
             },
             "0cb0251e-3947-4474-a66d-ff90153c4b9a": {
                 LastChangeDateTimeUtc: "2018-06-05T07:30:26.074Z",
@@ -14983,7 +14983,7 @@ export default {
                 SizeInBytes: 228857,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "gh1Ief2wOd+DjII47adnR2E6gDk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0cb0251e-3947-4474-a66d-ff90153c4b9a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0cb0251e-3947-4474-a66d-ff90153c4b9a/Content"
             },
             "8ae7d323-b56d-4155-8a88-6b418bcfd057": {
                 LastChangeDateTimeUtc: "2018-06-05T07:30:26.058Z",
@@ -14994,7 +14994,7 @@ export default {
                 SizeInBytes: 57888,
                 MimeType: "image/png",
                 ContentHashSha1: "u7Ih+dL/QkQf/L5TdUQuQqSirLw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8ae7d323-b56d-4155-8a88-6b418bcfd057/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8ae7d323-b56d-4155-8a88-6b418bcfd057/Content"
             },
             "fe6f5b5d-d29f-4bfe-b533-7d90f9bc5ec9": {
                 LastChangeDateTimeUtc: "2022-07-11T16:09:48.686Z",
@@ -15005,7 +15005,7 @@ export default {
                 SizeInBytes: 118581,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "LSn+1vxWeehpTwGvhDfSYcC0mdU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fe6f5b5d-d29f-4bfe-b533-7d90f9bc5ec9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fe6f5b5d-d29f-4bfe-b533-7d90f9bc5ec9/Content"
             },
             "3b9d4776-4ffc-4d56-8cb2-103aec41a904": {
                 LastChangeDateTimeUtc: "2022-07-03T11:44:01.644Z",
@@ -15016,7 +15016,7 @@ export default {
                 SizeInBytes: 185471,
                 MimeType: "image/png",
                 ContentHashSha1: "Ef9QukwAZl1pOkNVQmI4vBAY4qU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3b9d4776-4ffc-4d56-8cb2-103aec41a904/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3b9d4776-4ffc-4d56-8cb2-103aec41a904/Content"
             },
             "2ffe3196-6eba-439c-8153-be15baeb2eb6": {
                 LastChangeDateTimeUtc: "2018-08-10T18:24:33.364Z",
@@ -15027,7 +15027,7 @@ export default {
                 SizeInBytes: 15287,
                 MimeType: "image/png",
                 ContentHashSha1: "FduargekQ9GSN19jB4iDYf16+Gk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ffe3196-6eba-439c-8153-be15baeb2eb6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ffe3196-6eba-439c-8153-be15baeb2eb6/Content"
             },
             "e1f118ba-9530-4e14-aad0-8c6af1a087bf": {
                 LastChangeDateTimeUtc: "2018-08-10T18:24:05.175Z",
@@ -15038,7 +15038,7 @@ export default {
                 SizeInBytes: 44053,
                 MimeType: "image/png",
                 ContentHashSha1: "kOlGja2WeBLQYYrmsUO95+AINBU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e1f118ba-9530-4e14-aad0-8c6af1a087bf/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e1f118ba-9530-4e14-aad0-8c6af1a087bf/Content"
             },
             "37bfdabe-796d-43ab-b69e-b507c1322da2": {
                 LastChangeDateTimeUtc: "2018-06-05T07:30:25.927Z",
@@ -15049,7 +15049,7 @@ export default {
                 SizeInBytes: 274913,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "vCTgNnfNpdF5T+fDpIVcUcVV+dQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/37bfdabe-796d-43ab-b69e-b507c1322da2/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/37bfdabe-796d-43ab-b69e-b507c1322da2/Content"
             },
             "5605b5dd-4270-48b3-b5c1-842c878ec807": {
                 LastChangeDateTimeUtc: "2022-07-11T16:10:25.271Z",
@@ -15060,7 +15060,7 @@ export default {
                 SizeInBytes: 53435,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "owpH9NioFzrkZ/+VpSAsHIb/B2k=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5605b5dd-4270-48b3-b5c1-842c878ec807/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5605b5dd-4270-48b3-b5c1-842c878ec807/Content"
             },
             "f1c6bed9-4ee8-4699-b01a-9aad9143d828": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:08.039Z",
@@ -15071,7 +15071,7 @@ export default {
                 SizeInBytes: 40096,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "PLnHY9TPQJSmxV6mpB7VWDLr0i4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f1c6bed9-4ee8-4699-b01a-9aad9143d828/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f1c6bed9-4ee8-4699-b01a-9aad9143d828/Content"
             },
             "e61fe4c6-804c-4597-b404-76f5abcbe940": {
                 LastChangeDateTimeUtc: "2022-06-30T15:00:08.062Z",
@@ -15082,7 +15082,7 @@ export default {
                 SizeInBytes: 2119,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "JfB8Y9S4kIWdyutO77PUIbd9fu8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e61fe4c6-804c-4597-b404-76f5abcbe940/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e61fe4c6-804c-4597-b404-76f5abcbe940/Content"
             },
             "6315c72e-1102-48b6-926f-301fffc42b5b": {
                 LastChangeDateTimeUtc: "2022-06-23T19:00:07.506Z",
@@ -15093,7 +15093,7 @@ export default {
                 SizeInBytes: 52379,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "r2HbmxJ2UpS85N54Q5c7Q6pEFpc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6315c72e-1102-48b6-926f-301fffc42b5b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6315c72e-1102-48b6-926f-301fffc42b5b/Content"
             },
             "88248d5f-3e87-4997-959a-7ec05a7cc33a": {
                 LastChangeDateTimeUtc: "2022-06-23T20:00:08.466Z",
@@ -15104,7 +15104,7 @@ export default {
                 SizeInBytes: 355855,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ISTnlbBZ5u6gL7wk2fYyd25GKUs=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/88248d5f-3e87-4997-959a-7ec05a7cc33a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/88248d5f-3e87-4997-959a-7ec05a7cc33a/Content"
             },
             "0f6f4945-bf36-4259-9e94-9ac0ab2fba38": {
                 LastChangeDateTimeUtc: "2022-06-24T13:00:07.442Z",
@@ -15115,7 +15115,7 @@ export default {
                 SizeInBytes: 37406,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "q/5y3ery2uncjHm44pdkfXEbQP0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0f6f4945-bf36-4259-9e94-9ac0ab2fba38/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0f6f4945-bf36-4259-9e94-9ac0ab2fba38/Content"
             },
             "f8adc2ed-cb09-43a6-a71f-3d9d1c043b35": {
                 LastChangeDateTimeUtc: "2022-06-24T13:00:07.571Z",
@@ -15126,7 +15126,7 @@ export default {
                 SizeInBytes: 82080,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "fBNfUsCUpjtQbiOah9eZBEFsSrg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f8adc2ed-cb09-43a6-a71f-3d9d1c043b35/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f8adc2ed-cb09-43a6-a71f-3d9d1c043b35/Content"
             },
             "a2655f2e-2c94-442e-ac64-b32e68b87632": {
                 LastChangeDateTimeUtc: "2022-06-24T21:00:07.451Z",
@@ -15137,7 +15137,7 @@ export default {
                 SizeInBytes: 24217,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "WHYbCcjftJB3qrFfK9CElO8y4XA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a2655f2e-2c94-442e-ac64-b32e68b87632/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a2655f2e-2c94-442e-ac64-b32e68b87632/Content"
             },
             "7d847042-8c53-4a3e-9150-62f5ed0aa5b5": {
                 LastChangeDateTimeUtc: "2022-06-24T21:00:07.579Z",
@@ -15148,7 +15148,7 @@ export default {
                 SizeInBytes: 72588,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "wD5eM85Ail8EOo9x1iLorUw/VFI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d847042-8c53-4a3e-9150-62f5ed0aa5b5/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d847042-8c53-4a3e-9150-62f5ed0aa5b5/Content"
             },
             "ac7a0fe3-df02-4787-b170-958325041872": {
                 LastChangeDateTimeUtc: "2022-06-25T02:00:08.183Z",
@@ -15159,7 +15159,7 @@ export default {
                 SizeInBytes: 104230,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "bp648jdGEC6ltHY7ce2nzFqachY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac7a0fe3-df02-4787-b170-958325041872/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac7a0fe3-df02-4787-b170-958325041872/Content"
             },
             "4c404a31-21be-4b69-8154-d37f3d1b3c26": {
                 LastChangeDateTimeUtc: "2022-06-26T22:00:08.356Z",
@@ -15170,7 +15170,7 @@ export default {
                 SizeInBytes: 42675,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "21SrZ/OEnMOSxlqPAl28pFz1JOQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4c404a31-21be-4b69-8154-d37f3d1b3c26/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4c404a31-21be-4b69-8154-d37f3d1b3c26/Content"
             },
             "6795d3c8-51d3-436a-b348-680482a71d36": {
                 LastChangeDateTimeUtc: "2022-06-26T22:00:08.459Z",
@@ -15181,7 +15181,7 @@ export default {
                 SizeInBytes: 2726,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "QefthOG7vG6JFfdXn3TOr5p7ueY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6795d3c8-51d3-436a-b348-680482a71d36/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6795d3c8-51d3-436a-b348-680482a71d36/Content"
             },
             "0c3a4247-1a46-40c6-b085-e7aeb45ce44c": {
                 LastChangeDateTimeUtc: "2022-06-26T22:00:08.467Z",
@@ -15192,7 +15192,7 @@ export default {
                 SizeInBytes: 16009,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "FE+T1auTC1G3G6KXyKtWrYgt3kE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0c3a4247-1a46-40c6-b085-e7aeb45ce44c/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0c3a4247-1a46-40c6-b085-e7aeb45ce44c/Content"
             },
             "7d0c548e-a816-40fc-9d88-8b4640788da4": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.437Z",
@@ -15203,7 +15203,7 @@ export default {
                 SizeInBytes: 45789,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "AWxXt9n/ee+oBFk7WLey2d59p84=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d0c548e-a816-40fc-9d88-8b4640788da4/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d0c548e-a816-40fc-9d88-8b4640788da4/Content"
             },
             "3cfffda5-3e25-4cef-9606-ecac4c8d0c1b": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.536Z",
@@ -15214,7 +15214,7 @@ export default {
                 SizeInBytes: 2383,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "9CDqe+RWfRWxX6K/aKelj/DqqQ0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3cfffda5-3e25-4cef-9606-ecac4c8d0c1b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3cfffda5-3e25-4cef-9606-ecac4c8d0c1b/Content"
             },
             "47b4dd9d-c424-4fe1-9fca-e75e51cb0d31": {
                 LastChangeDateTimeUtc: "2022-06-27T09:00:07.549Z",
@@ -15225,7 +15225,7 @@ export default {
                 SizeInBytes: 47889,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "xgBDqIWNZoFSSUlQ7cyS7cbAtpw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/47b4dd9d-c424-4fe1-9fca-e75e51cb0d31/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/47b4dd9d-c424-4fe1-9fca-e75e51cb0d31/Content"
             },
             "1b4ef6b4-1519-4627-846d-e22460ba338b": {
                 LastChangeDateTimeUtc: "2022-06-27T17:00:08.434Z",
@@ -15236,7 +15236,7 @@ export default {
                 SizeInBytes: 26192,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "AXm+8xoZ+EZq1cE5RMdUNCRGGzA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1b4ef6b4-1519-4627-846d-e22460ba338b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1b4ef6b4-1519-4627-846d-e22460ba338b/Content"
             },
             "24ea3d82-c668-4b6c-9c9f-e9f310e6e295": {
                 LastChangeDateTimeUtc: "2022-06-27T17:00:08.854Z",
@@ -15247,7 +15247,7 @@ export default {
                 SizeInBytes: 689885,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "jgbOnZpyh2CGVEXlixJK/jNB414=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/24ea3d82-c668-4b6c-9c9f-e9f310e6e295/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/24ea3d82-c668-4b6c-9c9f-e9f310e6e295/Content"
             },
             "4a3cb0ac-e736-4058-bac7-4830f1828c20": {
                 LastChangeDateTimeUtc: "2022-06-27T17:00:08.883Z",
@@ -15258,7 +15258,7 @@ export default {
                 SizeInBytes: 49351,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ZrloDcQvcXRZjkQEoB7fpZlJdEc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4a3cb0ac-e736-4058-bac7-4830f1828c20/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4a3cb0ac-e736-4058-bac7-4830f1828c20/Content"
             },
             "00c57fce-ed9e-4a14-9983-d829465ca349": {
                 LastChangeDateTimeUtc: "2022-06-28T13:00:07.069Z",
@@ -15269,7 +15269,7 @@ export default {
                 SizeInBytes: 50669,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "rdic4nYs/743idpxqSl/C3dQ7mE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/00c57fce-ed9e-4a14-9983-d829465ca349/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/00c57fce-ed9e-4a14-9983-d829465ca349/Content"
             },
             "9d5d203f-d996-420e-8ca0-cace0fdf2597": {
                 LastChangeDateTimeUtc: "2022-06-28T13:00:07.190Z",
@@ -15280,7 +15280,7 @@ export default {
                 SizeInBytes: 2741,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "XJDK9x9urcOhHOAWCwD07uxTgOc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d5d203f-d996-420e-8ca0-cace0fdf2597/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d5d203f-d996-420e-8ca0-cace0fdf2597/Content"
             },
             "5c3b0ce2-cd77-43b8-877a-31b475a5fad0": {
                 LastChangeDateTimeUtc: "2022-06-28T13:00:07.219Z",
@@ -15291,7 +15291,7 @@ export default {
                 SizeInBytes: 80970,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "cUVMcYstXDEQjteh+WiP6g4cMaI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5c3b0ce2-cd77-43b8-877a-31b475a5fad0/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5c3b0ce2-cd77-43b8-877a-31b475a5fad0/Content"
             },
             "5334e4c5-77e4-4328-b3f2-8bd5efe38793": {
                 LastChangeDateTimeUtc: "2022-06-28T16:00:07.827Z",
@@ -15302,7 +15302,7 @@ export default {
                 SizeInBytes: 59109,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "+lMKg9/7APCa6FgzEtBXDQlGgeI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5334e4c5-77e4-4328-b3f2-8bd5efe38793/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5334e4c5-77e4-4328-b3f2-8bd5efe38793/Content"
             },
             "5ebeb45b-6ef3-4804-a319-48dbec1859a3": {
                 LastChangeDateTimeUtc: "2022-06-28T16:00:07.930Z",
@@ -15313,7 +15313,7 @@ export default {
                 SizeInBytes: 2079,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ICvtVBGcFGQ5Fi/OU28V6/oyhZM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5ebeb45b-6ef3-4804-a319-48dbec1859a3/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5ebeb45b-6ef3-4804-a319-48dbec1859a3/Content"
             },
             "5998068e-cf2b-407f-bdf0-686a99e8279c": {
                 LastChangeDateTimeUtc: "2022-06-28T16:00:07.940Z",
@@ -15324,7 +15324,7 @@ export default {
                 SizeInBytes: 43256,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "2GiXgimN4RBq9YbDZUCwsqnXYMI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5998068e-cf2b-407f-bdf0-686a99e8279c/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5998068e-cf2b-407f-bdf0-686a99e8279c/Content"
             },
             "110f9309-4083-4864-b403-ded7cf634c5e": {
                 LastChangeDateTimeUtc: "2022-06-28T17:00:08.254Z",
@@ -15335,7 +15335,7 @@ export default {
                 SizeInBytes: 25235,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "3X5V8bmwfESVm1VZFEm7MqSmHVk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/110f9309-4083-4864-b403-ded7cf634c5e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/110f9309-4083-4864-b403-ded7cf634c5e/Content"
             },
             "6f63a67c-4411-4e94-8182-8acd7983370b": {
                 LastChangeDateTimeUtc: "2022-07-23T23:00:09.622Z",
@@ -15346,7 +15346,7 @@ export default {
                 SizeInBytes: 373285,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "6W5efxVBT27FQC10yAX1oZSbyGM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6f63a67c-4411-4e94-8182-8acd7983370b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6f63a67c-4411-4e94-8182-8acd7983370b/Content"
             },
             "ecbac4ab-8865-4bff-b48b-04f6d7b74de5": {
                 LastChangeDateTimeUtc: "2022-06-28T18:00:08.507Z",
@@ -15357,7 +15357,7 @@ export default {
                 SizeInBytes: 47564,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "EXR5telVh3H8dhXDwmo2PjMYClk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ecbac4ab-8865-4bff-b48b-04f6d7b74de5/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ecbac4ab-8865-4bff-b48b-04f6d7b74de5/Content"
             },
             "8f97bc57-dea5-4b0f-9a26-2cf214d5a042": {
                 LastChangeDateTimeUtc: "2022-06-28T18:00:08.615Z",
@@ -15368,7 +15368,7 @@ export default {
                 SizeInBytes: 3214,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Vp/897oRpBaz4b09DPXqfPCSxKI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8f97bc57-dea5-4b0f-9a26-2cf214d5a042/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8f97bc57-dea5-4b0f-9a26-2cf214d5a042/Content"
             },
             "f0fd3aa0-a9e9-4f23-b069-82c6f2ca98ac": {
                 LastChangeDateTimeUtc: "2022-06-28T18:00:08.625Z",
@@ -15379,7 +15379,7 @@ export default {
                 SizeInBytes: 61622,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "pKnQT3T5m5gQTqytZOhgj6VVMnA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f0fd3aa0-a9e9-4f23-b069-82c6f2ca98ac/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f0fd3aa0-a9e9-4f23-b069-82c6f2ca98ac/Content"
             },
             "5990b1c9-972e-4db4-aeff-abf16b2ba165": {
                 LastChangeDateTimeUtc: "2022-06-29T06:00:07.970Z",
@@ -15390,7 +15390,7 @@ export default {
                 SizeInBytes: 41407,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "f19bXoDQ6kZ7zEZUxXgG/gG7Xbw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5990b1c9-972e-4db4-aeff-abf16b2ba165/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5990b1c9-972e-4db4-aeff-abf16b2ba165/Content"
             },
             "809cd869-9228-4ee7-803f-4ab5d343bf67": {
                 LastChangeDateTimeUtc: "2022-06-29T06:00:08.095Z",
@@ -15401,7 +15401,7 @@ export default {
                 SizeInBytes: 2618,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "SBh4LCQ8ReIpL31RQ8mS3taRdKc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/809cd869-9228-4ee7-803f-4ab5d343bf67/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/809cd869-9228-4ee7-803f-4ab5d343bf67/Content"
             },
             "cf1b2d9a-b305-4350-a47c-0361dc3563f2": {
                 LastChangeDateTimeUtc: "2022-06-29T10:00:08.583Z",
@@ -15412,7 +15412,7 @@ export default {
                 SizeInBytes: 52250,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "iwRzrFImY2955jMdYJtRkKw/V8M=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cf1b2d9a-b305-4350-a47c-0361dc3563f2/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cf1b2d9a-b305-4350-a47c-0361dc3563f2/Content"
             },
             "e54667dd-4562-4758-a691-0d3ed1859c46": {
                 LastChangeDateTimeUtc: "2022-06-29T10:00:08.691Z",
@@ -15423,7 +15423,7 @@ export default {
                 SizeInBytes: 3419,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "MWXmb+rkzRxRVf4g5wXRVUDKRA0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e54667dd-4562-4758-a691-0d3ed1859c46/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e54667dd-4562-4758-a691-0d3ed1859c46/Content"
             },
             "4610f539-c33f-4982-8981-111ca21b8abc": {
                 LastChangeDateTimeUtc: "2022-06-29T10:00:08.703Z",
@@ -15434,7 +15434,7 @@ export default {
                 SizeInBytes: 64642,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "rUoZr6gRXqc+SaCRjXwQWslJeag=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4610f539-c33f-4982-8981-111ca21b8abc/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4610f539-c33f-4982-8981-111ca21b8abc/Content"
             },
             "83e31d60-1c08-4fa3-b48a-2ddf9b8078f6": {
                 LastChangeDateTimeUtc: "2022-06-30T08:00:08.079Z",
@@ -15445,7 +15445,7 @@ export default {
                 SizeInBytes: 3253,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "TRyN6cnX1t4YysIqKaznr8Y3klU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/83e31d60-1c08-4fa3-b48a-2ddf9b8078f6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/83e31d60-1c08-4fa3-b48a-2ddf9b8078f6/Content"
             },
             "8523a76a-8570-4b7c-a8cf-822bf23766d3": {
                 LastChangeDateTimeUtc: "2022-06-29T16:00:07.310Z",
@@ -15456,7 +15456,7 @@ export default {
                 SizeInBytes: 96249,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "AFssbS1wqrJskf1Ha/d+ut2o9SE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8523a76a-8570-4b7c-a8cf-822bf23766d3/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8523a76a-8570-4b7c-a8cf-822bf23766d3/Content"
             },
             "55c8f2c1-7691-49e6-98a9-237c57b218ee": {
                 LastChangeDateTimeUtc: "2022-06-29T16:00:07.508Z",
@@ -15467,7 +15467,7 @@ export default {
                 SizeInBytes: 80807,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "dsxwhGzdUx1DD9+uO+6sAjEhM68=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/55c8f2c1-7691-49e6-98a9-237c57b218ee/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/55c8f2c1-7691-49e6-98a9-237c57b218ee/Content"
             },
             "4d5da0c0-67f3-4b94-8321-55c5a64c6f89": {
                 LastChangeDateTimeUtc: "2022-06-29T19:00:08.239Z",
@@ -15478,7 +15478,7 @@ export default {
                 SizeInBytes: 50502,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "s0k7C+J1FLchBiYb4y+dk+PNDBk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4d5da0c0-67f3-4b94-8321-55c5a64c6f89/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4d5da0c0-67f3-4b94-8321-55c5a64c6f89/Content"
             },
             "5ae969cd-00e9-49b1-819e-24d71ebfad61": {
                 LastChangeDateTimeUtc: "2022-06-29T19:00:08.444Z",
@@ -15489,7 +15489,7 @@ export default {
                 SizeInBytes: 361274,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "r+mHtbVdKoPDaiCSJX0x1+6ihGQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5ae969cd-00e9-49b1-819e-24d71ebfad61/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5ae969cd-00e9-49b1-819e-24d71ebfad61/Content"
             },
             "4010864f-5477-4468-8217-621f3ec1b8c5": {
                 LastChangeDateTimeUtc: "2022-06-29T19:00:08.459Z",
@@ -15500,7 +15500,7 @@ export default {
                 SizeInBytes: 65136,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "rvIIRVsU95NXcx1Usc3boC6XuRg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4010864f-5477-4468-8217-621f3ec1b8c5/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4010864f-5477-4468-8217-621f3ec1b8c5/Content"
             },
             "b269bb17-66ce-4d10-b534-05b733bba0b2": {
                 LastChangeDateTimeUtc: "2022-06-29T20:00:08.173Z",
@@ -15511,7 +15511,7 @@ export default {
                 SizeInBytes: 97594,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "uJN4rzowo32IvC4zfCyfSx/YX4k=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b269bb17-66ce-4d10-b534-05b733bba0b2/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b269bb17-66ce-4d10-b534-05b733bba0b2/Content"
             },
             "5dd91808-8be1-487b-9372-66e5b375a9e3": {
                 LastChangeDateTimeUtc: "2022-06-29T20:00:08.306Z",
@@ -15522,7 +15522,7 @@ export default {
                 SizeInBytes: 77701,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "YzPq27hwJquEnCRkcnjKQ90r9vk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5dd91808-8be1-487b-9372-66e5b375a9e3/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5dd91808-8be1-487b-9372-66e5b375a9e3/Content"
             },
             "357014e8-cc55-4927-936a-648e17f87b9d": {
                 LastChangeDateTimeUtc: "2022-07-05T21:00:08.953Z",
@@ -15533,7 +15533,7 @@ export default {
                 SizeInBytes: 56511,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "n/ZzofA7JlDB8yRjBESgLnE/8BQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/357014e8-cc55-4927-936a-648e17f87b9d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/357014e8-cc55-4927-936a-648e17f87b9d/Content"
             },
             "22c16723-cdf1-43e2-a884-a02661189d9a": {
                 LastChangeDateTimeUtc: "2022-06-30T09:00:07.710Z",
@@ -15544,7 +15544,7 @@ export default {
                 SizeInBytes: 39180,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Kc2ADoNAAkVOWCurBJcckcjo2Po=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/22c16723-cdf1-43e2-a884-a02661189d9a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/22c16723-cdf1-43e2-a884-a02661189d9a/Content"
             },
             "96b50010-c514-497d-a201-f7fdc19cc648": {
                 LastChangeDateTimeUtc: "2022-06-30T09:00:07.859Z",
@@ -15555,7 +15555,7 @@ export default {
                 SizeInBytes: 50322,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "K4mpDKfoz5yXbnaS5UFaFbuB2hY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/96b50010-c514-497d-a201-f7fdc19cc648/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/96b50010-c514-497d-a201-f7fdc19cc648/Content"
             },
             "a28e5d7a-2f64-459a-8e5d-dc2383b1d0b7": {
                 LastChangeDateTimeUtc: "2022-06-30T09:00:07.884Z",
@@ -15566,7 +15566,7 @@ export default {
                 SizeInBytes: 167243,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "MeeLKJMhr4ugEwbiLOsEpYUAJ0Y=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a28e5d7a-2f64-459a-8e5d-dc2383b1d0b7/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a28e5d7a-2f64-459a-8e5d-dc2383b1d0b7/Content"
             },
             "2e03c53d-0524-4f7f-9ae6-e38634b02339": {
                 LastChangeDateTimeUtc: "2022-06-30T10:00:08.125Z",
@@ -15577,7 +15577,7 @@ export default {
                 SizeInBytes: 39978,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "uD1d5gpWvNe7m//Rk9b1/7ozRIg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2e03c53d-0524-4f7f-9ae6-e38634b02339/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2e03c53d-0524-4f7f-9ae6-e38634b02339/Content"
             },
             "f97fe414-e828-4f0a-9d14-1870c48b053e": {
                 LastChangeDateTimeUtc: "2022-06-30T11:00:08.141Z",
@@ -15588,7 +15588,7 @@ export default {
                 SizeInBytes: 2749,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "PSxXj6QfrJ1WrCADfjxvjs4YtdQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f97fe414-e828-4f0a-9d14-1870c48b053e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f97fe414-e828-4f0a-9d14-1870c48b053e/Content"
             },
             "b899b816-b561-4851-9654-392090e1780d": {
                 LastChangeDateTimeUtc: "2022-06-30T12:00:08.492Z",
@@ -15599,7 +15599,7 @@ export default {
                 SizeInBytes: 1670186,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "J52t0vV2goWf+7wnlLCWU5fNwBE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b899b816-b561-4851-9654-392090e1780d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b899b816-b561-4851-9654-392090e1780d/Content"
             },
             "565e158f-1ce9-49a7-a2c8-e13f025a6bba": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.797Z",
@@ -15610,7 +15610,7 @@ export default {
                 SizeInBytes: 65127,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "oczCRaEKatMFtYrj7rRNeqW6F/k=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/565e158f-1ce9-49a7-a2c8-e13f025a6bba/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/565e158f-1ce9-49a7-a2c8-e13f025a6bba/Content"
             },
             "4691286e-db05-45a8-ac9c-1a2482be6670": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.821Z",
@@ -15621,7 +15621,7 @@ export default {
                 SizeInBytes: 42376,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "xdx9/u9rmjy3Iqtf/d7GYXmPXPM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4691286e-db05-45a8-ac9c-1a2482be6670/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4691286e-db05-45a8-ac9c-1a2482be6670/Content"
             },
             "1c21d262-68d5-4f9f-a8b3-d0cc7f4262aa": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.831Z",
@@ -15632,7 +15632,7 @@ export default {
                 SizeInBytes: 65127,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "oczCRaEKatMFtYrj7rRNeqW6F/k=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1c21d262-68d5-4f9f-a8b3-d0cc7f4262aa/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1c21d262-68d5-4f9f-a8b3-d0cc7f4262aa/Content"
             },
             "0b363075-b2e6-4097-8c93-008c75a37cd5": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.574Z",
@@ -15643,7 +15643,7 @@ export default {
                 SizeInBytes: 85874,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "4d+Ash5/X7A1YTBH0LccrEJyS7M=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0b363075-b2e6-4097-8c93-008c75a37cd5/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0b363075-b2e6-4097-8c93-008c75a37cd5/Content"
             },
             "e827a087-73bb-4c50-b4bb-0fba50cc7ff3": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.695Z",
@@ -15654,7 +15654,7 @@ export default {
                 SizeInBytes: 42248,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "/wDWcv1kxkEDgUmIixAMYz1uQg8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e827a087-73bb-4c50-b4bb-0fba50cc7ff3/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e827a087-73bb-4c50-b4bb-0fba50cc7ff3/Content"
             },
             "bd681b3b-9ae8-4fe4-8e99-b3ecb78a78de": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.735Z",
@@ -15665,7 +15665,7 @@ export default {
                 SizeInBytes: 190085,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "mA65j9aocBdzhz/6q+cFJRAM1J4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bd681b3b-9ae8-4fe4-8e99-b3ecb78a78de/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bd681b3b-9ae8-4fe4-8e99-b3ecb78a78de/Content"
             },
             "541df440-047b-42a1-ba48-621968d23a40": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.961Z",
@@ -15676,7 +15676,7 @@ export default {
                 SizeInBytes: 55520,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "YnjsFJ7Ozx5XsQkQHCiAMFXA5mA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/541df440-047b-42a1-ba48-621968d23a40/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/541df440-047b-42a1-ba48-621968d23a40/Content"
             },
             "36d3e1a0-8f5c-4a3f-818e-2dfc7641e815": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.973Z",
@@ -15687,7 +15687,7 @@ export default {
                 SizeInBytes: 2813,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "4LP7xvVwW6X3ze2CNlX7r+hR8aw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/36d3e1a0-8f5c-4a3f-818e-2dfc7641e815/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/36d3e1a0-8f5c-4a3f-818e-2dfc7641e815/Content"
             },
             "00b23efd-331a-45ae-ba36-f999729ecd64": {
                 LastChangeDateTimeUtc: "2022-06-30T14:00:07.983Z",
@@ -15698,7 +15698,7 @@ export default {
                 SizeInBytes: 79617,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "hkn50a1WlGt8julcsD+9BnE70fE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/00b23efd-331a-45ae-ba36-f999729ecd64/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/00b23efd-331a-45ae-ba36-f999729ecd64/Content"
             },
             "4f943a26-6f76-40b4-956b-d7b359e286e0": {
                 LastChangeDateTimeUtc: "2022-06-30T15:00:07.825Z",
@@ -15709,7 +15709,7 @@ export default {
                 SizeInBytes: 63375,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "l4SrJ/l7AMRtvt80IY9k+nGN7ww=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4f943a26-6f76-40b4-956b-d7b359e286e0/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4f943a26-6f76-40b4-956b-d7b359e286e0/Content"
             },
             "58c7527b-ece3-485d-a5cc-0a19ff15e71a": {
                 LastChangeDateTimeUtc: "2022-06-30T16:00:07.891Z",
@@ -15720,7 +15720,7 @@ export default {
                 SizeInBytes: 25950,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "7lKB5u8alC9hRcGniYGIfNUpzsU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/58c7527b-ece3-485d-a5cc-0a19ff15e71a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/58c7527b-ece3-485d-a5cc-0a19ff15e71a/Content"
             },
             "de5f9efe-e5be-4bdc-a895-44cf5a29e6d0": {
                 LastChangeDateTimeUtc: "2022-06-30T16:00:08.001Z",
@@ -15731,7 +15731,7 @@ export default {
                 SizeInBytes: 3195,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "bArpdAiAerIksSSj8a2tBC8ebVs=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/de5f9efe-e5be-4bdc-a895-44cf5a29e6d0/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/de5f9efe-e5be-4bdc-a895-44cf5a29e6d0/Content"
             },
             "068b6ad3-1589-4991-acf7-f08db9e543e6": {
                 LastChangeDateTimeUtc: "2022-06-30T16:00:08.423Z",
@@ -15742,7 +15742,7 @@ export default {
                 SizeInBytes: 75185,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "aLsLviG7VxfUVfSrZKFcMuDZZGw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/068b6ad3-1589-4991-acf7-f08db9e543e6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/068b6ad3-1589-4991-acf7-f08db9e543e6/Content"
             },
             "76eaa6ab-f72c-4aac-b563-61d04c237cb8": {
                 LastChangeDateTimeUtc: "2022-06-30T17:00:08.224Z",
@@ -15753,7 +15753,7 @@ export default {
                 SizeInBytes: 65904,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "qhozN9Icz/xYiR6sNlz69RXMHBI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/76eaa6ab-f72c-4aac-b563-61d04c237cb8/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/76eaa6ab-f72c-4aac-b563-61d04c237cb8/Content"
             },
             "5e20552b-8bee-4b57-b8da-6aee70b2d322": {
                 LastChangeDateTimeUtc: "2022-06-30T17:00:08.339Z",
@@ -15764,7 +15764,7 @@ export default {
                 SizeInBytes: 3035,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "k/BunYupeVnhTQG/Pw2OpY/HXjU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5e20552b-8bee-4b57-b8da-6aee70b2d322/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/5e20552b-8bee-4b57-b8da-6aee70b2d322/Content"
             },
             "ae469adb-eaba-4320-894f-40eeb1380016": {
                 LastChangeDateTimeUtc: "2022-06-30T17:00:08.372Z",
@@ -15775,7 +15775,7 @@ export default {
                 SizeInBytes: 75378,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "4YdtKozMX6Ds+LrPLSzohUPOB5g=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ae469adb-eaba-4320-894f-40eeb1380016/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ae469adb-eaba-4320-894f-40eeb1380016/Content"
             },
             "c6d6780f-c376-4632-aa5f-a7f6e1fc9011": {
                 LastChangeDateTimeUtc: "2022-06-30T17:00:08.648Z",
@@ -15786,7 +15786,7 @@ export default {
                 SizeInBytes: 51753,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "0cdmrikTf6YyTkWT0Jo73wgYOMM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6d6780f-c376-4632-aa5f-a7f6e1fc9011/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6d6780f-c376-4632-aa5f-a7f6e1fc9011/Content"
             },
             "6bde6424-73f9-493e-ab6e-713c561e79a1": {
                 LastChangeDateTimeUtc: "2022-06-30T19:00:07.742Z",
@@ -15797,7 +15797,7 @@ export default {
                 SizeInBytes: 42955,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "NhdsB83OyJ/oFcy0jlfekJlFgII=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6bde6424-73f9-493e-ab6e-713c561e79a1/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6bde6424-73f9-493e-ab6e-713c561e79a1/Content"
             },
             "2ee61068-e8ed-4f94-bbad-7d2bd2a2b163": {
                 LastChangeDateTimeUtc: "2022-06-30T18:00:08.347Z",
@@ -15808,7 +15808,7 @@ export default {
                 SizeInBytes: 2386,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Zhiwd/UM4q2qIkiiJkapkrjGG9c=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ee61068-e8ed-4f94-bbad-7d2bd2a2b163/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2ee61068-e8ed-4f94-bbad-7d2bd2a2b163/Content"
             },
             "d405bc97-23f8-4368-884f-d1bb17abfb9a": {
                 LastChangeDateTimeUtc: "2022-06-30T18:00:08.614Z",
@@ -15819,7 +15819,7 @@ export default {
                 SizeInBytes: 432366,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "RaZYTgljR0JJachXGnnCOVOASPw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d405bc97-23f8-4368-884f-d1bb17abfb9a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d405bc97-23f8-4368-884f-d1bb17abfb9a/Content"
             },
             "a34fdf9e-e9c5-4d3a-a606-76dc662f4919": {
                 LastChangeDateTimeUtc: "2022-06-30T18:00:08.703Z",
@@ -15830,7 +15830,7 @@ export default {
                 SizeInBytes: 432366,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "RaZYTgljR0JJachXGnnCOVOASPw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a34fdf9e-e9c5-4d3a-a606-76dc662f4919/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a34fdf9e-e9c5-4d3a-a606-76dc662f4919/Content"
             },
             "ac5f3d13-5b07-4aeb-8566-595fc8ffee71": {
                 LastChangeDateTimeUtc: "2022-06-30T18:00:08.759Z",
@@ -15841,7 +15841,7 @@ export default {
                 SizeInBytes: 235253,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "uMS8rj4/L9GK7FFF7FDBSOPYDB0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac5f3d13-5b07-4aeb-8566-595fc8ffee71/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac5f3d13-5b07-4aeb-8566-595fc8ffee71/Content"
             },
             "a90423f7-a359-4f38-9292-69e36cc7189f": {
                 LastChangeDateTimeUtc: "2022-06-30T19:00:07.881Z",
@@ -15852,7 +15852,7 @@ export default {
                 SizeInBytes: 65366,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "iFYhHOzl49dYeiHZ0NZ9hOld6Mk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a90423f7-a359-4f38-9292-69e36cc7189f/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a90423f7-a359-4f38-9292-69e36cc7189f/Content"
             },
             "24ec7b2d-1d46-416e-9c27-c5fc45d826a7": {
                 LastChangeDateTimeUtc: "2022-06-30T21:00:08.807Z",
@@ -15863,7 +15863,7 @@ export default {
                 SizeInBytes: 57202,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "4UJ1uf6BW0NNrJkpwZDeyry9SfQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/24ec7b2d-1d46-416e-9c27-c5fc45d826a7/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/24ec7b2d-1d46-416e-9c27-c5fc45d826a7/Content"
             },
             "26cc1bd1-9747-40c9-9569-a804a781e99a": {
                 LastChangeDateTimeUtc: "2022-06-30T23:00:09.273Z",
@@ -15874,7 +15874,7 @@ export default {
                 SizeInBytes: 2978,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "S05Z+NtI89KogQhWNPcQ4f0GZfg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/26cc1bd1-9747-40c9-9569-a804a781e99a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/26cc1bd1-9747-40c9-9569-a804a781e99a/Content"
             },
             "864f3a34-2767-4b85-9eca-4d5676b74e29": {
                 LastChangeDateTimeUtc: "2022-06-30T21:00:09.181Z",
@@ -15885,7 +15885,7 @@ export default {
                 SizeInBytes: 2144,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "JGOtkqYJfhky75EGrh5geEmcT4A=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/864f3a34-2767-4b85-9eca-4d5676b74e29/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/864f3a34-2767-4b85-9eca-4d5676b74e29/Content"
             },
             "dda421c0-b61d-4b81-a4c6-e682d056c70a": {
                 LastChangeDateTimeUtc: "2022-06-30T21:00:09.190Z",
@@ -15896,7 +15896,7 @@ export default {
                 SizeInBytes: 40009,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ZqJW/R1SywXq9sVy95lzAcVod+A=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/dda421c0-b61d-4b81-a4c6-e682d056c70a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/dda421c0-b61d-4b81-a4c6-e682d056c70a/Content"
             },
             "d86417f9-676b-44f8-8212-ef3b7234cddf": {
                 LastChangeDateTimeUtc: "2022-06-30T21:00:09.290Z",
@@ -15907,7 +15907,7 @@ export default {
                 SizeInBytes: 347338,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "rf/pnCNQygeNpzD/d3E0drHqdZM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d86417f9-676b-44f8-8212-ef3b7234cddf/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d86417f9-676b-44f8-8212-ef3b7234cddf/Content"
             },
             "1a01533a-1c35-427e-8c4a-ef5f25558c19": {
                 LastChangeDateTimeUtc: "2022-06-30T22:00:08.984Z",
@@ -15918,7 +15918,7 @@ export default {
                 SizeInBytes: 78571,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Irns8ILGYjr6ij1A2j8deIJQZu8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1a01533a-1c35-427e-8c4a-ef5f25558c19/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1a01533a-1c35-427e-8c4a-ef5f25558c19/Content"
             },
             "3df537ed-a0ad-476d-8b8f-e6d39ffa6460": {
                 LastChangeDateTimeUtc: "2022-08-09T21:00:09.522Z",
@@ -15929,7 +15929,7 @@ export default {
                 SizeInBytes: 113912,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "MvE1FQgcHU6HnaDf9JwmXoaCOho=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3df537ed-a0ad-476d-8b8f-e6d39ffa6460/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3df537ed-a0ad-476d-8b8f-e6d39ffa6460/Content"
             },
             "d3f36e63-0522-4206-8cda-039dd10e85c1": {
                 LastChangeDateTimeUtc: "2022-07-14T15:00:09.077Z",
@@ -15940,7 +15940,7 @@ export default {
                 SizeInBytes: 83168,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "91qsrx2IbkLO3/nloDU69pBGe/s=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d3f36e63-0522-4206-8cda-039dd10e85c1/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d3f36e63-0522-4206-8cda-039dd10e85c1/Content"
             },
             "e6fa4031-db99-4ba9-a724-03591b476c97": {
                 LastChangeDateTimeUtc: "2022-07-14T15:00:09.092Z",
@@ -15951,7 +15951,7 @@ export default {
                 SizeInBytes: 81550,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "HYWjw6awjUXMON5S4d6DVun331o=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e6fa4031-db99-4ba9-a724-03591b476c97/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e6fa4031-db99-4ba9-a724-03591b476c97/Content"
             },
             "b86dc160-98bb-4aa2-8d60-1fc9ab92c512": {
                 LastChangeDateTimeUtc: "2022-07-01T01:00:08.798Z",
@@ -15962,7 +15962,7 @@ export default {
                 SizeInBytes: 33534,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "Zb9LzhAnuSpqnxvDA29rakeDQg4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b86dc160-98bb-4aa2-8d60-1fc9ab92c512/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b86dc160-98bb-4aa2-8d60-1fc9ab92c512/Content"
             },
             "87cb1854-f8ee-4b1e-9bfd-128a607d75f9": {
                 LastChangeDateTimeUtc: "2022-07-01T04:00:09.289Z",
@@ -15973,7 +15973,7 @@ export default {
                 SizeInBytes: 496054,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "eTGjdYU4Xh4fE3T2Yp3KHC4nM4E=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/87cb1854-f8ee-4b1e-9bfd-128a607d75f9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/87cb1854-f8ee-4b1e-9bfd-128a607d75f9/Content"
             },
             "6e5b7e7d-4c9e-41df-a1c6-71b9124b5b4a": {
                 LastChangeDateTimeUtc: "2022-07-01T04:00:09.472Z",
@@ -15984,7 +15984,7 @@ export default {
                 SizeInBytes: 140922,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "m5RnUJnjfSSTda35QI7eMS0nI+Q=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6e5b7e7d-4c9e-41df-a1c6-71b9124b5b4a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/6e5b7e7d-4c9e-41df-a1c6-71b9124b5b4a/Content"
             },
             "668dcd58-8c8a-4ba2-878a-2c383412199a": {
                 LastChangeDateTimeUtc: "2022-07-01T06:00:09.470Z",
@@ -15995,7 +15995,7 @@ export default {
                 SizeInBytes: 39155,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "c2t/mghMPkG9u0gW5l/Um6RI7bM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/668dcd58-8c8a-4ba2-878a-2c383412199a/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/668dcd58-8c8a-4ba2-878a-2c383412199a/Content"
             },
             "9e83ad9c-e750-48c6-8202-32a97f184d6e": {
                 LastChangeDateTimeUtc: "2022-07-03T13:00:09.113Z",
@@ -16006,7 +16006,7 @@ export default {
                 SizeInBytes: 48014,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "d6ycS2+keMH+DENVflE5bqmG2pQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9e83ad9c-e750-48c6-8202-32a97f184d6e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9e83ad9c-e750-48c6-8202-32a97f184d6e/Content"
             },
             "c4850660-4f47-4947-9626-39c6577dc24c": {
                 LastChangeDateTimeUtc: "2022-07-03T20:00:08.452Z",
@@ -16017,7 +16017,7 @@ export default {
                 SizeInBytes: 33811,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "F04FwvVigpPFwQMJfQjRsFSlqNo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c4850660-4f47-4947-9626-39c6577dc24c/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c4850660-4f47-4947-9626-39c6577dc24c/Content"
             },
             "c76761b1-6342-4fbf-a1f4-a9c7f4db8128": {
                 LastChangeDateTimeUtc: "2022-07-03T20:00:08.546Z",
@@ -16028,7 +16028,7 @@ export default {
                 SizeInBytes: 2544,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "kkRzm/jzSn/kPcDOw9cvU1V1DAs=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c76761b1-6342-4fbf-a1f4-a9c7f4db8128/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c76761b1-6342-4fbf-a1f4-a9c7f4db8128/Content"
             },
             "7fd1ab9d-292d-4939-bb41-4059805f48a5": {
                 LastChangeDateTimeUtc: "2022-07-03T20:00:08.829Z",
@@ -16039,7 +16039,7 @@ export default {
                 SizeInBytes: 48698,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "q8jFi043IWhCOXMuXR2bmczOKb8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7fd1ab9d-292d-4939-bb41-4059805f48a5/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7fd1ab9d-292d-4939-bb41-4059805f48a5/Content"
             },
             "acf8f85c-6c5b-4053-b4a3-50c0198ccf46": {
                 LastChangeDateTimeUtc: "2022-07-03T20:00:08.838Z",
@@ -16050,7 +16050,7 @@ export default {
                 SizeInBytes: 2199,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "yYNTRksytYT0+euaQjw3tlWHk2M=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/acf8f85c-6c5b-4053-b4a3-50c0198ccf46/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/acf8f85c-6c5b-4053-b4a3-50c0198ccf46/Content"
             },
             "2b059b17-9052-4e13-b707-6adc8d7c0f16": {
                 LastChangeDateTimeUtc: "2022-07-04T10:00:07.953Z",
@@ -16061,7 +16061,7 @@ export default {
                 SizeInBytes: 66630,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "3HiYnZ48aPT5aPBUkI+sYqHoQ/Q=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2b059b17-9052-4e13-b707-6adc8d7c0f16/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2b059b17-9052-4e13-b707-6adc8d7c0f16/Content"
             },
             "63ba13dc-2407-4f8a-a19e-e66a9c8383f9": {
                 LastChangeDateTimeUtc: "2022-07-03T21:00:09.092Z",
@@ -16072,7 +16072,7 @@ export default {
                 SizeInBytes: 2934,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "p/YZzE2YXtVwUAJVi30hHgFqg5k=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63ba13dc-2407-4f8a-a19e-e66a9c8383f9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/63ba13dc-2407-4f8a-a19e-e66a9c8383f9/Content"
             },
             "176b1641-c44f-4f7b-9ac7-ecd389505493": {
                 LastChangeDateTimeUtc: "2022-07-03T22:00:08.614Z",
@@ -16083,7 +16083,7 @@ export default {
                 SizeInBytes: 80116,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "MfD0GkPCbps2EyRDzfjK9RNuaSg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/176b1641-c44f-4f7b-9ac7-ecd389505493/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/176b1641-c44f-4f7b-9ac7-ecd389505493/Content"
             },
             "acb1addf-825a-4056-8db3-257024cde2d7": {
                 LastChangeDateTimeUtc: "2022-07-04T07:00:09.645Z",
@@ -16094,7 +16094,7 @@ export default {
                 SizeInBytes: 41051,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "KUQY+w2fsLWRKCvW4H20ZFJQIsQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/acb1addf-825a-4056-8db3-257024cde2d7/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/acb1addf-825a-4056-8db3-257024cde2d7/Content"
             },
             "c6d36390-e705-4f10-ba8f-6e0f5cc9b764": {
                 LastChangeDateTimeUtc: "2022-07-04T08:00:08.505Z",
@@ -16105,7 +16105,7 @@ export default {
                 SizeInBytes: 45165,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ET/AcIiNthoKEQpRN5be4Dgphks=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6d36390-e705-4f10-ba8f-6e0f5cc9b764/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c6d36390-e705-4f10-ba8f-6e0f5cc9b764/Content"
             },
             "bfbcc311-1ae8-4d8f-a314-a068c379cd52": {
                 LastChangeDateTimeUtc: "2022-07-04T12:00:08.718Z",
@@ -16116,7 +16116,7 @@ export default {
                 SizeInBytes: 79127,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "i3O1vofavysDOUehg9n4buJIoow=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bfbcc311-1ae8-4d8f-a314-a068c379cd52/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bfbcc311-1ae8-4d8f-a314-a068c379cd52/Content"
             },
             "56ab369a-1551-49a5-81e1-cc7b1971975e": {
                 LastChangeDateTimeUtc: "2022-07-04T18:00:08.320Z",
@@ -16127,7 +16127,7 @@ export default {
                 SizeInBytes: 48730,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "+M5i2FxUvyKZfMW3/EnimnuJSAY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/56ab369a-1551-49a5-81e1-cc7b1971975e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/56ab369a-1551-49a5-81e1-cc7b1971975e/Content"
             },
             "32ea1591-3ae9-4532-850e-14dcd45427bb": {
                 LastChangeDateTimeUtc: "2022-07-04T19:00:09.548Z",
@@ -16138,7 +16138,7 @@ export default {
                 SizeInBytes: 42463,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "T46rxnrujMFFTdZ6RgWXAb4e6Sc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/32ea1591-3ae9-4532-850e-14dcd45427bb/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/32ea1591-3ae9-4532-850e-14dcd45427bb/Content"
             },
             "ffd95bda-b0c5-4a49-b0b2-7bd1678cee41": {
                 LastChangeDateTimeUtc: "2022-07-04T19:00:09.653Z",
@@ -16149,7 +16149,7 @@ export default {
                 SizeInBytes: 2676,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "NnpaDujcOlg3kk9MJ+w8otlNUiI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ffd95bda-b0c5-4a49-b0b2-7bd1678cee41/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ffd95bda-b0c5-4a49-b0b2-7bd1678cee41/Content"
             },
             "41bbbe45-3701-4d53-8dce-c6e8795dfa3e": {
                 LastChangeDateTimeUtc: "2022-07-04T20:00:09.189Z",
@@ -16160,7 +16160,7 @@ export default {
                 SizeInBytes: 48577,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "AoAH3gBKA1c8qWTrWKXtABWnRk4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/41bbbe45-3701-4d53-8dce-c6e8795dfa3e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/41bbbe45-3701-4d53-8dce-c6e8795dfa3e/Content"
             },
             "08021aaa-9b64-46c1-a33d-2f7f1ccb30d4": {
                 LastChangeDateTimeUtc: "2022-07-04T20:00:09.300Z",
@@ -16171,7 +16171,7 @@ export default {
                 SizeInBytes: 2406,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "xATzs8E6mTHn7P+hBpy6f1klyFs=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/08021aaa-9b64-46c1-a33d-2f7f1ccb30d4/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/08021aaa-9b64-46c1-a33d-2f7f1ccb30d4/Content"
             },
             "3da397d7-7ff9-4ed4-ac6c-5c9a94e51f1d": {
                 LastChangeDateTimeUtc: "2022-08-13T21:00:09.814Z",
@@ -16182,7 +16182,7 @@ export default {
                 SizeInBytes: 65082,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "1weMV1UcZ5INRTLr6B1y11ss7NY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3da397d7-7ff9-4ed4-ac6c-5c9a94e51f1d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3da397d7-7ff9-4ed4-ac6c-5c9a94e51f1d/Content"
             },
             "9a7fea08-7678-4ef6-a064-5fdb548d7936": {
                 LastChangeDateTimeUtc: "2022-07-06T22:00:09.478Z",
@@ -16193,7 +16193,7 @@ export default {
                 SizeInBytes: 61750,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "BckF86WBQhcdISK+fmfkSzg9yQM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9a7fea08-7678-4ef6-a064-5fdb548d7936/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9a7fea08-7678-4ef6-a064-5fdb548d7936/Content"
             },
             "0258d007-5440-403d-bebf-300a6896e923": {
                 LastChangeDateTimeUtc: "2022-07-06T22:00:09.600Z",
@@ -16204,7 +16204,7 @@ export default {
                 SizeInBytes: 58730,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "z5CA3TNatPvsq/PDnkBE08/oxBo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0258d007-5440-403d-bebf-300a6896e923/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0258d007-5440-403d-bebf-300a6896e923/Content"
             },
             "f89cfd12-9378-42ee-8b73-243721bd8305": {
                 LastChangeDateTimeUtc: "2022-07-06T22:00:09.631Z",
@@ -16215,7 +16215,7 @@ export default {
                 SizeInBytes: 159659,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "g0krdOMxGl2XrLCGDaqEaJK6Y1w=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f89cfd12-9378-42ee-8b73-243721bd8305/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f89cfd12-9378-42ee-8b73-243721bd8305/Content"
             },
             "8a56733f-e89b-41b9-8e7a-f27dbfcde8c4": {
                 LastChangeDateTimeUtc: "2022-07-07T10:00:08.998Z",
@@ -16226,7 +16226,7 @@ export default {
                 SizeInBytes: 39648,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "jizdUbwQ5GtutaPFKSHrJNnJaBA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8a56733f-e89b-41b9-8e7a-f27dbfcde8c4/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8a56733f-e89b-41b9-8e7a-f27dbfcde8c4/Content"
             },
             "719f1635-740e-43be-a8d9-cdc624268836": {
                 LastChangeDateTimeUtc: "2022-07-07T09:00:08.588Z",
@@ -16237,7 +16237,7 @@ export default {
                 SizeInBytes: 89023,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "kOClPhZJVYIBY4T6NlvgElDfvhU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/719f1635-740e-43be-a8d9-cdc624268836/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/719f1635-740e-43be-a8d9-cdc624268836/Content"
             },
             "91e04e2d-c6af-4efe-9e3c-2c14477dba02": {
                 LastChangeDateTimeUtc: "2022-07-07T18:00:08.998Z",
@@ -16248,7 +16248,7 @@ export default {
                 SizeInBytes: 91636,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "7e5kfgjrvPYdB436aCN1JEz4xAY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/91e04e2d-c6af-4efe-9e3c-2c14477dba02/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/91e04e2d-c6af-4efe-9e3c-2c14477dba02/Content"
             },
             "8420f0c3-d668-4a1b-ad1a-b5381849da66": {
                 LastChangeDateTimeUtc: "2022-07-07T18:00:09.124Z",
@@ -16259,7 +16259,7 @@ export default {
                 SizeInBytes: 2500,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "yKX8U8JYmZYPik7vAACKopWCCaU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8420f0c3-d668-4a1b-ad1a-b5381849da66/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8420f0c3-d668-4a1b-ad1a-b5381849da66/Content"
             },
             "1957c8a1-41d6-4b2f-9e89-bbdb55dc8c40": {
                 LastChangeDateTimeUtc: "2022-07-07T18:00:09.145Z",
@@ -16270,7 +16270,7 @@ export default {
                 SizeInBytes: 74783,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "lMqpHtVdU7eA0ddKYkDEIC8STTw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1957c8a1-41d6-4b2f-9e89-bbdb55dc8c40/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1957c8a1-41d6-4b2f-9e89-bbdb55dc8c40/Content"
             },
             "45deb6b6-d6d7-41c9-aca6-0683ae24cfea": {
                 LastChangeDateTimeUtc: "2022-07-07T19:00:08.100Z",
@@ -16281,7 +16281,7 @@ export default {
                 SizeInBytes: 94108,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "u5PpILLFtxGH49rYxh17iM5So1k=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45deb6b6-d6d7-41c9-aca6-0683ae24cfea/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45deb6b6-d6d7-41c9-aca6-0683ae24cfea/Content"
             },
             "195f1941-5292-47f4-9f12-2315e05768e2": {
                 LastChangeDateTimeUtc: "2022-07-07T19:00:08.208Z",
@@ -16292,7 +16292,7 @@ export default {
                 SizeInBytes: 2860,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "xMaA6xnDVWZBZVweQx6befr0KFE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/195f1941-5292-47f4-9f12-2315e05768e2/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/195f1941-5292-47f4-9f12-2315e05768e2/Content"
             },
             "fd0489fd-7658-422e-bdff-b96e177b6e8b": {
                 LastChangeDateTimeUtc: "2022-07-07T19:00:08.221Z",
@@ -16303,7 +16303,7 @@ export default {
                 SizeInBytes: 83499,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "hNTFxwfLk0h+PuLgCXSaFnQPkU4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fd0489fd-7658-422e-bdff-b96e177b6e8b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fd0489fd-7658-422e-bdff-b96e177b6e8b/Content"
             },
             "2f7e4970-5113-41d5-ac62-7b06e7429506": {
                 LastChangeDateTimeUtc: "2022-07-08T12:00:07.962Z",
@@ -16314,7 +16314,7 @@ export default {
                 SizeInBytes: 76828,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "VCQOl8mDElq4Id8oMvy/HWrgXv8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2f7e4970-5113-41d5-ac62-7b06e7429506/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2f7e4970-5113-41d5-ac62-7b06e7429506/Content"
             },
             "cdd77495-787c-4e5f-8647-687e6df9b157": {
                 LastChangeDateTimeUtc: "2022-07-08T12:00:08.119Z",
@@ -16325,7 +16325,7 @@ export default {
                 SizeInBytes: 2927,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "JyGJ0yST/cz28Wa0fL7dOyQkpOE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cdd77495-787c-4e5f-8647-687e6df9b157/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/cdd77495-787c-4e5f-8647-687e6df9b157/Content"
             },
             "45add9a7-7112-4a05-8371-46052112a1f6": {
                 LastChangeDateTimeUtc: "2022-07-08T12:00:08.131Z",
@@ -16336,7 +16336,7 @@ export default {
                 SizeInBytes: 74989,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "apZbUUS0aNTItM7dxa7or6vTH7U=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45add9a7-7112-4a05-8371-46052112a1f6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/45add9a7-7112-4a05-8371-46052112a1f6/Content"
             },
             "20bd09c5-59e0-4015-b180-50fc45c8046b": {
                 LastChangeDateTimeUtc: "2022-07-10T18:00:09.288Z",
@@ -16347,7 +16347,7 @@ export default {
                 SizeInBytes: 27303,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "67wkkERmN3DTqgjEWEecF7+/sX4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/20bd09c5-59e0-4015-b180-50fc45c8046b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/20bd09c5-59e0-4015-b180-50fc45c8046b/Content"
             },
             "e0b5f135-ecd7-4dab-96c0-f8c892085c5e": {
                 LastChangeDateTimeUtc: "2022-07-10T18:00:09.381Z",
@@ -16358,7 +16358,7 @@ export default {
                 SizeInBytes: 2409,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "sFmQ2IXn6qKHLE6bXMaMSXrZdsM=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e0b5f135-ecd7-4dab-96c0-f8c892085c5e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e0b5f135-ecd7-4dab-96c0-f8c892085c5e/Content"
             },
             "3c821c21-e1e5-4eb5-bf23-7fd69e11c681": {
                 LastChangeDateTimeUtc: "2022-07-11T12:00:08.951Z",
@@ -16369,7 +16369,7 @@ export default {
                 SizeInBytes: 41193,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "jKbt3QDAtZCA0XpJ+xzbXLbAhZ0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3c821c21-e1e5-4eb5-bf23-7fd69e11c681/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3c821c21-e1e5-4eb5-bf23-7fd69e11c681/Content"
             },
             "c7309031-481f-41a7-b581-3edceb0f8b27": {
                 LastChangeDateTimeUtc: "2022-07-11T12:00:09.061Z",
@@ -16380,7 +16380,7 @@ export default {
                 SizeInBytes: 1889,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "0S6pNVAFbvENlcPTrx8wSUuQyg0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c7309031-481f-41a7-b581-3edceb0f8b27/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/c7309031-481f-41a7-b581-3edceb0f8b27/Content"
             },
             "90b82aac-abcb-4e99-85f7-7b7f995516fc": {
                 LastChangeDateTimeUtc: "2022-07-11T12:00:09.074Z",
@@ -16391,7 +16391,7 @@ export default {
                 SizeInBytes: 70087,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "4T+Cw5utuW9UDgkaT/EvcH7UT0E=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/90b82aac-abcb-4e99-85f7-7b7f995516fc/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/90b82aac-abcb-4e99-85f7-7b7f995516fc/Content"
             },
             "d465f419-c7d7-40c7-8c18-55462dcadc6d": {
                 LastChangeDateTimeUtc: "2022-08-13T13:52:18.569Z",
@@ -16402,7 +16402,7 @@ export default {
                 SizeInBytes: 4012341,
                 MimeType: "image/png",
                 ContentHashSha1: "5oeQoEYzxs78+09QdJ7nH1xS22I=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d465f419-c7d7-40c7-8c18-55462dcadc6d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d465f419-c7d7-40c7-8c18-55462dcadc6d/Content"
             },
             "66a1b80b-8657-4580-854f-eee00dbf22ef": {
                 LastChangeDateTimeUtc: "2022-07-11T17:00:09.671Z",
@@ -16413,7 +16413,7 @@ export default {
                 SizeInBytes: 80679,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "yivY//wJu9lyv20uzAlk3uE9piA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/66a1b80b-8657-4580-854f-eee00dbf22ef/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/66a1b80b-8657-4580-854f-eee00dbf22ef/Content"
             },
             "3f567aae-4e5a-4c09-ba66-b1b7e8bf8dbe": {
                 LastChangeDateTimeUtc: "2022-07-11T17:00:09.768Z",
@@ -16424,7 +16424,7 @@ export default {
                 SizeInBytes: 2796,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "i3mmtabGapoiiV+8/MT9i5KfHb0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3f567aae-4e5a-4c09-ba66-b1b7e8bf8dbe/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/3f567aae-4e5a-4c09-ba66-b1b7e8bf8dbe/Content"
             },
             "8aae2e09-4183-4939-a57b-a293b71c5e8e": {
                 LastChangeDateTimeUtc: "2022-07-11T18:00:09.029Z",
@@ -16435,7 +16435,7 @@ export default {
                 SizeInBytes: 46695,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "enc9xOLQ1azIpdQV/SJntTuwGT4=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8aae2e09-4183-4939-a57b-a293b71c5e8e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/8aae2e09-4183-4939-a57b-a293b71c5e8e/Content"
             },
             "fd4cf342-2510-49a1-bd56-e9e6beda5479": {
                 LastChangeDateTimeUtc: "2022-07-11T20:00:09.258Z",
@@ -16446,7 +16446,7 @@ export default {
                 SizeInBytes: 17308,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "LX2CavHi0HnT6qXT0/H5lTJ/vgQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fd4cf342-2510-49a1-bd56-e9e6beda5479/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/fd4cf342-2510-49a1-bd56-e9e6beda5479/Content"
             },
             "88b5f0be-111d-4c38-8cad-7af5f6f7cdb9": {
                 LastChangeDateTimeUtc: "2022-07-11T20:00:09.354Z",
@@ -16457,7 +16457,7 @@ export default {
                 SizeInBytes: 2046,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "s9CxknK68sxisfHiJ0toJRCF0+A=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/88b5f0be-111d-4c38-8cad-7af5f6f7cdb9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/88b5f0be-111d-4c38-8cad-7af5f6f7cdb9/Content"
             },
             "b1d97c97-11bd-4547-95ca-e33d1814daf6": {
                 LastChangeDateTimeUtc: "2022-07-12T07:41:48.846Z",
@@ -16468,7 +16468,7 @@ export default {
                 SizeInBytes: 1973502,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "hj6a2niVSlhYhPSliikG6oBMzrY=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b1d97c97-11bd-4547-95ca-e33d1814daf6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/b1d97c97-11bd-4547-95ca-e33d1814daf6/Content"
             },
             "ba875b45-7c1d-47f2-b5a5-1b7ce33811ec": {
                 LastChangeDateTimeUtc: "2022-07-12T21:00:09.923Z",
@@ -16479,7 +16479,7 @@ export default {
                 SizeInBytes: 45022,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "qhclUsrT8sV+m9Sy1kQBlp+IHYE=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ba875b45-7c1d-47f2-b5a5-1b7ce33811ec/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ba875b45-7c1d-47f2-b5a5-1b7ce33811ec/Content"
             },
             "e136979a-b0af-4b94-8522-c83a9749ffd4": {
                 LastChangeDateTimeUtc: "2022-07-12T21:00:10.051Z",
@@ -16490,7 +16490,7 @@ export default {
                 SizeInBytes: 70407,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "M3hfkLrDkbi7hhSvoRzsc8LgX5M=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e136979a-b0af-4b94-8522-c83a9749ffd4/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e136979a-b0af-4b94-8522-c83a9749ffd4/Content"
             },
             "10a3d948-cafc-4409-9f5c-9c80891facb6": {
                 LastChangeDateTimeUtc: "2022-07-13T09:50:36.605Z",
@@ -16501,7 +16501,7 @@ export default {
                 SizeInBytes: 74779,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "pNy5J7iKxSRIbrYOyTor0mSPxGA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/10a3d948-cafc-4409-9f5c-9c80891facb6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/10a3d948-cafc-4409-9f5c-9c80891facb6/Content"
             },
             "ac300b9d-79ea-466d-aa12-7705577b22f9": {
                 LastChangeDateTimeUtc: "2022-08-02T08:48:27.966Z",
@@ -16512,7 +16512,7 @@ export default {
                 SizeInBytes: 127671,
                 MimeType: "image/png",
                 ContentHashSha1: "O6+UsZr1bAJOg8AFZKCYMlQgNAk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac300b9d-79ea-466d-aa12-7705577b22f9/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ac300b9d-79ea-466d-aa12-7705577b22f9/Content"
             },
             "66945aa8-6cd4-4739-9eb9-fa5301480749": {
                 LastChangeDateTimeUtc: "2022-07-20T13:00:08.985Z",
@@ -16523,7 +16523,7 @@ export default {
                 SizeInBytes: 59652,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "r9dsLdZ9Sd686fTwUhTJkCLVZGo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/66945aa8-6cd4-4739-9eb9-fa5301480749/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/66945aa8-6cd4-4739-9eb9-fa5301480749/Content"
             },
             "bca500d6-0f47-48a2-b681-81caa61b2b34": {
                 LastChangeDateTimeUtc: "2022-07-20T13:00:09.115Z",
@@ -16534,7 +16534,7 @@ export default {
                 SizeInBytes: 3651,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "NnkFe747RRVMH7PvohbOX9X3QEQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bca500d6-0f47-48a2-b681-81caa61b2b34/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/bca500d6-0f47-48a2-b681-81caa61b2b34/Content"
             },
             "277228b7-aeaf-4f9c-abc8-8c4683333c7b": {
                 LastChangeDateTimeUtc: "2022-07-20T13:00:09.124Z",
@@ -16545,7 +16545,7 @@ export default {
                 SizeInBytes: 63863,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "tSRTWIAUlTNEqN811HJl+SjJCYA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/277228b7-aeaf-4f9c-abc8-8c4683333c7b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/277228b7-aeaf-4f9c-abc8-8c4683333c7b/Content"
             },
             "f4ca4c1b-3e45-4762-8a3f-7c9e888036b7": {
                 LastChangeDateTimeUtc: "2022-07-20T19:00:09.232Z",
@@ -16556,7 +16556,7 @@ export default {
                 SizeInBytes: 367135,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "qUvGI+4pSzdPQMQauNOGFwxUqaU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f4ca4c1b-3e45-4762-8a3f-7c9e888036b7/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/f4ca4c1b-3e45-4762-8a3f-7c9e888036b7/Content"
             },
             "a0635663-044a-4733-b56c-14b54fb81d33": {
                 LastChangeDateTimeUtc: "2022-07-20T19:00:09.355Z",
@@ -16567,7 +16567,7 @@ export default {
                 SizeInBytes: 2890,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "d/00tcbaxBQSEsqBa21L4OvXKrk=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a0635663-044a-4733-b56c-14b54fb81d33/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/a0635663-044a-4733-b56c-14b54fb81d33/Content"
             },
             "d9912cdb-35e6-4b8c-9bde-68cc58bf4531": {
                 LastChangeDateTimeUtc: "2022-07-22T10:00:10.941Z",
@@ -16578,7 +16578,7 @@ export default {
                 SizeInBytes: 1001118,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "ufmusz0u4tlHGyvVqEjtXPyrsvw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d9912cdb-35e6-4b8c-9bde-68cc58bf4531/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d9912cdb-35e6-4b8c-9bde-68cc58bf4531/Content"
             },
             "4ba12ed7-e5ef-422e-b12c-f123cc32c329": {
                 LastChangeDateTimeUtc: "2022-07-24T18:00:09.548Z",
@@ -16589,7 +16589,7 @@ export default {
                 SizeInBytes: 39602,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "bVXszkFVH0/dAYBy3kZ7bE1YHMs=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4ba12ed7-e5ef-422e-b12c-f123cc32c329/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/4ba12ed7-e5ef-422e-b12c-f123cc32c329/Content"
             },
             "d593b83d-b2ad-49c4-bf67-b2f19574612d": {
                 LastChangeDateTimeUtc: "2022-07-24T18:00:09.660Z",
@@ -16600,7 +16600,7 @@ export default {
                 SizeInBytes: 2525,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "S2Otwiduak9dn1iIgqzlBg7B8jA=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d593b83d-b2ad-49c4-bf67-b2f19574612d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d593b83d-b2ad-49c4-bf67-b2f19574612d/Content"
             },
             "513e480e-cdb6-452d-a151-57f0fd4bc0cd": {
                 LastChangeDateTimeUtc: "2022-07-25T17:00:07.995Z",
@@ -16611,7 +16611,7 @@ export default {
                 SizeInBytes: 50768,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "fjSGNL9ginoeSBcmE/v+yAYu964=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/513e480e-cdb6-452d-a151-57f0fd4bc0cd/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/513e480e-cdb6-452d-a151-57f0fd4bc0cd/Content"
             },
             "72eba07f-a862-4b52-933b-51ec815dee53": {
                 LastChangeDateTimeUtc: "2022-07-28T12:00:09.857Z",
@@ -16622,7 +16622,7 @@ export default {
                 SizeInBytes: 91929,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "3lkTqO66ce6ZLxw6FT+WDX+OHOc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/72eba07f-a862-4b52-933b-51ec815dee53/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/72eba07f-a862-4b52-933b-51ec815dee53/Content"
             },
             "78cd74be-c940-4aa6-8816-653c278055a0": {
                 LastChangeDateTimeUtc: "2022-07-28T15:00:08.638Z",
@@ -16633,7 +16633,7 @@ export default {
                 SizeInBytes: 216804,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "xCNb8e908G0IpLi5XRCCMZSgWBU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/78cd74be-c940-4aa6-8816-653c278055a0/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/78cd74be-c940-4aa6-8816-653c278055a0/Content"
             },
             "e0191af3-5b91-45fb-b013-7127e6ca7717": {
                 LastChangeDateTimeUtc: "2022-07-28T15:00:08.784Z",
@@ -16644,7 +16644,7 @@ export default {
                 SizeInBytes: 216804,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "xCNb8e908G0IpLi5XRCCMZSgWBU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e0191af3-5b91-45fb-b013-7127e6ca7717/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/e0191af3-5b91-45fb-b013-7127e6ca7717/Content"
             },
             "1dca3db9-f21b-4ee3-8940-65e900627e23": {
                 LastChangeDateTimeUtc: "2022-07-28T15:00:09.234Z",
@@ -16655,7 +16655,7 @@ export default {
                 SizeInBytes: 688972,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "U5oxYINHhZEKqNVOBnU35q+S/nc=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1dca3db9-f21b-4ee3-8940-65e900627e23/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/1dca3db9-f21b-4ee3-8940-65e900627e23/Content"
             },
             "0d422c14-61bf-4d89-9c03-d2bf008b4135": {
                 LastChangeDateTimeUtc: "2022-07-29T03:00:09.334Z",
@@ -16666,7 +16666,7 @@ export default {
                 SizeInBytes: 79604,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "9qjR3Xi0y6yQbWj+u0TTZ4Xe0U0=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0d422c14-61bf-4d89-9c03-d2bf008b4135/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/0d422c14-61bf-4d89-9c03-d2bf008b4135/Content"
             },
             "9d75b622-bebd-429a-90d1-f01596dca2ed": {
                 LastChangeDateTimeUtc: "2022-07-29T03:00:09.429Z",
@@ -16677,7 +16677,7 @@ export default {
                 SizeInBytes: 2788,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "jpGrckiL78XTpr1MG41invRbuvw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d75b622-bebd-429a-90d1-f01596dca2ed/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/9d75b622-bebd-429a-90d1-f01596dca2ed/Content"
             },
             "d9d19124-ba49-4ff6-96f9-0b9cf222895b": {
                 LastChangeDateTimeUtc: "2022-07-30T10:00:09.830Z",
@@ -16688,7 +16688,7 @@ export default {
                 SizeInBytes: 65403,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "xsVZASriFBRtHHUrmyxjOZh/xjo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d9d19124-ba49-4ff6-96f9-0b9cf222895b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d9d19124-ba49-4ff6-96f9-0b9cf222895b/Content"
             },
             "ea9b18d1-d9ec-4f09-9c9a-2cbc6cf1ec8e": {
                 LastChangeDateTimeUtc: "2022-07-30T21:00:08.535Z",
@@ -16699,7 +16699,7 @@ export default {
                 SizeInBytes: 2762,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "FopL5QnVtMPMgcXT6wk8QNjCQlg=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ea9b18d1-d9ec-4f09-9c9a-2cbc6cf1ec8e/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ea9b18d1-d9ec-4f09-9c9a-2cbc6cf1ec8e/Content"
             },
             "7da15684-d942-4843-a565-5b6a1a28197d": {
                 LastChangeDateTimeUtc: "2022-07-30T21:00:08.325Z",
@@ -16710,7 +16710,7 @@ export default {
                 SizeInBytes: 18000,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "m3xFj2teo1IOY5rc1cQ4zepGZJU=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7da15684-d942-4843-a565-5b6a1a28197d/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7da15684-d942-4843-a565-5b6a1a28197d/Content"
             },
             "db62ee30-fc55-4466-9fc8-864cc2315bfd": {
                 LastChangeDateTimeUtc: "2022-07-31T14:00:09.512Z",
@@ -16721,7 +16721,7 @@ export default {
                 SizeInBytes: 1841,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "VbQNYXgtb3SJ7MtvKnKtCBCKbY8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/db62ee30-fc55-4466-9fc8-864cc2315bfd/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/db62ee30-fc55-4466-9fc8-864cc2315bfd/Content"
             },
             "d857958b-5285-4a30-9f91-f9695e18f654": {
                 LastChangeDateTimeUtc: "2022-07-31T14:00:09.384Z",
@@ -16732,7 +16732,7 @@ export default {
                 SizeInBytes: 38960,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "VajDz8cHNpe3VZT/ikqNEiyAFmQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d857958b-5285-4a30-9f91-f9695e18f654/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d857958b-5285-4a30-9f91-f9695e18f654/Content"
             },
             "21f02cd2-b852-4d50-bc05-a59952b05974": {
                 LastChangeDateTimeUtc: "2022-07-31T15:00:10.464Z",
@@ -16743,7 +16743,7 @@ export default {
                 SizeInBytes: 36206,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "zSOJ9guFj4Toi1YKo4qMf4YIG/w=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/21f02cd2-b852-4d50-bc05-a59952b05974/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/21f02cd2-b852-4d50-bc05-a59952b05974/Content"
             },
             "2fea766c-5406-4710-9450-4bfa814bf3f2": {
                 LastChangeDateTimeUtc: "2022-08-02T08:00:09.540Z",
@@ -16754,7 +16754,7 @@ export default {
                 SizeInBytes: 1982690,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "hNF4ek69TnC0qBcUUF/W7DulS/w=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2fea766c-5406-4710-9450-4bfa814bf3f2/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/2fea766c-5406-4710-9450-4bfa814bf3f2/Content"
             },
             "ef466b01-5322-46df-9cc8-6449beda2e51": {
                 LastChangeDateTimeUtc: "2022-08-02T08:00:09.304Z",
@@ -16765,7 +16765,7 @@ export default {
                 SizeInBytes: 34154,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "mkGy5EnSr4/V3dZs/bMvECzFe+A=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ef466b01-5322-46df-9cc8-6449beda2e51/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ef466b01-5322-46df-9cc8-6449beda2e51/Content"
             },
             "832124a4-929e-44ae-8b96-4dbf693c9cdc": {
                 LastChangeDateTimeUtc: "2022-08-02T08:00:09.172Z",
@@ -16776,7 +16776,7 @@ export default {
                 SizeInBytes: 59070,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "9pxs8eqRySyKFWWVLrldpbk5ArI=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/832124a4-929e-44ae-8b96-4dbf693c9cdc/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/832124a4-929e-44ae-8b96-4dbf693c9cdc/Content"
             },
             "99f65c8d-7c65-4587-bc39-587110f6dd80": {
                 LastChangeDateTimeUtc: "2022-08-12T15:00:10.479Z",
@@ -16787,7 +16787,7 @@ export default {
                 SizeInBytes: 64386,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "hE/2DJpOIeM61gQtL8jVJj7F8zQ=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/99f65c8d-7c65-4587-bc39-587110f6dd80/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/99f65c8d-7c65-4587-bc39-587110f6dd80/Content"
             },
             "ea2ff0cd-fc4d-4045-93ff-9d51300e5562": {
                 LastChangeDateTimeUtc: "2022-08-12T15:00:10.462Z",
@@ -16798,7 +16798,7 @@ export default {
                 SizeInBytes: 3379,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "T0mjUey77DpHeqysOsc9g3cTzU8=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ea2ff0cd-fc4d-4045-93ff-9d51300e5562/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/ea2ff0cd-fc4d-4045-93ff-9d51300e5562/Content"
             },
             "13ae8d15-e27e-4dbf-9f72-5e5e6bac79d6": {
                 LastChangeDateTimeUtc: "2022-08-12T15:00:10.322Z",
@@ -16809,7 +16809,7 @@ export default {
                 SizeInBytes: 38821,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "aW8TccwmXpRUpMeMax7AO3x1hBw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/13ae8d15-e27e-4dbf-9f72-5e5e6bac79d6/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/13ae8d15-e27e-4dbf-9f72-5e5e6bac79d6/Content"
             },
             "7d118f9f-33a6-4ac6-a10f-808dea795ab7": {
                 LastChangeDateTimeUtc: "2022-08-11T11:00:09.423Z",
@@ -16820,7 +16820,7 @@ export default {
                 SizeInBytes: 58327,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "dh6v3AmKgdmyLJoX0r0zmgyRfHo=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d118f9f-33a6-4ac6-a10f-808dea795ab7/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/7d118f9f-33a6-4ac6-a10f-808dea795ab7/Content"
             },
             "d73990a0-73c3-47a8-8e13-7fed0629199b": {
                 LastChangeDateTimeUtc: "2022-08-11T11:00:09.282Z",
@@ -16831,7 +16831,7 @@ export default {
                 SizeInBytes: 48814,
                 MimeType: "image/jpeg",
                 ContentHashSha1: "qctqGor73nGP1AlFZRMCWUr2WCw=",
-                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d73990a0-73c3-47a8-8e13-7fed0629199b/Content",
+                ImageUrl: "https://app.eurofurence.org/EF26/Api/Images/d73990a0-73c3-47a8-8e13-7fed0629199b/Content"
             },
             "aa9935e0-fbe5-40b0-9413-d671b52d6c2b": {
                 LastChangeDateTimeUtc: "2022-08-13T12:00:09.703Z",
@@ -16841,7 +16841,7 @@ export default {
                 Height: 60,
                 SizeInBytes: 2714,
                 MimeType: "image/jpeg",
-                ContentHashSha1: "zYQJKIS7Cu1+PHJUPqCoCRxRexY=",
+                ContentHashSha1: "zYQJKIS7Cu1+PHJUPqCoCRxRexY="
             },
             "f7a3094f-ed08-4661-84fd-641fd6402497": {
                 LastChangeDateTimeUtc: "2022-08-13T12:00:09.574Z",
@@ -16851,7 +16851,7 @@ export default {
                 Height: 450,
                 SizeInBytes: 47137,
                 MimeType: "image/jpeg",
-                ContentHashSha1: "shn4eOADVTna/o/NU2EK1PZRqmM=",
+                ContentHashSha1: "shn4eOADVTna/o/NU2EK1PZRqmM="
             },
             "c42f2ffe-97e2-499b-9030-423eb7db92d7": {
                 LastChangeDateTimeUtc: "2022-08-14T01:00:08.984Z",
@@ -16861,8 +16861,8 @@ export default {
                 Height: 900,
                 SizeInBytes: 278372,
                 MimeType: "image/jpeg",
-                ContentHashSha1: "4ml1QBhcqrKevazBbq4NUvP2e7M=",
-            },
-        },
-    },
+                ContentHashSha1: "4ml1QBhcqrKevazBbq4NUvP2e7M="
+            }
+        }
+    }
 };

@@ -31,7 +31,7 @@ import {
     applyMapDetails,
 } from "./eurofurence.details";
 import {
-    AnnouncementRecord,
+    AnnouncementDetails,
     AttendanceDay,
     EventDayRecord,
     EventDetails,
@@ -41,7 +41,6 @@ import {
     LinkFragment,
     MapDetails,
     MapEntryRecord,
-    MapRecord,
     RecordId,
 } from "./eurofurence.types";
 import { RootState } from "./index";
@@ -153,7 +152,7 @@ export const selectUpcomingFavoriteEvents = createSelector([selectFavoriteEvents
     events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc))
 );
 
-export const filterCurrentEvents = (events: Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">[], now: Moment) =>
+export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
     events.filter((it) => {
         return now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc);
     });
@@ -172,7 +171,7 @@ export const selectEventsByDay = createSelector(
     (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceDayId === itemId)
 );
 
-export const filterUpcomingEvents = (events: Pick<EventDetails, "StartDateTimeUtc">[], now: Moment) =>
+export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Moment) =>
     events.filter((it) => {
         const startMoment = moment(it.StartDateTimeUtc, true).subtract(30, "minutes");
         const endMoment = moment(it.StartDateTimeUtc, true);
@@ -180,7 +179,7 @@ export const filterUpcomingEvents = (events: Pick<EventDetails, "StartDateTimeUt
     });
 export const selectUpcomingEvents = createSelector([eventsSelector.selectAll, (state, now: Moment) => now], (events, now) => filterUpcomingEvents(events, now));
 
-export const filterActiveAnnouncements = (announcements: Pick<AnnouncementRecord, "ValidUntilDateTimeUtc" | "ValidFromDateTimeUtc">[], now: Moment) =>
+export const filterActiveAnnouncements = <T extends Pick<AnnouncementDetails, "ValidUntilDateTimeUtc" | "ValidFromDateTimeUtc">>(announcements: T[], now: Moment) =>
     announcements.filter((it) => now.isBetween(it.ValidFromDateTimeUtc, it.ValidUntilDateTimeUtc, "minute"));
 export const selectActiveAnnouncements = createSelector([announcementsSelectors.selectAll, (state, now: Moment) => now], (announcements, now) =>
     filterActiveAnnouncements(announcements, now)
@@ -195,8 +194,8 @@ export const selectDealersByDayName = createSelector([dealersSelectors.selectAll
     })
 );
 
-export const filterBrowseableMaps = (maps: Pick<MapRecord, "IsBrowseable">[]) => maps.filter((it) => it.IsBrowseable);
-export const selectBrowseableMaps = createSelector(mapsSelectors.selectAll, filterBrowseableMaps);
+export const filterBrowseableMaps = <T extends Pick<MapDetails, "IsBrowseable">>(maps: T[]) => maps.filter((it) => it.IsBrowseable);
+export const selectBrowseableMaps = createSelector(mapsSelectors.selectAll, (state) => filterBrowseableMaps(state));
 
 export const selectValidLinksByTarget = createSelector(
     [mapsSelectors.selectAll, (state, target: RecordId) => target],

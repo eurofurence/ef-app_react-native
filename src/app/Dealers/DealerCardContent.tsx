@@ -1,4 +1,4 @@
-import React, { useMemo, FC, memo } from "react";
+import React, { FC, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 

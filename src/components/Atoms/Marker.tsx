@@ -1,6 +1,6 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import { FC, useMemo } from "react";
 import * as React from "react";
+import { FC, useMemo } from "react";
 import { ColorValue, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { Theme, useTheme } from "../../context/Theme";

@@ -10,7 +10,6 @@ import { authorizationSlice } from "./authorization.slice";
 import { backgroundSlice } from "./background.slice";
 import { eurofurenceCache } from "./eurofurence.cache";
 import { eurofurenceService } from "./eurofurence.service";
-import { RecordMetadata } from "./eurofurence.types";
 import { settingsSlice } from "./settings.slice";
 import { timeTravelSlice } from "./timetravel.slice";
 
@@ -53,16 +52,6 @@ export const store = configureStore({
     },
 });
 
-const recordEqualityFn = (a: RecordMetadata, b: RecordMetadata) => a.Id === b.Id && a.LastChangeDateTimeUtc === b.LastChangeDateTimeUtc;
-
-const detectEqualityFn = (a: any, b: any) =>
-    (typeof a?.Id === "string" &&
-        typeof b?.Id === "string" &&
-        typeof a?.LastChangeDateTimeUtc === "string" &&
-        typeof b?.LastChangeDateTimeUtc === "string" &&
-        recordEqualityFn(a, b)) ||
-    a === b;
-
 export const persistor = persistStore(store);
 
 // Types for the Store
@@ -71,4 +60,4 @@ export type AppDispatch = typeof store.dispatch;
 
 // Typed versions of common hooks
 export const useAppDispatch: () => AppDispatch = useDispatch;
-export const useAppSelector: TypedUseSelectorHook<RootState> = (selector, equalityFn) => useSelector(selector, equalityFn ?? detectEqualityFn);
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

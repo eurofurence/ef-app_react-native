@@ -1,5 +1,4 @@
-import { useEffect, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

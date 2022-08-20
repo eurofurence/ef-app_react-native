@@ -1,5 +1,5 @@
-import { FC, useMemo } from "react";
 import * as React from "react";
+import { FC, useMemo } from "react";
 import { Image, ImageStyle, StyleProp, StyleSheet } from "react-native";
 
 import { ImageDetails } from "../../store/eurofurence.types";

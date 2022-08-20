@@ -12,6 +12,7 @@ import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { conName } from "../../configuration";
 import { setMomentLocale, Translations } from "../../i18n";
+import { captureException } from "../../sentryHelpers";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { logout } from "../../store/authorization.slice";
 import { setAnalytics, toggleDevMenu } from "../../store/settings.slice";
@@ -107,8 +108,8 @@ export const UserSettings = () => {
                 <Picker<string>
                     selectedValue={i18n.language}
                     prompt={t("changeLanguage")}
-                    onValueChange={(it) => {
-                        i18n.changeLanguage(it);
+                    onValueChange={(it: string) => {
+                        i18n.changeLanguage(it).catch(captureException);
                         setMomentLocale(it);
                     }}
                 >

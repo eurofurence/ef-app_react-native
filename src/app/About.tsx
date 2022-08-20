@@ -1,10 +1,7 @@
 import { nativeApplicationVersion, nativeBuildVersion } from "expo-application";
-import Constants from "expo-constants";
-import { runtimeVersion } from "expo-updates";
-import { capitalize } from "lodash";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, Linking, Platform, ScrollView } from "react-native";
+import { Image, Linking, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

@@ -3665,18 +3665,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openspacelabs/react-native-zoomable-view@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "@openspacelabs/react-native-zoomable-view@npm:2.0.4"
-  dependencies:
-    prop-types: ^15.7.2
-  peerDependencies:
-    react: ">=16.8.0"
-    react-native: ">=0.54.0"
-  checksum: 65dd0e7bf14e68739503f9bb781de444f0219537b1fc3d113b25e5360f14d07dfb7ddb3f1c9592557134a86346b22d48278dc04a74e19a391d30a8ae3088412b
-  languageName: node
-  linkType: hard
-
 "@oclif/core@npm:1.13.10":
   version: 1.13.10
   resolution: "@oclif/core@npm:1.13.10"
@@ -3760,6 +3748,18 @@ __metadata:
   version: 3.0.2
   resolution: "@oclif/screen@npm:3.0.2"
   checksum: 962678c65f1cf5b06864295a212020e3ddda36ab37190ca317e938943325a5acdbf3cb2761c371612daf1565e397fa5ff7bd0563887d746ccfde7c4ab312f005
+  languageName: node
+  linkType: hard
+
+"@openspacelabs/react-native-zoomable-view@npm:^2.0.4":
+  version: 2.0.4
+  resolution: "@openspacelabs/react-native-zoomable-view@npm:2.0.4"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16.8.0"
+    react-native: ">=0.54.0"
+  checksum: 65dd0e7bf14e68739503f9bb781de444f0219537b1fc3d113b25e5360f14d07dfb7ddb3f1c9592557134a86346b22d48278dc04a74e19a391d30a8ae3088412b
   languageName: node
   linkType: hard
 
@@ -8681,10 +8681,9 @@ __metadata:
     "@expo/webpack-config": ^0.17.0
     "@gorhom/bottom-sheet": ^4.4.2
     "@hookform/resolvers": ^2.9.3
+    "@openspacelabs/react-native-zoomable-view": ^2.0.4
     "@react-native-async-storage/async-storage": ~1.17.3
     "@react-native-picker/picker": 2.4.2
-    "@openspacelabs/react-native-zoomable-view": ^2.0.4
-    "@react-native-async-storage/async-storage": ^1.17.7
     "@react-navigation/core": ^6.2.2
     "@react-navigation/native": ^6.0.11
     "@react-navigation/stack": ^6.2.2

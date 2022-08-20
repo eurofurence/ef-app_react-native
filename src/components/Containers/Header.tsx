@@ -1,7 +1,7 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
 import React, { FC, useMemo } from "react";
-import { StyleSheet, View, ViewProps, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 
 import { useTheme } from "../../context/Theme";
 import { Activity } from "../Atoms/Activity";

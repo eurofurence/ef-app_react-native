@@ -1,6 +1,6 @@
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { FC, memo, ReactNode, useMemo } from "react";
-import { Image, ImageSourcePropType, StyleSheet, View, ViewStyle, TouchableOpacity, ColorValue, ImageBackground } from "react-native";
+import { ColorValue, ImageBackground, ImageSourcePropType, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
