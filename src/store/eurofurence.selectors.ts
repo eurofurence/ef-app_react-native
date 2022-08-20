@@ -148,7 +148,7 @@ export const selectFavoriteEvents = createSelector([eventsSelector.selectAll, (s
 );
 
 export const selectUpcomingFavoriteEvents = createSelector([selectFavoriteEvents, (state, now: Moment) => now], (events, now) =>
-    events.filter((it) => now.isBefore(it.EndDateTimeUtc))
+    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc))
 );
 
 export const selectCurrentEvents = createSelector([eventsSelector.selectAll, (events, now: Moment) => now], (events, now) =>
