@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { EntityId, EntitySelectors } from "@reduxjs/toolkit/src/entities/models";
 import { TFunction } from "i18next";
-import _, { chain, map, mapValues, Dictionary as LodashDictionary } from "lodash";
+import _, { chain, Dictionary as LodashDictionary, map, mapValues } from "lodash";
 import moment, { Moment } from "moment";
 import { SectionListData } from "react-native";
 
