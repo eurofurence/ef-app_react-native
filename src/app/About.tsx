@@ -13,7 +13,8 @@ import { Col } from "../components/Containers/Col";
 import { Floater } from "../components/Containers/Floater";
 import { Header } from "../components/Containers/Header";
 import { Row } from "../components/Containers/Row";
-import { useAppSelector } from "../store";
+import { useAppDispatch, useAppSelector } from "../store";
+import { setTheme } from "../store/settings.slice";
 import { appStyles } from "./AppStyles";
 
 const extraThanksMarkdown = `
@@ -81,7 +82,7 @@ And Sentry helps us out with exception tracing.
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.`;
 
 export const Credit: FC<{ uri: string; name: string; role: string; onPress?: () => void }> = ({ uri, name, role, onPress }) => (
-    <TouchableOpacity disabled={onPress === undefined} onPress={onPress}>
+    <TouchableOpacity disabled={onPress === undefined} onLongPress={onPress} delayLongPress={500}>
         <Row type={"center"} style={{ marginVertical: 5 }}>
             <Image
                 source={{ uri, height: 60, width: 60 }}
@@ -92,10 +93,7 @@ export const Credit: FC<{ uri: string; name: string; role: string; onPress?: () 
 
             <Col style={{ flex: 1, marginLeft: 10 }}>
                 <Label type={"h2"}>{name}</Label>
-                <Label>
-                    {role}
-                    {}
-                </Label>
+                <Label>{role}</Label>
             </Col>
         </Row>
     </TouchableOpacity>
@@ -105,6 +103,7 @@ export const AboutScreen = () => {
     const { t } = useTranslation("About");
     const safe = useSafeAreaInsets();
     const showHelpButtons = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
+    const dispatch = useAppDispatch();
     return (
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>
@@ -125,7 +124,12 @@ export const AboutScreen = () => {
                 <Section title={t("developed_by")} icon={"code-json"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/13329381"} name={"Luchs"} role={"Project management and getting us to move our butts in gear"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/5929561"} name={"Pazuzu"} role={"React Development and UI design"} />
-                <Credit uri={"https://avatars.githubusercontent.com/u/5537850"} name={"Requinard"} role={"React Development and app mechanics"} />
+                <Credit
+                    uri={"https://avatars.githubusercontent.com/u/5537850"}
+                    name={"Requinard"}
+                    role={"React Development and app mechanics"}
+                    onPress={() => dispatch(setTheme("requinard"))}
+                />
                 <Credit uri={"https://avatars.githubusercontent.com/u/12624320"} name={"Shez"} role={"iOS Development"} />
                 <Credit uri={"https://avatars.githubusercontent.com/u/3359222"} name={"Fenrikur"} role={"iOS Development"} />
                 <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
