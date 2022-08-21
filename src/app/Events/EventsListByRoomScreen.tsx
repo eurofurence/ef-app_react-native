@@ -15,6 +15,7 @@ import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
+import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
@@ -35,6 +36,8 @@ export type EventsListByRoomScreenProps =
 export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const isEventDone = useIsEventDone();
+
+    const { setSelected } = useEventsTabsContext();
 
     // Get the room. Use it to resolve events to display.
     const room = useAppSelector((state) => eventRoomsSelectors.selectById(state, route.name));
@@ -72,6 +75,7 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ route 
     return (
         <EventsSectionedListGeneric
             eventsGroups={eventsGroups}
+            select={setSelected}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
                     {room?.Name ?? ""}

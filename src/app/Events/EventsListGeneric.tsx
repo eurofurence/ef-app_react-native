@@ -1,8 +1,7 @@
-import { FC, ReactNode, useCallback, useState } from "react";
-import { FlatList, StyleSheet, Vibration, View } from "react-native";
+import { FC, ReactNode, useCallback } from "react";
+import { FlatList, StyleSheet, Vibration } from "react-native";
 
 import { EventDetails } from "../../store/eurofurence.types";
-import { EventActionsSheet } from "./EventActionsSheet";
 import { EventCard } from "./EventCard";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
 import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
@@ -25,14 +24,13 @@ export type EventsListGenericProps = {
         | EventsListByTrackScreenProps["navigation"];
     leader?: ReactNode;
     events: EventDetails[];
+    select?: (event: EventDetails) => void;
+    empty?: ReactNode;
     trailer?: ReactNode;
     cardType?: "duration" | "time";
 };
 
-export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, trailer, cardType = "duration" }) => {
-    // Set event for action sheet
-    const [selectedEvent, setSelectedEvent] = useState<EventDetails | undefined>(undefined);
-
+export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, select, empty, trailer, cardType = "duration" }) => {
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(
         (event: EventDetails) =>
@@ -43,32 +41,30 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
     );
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <FlatList
-                style={styles.list}
-                contentContainerStyle={styles.container}
-                scrollEnabled={true}
-                ListHeaderComponent={<>{leader}</>}
-                ListFooterComponent={<>{trailer}</>}
-                data={events}
-                keyExtractor={(item) => item.Id}
-                initialNumToRender={5}
-                maxToRenderPerBatch={5}
-                renderItem={(entry: { item: EventDetails }) => (
-                    <EventCard
-                        key={entry.item.Id}
-                        event={entry.item}
-                        type={cardType}
-                        onPress={() => navigateTo(entry.item)}
-                        onLongPress={() => {
-                            Vibration.vibrate(50);
-                            setSelectedEvent(entry.item);
-                        }}
-                    />
-                )}
-            />
-            <EventActionsSheet eventRecord={selectedEvent} onClose={() => setSelectedEvent(undefined)} />
-        </View>
+        <FlatList
+            style={styles.list}
+            contentContainerStyle={styles.container}
+            scrollEnabled={true}
+            ListHeaderComponent={<>{leader}</>}
+            ListFooterComponent={<>{trailer}</>}
+            ListEmptyComponent={<>{empty}</>}
+            data={events}
+            keyExtractor={(item) => item.Id}
+            initialNumToRender={5}
+            maxToRenderPerBatch={5}
+            renderItem={(entry: { item: EventDetails }) => (
+                <EventCard
+                    key={entry.item.Id}
+                    event={entry.item}
+                    type={cardType}
+                    onPress={() => navigateTo(entry.item)}
+                    onLongPress={() => {
+                        Vibration.vibrate(50);
+                        select && select(entry.item);
+                    }}
+                />
+            )}
+        />
     );
 };
 

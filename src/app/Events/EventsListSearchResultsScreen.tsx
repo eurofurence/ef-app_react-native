@@ -8,10 +8,10 @@ import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useEventsSearchContext } from "../../components/Searching/EventsSearchContext";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsListGeneric } from "./EventsListGeneric";
+import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
@@ -30,7 +30,7 @@ export type EventsListSearchResultsScreenProps =
     >;
 
 export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProps> = ({ navigation }) => {
-    const { search, setSearch, results } = useEventsSearchContext();
+    const { search, setSearch, results, setSelected } = useEventsTabsContext();
 
     const onClear = useCallback(() => {
         setSearch("");
@@ -43,6 +43,7 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
         <EventsListGeneric
             navigation={navigation}
             events={events}
+            select={setSelected}
             cardType="time"
             leader={
                 <View style={{ paddingBottom: 30 }}>

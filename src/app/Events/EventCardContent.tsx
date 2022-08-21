@@ -4,6 +4,7 @@ import { ColorValue, ImageBackground, ImageSourcePropType, StyleSheet, Touchable
 
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
+import { Row } from "../../components/Containers/Row";
 import { useTheme } from "../../context/Theme";
 import { IconNames } from "../../types/IconNames";
 import { appStyles } from "../AppStyles";
@@ -31,7 +32,7 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
     const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
     const styleBadgeFrame = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary }), [theme]);
     const colorBadge = useMemo<ColorValue>(() => theme.white, [theme]);
-    const colorGlyph = useMemo<ColorValue>(() => (done ? theme.soften : theme.white), [done, theme]);
+    const colorGlyph = useMemo<ColorValue>(() => theme.lighten, [theme]);
     return (
         <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer]} onPress={onPress} onLongPress={onLongPress}>
             <View style={[styles.pre, stylePre]}>
@@ -62,23 +63,23 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
                 </View>
             ) : (
                 <View style={styles.mainText}>
-                    <Label type="h3">{title}</Label>
+                    <Row>
+                        <Label style={styles.title} type="h3">
+                            {title}
+                        </Label>
+
+                        {badges?.map((icon) => (
+                            <View key={icon} style={[styles.badgeFrame, styleBadgeFrame]}>
+                                <Icon name={icon} color={colorBadge} size={badgeIconSize} />
+                            </View>
+                        )) ?? null}
+                    </Row>
                     <Label type="h4" variant="narrow">
                         {subtitle}
                     </Label>
                     <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
                         {tag}
                     </Label>
-                </View>
-            )}
-
-            {!badges ? null : (
-                <View style={styles.badgeContainer}>
-                    {badges.map((icon) => (
-                        <View key={icon} style={[styles.badgeFrame, styleBadgeFrame]}>
-                            <Icon name={icon} color={colorBadge} size={badgeIconSize} />
-                        </View>
-                    ))}
                 </View>
             )}
 
@@ -109,20 +110,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     glyph: {
-        opacity: 0.2,
+        opacity: 0.25,
         transform: [{ rotate: "-15deg" }],
     },
-    badgeContainer: {
-        position: "absolute",
-        top: 0,
-        right: 0,
-        flexDirection: "row",
-    },
     badgeFrame: {
-        borderRadius: 16,
-        flex: 1,
+        borderRadius: 20,
+        aspectRatio: 1,
         padding: 4,
-        margin: 8,
+        marginLeft: 8,
     },
     pre: {
         overflow: "hidden",
@@ -138,6 +133,9 @@ const styles = StyleSheet.create({
     mainText: {
         flex: 1,
         padding: 16,
+    },
+    title: {
+        flex: 1,
     },
     subtitleArea: {
         flexDirection: "row",

@@ -1,4 +1,3 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import moment from "moment";
 import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,6 +15,7 @@ import { appBase, conAbbr } from "../../configuration";
 import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useEventReminder } from "../../hooks/useEventReminder";
+import { captureException } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
 import { EventDetails } from "../../store/eurofurence.types";
@@ -56,7 +56,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
             },
             {}
-        );
+        ).catch(captureException);
     }, [event]);
 
     return (
@@ -85,15 +85,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
             </MarkdownContent>
 
             {!event.MaskRequired ? null : (
-                <Row variant={"center"} style={{ marginBottom: 20 }}>
-                    <Icon name={"face-mask"} style={{ flexGrow: 1 }} size={20} color={theme.secondary} />
-                    <Label type="para" style={{ flexGrow: 9 }} color={theme.secondary}>
-                        {t("mask_required")}
-                    </Label>
-                </Row>
+                <BadgeInvPad padding={parentPad} icon="face-mask" textColor={theme.secondary} textType="regular" textVariant="regular">
+                    {t("mask_required")}
+                </BadgeInvPad>
             )}
 
-            <Row>
+            <Row style={styles.marginBefore}>
                 <Button style={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
                     {isFavorited ? t("remove_favorite") : t("add_favorite")}
                 </Button>
@@ -157,6 +154,9 @@ const styles = StyleSheet.create({
     },
     share: {
         marginVertical: 15,
+    },
+    marginBefore: {
+        marginTop: 20,
     },
     posterLine: {
         marginTop: 20,
