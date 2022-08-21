@@ -18,6 +18,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { logout } from "../../store/authorization.slice";
 import { setAnalytics, toggleDevMenu } from "../../store/settings.slice";
 import { LoginForm } from "../MainMenu/PagerLogin";
+import { ThemePicker } from "./ThemePicker";
 
 type Language = {
     code: Translations;
@@ -71,6 +72,9 @@ export const UserSettings = () => {
     return (
         <View>
             <Section title={t("settingsSection")} icon={"cog"} />
+            <SettingItem>
+                <ThemePicker />
+            </SettingItem>
             <SettingItem>
                 <TouchableOpacity
                     style={{ flexDirection: "row", alignItems: "center" }}

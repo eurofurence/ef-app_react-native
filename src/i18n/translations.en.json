@@ -215,6 +215,13 @@
       "title": "Remote Messages"
     },
     "settingsSection": "Settings",
+    "theme": {
+      "dark": "Dark",
+      "description": "Configure the way the app looks. When set to System it will follow the general system theme. By changing it you can keep the app in your preferred theme.",
+      "light": "Light",
+      "system": "System",
+      "title": "Change the application theme"
+    },
     "timeTravel": "Show time travel settings."
   },
   "TimeTravel": {

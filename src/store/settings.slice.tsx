@@ -1,11 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { AppTheme } from "../context/Theme";
+
 type SettingsSliceState = {
     analytics: {
         enabled: boolean;
         prompted: boolean;
     };
     showDevMenu?: boolean;
+    theme?: AppTheme;
 };
 
 export const settingsSlice = createSlice({
@@ -26,11 +29,12 @@ export const settingsSlice = createSlice({
             state.showDevMenu = action.payload;
         },
         toggleDevMenu: (state, action: PayloadAction<boolean | undefined>) => {
-            const newValue = action.payload !== undefined ? action.payload : !state.showDevMenu ?? true;
-
-            state.showDevMenu = newValue;
+            state.showDevMenu = action.payload !== undefined ? action.payload : !state.showDevMenu ?? true;
+        },
+        setTheme: (state, action: PayloadAction<AppTheme | undefined>) => {
+            state.theme = action.payload;
         },
     },
 });
 
-export const { setAnalytics, showDevMenu, toggleDevMenu } = settingsSlice.actions;
+export const { setAnalytics, showDevMenu, toggleDevMenu, setTheme } = settingsSlice.actions;
