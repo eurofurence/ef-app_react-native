@@ -66,7 +66,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
     // TODO: Use configuration constants here.
     // Return the composed linking object.
     return {
-        prefixes: [Linking.createURL(`/`), Linking.createURL(`/${conId}/Web/`), `https://app.eurofurence.org`],
+        prefixes: [Linking.createURL(`/`), Linking.createURL(`/${conId}/Web/`), `https://app.eurofurence.org`, "http://eurofurence.github.io/ef-app_react-native"],
         config: {
             initialRouteName: "Areas",
             screens: {
