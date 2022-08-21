@@ -15,6 +15,7 @@ import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
+import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
@@ -35,6 +36,8 @@ export type EventsListByTrackScreenProps =
 export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const isEventDone = useIsEventDone();
+
+    const { setSelected } = useEventsTabsContext();
 
     // Get the track. Use it to resolve events to display.
     const track = useAppSelector((state) => eventTracksSelectors.selectById(state, route.name));
@@ -72,6 +75,7 @@ export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ rout
     return (
         <EventsSectionedListGeneric
             eventsGroups={eventsGroups}
+            select={setSelected}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
                     {track?.Name ?? ""}

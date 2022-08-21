@@ -45,6 +45,11 @@ export const PersonalScheduleList = () => {
                     {t("schedule_title")}
                 </Label>
             }
+            empty={
+                <Label type="para" variant="middle" mt={30}>
+                    {t("schedule_empty")}
+                </Label>
+            }
         />
     );
 };

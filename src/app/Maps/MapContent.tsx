@@ -4,10 +4,11 @@ import { chain, clamp } from "lodash";
 import * as React from "react";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, Platform, StyleSheet, View, ViewStyle } from "react-native";
+import { Image, StyleSheet, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Marker } from "../../components/Atoms/Marker";
+import { useThemeBackground } from "../../context/Theme";
 import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";
 import { LinkItem } from "./LinkItem";
 
@@ -36,6 +37,9 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
     const refHandle = useRef<any>([0, 0]);
     const refZoom = useRef<ZoomableView>(null);
     const refSheet = useRef<BottomSheet>(null);
+
+    const styleBackground = useThemeBackground("background");
+    const styleHandle = useThemeBackground("inverted");
 
     const [results, setResults] = useState<FilterResult[]>([]);
     const onTransform = useCallback((event: ZoomableViewEvent) => {
@@ -115,30 +119,31 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                 </ZoomableView>
             </View>
 
-            {/*Apparently we cannot render this in a browser*/}
-            {Platform.OS === "web" ? null : (
-                <BottomSheet ref={refSheet} snapPoints={["10%", "75%"]} index={0}>
-                    {!results ? (
-                        <Label mt={15} type="em" variant="middle">
-                            {t("filtering")}
-                        </Label>
-                    ) : (
-                        <BottomSheetFlatList
-                            initialNumToRender={2}
-                            maxToRenderPerBatch={1}
-                            data={results}
-                            keyExtractor={({ key }) => key}
-                            renderItem={({ item: { map, entry, link } }) => <LinkItem map={map} entry={entry} link={link} />}
-                            contentContainerStyle={{ paddingHorizontal: 15 }}
-                        />
-                    )}
-                </BottomSheet>
-            )}
+            <BottomSheet ref={refSheet} backgroundStyle={styleBackground} handleStyle={styles.handle} handleIndicatorStyle={styleHandle} snapPoints={["10%", "75%"]} index={0}>
+                {!results ? (
+                    <Label mt={15} type="em" variant="middle">
+                        {t("filtering")}
+                    </Label>
+                ) : (
+                    <BottomSheetFlatList
+                        initialNumToRender={2}
+                        maxToRenderPerBatch={1}
+                        data={results}
+                        keyExtractor={({ key }) => key}
+                        renderItem={({ item: { map, entry, link } }) => <LinkItem map={map} entry={entry} link={link} />}
+                        contentContainerStyle={{ paddingHorizontal: 15 }}
+                    />
+                )}
+            </BottomSheet>
         </>
     );
 };
 
 const styles = StyleSheet.create({
+    handle: {
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+    },
     container: {
         flex: 1,
         paddingBottom: "10%",

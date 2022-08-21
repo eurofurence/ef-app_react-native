@@ -76,7 +76,7 @@ export const ScreenStart: FC<ScreenStartProps> = React.memo(() => {
     return (
         <View style={StyleSheet.absoluteFill}>
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
-            <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false, cardStyle: { backgroundColor: theme.surface } }}>
+            <ScreenStartNavigator.Navigator screenOptions={{ headerShown: false }}>
                 <ScreenStartNavigator.Screen name="Areas" component={ScreenAreas} />
                 <ScreenStartNavigator.Screen name="Event" component={EventScreen} />
                 <ScreenStartNavigator.Screen name="Dealer" component={DealerScreen} />

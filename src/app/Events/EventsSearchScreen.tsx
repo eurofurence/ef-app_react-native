@@ -12,10 +12,10 @@ import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useEventsSearchContext } from "../../components/Searching/EventsSearchContext";
 import { useTheme } from "../../context/Theme";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
+import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
@@ -35,7 +35,7 @@ export type EventsSearchScreenProps =
 
 export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) => {
     const { t } = useTranslation("Events");
-    const { search, setSearch, results } = useEventsSearchContext();
+    const { search, setSearch, results } = useEventsTabsContext();
 
     // Hide keyboard on navigating away from this page.
     const isFocused = useIsFocused();
@@ -48,14 +48,14 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
     const onTrack = useCallback(() => navigation.getParent()?.setParams({ filterType: "tracks" }), [navigation]);
 
     const theme = useTheme();
-    const border = useMemo<ViewStyle>(() => ({ borderBottomColor: theme.text }), [theme]);
+    const searchStyle = useMemo<ViewStyle>(() => ({ color: theme.text, borderBottomColor: theme.text }), [theme]);
     const roundedStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary }), [theme]);
     return (
         <Floater>
             <View style={styles.end}>
                 <View style={styles.searchArea}>
                     <Label type="caption">Enter your query</Label>
-                    <TextInput style={[styles.searchField, border]} value={search} onChangeText={setSearch} placeholder="Enter query" />
+                    <TextInput style={[styles.searchField, searchStyle]} value={search} onChangeText={setSearch} placeholder="Enter query" />
 
                     {!results ? null : <Button onPress={() => navigation.jumpTo("Results")}>View all {results.length} results</Button>}
                 </View>

@@ -6,7 +6,6 @@ import { PlatformBackgroundSyncManager } from "./components/Managers/BackgroundS
 import { PlatformNotificationReceivedManager } from "./components/Managers/NotificationReceivedManager";
 import { PlatformNotificationRespondedManager } from "./components/Managers/NotificationRespondedManager";
 import { PlatformTokenManager } from "./components/Managers/TokenManager";
-import { EventsSearchProvider } from "./components/Searching/EventsSearchContext";
 import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
 import { NavigationProvider } from "./context/NavigationProvider";
 
@@ -17,24 +16,22 @@ export default function App() {
     return (
         <BottomSheetModalProvider>
             <SynchronizationProvider>
-                <EventsSearchProvider>
-                    <NavigationProvider>
-                        <ScreenStart />
+                <NavigationProvider>
+                    <ScreenStart />
 
-                        {/* Handle device token acquisition. */}
-                        <PlatformTokenManager />
+                    {/* Handle device token acquisition. */}
+                    <PlatformTokenManager />
 
-                        {/* Handle handling notifications in foreground. */}
-                        <PlatformNotificationReceivedManager />
-                        <PlatformNotificationRespondedManager />
+                    {/* Handle handling notifications in foreground. */}
+                    <PlatformNotificationReceivedManager />
+                    <PlatformNotificationRespondedManager />
 
-                        {/* Handle notifications in background. */}
-                        <PlatformBackgroundSyncManager />
+                    {/* Handle notifications in background. */}
+                    <PlatformBackgroundSyncManager />
 
-                        {/* Set up analytics. */}
-                        <AnalyticsManager />
-                    </NavigationProvider>
-                </EventsSearchProvider>
+                    {/* Set up analytics. */}
+                    <AnalyticsManager />
+                </NavigationProvider>
             </SynchronizationProvider>
         </BottomSheetModalProvider>
     );

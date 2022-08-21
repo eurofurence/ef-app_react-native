@@ -88,6 +88,7 @@
     "finished": "Finished",
     "morning": "In the morning",
     "night": "At night",
+    "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
     "schedule_title": "Your Schedule",
     "today_schedule_subtitle": "You will receive a reminder before this event starts",
     "today_schedule_title": "Today's schedule",

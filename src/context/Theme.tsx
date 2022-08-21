@@ -5,25 +5,104 @@ import { shallowEqual } from "react-redux";
 import { useAppSelector } from "../store";
 
 export type Theme = Record<string, string> & {
+    /**
+     * Primary brand color.
+     */
     primary: string;
+
+    /**
+     * Secondary "colorful" color.
+     */
     secondary: string;
+
+    /**
+     * Background of element displayed within a screen.
+     */
     background: string;
+
+    /**
+     * Lowest surface of the screen, i.e., the proper background color.
+     */
     surface: string;
+
+    /**
+     * Opposite of background.
+     */
     inverted: string;
+
+    /**
+     * Text color.
+     */
     text: string;
+
+    /**
+     * Text color with emphasis.
+     */
     important: string;
+
+    /**
+     Text color on inverted.
+     */
     invText: string;
+
+    /**
+     * Text color with emphasis on inverted.
+     */
     invImportant: string;
+
+    /**
+     * Warning background.
+     */
     warning: string;
+
+    /**
+     * Notification color.
+     */
     notification: string;
+
+    /**
+     * Pull towards black.
+     */
     darken: string;
+
+    /**
+     * Pull towards light.
+     */
     lighten: string;
+
+    /**
+     * Pull against background.
+     */
     soften: string;
+
+    /**
+     * White.
+     */
     white: string;
+
+    /**
+     * Background for super-sponsor badge.
+     */
     superSponsor: string;
-    superSponsorText: string;
+
+    /**
+     * Background for sponsor badge.
+     */
     sponsor: string;
+
+    /**
+     * Text on super-sponsor badge.
+     */
+    superSponsorText: string;
+
+    /**
+     * Text on sponsor badge.
+     */
     sponsorText: string;
+
+    /**
+     * Map marker.
+     */
     marker: string;
 };
 
@@ -53,7 +132,7 @@ const themes = {
         notification: "#d91c52",
         darken: "#04001440",
         lighten: "#f7f7f7a0",
-        soften: "#04001440",
+        soften: "#040014a0",
         white: "#ffffff",
         superSponsor: "#5300ff",
         superSponsorText: "#fff7f0",
@@ -63,10 +142,10 @@ const themes = {
     },
     dark: {
         primary: "#37726d",
-        secondary: "#4631cc",
-        background: "#252525",
-        surface: "#2d2d2d",
-        inverted: "#b0b0b0",
+        secondary: "#917dff",
+        background: "#212121",
+        surface: "#000000",
+        inverted: "#e0dedb",
         text: "#e0dedb",
         important: "#f1ede8",
         invText: "#131313",
@@ -74,7 +153,7 @@ const themes = {
         warning: "#ee5e22",
         notification: "#d91c52",
         darken: "#04001440",
-        lighten: "#f7f7f7a0",
+        lighten: "#f7f7f780",
         soften: "#f7f7f7a0",
         white: "#ffffff",
         superSponsor: "#5300ff",

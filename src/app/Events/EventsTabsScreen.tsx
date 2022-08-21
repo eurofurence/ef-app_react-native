@@ -1,25 +1,27 @@
-import { CompositeScreenProps } from "@react-navigation/core";
+import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import moment from "moment";
-import { FC, useCallback, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useEventsSearchHasResults } from "../../components/Searching/EventsSearchContext";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
+import { EventActionsSheet } from "./EventActionsSheet";
 import { EventsListByDayScreen, EventsListByDayScreenParams } from "./EventsListByDayScreen";
 import { EventsListByRoomScreen, EventsListByRoomScreenParams } from "./EventsListByRoomScreen";
 import { EventsListByTrackScreen, EventsListByTrackScreenParams } from "./EventsListByTrackScreen";
 import { EventsListSearchResultsScreen, EventsListSearchResultsScreenParams } from "./EventsListSearchResultsScreen";
 import { EventsSearchScreen, EventsSearchScreenParams } from "./EventsSearchScreen";
+import { EventsTabsContextProvider, useEventsTabsContext } from "./EventsTabsContext";
 import { PersonalScheduleList } from "./PersonalScheduleList";
 
 // TODO: Might have an distinction between days, tracks, rooms as param.
@@ -61,7 +63,7 @@ export type EventsTabsScreenProps =
         PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
+const EventsTabsScreenContent: FC<EventsTabsScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), [t]);
 
@@ -73,16 +75,22 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
     const tracks = useAppSelector(eventTracksSelectors.selectAll);
     const rooms = useAppSelector(eventRoomsSelectors.selectAll);
 
-    // Use to display results tab.
-    const hasSearchResults = useEventsSearchHasResults();
+    // Get context and resolve if results present and the current selection state..
+    const { hasResults, selected, setSelected } = useEventsTabsContext();
+
+    // Deselect on unfocus.
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        if (!isFocused) setSelected(null);
+    }, [isFocused]);
 
     // Convert given optional type to actual filter type.
     const actualType = useMemo(() => {
-        if (hasSearchResults) return "results";
+        if (hasResults) return "results";
         // TODO: @lukashaertel pls fix
         return route.params?.filterType ?? "days";
         // TODO: @lukashaertel pls fix
-    }, [hasSearchResults, route.params?.filterType]);
+    }, [hasResults, route.params?.filterType]);
 
     // Get the current day ID.
     const currentDayId = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Id, [days, now]);
@@ -106,34 +114,45 @@ export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ route }) => {
 
     // If the screens require too much performance we should set detach to true again.
     return (
-        <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialId}>
-            {/*Tab for searching and filtering*/}
-            <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
+        <View style={StyleSheet.absoluteFill}>
+            <EventsTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName={initialId}>
+                {/*Tab for searching and filtering*/}
+                <EventsTabsScreenNavigator.Screen name="Search" options={{ icon: "table-search" }} component={EventsSearchScreen} />
 
-            <EventsTabsScreenNavigator.Screen name={"Your Schedule"} options={{ icon: "calendar" }} component={PersonalScheduleList} />
+                <EventsTabsScreenNavigator.Screen name={"Your Schedule"} options={{ icon: "calendar" }} component={PersonalScheduleList} />
 
-            {actualType !== "results" ? null : <EventsTabsScreenNavigator.Screen name="Results" options={{ icon: "view-list" }} component={EventsListSearchResultsScreen} />}
+                {actualType !== "results" ? null : <EventsTabsScreenNavigator.Screen name="Results" options={{ icon: "view-list" }} component={EventsListSearchResultsScreen} />}
 
-            {actualType !== "days"
-                ? null
-                : days.map((day) => (
-                      <EventsTabsScreenNavigator.Screen
-                          key={day.Id}
-                          name={day.Id}
-                          component={EventsListByDayScreen}
-                          options={{ title: formatDay(day), highlight: day.Name === currentDayId }}
-                      />
-                  ))}
+                {actualType !== "days"
+                    ? null
+                    : days.map((day) => (
+                          <EventsTabsScreenNavigator.Screen
+                              key={day.Id}
+                              name={day.Id}
+                              component={EventsListByDayScreen}
+                              options={{ title: formatDay(day), highlight: day.Name === currentDayId }}
+                          />
+                      ))}
 
-            {actualType !== "tracks"
-                ? null
-                : tracks.map((track) => <EventsTabsScreenNavigator.Screen key={track.Id} name={track.Id} component={EventsListByTrackScreen} options={{ title: track.Name }} />)}
+                {actualType !== "tracks"
+                    ? null
+                    : tracks.map((track) => (
+                          <EventsTabsScreenNavigator.Screen key={track.Id} name={track.Id} component={EventsListByTrackScreen} options={{ title: track.Name }} />
+                      ))}
 
-            {actualType !== "rooms"
-                ? null
-                : rooms.map((room) => (
-                      <EventsTabsScreenNavigator.Screen key={room.Id} name={room.Id} component={EventsListByRoomScreen} options={{ title: room.ShortName ?? room.Name }} />
-                  ))}
-        </EventsTabsScreenNavigator.Navigator>
+                {actualType !== "rooms"
+                    ? null
+                    : rooms.map((room) => (
+                          <EventsTabsScreenNavigator.Screen key={room.Id} name={room.Id} component={EventsListByRoomScreen} options={{ title: room.ShortName ?? room.Name }} />
+                      ))}
+            </EventsTabsScreenNavigator.Navigator>
+            <EventActionsSheet event={selected} onClose={() => setSelected(null)} />
+        </View>
     );
 };
+
+export const EventsTabsScreen: FC<EventsTabsScreenProps> = ({ navigation, route }) => (
+    <EventsTabsContextProvider>
+        <EventsTabsScreenContent navigation={navigation} route={route} />
+    </EventsTabsContextProvider>
+);

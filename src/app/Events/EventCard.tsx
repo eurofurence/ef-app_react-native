@@ -39,19 +39,19 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
             // Return simple label with duration text.
             return (
                 <Col type="center">
-                    <Label type="caption" color={done ? "important" : "invText"}>
+                    <Label type="caption" color={done ? "important" : "white"}>
                         {time}
                     </Label>
-                    <Label color={done ? "important" : "invText"}>{runtime}</Label>
+                    <Label color={done ? "important" : "white"}>{runtime}</Label>
                 </Col>
             );
         } else {
             return (
                 <Col type="center">
-                    <Label type="caption" color={done ? "important" : "invText"}>
+                    <Label type="caption" color={done ? "important" : "white"}>
                         {time}
                     </Label>
-                    <Label color={done ? "important" : "invText"}>{day}</Label>
+                    <Label color={done ? "important" : "white"}>{day}</Label>
                 </Col>
             );
         }

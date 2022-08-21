@@ -4,25 +4,37 @@ import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
 import { EventDetails } from "../../store/eurofurence.types";
 
-export type EventsSearchContextType = {
+export type EventsTabsContextType = {
+    selected: null | EventDetails;
+    setSelected: (event: null | EventDetails) => void;
     search: string;
     setSearch: (results: string) => void;
     results: null | EventDetails[];
+    hasResults: boolean;
 };
 
-export const EventsSearchContext = createContext<EventsSearchContextType>({
+export const EventsTabsContext = createContext<EventsTabsContextType>({
+    selected: null,
+    setSelected: () => undefined,
     search: "",
     setSearch: () => undefined,
     results: null,
+    hasResults: false,
 });
 
-export const EventsSearchProvider: FC = ({ children }) => {
+export const EventsTabsContextProvider: FC = ({ children }) => {
     // Source of all events.
     const events = useAppSelector(eventsSelector.selectAll);
+
+    // State of detail view selection.
+    const [selected, setSelected] = useState<null | EventDetails>(null);
 
     // State of query and results.
     const [search, setSearch] = useState<string>("");
     const [results, setResults] = useState<null | EventDetails[]>(null);
+
+    // Check if results are not empty.
+    const hasResults = useMemo(() => (results?.length ?? 0) > 0, [results?.length]);
 
     // Perform search.
     useEffect(() => {
@@ -46,24 +58,19 @@ export const EventsSearchProvider: FC = ({ children }) => {
         return () => clearTimeout(handle);
     }, [events, search]);
 
-    const context = useMemo<EventsSearchContextType>(
+    const context = useMemo<EventsTabsContextType>(
         () => ({
+            selected,
+            setSelected,
             search,
             setSearch,
             results,
+            hasResults,
         }),
-        [search, setSearch, results]
+        [selected, setSelected, search, setSearch, results, hasResults]
     );
 
-    return <EventsSearchContext.Provider value={context}>{children}</EventsSearchContext.Provider>;
+    return <EventsTabsContext.Provider value={context}>{children}</EventsTabsContext.Provider>;
 };
 
-export const useEventsSearchContext = () => useContext(EventsSearchContext);
-
-export const useEventsSearchResults = () => useContext(EventsSearchContext).results;
-
-export const useEventsSearchHasResults = () => useContext(EventsSearchContext).results !== null;
-
-export const useEventsSearchQuery = () => useContext(EventsSearchContext).search;
-
-export const useEventsSearchSetQuery = () => useContext(EventsSearchContext).setSearch;
+export const useEventsTabsContext = () => useContext(EventsTabsContext);
