@@ -2,7 +2,7 @@
   "name": "ef-app_react-native",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
-  "homepage": "http://eurofurence.github.io/ef-app_react-native/",
+  "homepage": "https://eurofurence.github.io/ef-app_react-native/",
   "contributors": [
     {
       "name": "requinard"

@@ -10,6 +10,7 @@ import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
+import { LoginForm } from "../../components/Forms";
 import { conName } from "../../configuration";
 import { useTheme } from "../../context/Theme";
 import { setMomentLocale, Translations } from "../../i18n";
@@ -17,7 +18,6 @@ import { captureException } from "../../sentryHelpers";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { logout } from "../../store/authorization.slice";
 import { setAnalytics, toggleDevMenu } from "../../store/settings.slice";
-import { LoginForm } from "../MainMenu/PagerLogin";
 import { ThemePicker } from "./ThemePicker";
 
 type Language = {
