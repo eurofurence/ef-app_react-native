@@ -93,6 +93,7 @@
           "config": {
             "organization": "eurofurence",
             "project": "ef-app_react-native",
+            "authToken": false,
             "setCommits": true
           }
         }
