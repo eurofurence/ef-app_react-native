@@ -10,7 +10,7 @@ const iconSize = 32; // Matches H1 font size.
 
 export type BadgeInvPadProps = ViewProps & {
     padding: number;
-    badgeColor: ColorValue;
+    badgeColor?: ColorValue;
     textColor: ColorValue;
     textType?: LabelProps["type"];
     textVariant?: LabelProps["variant"];
@@ -19,7 +19,7 @@ export type BadgeInvPadProps = ViewProps & {
 };
 
 export const BadgeInvPad: FC<BadgeInvPadProps> = ({ padding, badgeColor, textColor, textType = "h3", textVariant = "middle", icon, children }) => {
-    const styleContainer = useMemo<ViewStyle>(() => ({ marginHorizontal: -padding, backgroundColor: badgeColor }), [padding, badgeColor]);
+    const styleContainer = useMemo<ViewStyle>(() => ({ marginHorizontal: -padding, backgroundColor: badgeColor ?? "transparent" }), [padding, badgeColor]);
     const styleContent = useMemo<ViewStyle>(() => ({ paddingVertical: 10, paddingHorizontal: padding }), [padding]);
 
     return (

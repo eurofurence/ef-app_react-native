@@ -10,10 +10,11 @@ import { ScreenStartParamsList } from "../app/ScreenStart";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
-import { PlatformSentry } from "../sentryHelpers";
+import { captureException, PlatformSentry } from "../sentryHelpers";
 import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
 import { RecordId } from "../store/eurofurence.types";
+import { useTheme, useThemeType } from "./Theme";
 
 export const sentryRoutingInstrumentation = "ReactNavigationInstrumentation" in PlatformSentry ? new PlatformSentry.ReactNavigationInstrumentation() : undefined;
 
@@ -89,6 +90,23 @@ export const NavigationProvider: FC = ({ children }) => {
     const [isReady, initialState, onStateChange] = useNavigationStatePersistence();
     const logEvent = useAnalytics();
 
+    const theme = useTheme();
+    const type = useThemeType();
+    const navTheme = useMemo(
+        () => ({
+            dark: type === "dark",
+            colors: {
+                primary: theme.primary,
+                background: theme.surface,
+                card: theme.surface,
+                text: theme.text,
+                border: theme.darken,
+                notification: theme.notification,
+            },
+        }),
+        [type, theme]
+    );
+
     const logAnalytics = useCallback(
         (state: NavigationState | undefined) => {
             if (!state) return null;
@@ -97,7 +115,7 @@ export const NavigationProvider: FC = ({ children }) => {
             logEvent("screen_view", {
                 screen_name: route.name,
                 ...route.params,
-            });
+            }).catch(captureException);
         },
         [logEvent]
     );
@@ -113,6 +131,7 @@ export const NavigationProvider: FC = ({ children }) => {
     }
     return (
         <NavigationContainer
+            theme={navTheme}
             ref={navigation}
             linking={linking}
             initialState={initialState}

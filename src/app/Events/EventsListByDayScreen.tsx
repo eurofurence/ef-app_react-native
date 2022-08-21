@@ -15,6 +15,7 @@ import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
+import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
@@ -35,6 +36,9 @@ export type EventsListByDayScreenProps =
 export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ route }) => {
     const { t } = useTranslation("Events");
     const [now] = useNow();
+
+    const { setSelected } = useEventsTabsContext();
+
     // Get the day. Use it to resolve events to display.
     // TODO: @lukashaertel pls fix
     const day = useAppSelector((state) => eventDaysSelectors.selectById(state, route.name));
@@ -76,6 +80,7 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ rou
     return (
         <EventsSectionedListGeneric
             eventsGroups={eventsGroups}
+            select={setSelected}
             leader={
                 <Label type="h1" variant="middle" mt={30}>
                     {day?.Name ?? ""}
