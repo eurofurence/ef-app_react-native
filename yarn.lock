@@ -8706,6 +8706,7 @@ __metadata:
     eslint-plugin-testing-library: ^5.5.1
     expo: ^46.0.0
     expo-application: ~4.2.2
+    expo-av: ~12.0.4
     expo-checkbox: ~2.2.0
     expo-constants: ~13.2.3
     expo-device: ~4.3.0
@@ -9609,6 +9610,17 @@ __metadata:
     path-browserify: ^1.0.0
     url-parse: ^1.5.9
   checksum: 4ea8d73afbacc539391007ae6cda1b62478a60388b9fab42def333d1230c92b5c345da28f47167e74d779fecad49850734ac3e690759cccdefe01dd0dea5c1e6
+  languageName: node
+  linkType: hard
+
+"expo-av@npm:~12.0.4":
+  version: 12.0.4
+  resolution: "expo-av@npm:12.0.4"
+  dependencies:
+    "@expo/config-plugins": ~5.0.0
+  peerDependencies:
+    expo: "*"
+  checksum: 5d985ab18159f45e1a2857af8b671285d940c457797eef489888c019fb1a760e1dcc01ea7eaff6f06cd80d4d9b17f2573568cd4c01799e6f054df76f89e312ec
   languageName: node
   linkType: hard
 
