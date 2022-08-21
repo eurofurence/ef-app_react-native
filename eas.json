@@ -9,9 +9,11 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "preview"
     },
     "production": {
+      "channel": "production",
       "android": {
         "buildType": "app-bundle",
         "autoIncrement": "versionCode"
