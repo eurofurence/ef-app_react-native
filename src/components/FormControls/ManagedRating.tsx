@@ -2,7 +2,6 @@ import { Controller } from "react-hook-form";
 import { StyleProp, ViewStyle } from "react-native";
 import StarRating from "react-native-star-rating-widget";
 
-import { useTheme } from "../../context/Theme";
 import { Label } from "../Atoms/Label";
 import { Col } from "../Containers/Col";
 

@@ -8,10 +8,6 @@ const tagsFromList =
     <TagType extends string>(type: TagType) =>
     <ResultType extends RecordMetadata[]>(result: ResultType | undefined) =>
         result ? result.map((it) => ({ type, id: it.Id })) : [type];
-const tagsFromItem =
-    <TagType extends string>(type: TagType) =>
-    <ResultType extends RecordMetadata>(result: ResultType | undefined) =>
-        result ? [{ type, id: result.Id }] : [type];
 
 export const eurofurenceService = createApi({
     reducerPath: "eurofurenceService",
