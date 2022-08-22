@@ -1,0 +1,1 @@
+ignore_patterns: ["**.*.spec.*", "setupTests.js", "testUtils.tsx"]
