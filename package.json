@@ -99,7 +99,7 @@
     "@expo/ngrok": "^2.5.0",
     "@expo/webpack-config": "^0.17.0",
     "@testing-library/jest-native": "^4.0.5",
-    "@testing-library/react-native": "^10.1.1",
+    "@testing-library/react-native": "^11.0.0",
     "@types/eslint": "^8",
     "@types/jest": "^28.1.4",
     "@types/lodash": "^4",
@@ -118,7 +118,7 @@
     "jest-expo": "^46.0.0",
     "prettier": "^2.7.1",
     "react-native-bundle-visualizer": "^3.1.1",
-    "react-test-renderer": "^17.0.2",
+    "react-test-renderer": "^18.0.0",
     "typescript": "^4.6.3"
   },
   "eslintConfig": {

@@ -28,7 +28,7 @@ describe("useNow", function () {
 
         const diff = result.current[0].diff(moment(), "minutes");
 
-        expect(diff).toBe(60);
+        expect(diff).toBeCloseTo(60, 1);
     });
     it("returns a time in the past if a state is supplied with a negative amount", async () => {
         const { result } = customRenderHook(() => useNow(), {
@@ -43,7 +43,7 @@ describe("useNow", function () {
 
         const diff = result.current[0].diff(moment(), "minutes");
 
-        expect(diff).toBe(-60);
+        expect(diff).toBeCloseTo(-60, 1);
     });
 
     it("does not apply timetravel when it is not enabled", async () => {
