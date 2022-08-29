@@ -28,7 +28,7 @@ const persistedReducer = persistReducer(
         key: "root",
         version: 2,
         storage: AsyncStorage,
-        whitelist: [timeTravelSlice.name, eurofurenceService.reducerPath, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name, settingsSlice.name],
+        whitelist: [timeTravelSlice.name, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name, settingsSlice.name],
     },
     reducers
 );
@@ -39,7 +39,7 @@ export const store = configureStore({
         const middleware = getDefaultMiddleware({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-                ignoredPaths: [eurofurenceCache.name, eurofurenceService.reducerPath],
+                ignoredPaths: [eurofurenceCache.name],
                 warnAfter: 200,
             },
         }).concat(eurofurenceService.middleware, authorizationService.middleware);
