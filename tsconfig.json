@@ -6,7 +6,8 @@
   "extends": "expo/tsconfig.base",
   "include": [
     "./src",
-    "./node_modules/moment/locale",
+//    "./node_modules/moment/locale",
+    "./.storybook",
     "./package.json"
   ]
 }
