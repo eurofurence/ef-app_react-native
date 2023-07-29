@@ -47,7 +47,7 @@
             {
               "scheme": "https",
               "host": "app.eurofurence.org",
-              "pathPrefix": "/EF26/Web/"
+              "pathPrefix": "/EF27/Web/"
             }
           ],
           "category": [

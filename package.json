@@ -17,9 +17,9 @@
   "convention": {
     "name": "Eurofurence",
     "abbreviation": "EF",
-    "identifier": "EF26",
-    "appBase": "https://app.eurofurence.org/EF26",
-    "apiBase": "https://app.eurofurence.org/EF26/Api"
+    "identifier": "EF27",
+    "appBase": "https://app.eurofurence.org/EF27",
+    "apiBase": "https://app.eurofurence.org/EF27/Api"
   },
   "license": "MIT",
   "scripts": {
@@ -87,6 +87,7 @@
     "react-native-screens": "~3.15.0",
     "react-native-star-rating-widget": "^1.2.0",
     "react-native-svg": "12.3.0",
+    "react-native-web": "~0.18.7",
     "react-redux": "^8.0.2",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
