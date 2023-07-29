@@ -20,9 +20,9 @@ export const AnalyticsManager = () => {
                       id: user.uid,
                       username: user.username,
                   }
-                : null
+                : null,
         );
-        PlatformSentry.setTag("appVersionCode", Constants.manifest?.android?.versionCode);
+        PlatformSentry.setTag("appVersionCode", Constants.expoConfig?.android?.versionCode);
 
         Analytics.setUserId(user?.uid ?? null).catch(captureException);
         Analytics.setUserProperty("username", user?.username ?? null).catch(captureException);

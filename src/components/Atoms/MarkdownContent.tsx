@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, PropsWithChildren, useMemo } from "react";
 import { StyleProp, TextStyle } from "react-native";
 // @ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
@@ -6,7 +6,7 @@ import Markdown from "react-native-easy-markdown";
 import { useTheme } from "../../context/Theme";
 import { LabelProps } from "./Label";
 
-export type MarkdownContentProps = {
+export type MarkdownContentProps = PropsWithChildren<{
     defaultType?: LabelProps["type"];
 
     /**
@@ -28,7 +28,7 @@ export type MarkdownContentProps = {
      * Margin bottom.
      */
     mb?: number;
-};
+}>;
 
 export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, children }) => {
     // Compute outer container margins.

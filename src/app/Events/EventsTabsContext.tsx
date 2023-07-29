@@ -1,4 +1,4 @@
-import { createContext, FC, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, FC, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
@@ -22,7 +22,7 @@ export const EventsTabsContext = createContext<EventsTabsContextType>({
     hasResults: false,
 });
 
-export const EventsTabsContextProvider: FC = ({ children }) => {
+export const EventsTabsContextProvider: FC<PropsWithChildren> = ({ children }) => {
     // Source of all events.
     const events = useAppSelector(eventsSelector.selectAll);
 

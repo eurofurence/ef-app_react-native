@@ -12,11 +12,10 @@ import { TabNavigationEventMap, TabNavigationProp } from "./TabsNavigator";
  */
 export function navigateTab<ParamList extends ParamListBase, RouteName extends keyof ParamList>(
     navigation: (PagesNavigationProp<ParamList> & EventEmitter<PagesNavigationEventMap>) | (TabNavigationProp<ParamList> & EventEmitter<TabNavigationEventMap>),
-    nameOrIndex: number | Route<Extract<RouteName, string>, ParamList[RouteName]>
+    nameOrIndex: number | Route<Extract<RouteName, string>, ParamList[RouteName]>,
 ) {
     const state = navigation.getState();
     const target = typeof nameOrIndex === "number" ? state.routes[nameOrIndex] : nameOrIndex;
-
     // Skip if invalid target.
     if (!target) return;
 

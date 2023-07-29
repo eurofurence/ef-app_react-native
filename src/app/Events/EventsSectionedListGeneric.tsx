@@ -27,7 +27,7 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
     const navigation = useAppNavigation("Areas");
 
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
-    const navigateTo = useCallback((event) => navigation.push("Event", { id: event.Id }), [navigation]);
+    const navigateTo = useCallback((event: EventDetails) => navigation.push("Event", { id: event.Id }), [navigation]);
     const synchronizer = useSynchronizer();
 
     return (

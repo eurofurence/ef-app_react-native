@@ -31,7 +31,7 @@ export const isTriggerWithNotification = (trigger: NotificationTrigger): trigger
     // Is for android.
     "remoteMessage" in trigger &&
     // Has non-null notification.
-    typeof trigger.remoteMessage.notification === "object" &&
+    typeof trigger.remoteMessage?.notification === "object" &&
     trigger.remoteMessage.notification !== null;
 
 /**
@@ -45,5 +45,5 @@ export const isTriggerWithData = (trigger: NotificationTrigger): trigger is Fire
     // Is for android.
     "remoteMessage" in trigger &&
     // Has non-null data.
-    typeof trigger.remoteMessage.data === "object" &&
+    typeof trigger.remoteMessage?.data === "object" &&
     trigger.remoteMessage.data !== null;

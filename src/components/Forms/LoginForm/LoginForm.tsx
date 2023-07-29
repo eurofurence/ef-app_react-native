@@ -61,7 +61,7 @@ export const LoginForm: FC<LoginFormProps> = ({ style, close }) => {
                     autoComplete={"username"}
                     autoCapitalize={"none"}
                     textContentType={"username"}
-                    keyboardType={"numeric"}
+                    inputMode={"numeric"}
                 />
 
                 <ManagedTextInput<LoginSchema>

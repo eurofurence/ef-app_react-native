@@ -1,5 +1,5 @@
 import { noop } from "lodash";
-import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Vibration } from "react-native";
 
 import { apiBase } from "../../configuration";
@@ -24,7 +24,7 @@ const SynchronizationContext = createContext<SynchronizationProviderProps>({
     clear: noop,
 });
 
-export const SynchronizationProvider: FC = ({ children }) => {
+export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => {
     const dispatch = useAppDispatch();
     const lastFetch = useAppSelector((state) => state.eurofurenceCache.lastSynchronised);
     const [count, setCount] = useState(1);

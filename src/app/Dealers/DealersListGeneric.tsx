@@ -20,7 +20,7 @@ export type DealersListGenericProps = {
 };
 
 export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, leader, dealers, trailer }) => {
-    const navigateTo = useCallback((dealer) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
+    const navigateTo = useCallback((dealer: DealerDetails) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
 
     return (
         <View style={StyleSheet.absoluteFill}>

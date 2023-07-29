@@ -22,7 +22,7 @@ export type DealersSectionedListGenericProps = {
 
 export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> = ({ leader, dealersGroups, trailer }) => {
     const navigation = useAppNavigation("Areas");
-    const navigateTo = useCallback((dealer) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
+    const navigateTo = useCallback((dealer: DealerDetails) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
     const synchronizer = useSynchronizer();
     return (
         <View style={StyleSheet.absoluteFill}>

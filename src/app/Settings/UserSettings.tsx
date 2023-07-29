@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import Checkbox from "expo-checkbox";
 import { capitalize, noop, orderBy } from "lodash";
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -132,4 +132,4 @@ export const UserSettings = () => {
     );
 };
 
-const SettingItem: FC = ({ children }) => <View style={{ marginVertical: 10 }}>{children}</View>;
+const SettingItem: FC<PropsWithChildren> = ({ children }) => <View style={{ marginVertical: 10 }}>{children}</View>;

@@ -32,7 +32,7 @@ export const ManagedTextInput = <T extends object>({ name, label, style, ...text
         [theme]
     );
 
-    const textFieldStyle = useMemo(
+    const textFieldStyle = useMemo<StyleProp<TextStyle>>(
         () => [
             {
                 color: theme.text,

@@ -85,7 +85,8 @@
           "icon": "./assets/images/notification.png",
           "color": "#006459"
         }
-      ]
+      ],
+      "expo-localization"
     ],
     "hooks": {
       "postPublish": [

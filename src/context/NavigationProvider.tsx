@@ -1,7 +1,7 @@
 import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
 import * as Linking from "expo-linking";
-import { FC, useCallback, useMemo, useRef } from "react";
+import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
 import { DealersTabsScreenParamsList } from "../app/Dealers/DealersTabsScreen";
 import { EventsTabsScreenParamsList } from "../app/Events/EventsTabsScreen";
@@ -90,7 +90,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
     };
 };
 
-export const NavigationProvider: FC = ({ children }) => {
+export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
     const navigation = useRef<NavigationContainerRef<any> | null>(null);
     // Get navigation state from persistence.
     const [isReady, initialState, onStateChange] = useNavigationStatePersistence();

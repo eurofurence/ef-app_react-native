@@ -1,5 +1,5 @@
 import { useIsFocused } from "@react-navigation/core";
-import { createContext, FC, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 
 /**
  * Type for the context.
@@ -37,7 +37,7 @@ export const LoadingContext = createContext<LoadingContextType>({
  * @param children The children to provide for.
  * @constructor
  */
-export const LoadingContextProvider: FC = ({ children }) => {
+export const LoadingContextProvider: FC<PropsWithChildren> = ({ children }) => {
     // Array of active IDs.
     const [active, setActive] = useState<string[]>([]);
 

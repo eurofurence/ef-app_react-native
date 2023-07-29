@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 export const padFloater = 20;
@@ -6,7 +6,7 @@ export const padFloater = 20;
 /**
  * Props to the Floater.
  */
-export type FloaterProps = {
+export type FloaterProps = PropsWithChildren<{
     /**
      * Style of the container view.
      */
@@ -15,7 +15,7 @@ export type FloaterProps = {
      * Style of the content view.
      */
     contentStyle?: StyleProp<ViewStyle>;
-};
+}>;
 
 /**
  * A scrolling content with a child that has a maximum width.

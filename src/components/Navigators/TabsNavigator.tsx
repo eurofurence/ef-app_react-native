@@ -5,6 +5,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { IconNames } from "../../types/IconNames";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 import { navigateTab } from "./Common";
+import { TabActions } from "@react-navigation/core";
 
 /**
  * Options for a tabs-screen.
@@ -92,7 +93,7 @@ export type TabNavigationEventMap = {
 export type TabNavigationProp<
     ParamList extends ParamListBase,
     RouteName extends keyof ParamList = keyof ParamList,
-    NavigatorID extends string | undefined = undefined
+    NavigatorID extends string | undefined = undefined,
 > = NavigationProp<ParamList, RouteName, NavigatorID, TabNavigationState<ParamList>, TabNavigationOptions, TabNavigationEventMap> & TabActionHelpers<ParamList>;
 
 /**
@@ -143,7 +144,8 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
                     text: descriptors[route.key].options.title,
                     onPress: () => {
                         // todo: @lukashaertel pls fix
-                        navigateTab(navigation, route);
+                        console.log(JSON.stringify(navigation.getState(), null, 2), route);
+                        navigateTab(navigation, i);
                         tabs.current?.close();
                     },
                     indicate: descriptors[route.key].options.indicate,

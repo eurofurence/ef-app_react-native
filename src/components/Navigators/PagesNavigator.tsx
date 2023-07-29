@@ -91,7 +91,7 @@ export type PagesNavigationEventMap = {
 export type PagesNavigationProp<
     ParamList extends ParamListBase,
     RouteName extends keyof ParamList = keyof ParamList,
-    NavigatorID extends string | undefined = undefined
+    NavigatorID extends string | undefined = undefined,
 > = NavigationProp<ParamList, RouteName, NavigatorID, TabNavigationState<ParamList>, PagesNavigationOptions, PagesNavigationEventMap> & TabActionHelpers<ParamList>;
 
 /**
@@ -118,7 +118,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
     const [viewing, setViewing] = useState(state.index);
 
     // Style for arranger's width, fitting all given pages.
-    const arrangerWidth = useMemo(() => ({ width: `${state.routes.length * 100}%` }), [state.routes.length]);
+    const arrangerWidth = useMemo<StyleProp<Animated.AnimateStyle<StyleProp<ViewStyle>>>>(() => ({ width: `${state.routes.length * 100}%` }), [state.routes.length]);
 
     // Target and offset used for differentially determining if set from navigation or set from pan or button press.
     const offset = useSharedValue(state.index);
@@ -134,7 +134,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
     useAnimatedReaction(
         () => Math.max(0, Math.min(Math.round(offset.value), state.routes.length - 1)),
         (index) => runOnJS(setViewing)(index),
-        [navigation, offset, state.routes.length]
+        [navigation, offset, state.routes.length],
     );
 
     // React to viewed page change by scrolling to the page in the top tabs.
@@ -147,7 +147,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
         () => ({
             transform: [{ translateX: -width * offset.value }],
         }),
-        [width, offset]
+        [width, offset],
     );
 
     // Swipe page gesture.

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -16,7 +16,7 @@ import { PrivateMessageLinker } from "../PrivateMessages/PrivateMessageLinker";
 /**
  * Props to the pager.
  */
-export type PagerMenuProps = {
+export type PagerMenuProps = PropsWithChildren<{
     onMessages?: () => void;
     onLogin?: () => void;
     onInfo?: () => void;
@@ -25,7 +25,7 @@ export type PagerMenuProps = {
     onAbout?: () => void;
     onSettings?: () => void;
     onMap?: (id: RecordId) => void;
-};
+}>;
 
 export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onAbout, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");

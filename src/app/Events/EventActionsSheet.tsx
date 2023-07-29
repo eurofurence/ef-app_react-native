@@ -1,7 +1,7 @@
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { debounce } from "lodash";
 import { FC, useEffect, useMemo, useRef } from "react";
-import { StyleSheet } from "react-native";
+import { Platform, ScrollView, StyleSheet } from "react-native";
 
 import { useThemeBackground } from "../../context/Theme";
 import { EventDetails } from "../../store/eurofurence.types";
@@ -11,6 +11,11 @@ type EventActionsSheetProps = {
     event: EventDetails | null;
     onClose?: () => void;
 };
+
+/**
+ * Returns a normal scroll view on web for compatibility.
+ */
+const EventActionsSheetScrollView = Platform.OS === "web" ? ScrollView : BottomSheetScrollView;
 
 export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }) => {
     const sheetRef = useRef<BottomSheet>(null);
@@ -38,7 +43,7 @@ export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }
             enablePanDownToClose
             onClose={close}
         >
-            <BottomSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} />}</BottomSheetScrollView>
+            <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} />}</EventActionsSheetScrollView>
         </BottomSheet>
     );
 };
