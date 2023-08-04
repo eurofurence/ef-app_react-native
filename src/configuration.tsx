@@ -24,3 +24,8 @@ export const appBase = packageData.convention.appBase;
  * API base, API methods are under this URL.
  */
 export const apiBase = packageData.convention.apiBase;
+
+/**
+ * True if login is available for this convention.
+ */
+export const loginAvailable = /true|yes/i.test(packageData.convention.loginAvailable);

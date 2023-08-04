@@ -1,11 +1,10 @@
+import { CommonActions } from "@react-navigation/core";
 import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabActionHelpers, TabNavigationState, TabRouter, useNavigationBuilder } from "@react-navigation/native";
 import { FC, ReactNode, RefObject, useRef } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { IconNames } from "../../types/IconNames";
 import { Tabs, TabsRef } from "../Containers/Tabs";
-import { navigateTab } from "./Common";
-import { TabActions } from "@react-navigation/core";
 
 /**
  * Options for a tabs-screen.
@@ -122,6 +121,13 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
         initialRouteName,
     });
 
+    // Wrapper for dispatching navigation on presses.
+    const dispatchNavigateToRoute = (routeIndex: number) =>
+        navigation.dispatch({
+            ...CommonActions.navigate(state.routes[routeIndex]),
+            target: state.key,
+        });
+
     const tabs = useRef<TabsRef>(null);
 
     return (
@@ -143,9 +149,7 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
                     icon: descriptors[route.key].options.icon,
                     text: descriptors[route.key].options.title,
                     onPress: () => {
-                        // todo: @lukashaertel pls fix
-                        console.log(JSON.stringify(navigation.getState(), null, 2), route);
-                        navigateTab(navigation, i);
+                        dispatchNavigateToRoute(i);
                         tabs.current?.close();
                     },
                     indicate: descriptors[route.key].options.indicate,

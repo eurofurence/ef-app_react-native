@@ -8,10 +8,36 @@ import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
 import { useTabs } from "../../components/Containers/Tabs";
+import { loginAvailable } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { selectBrowseableMaps } from "../../store/eurofurence.selectors";
 import { RecordId } from "../../store/eurofurence.types";
 import { PrivateMessageLinker } from "../PrivateMessages/PrivateMessageLinker";
+
+type PagerPrimaryLoginProps = {
+    loggedIn: boolean;
+    open: boolean;
+    onMessages?: () => void;
+    onLogin?: () => void;
+};
+const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, open, onMessages, onLogin }) => {
+    const { t } = useTranslation("Menu");
+
+    if (loggedIn) {
+        return <PrivateMessageLinker onOpenMessages={onMessages} open={open} />;
+    } else {
+        return (
+            <View style={{ padding: 30 }}>
+                <Label style={styles.marginBefore} type="caption">
+                    {t("not_logged_in")}
+                </Label>
+                <Button style={styles.marginBefore} icon="login" onPress={onLogin}>
+                    {t("logged_in_now")}
+                </Button>
+            </View>
+        );
+    }
+};
 
 /**
  * Props to the pager.
@@ -35,18 +61,8 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
 
     return (
         <Col type="stretch">
-            {loggedIn ? (
-                <PrivateMessageLinker onOpenMessages={onMessages} open={tabs.isOpen} />
-            ) : (
-                <View style={{ padding: 30 }}>
-                    <Label style={styles.marginBefore} type="caption">
-                        {t("not_logged_in")}
-                    </Label>
-                    <Button style={styles.marginBefore} icon="login" onPress={onLogin}>
-                        {t("logged_in_now")}
-                    </Button>
-                </View>
-            )}
+            {!loginAvailable ? null : <PagerPrimaryLogin loggedIn={loggedIn} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} />}
+
             <Grid cols={3} style={{ alignSelf: "stretch" }}>
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
                 <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />

@@ -1,3 +1,4 @@
+import { CommonActions } from "@react-navigation/core";
 import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabActionHelpers, TabNavigationState, TabRouter, useNavigationBuilder } from "@react-navigation/native";
 import { FC, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
@@ -6,7 +7,6 @@ import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAni
 
 import { IconNames } from "../../types/IconNames";
 import { Pages, PagesRef } from "../Containers/Pages";
-import { navigateTab } from "./Common";
 
 /**
  * Options for a pages-screen.
@@ -110,6 +110,14 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
         initialRouteName,
     });
 
+    // Wrapper for dispatching navigation on presses and swipes.
+    const dispatchNavigateToRoute = (routeIndex: number) => {
+        navigation.dispatch({
+            ...CommonActions.navigate(state.routes[routeIndex]),
+            target: state.key,
+        });
+    };
+
     // Reference, used for scrolling to selected page in tabs.
     const pages = useRef<PagesRef>(null);
 
@@ -166,11 +174,9 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
             const index = Math.max(0, Math.min(Math.round(offset.value + shift), state.routes.length - 1));
 
             // Animate to the end position. If able to finish, sync navigation.
-            offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished, current) => {
+            offset.value = withTiming(index, { duration: 234, easing: Easing.out(Easing.cubic) }, (finished) => {
                 if (finished) {
-                    // The callback apparently does not work as per spec, or the closure is not capturing the proper index. Therefore
-                    // we want to navigate to the actual endpoint rather than the index.
-                    runOnJS(navigateTab)(navigation, Math.round(current as number));
+                    runOnJS(dispatchNavigateToRoute)(offset.value);
                 }
             });
         });
@@ -189,7 +195,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
                     text: descriptors[route.key].options.title,
                     onPress: () => {
                         offset.value = i;
-                        navigateTab(navigation, i);
+                        dispatchNavigateToRoute(i);
                     },
                 }))}
             />

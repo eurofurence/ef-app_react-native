@@ -19,7 +19,8 @@
     "abbreviation": "EF",
     "identifier": "EF27",
     "appBase": "https://app.eurofurence.org/EF27",
-    "apiBase": "https://app.eurofurence.org/EF27/Api"
+    "apiBase": "https://app.eurofurence.org/EF27/Api",
+    "loginAvailable": "false"
   },
   "license": "MIT",
   "scripts": {
@@ -105,12 +106,13 @@
     "@types/eslint": "^8",
     "@types/lodash": "^4",
     "@types/react": "~18.0.14",
-    "@types/react-dom": "^18",
+    "@types/react-dom": "~18.0.10",
     "@types/react-test-renderer": "^18",
     "@types/redux-logger": "^3",
     "eslint": "^8.46.0",
     "eslint-config-universe": "^11.3.0",
     "eslint-plugin-i18n-json": "^4.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-testing-library": "^5.11.0",
     "gh-pages": "^5.0.0",
     "jest": "^29.2.1",
