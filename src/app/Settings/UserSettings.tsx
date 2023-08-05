@@ -6,7 +6,7 @@ import { LanguagePicker } from "./LanguagePicker";
 import { LoginFormOrDisplay } from "./LoginFormOrDisplay";
 import { ThemePicker } from "./ThemePicker";
 import { Section } from "../../components/Atoms/Section";
-import { loginAvailable } from "../../configuration";
+import { showLogin } from "../../configuration";
 
 /**
  * User settings section of the settings screen.
@@ -30,7 +30,7 @@ export const UserSettings = () => {
             <LanguagePicker />
 
             {/* Login mask, conditionally available when defined in PLC. */}
-            {!loginAvailable ? null : <LoginFormOrDisplay />}
+            {!showLogin ? null : <LoginFormOrDisplay />}
         </View>
     );
 };

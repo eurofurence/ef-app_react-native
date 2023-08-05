@@ -4,10 +4,10 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
+import { Tab } from "./Tab";
 import { useTheme } from "../../context/Theme";
 import { IconNames } from "../../types/IconNames";
 import { Activity } from "../Atoms/Activity";
-import { Tab } from "./Tab";
 
 /**
  * Arguments to the tabs.
@@ -146,7 +146,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
                 },
             ],
         }),
-        [offset]
+        [offset],
     );
 
     // Derive transformation from offset.
@@ -154,7 +154,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         () => ({
             transform: [{ translateY: -offset.value * height }],
         }),
-        [offset, height]
+        [offset, height],
     );
 
     // Opens the more area and runs the handlers.

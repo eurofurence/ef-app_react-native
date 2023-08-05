@@ -6,6 +6,8 @@ import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { DealersListAllScreen, DealersListAllScreenParams } from "./DealersListAllScreen";
+import { DealersListByDayScreen, DealersListByDayScreenParams } from "./DealersListByDayScreen";
 import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useNow } from "../../hooks/useNow";
@@ -13,8 +15,6 @@ import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence.selectors";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { DealersListAllScreen, DealersListAllScreenParams } from "./DealersListAllScreen";
-import { DealersListByDayScreen, DealersListByDayScreenParams } from "./DealersListByDayScreen";
 
 /**
  * Available routes.
@@ -39,12 +39,7 @@ export type DealersTabsScreenParams = NavigatorScreenParams<DealersTabsScreenPar
 /**
  * The properties to the screen as a component.
  */
-export type DealersTabsScreenProps = CompositeScreenProps<TabScreenProps<ScreenAreasParamsList, "Events">, StackScreenProps<ScreenStartParamsList>>;
-
-/**
- * The properties to the screen as a component.
- */
-export type EventsTabsScreenProps =
+export type DealersTabsScreenProps =
     // Route carrying from area screen at "Dealers", own navigation via own parameter list.
     CompositeScreenProps<
         TabScreenProps<ScreenAreasParamsList, "Dealers">,
@@ -65,7 +60,7 @@ export const DealersTabsScreen: FC<DealersTabsScreenProps> = () => {
             fri: moment().day(5).format("ddd"),
             sat: moment().day(6).format("ddd"),
         }),
-        [t]
+        [t],
     );
 
     // Returns the flags if this is the current day.

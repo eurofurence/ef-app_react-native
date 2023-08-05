@@ -3,6 +3,7 @@ import { NavigationState } from "@react-navigation/routers";
 import * as Linking from "expo-linking";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
+import { useTheme, useThemeType } from "./Theme";
 import { DealersTabsScreenParamsList } from "../app/Dealers/DealersTabsScreen";
 import { EventsTabsScreenParamsList } from "../app/Events/EventsTabsScreen";
 import { ScreenAreasParamsList } from "../app/ScreenAreas";
@@ -14,7 +15,6 @@ import { captureException, PlatformSentry } from "../sentryHelpers";
 import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
 import { RecordId } from "../store/eurofurence.types";
-import { useTheme, useThemeType } from "./Theme";
 
 export const sentryRoutingInstrumentation = "ReactNavigationInstrumentation" in PlatformSentry ? new PlatformSentry.ReactNavigationInstrumentation() : undefined;
 
@@ -110,20 +110,28 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
                 notification: theme.notification,
             },
         }),
-        [type, theme]
+        [type, theme],
     );
 
     const logAnalytics = useCallback(
         (state: NavigationState | undefined) => {
+            // Skip, no state.
             if (!state) return null;
-            const route: { name: string; params?: object; key: string } = state.routes[state.index] as any;
 
-            logEvent("screen_view", {
-                screen_name: route.name,
-                ...route.params,
-            }).catch(captureException);
+            // Get initial route and create path.
+            let current = state.routes[state.index];
+            let path = current.name;
+
+            // While nested screens are available, add.
+            while (typeof current?.state?.index === "number") {
+                current = current.state.routes[current.state.index] as any;
+                path = `${path}/${current.name}`;
+            }
+
+            // Log screen view with params.
+            logEvent("screen_view", { screen_name: path, ...current.params }).catch(captureException);
         },
-        [logEvent]
+        [logEvent],
     );
 
     const days = useAppSelector(eventDaysSelectors.selectIds);

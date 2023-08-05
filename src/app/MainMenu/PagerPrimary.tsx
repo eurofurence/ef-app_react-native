@@ -8,7 +8,7 @@ import { Col } from "../../components/Containers/Col";
 import { Grid } from "../../components/Containers/Grid";
 import { Tab } from "../../components/Containers/Tab";
 import { useTabs } from "../../components/Containers/Tabs";
-import { loginAvailable } from "../../configuration";
+import { menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { selectBrowseableMaps } from "../../store/eurofurence.selectors";
 import { RecordId } from "../../store/eurofurence.types";
@@ -61,16 +61,17 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
 
     return (
         <Col type="stretch">
-            {!loginAvailable ? null : <PagerPrimaryLogin loggedIn={loggedIn} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} />}
+            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} />}
 
-            <Grid cols={3} style={{ alignSelf: "stretch" }}>
+            <Grid cols={menuColumns} style={{ alignSelf: "stretch" }}>
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
-                <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />
-                <Tab icon="book-outline" text={t("services")} onPress={onServices} />
+                {!showCatchEm ? null : <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />}
+                {!showServices ? null : <Tab icon="book-outline" text={t("services")} onPress={onServices} />}
                 <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
                 <Tab icon="cog" text={t("settings")} onPress={onSettings} />
                 {children}
             </Grid>
+
             <Col style={{ padding: 30, alignItems: "stretch" }}>
                 {maps.map((it) => (
                     <Button key={it.Id} style={{ marginVertical: 10 }} icon={"map"} onPress={() => onMap && onMap(it.Id)}>

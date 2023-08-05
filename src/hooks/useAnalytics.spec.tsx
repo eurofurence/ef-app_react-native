@@ -1,11 +1,11 @@
-import * as Analytics from "expo-firebase-analytics";
+import analytics from "@react-native-firebase/analytics";
 
-import { customRenderHook } from "../testUtils";
 import { useAnalytics } from "./useAnalytics";
+import { customRenderHook } from "../testUtils";
 
 describe("useAnalytics", function () {
     it("should not try to log analytics when it is not enabled", () => {
-        const spy = jest.spyOn(Analytics, "logEvent");
+        const spy = jest.spyOn(analytics(), "logEvent");
         spy.mockImplementation();
 
         const result = customRenderHook(() => useAnalytics(), {
@@ -25,7 +25,7 @@ describe("useAnalytics", function () {
     });
 
     it("should actually call analytics when it is enabled", () => {
-        const spy = jest.spyOn(Analytics, "logEvent");
+        const spy = jest.spyOn(analytics(), "logEvent");
         spy.mockImplementation();
 
         const result = customRenderHook(() => useAnalytics(), {

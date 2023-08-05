@@ -26,6 +26,21 @@ export const appBase = packageData.convention.appBase;
 export const apiBase = packageData.convention.apiBase;
 
 /**
+ * Number of columns to use in main menu pager.
+ */
+export const menuColumns = packageData.convention.menuColumns;
+
+/**
  * True if login is available for this convention.
  */
-export const loginAvailable = /true|yes/i.test(packageData.convention.loginAvailable);
+export const showLogin = packageData.convention.showLogin;
+
+/**
+ * True if services are available for this convention.
+ */
+export const showServices = packageData.convention.showServices;
+
+/**
+ * True if catch-em-all game is available for this convention.
+ */
+export const showCatchEm = packageData.convention.showCatchEm;

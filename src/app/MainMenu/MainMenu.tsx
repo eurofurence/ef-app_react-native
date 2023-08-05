@@ -1,15 +1,16 @@
 import { FC, RefObject, useMemo, useRef } from "react";
 import { Linking } from "react-native";
 
+import { PagerLogin } from "./PagerLogin";
+import { PagerPrimary } from "./PagerPrimary";
 import { Pager, PagerRef } from "../../components/Containers/Pager";
 import { Tab } from "../../components/Containers/Tab";
 import { TabsRef } from "../../components/Containers/Tabs";
+import { showLogin } from "../../configuration";
 import { useAdditionalServices } from "../../hooks/useAdditionalServices";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useFursuitGames } from "../../hooks/useFursuitGames";
 import { RecordId } from "../../store/eurofurence.types";
-import { PagerLogin } from "./PagerLogin";
-import { PagerPrimary } from "./PagerPrimary";
 
 export type MainMenuProps = {
     tabs: RefObject<TabsRef>;
@@ -53,8 +54,26 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 tabs.current?.close();
             },
         }),
-        [tabs, pager, openFursuitGames, openAdditionalServices]
+        [tabs, pager, openFursuitGames, openAdditionalServices],
     );
+
+    // If no login, do not return pager.
+    if (!showLogin) {
+        return (
+            <PagerPrimary
+                onMessages={on.messages}
+                onLogin={on.login}
+                onInfo={on.info}
+                onCatchEmAll={on.catchEmAll}
+                onServices={on.services}
+                onSettings={on.settings}
+                onAbout={on.about}
+                onMap={on.map}
+            >
+                <Tab icon={"twitter"} text={"Twitter"} onPress={() => Linking.openURL("https://twitter.com/eurofurence")} />
+            </PagerPrimary>
+        );
+    }
 
     return (
         <Pager

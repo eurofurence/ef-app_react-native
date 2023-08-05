@@ -68,7 +68,7 @@ export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, r
         () => ({
             transform: [{ translateX: -0.5 * width * offset.value }],
         }),
-        [width, offset]
+        [width, offset],
     );
 
     // Handle to invoke internal mutations from outside if needed.
@@ -86,7 +86,7 @@ export const Pager = forwardRef<PagerRef, PagerProps>(({ style, left, right }, r
                 setIsRight(true);
             },
         }),
-        [offset]
+        [offset],
     );
 
     // Double width row that starts on the left. Translates the right part via status.
