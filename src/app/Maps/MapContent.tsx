@@ -1,16 +1,16 @@
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { ReactNativeZoomableView as ZoomableView, ZoomableViewEvent } from "@openspacelabs/react-native-zoomable-view";
 import { chain, clamp } from "lodash";
 import * as React from "react";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, StyleSheet, View, ViewStyle } from "react-native";
+import { FlatList, Image, Platform, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
 
+import { LinkItem } from "./LinkItem";
 import { Label } from "../../components/Atoms/Label";
 import { Marker } from "../../components/Atoms/Marker";
 import { useThemeBackground } from "../../context/Theme";
 import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";
-import { LinkItem } from "./LinkItem";
 
 const distSq = (hx: number, hy: number) => hx * hx + hy * hy;
 const circleTouches = (x1: number, y1: number, x2: number, y2: number, x: number, y: number, r: number) => {
@@ -31,6 +31,11 @@ export type MapContentProps = {
     entry?: MapEntryDetails;
     link?: LinkFragment;
 };
+
+/**
+ * Returns a normal flat list on web for compatibility.
+ */
+const MapContentFlatList = Platform.OS === "web" ? FlatList : BottomSheetFlatList;
 
 export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
     const { t } = useTranslation("Maps");
@@ -67,7 +72,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                     .filter((entry) => circleTouches(x1, y1, x2, y2, entry.X, entry.Y, entry.TapRadius))
                     .orderBy((entry) => distSq(entry.X - centerX, entry.Y - centerY), "asc")
                     .flatMap((entry) => entry.Links.map((link, i) => ({ key: `${map.Id}/${entry.Id}#${i}`, map, entry, link })))
-                    .value()
+                    .value(),
             );
         }, 350);
     }, []);
@@ -125,7 +130,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                         {t("filtering")}
                     </Label>
                 ) : (
-                    <BottomSheetFlatList
+                    <MapContentFlatList
                         initialNumToRender={2}
                         maxToRenderPerBatch={1}
                         data={results}

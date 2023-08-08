@@ -16,8 +16,8 @@ import {
 
 type EntitySyncState<T = unknown> = {
     StorageLastChangeDateTimeUtc: string;
-    StorageDeltaStartChagneDAteTimeUtc: string;
-    RemoveAllEntitiesBeforeInsert: string;
+    StorageDeltaStartChangeDateTimeUtc: string;
+    RemoveAllBeforeInsert: string;
     ChangedEntities?: T[];
     DeletedEntities?: string[];
 };
@@ -118,7 +118,7 @@ const initialState: EurofurenceCacheState = {
 };
 
 const syncEntities = <T>(state: EntityState<T>, adapter: EntityAdapter<T>, delta: EntitySyncState<T>) => {
-    if (delta.RemoveAllEntitiesBeforeInsert) {
+    if (delta.RemoveAllBeforeInsert) {
         adapter.removeAll(state);
     }
 
