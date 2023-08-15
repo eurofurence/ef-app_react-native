@@ -31,7 +31,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
                 titleVariant="shadow"
                 subtitleVariant="shadow"
             />
-            <Image style={styles.logo} source={require("../../../assets/images/banner_2023_logo.png")} />
+            <Image style={styles.logo} source={require("../../../assets/images/banner_2023_logo.png")} resizeMode="contain" />
         </View>
     );
 };
