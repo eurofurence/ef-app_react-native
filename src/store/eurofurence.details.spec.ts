@@ -119,9 +119,9 @@ describe("Eurofurence details", () => {
             const results = dealersSelectors.selectAll(state);
             const unaggregated = results.filter(
                 (result) =>
-                    (result.AttendsOnThursday && !result.AttendanceDayNames.includes("thu")) ||
-                    (result.AttendsOnFriday && !result.AttendanceDayNames.includes("fri")) ||
-                    (result.AttendsOnSaturday && !result.AttendanceDayNames.includes("sat"))
+                    (result.AttendsOnThursday && !result.AttendanceDayNames.includes("mon")) ||
+                    (result.AttendsOnFriday && !result.AttendanceDayNames.includes("tue")) ||
+                    (result.AttendsOnSaturday && !result.AttendanceDayNames.includes("wed")),
             );
 
             expect(unaggregated).toHaveLength(0);
@@ -198,9 +198,9 @@ describe("Eurofurence details", () => {
         });
 
         it("finds dealers by proper day", () => {
-            const notOnThursday = selectDealersByDayName(state, "thu").filter((dealer) => !dealer.AttendsOnThursday);
-            const notOnFriday = selectDealersByDayName(state, "fri").filter((dealer) => !dealer.AttendsOnFriday);
-            const notOnSaturday = selectDealersByDayName(state, "sat").filter((dealer) => !dealer.AttendsOnSaturday);
+            const notOnThursday = selectDealersByDayName(state, "mon").filter((dealer) => !dealer.AttendsOnThursday);
+            const notOnFriday = selectDealersByDayName(state, "tue").filter((dealer) => !dealer.AttendsOnFriday);
+            const notOnSaturday = selectDealersByDayName(state, "wed").filter((dealer) => !dealer.AttendsOnSaturday);
 
             expect(notOnThursday).toHaveLength(0);
             expect(notOnFriday).toHaveLength(0);

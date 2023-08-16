@@ -2,9 +2,9 @@ import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { DealerCardContent } from "./DealerCardContent";
 import { useNow } from "../../hooks/useNow";
 import { DealerDetails } from "../../store/eurofurence.types";
-import { DealerCardContent } from "./DealerCardContent";
 
 export type DealerCardProps = {
     dealer: DealerDetails;
@@ -25,9 +25,9 @@ export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }
 
     const offDays = useMemo(() => {
         return [
-            !dealer.AttendsOnThursday && moment().day(4).format("dddd"),
-            !dealer.AttendsOnFriday && moment().day(5).format("dddd"),
-            !dealer.AttendsOnSaturday && moment().day(6).format("dddd"),
+            !dealer.AttendsOnThursday && moment().day(1).format("dddd"),
+            !dealer.AttendsOnFriday && moment().day(2).format("dddd"),
+            !dealer.AttendsOnSaturday && moment().day(3).format("dddd"),
         ]
             .filter(Boolean)
             .join(", ");

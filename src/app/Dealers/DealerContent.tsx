@@ -51,9 +51,9 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
 
     // Check if not-attending warning should be marked.
     const markNotAttending = useMemo(() => {
-        if (now.day() === 4 && !dealer.AttendsOnThursday) return true;
-        else if (now.day() === 5 && !dealer.AttendsOnFriday) return true;
-        else if (now.day() === 6 && !dealer.AttendsOnSaturday) return true;
+        if (now.day() === 1 && !dealer.AttendsOnThursday) return true;
+        else if (now.day() === 2 && !dealer.AttendsOnFriday) return true;
+        else if (now.day() === 3 && !dealer.AttendsOnSaturday) return true;
         return false;
     }, [now, dealer]);
 

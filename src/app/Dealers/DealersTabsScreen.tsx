@@ -21,9 +21,9 @@ import { ScreenStartParamsList } from "../ScreenStart";
  */
 export type DealersTabsScreenParamsList = {
     All: DealersListAllScreenParams;
-    Thu: DealersListByDayScreenParams;
-    Fri: DealersListByDayScreenParams;
-    Sat: DealersListByDayScreenParams;
+    Mon: DealersListByDayScreenParams;
+    Tue: DealersListByDayScreenParams;
+    Wed: DealersListByDayScreenParams;
 };
 
 /**
@@ -54,25 +54,25 @@ export const DealersTabsScreen: FC<DealersTabsScreenProps> = () => {
     const days = useAppSelector(eventDaysSelectors.selectAll);
 
     // Formatted names.
-    const { thu, fri, sat } = useMemo(
+    const { mon, tue, wed } = useMemo(
         () => ({
-            thu: moment().day(4).format("ddd"),
-            fri: moment().day(5).format("ddd"),
-            sat: moment().day(6).format("ddd"),
+            mon: moment().day(1).format("ddd"),
+            tue: moment().day(2).format("ddd"),
+            wed: moment().day(3).format("ddd"),
         }),
         [t],
     );
 
     // Returns the flags if this is the current day.
-    const { isThu, isFri, isSat } = useMemo(() => {
-        const thuDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 4);
-        const friDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 5);
-        const satDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 6);
+    const { isMon, isTue, isWed } = useMemo(() => {
+        const monDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 1);
+        const tueDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 2);
+        const wedDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 3);
 
         return {
-            isThu: thuDate?.isSame(now, "day") ?? false,
-            isFri: friDate?.isSame(now, "day") ?? false,
-            isSat: satDate?.isSame(now, "day") ?? false,
+            isMon: monDate?.isSame(now, "day") ?? false,
+            isTue: tueDate?.isSame(now, "day") ?? false,
+            isWed: wedDate?.isSame(now, "day") ?? false,
         };
     }, [now]);
 
@@ -84,9 +84,9 @@ export const DealersTabsScreen: FC<DealersTabsScreenProps> = () => {
     return (
         <DealersTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName="All">
             <DealersTabsScreenNavigator.Screen name="All" options={{ title: t("all") }} component={DealersListAllScreen} />
-            <DealersTabsScreenNavigator.Screen name="Thu" options={{ title: thu, highlight: isThu }} component={DealersListByDayScreen} />
-            <DealersTabsScreenNavigator.Screen name="Fri" options={{ title: fri, highlight: isFri }} component={DealersListByDayScreen} />
-            <DealersTabsScreenNavigator.Screen name="Sat" options={{ title: sat, highlight: isSat }} component={DealersListByDayScreen} />
+            <DealersTabsScreenNavigator.Screen name="Mon" options={{ title: mon, highlight: isMon }} component={DealersListByDayScreen} />
+            <DealersTabsScreenNavigator.Screen name="Tue" options={{ title: tue, highlight: isTue }} component={DealersListByDayScreen} />
+            <DealersTabsScreenNavigator.Screen name="Wed" options={{ title: wed, highlight: isWed }} component={DealersListByDayScreen} />
         </DealersTabsScreenNavigator.Navigator>
     );
 };

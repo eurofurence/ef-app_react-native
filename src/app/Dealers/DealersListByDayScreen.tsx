@@ -28,7 +28,7 @@ export type DealersListByDayScreenParams = object;
 export type DealersListByDayScreenProps =
     // Route carrying from dealers tabs screen at any of the day names, own navigation via own parameter list.
     CompositeScreenProps<
-        PagesScreenProps<DealersTabsScreenParamsList, "Thu" | "Fri" | "Sat">,
+        PagesScreenProps<DealersTabsScreenParamsList, "Mon" | "Tue" | "Wed">,
         PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
@@ -56,11 +56,11 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route 
     const lead = useMemo(
         () =>
             // Match thursday.
-            (day === "thu" && t("dealers_on_day", { day: moment().day(4).format("dddd") })) ||
+            (day === "mon" && t("dealers_on_day", { day: moment().day(1).format("dddd") })) ||
             // Match friday.
-            (day === "fri" && t("dealers_on_day", { day: moment().day(5).format("dddd") })) ||
+            (day === "tue" && t("dealers_on_day", { day: moment().day(2).format("dddd") })) ||
             // Match saturday.
-            (day === "sat" && t("dealers_on_day", { day: moment().day(6).format("dddd") })) ||
+            (day === "wed" && t("dealers_on_day", { day: moment().day(3).format("dddd") })) ||
             // Match saturday.
             t("dealers_on_this_day"),
         [t, day],

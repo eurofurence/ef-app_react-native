@@ -49,9 +49,9 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
         initialRouteName: "All",
         screens: {
             All: "Areas/Dealers",
-            Thu: "Areas/Dealers/Thu",
-            Fri: "Areas/Dealers/Fri",
-            Sat: "Areas/Dealers/Sat",
+            Mon: "Areas/Dealers/Mon",
+            Tue: "Areas/Dealers/Tue",
+            Wed: "Areas/Dealers/Wed",
         },
     };
 

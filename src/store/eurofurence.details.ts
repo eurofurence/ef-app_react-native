@@ -113,9 +113,9 @@ const internalMaskRequired = (tags?: string[]) => Boolean(tags?.includes("mask_r
 
 const internalAttendanceDayNames = (dealer: DealerRecord) => {
     const result: AttendanceDay[] = [];
-    if (dealer.AttendsOnThursday) result.push("thu");
-    if (dealer.AttendsOnFriday) result.push("fri");
-    if (dealer.AttendsOnSaturday) result.push("sat");
+    if (dealer.AttendsOnThursday) result.push("mon");
+    if (dealer.AttendsOnFriday) result.push("tue");
+    if (dealer.AttendsOnSaturday) result.push("wed");
     return result;
 };
 
@@ -124,9 +124,9 @@ const internalAttendanceDays = (state: RootState, dealer: DealerRecord) => {
     const result: EventDayDetails[] = [];
     for (const day of days) {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
-        if (dealer.AttendsOnThursday && day && moment(day.Date).day() === 4) result.push(day);
-        if (dealer.AttendsOnFriday && day && moment(day.Date).day() === 5) result.push(day);
-        if (dealer.AttendsOnSaturday && day && moment(day.Date).day() === 6) result.push(day);
+        if (dealer.AttendsOnThursday && day && moment(day.Date).day() === 1) result.push(day);
+        if (dealer.AttendsOnFriday && day && moment(day.Date).day() === 2) result.push(day);
+        if (dealer.AttendsOnSaturday && day && moment(day.Date).day() === 3) result.push(day);
     }
     return result;
 };

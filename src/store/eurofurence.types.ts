@@ -11,7 +11,7 @@ export type PartOfDay = "morning" | "afternoon" | "evening" | "night";
 /**
  * Attendance day for dealers.
  */
-export type AttendanceDay = "thu" | "fri" | "sat";
+export type AttendanceDay = "mon" | "tue" | "wed";
 
 /**
  * Named type to use when referencing other records.
