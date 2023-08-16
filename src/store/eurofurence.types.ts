@@ -1,7 +1,7 @@
 /**
  * A URL leading to an image.
  */
-import { IconNames } from "../types/IconNames";
+import { IconNames } from "../components/Atoms/Icon";
 
 /**
  * Time categorized in part of day.

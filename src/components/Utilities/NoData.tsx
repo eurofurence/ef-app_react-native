@@ -1,6 +1,6 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { StyleSheet, View } from "react-native";
 
+import Icon from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
 
 export const NoData = () => {

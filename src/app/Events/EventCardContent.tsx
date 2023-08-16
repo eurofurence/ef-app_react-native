@@ -1,12 +1,11 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { FC, memo, ReactNode, useMemo } from "react";
 import { ColorValue, ImageBackground, ImageSourcePropType, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
+import Icon, { IconNames } from "../../components/Atoms/Icon";
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
 import { Row } from "../../components/Containers/Row";
 import { useTheme } from "../../context/Theme";
-import { IconNames } from "../../types/IconNames";
 import { appStyles } from "../AppStyles";
 
 const glyphIconSize = 90;

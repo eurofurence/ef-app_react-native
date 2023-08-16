@@ -5,17 +5,17 @@ import moment from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { DealersSectionedListGeneric } from "./DealersSectionedListGeneric";
+import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
+import { IconNames } from "../../components/Atoms/Icon";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useAppSelector } from "../../store";
 import { selectDealersByDayName } from "../../store/eurofurence.selectors";
 import { AttendanceDay } from "../../store/eurofurence.types";
-import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { DealersSectionedListGeneric } from "./DealersSectionedListGeneric";
-import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -63,7 +63,7 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route 
             (day === "sat" && t("dealers_on_day", { day: moment().day(6).format("dddd") })) ||
             // Match saturday.
             t("dealers_on_this_day"),
-        [t, day]
+        [t, day],
     );
 
     return (

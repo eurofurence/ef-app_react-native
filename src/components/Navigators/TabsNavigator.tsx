@@ -3,7 +3,7 @@ import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabAc
 import { FC, ReactNode, RefObject, useRef } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { IconNames } from "../../types/IconNames";
+import { IconNames } from "../Atoms/Icon";
 import { Tabs, TabsRef } from "../Containers/Tabs";
 
 /**

@@ -5,7 +5,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { IconNames } from "../../types/IconNames";
+import { IconNames } from "../Atoms/Icon";
 import { Pages, PagesRef } from "../Containers/Pages";
 
 /**

@@ -3,7 +3,7 @@ import { FC, useMemo } from "react";
 import { ColorValue, StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 
 import { Theme, useTheme } from "../../context/Theme";
-import { IconNames } from "../../types/IconNames";
+import { IconNames } from "../Atoms/Icon";
 import { ImageFill, ImageFillProps } from "../Atoms/ImageFill";
 import { Marker } from "../Atoms/Marker";
 

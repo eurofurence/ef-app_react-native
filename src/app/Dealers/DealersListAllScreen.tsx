@@ -4,17 +4,17 @@ import { chain } from "lodash";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { DealersSectionedListGeneric } from "./DealersSectionedListGeneric";
+import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
+import { IconNames } from "../../components/Atoms/Icon";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { conName } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence.selectors";
-import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { DealersSectionedListGeneric } from "./DealersSectionedListGeneric";
-import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
 
 /**
  * Params handled by the screen in route.

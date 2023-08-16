@@ -5,18 +5,18 @@ import moment from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
+import { useEventsTabsContext } from "./EventsTabsContext";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
+import { IconNames } from "../../components/Atoms/Icon";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useIsEventDone } from "../../hooks/useEventProperties";
 import { useAppSelector } from "../../store";
 import { eventTracksSelectors, selectEventsByTrack } from "../../store/eurofurence.selectors";
-import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
-import { useEventsTabsContext } from "./EventsTabsContext";
-import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -67,7 +67,7 @@ export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ rout
                           subtitle: t("events_count", { count: done.length }),
                           icon: "calendar-clock-outline" as IconNames,
                           data: done,
-                      })
+                      }),
             )
             .value();
     }, [t, eventsByTrack, isEventDone]);

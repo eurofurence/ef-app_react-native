@@ -3,9 +3,9 @@ import { LayoutRectangle, StyleProp, StyleSheet, View, ViewStyle } from "react-n
 import { ScrollView } from "react-native-gesture-handler";
 import Animated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
 
-import { useTheme } from "../../context/Theme";
-import { IconNames } from "../../types/IconNames";
 import { Page } from "./Page";
+import { useTheme } from "../../context/Theme";
+import { IconNames } from "../Atoms/Icon";
 
 /**
  * Arguments to the pages.
@@ -89,7 +89,7 @@ export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicator
                 return copy;
             });
         },
-        [pages]
+        [pages],
     );
 
     const dynamicIndicator = useAnimatedStyle(() => {
@@ -133,7 +133,7 @@ export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicator
                 });
             },
         }),
-        [anchors, scrollView, totalWidth]
+        [anchors, scrollView, totalWidth],
     );
 
     return (

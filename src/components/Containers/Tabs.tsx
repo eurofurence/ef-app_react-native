@@ -6,8 +6,8 @@ import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useShared
 
 import { Tab } from "./Tab";
 import { useTheme } from "../../context/Theme";
-import { IconNames } from "../../types/IconNames";
 import { Activity } from "../Atoms/Activity";
+import { IconNames } from "../Atoms/Icon";
 
 /**
  * Arguments to the tabs.

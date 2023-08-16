@@ -1,9 +1,8 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { FC, useMemo } from "react";
 import { ColorValue, StyleProp, StyleSheet, Text, TextProps, TextStyle } from "react-native";
 
+import Icon, { IconNames } from "./Icon";
 import { Theme, useTheme } from "../../context/Theme";
-import { IconNames } from "../../types/IconNames";
 
 /**
  * Props to label.

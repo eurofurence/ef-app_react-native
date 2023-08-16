@@ -1,10 +1,9 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as React from "react";
 import { FC, useMemo } from "react";
 import { ColorValue, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
+import Icon, { IconNames } from "./Icon";
 import { Theme, useTheme } from "../../context/Theme";
-import { IconNames } from "../../types/IconNames";
 
 export type MarkerProps = {
     style?: StyleProp<ViewStyle>;

@@ -1,10 +1,9 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { FC, useMemo } from "react";
 import { ColorValue, StyleSheet, TextProps, View, ViewProps, ViewStyle } from "react-native";
 
-import { IconNames } from "../../types/IconNames";
-import { Label, LabelProps } from "../Atoms/Label";
 import { Row } from "./Row";
+import Icon, { IconNames } from "../Atoms/Icon";
+import { Label, LabelProps } from "../Atoms/Label";
 
 const iconSize = 32; // Matches H1 font size.
 

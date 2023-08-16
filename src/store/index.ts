@@ -30,7 +30,7 @@ const persistedReducer = persistReducer(
         storage: AsyncStorage,
         whitelist: [timeTravelSlice.name, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name, settingsSlice.name],
     },
-    reducers
+    reducers,
 );
 
 export const store = configureStore({
@@ -42,6 +42,7 @@ export const store = configureStore({
                 ignoredPaths: [eurofurenceCache.name],
                 warnAfter: 200,
             },
+            immutableCheck: false, // TODO: __DEV__
         }).concat(eurofurenceService.middleware, authorizationService.middleware);
 
         if (Platform.OS === "web") {

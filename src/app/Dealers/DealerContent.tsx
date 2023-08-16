@@ -46,7 +46,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 .map((day) => moment(day.Date).format("dddd"))
                 // Join comma separated.
                 .join(", "),
-        [dealer, t]
+        [dealer, t],
     );
 
     // Check if not-attending warning should be marked.
@@ -112,12 +112,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 ))}
 
             {dealer.TelegramHandle && (
-                <Button style={styles.button} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}>
+                <Button style={styles.button} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)} icon="telegram-plane">
                     Telegram: {dealer.TelegramHandle}
                 </Button>
             )}
             {dealer.TwitterHandle && (
-                <Button style={styles.button} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon={"twitter"}>
+                <Button style={styles.button} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
                     Twitter: {dealer.TwitterHandle}
                 </Button>
             )}

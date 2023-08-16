@@ -1,12 +1,12 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { useNavigation } from "@react-navigation/core";
 import React, { FC, useMemo } from "react";
 import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 
+import { Row } from "./Row";
 import { useTheme } from "../../context/Theme";
 import { Activity } from "../Atoms/Activity";
+import Icon from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
-import { Row } from "./Row";
 
 const iconSize = 32;
 

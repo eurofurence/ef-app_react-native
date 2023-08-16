@@ -1,10 +1,9 @@
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import * as React from "react";
 import { FC, ReactNode, useMemo } from "react";
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { useTheme } from "../../context/Theme";
-import { IconNames } from "../../types/IconNames";
+import Icon, { IconNames } from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
 
 const iconSize = 20;

@@ -4,6 +4,10 @@ import { chain, partition } from "lodash";
 import { FC, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
+import { useEventsTabsContext } from "./EventsTabsContext";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
+import { IconNames } from "../../components/Atoms/Icon";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
@@ -11,12 +15,8 @@ import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors, selectEventsByDay } from "../../store/eurofurence.selectors";
 import { EventDetails, PartOfDay } from "../../store/eurofurence.types";
-import { IconNames } from "../../types/IconNames";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
-import { useEventsTabsContext } from "./EventsTabsContext";
-import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
