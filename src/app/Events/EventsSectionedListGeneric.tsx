@@ -1,11 +1,11 @@
 import { FC, ReactNode, useCallback } from "react";
 import { SectionList, StyleSheet, Vibration } from "react-native";
 
+import { EventCard } from "./EventCard";
+import { EventSection, EventSectionProps } from "./EventSection";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { EventDetails } from "../../store/eurofurence.types";
-import { EventCard } from "./EventCard";
-import { EventSection, EventSectionProps } from "./EventSection";
 
 export type EventsSectionedListItem = EventSectionProps & {
     data: EventDetails[];
@@ -30,6 +30,16 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
     const navigateTo = useCallback((event: EventDetails) => navigation.push("Event", { id: event.Id }), [navigation]);
     const synchronizer = useSynchronizer();
 
+    // Press and long press handlers.
+    const onPress = useCallback((event: EventDetails) => navigateTo(event), [navigateTo]);
+    const onLongPress = useCallback(
+        (event: EventDetails) => {
+            Vibration.vibrate(50);
+            select?.(event);
+        },
+        [select],
+    );
+
     return (
         <SectionList
             refreshing={synchronizer.isSynchronizing}
@@ -45,18 +55,7 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
             initialNumToRender={5}
             maxToRenderPerBatch={5}
             renderSectionHeader={({ section }) => <EventSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
-            renderItem={(entry: { item: EventDetails }) => (
-                <EventCard
-                    key={entry.item.Id}
-                    event={entry.item}
-                    type={cardType}
-                    onPress={() => navigateTo(entry.item)}
-                    onLongPress={() => {
-                        Vibration.vibrate(50);
-                        select && select(entry.item);
-                    }}
-                />
-            )}
+            renderItem={(entry: { item: EventDetails }) => <EventCard key={entry.item.Id} event={entry.item} type={cardType} onPress={onPress} onLongPress={onLongPress} />}
         />
     );
 };

@@ -6,6 +6,7 @@ import { Image, Linking, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { appStyles } from "./AppStyles";
 import { Label } from "../components/Atoms/Label";
 import { MarkdownContent } from "../components/Atoms/MarkdownContent";
 import { Section } from "../components/Atoms/Section";
@@ -16,7 +17,6 @@ import { Header } from "../components/Containers/Header";
 import { Row } from "../components/Containers/Row";
 import { useAppDispatch, useAppSelector } from "../store";
 import { setTheme } from "../store/settings.slice";
-import { appStyles } from "./AppStyles";
 
 const extraThanksMarkdown = `
 # Tooling

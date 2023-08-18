@@ -194,6 +194,7 @@ export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesSty
                     icon: descriptors[route.key].options.icon,
                     text: descriptors[route.key].options.title,
                     onPress: () => {
+                        cancelAnimation(offset);
                         offset.value = i;
                         dispatchNavigateToRoute(i);
                     },

@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { FC, useMemo } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DealerCardContent } from "./DealerCardContent";
@@ -8,8 +8,8 @@ import { DealerDetails } from "../../store/eurofurence.types";
 
 export type DealerCardProps = {
     dealer: DealerDetails;
-    onPress?: () => void;
-    onLongPress?: () => void;
+    onPress?: (dealer: DealerDetails) => void;
+    onLongPress?: (dealer: DealerDetails) => void;
 };
 
 export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }) => {
@@ -33,6 +33,10 @@ export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }
             .join(", ");
     }, [dealer, t]);
 
+    // Wrap delegates.
+    const onPressDelegate = useCallback(() => onPress?.(dealer), [onPress, dealer]);
+    const onLongPressDelegate = useCallback(() => onLongPress?.(dealer), [onLongPress, dealer]);
+
     return (
         <DealerCardContent
             avatar={avatar}
@@ -40,8 +44,8 @@ export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }
             present={present}
             merchandise={dealer.Merchandise}
             offDays={offDays}
-            onPress={onPress}
-            onLongPress={onLongPress}
+            onPress={onPressDelegate}
+            onLongPress={onLongPressDelegate}
         />
     );
 };

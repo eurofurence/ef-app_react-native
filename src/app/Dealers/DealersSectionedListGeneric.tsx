@@ -1,11 +1,11 @@
 import { FC, ReactNode, useCallback } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
 
+import { DealerCard } from "./DealerCard";
+import { DealerSection, DealerSectionProps } from "./DealerSection";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { DealerDetails } from "../../store/eurofurence.types";
-import { DealerCard } from "./DealerCard";
-import { DealerSection, DealerSectionProps } from "./DealerSection";
 
 export type DealersSectionedListItem = DealerSectionProps & {
     data: DealerDetails[];
@@ -24,6 +24,9 @@ export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> =
     const navigation = useAppNavigation("Areas");
     const navigateTo = useCallback((dealer: DealerDetails) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
     const synchronizer = useSynchronizer();
+
+    const onPress = useCallback((dealer: DealerDetails) => navigateTo(dealer), [navigateTo]);
+
     return (
         <View style={StyleSheet.absoluteFill}>
             <SectionList
@@ -39,7 +42,7 @@ export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> =
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
                 renderSectionHeader={({ section }) => <DealerSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
-                renderItem={(entry: { item: DealerDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={() => navigateTo(entry.item)} />}
+                renderItem={(entry: { item: DealerDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={onPress} />}
             />
         </View>
     );

@@ -131,11 +131,24 @@ const syncEntities = <T>(state: EntityState<T>, adapter: EntityAdapter<T>, delta
     }
 };
 
+const internalPatchDealers = (dealers: EntitySyncState<DealerRecord>) => {
+    dealers.ChangedEntities?.forEach((dealer) => {
+        if (!dealer.AttendsOnThursday && !dealer.AttendsOnFriday && !dealer.AttendsOnSaturday) {
+            dealer.AttendsOnThursday = true;
+            dealer.AttendsOnFriday = true;
+            dealer.AttendsOnSaturday = true;
+        }
+    });
+};
+
 export const eurofurenceCache = createSlice({
     name: "eurofurenceCache",
     initialState,
     reducers: {
         applySync: (state, action: PayloadAction<SyncResponse>) => {
+            // Fix locally for now. TODO: Remove when API is fixed.
+            internalPatchDealers(action.payload.Dealers);
+
             state.lastSynchronised = action.payload.CurrentDateTimeUtc;
             state.state = action.payload.State;
 

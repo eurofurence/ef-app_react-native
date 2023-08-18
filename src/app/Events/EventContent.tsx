@@ -55,7 +55,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 url: `${appBase}/Web/Events/${event.Id}`,
                 message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
             },
-            {}
+            {},
         ).catch(captureException);
     }, [event]);
 

@@ -1,19 +1,19 @@
 import moment from "moment";
-import React, { FC, ReactNode, useMemo } from "react";
+import React, { FC, ReactNode, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { EventCardContent } from "./EventCardContent";
 import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
 import { useTheme } from "../../context/Theme";
 import { useEventIsDone, useEventIsHappening } from "../../hooks/useEventProperties";
 import { EventDetails } from "../../store/eurofurence.types";
-import { EventCardContent } from "./EventCardContent";
 
 export type EventCardProps = {
     type?: "duration" | "time";
     event: EventDetails;
-    onPress?: () => void;
-    onLongPress?: () => void;
+    onPress?: (event: EventDetails) => void;
+    onLongPress?: (event: EventDetails) => void;
 };
 
 export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPress, onLongPress }) => {
@@ -57,19 +57,26 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
         }
     }, [t, type, event, done, theme]);
 
+    // Convert to poster source.
+    const poster = useMemo(() => (event.Banner ? { uri: event.Banner.FullUrl } : undefined), [event]);
+
+    // Wrap delegates.
+    const onPressDelegate = useCallback(() => onPress?.(event), [onPress, event]);
+    const onLongPressDelegate = useCallback(() => onLongPress?.(event), [onLongPress, event]);
+
     return (
         <EventCardContent
             badges={event.Badges}
             glyph={event.Glyph}
             pre={pre}
-            poster={event.Banner ? { uri: event.Banner.FullUrl } : undefined}
+            poster={poster}
             title={event.Title}
             subtitle={event.SubTitle}
             tag={event.ConferenceRoom?.ShortName ?? event.ConferenceRoom?.Name}
             happening={happening}
             done={done}
-            onPress={onPress}
-            onLongPress={onLongPress}
+            onPress={onPressDelegate}
+            onLongPress={onLongPressDelegate}
         />
     );
 };

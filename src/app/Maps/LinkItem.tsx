@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Linking } from "react-native";
+import { FC, useCallback } from "react";
+import { Linking, StyleSheet } from "react-native";
 import { match } from "ts-pattern";
 
 import { Button } from "../../components/Containers/Button";
@@ -19,16 +19,22 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     const navigation = useAppNavigation("Areas");
     const dealer = useAppSelector((state) => dealersSelectors.selectById(state, link.Target));
 
+    const onPress = useCallback(() => navigation.navigate("Dealer", { id: link.Target }), [navigation, link]);
+
     if (dealer === undefined) {
         return null;
     }
 
-    return <DealerCard dealer={dealer} onPress={() => navigation.navigate("Dealer", { id: link.Target })} />;
+    return <DealerCard dealer={dealer} onPress={onPress} />;
 };
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
+    const onPress = useCallback(() => {
+        Linking.openURL(link.Target).catch();
+    }, [link]);
+
     return (
-        <Button onPress={() => Linking.openURL(link.Target)} icon={"web"}>
+        <Button style={styles.linkButton} onPress={onPress} icon={"web"}>
             {link.Name ? link.Name : link.Target}
         </Button>
     );
@@ -36,8 +42,12 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
 
 const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
     const navigation = useAppNavigation("Areas");
+    const onPress = useCallback(() => {
+        if (map && entry) navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) });
+    }, [navigation, map, entry, link]);
+
     return !map || !entry ? null : (
-        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) })}>
+        <Button style={styles.linkButton} onPress={onPress}>
             {link.Name}
         </Button>
     );
@@ -45,8 +55,12 @@ const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
 
 const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
     const navigation = useAppNavigation("Areas");
+    const onPress = useCallback(() => {
+        if (map && entry) navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) });
+    }, [navigation, map, entry, link]);
+
     return !map || !entry ? null : (
-        <Button style={{ marginVertical: 5 }} onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) })}>
+        <Button style={styles.linkButton} onPress={onPress}>
             {link.Name}
         </Button>
     );
@@ -60,3 +74,9 @@ export const LinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
         .with("EventConferenceRoom", () => <EventConferenceRoomLinkItem map={map} entry={entry} link={link} />)
         .otherwise(() => null);
 };
+
+const styles = StyleSheet.create({
+    linkButton: {
+        marginVertical: 5,
+    },
+});

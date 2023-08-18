@@ -86,6 +86,7 @@ export const i18t = i18next
             pl,
             da,
         },
+        interpolation: { escapeValue: false },
         react: {
             useSuspense: false,
         },

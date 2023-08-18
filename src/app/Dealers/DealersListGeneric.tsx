@@ -1,10 +1,10 @@
 import { FC, ReactNode, useCallback } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
-import { DealerDetails } from "../../store/eurofurence.types";
 import { DealerCard } from "./DealerCard";
 import { DealersListAllScreenProps } from "./DealersListAllScreen";
 import { DealersListByDayScreenProps } from "./DealersListByDayScreen";
+import { DealerDetails } from "../../store/eurofurence.types";
 
 /**
  * The properties to the component.
@@ -22,6 +22,8 @@ export type DealersListGenericProps = {
 export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, leader, dealers, trailer }) => {
     const navigateTo = useCallback((dealer: DealerDetails) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
 
+    const onPress = useCallback((dealer: DealerDetails) => navigateTo(dealer), [navigateTo]);
+
     return (
         <View style={StyleSheet.absoluteFill}>
             <FlatList
@@ -34,7 +36,7 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
                 keyExtractor={(item) => item.Id}
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
-                renderItem={(entry: { item: DealerDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={() => navigateTo(entry.item)} />}
+                renderItem={(entry: { item: DealerDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={onPress} />}
             />
         </View>
     );

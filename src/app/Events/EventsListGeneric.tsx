@@ -1,13 +1,13 @@
 import { FC, ReactNode, useCallback } from "react";
 import { FlatList, StyleSheet, Vibration } from "react-native";
 
-import { EventDetails } from "../../store/eurofurence.types";
 import { EventCard } from "./EventCard";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
 import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
 import { EventsListByTrackScreenProps } from "./EventsListByTrackScreen";
 import { EventsListSearchResultsScreenProps } from "./EventsListSearchResultsScreen";
 import { EventsSearchScreenProps } from "./EventsSearchScreen";
+import { EventDetails } from "../../store/eurofurence.types";
 
 /**
  * The properties to the component.
@@ -37,7 +37,17 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
             navigation.push("Event", {
                 id: event.Id,
             }),
-        [navigation]
+        [navigation],
+    );
+
+    // Press and long press handlers.
+    const onPress = useCallback((event: EventDetails) => navigateTo(event), [navigateTo]);
+    const onLongPress = useCallback(
+        (event: EventDetails) => {
+            Vibration.vibrate(50);
+            select?.(event);
+        },
+        [select],
     );
 
     return (
@@ -52,18 +62,7 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
             keyExtractor={(item) => item.Id}
             initialNumToRender={5}
             maxToRenderPerBatch={5}
-            renderItem={(entry: { item: EventDetails }) => (
-                <EventCard
-                    key={entry.item.Id}
-                    event={entry.item}
-                    type={cardType}
-                    onPress={() => navigateTo(entry.item)}
-                    onLongPress={() => {
-                        Vibration.vibrate(50);
-                        select && select(entry.item);
-                    }}
-                />
-            )}
+            renderItem={(entry: { item: EventDetails }) => <EventCard key={entry.item.Id} event={entry.item} type={cardType} onPress={onPress} onLongPress={onLongPress} />}
         />
     );
 };

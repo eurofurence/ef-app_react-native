@@ -3,8 +3,8 @@ import { StyleProp, TextStyle } from "react-native";
 // @ts-expect-error untyped module
 import Markdown from "react-native-easy-markdown";
 
-import { useTheme } from "../../context/Theme";
 import { LabelProps } from "./Label";
+import { useTheme } from "../../context/Theme";
 
 export type MarkdownContentProps = PropsWithChildren<{
     defaultType?: LabelProps["type"];
@@ -171,7 +171,7 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, chil
                 height: 200,
             },
         }),
-        [theme]
+        [theme],
     );
 
     return (

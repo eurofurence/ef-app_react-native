@@ -90,7 +90,6 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
         </TouchableOpacity>
     );
 });
-
 const styles = StyleSheet.create({
     container: {
         minHeight: 80,

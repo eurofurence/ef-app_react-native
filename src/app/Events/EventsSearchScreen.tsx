@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { Keyboard, StyleSheet, View, ViewStyle } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
+import { useEventsTabsContext } from "./EventsTabsContext";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 import { Label } from "../../components/Atoms/Label";
 import { Button } from "../../components/Containers/Button";
 import { Floater } from "../../components/Containers/Floater";
@@ -15,8 +17,6 @@ import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useTheme } from "../../context/Theme";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { useEventsTabsContext } from "./EventsTabsContext";
-import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
