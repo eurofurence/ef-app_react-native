@@ -74,9 +74,9 @@
         }
       ],
       "expo-localization",
-      "expo-build-properties"
+      "expo-build-properties",
+      "@react-native-firebase/app"
     ],
-
     "extra": {
       "eas": {
         "projectId": "a60a3199-98db-4eec-8c66-cda6c424377d"
