@@ -52,7 +52,7 @@ export const ImageExButton: FC<ImageButtonProps> = ({ style, image, target, noMa
 
     return (
         <TouchableOpacity style={[styles.container, styleBackground, style]} onPress={onPress} onLongPress={onLongPress}>
-            <ImageFill image={image} target={target} />
+            {!target || !image ? null : <ImageFill image={image} target={target} />}
             {noMarker ? null : <Marker style={styles.marker} markerColor={markerColor} markerType={markerType} markerSize={markerSize} />}
         </TouchableOpacity>
     );

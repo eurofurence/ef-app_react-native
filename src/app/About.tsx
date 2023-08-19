@@ -1,8 +1,9 @@
 import { nativeApplicationVersion, nativeBuildVersion } from "expo-application";
 import { Sound } from "expo-av/build/Audio/Sound";
+import { Image } from "expo-image";
 import { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, Linking, ScrollView } from "react-native";
+import { Linking, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -89,6 +90,8 @@ export const Credit: FC<{ uri: string; name: string; role: string; onEasterEgg?:
                 source={{ uri, height: 60, width: 60 }}
                 style={{
                     borderRadius: 100,
+                    width: 60,
+                    height: 60,
                 }}
             />
 

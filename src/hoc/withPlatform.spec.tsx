@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 
-import { render } from "../testUtils";
 import { withPlatform } from "./withPlatform";
+import { render } from "../testUtils";
 
 const TestComponent = (props: any) => <Text testID={"withPlatformComponent"}>I am some text</Text>;
 describe("withPlatform", function () {

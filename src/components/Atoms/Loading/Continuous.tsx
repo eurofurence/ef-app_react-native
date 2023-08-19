@@ -47,7 +47,7 @@ export const Continuous: FC<ContinuousProps> = ({ style, active = true }) => {
             left: `${(1 - at.value) * 140 - 20}%`,
             width: "20%",
         }),
-        [at]
+        [at],
     );
 
     return (

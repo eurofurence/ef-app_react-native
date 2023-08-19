@@ -1,4 +1,5 @@
-import { FC, ReactNode, useCallback } from "react";
+import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { FC, ReactNode, useCallback, useMemo } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 
 import { DealerCard } from "./DealerCard";
@@ -24,19 +25,30 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
 
     const onPress = useCallback((dealer: DealerDetails) => navigateTo(dealer), [navigateTo]);
 
+    const headerComponent = useMemo(() => <>{leader}</>, [leader]);
+    const footerComponent = useMemo(() => <>{trailer}</>, [trailer]);
+
+    const keyExtractor = useCallback(({ Id }: DealerDetails) => Id, []);
+    const renderItem = useCallback(
+        ({ item }: ListRenderItemInfo<DealerDetails>) => {
+            return <DealerCard key={item.Id} dealer={item} onPress={onPress} />;
+        },
+        [onPress],
+    );
+
     return (
         <View style={StyleSheet.absoluteFill}>
             <FlatList
                 style={styles.list}
                 contentContainerStyle={styles.container}
                 scrollEnabled={true}
-                ListHeaderComponent={<>{leader}</>}
-                ListFooterComponent={<>{trailer}</>}
+                ListHeaderComponent={headerComponent}
+                ListFooterComponent={footerComponent}
                 data={dealers}
-                keyExtractor={(item) => item.Id}
+                keyExtractor={keyExtractor}
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
-                renderItem={(entry: { item: DealerDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={onPress} />}
+                renderItem={renderItem}
             />
         </View>
     );

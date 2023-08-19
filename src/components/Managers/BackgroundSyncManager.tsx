@@ -45,7 +45,7 @@ export const BackgroundSyncManager = () => {
                 }
             })().then(
                 (r) => console.log("Sync request checked, requested:", r),
-                (e) => captureNotificationException("Sync request could not be checked", e)
+                (e) => captureNotificationException("Sync request could not be checked", e),
             );
         });
 

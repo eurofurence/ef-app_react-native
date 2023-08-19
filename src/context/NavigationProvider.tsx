@@ -1,6 +1,5 @@
 import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
-import * as Linking from "expo-linking";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
 import { useTheme, useThemeType } from "./Theme";
@@ -67,13 +66,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
     // TODO: Use configuration constants here.
     // Return the composed linking object.
     return {
-        prefixes: [
-            Linking.createURL(`/`),
-            Linking.createURL(`/${conId}/Web/`),
-            Linking.createURL("/ef-app_react-native/"),
-            `https://app.eurofurence.org`,
-            "https://eurofurence.github.io/ef-app_react-native",
-        ],
+        prefixes: [`https://app.eurofurence.org/${conId}/Web/`],
         config: {
             initialRouteName: "Areas",
             screens: {

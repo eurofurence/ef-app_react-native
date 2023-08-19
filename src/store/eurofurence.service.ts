@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import _ from "lodash";
 
-import { apiBase } from "../configuration";
 import { CommunicationRecord, RecordId, RecordMetadata } from "./eurofurence.types";
+import { apiBase } from "../configuration";
 
 const tagsFromList =
     <TagType extends string>(type: TagType) =>

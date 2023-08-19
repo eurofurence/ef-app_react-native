@@ -4,6 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
+import { LoginSchema, loginSchema } from "./LoginSchema.schema";
 import { useTheme } from "../../../context/Theme";
 import { useSentryProfiler } from "../../../sentryHelpers";
 import { usePostTokenMutation } from "../../../store/authorization.service";
@@ -11,7 +12,6 @@ import { Label } from "../../Atoms/Label";
 import { Button } from "../../Containers/Button";
 import { Row } from "../../Containers/Row";
 import { ManagedTextInput } from "../../FormControls";
-import { LoginSchema, loginSchema } from "./LoginSchema.schema";
 
 export type LoginFormProps = {
     style?: ViewStyle;

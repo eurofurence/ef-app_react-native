@@ -72,16 +72,13 @@ export const EventsListByRoomScreen: FC<EventsListByRoomScreenProps> = ({ route 
             .value();
     }, [t, eventsByRoom, isEventDone]);
 
-    return (
-        <EventsSectionedListGeneric
-            eventsGroups={eventsGroups}
-            select={setSelected}
-            leader={
-                <Label type="h1" variant="middle" mt={30}>
-                    {room?.Name ?? ""}
-                </Label>
-            }
-            cardType="time"
-        />
-    );
+    const leader = useMemo(() => {
+        return (
+            <Label type="h1" variant="middle" mt={30}>
+                {room?.Name ?? ""}
+            </Label>
+        );
+    }, [room]);
+
+    return <EventsSectionedListGeneric eventsGroups={eventsGroups} select={setSelected} leader={leader} cardType="time" />;
 };

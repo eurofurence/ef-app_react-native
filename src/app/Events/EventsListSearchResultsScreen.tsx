@@ -2,17 +2,17 @@ import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
 import { FC, useCallback, useMemo } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
+import { EventsListGeneric } from "./EventsListGeneric";
+import { useEventsTabsContext } from "./EventsTabsContext";
+import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 import { Section } from "../../components/Atoms/Section";
 import { Button } from "../../components/Containers/Button";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { EventsListGeneric } from "./EventsListGeneric";
-import { useEventsTabsContext } from "./EventsTabsContext";
-import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 
 /**
  * Params handled by the screen in route.
@@ -39,20 +39,22 @@ export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProp
 
     const events = useMemo(() => chain(results).orderBy("StartDateTimeUtc").value(), []);
 
-    return (
-        <EventsListGeneric
-            navigation={navigation}
-            events={events}
-            select={setSelected}
-            cardType="time"
-            leader={
-                <View style={{ paddingBottom: 30 }}>
-                    <Section icon="view-list" title={search} subtitle={`${results?.length} results in total`} />
-                    <Button icon="chevron-left" onPress={onClear}>
-                        Clear search
-                    </Button>
-                </View>
-            }
-        />
-    );
+    const leader = useMemo(() => {
+        return (
+            <View style={styles.leader}>
+                <Section icon="view-list" title={search} subtitle={`${results?.length} results in total`} />
+                <Button icon="chevron-left" onPress={onClear}>
+                    Clear search
+                </Button>
+            </View>
+        );
+    }, [search, results, onClear]);
+
+    return <EventsListGeneric navigation={navigation} events={events} select={setSelected} cardType="time" leader={leader} />;
 };
+
+const styles = StyleSheet.create({
+    leader: {
+        paddingBottom: 30,
+    },
+});

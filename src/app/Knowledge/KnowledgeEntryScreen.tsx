@@ -1,4 +1,5 @@
-import { Image, View } from "react-native";
+import { Image } from "expo-image";
+import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -21,7 +22,7 @@ export const KnowledgeEntryScreen = () => {
             <Header>{entry?.Title}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 {images.map((it) => (
-                    <Image source={{ uri: it.FullUrl, height: 400 }} key={it.Id} resizeMode={"contain"} />
+                    <Image style={styles.image} source={{ uri: it.FullUrl }} key={it.Id} contentFit="contain" />
                 ))}
                 <MarkdownContent>{entry?.Text ?? ""}</MarkdownContent>
                 {entry?.Links.map((link) => (
@@ -33,3 +34,11 @@ export const KnowledgeEntryScreen = () => {
         </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    image: {
+        width: "100%",
+        height: "auto",
+        aspectRatio: 4 / 3,
+    },
+});

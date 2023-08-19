@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { apiBase } from "../configuration";
-import { Query } from "../types";
 import { TokenRegSysRequest, TokenRegSysResponse, TokenWhoAmIResponse } from "./authorization.types";
 import { RecordId, RecordMetadata } from "./eurofurence.types";
+import { apiBase } from "../configuration";
+import { Query } from "../types";
 
 type NewPrivateMessage = {
     RecipientUid: string;
@@ -87,7 +87,7 @@ export const authorizationService = createApi({
 export const selectById =
     <T extends RecordMetadata>(id: RecordId) =>
     (
-        query: Query<T[]>
+        query: Query<T[]>,
     ): Query<T[]> & {
         record: T | undefined;
     } => ({
@@ -98,7 +98,7 @@ export const selectById =
 export const filterByIds =
     <T extends RecordMetadata>(ids: RecordId[]) =>
     (
-        query: Query<T[]>
+        query: Query<T[]>,
     ): Query<T[]> & {
         records: T[];
     } => ({

@@ -1,5 +1,6 @@
+import { Image } from "expo-image";
 import { FC } from "react";
-import { Image, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
@@ -18,7 +19,14 @@ export const AnnouncementItem: FC<{ announcement: AnnouncementDetails }> = ({ an
 
             <MarkdownContent>{announcement.Content}</MarkdownContent>
 
-            {announcement.Image && <Image source={{ uri: announcement.Image.FullUrl }} style={{ width: "100%", height: "auto" }} />}
+            {announcement.Image && <Image source={{ uri: announcement.Image.FullUrl }} style={styles.image} />}
         </Card>
     );
 };
+
+const styles = StyleSheet.create({
+    image: {
+        width: "100%",
+        height: "auto",
+    },
+});

@@ -77,15 +77,13 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ rou
         return stillUpcomingSections.concat(...passedSections);
     }, [t, eventsByDay, now]);
 
-    return (
-        <EventsSectionedListGeneric
-            eventsGroups={eventsGroups}
-            select={setSelected}
-            leader={
-                <Label type="h1" variant="middle" mt={30}>
-                    {day?.Name ?? ""}
-                </Label>
-            }
-        />
-    );
+    const leader = useMemo(() => {
+        return (
+            <Label type="h1" variant="middle" mt={30}>
+                {day?.Name ?? ""}
+            </Label>
+        );
+    }, [day]);
+
+    return <EventsSectionedListGeneric eventsGroups={eventsGroups} select={setSelected} leader={leader} />;
 });

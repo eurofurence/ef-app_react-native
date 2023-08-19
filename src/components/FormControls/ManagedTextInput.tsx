@@ -29,7 +29,7 @@ export const ManagedTextInput = <T extends object>({ name, label, style, ...text
             marginTop: 6,
             marginBottom: 16,
         }),
-        [theme]
+        [theme],
     );
 
     const textFieldStyle = useMemo<StyleProp<TextStyle>>(
@@ -42,7 +42,7 @@ export const ManagedTextInput = <T extends object>({ name, label, style, ...text
             },
             style,
         ],
-        [theme]
+        [theme],
     );
 
     return (

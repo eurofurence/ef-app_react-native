@@ -19,9 +19,9 @@ export const Indicator: FC<IndicatorProps> = ({ color }) => {
                 // Animate in.
                 withDelay(1000, withTiming(1, { duration: 1000 })),
                 // Animate out.
-                withDelay(1000, withTiming(0, { duration: 1000 }))
+                withDelay(1000, withTiming(0, { duration: 1000 })),
             ),
-            -1
+            -1,
         );
 
         return () => cancelAnimation(at);
@@ -33,7 +33,7 @@ export const Indicator: FC<IndicatorProps> = ({ color }) => {
         () => ({
             opacity: at.value,
         }),
-        [at]
+        [at],
     );
 
     return <Animated.View style={[styles.indicator, styleIndicator, dynamicIndicator]} />;

@@ -2,11 +2,11 @@ import { noop } from "lodash";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Vibration } from "react-native";
 
+import { PlatformImageSynchronizer } from "./ImageSynchronizer";
 import { apiBase } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
 import { selectIsSynchronized } from "../../store/eurofurence.selectors";
-import { PlatformImageSynchronizer } from "./ImageSynchronizer";
 
 type SynchronizationProviderProps = {
     /**
@@ -53,7 +53,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
             synchronize,
             clear: clearCache,
         }),
-        [synchronize]
+        [synchronize],
     );
 
     return (

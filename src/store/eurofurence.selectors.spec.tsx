@@ -57,7 +57,7 @@ describe("eurofurence.selectors", function () {
         it("selects event that are happening", () => {
             const result = filterCurrentEvents(
                 [{ StartDateTimeUtc: moment().subtract(10, "minute").toISOString(), EndDateTimeUtc: moment().add(10, "minute").toISOString() }],
-                moment()
+                moment(),
             );
 
             expect(result).toHaveLength(1);
@@ -65,7 +65,7 @@ describe("eurofurence.selectors", function () {
         it("does not select events in the past", () => {
             const result = filterCurrentEvents(
                 [{ StartDateTimeUtc: moment().subtract(10, "minute").toISOString(), EndDateTimeUtc: moment().subtract(5, "minute").toISOString() }],
-                moment()
+                moment(),
             );
 
             expect(result).toHaveLength(0);

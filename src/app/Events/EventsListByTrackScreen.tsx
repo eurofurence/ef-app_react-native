@@ -72,16 +72,13 @@ export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ rout
             .value();
     }, [t, eventsByTrack, isEventDone]);
 
-    return (
-        <EventsSectionedListGeneric
-            eventsGroups={eventsGroups}
-            select={setSelected}
-            leader={
-                <Label type="h1" variant="middle" mt={30}>
-                    {track?.Name ?? ""}
-                </Label>
-            }
-            cardType="time"
-        />
-    );
+    const leader = useMemo(() => {
+        return (
+            <Label type="h1" variant="middle" mt={30}>
+                {track?.Name ?? ""}
+            </Label>
+        );
+    }, [track]);
+
+    return <EventsSectionedListGeneric eventsGroups={eventsGroups} select={setSelected} leader={leader} cardType="time" />;
 };

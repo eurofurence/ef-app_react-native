@@ -3,16 +3,16 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Floater } from "../../components/Containers/Floater";
-import { Header } from "../../components/Containers/Header";
-import { useAppSelector } from "../../store";
-import { appStyles } from "../AppStyles";
 import { CacheStats } from "./CacheStats";
 import { DevButtons } from "./DevButtons";
 import { RemoteMessages } from "./RemoteMessages";
 import { PlatformScheduledNotifications } from "./ScheduledNotifications";
 import { TimeTravel } from "./TimeTravel";
 import { UserSettings } from "./UserSettings";
+import { Floater } from "../../components/Containers/Floater";
+import { Header } from "../../components/Containers/Header";
+import { useAppSelector } from "../../store";
+import { appStyles } from "../AppStyles";
 
 export const SettingsScreen = () => {
     const { t } = useTranslation("Settings");

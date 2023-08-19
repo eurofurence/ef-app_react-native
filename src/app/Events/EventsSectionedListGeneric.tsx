@@ -1,5 +1,7 @@
-import { FC, ReactNode, useCallback } from "react";
+import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { FC, ReactNode, useCallback, useMemo } from "react";
 import { SectionList, StyleSheet, Vibration } from "react-native";
+import { SectionListData } from "react-native/Libraries/Lists/SectionList";
 
 import { EventCard } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
@@ -40,6 +42,21 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
         [select],
     );
 
+    const headerComponent = useMemo(() => <>{leader}</>, [leader]);
+    const footerComponent = useMemo(() => <>{trailer}</>, [trailer]);
+    const emptyComponent = useMemo(() => <>{empty}</>, [empty]);
+
+    const keyExtractor = useCallback(({ Id }: EventDetails) => Id, []);
+    const renderSection = useCallback(({ section }: SectionListData<any, any>) => {
+        return <EventSection title={section.title} subtitle={section.subtitle} icon={section.icon} />;
+    }, []);
+    const renderItem = useCallback(
+        ({ item }: ListRenderItemInfo<EventDetails>) => {
+            return <EventCard key={item.Id} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />;
+        },
+        [onPress, onLongPress],
+    );
+
     return (
         <SectionList
             refreshing={synchronizer.isSynchronizing}
@@ -47,15 +64,15 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
             style={styles.list}
             contentContainerStyle={styles.container}
             scrollEnabled={true}
-            ListHeaderComponent={<>{leader}</>}
-            ListFooterComponent={<>{trailer}</>}
-            ListEmptyComponent={<>{empty}</>}
+            ListHeaderComponent={headerComponent}
+            ListFooterComponent={footerComponent}
+            ListEmptyComponent={emptyComponent}
             sections={eventsGroups}
-            keyExtractor={(item) => item.Id}
+            keyExtractor={keyExtractor}
             initialNumToRender={5}
             maxToRenderPerBatch={5}
-            renderSectionHeader={({ section }) => <EventSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
-            renderItem={(entry: { item: EventDetails }) => <EventCard key={entry.item.Id} event={entry.item} type={cardType} onPress={onPress} onLongPress={onLongPress} />}
+            renderSectionHeader={renderSection}
+            renderItem={renderItem}
         />
     );
 };

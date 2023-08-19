@@ -66,14 +66,13 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route 
         [t, day],
     );
 
-    return (
-        <DealersSectionedListGeneric
-            dealersGroups={dealersGroups}
-            leader={
-                <Label type="h1" variant="middle" mt={30}>
-                    {lead}
-                </Label>
-            }
-        />
-    );
+    const leader = useMemo(() => {
+        return (
+            <Label type="h1" variant="middle" mt={30}>
+                {lead}
+            </Label>
+        );
+    }, [lead]);
+
+    return <DealersSectionedListGeneric dealersGroups={dealersGroups} leader={leader} />;
 };

@@ -108,6 +108,7 @@ const types = StyleSheet.create({
     caption: {
         fontSize: 14,
         fontWeight: "600",
+        opacity: 0.666,
     },
     regular: {
         fontSize: 14,

@@ -33,7 +33,7 @@ export const TimeTravel = () => {
                           .add(1, "week")
                           .toISOString(),
                   ],
-        [days]
+        [days],
     );
 
     return (

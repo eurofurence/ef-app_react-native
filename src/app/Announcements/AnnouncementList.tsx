@@ -1,11 +1,11 @@
 import { useTranslation } from "react-i18next";
 
+import { AnnouncementItem } from "./AnnouncementItem";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { selectActiveAnnouncements } from "../../store/eurofurence.selectors";
-import { AnnouncementItem } from "./AnnouncementItem";
 
 export const AnnouncementList = () => {
     const { t } = useTranslation("Announcements");

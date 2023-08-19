@@ -1,10 +1,12 @@
-import BottomSheet, { BottomSheetFlatList, BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { ReactNativeZoomableView as ZoomableView, ZoomableViewEvent } from "@openspacelabs/react-native-zoomable-view";
+import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { Image } from "expo-image";
 import { chain, clamp } from "lodash";
 import * as React from "react";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, Image, Platform, ScrollView, StyleSheet, View, ViewStyle } from "react-native";
+import { FlatList, InteractionManager, Platform, StyleSheet, View, ViewStyle } from "react-native";
 
 import { LinkItem } from "./LinkItem";
 import { Label } from "../../components/Atoms/Label";
@@ -48,33 +50,41 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
 
     const [results, setResults] = useState<FilterResult[]>([]);
     const onTransform = useCallback((event: ZoomableViewEvent) => {
+        // Clear last handle if it did not run yet.
         clearTimeout(refHandle.current);
 
-        refHandle.current = setTimeout(() => {
-            // Get arguments from event.
-            const targetWidth = event.originalWidth;
-            const targetHeight = event.originalHeight;
-            const offsetX = event.offsetX;
-            const offsetY = event.offsetY;
-            const zoom = event.zoomLevel;
+        // Create timeout with handle.
+        const ownHandle = setTimeout(() => {
+            InteractionManager.runAfterInteractions(() => {
+                // Get arguments from event.
+                const targetWidth = event.originalWidth;
+                const targetHeight = event.originalHeight;
+                const offsetX = event.offsetX;
+                const offsetY = event.offsetY;
+                const zoom = event.zoomLevel;
 
-            // Get area and area center.
-            const x1 = ((map.Image.Width * zoom) / 2 - offsetX * zoom - targetWidth / 2) / zoom;
-            const x2 = x1 + targetWidth / zoom;
-            const y1 = ((map.Image.Height * zoom) / 2 - offsetY * zoom - targetHeight / 2) / zoom;
-            const y2 = y1 + targetHeight / zoom;
-            const centerX = (x1 + x2) / 2;
-            const centerY = (y1 + y2) / 2;
+                // Get area and area center.
+                const x1 = ((map.Image.Width * zoom) / 2 - offsetX * zoom - targetWidth / 2) / zoom;
+                const x2 = x1 + targetWidth / zoom;
+                const y1 = ((map.Image.Height * zoom) / 2 - offsetY * zoom - targetHeight / 2) / zoom;
+                const y2 = y1 + targetHeight / zoom;
+                const centerX = (x1 + x2) / 2;
+                const centerY = (y1 + y2) / 2;
 
-            // Filter all that touch the view. Order ascending by square distance and then add all their links.
-            setResults(
-                chain(map?.Entries)
+                // Filter all that touch the view. Order ascending by square distance and then add all their links.
+                const results = chain(map?.Entries)
                     .filter((entry) => circleTouches(x1, y1, x2, y2, entry.X, entry.Y, entry.TapRadius))
                     .orderBy((entry) => distSq(entry.X - centerX, entry.Y - centerY), "asc")
                     .flatMap((entry) => entry.Links.map((link, i) => ({ key: `${map.Id}/${entry.Id}#${i}`, map, entry, link })))
-                    .value(),
-            );
+                    .value();
+
+                // Assign if this is still the active handle.
+                if (refHandle.current === ownHandle) setResults(results);
+            });
         }, 350);
+
+        // Assign handle.
+        refHandle.current = ownHandle;
     }, []);
 
     useEffect(() => {
@@ -102,7 +112,17 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
     const styleContainer = useMemo<ViewStyle>(() => ({ width: map.Image.Width, height: map.Image.Height }), [map]);
     const styleMarker = useMemo<ViewStyle>(() => (!entry ? { display: "none" } : { left: entry.X, top: entry.Y }), [entry]);
 
+    // Determine zoom levels.
     const [minZoom, maxZoom] = useMemo(() => (Math.max(map.Image.Width, map.Image.Height) < 2048 ? [0.5, 2] : [0.25, 1]), [map]);
+
+    // Key extractor callback.
+    const keyExtractor = useCallback(({ key }: FilterResult) => key, []);
+
+    // Render item callback.
+    const renderItem = useCallback(({ item: { map, entry, link } }: ListRenderItemInfo<FilterResult>) => {
+        return <LinkItem map={map} entry={entry} link={link} />;
+    }, []);
+
     return (
         <>
             <View style={styles.container}>
@@ -118,7 +138,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                     onTransform={onTransform}
                 >
                     <View style={styleContainer}>
-                        <Image style={styles.image} resizeMode={undefined} source={{ uri: map.Image.FullUrl }} />
+                        <Image style={styles.image} contentFit={undefined} source={{ uri: map.Image.FullUrl }} />
                         {!entry ? null : <Marker style={styleMarker} markerSize={75} />}
                     </View>
                 </ZoomableView>
@@ -133,10 +153,11 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                     <MapContentFlatList
                         initialNumToRender={2}
                         maxToRenderPerBatch={1}
+                        windowSize={5}
                         data={results}
-                        keyExtractor={({ key }) => key}
-                        renderItem={({ item: { map, entry, link } }) => <LinkItem map={map} entry={entry} link={link} />}
-                        contentContainerStyle={{ paddingHorizontal: 15 }}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderItem}
+                        contentContainerStyle={styles.mapContentContainer}
                     />
                 )}
             </BottomSheet>
@@ -156,5 +177,8 @@ const styles = StyleSheet.create({
     image: {
         width: "100%",
         height: "100%",
+    },
+    mapContentContainer: {
+        paddingHorizontal: 15,
     },
 });

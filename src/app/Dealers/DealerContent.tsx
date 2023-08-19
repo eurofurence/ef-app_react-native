@@ -1,8 +1,9 @@
+import { Image } from "expo-image";
 import * as Linking from "expo-linking";
 import moment from "moment";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import { Banner } from "../../components/Atoms/Banner";
 import { Label } from "../../components/Atoms/Label";
@@ -67,15 +68,22 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
 
             {!dealer.Artist ? null : (
                 <View style={[appStyles.shadow, styles.avatarCircle]}>
-                    <Image resizeMode="cover" style={styles.avatarImage} source={{ uri: dealer.Artist.FullUrl }} />
+                    <Image contentFit="cover" style={styles.avatarImage} source={{ uri: dealer.Artist.FullUrl }} />
                 </View>
             )}
 
             <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
 
-            <Label type="para">{dealer.ShortDescription}</Label>
+            <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
             <Section icon="directions-fork" title={t("about")} />
+            <Label type="caption">{t("table")}</Label>
+            {!dealer.ShortDescriptionTable ? null : (
+                <Label type="h3" mb={20}>
+                    {dealer.ShortDescriptionTable}
+                </Label>
+            )}
+
             <Label type="caption">{t("attends")}</Label>
             <Label type="h3" mb={20}>
                 {days}

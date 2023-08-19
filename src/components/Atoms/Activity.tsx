@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 
-import { useIsLoading } from "../../context/LoadingContext";
 import { Continuous } from "./Loading/Continuous";
+import { useIsLoading } from "../../context/LoadingContext";
 
 /**
  * Props for the activity indicator.

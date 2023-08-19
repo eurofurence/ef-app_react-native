@@ -1,6 +1,7 @@
+import { Image, ImageProps } from "expo-image";
 import * as React from "react";
-import { FC, useMemo, useState } from "react";
-import { Image, ImageStyle, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { FC, useCallback, useMemo, useState } from "react";
+import { LayoutChangeEvent, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { ImageDetails } from "../../store/eurofurence.types";
 
@@ -32,8 +33,10 @@ export type ImageFillProps = {
 export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
     const [size, setSize] = useState<{ width: number; height: number }>(initialSize);
 
+    const onLayout = useCallback((e: LayoutChangeEvent) => setSize(e.nativeEvent.layout), []);
+
     const arrangerStyle = useMemo<ViewStyle>(() => {
-        if (!target) return StyleSheet.absoluteFillObject;
+        if (!target) return undefined!;
 
         const scale = Math.max(size.width, size.height) / target.size;
 
@@ -47,20 +50,10 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
         };
     }, [target]);
 
-    const imageStyle = useMemo<ImageStyle>(() => {
-        if (!image) return {};
-
-        // Unscaled if no section given.
-        if (!target) {
-            return {
-                position: "absolute",
-                left: 0,
-                top: 0,
-                width: "100%",
-                height: "100%",
-                resizeMode: "cover",
-            };
-        }
+    const imageStyle = useMemo<ImageProps["style"]>(() => {
+        if (!image) return undefined!;
+        if (!target) return undefined!;
+        if (!size) return undefined!;
 
         // Section, scale and translate around center.
         return {
@@ -73,13 +66,17 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
         };
     }, [size, image, target]);
 
-    // Do not render if nothing given.
-    if (!image) return null;
+    const source = useMemo<ImageProps["source"]>(() => {
+        if (!image) return undefined!;
+        return { uri: image.FullUrl };
+    }, [image]);
 
     return (
-        <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>
+        <View style={[StyleSheet.absoluteFill, style]} onLayout={onLayout}>
             <View style={arrangerStyle}>
-                <Image style={imageStyle} resizeMode={undefined} source={{ uri: image.FullUrl }} />
+                <View style={imageStyle}>
+                    <Image style={StyleSheet.absoluteFill} contentFit="fill" contentPosition="top left" source={source} />
+                </View>
             </View>
         </View>
     );

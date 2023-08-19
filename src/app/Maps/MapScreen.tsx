@@ -3,13 +3,13 @@ import { useMemo } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { MapContent, MapContentProps } from "./MapContent";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
 import { useSentryProfiler } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 import { mapsSelectors } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
-import { MapContent, MapContentProps } from "./MapContent";
 
 export const MapScreen = () => {
     // Get safe area and route.

@@ -1,13 +1,14 @@
+import { Image, ImageProps } from "expo-image";
 import React, { FC, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
+import { StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { useTheme } from "../../context/Theme";
 import { appStyles } from "../AppStyles";
 
 export type DealerCardContentProps = {
-    avatar?: ImageSourcePropType;
+    avatar?: ImageProps["source"];
     name: string;
     present: boolean;
     merchandise?: string;
@@ -26,7 +27,7 @@ export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, nam
         <TouchableOpacity style={[styles.container, appStyles.shadow, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
             {!avatar ? null : (
                 <View style={[styles.pre, stylePre]}>
-                    <Image style={styles.avatarCircle} source={avatar} resizeMode="contain" />
+                    <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={require("../../../assets/images/dealer_black.png")} priority="low" />
                 </View>
             )}
 

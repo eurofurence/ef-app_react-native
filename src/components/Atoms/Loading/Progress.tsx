@@ -40,7 +40,7 @@ export const Progress: FC<ProgressProps> = ({ style, value }) => {
             left: 0,
             width: `${at.value * 100}%`,
         }),
-        [at]
+        [at],
     );
 
     return (

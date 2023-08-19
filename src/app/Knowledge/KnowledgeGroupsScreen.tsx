@@ -1,6 +1,8 @@
-import React, { FC } from "react";
+import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionList, StyleSheet, View } from "react-native";
+import { SectionListData } from "react-native/Libraries/Lists/SectionList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { Label } from "../../components/Atoms/Label";
@@ -34,20 +36,36 @@ export const KnowledgeGroupsScreen = () => {
     const theme = useTheme();
     const entries = useAppSelector((state) => selectKnowledgeItemsSections(state));
 
+    const sectionStyle = useMemo(() => ({ backgroundColor: theme.surface }), [theme]);
+
+    const headerComponent = useMemo(() => <Header>{t("header")}</Header>, [t]);
+
+    const keyExtractor = useCallback(({ Id }: KnowledgeEntryRecord, index: number) => Id + index, []);
+    const renderSection = useCallback(
+        ({ section }: SectionListData<any, any>) => {
+            return <Section title={section.Name} subtitle={section.Description} style={[styles.section, sectionStyle]} />;
+        },
+        [sectionStyle],
+    );
+    const renderItem = useCallback(({ item }: ListRenderItemInfo<KnowledgeEntryRecord>) => {
+        return <KnowledgeListEntry entry={item} key={item.Id} />;
+    }, []);
+    const renderSectionFooter = useCallback(() => {
+        return <View style={styles.footer} />;
+    }, []);
+
     return (
         <SectionList
             style={[appStyles.abs, safe]}
             onRefresh={synchronizer.synchronize}
             refreshing={synchronizer.isSynchronizing}
-            ListHeaderComponent={<Header>{t("header")}</Header>}
+            ListHeaderComponent={headerComponent}
             sections={entries}
             stickySectionHeadersEnabled
-            keyExtractor={(item, index) => item.Id + index}
-            renderItem={({ item }) => <KnowledgeListEntry entry={item} key={item.Id} />}
-            renderSectionHeader={({ section }) => (
-                <Section title={section.Name} subtitle={section.Description} style={{ padding: 20, marginTop: 0, backgroundColor: theme.surface }} />
-            )}
-            renderSectionFooter={() => <View style={styles.footer} />}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            renderSectionHeader={renderSection}
+            renderSectionFooter={renderSectionFooter}
         />
     );
 };
@@ -66,5 +84,9 @@ const styles = StyleSheet.create({
     },
     entryButton: {
         marginVertical: 10,
+    },
+    section: {
+        padding: 20,
+        marginTop: 0,
     },
 });

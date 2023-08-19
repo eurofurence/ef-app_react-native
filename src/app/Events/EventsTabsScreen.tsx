@@ -4,17 +4,9 @@ import { StackScreenProps } from "@react-navigation/stack";
 import moment from "moment";
 import { FC, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { BackHandler, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
-import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useNow } from "../../hooks/useNow";
-import { useAppSelector } from "../../store";
-import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
-import { EventDayRecord } from "../../store/eurofurence.types";
-import { ScreenAreasParamsList } from "../ScreenAreas";
-import { ScreenStartParamsList } from "../ScreenStart";
 import { EventActionsSheet } from "./EventActionsSheet";
 import { EventsListByDayScreen, EventsListByDayScreenParams } from "./EventsListByDayScreen";
 import { EventsListByRoomScreen, EventsListByRoomScreenParams } from "./EventsListByRoomScreen";
@@ -23,6 +15,14 @@ import { EventsListSearchResultsScreen, EventsListSearchResultsScreenParams } fr
 import { EventsSearchScreen, EventsSearchScreenParams } from "./EventsSearchScreen";
 import { EventsTabsContextProvider, useEventsTabsContext } from "./EventsTabsContext";
 import { PersonalScheduleList } from "./PersonalScheduleList";
+import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
+import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { useNow } from "../../hooks/useNow";
+import { useAppSelector } from "../../store";
+import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
+import { EventDayRecord } from "../../store/eurofurence.types";
+import { ScreenAreasParamsList } from "../ScreenAreas";
+import { ScreenStartParamsList } from "../ScreenStart";
 
 // TODO: Might have an distinction between days, tracks, rooms as param.
 
@@ -77,6 +77,19 @@ const EventsTabsScreenContent: FC<EventsTabsScreenProps> = ({ route }) => {
 
     // Get context and resolve if results present and the current selection state..
     const { hasResults, selected, setSelected } = useEventsTabsContext();
+
+    // Connect back handler to clearing selection.
+    useEffect(() => {
+        if (!selected) return;
+
+        const handler = () => {
+            setSelected(null);
+            return true;
+        };
+
+        BackHandler.addEventListener("hardwareBackPress", handler);
+        return () => BackHandler.removeEventListener("hardwareBackPress", handler);
+    }, [selected]);
 
     // Deselect on unfocus.
     const isFocused = useIsFocused();

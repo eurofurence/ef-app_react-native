@@ -4,6 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
+import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
 import { useTheme } from "../../../context/Theme";
 import { useAppNavigation, useAppRoute } from "../../../hooks/useAppNavigation";
 import { useAppSelector } from "../../../store";
@@ -12,7 +13,6 @@ import { useSubmitEventFeedbackMutation } from "../../../store/eurofurence.servi
 import { Label } from "../../Atoms/Label";
 import { Button } from "../../Containers/Button";
 import { ManagedRating, ManagedTextInput } from "../../FormControls";
-import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
 
 export const FeedbackForm = () => {
     const theme = useTheme();

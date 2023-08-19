@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 
-import { PlatformSentry } from "../../sentryHelpers";
 import { AppErrorContent } from "./AppErrorContent";
+import { PlatformSentry } from "../../sentryHelpers";
 
 export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
     constructor(props: { children: ReactNode }) {

@@ -1,4 +1,5 @@
-import { FC, ReactNode, useCallback } from "react";
+import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { FC, ReactNode, useCallback, useMemo } from "react";
 import { FlatList, StyleSheet, Vibration } from "react-native";
 
 import { EventCard } from "./EventCard";
@@ -50,19 +51,31 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
         [select],
     );
 
+    const headerComponent = useMemo(() => <>{leader}</>, [leader]);
+    const footerComponent = useMemo(() => <>{trailer}</>, [trailer]);
+    const emptyComponent = useMemo(() => <>{empty}</>, [empty]);
+
+    const keyExtractor = useCallback(({ Id }: EventDetails) => Id, []);
+    const renderItem = useCallback(
+        ({ item }: ListRenderItemInfo<EventDetails>) => {
+            return <EventCard key={item.Id} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />;
+        },
+        [onPress, onLongPress],
+    );
+
     return (
         <FlatList
             style={styles.list}
             contentContainerStyle={styles.container}
             scrollEnabled={true}
-            ListHeaderComponent={<>{leader}</>}
-            ListFooterComponent={<>{trailer}</>}
-            ListEmptyComponent={<>{empty}</>}
+            ListHeaderComponent={headerComponent}
+            ListFooterComponent={footerComponent}
+            ListEmptyComponent={emptyComponent}
             data={events}
-            keyExtractor={(item) => item.Id}
+            keyExtractor={keyExtractor}
             initialNumToRender={5}
             maxToRenderPerBatch={5}
-            renderItem={(entry: { item: EventDetails }) => <EventCard key={entry.item.Id} event={entry.item} type={cardType} onPress={onPress} onLongPress={onLongPress} />}
+            renderItem={renderItem}
         />
     );
 };

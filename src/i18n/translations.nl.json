@@ -21,7 +21,8 @@
   "Dealer": {
     "attends_fri": "Vrijdag",
     "attends_sat": "Zaterdag",
-    "attends_thu": "Donderdag"
+    "attends_thu": "Donderdag",
+    "table": "Tafel"
   },
   "EmptyScreen": {
     "notImplemented": "Deze content is niet zichtbaar."

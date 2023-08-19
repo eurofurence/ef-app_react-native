@@ -148,6 +148,19 @@ export const applyEventDetails = (state: RootState, source: EventRecord): EventD
     ConferenceTrack: !source.ConferenceTrackId ? undefined : eventTracksSelectors.selectById(state, source.ConferenceTrackId),
 });
 
+const internalDealerParseTable = (dealer: DealerRecord) => {
+    if (!dealer.ShortDescription) return undefined;
+    if (!dealer.ShortDescription?.startsWith("Table")) return undefined;
+
+    return dealer.ShortDescription.split(/\r?\n/, 1)[0].substring("Table".length).trim();
+};
+const internalDealerParseDescriptionContent = (dealer: DealerRecord) => {
+    if (!dealer.ShortDescription) return dealer.ShortDescription;
+    if (!dealer.ShortDescription?.startsWith("Table")) return dealer.ShortDescription;
+
+    return dealer.ShortDescription.split(/\r?\n/).slice(1).join("\n").trimStart();
+};
+
 export const applyDealerDetails = (state: RootState, source: DealerRecord): DealerDetails => ({
     ...source,
     AttendanceDayNames: internalAttendanceDayNames(source),
@@ -156,6 +169,8 @@ export const applyDealerDetails = (state: RootState, source: DealerRecord): Deal
     ArtistThumbnail: !source.ArtistThumbnailImageId ? undefined : imagesSelectors.selectById(state, source.ArtistThumbnailImageId),
     ArtPreview: !source.ArtPreviewImageId ? undefined : imagesSelectors.selectById(state, source.ArtPreviewImageId),
     FullName: source.DisplayName || source.AttendeeNickname,
+    ShortDescriptionTable: internalDealerParseTable(source),
+    ShortDescriptionContent: internalDealerParseDescriptionContent(source),
 });
 
 export const applyEventDayDetails = (state: RootState, source: EventDayRecord): EventDayDetails => source;

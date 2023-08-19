@@ -13,7 +13,7 @@ setNotificationChannelAsync("default", {
     lightColor: "#006459",
 }).then(
     () => console.log("Assigned default notification channel"),
-    (e) => captureNotificationException("Failed to assign notification channel:", e)
+    (e) => captureNotificationException("Failed to assign notification channel:", e),
 );
 
 setNotificationChannelAsync("event_reminders", {
@@ -22,7 +22,7 @@ setNotificationChannelAsync("event_reminders", {
     lightColor: "#006459",
 }).then(
     () => console.log("Assigned Event Reminders notification channel"),
-    (e) => captureNotificationException("Failed to assign notification channel:", e)
+    (e) => captureNotificationException("Failed to assign notification channel:", e),
 );
 
 setNotificationChannelAsync("announcements", {
@@ -31,7 +31,7 @@ setNotificationChannelAsync("announcements", {
     lightColor: "#006459",
 }).then(
     () => console.log("Assigned Announcements notification channel"),
-    (e) => captureNotificationException("Failed to assign notification channel:", e)
+    (e) => captureNotificationException("Failed to assign notification channel:", e),
 );
 
 setNotificationChannelAsync("private_messages", {
@@ -40,5 +40,5 @@ setNotificationChannelAsync("private_messages", {
     lightColor: "#006459",
 }).then(
     () => console.log("Assigned Private Messages notification channel"),
-    (e) => captureNotificationException("Failed to assign notification channel:", e)
+    (e) => captureNotificationException("Failed to assign notification channel:", e),
 );

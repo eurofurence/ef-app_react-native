@@ -6,13 +6,13 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { TabsRef } from "../components/Containers/Tabs";
-import { createTabNavigator, TabScreenProps } from "../components/Navigators/TabsNavigator";
 import { DealersTabsScreen, DealersTabsScreenParams } from "./Dealers/DealersTabsScreen";
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { HomeScreen, ScreenHomeParams } from "./Home/HomeScreen";
 import { MainMenu } from "./MainMenu/MainMenu";
 import { ScreenStartParamsList } from "./ScreenStart";
+import { TabsRef } from "../components/Containers/Tabs";
+import { createTabNavigator, TabScreenProps } from "../components/Navigators/TabsNavigator";
 
 /**
  * Available routes.

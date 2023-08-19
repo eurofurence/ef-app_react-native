@@ -49,14 +49,13 @@ export const DealersListAllScreen: FC<DealersListAllScreenProps> = () => {
             .value();
     }, [t, dealers]);
 
-    return (
-        <DealersSectionedListGeneric
-            dealersGroups={dealersGroups}
-            leader={
-                <Label type="h1" variant="middle" mt={30}>
-                    {t("dealers_at_convention", { convention: conName })}
-                </Label>
-            }
-        />
-    );
+    const leader = useMemo(() => {
+        return (
+            <Label type="h1" variant="middle" mt={30}>
+                {t("dealers_at_convention", { convention: conName })}
+            </Label>
+        );
+    }, [t]);
+
+    return <DealersSectionedListGeneric dealersGroups={dealersGroups} leader={leader} />;
 };

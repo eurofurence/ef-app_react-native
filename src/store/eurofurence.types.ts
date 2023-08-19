@@ -115,6 +115,8 @@ export type DealerDetails = DealerRecord & {
     ArtistThumbnail?: ImageDetails;
     ArtPreview?: ImageDetails;
     FullName: string;
+    ShortDescriptionContent?: string;
+    ShortDescriptionTable?: string;
 };
 
 export type EventDayRecord = RecordMetadata & {

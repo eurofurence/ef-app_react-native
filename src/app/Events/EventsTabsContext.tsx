@@ -50,7 +50,7 @@ export const EventsTabsContextProvider: FC<PropsWithChildren> = ({ children }) =
                     event.Title.toLowerCase().includes(searchActual) ||
                     event.SubTitle?.toLowerCase()?.includes(searchActual) ||
                     event.Abstract?.toLowerCase()?.includes(searchActual) ||
-                    event.PanelHosts?.toLowerCase()?.includes(searchActual)
+                    event.PanelHosts?.toLowerCase()?.includes(searchActual),
             );
             setResults(results);
         }, 100);
@@ -67,7 +67,7 @@ export const EventsTabsContextProvider: FC<PropsWithChildren> = ({ children }) =
             results,
             hasResults,
         }),
-        [selected, setSelected, search, setSearch, results, hasResults]
+        [selected, setSelected, search, setSearch, results, hasResults],
     );
 
     return <EventsTabsContext.Provider value={context}>{children}</EventsTabsContext.Provider>;

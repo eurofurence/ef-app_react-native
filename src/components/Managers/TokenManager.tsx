@@ -86,7 +86,7 @@ export const TokenManager = () => {
             return true;
         })().then(
             (r) => console.log("Registration and subscription, performed:", r),
-            (e) => captureNotificationException("Could not register and subscribe", e)
+            (e) => captureNotificationException("Could not register and subscribe", e),
         );
     }, [authToken /* Remote methods depend on token implicitly. */]);
 

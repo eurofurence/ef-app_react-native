@@ -4,6 +4,9 @@ import React, { FC } from "react";
 import { RefreshControl, ScrollView } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { CountdownHeader } from "./CountdownHeader";
+import { DeviceSpecificWarnings } from "./DeviceSpecificWarnings";
+import { LanguageWarnings } from "./LanguageWarnings";
 import { Floater, padFloater } from "../../components/Containers/Floater";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
@@ -14,9 +17,6 @@ import { TodayScheduleList } from "../Events/TodayScheduleList";
 import { UpcomingEventsList } from "../Events/UpcomingEventsList";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
-import { CountdownHeader } from "./CountdownHeader";
-import { DeviceSpecificWarnings } from "./DeviceSpecificWarnings";
-import { LanguageWarnings } from "./LanguageWarnings";
 
 /**
  * Params handled by the screen in route, nothing so far.

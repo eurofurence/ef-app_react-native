@@ -1,5 +1,7 @@
-import { FC, ReactNode, useCallback } from "react";
+import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { FC, ReactNode, useCallback, useMemo } from "react";
 import { SectionList, StyleSheet, View } from "react-native";
+import { SectionListData } from "react-native/Libraries/Lists/SectionList";
 
 import { DealerCard } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
@@ -27,6 +29,20 @@ export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> =
 
     const onPress = useCallback((dealer: DealerDetails) => navigateTo(dealer), [navigateTo]);
 
+    const headerComponent = useMemo(() => <>{leader}</>, [leader]);
+    const footerComponent = useMemo(() => <>{trailer}</>, [trailer]);
+
+    const keyExtractor = useCallback(({ Id }: DealerDetails) => Id, []);
+    const renderSection = useCallback(({ section }: SectionListData<any, any>) => {
+        return <DealerSection title={section.title} subtitle={section.subtitle} icon={section.icon} />;
+    }, []);
+    const renderItem = useCallback(
+        ({ item }: ListRenderItemInfo<DealerDetails>) => {
+            return <DealerCard key={item.Id} dealer={item} onPress={onPress} />;
+        },
+        [onPress],
+    );
+
     return (
         <View style={StyleSheet.absoluteFill}>
             <SectionList
@@ -35,14 +51,14 @@ export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> =
                 style={styles.list}
                 contentContainerStyle={styles.container}
                 scrollEnabled={true}
-                ListHeaderComponent={<>{leader}</>}
-                ListFooterComponent={<>{trailer}</>}
+                ListHeaderComponent={headerComponent}
+                ListFooterComponent={footerComponent}
                 sections={dealersGroups}
-                keyExtractor={(item) => item.Id}
+                keyExtractor={keyExtractor}
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
-                renderSectionHeader={({ section }) => <DealerSection title={section.title} subtitle={section.subtitle} icon={section.icon} />}
-                renderItem={(entry: { item: DealerDetails }) => <DealerCard key={entry.item.Id} dealer={entry.item} onPress={onPress} />}
+                renderSectionHeader={renderSection}
+                renderItem={renderItem}
             />
         </View>
     );

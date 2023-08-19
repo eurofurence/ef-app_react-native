@@ -1,6 +1,7 @@
+import { Image, ImageBackground } from "expo-image";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, ImageBackground, StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";
 
 import { Section } from "../../components/Atoms/Section";
 import { conId } from "../../configuration";
@@ -28,7 +29,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
     const subtitle = useAppSelector((state) => selectCountdownTitle(state, now, t));
     return (
         <View style={[styles.container, style]}>
-            <ImageBackground style={styles.background} source={background} resizeMode="cover" />
+            <ImageBackground style={styles.background} source={background} contentFit="cover" />
 
             <Section
                 style={styles.section}
@@ -40,7 +41,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
                 titleVariant="shadow"
                 subtitleVariant="shadow"
             />
-            <Image style={styles.logo} source={logoSrc} resizeMode="contain" />
+            <Image style={styles.logo} source={logoSrc} contentFit="contain" />
         </View>
     );
 };

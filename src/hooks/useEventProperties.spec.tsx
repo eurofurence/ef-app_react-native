@@ -1,7 +1,7 @@
 import moment from "moment";
 
-import { renderHook } from "../testUtils";
 import { useEventIsDone, useEventIsHappening } from "./useEventProperties";
+import { renderHook } from "../testUtils";
 
 describe("useEventProperties", function () {
     describe("useEventIsHappening", () => {

@@ -1,5 +1,6 @@
+import { ImageBackground, ImageBackgroundProps } from "expo-image";
 import React, { FC, memo, ReactNode, useMemo } from "react";
-import { ColorValue, ImageBackground, ImageSourcePropType, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
+import { ColorValue, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import Icon, { IconNames } from "../../components/Atoms/Icon";
 import { Indicator } from "../../components/Atoms/Indicator";
@@ -15,7 +16,7 @@ export type EventCardProps = {
     badges?: IconNames[];
     glyph?: IconNames;
     pre: ReactNode;
-    poster?: ImageSourcePropType;
+    poster?: ImageBackgroundProps["source"];
     title?: string;
     subtitle?: string;
     tag?: string;
@@ -45,7 +46,7 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
 
             {poster ? (
                 <View style={styles.mainPoster}>
-                    <ImageBackground source={poster} resizeMode={"cover"} style={StyleSheet.absoluteFill}>
+                    <ImageBackground source={poster} contentFit="cover" style={StyleSheet.absoluteFill} priority="low">
                         <View style={styles.tagArea2}>
                             <View style={styles.tagAreaInner}>
                                 <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>

@@ -3,11 +3,11 @@ import moment from "moment";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 import { Label } from "../../components/Atoms/Label";
 import { useNow } from "../../hooks/useNow";
 import { useAppSelector } from "../../store";
 import { selectFavoriteEvents } from "../../store/eurofurence.selectors";
-import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 
 export const PersonalScheduleList = () => {
     const { t } = useTranslation("Events");
@@ -36,20 +36,21 @@ export const PersonalScheduleList = () => {
         return upcomingSections;
     }, [events]);
 
-    return (
-        <EventsSectionedListGeneric
-            eventsGroups={sections}
-            cardType={"time"}
-            leader={
-                <Label type="h1" variant="middle" mt={30}>
-                    {t("schedule_title")}
-                </Label>
-            }
-            empty={
-                <Label type="para" variant="middle" mt={30}>
-                    {t("schedule_empty")}
-                </Label>
-            }
-        />
-    );
+    const leader = useMemo(() => {
+        return (
+            <Label type="h1" variant="middle" mt={30}>
+                {t("schedule_title")}
+            </Label>
+        );
+    }, [t]);
+
+    const empty = useMemo(() => {
+        return (
+            <Label type="para" variant="middle" mt={30}>
+                {t("schedule_empty")}
+            </Label>
+        );
+    }, [t]);
+
+    return <EventsSectionedListGeneric eventsGroups={sections} cardType={"time"} leader={leader} empty={empty} />;
 };

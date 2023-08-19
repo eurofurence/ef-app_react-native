@@ -2,6 +2,7 @@ import { addNotificationReceivedListener, Notification, removeNotificationSubscr
 import moment from "moment";
 import { useEffect } from "react";
 
+import { NotificationChannels } from "./NotificationChannel";
 import { conId } from "../../configuration";
 import { withPlatform } from "../../hoc/withPlatform";
 import { captureNotificationException } from "../../sentryHelpers";
@@ -9,7 +10,6 @@ import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background.slice";
 import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "../../types/NotificationTrigger";
 import { useSynchronizer } from "../Synchronization/SynchronizationProvider";
-import { NotificationChannels } from "./NotificationChannel";
 
 const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger, channelId: NotificationChannels = "default") =>
     scheduleNotificationAsync({
@@ -74,13 +74,13 @@ export const NotificationReceivedManager = () => {
                     // Schedule it.
                     scheduleNotificationFromTrigger(trigger, "announcements").then(
                         () => console.log("Announcement scheduled"),
-                        (e) => captureNotificationException("Unable to schedule announcement", e)
+                        (e) => captureNotificationException("Unable to schedule announcement", e),
                     );
                 } else if (event === "Notification" && isTriggerWithNotification(trigger)) {
                     // Schedule it.
                     scheduleNotificationFromTrigger(trigger, "private_messages").then(
                         () => console.log("Personal message scheduled"),
-                        (e) => captureNotificationException("Unable to schedule personal message", e)
+                        (e) => captureNotificationException("Unable to schedule personal message", e),
                     );
                 }
             }

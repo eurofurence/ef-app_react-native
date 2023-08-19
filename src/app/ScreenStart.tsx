@@ -3,8 +3,6 @@ import { StatusBar } from "expo-status-bar";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { useTheme, useThemeType } from "../context/Theme";
-import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 import { AboutScreen } from "./About";
 import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
@@ -17,6 +15,8 @@ import { PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemSc
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
 import { SettingsScreen } from "./Settings/SettingsScreen";
+import { useTheme, useThemeType } from "../context/Theme";
+import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 
 /**
  * Available routes.

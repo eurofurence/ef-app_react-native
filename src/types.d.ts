@@ -25,8 +25,3 @@ export type CustomRoute<ParamProps extends object, RouteName extends string> = {
     path?: string;
     params: Readonly<ParamProps>;
 };
-
-declare module "react-native-easy-markdown" {
-    import Markdown from "react-native-easy-markdown";
-    export default Markdown;
-}

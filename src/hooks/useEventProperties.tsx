@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 
-import { EventRecord } from "../store/eurofurence.types";
 import { useNow } from "./useNow";
+import { EventRecord } from "../store/eurofurence.types";
 
 /**
  * Uses a boolean that is true if the passed event is happening.

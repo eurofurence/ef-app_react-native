@@ -31,6 +31,7 @@
     "in_after_dark": "Im After Dark Bereich",
     "merchandise": "Angebot",
     "not_attending": "Heute nicht anwesend",
+    "table": "Tisch",
     "view_on_map": "Auf der Karte ansehen",
     "viewing_dealer": "Betrachte Dealer"
   },
@@ -79,6 +80,8 @@
     "night": "In der Nacht",
     "schedule_empty": "Du hast noch keine Events in Deinen Favoriten. Füge Events zu Deinen Favoriten hinzu, um Deine Agenda zu erstellen.",
     "schedule_title": "Deine Agenda",
+    "today_schedule_subtitle": "Du wirst an diese Events erinnert werden",
+    "today_schedule_title": "Deine Agenda",
     "upcoming_favorites_subtitle": "Du wirst eine Erinnerung bekommen bevor diese Events beginnen",
     "upcoming_favorites_title": "Favorisierte Events",
     "upcoming_subtitle": "Diese Events beginnenn in den nächsten 30 Minuten",
