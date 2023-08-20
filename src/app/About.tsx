@@ -118,7 +118,8 @@ export const AboutScreen = () => {
     const pazuzuEgg = useCallback(async () => {
         const { sound } = await Sound.createAsync(require("../../assets/audio/sheesh.webm"));
         await sound.playAsync();
-    }, []);
+        dispatch(setTheme("pazuzu"));
+    }, [dispatch]);
     return (
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>

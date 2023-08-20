@@ -184,6 +184,28 @@ const themes = {
         sponsorText: "#323034",
         marker: "#ff2f66",
     },
+    pazuzu: {
+        primary: "#1e2940",
+        secondary: "#97b165",
+        background: "#232734",
+        surface: "#14161b",
+        inverted: "#e0dedb",
+        text: "#e0dedb",
+        important: "#f1ede8",
+        invText: "#131313",
+        invImportant: "#000000",
+        warning: "#ee5e22",
+        notification: "#d91c52",
+        darken: "#04001440",
+        lighten: "#f7f7f780",
+        soften: "#f7f7f7a0",
+        white: "#ffffff",
+        superSponsor: "#5300ff",
+        superSponsorText: "#fff7f0",
+        sponsor: "#ffd700",
+        sponsorText: "#323034",
+        marker: "#ff2f66",
+    },
 };
 
 export type AppTheme = keyof typeof themes;
