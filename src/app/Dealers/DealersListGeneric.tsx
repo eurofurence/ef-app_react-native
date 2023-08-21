@@ -1,10 +1,11 @@
-import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { FC, ReactNode, useCallback, useMemo } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { DealerCard } from "./DealerCard";
 import { DealersListAllScreenProps } from "./DealersListAllScreen";
 import { DealersListByDayScreenProps } from "./DealersListByDayScreen";
+import { useDealersRefreshKey } from "../../hooks/useDealersRefreshKey";
 import { DealerDetails } from "../../store/eurofurence.types";
 
 /**
@@ -21,6 +22,9 @@ export type DealersListGenericProps = {
 };
 
 export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, leader, dealers, trailer }) => {
+    // Use refresh key.
+    const refreshKey = useDealersRefreshKey();
+
     const navigateTo = useCallback((dealer: DealerDetails) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
 
     const onPress = useCallback((dealer: DealerDetails) => navigateTo(dealer), [navigateTo]);
@@ -37,27 +41,21 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
     );
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <FlatList
-                style={styles.list}
-                contentContainerStyle={styles.container}
-                scrollEnabled={true}
-                ListHeaderComponent={headerComponent}
-                ListFooterComponent={footerComponent}
-                data={dealers}
-                keyExtractor={keyExtractor}
-                initialNumToRender={5}
-                maxToRenderPerBatch={5}
-                renderItem={renderItem}
-            />
-        </View>
+        <FlashList
+            contentContainerStyle={styles.container}
+            scrollEnabled={true}
+            ListHeaderComponent={headerComponent}
+            ListFooterComponent={footerComponent}
+            data={dealers}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
+            estimatedItemSize={100}
+            extraData={refreshKey}
+        />
     );
 };
 
 const styles = StyleSheet.create({
-    list: {
-        flex: 1,
-    },
     container: {
         paddingHorizontal: 20,
         paddingBottom: 100,

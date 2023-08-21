@@ -20,7 +20,7 @@
     "identifier": "EF27",
     "appBase": "https://app.eurofurence.org/EF27",
     "apiBase": "https://app.eurofurence.org/EF27/Api",
-    "menuColumns": 2,
+    "menuColumns": 4,
     "showLogin": false,
     "showServices": false,
     "showCatchEm": false
@@ -71,6 +71,7 @@
     "@react-navigation/stack": "^6.3.17",
     "@reduxjs/toolkit": "^1.9.5",
     "@sentry/react-native": "5.5.0",
+    "@shopify/flash-list": "1.4.3",
     "expo": "^49.0.6",
     "expo-application": "~5.3.0",
     "expo-av": "~13.4.1",

@@ -4,8 +4,10 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
-import { useTheme } from "../../context/Theme";
+import { useTheme, useThemeBackground } from "../../context/Theme";
 import { appStyles } from "../AppStyles";
+
+const placeholder = require("../../../assets/images/dealer_black.png");
 
 export type DealerCardContentProps = {
     avatar?: ImageProps["source"];
@@ -20,14 +22,14 @@ export type DealerCardContentProps = {
 export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, name, present, merchandise, offDays, onPress, onLongPress }) => {
     const { t } = useTranslation("Dealers");
     const theme = useTheme();
-    const backgroundStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
     const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: present ? theme.primary : theme.darken }), [present, theme]);
+    const backgroundStyle = useThemeBackground("background");
 
     return (
         <TouchableOpacity style={[styles.container, appStyles.shadow, backgroundStyle]} onPress={onPress} onLongPress={onLongPress}>
             {!avatar ? null : (
                 <View style={[styles.pre, stylePre]}>
-                    <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={require("../../../assets/images/dealer_black.png")} priority="low" />
+                    <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={placeholder} transition={60} priority="low" />
                 </View>
             )}
 

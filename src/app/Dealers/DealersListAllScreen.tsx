@@ -4,6 +4,7 @@ import { chain } from "lodash";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { DealerSectionProps } from "./DealerSection";
 import { DealersSectionedListGeneric } from "./DealersSectionedListGeneric";
 import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
 import { IconNames } from "../../components/Atoms/Icon";
@@ -41,11 +42,13 @@ export const DealersListAllScreen: FC<DealersListAllScreenProps> = () => {
             .orderBy("FullName")
             .groupBy((dealer) => dealer.FullName.substring(0, 1).toUpperCase())
             .entries()
-            .map(([firstLetter, events]) => ({
-                title: firstLetter,
-                icon: "bookmark" as IconNames,
-                data: events,
-            }))
+            .flatMap(([firstLetter, dealers]) => [
+                {
+                    title: firstLetter,
+                    icon: "bookmark" as IconNames,
+                } as DealerSectionProps,
+                ...dealers,
+            ])
             .value();
     }, [t, dealers]);
 

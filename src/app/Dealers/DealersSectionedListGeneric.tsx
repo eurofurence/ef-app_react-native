@@ -1,28 +1,27 @@
-import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { FC, ReactNode, useCallback, useMemo } from "react";
-import { SectionList, StyleSheet, View } from "react-native";
-import { SectionListData } from "react-native/Libraries/Lists/SectionList";
+import { StyleSheet } from "react-native";
 
 import { DealerCard } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
+import { useDealersRefreshKey } from "../../hooks/useDealersRefreshKey";
 import { DealerDetails } from "../../store/eurofurence.types";
-
-export type DealersSectionedListItem = DealerSectionProps & {
-    data: DealerDetails[];
-};
 
 /**
  * The properties to the component.
  */
 export type DealersSectionedListGenericProps = {
     leader?: ReactNode;
-    dealersGroups: DealersSectionedListItem[];
+    dealersGroups: (DealerSectionProps | DealerDetails)[];
     trailer?: ReactNode;
 };
 
 export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> = ({ leader, dealersGroups, trailer }) => {
+    // Use refresh key.
+    const refreshKey = useDealersRefreshKey();
+
     const navigation = useAppNavigation("Areas");
     const navigateTo = useCallback((dealer: DealerDetails) => navigation.push("Dealer", { id: dealer.Id }), [navigation]);
     const synchronizer = useSynchronizer();
@@ -32,42 +31,33 @@ export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> =
     const headerComponent = useMemo(() => <>{leader}</>, [leader]);
     const footerComponent = useMemo(() => <>{trailer}</>, [trailer]);
 
-    const keyExtractor = useCallback(({ Id }: DealerDetails) => Id, []);
-    const renderSection = useCallback(({ section }: SectionListData<any, any>) => {
-        return <DealerSection title={section.title} subtitle={section.subtitle} icon={section.icon} />;
-    }, []);
+    const getItemType = useCallback((item: DealerSectionProps | DealerDetails) => ("Id" in item ? "row" : "sectionHeader"), []);
     const renderItem = useCallback(
-        ({ item }: ListRenderItemInfo<DealerDetails>) => {
-            return <DealerCard key={item.Id} dealer={item} onPress={onPress} />;
+        ({ item }: ListRenderItemInfo<DealerSectionProps | DealerDetails>) => {
+            if ("Id" in item) return <DealerCard key={item.Id} dealer={item} onPress={onPress} />;
+            else return <DealerSection title={item.title} subtitle={item.subtitle} icon={item.icon} />;
         },
         [onPress],
     );
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <SectionList
-                refreshing={synchronizer.isSynchronizing}
-                onRefresh={synchronizer.synchronize}
-                style={styles.list}
-                contentContainerStyle={styles.container}
-                scrollEnabled={true}
-                ListHeaderComponent={headerComponent}
-                ListFooterComponent={footerComponent}
-                sections={dealersGroups}
-                keyExtractor={keyExtractor}
-                initialNumToRender={5}
-                maxToRenderPerBatch={5}
-                renderSectionHeader={renderSection}
-                renderItem={renderItem}
-            />
-        </View>
+        <FlashList
+            refreshing={synchronizer.isSynchronizing}
+            onRefresh={synchronizer.synchronize}
+            contentContainerStyle={styles.container}
+            scrollEnabled={true}
+            ListHeaderComponent={headerComponent}
+            ListFooterComponent={footerComponent}
+            data={dealersGroups}
+            getItemType={getItemType}
+            renderItem={renderItem}
+            estimatedItemSize={100}
+            extraData={refreshKey}
+        />
     );
 };
 
 const styles = StyleSheet.create({
-    list: {
-        flex: 1,
-    },
     container: {
         paddingHorizontal: 20,
         paddingBottom: 100,

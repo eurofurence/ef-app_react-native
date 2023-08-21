@@ -185,10 +185,10 @@ const themes = {
         marker: "#ff2f66",
     },
     pazuzu: {
-        primary: "#1e2940",
+        primary: "#1E2639",
         secondary: "#97b165",
-        background: "#232734",
-        surface: "#14161b",
+        background: "#16171b",
+        surface: "#09090c",
         inverted: "#e0dedb",
         text: "#e0dedb",
         important: "#f1ede8",

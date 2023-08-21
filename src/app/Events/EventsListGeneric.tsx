@@ -1,6 +1,6 @@
-import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
+import { FlashList, ListRenderItemInfo } from "@shopify/flash-list";
 import { FC, ReactNode, useCallback, useMemo } from "react";
-import { FlatList, StyleSheet, Vibration } from "react-native";
+import { StyleSheet, Vibration } from "react-native";
 
 import { EventCard } from "./EventCard";
 import { EventsListByDayScreenProps } from "./EventsListByDayScreen";
@@ -8,6 +8,7 @@ import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
 import { EventsListByTrackScreenProps } from "./EventsListByTrackScreen";
 import { EventsListSearchResultsScreenProps } from "./EventsListSearchResultsScreen";
 import { EventsSearchScreenProps } from "./EventsSearchScreen";
+import { useEventsRefreshKey } from "../../hooks/useEventsRefreshKey";
 import { EventDetails } from "../../store/eurofurence.types";
 
 /**
@@ -32,6 +33,9 @@ export type EventsListGenericProps = {
 };
 
 export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, leader, events, select, empty, trailer, cardType = "duration" }) => {
+    // Use refresh key.
+    const refreshKey = useEventsRefreshKey();
+
     // Prepare navigation callback. This clones the respective parameters, as otherwise illegal mutation will occur.
     const navigateTo = useCallback(
         (event: EventDetails) =>
@@ -64,8 +68,7 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
     );
 
     return (
-        <FlatList
-            style={styles.list}
+        <FlashList
             contentContainerStyle={styles.container}
             scrollEnabled={true}
             ListHeaderComponent={headerComponent}
@@ -73,17 +76,13 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
             ListEmptyComponent={emptyComponent}
             data={events}
             keyExtractor={keyExtractor}
-            initialNumToRender={5}
-            maxToRenderPerBatch={5}
             renderItem={renderItem}
+            extraData={refreshKey}
         />
     );
 };
 
 const styles = StyleSheet.create({
-    list: {
-        flex: 1,
-    },
     container: {
         paddingHorizontal: 20,
         paddingBottom: 100,

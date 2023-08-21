@@ -89,6 +89,7 @@ export const mapsAdapter = createEntityAdapter<MapRecord>({
 
 type EurofurenceCacheState = {
     lastSynchronised: string;
+    cid?: string;
     state: "uninitialized" | "preview" | "refreshing" | string;
     events: EntityState<EventRecord>;
     eventDays: EntityState<EventDayRecord>;
@@ -146,6 +147,21 @@ export const eurofurenceCache = createSlice({
     initialState,
     reducers: {
         applySync: (state, action: PayloadAction<SyncResponse>) => {
+            // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
+            if (state.cid !== action.payload.ConventionIdentifier) {
+                state.cid = action.payload.ConventionIdentifier;
+                eventsAdapter.removeAll(state.events);
+                eventDaysAdapter.removeAll(state.eventDays);
+                eventRoomsAdapter.removeAll(state.eventRooms);
+                eventTracksAdapter.removeAll(state.eventTracks);
+                knowledgeGroupsAdapter.removeAll(state.knowledgeGroups);
+                knowledgeEntriesAdapter.removeAll(state.knowledgeEntries);
+                dealersAdapter.removeAll(state.dealers);
+                imagesAdapter.removeAll(state.images);
+                announcementsAdapter.removeAll(state.announcements);
+                mapsAdapter.removeAll(state.maps);
+            }
+
             // Fix locally for now. TODO: Remove when API is fixed.
             internalPatchDealers(action.payload.Dealers);
 

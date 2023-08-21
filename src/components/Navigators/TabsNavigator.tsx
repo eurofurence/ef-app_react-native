@@ -1,7 +1,7 @@
 import { CommonActions } from "@react-navigation/core";
 import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabActionHelpers, TabNavigationState, TabRouter, useNavigationBuilder } from "@react-navigation/native";
-import { FC, ReactNode, RefObject, useRef } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { FC, ReactNode, RefObject, useEffect, useRef } from "react";
+import { BackHandler, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { IconNames } from "../Atoms/Icon";
 import { Tabs, TabsRef } from "../Containers/Tabs";
@@ -129,6 +129,16 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
         });
 
     const tabs = useRef<TabsRef>(null);
+
+    // Connect to back handler.
+    useEffect(() => {
+        // Handler for closing, return false if no tabs present yet.
+        const handler = () => tabs.current?.close() ?? false;
+
+        // Add handler and return removal.
+        BackHandler.addEventListener("hardwareBackPress", handler);
+        return () => BackHandler.removeEventListener("hardwareBackPress", handler);
+    }, [tabs]);
 
     return (
         <NavigationContent>

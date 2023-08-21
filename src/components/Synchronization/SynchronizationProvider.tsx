@@ -3,7 +3,7 @@ import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffec
 import { Vibration } from "react-native";
 
 import { PlatformImageSynchronizer } from "./ImageSynchronizer";
-import { apiBase } from "../../configuration";
+import { apiBase, conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
 import { selectIsSynchronized } from "../../store/eurofurence.selectors";
@@ -26,11 +26,16 @@ const SynchronizationContext = createContext<SynchronizationProviderProps>({
 
 export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => {
     const dispatch = useAppDispatch();
+    const cid = useAppSelector((state) => state.eurofurenceCache.cid);
     const lastFetch = useAppSelector((state) => state.eurofurenceCache.lastSynchronised);
     const [count, setCount] = useState(1);
 
     useEffect(() => {
-        fetch(`${apiBase}/Sync?since=${lastFetch}`)
+        // Sync fully if state is for a different convention.
+        const path = cid === conId ? `Sync?since=${lastFetch}` : `Sync`;
+
+        // Fetch and apply.
+        fetch(`${apiBase}/${path}`)
             .then((r) => r.json())
             .then((data) => dispatch(applySync(data)))
             .catch(console.error);

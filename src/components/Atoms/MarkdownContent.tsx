@@ -51,7 +51,7 @@ export type MarkdownContentProps = {
 
 export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, children }) => {
     // TODO Verify all.
-    const fixed = useMemo(() => children?.replace(/\r\n?/gm, "\n").replace(/(?<!\s)\n(?!\n|\s*\*|\s*-|#)/gm, ""), [children]);
+    const fixed = useMemo(() => children?.replace(/\r\n?/gm, "\n")?.replace(/(?<!\s)\n(?!\n|\s*\*|\s*-|\s*\d|#)/gm, ""), [children]);
 
     // Compute outer container margins.
     const styleContainer = useMemo<StyleProp<TextStyle>>(() => {

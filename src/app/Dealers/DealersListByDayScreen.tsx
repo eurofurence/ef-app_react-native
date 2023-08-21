@@ -36,7 +36,6 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route 
     const { t } = useTranslation("Dealers");
 
     // Get the day. Use it to resolve events to display.
-    // TODO: @lukashaertel pls fix
     const day = route.name.toLowerCase() as AttendanceDay;
     const dealers = useAppSelector((state) => selectDealersByDayName(state, day));
     const dealersGroups = useMemo(() => {
@@ -44,11 +43,13 @@ export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route 
             .orderBy("FullName")
             .groupBy((dealer) => dealer.FullName.substring(0, 1).toUpperCase())
             .entries()
-            .map(([firstLetter, events]) => ({
-                title: firstLetter,
-                icon: "bookmark" as IconNames,
-                data: events,
-            }))
+            .flatMap(([firstLetter, dealers]) => [
+                {
+                    title: firstLetter,
+                    icon: "bookmark" as IconNames,
+                },
+                ...dealers,
+            ])
             .value();
     }, [t, dealers]);
 

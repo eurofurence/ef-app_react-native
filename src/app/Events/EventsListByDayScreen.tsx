@@ -4,6 +4,7 @@ import { chain, partition } from "lodash";
 import { FC, memo, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { EventSectionProps } from "./EventSection";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
@@ -50,16 +51,18 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ rou
             .orderBy("StartDateTimeUtc")
             .groupBy("PartOfDay")
             .entries()
-            .map(([partOfDay, events]) => ({
-                title: t(partOfDay as PartOfDay),
-                subtitle: t("events_count", { count: events.length }),
-                icon: ((partOfDay === "morning" && "weather-sunset-up") ||
-                    (partOfDay === "afternoon" && "weather-sunny") ||
-                    (partOfDay === "evening" && "weather-sunset-down") ||
-                    (partOfDay === "night" && "weather-night") ||
-                    "weather-sunny") as IconNames,
-                data: events,
-            }))
+            .flatMap(([partOfDay, events]) => [
+                {
+                    title: t(partOfDay as PartOfDay),
+                    subtitle: t("events_count", { count: events.length }),
+                    icon: ((partOfDay === "morning" && "weather-sunset-up") ||
+                        (partOfDay === "afternoon" && "weather-sunny") ||
+                        (partOfDay === "evening" && "weather-sunset-down") ||
+                        (partOfDay === "night" && "weather-night") ||
+                        "weather-sunny") as IconNames,
+                } as EventSectionProps,
+                ...events,
+            ])
             .value();
 
         const passedSections =
@@ -69,8 +72,8 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ rou
                           title: t("finished"),
                           subtitle: t("events_count", { count: passed.length }),
                           icon: "history" as IconNames,
-                          data: passed,
-                      },
+                      } as EventSectionProps,
+                      ...passed,
                   ]
                 : [];
 
