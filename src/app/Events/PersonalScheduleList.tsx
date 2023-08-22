@@ -20,17 +20,21 @@ export const PersonalScheduleList = () => {
         const upcomingSections = _.chain(upcoming)
             .orderBy((it) => moment(it.StartDateTimeUtc).valueOf(), "asc")
             .groupBy((it) => it.ConferenceDay?.Name)
-            .map((items, day) => ({
-                title: day,
-                data: items,
-            }))
+            .flatMap((items, day) => [
+                {
+                    title: day,
+                },
+                ...items,
+            ])
             .value();
 
         if (past.length > 0) {
-            upcomingSections.push({
-                title: t("finished"),
-                data: past,
-            });
+            upcomingSections.push(
+                {
+                    title: t("finished"),
+                },
+                ...past,
+            );
         }
 
         return upcomingSections;
