@@ -49,7 +49,11 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
     const styleHandle = useThemeBackground("inverted");
 
     const [results, setResults] = useState<FilterResult[]>([]);
+    const [filtering, setFiltering] = useState(false);
     const onTransform = useCallback((event: ZoomableViewEvent) => {
+        // Mark filtering start.
+        setFiltering(true);
+
         // Clear last handle if it did not run yet.
         clearTimeout(refHandle.current);
 
@@ -79,7 +83,10 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                     .value();
 
                 // Assign if this is still the active handle.
-                if (refHandle.current === ownHandle) setResults(results);
+                if (refHandle.current === ownHandle) {
+                    setResults(results);
+                    setFiltering(false);
+                }
             });
         }, 350);
 
@@ -114,6 +121,16 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
 
     // Determine zoom levels.
     const [minZoom, maxZoom] = useMemo(() => (Math.max(map.Image.Width, map.Image.Height) < 2048 ? [0.5, 2] : [0.25, 1]), [map]);
+    useEffect(() => console.log(filtering), [filtering]);
+    // List header component.
+    const header = useMemo(
+        () => (
+            <Label mt={15} mb={15} type="em" variant="middle">
+                {filtering ? t("filtering") : t("results")}
+            </Label>
+        ),
+        [t, filtering],
+    );
 
     // Key extractor callback.
     const keyExtractor = useCallback(({ key }: FilterResult) => key, []);
@@ -144,22 +161,17 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                 </ZoomableView>
             </View>
 
-            <BottomSheet ref={refSheet} backgroundStyle={styleBackground} handleStyle={styles.handle} handleIndicatorStyle={styleHandle} snapPoints={["10%", "75%"]} index={0}>
-                {!results ? (
-                    <Label mt={15} type="em" variant="middle">
-                        {t("filtering")}
-                    </Label>
-                ) : (
-                    <MapContentFlatList
-                        initialNumToRender={2}
-                        maxToRenderPerBatch={1}
-                        windowSize={5}
-                        data={results}
-                        keyExtractor={keyExtractor}
-                        renderItem={renderItem}
-                        contentContainerStyle={styles.mapContentContainer}
-                    />
-                )}
+            <BottomSheet ref={refSheet} backgroundStyle={styleBackground} handleStyle={styles.handle} handleIndicatorStyle={styleHandle} snapPoints={["17%", "75%"]} index={0}>
+                <MapContentFlatList
+                    initialNumToRender={2}
+                    maxToRenderPerBatch={1}
+                    ListHeaderComponent={header}
+                    windowSize={5}
+                    data={results}
+                    keyExtractor={keyExtractor}
+                    renderItem={renderItem}
+                    contentContainerStyle={styles.mapContentContainer}
+                />
             </BottomSheet>
         </>
     );

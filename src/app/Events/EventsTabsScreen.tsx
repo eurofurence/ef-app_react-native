@@ -82,13 +82,12 @@ const EventsTabsScreenContent: FC<EventsTabsScreenProps> = ({ route }) => {
     useEffect(() => {
         if (!selected) return;
 
-        const handler = () => {
+        const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
             setSelected(null);
             return true;
-        };
+        });
 
-        BackHandler.addEventListener("hardwareBackPress", handler);
-        return () => BackHandler.removeEventListener("hardwareBackPress", handler);
+        return () => subscription.remove();
     }, [selected]);
 
     // Deselect on unfocus.

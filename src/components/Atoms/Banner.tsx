@@ -15,15 +15,20 @@ export type BannerProps = {
      * The source image object.
      */
     image?: ImageDetails;
+
+    /**
+     * Placeholder to use.
+     */
+    placeholder: ImageProps["placeholder"];
 };
 
-export const Banner: FC<BannerProps> = ({ style, image }) => {
+export const Banner: FC<BannerProps> = ({ style, image, placeholder }) => {
     // Do not render if nothing given.
     if (!image) return null;
 
     const aspect = useMemo<ImageProps["style"]>(() => (!image ? {} : { aspectRatio: image.Width / image.Height }), [image]);
 
-    return <Image style={[styles.image, aspect, style]} contentFit={undefined} source={{ uri: image.FullUrl }} />;
+    return <Image style={[styles.image, aspect, style]} contentFit={undefined} source={{ uri: image.FullUrl }} placeholder={placeholder} />;
 };
 
 const styles = StyleSheet.create({

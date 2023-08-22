@@ -77,6 +77,7 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
             data={events}
             keyExtractor={keyExtractor}
             renderItem={renderItem}
+            estimatedItemSize={80}
             extraData={refreshKey}
         />
     );

@@ -35,6 +35,11 @@ export type EventContentProps = {
     parentPad?: number;
 };
 
+/**
+ * Placeholder blur hash.
+ */
+const placeholder = "m38D%z^%020303D+bv~m%IWF-nIrRS-mxsobE3E4f+W;s:%0oIRk";
+
 export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) => {
     const navigation = useAppNavigation("Areas");
 
@@ -75,7 +80,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
 
             {!event.Poster ? null : (
                 <View style={styles.posterLine}>
-                    <Banner image={event.Poster} />
+                    <Banner image={event.Poster} placeholder={placeholder} />
                 </View>
             )}
 

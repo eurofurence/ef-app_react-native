@@ -132,12 +132,9 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
 
     // Connect to back handler.
     useEffect(() => {
-        // Handler for closing, return false if no tabs present yet.
-        const handler = () => tabs.current?.close() ?? false;
-
         // Add handler and return removal.
-        BackHandler.addEventListener("hardwareBackPress", handler);
-        return () => BackHandler.removeEventListener("hardwareBackPress", handler);
+        const subscription = BackHandler.addEventListener("hardwareBackPress", () => tabs.current?.close() ?? false);
+        return () => subscription.remove();
     }, [tabs]);
 
     return (

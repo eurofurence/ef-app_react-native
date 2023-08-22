@@ -56,6 +56,7 @@ export const LanguagePicker = () => {
             <Picker<string>
                 selectedValue={i18n.language}
                 style={{ color: theme.text }}
+                dropdownIconColor={theme.text}
                 prompt={t("changeLanguage")}
                 onValueChange={(it: string) => {
                     i18n.changeLanguage(it).catch(captureException);
