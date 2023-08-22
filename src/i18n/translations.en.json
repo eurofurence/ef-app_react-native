@@ -117,7 +117,8 @@
     "header": "Info Articles"
   },
   "Maps": {
-    "filtering": "Searching viewed area"
+    "filtering": "Searching viewed area",
+    "results": "In the viewed area"
   },
   "Menu": {
     "about": "About",

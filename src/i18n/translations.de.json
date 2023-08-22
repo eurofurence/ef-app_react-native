@@ -107,7 +107,8 @@
     "header": "Wissenswertes"
   },
   "Maps": {
-    "filtering": "Durchsuche Ansicht"
+    "filtering": "Durchsuche Ansicht",
+    "results": "In der Ansicht"
   },
   "Menu": {
     "about": "Über uns",
