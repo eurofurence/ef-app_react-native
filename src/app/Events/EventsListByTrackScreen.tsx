@@ -5,6 +5,7 @@ import moment from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { EventSectionProps } from "./EventSection";
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
@@ -53,21 +54,25 @@ export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ rout
             .orderBy("StartDateTimeUtc")
             .groupBy((event) => event.ConferenceDay?.Date)
             .entries()
-            .map(([date, events]) => ({
-                title: moment(date).format("dddd"),
-                subtitle: t("events_count", { count: events.length }),
-                icon: "calendar-outline" as IconNames,
-                data: events,
-            }))
+            .flatMap(([date, events]) => [
+                {
+                    title: moment(date).format("dddd"),
+                    subtitle: t("events_count", { count: events.length }),
+                    icon: "calendar-outline" as IconNames,
+                } as EventSectionProps,
+                ...events,
+            ])
             .thru((chain) =>
                 done.length === 0
                     ? chain
-                    : chain.concat({
-                          title: t("events_done"),
-                          subtitle: t("events_count", { count: done.length }),
-                          icon: "calendar-clock-outline" as IconNames,
-                          data: done,
-                      }),
+                    : chain.concat([
+                          {
+                              title: t("events_done"),
+                              subtitle: t("events_count", { count: done.length }),
+                              icon: "calendar-clock-outline" as IconNames,
+                          } as EventSectionProps,
+                          ...done,
+                      ]),
             )
             .value();
     }, [t, eventsByTrack, isEventDone]);

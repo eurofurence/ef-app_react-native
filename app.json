@@ -7,7 +7,7 @@
     "slug": "ef-app-react-native",
     "description": "Your one stop shop to the convention!",
     "owner": "eurofurence",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "orientation": "default",
     "icon": "./assets/images/playstore.png",
     "userInterfaceStyle": "automatic",
