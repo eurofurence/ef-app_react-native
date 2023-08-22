@@ -7,7 +7,7 @@
     "slug": "ef-app-react-native",
     "description": "Your one stop shop to the convention!",
     "owner": "eurofurence",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "orientation": "default",
     "icon": "./assets/images/playstore.png",
     "userInterfaceStyle": "automatic",
@@ -41,7 +41,7 @@
       "intentFilters": [
         {
           "action": "VIEW",
-          "autoVerify": false,
+          "autoVerify": true,
           "data": [
             {
               "scheme": "https",
@@ -74,6 +74,12 @@
         {
           "icon": "./assets/images/notification.png",
           "color": "#006459"
+        }
+      ],
+      [
+        "expo-av",
+        {
+          "microphonePermission": false
         }
       ],
       "expo-localization",
