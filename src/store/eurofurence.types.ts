@@ -124,7 +124,9 @@ export type EventDayRecord = RecordMetadata & {
     Date: string;
 };
 
-export type EventDayDetails = EventDayRecord & object;
+export type EventDayDetails = EventDayRecord & {
+    dayOfWeek: number;
+};
 
 export type EventTrackRecord = RecordMetadata & {
     Name: string;

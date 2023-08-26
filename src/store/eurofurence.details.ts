@@ -124,9 +124,9 @@ const internalAttendanceDays = (state: RootState, dealer: DealerRecord) => {
     const result: EventDayDetails[] = [];
     for (const day of days) {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
-        if (dealer.AttendsOnThursday && day && moment(day.Date).day() === 1) result.push(day);
-        if (dealer.AttendsOnFriday && day && moment(day.Date).day() === 2) result.push(day);
-        if (dealer.AttendsOnSaturday && day && moment(day.Date).day() === 3) result.push(day);
+        if (dealer.AttendsOnThursday && day.dayOfWeek === 1) result.push(day);
+        if (dealer.AttendsOnFriday && day.dayOfWeek === 2) result.push(day);
+        if (dealer.AttendsOnSaturday && day.dayOfWeek === 3) result.push(day);
     }
     return result;
 };
@@ -173,7 +173,10 @@ export const applyDealerDetails = (state: RootState, source: DealerRecord): Deal
     ShortDescriptionContent: internalDealerParseDescriptionContent(source),
 });
 
-export const applyEventDayDetails = (state: RootState, source: EventDayRecord): EventDayDetails => source;
+export const applyEventDayDetails = (state: RootState, source: EventDayRecord): EventDayDetails => ({
+    ...source,
+    dayOfWeek: moment(source.Date).day(),
+});
 
 export const applyEventTrackDetails = (state: RootState, source: EventTrackRecord): EventTrackDetails => source;
 

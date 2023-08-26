@@ -51,7 +51,7 @@ export type ScreenAreasProps =
     // Route carrying from start screen at "Areas", navigation via own parameter list and parent.
     CompositeScreenProps<StackScreenProps<ScreenStartParamsList, "Areas">, TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>>;
 
-export const ScreenAreas: FC<ScreenAreasProps> = React.memo(() => {
+export const ScreenAreas: FC<ScreenAreasProps> = () => {
     const { t } = useTranslation("Menu");
 
     // Compute safe inset at the bottom and convert to style.
@@ -67,4 +67,4 @@ export const ScreenAreas: FC<ScreenAreasProps> = React.memo(() => {
             </AreasNavigator.Navigator>
         </View>
     );
-});
+};

@@ -65,14 +65,14 @@ export const DealersTabsScreen: FC<DealersTabsScreenProps> = () => {
 
     // Returns the flags if this is the current day.
     const { isMon, isTue, isWed } = useMemo(() => {
-        const monDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 1);
-        const tueDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 2);
-        const wedDate = days.map((day) => moment(day.Date)).find((moment) => moment.day() === 3);
+        const monDate = days.find((day) => day.dayOfWeek === 1);
+        const tueDate = days.find((day) => day.dayOfWeek === 2);
+        const wedDate = days.find((day) => day.dayOfWeek === 3);
 
         return {
-            isMon: monDate?.isSame(now, "day") ?? false,
-            isTue: tueDate?.isSame(now, "day") ?? false,
-            isWed: wedDate?.isSame(now, "day") ?? false,
+            isMon: monDate && moment(monDate.Date).isSame(now, "day"),
+            isTue: tueDate && moment(tueDate.Date).isSame(now, "day"),
+            isWed: wedDate && moment(wedDate.Date).isSame(now, "day"),
         };
     }, [now]);
 

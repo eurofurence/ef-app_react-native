@@ -1,7 +1,7 @@
 import { CompositeScreenProps } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain, partition } from "lodash";
-import { FC, memo, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { EventSectionProps } from "./EventSection";
@@ -34,7 +34,7 @@ export type EventsListByDayScreenProps =
         PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
-export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ route }) => {
+export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = ({ route }) => {
     const { t } = useTranslation("Events");
     const [now] = useNow();
 
@@ -89,4 +89,4 @@ export const EventsListByDayScreen: FC<EventsListByDayScreenProps> = memo(({ rou
     }, [day]);
 
     return <EventsSectionedListGeneric eventsGroups={eventsGroups} select={setSelected} leader={leader} />;
-});
+};

@@ -1,7 +1,7 @@
 import { CommonActions } from "@react-navigation/core";
 import { createNavigatorFactory, NavigationProp, ParamListBase, RouteProp, TabActionHelpers, TabNavigationState, TabRouter, useNavigationBuilder } from "@react-navigation/native";
-import { FC, ReactNode, RefObject, useEffect, useRef } from "react";
-import { BackHandler, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { FC, ReactNode, RefObject, useRef } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { IconNames } from "../Atoms/Icon";
 import { Tabs, TabsRef } from "../Containers/Tabs";
@@ -128,14 +128,8 @@ export const TabNavigator: FC<TabNavigatorProps> = ({
             target: state.key,
         });
 
+    // Handle to tabs for closing on press.
     const tabs = useRef<TabsRef>(null);
-
-    // Connect to back handler.
-    useEffect(() => {
-        // Add handler and return removal.
-        const subscription = BackHandler.addEventListener("hardwareBackPress", () => tabs.current?.close() ?? false);
-        return () => subscription.remove();
-    }, [tabs]);
 
     return (
         <NavigationContent>

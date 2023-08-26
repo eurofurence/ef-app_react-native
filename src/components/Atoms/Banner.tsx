@@ -19,7 +19,7 @@ export type BannerProps = {
     /**
      * Placeholder to use.
      */
-    placeholder: ImageProps["placeholder"];
+    placeholder?: ImageProps["placeholder"];
 };
 
 export const Banner: FC<BannerProps> = ({ style, image, placeholder }) => {

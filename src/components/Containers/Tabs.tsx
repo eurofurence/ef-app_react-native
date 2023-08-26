@@ -1,5 +1,5 @@
-import { createContext, forwardRef, ReactNode, useCallback, useContext, useImperativeHandle, useMemo, useState } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import { BackHandler, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
 
@@ -18,7 +18,7 @@ export type TabsProps = {
     style?: StyleProp<ViewStyle>;
 
     /**
-     * If given, tabs that are layed out before the more/less button.
+     * If given, tabs that are laid out before the more/less button.
      */
     tabs: {
         /**
@@ -37,7 +37,7 @@ export type TabsProps = {
         active?: boolean;
 
         /**
-         * If true or node, indicator will be presented over the this tab.
+         * If true or node, indicator will be presented over this tab.
          */
         indicate?: boolean | ReactNode;
 
@@ -222,6 +222,13 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         if (state === "closed") return open;
         return undefined;
     }, [state, close, open]);
+
+    // Connect to back handler.
+    useEffect(() => {
+        // Add handler and return removal.
+        const subscription = BackHandler.addEventListener("hardwareBackPress", () => close() ?? false);
+        return () => subscription.remove();
+    }, [close]);
 
     // TODO: Add safe area to tabs.
 

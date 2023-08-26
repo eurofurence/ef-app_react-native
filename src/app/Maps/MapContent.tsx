@@ -121,7 +121,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
 
     // Determine zoom levels.
     const [minZoom, maxZoom] = useMemo(() => (Math.max(map.Image.Width, map.Image.Height) < 2048 ? [0.5, 2] : [0.25, 1]), [map]);
-    useEffect(() => console.log(filtering), [filtering]);
+
     // List header component.
     const header = useMemo(
         () => (
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingBottom: "10%",
+        paddingBottom: "17%",
     },
     image: {
         width: "100%",
