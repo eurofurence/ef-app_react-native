@@ -1,8 +1,33 @@
+import Fuse from "fuse.js";
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 
-import { useAppSelector } from "../../store";
+import { useFuseFor } from "../../hooks/useFuseFor";
 import { eventsSelector } from "../../store/eurofurence.selectors";
 import { EventDetails } from "../../store/eurofurence.types";
+
+const eventSearchProperties: Fuse.FuseOptionKey<EventDetails>[] = [
+    {
+        name: "Title",
+        weight: 2,
+    },
+    {
+        name: "SubTitle",
+        weight: 1,
+    },
+    {
+        name: "Abstract",
+        weight: 0.5,
+    },
+    {
+        name: "PanelHosts",
+        weight: 0.1,
+    },
+];
+
+const eventSearchOptions: Fuse.IFuseOptions<EventDetails> = {
+    shouldSort: true,
+    threshold: 0.3,
+};
 
 export type EventsTabsContextType = {
     selected: null | EventDetails;
@@ -23,8 +48,8 @@ export const EventsTabsContext = createContext<EventsTabsContextType>({
 });
 
 export const EventsTabsContextProvider: FC<PropsWithChildren> = ({ children }) => {
-    // Source of all events.
-    const events = useAppSelector(eventsSelector.selectAll);
+    // Create indexer.
+    const fuse = useFuseFor(eventsSelector.selectAll, eventSearchProperties, eventSearchOptions);
 
     // State of detail view selection.
     const [selected, setSelected] = useState<null | EventDetails>(null);
@@ -38,25 +63,12 @@ export const EventsTabsContextProvider: FC<PropsWithChildren> = ({ children }) =
 
     // Perform search.
     useEffect(() => {
-        if (search.length < 3) {
-            setResults(null);
-            return;
-        }
-
         const handle = setTimeout(() => {
-            const searchActual = search.toLowerCase().trim();
-            const results = events.filter(
-                (event) =>
-                    event.Title.toLowerCase().includes(searchActual) ||
-                    event.SubTitle?.toLowerCase()?.includes(searchActual) ||
-                    event.Abstract?.toLowerCase()?.includes(searchActual) ||
-                    event.PanelHosts?.toLowerCase()?.includes(searchActual),
-            );
-            setResults(results);
-        }, 100);
+            setResults(fuse.search(search, { limit: 10 }).map((result) => result.item));
+        }, 60);
 
         return () => clearTimeout(handle);
-    }, [events, search]);
+    }, [fuse, search]);
 
     const context = useMemo<EventsTabsContextType>(
         () => ({

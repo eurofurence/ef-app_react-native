@@ -89,11 +89,6 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 {days}
             </Label>
 
-            <Label type="caption">{t("merchandise")}</Label>
-            <Label type="h3" mb={20}>
-                {dealer.Merchandise}
-            </Label>
-
             {!dealer.IsAfterDark ? null : (
                 <>
                     <Label type="caption">{t("after_dark")}</Label>

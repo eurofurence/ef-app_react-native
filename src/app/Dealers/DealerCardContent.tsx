@@ -13,16 +13,17 @@ export type DealerCardContentProps = {
     avatar?: ImageProps["source"];
     name: string;
     present: boolean;
-    merchandise?: string;
+    categories?: string[];
     offDays?: string;
     onPress?: () => void;
     onLongPress?: () => void;
 };
 
-export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, name, present, merchandise, offDays, onPress, onLongPress }) => {
+export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, name, present, categories, offDays, onPress, onLongPress }) => {
     const { t } = useTranslation("Dealers");
     const theme = useTheme();
     const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: present ? theme.primary : theme.darken }), [present, theme]);
+    const description = useMemo(() => categories?.join(", "), [categories]);
     const backgroundStyle = useThemeBackground("background");
 
     return (
@@ -36,9 +37,9 @@ export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, nam
             <View style={styles.main}>
                 <Label type="h3">{name}</Label>
 
-                {!merchandise ? null : (
+                {!description ? null : (
                     <Label type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
-                        {merchandise}
+                        {description}
                     </Label>
                 )}
 
