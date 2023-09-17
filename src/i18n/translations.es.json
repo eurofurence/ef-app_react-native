@@ -1,0 +1,250 @@
+{
+  "About": {
+    "app_details": {
+      "get_help": "Ayuda",
+      "report_bug": "Reportar un Error",
+      "title": "Detalles de la App"
+    },
+    "developed_by": "Desarrollado por",
+    "extra_thanks": "Agradecimientos Extra",
+    "header": "Acerca de"
+  },
+
+  "Announcements": {
+    "noAnnouncements": "Actualmente no hay anuncios activos",
+    "sectionSubtitle": "Actualizaciones en vivo desde la convención",
+    "sectionTitle": "Anuncios"
+  },
+  "Countdown": {
+    "after_event": "¡Eso fue todo! ¡Esperamos verte de nuevo el próximo año!",
+    "before_event": "{{conName}} comenzará en {{diff}}"
+  },
+  "Dealer": {
+    "about": "Acerca de",
+    "about_the_art": "Acerca del arte",
+    "about_the_artist": "Acerca del artista",
+    "after_dark": "Después del anochecer",
+    "attends": "Asiste el",
+    "attends_fri": "Viernes",
+    "attends_sat": "Sábado",
+    "attends_thu": "Jueves",
+    "categories": "Categorías",
+    "in_after_dark": "Ubicado en la sección después del anochecer",
+    "merchandise": "Merchandise",
+    "not_attending": "No asiste hoy",
+    "view_on_map": "Ver en el mapa",
+    "viewing_dealer": "Viendo al vendedor"
+  },
+
+
+
+  "Dealers": {
+    "all": "Todos",
+    "dealers_at_convention": "Dealers en {{convention}}",
+    "dealers_count": "{{count}} dealers",
+    "dealers_on_day": "Dealers el {{day}}",
+    "dealers_on_this_day": "Dealers en este día",
+    "not_attending_on": "No en el {{offDays}}"
+  },
+  "EmptyScreen": {
+    "notImplemented": "El contenido aún no está implementado."
+  },
+  "Event": {
+    "about_title": "Acerca de",
+    "add_favorite": "Favorito",
+    "give_feedback": "Feedback",
+    "label_event_description": "Más sobre el evento",
+    "label_event_panelhosts": "Organizado por",
+    "label_event_room": "Sala",
+    "label_event_track": "Pista",
+    "label_event_when": "Cuándo",
+    "mask_required": "Las mascarillas son obligatorias para este evento",
+    "remove_favorite": "Quitar favorito",
+    "share": "Compartir este evento",
+    "sponsor_event": "Evento patrocinado",
+    "supersponsor_event": "Evento superpatrocinado",
+    "view_on_map": "Ver en el mapa",
+    "when": "{{day}}, {{start}} hasta {{finish}}."
+  },
+  "EventFeedback": {
+    "explanation": "Haznos saber tu valoración sobre {{ eventTitle }} dejándonos una calificación e incluso un mensaje. Nos aseguraremos de que llegue a la persona adecuada.",
+    "header": "Feedback: {{ eventTitle }}",
+    "message_placeholder": "¿Tiene algún comentario más específico para su(s) anfitrión(es)? Escríbalo aquí.",
+    "message_title": "Mensaje de feedback",
+    "rating_title": "¿Cuánto te gustó este evento?",
+    "submit": "Enviar feedback",
+    "submit_failed": "Algo salió mal durante el envío. Por favor, inténtelo de nuevo . . .",
+    "submit_in_progress": "Enviando . . .",
+    "thank_you": "Gracias por hacernos saber tu valoración acerca de {{ eventTitle }}."
+  },
+
+
+
+  "Events": {
+    "afternoon": "Por la tarde",
+    "current_subtitle": "Ahora se están celebrando estos eventos",
+    "current_title": "Eventos actuales",
+    "evening": "Por la noche",
+    "events_count": "{{count}} eventos",
+    "events_done": "Eventos concluidos",
+    "favorites_subtitle": "Recibirás un recordatorio sobre estos eventos",
+    "favorites_title": "Eventos favoritos",
+    "filter_by_day": "Navegar por días",
+    "filter_by_room": "Navegar por salas",
+    "filter_by_track": "Navegar por pistas",
+    "finished": "Terminado",
+    "morning": "Por la mañana",
+    "night": "De noche",
+    "schedule_empty": "Aún no tienes eventos favoritos. Marca algunos eventos como favoritos para crear tu propio horario.",
+    "schedule_title": "Tu horario",
+    "today_schedule_subtitle": "Recibirás un recordatorio antes de que comience este evento",
+    "today_schedule_title": "Horario de hoy",
+    "upcoming_favorites_title": "Eventos favoritos",
+    "upcoming_subtitle": "Estos eventos comienzan en los próximos 30 minutos",
+    "upcoming_title": "Próximos eventos"
+  },
+  "Home": {
+    "announcementsTitle_one": "{{ count }} anuncio.",
+    "announcementsTitle_other": "{{ count }} anuncios.",
+    "announcementsTitle_zero": "{{ count }} anuncios.",
+    "content_untranslated": "",
+    "eventsTitle_one": "Hemos obtenido {{ count }} evento.",
+    "eventsTitle_other": "Hemos obtenido {{ count }} eventos.",
+    "eventsTitle_zero": "No hay eventos.",
+    "warnings": {
+      "no_image_caching": "Tu dispositivo no puede almacenar imágenes en caché. Sin conexión a Internet, las imágenes no se mostrarán.",
+      "no_notifications": "Tu dispositivo no admite notificaciones programadas. No recibirás recordatorios sobre próximos eventos.",
+      "no_push_notifications": "Su dispositivo no es compatible con las notificaciones push. No recibirás notificaciones automáticas de anuncios o mensajes privados.",
+      "subtitle": "Es posible que algunas características no funcionen en tu dispositivo",
+      "title": "Problemas con tu dispositivo"
+    }
+  },
+
+
+  "KnowledgeGroups": {
+    "header": "Información"
+  },
+  "Maps": {
+    "filtering": "Buscando área visualizada"
+  },
+  "Menu": {
+    "about": "Acerca de",
+    "catch_em": "Atrápalos a todos",
+    "dealers": "Dealers",
+    "events": "Eventos",
+    "home": "Inicio",
+    "info": "Información",
+    "less": "Menos",
+    "logged_in_now": "Iniciar sesión",
+    "maps": "Mapas",
+    "messages_one": "Tienes 1 mensaje sin leer.",
+    "messages_other": "Tienes {{count}} mensajes sin leer",
+    "messages_zero": "No hay mensajes nuevos",
+    "more": "Más",
+    "not_logged_in": "No has iniciado sesión",
+    "open_messages": "Abrir mensajes",
+    "services": "Servicios",
+    "settings": "Configuración"
+  },
+  "Notification": {
+    "announcement": "{{conName}} ha hecho un anuncio",
+    "private_message": "{{conName}} ha recibido un nuevo mensaje privado"
+  },
+  "PrivateMessageList": {
+    "from": "De {{ author }}",
+    "from_unknown": "De autor desconocido",
+    "message_item_subtitle": "{{ status }} - Enviado el {{ time }}",
+    "read": "Leido",
+    "section_title_from": "De {{authorName}}",
+    "unread": "Sin leer"
+  },
+
+  "Settings": {
+    "allowAnalytics": "Permitenos recoger analiticas de los eventos",
+    "allowAnalyticsSubtitle": "Al permitirnos recopilar datos, podemos mejorar el funcionamiento de la aplicación. Los datos los proporcionan Firebase y no se comparte con terceros.",
+    "cache": {
+      "cache_item": "Hay{{ count }} {{ type }}s",
+      "cache_state": "Estado actual: {{ state }}",
+      "reset": "Limpiar cache",
+      "reset_alert": "Para limpiar la cache tienes que mantener pulsado este botón",
+      "subtitle": "Última actualización: {{ time }}",
+      "synchronize": "Actualizar",
+      "title": "Estadísticas de caché"
+    },
+    "changeLanguage": "Cambiar idioma",
+    "currentLanguage": "¡El idioma actual es Español!",
+    "dev_buttons": {
+      "no_auth_alert": "No ha iniciado sesión. Deteniendo.",
+      "send_private_message": "Recibir mensajes privados {{ status }}",
+      "subtitle": "Hace que la API haga algo.",
+      "sync": "Forzar actualización {{ status }}",
+      "sync_alert_done": "Pedir a todos los dispositivos que se sincronicen",
+      "sync_alert_error": "Mantén presionado para activar esta función",
+      "test_message_content": "¡Has ganado un gran premio!",
+      "test_message_subject": "¡Has ganado un gran premio!",
+      "title": "Botones dev"
+    },
+    "developer_settings": {
+      "subtitle": "No deberías tocar esto a menos que sepas lo que haces.",
+      "title": "Ajustes de desarrollador"
+    },
+    "developer_settings_alert": {
+      "body": "¿Quieres activar los ajustes de desarrollador? Hazlo sólo si sabes lo que haces y no te importa limpiar tu desastre.",
+      "cancel": "Cancelar",
+      "disable": "Desactivar",
+      "enable": "Activar",
+      "title": "Menú de ajustes de desarrollador"
+    },
+    "header": "Ajustes",
+    "login": {
+      "back_button": "Atras",
+      "enter_password": "Introduce tu contraseña",
+      "enter_reg": "Introduce tu nùmero de registro",
+      "enter_username": "Introduce tu nombre de usuario",
+      "hint_password": "Tu contraseña",
+      "hint_reg": "Tu numero de registro",
+      "hint_username": "Tu nombre de usuario",
+      "logged_in_as": "Has iniciado sesión como {{username}}",
+      "logging_in": "Iniciando sesión . . .",
+      "login": "Iniciar sesión",
+      "login_button": "Iniciar sesión",
+      "login_description": "Con una cuenta {{conName}} puede mandarte mensajes privados. También puede utilizarla para participar en los Fursuit Games e inscribirse en las mesas del Artist Alley",
+      "login_error": "Algo falló durante el inicio de sesión. Inténtalo de nuevo",
+      "login_hint": "Sus credenciales de inicio de sesión para la app son las mismas que para el sistema de registro de Eurofurence.\nSi no las recuerda o no tiene acceso a ellas, puede solicitar un código PIN\npara iniciar sesión en el mostrador de registro o en la oficina de seguridad.",
+      "logout": "Cerrar sesión"
+    },
+    "notifications": {
+      "no_notifications": "No hay notificaciones programadas",
+      "notification_item": "{{ identifier }} programado para {{ time }}",
+      "subtitle": "Todas las notificaciones programadas en este dispositivo",
+      "title": "Notificaciones"
+    },
+    "remote_messages": {
+      "no_messages": "No hemos recibido ningún mensaje de FCM",
+      "subtitle": "Mensajes que recibimos de FCM",
+      "title": "Mensajes remotos"
+    },
+    "settingsSection": "Ajustes",
+    "theme": {
+      "dark": "Oscuro",
+      "description": "Configura el aspecto de la aplicación. Si está configurada como Sistema, seguirá el tema general del sistema. Si lo cambias, podrás mantener la aplicación en el tema que prefieras.",
+      "light": "Claro",
+      "system": "Sistema",
+      "title": "Cambiar tema"
+    },
+    "timeTravel": "Show time travel settings."
+  },
+  "TimeTravel": {
+    "currentTime": "Current: {{ time }}",
+    "difference": "Your time difference is {{ diff }}",
+    "disable": "Desactivar",
+    "enable": "Activar",
+    "originalTime": "Original: {{ time }}",
+    "reset": "Restablecer",
+    "subtitle": "Ajusta los tiempos para testing y debugging",
+    "title": "Time Travel",
+    "week_after": "1 week after {{conName}}",
+    "week_before": "1 week before {{conName}}"
+  },
+  "Todo": {}
+}
