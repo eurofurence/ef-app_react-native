@@ -13,6 +13,7 @@ import "intl-pluralrules";
 import da from "./translations.da.json";
 import de from "./translations.de.json";
 import en from "./translations.en.json";
+import es from "./translations.es.json";
 import it from "./translations.it.json";
 import nl from "./translations.nl.json";
 import pl from "./translations.pl.json";
@@ -28,7 +29,7 @@ import "moment/locale/nl";
 /**
  * The translations we provide.
  */
-export type Translations = "en" | "nl" | "pl" | "it" | "da" | "de";
+export type Translations = "en" | "es" | "nl" | "pl" | "it" | "da" | "de";
 
 /**
  * Set the locale in a managed way.
@@ -80,6 +81,7 @@ export const i18t = i18next
         defaultNS: "Home",
         resources: {
             en,
+            es,
             nl,
             de,
             it,
