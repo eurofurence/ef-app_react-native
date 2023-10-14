@@ -232,19 +232,19 @@
       "system": "Sistema",
       "title": "Cambiar tema"
     },
-    "timeTravel": "Show time travel settings."
+    "timeTravel": "Mostrar ajustes de tiempo de viaje"
   },
   "TimeTravel": {
-    "currentTime": "Current: {{ time }}",
-    "difference": "Your time difference is {{ diff }}",
+    "currentTime": "Hora actual: {{ time }}",
+    "difference": "Tu diferencia de tiempo es {{ diff }}",
     "disable": "Desactivar",
     "enable": "Activar",
     "originalTime": "Original: {{ time }}",
     "reset": "Restablecer",
     "subtitle": "Ajusta los tiempos para testing y debugging",
-    "title": "Time Travel",
-    "week_after": "1 week after {{conName}}",
-    "week_before": "1 week before {{conName}}"
+    "title": "Viaje en el tiempo",
+    "week_after": "1 semana después {{conName}}",
+    "week_before": "1 semana antes {{conName}}"
   },
   "Todo": {}
 }
