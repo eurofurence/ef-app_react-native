@@ -1,7 +1,7 @@
 import * as analytics from "firebase/analytics";
 import { useMemo } from "react";
 
-import { firebaseApp } from "../../firebaseApp";
+import { firebaseApp } from "../../init/firebaseApp";
 import { useAppSelector } from "../../store";
 
 type LogEvent = (name: string, params: Record<string, any>) => Promise<void>;

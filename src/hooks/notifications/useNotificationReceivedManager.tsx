@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import { useSynchronizer } from "../../components/app/sync/SynchronizationProvider";
 import { conId } from "../../configuration";
-import { NotificationChannels } from "../../initialization/NotificationChannel";
+import { NotificationChannels } from "../../init/NotificationChannel";
 import { captureNotificationException } from "../../sentryHelpers";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background.slice";

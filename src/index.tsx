@@ -1,4 +1,3 @@
-import { init as sentryInit, ReactNativeTracing } from "@sentry/react-native";
 import { registerRootComponent } from "expo";
 import { FC } from "react";
 import { StyleSheet } from "react-native";
@@ -10,34 +9,15 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import { AppErrorBoundary } from "./components/app/util/AppErrorBoundary";
 import { LoadingContextProvider } from "./context/LoadingContext";
-import { sentryRoutingInstrumentation } from "./context/NavigationProvider";
 import { persistor, store } from "./store";
 
 import "react-native-reanimated";
 
 // Import background notification connector and handler setup.
-import "./initialization/BackgroundSyncGenerator";
-import "./initialization/NotificationChannel";
-import "./initialization/NotificationHandler";
-
-sentryInit({
-    dsn: "https://f3baa5424fef43dfa5e2e881b37c13de@o1343479.ingest.sentry.io/6647748",
-    tracesSampleRate: 1,
-    debug: false,
-    integrations: [
-        new ReactNativeTracing({
-            traceFetch: true,
-            enableAppStartTracking: true,
-            enableNativeFramesTracking: true,
-            traceXHR: true,
-            enableStallTracking: true,
-            shouldCreateSpanForRequest(url: string): boolean {
-                return url.startsWith("/") || url.startsWith("http://localhost") || url.startsWith("https://localhost") || url.startsWith("https://app.eurofurence.org");
-            },
-            routingInstrumentation: sentryRoutingInstrumentation,
-        }),
-    ],
-});
+import "./init/BackgroundSyncGenerator";
+import "./init/NotificationChannel";
+import "./init/NotificationHandler";
+import "./init/sentryInit";
 
 const Index: FC = () => {
     return (

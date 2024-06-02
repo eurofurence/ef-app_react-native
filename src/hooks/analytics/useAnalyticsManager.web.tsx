@@ -3,7 +3,7 @@ import Constants from "expo-constants";
 import * as analytics from "firebase/analytics";
 import { useEffect, useMemo } from "react";
 
-import { firebaseApp } from "../../firebaseApp";
+import { firebaseApp } from "../../init/firebaseApp";
 import { useAppSelector } from "../../store";
 
 /**
