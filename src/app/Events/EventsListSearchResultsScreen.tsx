@@ -4,13 +4,13 @@ import { chain } from "lodash";
 import { FC, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { EventsListGeneric } from "./EventsListGeneric";
 import { useEventsTabsContext } from "./EventsTabsContext";
 import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
-import { Section } from "../../components/Atoms/Section";
-import { Button } from "../../components/Containers/Button";
-import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
-import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { EventsListGeneric } from "../../components/app/events/EventsListGeneric";
+import { Section } from "../../components/generic/atoms/Section";
+import { Button } from "../../components/generic/containers/Button";
+import { PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
+import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 

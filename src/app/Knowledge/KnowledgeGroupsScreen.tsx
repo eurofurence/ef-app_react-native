@@ -5,17 +5,17 @@ import { SectionList, StyleSheet, View } from "react-native";
 import { SectionListData } from "react-native/Libraries/Lists/SectionList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Label } from "../../components/Atoms/Label";
-import { Section } from "../../components/Atoms/Section";
-import { Card } from "../../components/Containers/Card";
-import { Header } from "../../components/Containers/Header";
-import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
-import { useAppNavigation } from "../../hooks/navigation/useAppNavigation";
+import { appStyles } from "../../components/app/AppStyles";
+import { useSynchronizer } from "../../components/app/sync/SynchronizationProvider";
+import { Label } from "../../components/generic/atoms/Label";
+import { Section } from "../../components/generic/atoms/Section";
+import { Card } from "../../components/generic/containers/Card";
+import { Header } from "../../components/generic/containers/Header";
+import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../store";
 import { selectKnowledgeItemsSections } from "../../store/eurofurence.selectors";
 import { KnowledgeEntryRecord } from "../../store/eurofurence.types";
-import { appStyles } from "../AppStyles";
 
 export const KnowledgeListEntry: FC<{ entry: KnowledgeEntryRecord }> = ({ entry }) => {
     const navigation = useAppNavigation("KnowledgeGroups");

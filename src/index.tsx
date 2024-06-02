@@ -8,7 +8,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import App from "./App";
-import { AppErrorBoundary } from "./components/Utilities/AppErrorBoundary";
+import { AppErrorBoundary } from "./components/app/util/AppErrorBoundary";
 import { LoadingContextProvider } from "./context/LoadingContext";
 import { sentryRoutingInstrumentation } from "./context/NavigationProvider";
 import { persistor, store } from "./store";

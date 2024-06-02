@@ -2,12 +2,12 @@ import { useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
-import { Floater } from "../../components/Containers/Floater";
-import { Header } from "../../components/Containers/Header";
-import { useAppRoute } from "../../hooks/navigation/useAppNavigation";
+import { appStyles } from "../../components/app/AppStyles";
+import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
+import { Floater } from "../../components/generic/containers/Floater";
+import { Header } from "../../components/generic/containers/Header";
+import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useMarkCommunicationReadMutation } from "../../store/eurofurence.service";
-import { appStyles } from "../AppStyles";
 
 export const PrivateMessageItemScreen = () => {
     const { params } = useAppRoute("PrivateMessageItem");

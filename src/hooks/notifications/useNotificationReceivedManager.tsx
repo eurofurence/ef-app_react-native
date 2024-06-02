@@ -2,7 +2,7 @@ import { addNotificationReceivedListener, Notification, removeNotificationSubscr
 import moment from "moment";
 import { useEffect } from "react";
 
-import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
+import { useSynchronizer } from "../../components/app/sync/SynchronizationProvider";
 import { conId } from "../../configuration";
 import { NotificationChannels } from "../../initialization/NotificationChannel";
 import { captureNotificationException } from "../../sentryHelpers";

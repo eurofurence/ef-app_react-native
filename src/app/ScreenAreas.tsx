@@ -9,10 +9,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { DealersTabsScreen, DealersTabsScreenParams } from "./Dealers/DealersTabsScreen";
 import { EventsTabsScreen, EventsTabsScreenParams } from "./Events/EventsTabsScreen";
 import { HomeScreen, ScreenHomeParams } from "./Home/HomeScreen";
-import { MainMenu } from "./MainMenu/MainMenu";
 import { ScreenStartParamsList } from "./ScreenStart";
-import { TabsRef } from "../components/Containers/Tabs";
-import { createTabNavigator, TabScreenProps } from "../components/Navigators/TabsNavigator";
+import { MainMenu } from "../components/app/mainmenu/MainMenu";
+import { TabsRef } from "../components/generic/containers/Tabs";
+import { createTabNavigator, TabScreenProps } from "../components/generic/nav/TabsNavigator";
 
 /**
  * Available routes.

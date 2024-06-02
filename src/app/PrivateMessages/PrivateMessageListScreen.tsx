@@ -7,19 +7,19 @@ import { SectionList, StyleSheet, View } from "react-native";
 import { SectionListData } from "react-native/Libraries/Lists/SectionList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import Icon from "../../components/Atoms/Icon";
-import { Label } from "../../components/Atoms/Label";
-import { Card } from "../../components/Containers/Card";
-import { Col } from "../../components/Containers/Col";
-import { Header } from "../../components/Containers/Header";
-import { Row } from "../../components/Containers/Row";
-import { NoData } from "../../components/Utilities/NoData";
-import { useAppNavigation } from "../../hooks/navigation/useAppNavigation";
+import { appStyles } from "../../components/app/AppStyles";
+import { NoData } from "../../components/app/util/NoData";
+import Icon from "../../components/generic/atoms/Icon";
+import { Label } from "../../components/generic/atoms/Label";
+import { Card } from "../../components/generic/containers/Card";
+import { Col } from "../../components/generic/containers/Col";
+import { Header } from "../../components/generic/containers/Header";
+import { Row } from "../../components/generic/containers/Row";
+import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 import { CommunicationRecord } from "../../store/eurofurence.types";
 import { Query } from "../../types";
-import { appStyles } from "../AppStyles";
 
 type PrivateMessageItemProps = {
     onPress: (item: CommunicationRecord) => void;

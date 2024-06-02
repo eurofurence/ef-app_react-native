@@ -3,7 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { AboutScreen } from "./About";
+import { AboutScreen } from "./AboutScreen";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen } from "./Events/EventScreen";
 import { FeedbackScreen } from "./Events/FeedbackScreen";

@@ -2,13 +2,13 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { DealerContent } from "./DealerContent";
-import { Floater, padFloater } from "../../components/Containers/Floater";
-import { Header } from "../../components/Containers/Header";
-import { useAppRoute } from "../../hooks/navigation/useAppNavigation";
+import { appStyles } from "../../components/app/AppStyles";
+import { DealerContent } from "../../components/app/dealers/DealerContent";
+import { Floater, padFloater } from "../../components/generic/containers/Floater";
+import { Header } from "../../components/generic/containers/Header";
+import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence.selectors";
-import { appStyles } from "../AppStyles";
 
 /**
  * Params handled by the screen in route.

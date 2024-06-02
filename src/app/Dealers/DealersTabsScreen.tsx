@@ -8,8 +8,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { DealersListAllScreen, DealersListAllScreenParams } from "./DealersListAllScreen";
 import { DealersListByDayScreen, DealersListByDayScreenParams } from "./DealersListByDayScreen";
-import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
-import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { createPagesNavigator, PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
+import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence.selectors";

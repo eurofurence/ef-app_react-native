@@ -27,7 +27,7 @@ import {
     MapRecord,
 } from "./eurofurence.types";
 import { RootState } from "./index";
-import { IconNames } from "../components/Atoms/Icon";
+import { IconNames } from "../components/generic/atoms/Icon";
 import { apiBase } from "../configuration";
 
 const base64encode = (input: string) => {

@@ -3,14 +3,14 @@ import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
-import { Floater } from "../../components/Containers/Floater";
-import { Header } from "../../components/Containers/Header";
-import { useAppRoute } from "../../hooks/navigation/useAppNavigation";
+import { appStyles } from "../../components/app/AppStyles";
+import { LinkItem } from "../../components/app/maps/LinkItem";
+import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
+import { Floater } from "../../components/generic/containers/Floater";
+import { Header } from "../../components/generic/containers/Header";
+import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { knowledgeEntriesSelectors, selectImagesById } from "../../store/eurofurence.selectors";
-import { appStyles } from "../AppStyles";
-import { LinkItem } from "../Maps/LinkItem";
 
 export const KnowledgeEntryScreen = () => {
     const { params } = useAppRoute("KnowledgeEntry");

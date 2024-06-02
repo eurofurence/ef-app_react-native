@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect } from "react";
 
 import { conId } from "../../configuration";
-import { useAppNavigation } from "../navigation/useAppNavigation";
+import { useAppNavigation } from "../nav/useAppNavigation";
 
 /**
  * Manages the foreground part notification response handling.

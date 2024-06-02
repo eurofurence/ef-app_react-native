@@ -5,12 +5,12 @@ import moment from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { DealersSectionedListGeneric } from "./DealersSectionedListGeneric";
 import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
-import { IconNames } from "../../components/Atoms/Icon";
-import { Label } from "../../components/Atoms/Label";
-import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
-import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
+import { DealersSectionedListGeneric } from "../../components/app/dealers/DealersSectionedListGeneric";
+import { IconNames } from "../../components/generic/atoms/Icon";
+import { Label } from "../../components/generic/atoms/Label";
+import { PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
+import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { useAppSelector } from "../../store";
 import { selectDealersByDayName } from "../../store/eurofurence.selectors";
 import { AttendanceDay } from "../../store/eurofurence.types";

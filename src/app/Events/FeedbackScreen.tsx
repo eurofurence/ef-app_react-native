@@ -2,10 +2,10 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { Floater } from "../../components/Containers/Floater";
-import { Header } from "../../components/Containers/Header";
-import { FeedbackForm } from "../../components/Forms";
-import { useAppRoute } from "../../hooks/navigation/useAppNavigation";
+import { FeedbackForm } from "../../components/app/forms/feedback/FeedbackForm";
+import { Floater } from "../../components/generic/containers/Floater";
+import { Header } from "../../components/generic/containers/Header";
+import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
 

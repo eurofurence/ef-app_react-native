@@ -3,16 +3,16 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { CacheStats } from "./CacheStats";
-import { DevButtons } from "./DevButtons";
-import { RemoteMessages } from "./RemoteMessages";
-import { ScheduledNotifications } from "./ScheduledNotifications";
-import { TimeTravel } from "./TimeTravel";
-import { UserSettings } from "./UserSettings";
-import { Floater } from "../../components/Containers/Floater";
-import { Header } from "../../components/Containers/Header";
+import { appStyles } from "../../components/app/AppStyles";
+import { CacheStats } from "../../components/app/settings/CacheStats";
+import { DevButtons } from "../../components/app/settings/DevButtons";
+import { RemoteMessages } from "../../components/app/settings/RemoteMessages";
+import { ScheduledNotifications } from "../../components/app/settings/ScheduledNotifications";
+import { TimeTravel } from "../../components/app/settings/TimeTravel";
+import { UserSettings } from "../../components/app/settings/UserSettings";
+import { Floater } from "../../components/generic/containers/Floater";
+import { Header } from "../../components/generic/containers/Header";
 import { useAppSelector } from "../../store";
-import { appStyles } from "../AppStyles";
 
 export const SettingsScreen = () => {
     const { t } = useTranslation("Settings");

@@ -9,7 +9,7 @@ import { ScreenAreasParamsList } from "../app/ScreenAreas";
 import { ScreenStartParamsList } from "../app/ScreenStart";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/analytics/useAnalytics";
-import { useNavigationStatePersistence } from "../hooks/navigation/useNavigationStatePersistence";
+import { useNavigationStatePersistence } from "../hooks/nav/useNavigationStatePersistence";
 import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";

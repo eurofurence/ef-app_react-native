@@ -1,13 +1,13 @@
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { EventContent } from "./EventContent";
-import { Floater, padFloater } from "../../components/Containers/Floater";
-import { Header } from "../../components/Containers/Header";
-import { useAppRoute } from "../../hooks/navigation/useAppNavigation";
+import { appStyles } from "../../components/app/AppStyles";
+import { EventContent } from "../../components/app/events/EventContent";
+import { Floater, padFloater } from "../../components/generic/containers/Floater";
+import { Header } from "../../components/generic/containers/Header";
+import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
-import { appStyles } from "../AppStyles";
 
 /**
  * Params handled by the screen in route.

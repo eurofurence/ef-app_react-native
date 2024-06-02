@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { AppState } from "react-native";
 
-import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
+import { useSynchronizer } from "../../components/app/sync/SynchronizationProvider";
 import { captureNotificationException } from "../../sentryHelpers";
 
 const STORAGE_TAG_NAME = "background_sync_requested";
