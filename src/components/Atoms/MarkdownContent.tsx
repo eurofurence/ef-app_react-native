@@ -4,7 +4,7 @@ import { StyleProp, TextStyle, View } from "react-native";
 import Markdown, { MarkdownProps } from "react-native-markdown-display";
 
 import { LabelProps } from "./Label";
-import { useTheme } from "../../hooks/useThemeHooks";
+import { useTheme } from "../../hooks/themes/useThemeHooks";
 
 const MarkdownComponent: FC<MarkdownProps & { children?: string }> = Markdown as any;
 

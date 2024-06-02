@@ -10,7 +10,7 @@ import { DealersListAllScreen, DealersListAllScreenParams } from "./DealersListA
 import { DealersListByDayScreen, DealersListByDayScreenParams } from "./DealersListByDayScreen";
 import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useNow } from "../../hooks/useNow";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence.selectors";
 import { ScreenAreasParamsList } from "../ScreenAreas";

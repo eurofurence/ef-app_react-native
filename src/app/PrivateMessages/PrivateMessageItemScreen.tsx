@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
 import { Floater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
-import { useAppRoute } from "../../hooks/useAppNavigation";
+import { useAppRoute } from "../../hooks/navigation/useAppNavigation";
 import { useMarkCommunicationReadMutation } from "../../store/eurofurence.service";
 import { appStyles } from "../AppStyles";
 

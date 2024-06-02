@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 
 import { Row } from "./Row";
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../hooks/useThemeHooks";
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../hooks/themes/useThemeHooks";
 import { Activity } from "../Atoms/Activity";
 import Icon from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";

@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
 import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
-import { useAppNavigation, useAppRoute } from "../../../hooks/useAppNavigation";
-import { useTheme } from "../../../hooks/useThemeHooks";
+import { useAppNavigation, useAppRoute } from "../../../hooks/navigation/useAppNavigation";
+import { useTheme } from "../../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../../store";
 import { eventsSelector } from "../../../store/eurofurence.selectors";
 import { useSubmitEventFeedbackMutation } from "../../../store/eurofurence.service";

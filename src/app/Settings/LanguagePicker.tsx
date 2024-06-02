@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { SettingContainer } from "./SettingContainer";
 import { Label } from "../../components/Atoms/Label";
-import { useThemeColor } from "../../hooks/useThemeHooks";
+import { useThemeColor } from "../../hooks/themes/useThemeHooks";
 import { setMomentLocale, Translations } from "../../i18n";
 
 /**

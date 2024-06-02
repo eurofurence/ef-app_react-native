@@ -16,9 +16,9 @@ import { persistor, store } from "./store";
 import "react-native-reanimated";
 
 // Import background notification connector and handler setup.
-import "./components/Managers/BackgroundSyncGenerator";
-import "./components/Managers/NotificationChannel";
-import "./components/Managers/NotificationHandler";
+import "./initialization/BackgroundSyncGenerator";
+import "./initialization/NotificationChannel";
+import "./initialization/NotificationHandler";
 
 sentryInit({
     dsn: "https://f3baa5424fef43dfa5e2e881b37c13de@o1343479.ingest.sentry.io/6647748",

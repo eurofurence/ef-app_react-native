@@ -14,7 +14,7 @@ import { PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemSc
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
 import { SettingsScreen } from "./Settings/SettingsScreen";
-import { useTheme, useThemeName } from "../hooks/useThemeHooks";
+import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 
 /**

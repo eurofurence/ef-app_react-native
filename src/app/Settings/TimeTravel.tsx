@@ -9,7 +9,7 @@ import { Button } from "../../components/Containers/Button";
 import { Col } from "../../components/Containers/Col";
 import { Row } from "../../components/Containers/Row";
 import { conName } from "../../configuration";
-import { useNow } from "../../hooks/useNow";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence.selectors";
 import { enableTimeTravel, ONE_HOUR, ONE_MINUTE, resetTravel, travelBackward, travelForward, travelToDate } from "../../store/timetravel.slice";

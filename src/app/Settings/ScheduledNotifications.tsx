@@ -7,7 +7,6 @@ import { View } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { withPlatform } from "../../hoc/withPlatform";
 
 /**
  * Shows all scheduled notifications
@@ -38,5 +37,3 @@ export const ScheduledNotifications = () => {
         </View>
     );
 };
-
-export const PlatformScheduledNotifications = withPlatform(ScheduledNotifications, ["android", "ios"]);

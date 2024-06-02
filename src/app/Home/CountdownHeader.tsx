@@ -5,7 +5,7 @@ import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "rea
 
 import { Section } from "../../components/Atoms/Section";
 import { conId } from "../../configuration";
-import { useNow } from "../../hooks/useNow";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { selectCountdownTitle } from "../../store/eurofurence.selectors";
 

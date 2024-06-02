@@ -3,7 +3,7 @@ import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DealerCardContent } from "./DealerCardContent";
-import { useNow } from "../../hooks/useNow";
+import { useNow } from "../../hooks/time/useNow";
 import { DealerDetails } from "../../store/eurofurence.types";
 
 export type DealerCardProps = {

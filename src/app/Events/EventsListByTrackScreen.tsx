@@ -13,7 +13,7 @@ import { IconNames } from "../../components/Atoms/Icon";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useIsEventDone } from "../../hooks/useEventProperties";
+import { useIsEventDone } from "../../hooks/events/useEventProperties";
 import { useAppSelector } from "../../store";
 import { eventTracksSelectors, selectEventsByTrack } from "../../store/eurofurence.selectors";
 import { ScreenAreasParamsList } from "../ScreenAreas";

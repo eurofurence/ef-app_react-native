@@ -8,7 +8,7 @@ import { EventsListByRoomScreenProps } from "./EventsListByRoomScreen";
 import { EventsListByTrackScreenProps } from "./EventsListByTrackScreen";
 import { EventsListSearchResultsScreenProps } from "./EventsListSearchResultsScreen";
 import { EventsSearchScreenProps } from "./EventsSearchScreen";
-import { useEventsRefreshKey } from "../../hooks/useEventsRefreshKey";
+import { useEventsRefreshKey } from "../../hooks/events/useEventsRefreshKey";
 import { EventDetails } from "../../store/eurofurence.types";
 
 /**

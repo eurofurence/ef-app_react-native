@@ -12,7 +12,7 @@ import { IconNames } from "../../components/Atoms/Icon";
 import { Label } from "../../components/Atoms/Label";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useNow } from "../../hooks/useNow";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors, selectEventsByDay } from "../../store/eurofurence.selectors";
 import { EventDetails, PartOfDay } from "../../store/eurofurence.types";

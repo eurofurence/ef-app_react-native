@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Animated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
 
 import { Page } from "./Page";
-import { useTheme, useThemeBackground } from "../../hooks/useThemeHooks";
+import { useTheme, useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { IconNames } from "../Atoms/Icon";
 
 /**

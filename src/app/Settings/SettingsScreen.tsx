@@ -6,7 +6,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CacheStats } from "./CacheStats";
 import { DevButtons } from "./DevButtons";
 import { RemoteMessages } from "./RemoteMessages";
-import { PlatformScheduledNotifications } from "./ScheduledNotifications";
+import { ScheduledNotifications } from "./ScheduledNotifications";
 import { TimeTravel } from "./TimeTravel";
 import { UserSettings } from "./UserSettings";
 import { Floater } from "../../components/Containers/Floater";
@@ -29,7 +29,7 @@ export const SettingsScreen = () => {
                     <>
                         <CacheStats />
                         <TimeTravel />
-                        <PlatformScheduledNotifications />
+                        <ScheduledNotifications />
                         <RemoteMessages />
                         <DevButtons />
                     </>

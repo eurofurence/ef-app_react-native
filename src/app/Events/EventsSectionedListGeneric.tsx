@@ -5,8 +5,8 @@ import { StyleSheet, Vibration } from "react-native";
 import { EventCard } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
-import { useEventsRefreshKey } from "../../hooks/useEventsRefreshKey";
+import { useEventsRefreshKey } from "../../hooks/events/useEventsRefreshKey";
+import { useAppNavigation } from "../../hooks/navigation/useAppNavigation";
 import { EventDetails } from "../../store/eurofurence.types";
 
 /**

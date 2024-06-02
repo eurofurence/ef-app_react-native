@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 
-import { useThemeBackground } from "../../hooks/useThemeHooks";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 
 export const Rule = () => {
     const styleBackground = useThemeBackground("darken");

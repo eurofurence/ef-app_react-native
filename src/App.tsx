@@ -2,40 +2,30 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { wrap as sentryWrap } from "@sentry/react-native";
 
 import { ScreenStart } from "./app/ScreenStart";
-import { AnalyticsManager } from "./components/Managers/AnalyticsManager";
-import { PlatformBackgroundSyncManager } from "./components/Managers/BackgroundSyncManager";
-import { ColorSchemeManager } from "./components/Managers/ColorSchemeManager";
-import { PlatformNotificationReceivedManager } from "./components/Managers/NotificationReceivedManager";
-import { PlatformNotificationRespondedManager } from "./components/Managers/NotificationRespondedManager";
-import { PlatformTokenManager } from "./components/Managers/TokenManager";
 import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
 import { NavigationProvider } from "./context/NavigationProvider";
+import { useAnalyticsManager } from "./hooks/analytics/useAnalyticsManager";
+import { useNotificationReceivedManager } from "./hooks/notifications/useNotificationReceivedManager";
+import { useNotificationRespondedManager } from "./hooks/notifications/useNotificationRespondedManager";
+import { useBackgroundSyncManager } from "./hooks/sync/useBackgroundSyncManager";
+import { useColorSchemeManager } from "./hooks/themes/useColorSchemeManager";
+import { useTokenManager } from "./hooks/tokens/useTokenManager";
 
 /**
  * Base App. Handles all ui related layout stuff. Context providers go in index.tsx. Actual UI content should be in screens or components
  */
 function App() {
+    useAnalyticsManager();
+    useColorSchemeManager();
+    useBackgroundSyncManager();
+    useTokenManager();
+    useNotificationReceivedManager();
+    useNotificationRespondedManager();
     return (
         <BottomSheetModalProvider>
             <SynchronizationProvider>
                 <NavigationProvider>
                     <ScreenStart />
-
-                    {/* Handles changes to the system's color scheme settings*/}
-                    <ColorSchemeManager />
-
-                    {/* Handle device token acquisition. */}
-                    <PlatformTokenManager />
-
-                    {/* Handle handling notifications in foreground. */}
-                    <PlatformNotificationReceivedManager />
-                    <PlatformNotificationRespondedManager />
-
-                    {/* Handle notifications in background. */}
-                    <PlatformBackgroundSyncManager />
-
-                    {/* Set up analytics. */}
-                    <AnalyticsManager />
                 </NavigationProvider>
             </SynchronizationProvider>
         </BottomSheetModalProvider>

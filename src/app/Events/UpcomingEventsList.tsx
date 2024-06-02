@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 
 import { EventCard } from "./EventCard";
 import { Section } from "../../components/Atoms/Section";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
-import { useNow } from "../../hooks/useNow";
+import { useAppNavigation } from "../../hooks/navigation/useAppNavigation";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { selectUpcomingEvents } from "../../store/eurofurence.selectors";
 import { EventDetails } from "../../store/eurofurence.types";

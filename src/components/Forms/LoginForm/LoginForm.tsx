@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { LoginSchema, loginSchema } from "./LoginSchema.schema";
-import { useTheme } from "../../../hooks/useThemeHooks";
+import { useTheme } from "../../../hooks/themes/useThemeHooks";
 import { usePostTokenMutation } from "../../../store/authorization.service";
 import { Label } from "../../Atoms/Label";
 import { Button } from "../../Containers/Button";

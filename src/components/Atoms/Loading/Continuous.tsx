@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from "react-native-reanimated";
 
-import { useThemeBackground } from "../../../hooks/useThemeHooks";
+import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 
 /**
  * Props for the continuous indicator.

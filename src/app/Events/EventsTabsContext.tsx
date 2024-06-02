@@ -1,7 +1,7 @@
 import Fuse from "fuse.js";
 import { createContext, FC, PropsWithChildren, useContext, useEffect, useMemo, useState } from "react";
 
-import { useFuseFor } from "../../hooks/useFuseFor";
+import { useFuseFor } from "../../hooks/searching/useFuseFor";
 import { eventsSelector } from "../../store/eurofurence.selectors";
 import { EventDetails } from "../../store/eurofurence.types";
 

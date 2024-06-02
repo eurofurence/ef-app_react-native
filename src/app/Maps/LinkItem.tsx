@@ -3,7 +3,7 @@ import { Linking, StyleSheet } from "react-native";
 import { match } from "ts-pattern";
 
 import { Button } from "../../components/Containers/Button";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../hooks/navigation/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence.selectors";
 import { LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";

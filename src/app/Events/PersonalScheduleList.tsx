@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { EventsSectionedListGeneric } from "./EventsSectionedListGeneric";
 import { Label } from "../../components/Atoms/Label";
-import { useNow } from "../../hooks/useNow";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { selectFavoriteEvents } from "../../store/eurofurence.selectors";
 

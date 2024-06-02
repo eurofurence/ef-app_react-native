@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { StyleProp, TextInputProps, TextStyle, View, TextInput } from "react-native";
 
-import { useTheme } from "../../hooks/useThemeHooks";
+import { useTheme } from "../../hooks/themes/useThemeHooks";
 import { Label } from "../Atoms/Label";
 
 type InnerManagedTextInputProps<FormType extends object> = {

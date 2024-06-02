@@ -17,7 +17,7 @@ import { EventsTabsContextProvider, useEventsTabsContext } from "./EventsTabsCon
 import { PersonalScheduleList } from "./PersonalScheduleList";
 import { createPagesNavigator, PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useNow } from "../../hooks/useNow";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
 import { EventDayRecord } from "../../store/eurofurence.types";

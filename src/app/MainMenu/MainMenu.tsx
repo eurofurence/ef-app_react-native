@@ -7,9 +7,9 @@ import { Pager, PagerRef } from "../../components/Containers/Pager";
 import { Tab } from "../../components/Containers/Tab";
 import { TabsRef } from "../../components/Containers/Tabs";
 import { showLogin } from "../../configuration";
-import { useAdditionalServices } from "../../hooks/useAdditionalServices";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
-import { useFursuitGames } from "../../hooks/useFursuitGames";
+import { useAdditionalServices } from "../../hooks/callbacks/useAdditionalServices";
+import { useFursuitGames } from "../../hooks/callbacks/useFursuitGames";
+import { useAppNavigation } from "../../hooks/navigation/useAppNavigation";
 import { RecordId } from "../../store/eurofurence.types";
 
 export type MainMenuProps = {

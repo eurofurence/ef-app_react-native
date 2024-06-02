@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import Icon, { IconNames } from "./Icon";
 import { ThemeColor } from "../../context/Theme";
-import { useTheme } from "../../hooks/useThemeHooks";
+import { useTheme } from "../../hooks/themes/useThemeHooks";
 
 export type MarkerProps = {
     style?: StyleProp<ViewStyle>;

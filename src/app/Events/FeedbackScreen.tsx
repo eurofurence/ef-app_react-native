@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Floater } from "../../components/Containers/Floater";
 import { Header } from "../../components/Containers/Header";
 import { FeedbackForm } from "../../components/Forms";
-import { useAppRoute } from "../../hooks/useAppNavigation";
+import { useAppRoute } from "../../hooks/navigation/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
 

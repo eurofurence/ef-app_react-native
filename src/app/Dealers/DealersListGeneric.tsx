@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 import { DealerCard } from "./DealerCard";
 import { DealersListAllScreenProps } from "./DealersListAllScreen";
 import { DealersListByDayScreenProps } from "./DealersListByDayScreen";
-import { useDealersRefreshKey } from "../../hooks/useDealersRefreshKey";
+import { useDealersRefreshKey } from "../../hooks/dealers/useDealersRefreshKey";
 import { DealerDetails } from "../../store/eurofurence.types";
 
 /**

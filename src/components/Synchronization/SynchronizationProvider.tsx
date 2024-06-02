@@ -2,7 +2,7 @@ import { noop } from "lodash";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Vibration } from "react-native";
 
-import { PlatformImageSynchronizer } from "./ImageSynchronizer";
+import { ImageSynchronizer } from "./ImageSynchronizer";
 import { apiBase, conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
@@ -63,7 +63,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
 
     return (
         <SynchronizationContext.Provider value={providerValues}>
-            <PlatformImageSynchronizer />
+            <ImageSynchronizer />
             {children}
         </SynchronizationContext.Provider>
     );

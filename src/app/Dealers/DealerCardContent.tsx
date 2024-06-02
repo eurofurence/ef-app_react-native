@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
-import { useTheme, useThemeBackground } from "../../hooks/useThemeHooks";
+import { useTheme, useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { appStyles } from "../AppStyles";
 
 const placeholder = require("../../../assets/images/dealer_black.png");

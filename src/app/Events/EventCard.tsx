@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { EventCardContent } from "./EventCardContent";
 import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
-import { useEventIsDone, useEventIsHappening } from "../../hooks/useEventProperties";
+import { useEventIsDone, useEventIsHappening } from "../../hooks/events/useEventProperties";
 import { EventDetails } from "../../store/eurofurence.types";
 
 export type EventCardProps = {

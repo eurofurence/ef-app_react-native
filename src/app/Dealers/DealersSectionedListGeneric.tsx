@@ -5,8 +5,8 @@ import { StyleSheet } from "react-native";
 import { DealerCard } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
-import { useAppNavigation } from "../../hooks/useAppNavigation";
-import { useDealersRefreshKey } from "../../hooks/useDealersRefreshKey";
+import { useDealersRefreshKey } from "../../hooks/dealers/useDealersRefreshKey";
+import { useAppNavigation } from "../../hooks/navigation/useAppNavigation";
 import { DealerDetails } from "../../store/eurofurence.types";
 
 /**

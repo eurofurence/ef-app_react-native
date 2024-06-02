@@ -4,7 +4,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Icon, { IconNames } from "./Icon";
 import { Label, LabelProps } from "./Label";
 import { Theme } from "../../context/Theme";
-import { useThemeColorValue } from "../../hooks/useThemeHooks";
+import { useThemeColorValue } from "../../hooks/themes/useThemeHooks";
 import { Col } from "../Containers/Col";
 import { Row } from "../Containers/Row";
 

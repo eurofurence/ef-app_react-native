@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 
-import { useThemeBackground, useThemeColorValue } from "../../hooks/useThemeHooks";
+import { useThemeBackground, useThemeColorValue } from "../../hooks/themes/useThemeHooks";
 import Icon, { IconNames } from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
 

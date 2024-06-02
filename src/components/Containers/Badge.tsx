@@ -3,7 +3,7 @@ import { StyleSheet, TextProps, View, ViewProps } from "react-native";
 
 import { Row } from "./Row";
 import { ThemeColor } from "../../context/Theme";
-import { useThemeBackground } from "../../hooks/useThemeHooks";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import Icon, { IconNames } from "../Atoms/Icon";
 import { Label, LabelProps } from "../Atoms/Label";
 

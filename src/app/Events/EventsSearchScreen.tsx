@@ -14,7 +14,7 @@ import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useThemeBackground, useThemeMemo } from "../../hooks/useThemeHooks";
+import { useThemeBackground, useThemeMemo } from "../../hooks/themes/useThemeHooks";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 

@@ -6,7 +6,7 @@ import Icon, { IconNames } from "../../components/Atoms/Icon";
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
 import { Row } from "../../components/Containers/Row";
-import { useThemeBackground, useThemeColorValue } from "../../hooks/useThemeHooks";
+import { useThemeBackground, useThemeColorValue } from "../../hooks/themes/useThemeHooks";
 import { appStyles } from "../AppStyles";
 
 const glyphIconSize = 90;

@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import Animated, { cancelAnimation, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming } from "react-native-reanimated";
 
 import { ThemeColor } from "../../context/Theme";
-import { useThemeBackground } from "../../hooks/useThemeHooks";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 
 export type IndicatorProps = {
     color: ThemeColor;

@@ -2,7 +2,7 @@ import * as React from "react";
 import { FC, ReactNode, useMemo } from "react";
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
-import { useTheme, useThemeBackground, useThemeColorValue } from "../../hooks/useThemeHooks";
+import { useTheme, useThemeBackground, useThemeColorValue } from "../../hooks/themes/useThemeHooks";
 import Icon, { IconNames } from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
 
