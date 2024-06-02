@@ -1,8 +1,8 @@
 import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
+import { captureException, ReactNavigationInstrumentation } from "@sentry/react-native";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
-import { useTheme, useThemeType } from "./Theme";
 import { DealersTabsScreenParamsList } from "../app/Dealers/DealersTabsScreen";
 import { EventsTabsScreenParamsList } from "../app/Events/EventsTabsScreen";
 import { ScreenAreasParamsList } from "../app/ScreenAreas";
@@ -10,12 +10,12 @@ import { ScreenStartParamsList } from "../app/ScreenStart";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/useNavigationStatePersistence";
-import { captureException, PlatformSentry } from "../sentryHelpers";
+import { useTheme, useThemeName } from "../hooks/useThemeHooks";
 import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
 import { RecordId } from "../store/eurofurence.types";
 
-export const sentryRoutingInstrumentation = "ReactNavigationInstrumentation" in PlatformSentry ? new PlatformSentry.ReactNavigationInstrumentation() : undefined;
+export const sentryRoutingInstrumentation = new ReactNavigationInstrumentation();
 
 type LinkingConfig<ParamsList> = {
     initialRouteName?: keyof ParamsList;
@@ -90,7 +90,7 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
     const logEvent = useAnalytics();
 
     const theme = useTheme();
-    const type = useThemeType();
+    const type = useThemeName();
     const navTheme = useMemo(
         () => ({
             dark: type === "dark",

@@ -1,9 +1,10 @@
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import Icon, { IconNames } from "./Icon";
 import { Label, LabelProps } from "./Label";
-import { Theme, useTheme } from "../../context/Theme";
+import { Theme } from "../../context/Theme";
+import { useThemeColorValue } from "../../hooks/useThemeHooks";
 import { Col } from "../Containers/Col";
 import { Row } from "../Containers/Row";
 
@@ -40,8 +41,7 @@ export type SectionProps = {
 };
 
 export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark", title, subtitle, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
-    const theme = useTheme();
-    const iconColor = useMemo(() => theme[titleColor ?? "important"], [theme, titleColor]);
+    const iconColor = useThemeColorValue(titleColor ?? "important");
     return (
         <Col style={[styles.container, style]}>
             <Row type="center">

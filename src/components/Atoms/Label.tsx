@@ -1,8 +1,9 @@
-import { FC, useMemo } from "react";
-import { ColorValue, StyleProp, StyleSheet, Text, TextProps, TextStyle } from "react-native";
+import { FC } from "react";
+import { StyleSheet, Text, TextProps, ViewStyle } from "react-native";
 
 import Icon, { IconNames } from "./Icon";
-import { Theme, useTheme } from "../../context/Theme";
+import { ThemeColor } from "../../context/Theme";
+import { useThemeColor, useThemeName } from "../../hooks/useThemeHooks";
 
 /**
  * Props to label.
@@ -17,10 +18,11 @@ export type LabelProps = TextProps & {
      * The variant, one of some predefined secondary style values, overriding type.
      */
     variant?: keyof typeof variants;
+
     /**
      * The color name, a value from the theme.
      */
-    color?: keyof Theme | ColorValue;
+    color?: ThemeColor;
 
     /**
      * The icon to be displayed next to the label.
@@ -48,36 +50,56 @@ export type LabelProps = TextProps & {
     mb?: number;
 };
 
-export const Label: FC<LabelProps> = ({ style, type, variant, color = "text", icon, ml, mt, mr, mb, children, ...props }) => {
-    // Get theme for resolution.
-    const theme = useTheme();
+/**
+ * A typography element.
+ * @param style An extra override style.
+ * @param type The type, one of some predefined primary style values.
+ * @param variant The variant, one of some predefined secondary style values, overriding type.
+ * @param color The color name, a value from the theme.
+ * @param icon The icon to be displayed next to the label.
+ * @param ml Margin left.
+ * @param mt Margin top.
+ * @param mr Margin right.
+ * @param mb Margin bottom.
+ * @param children The text content.
+ * @param props Additional props passed to the root text element.
+ * @constructor
+ */
+export const Label: FC<LabelProps> = ({ style, type, variant, color, icon, ml, mt, mr, mb, children, ...props }) => {
+    // Value reads for named parameters.
+    const styleType = type ? types[type] : types.regular;
+    const styleVariant = variant ? variants[variant] : variants.regular;
+    const styleColor = useThemeColor(color ?? "text");
 
-    // Create computed part.
-    const resType = useMemo(() => (type ? types[type] : types.regular), [type]);
-    const resVariant = useMemo(() => (variant ? variants[variant] : variants.regular), [variant]);
-    const marginColor = useMemo(() => {
-        // Get color value from theme, otherwise use as is.
-        const colorValue = typeof color === "string" && color in theme ? theme[color] : color;
-        const result: StyleProp<TextStyle> = { color: colorValue };
-        if (typeof ml === "number") result.marginLeft = ml;
-        if (typeof mt === "number") result.marginTop = mt;
-        if (typeof mr === "number") result.marginRight = mr;
-        if (typeof mb === "number") result.marginBottom = mb;
-        return result;
-    }, [ml, mt, mr, mb, theme, color]);
-
-    const iconStyle: StyleProp<TextStyle> = { marginRight: 8, textAlignVertical: "bottom" };
-    const iconSize = StyleSheet.flatten(resType).fontSize * 2;
+    // Margin style, only created when a margin is defined.
+    let styleMargin: ViewStyle | null = null;
+    if (typeof ml === "number" || typeof mt === "number" || typeof mr === "number" || typeof mb === "number") {
+        styleMargin = {};
+        if (typeof ml === "number") styleMargin.marginLeft = ml;
+        if (typeof mt === "number") styleMargin.marginTop = mt;
+        if (typeof mr === "number") styleMargin.marginRight = mr;
+        if (typeof mb === "number") styleMargin.marginBottom = mb;
+    }
 
     // Return styled text.
     return (
-        <Text style={[resType, resVariant, marginColor, style]} {...props}>
-            {!icon ? null : <Icon name={icon} style={iconStyle} size={iconSize} />}
+        <Text style={[styleType, styleVariant, styleMargin, styleColor, style]} {...props}>
+            {!icon ? null : <Icon name={icon} style={styles.icon} size={styleType.fontSize * 2} />}
             {children}
         </Text>
     );
 };
 
+/**
+ * Fixed component styles.
+ */
+const styles = StyleSheet.create({
+    icon: { marginRight: 8, textAlignVertical: "bottom" },
+});
+
+/**
+ * Label font settings.
+ */
 const types = StyleSheet.create({
     lead: {
         fontWeight: "100",
@@ -138,6 +160,9 @@ const types = StyleSheet.create({
     },
 });
 
+/**
+ * Label variant definitions.
+ */
 const variants = StyleSheet.create({
     regular: {},
     narrow: {

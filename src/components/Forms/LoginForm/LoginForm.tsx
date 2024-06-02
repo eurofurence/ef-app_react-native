@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod/dist/zod";
+import { useProfiler } from "@sentry/react-native";
 import { FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, ViewStyle } from "react-native";
 
 import { LoginSchema, loginSchema } from "./LoginSchema.schema";
-import { useTheme } from "../../../context/Theme";
-import { useSentryProfiler } from "../../../sentryHelpers";
+import { useTheme } from "../../../hooks/useThemeHooks";
 import { usePostTokenMutation } from "../../../store/authorization.service";
 import { Label } from "../../Atoms/Label";
 import { Button } from "../../Containers/Button";
@@ -20,7 +20,7 @@ export type LoginFormProps = {
 export const LoginForm: FC<LoginFormProps> = ({ style, close }) => {
     const { t } = useTranslation("Settings", { keyPrefix: "login" });
     const theme = useTheme();
-    useSentryProfiler("LoginForm");
+    useProfiler("LoginForm");
 
     const form = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),

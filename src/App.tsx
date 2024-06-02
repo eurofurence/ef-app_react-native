@@ -1,8 +1,10 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { wrap as sentryWrap } from "@sentry/react-native";
 
 import { ScreenStart } from "./app/ScreenStart";
 import { AnalyticsManager } from "./components/Managers/AnalyticsManager";
 import { PlatformBackgroundSyncManager } from "./components/Managers/BackgroundSyncManager";
+import { ColorSchemeManager } from "./components/Managers/ColorSchemeManager";
 import { PlatformNotificationReceivedManager } from "./components/Managers/NotificationReceivedManager";
 import { PlatformNotificationRespondedManager } from "./components/Managers/NotificationRespondedManager";
 import { PlatformTokenManager } from "./components/Managers/TokenManager";
@@ -12,12 +14,15 @@ import { NavigationProvider } from "./context/NavigationProvider";
 /**
  * Base App. Handles all ui related layout stuff. Context providers go in index.tsx. Actual UI content should be in screens or components
  */
-export default function App() {
+function App() {
     return (
         <BottomSheetModalProvider>
             <SynchronizationProvider>
                 <NavigationProvider>
                     <ScreenStart />
+
+                    {/* Handles changes to the system's color scheme settings*/}
+                    <ColorSchemeManager />
 
                     {/* Handle device token acquisition. */}
                     <PlatformTokenManager />
@@ -36,3 +41,5 @@ export default function App() {
         </BottomSheetModalProvider>
     );
 }
+
+export default sentryWrap(App);

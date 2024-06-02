@@ -10,8 +10,8 @@ import { Section } from "../../components/Atoms/Section";
 import { Card } from "../../components/Containers/Card";
 import { Header } from "../../components/Containers/Header";
 import { useSynchronizer } from "../../components/Synchronization/SynchronizationProvider";
-import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
+import { useThemeBackground } from "../../hooks/useThemeHooks";
 import { useAppSelector } from "../../store";
 import { selectKnowledgeItemsSections } from "../../store/eurofurence.selectors";
 import { KnowledgeEntryRecord } from "../../store/eurofurence.types";
@@ -33,10 +33,9 @@ export const KnowledgeGroupsScreen = () => {
     const { t } = useTranslation("KnowledgeGroups");
     const synchronizer = useSynchronizer();
     const safe = useSafeAreaInsets();
-    const theme = useTheme();
     const entries = useAppSelector((state) => selectKnowledgeItemsSections(state));
 
-    const sectionStyle = useMemo(() => ({ backgroundColor: theme.surface }), [theme]);
+    const sectionStyle = useThemeBackground("surface");
 
     const headerComponent = useMemo(() => <Header>{t("header")}</Header>, [t]);
 

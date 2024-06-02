@@ -1,12 +1,12 @@
 import { Picker } from "@react-native-picker/picker";
+import { captureException } from "@sentry/react-native";
 import { orderBy } from "lodash";
 import { useTranslation } from "react-i18next";
 
 import { SettingContainer } from "./SettingContainer";
 import { Label } from "../../components/Atoms/Label";
-import { useTheme } from "../../context/Theme";
+import { useThemeColor } from "../../hooks/useThemeHooks";
 import { setMomentLocale, Translations } from "../../i18n";
-import { captureException } from "../../sentryHelpers";
 
 /**
  * Element of languages that the picker displays.
@@ -47,7 +47,7 @@ const languages = orderBy(
  */
 export const LanguagePicker = () => {
     const { t, i18n } = useTranslation("Settings");
-    const theme = useTheme();
+    const style = useThemeColor("text");
 
     return (
         <SettingContainer>
@@ -55,8 +55,8 @@ export const LanguagePicker = () => {
             <Label variant={"narrow"}>{t("currentLanguage")}</Label>
             <Picker<string>
                 selectedValue={i18n.language}
-                style={{ color: theme.text }}
-                dropdownIconColor={theme.text}
+                style={style}
+                dropdownIconColor={style.color}
                 prompt={t("changeLanguage")}
                 onValueChange={(it: string) => {
                     i18n.changeLanguage(it).catch(captureException);

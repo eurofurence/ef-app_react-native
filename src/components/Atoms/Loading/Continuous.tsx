@@ -1,8 +1,8 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from "react-native-reanimated";
 
-import { useTheme } from "../../../context/Theme";
+import { useThemeBackground } from "../../../hooks/useThemeHooks";
 
 /**
  * Props for the continuous indicator.
@@ -20,9 +20,6 @@ export type ContinuousProps = {
 };
 
 export const Continuous: FC<ContinuousProps> = ({ style, active = true }) => {
-    // Use theme for colors.
-    const theme = useTheme();
-
     // Shared at value.
     const at = useSharedValue(0);
 
@@ -39,7 +36,7 @@ export const Continuous: FC<ContinuousProps> = ({ style, active = true }) => {
     }, [at, active]);
 
     // Convert theme into style.
-    const colorStyle = useMemo(() => ({ backgroundColor: theme.secondary }), [theme]);
+    const colorStyle = useThemeBackground("secondary");
 
     // Compute dynamic style animating the bar.
     const dynamicStyle = useAnimatedStyle(

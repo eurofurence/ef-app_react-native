@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/core";
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 
 import { Row } from "./Row";
-import { useTheme } from "../../context/Theme";
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../hooks/useThemeHooks";
 import { Activity } from "../Atoms/Activity";
 import Icon from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
@@ -13,15 +13,15 @@ const iconSize = 32;
 export type HeaderProps = ViewProps;
 
 export const Header: FC<HeaderProps> = ({ style, children }) => {
-    const theme = useTheme();
-
-    const containerStyle = useMemo(() => ({ backgroundColor: theme.background, borderColor: theme.darken }), [theme]);
+    const colorValue = useThemeColorValue("text");
+    const styleBackground = useThemeBackground("background");
+    const styleBorder = useThemeBorder("darken");
 
     const navigation = useNavigation();
 
     return (
-        <Row style={[styles.container, containerStyle, style]} type="center" variant="spaced">
-            <Icon name="chevron-left" size={iconSize} color={theme.text} />
+        <Row style={[styles.container, styleBackground, styleBorder, style]} type="center" variant="spaced">
+            <Icon name="chevron-left" size={iconSize} color={colorValue} />
 
             <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
                 {children}

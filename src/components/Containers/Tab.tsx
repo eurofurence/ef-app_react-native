@@ -1,7 +1,7 @@
-import { FC, ReactNode, useMemo } from "react";
+import { FC, ReactNode } from "react";
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
-import { useTheme } from "../../context/Theme";
+import { useThemeBackground, useThemeColorValue } from "../../hooks/useThemeHooks";
 import Icon, { IconNames } from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
 
@@ -50,28 +50,25 @@ export type TabProps = {
  * @constructor
  */
 export const Tab: FC<TabProps> = ({ style, icon, text, indicate, active = false, inverted = false, onPress }) => {
-    const theme = useTheme();
-    const color = useMemo(() => {
-        if (inverted) return active ? theme.invImportant : theme.invText;
-        else return active ? theme.secondary : theme.text;
-    }, [theme, active, inverted]);
-    const fillNotify = useMemo(() => ({ backgroundColor: theme.notification }), [theme]);
+    const colorName = inverted ? (active ? "invImportant" : "invText") : active ? "secondary" : "text";
+    const colorValue = useThemeColorValue(colorName);
+    const styleBackground = useThemeBackground("notification");
 
     return (
         <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
             <View style={styles.item}>
-                <Icon name={icon} size={24} color={color} />
+                <Icon name={icon} size={24} color={colorValue} />
 
                 {!indicate ? null : (
                     <View style={styles.indicatorArea}>
                         <View style={styles.indicatorLocator}>
-                            <View style={[styles.indicatorContent, fillNotify]}>{indicate === true ? null : indicate}</View>
+                            <View style={[styles.indicatorContent, styleBackground]}>{indicate === true ? null : indicate}</View>
                         </View>
                     </View>
                 )}
             </View>
             <View style={styles.item}>
-                <Label variant="middle" color={color}>
+                <Label variant="middle" color={colorName}>
                     {text}
                 </Label>
             </View>

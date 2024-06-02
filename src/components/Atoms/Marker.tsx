@@ -1,20 +1,21 @@
 import * as React from "react";
-import { FC, useMemo } from "react";
-import { ColorValue, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { FC } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import Icon, { IconNames } from "./Icon";
-import { Theme, useTheme } from "../../context/Theme";
+import { ThemeColor } from "../../context/Theme";
+import { useTheme } from "../../hooks/useThemeHooks";
 
 export type MarkerProps = {
     style?: StyleProp<ViewStyle>;
-    markerColor?: keyof Theme | ColorValue;
+    markerColor?: ThemeColor;
     markerType?: IconNames;
     markerSize?: number;
 };
 
 export const Marker: FC<MarkerProps> = ({ style, markerColor = "marker", markerType = "map-marker", markerSize = 40 }) => {
     const theme = useTheme();
-    const color = useMemo(() => (typeof markerColor === "string" && markerColor in theme ? theme[markerColor] : markerColor), [theme, markerColor]);
+    const color = markerColor in theme ? theme[markerColor] : markerColor;
 
     return (
         <View style={[styles.container, style]}>

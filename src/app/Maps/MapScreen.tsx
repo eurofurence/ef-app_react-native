@@ -1,3 +1,4 @@
+import { useProfiler } from "@sentry/react-native";
 import * as React from "react";
 import { useMemo } from "react";
 import { View } from "react-native";
@@ -6,14 +7,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MapContent, MapContentProps } from "./MapContent";
 import { Header } from "../../components/Containers/Header";
 import { useAppRoute } from "../../hooks/useAppNavigation";
-import { useSentryProfiler } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 import { mapsSelectors } from "../../store/eurofurence.selectors";
 import { appStyles } from "../AppStyles";
 
 export const MapScreen = () => {
     // Get safe area and route.
-    useSentryProfiler("MapScreen");
+    useProfiler("MapScreen");
     const safe = useSafeAreaInsets();
     const route = useAppRoute("Map");
 

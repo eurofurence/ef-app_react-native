@@ -1,8 +1,8 @@
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { FC, useCallback, useEffect, useMemo } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Keyboard, StyleSheet, View, ViewStyle } from "react-native";
+import { Keyboard, StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 import { useEventsTabsContext } from "./EventsTabsContext";
@@ -14,7 +14,7 @@ import { Row } from "../../components/Containers/Row";
 import { Tab } from "../../components/Containers/Tab";
 import { PagesScreenProps } from "../../components/Navigators/PagesNavigator";
 import { TabScreenProps } from "../../components/Navigators/TabsNavigator";
-import { useTheme } from "../../context/Theme";
+import { useThemeBackground, useThemeMemo } from "../../hooks/useThemeHooks";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
 
@@ -47,9 +47,8 @@ export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) 
     const onRoom = useCallback(() => navigation.getParent()?.setParams({ filterType: "rooms" }), [navigation]);
     const onTrack = useCallback(() => navigation.getParent()?.setParams({ filterType: "tracks" }), [navigation]);
 
-    const theme = useTheme();
-    const searchStyle = useMemo<ViewStyle>(() => ({ color: theme.text, borderBottomColor: theme.text }), [theme]);
-    const roundedStyle = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary }), [theme]);
+    const searchStyle = useThemeMemo((theme) => ({ color: theme.text, borderBottomColor: theme.text }));
+    const roundedStyle = useThemeBackground("secondary");
     return (
         <Floater>
             <View style={styles.end}>

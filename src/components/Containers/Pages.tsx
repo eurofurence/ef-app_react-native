@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Animated, { SharedValue, useAnimatedStyle } from "react-native-reanimated";
 
 import { Page } from "./Page";
-import { useTheme } from "../../context/Theme";
+import { useTheme, useThemeBackground } from "../../hooks/useThemeHooks";
 import { IconNames } from "../Atoms/Icon";
 
 /**
@@ -70,10 +70,10 @@ export type PagesRef = {
  */
 export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicatorIndex = -1, indicatorHeight = 4 }, ref) => {
     // Computed styles.
-    const theme = useTheme();
-    const styleIndicator = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary, height: indicatorHeight }), [theme, indicatorHeight]);
-    const styleBackground = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
-    const styleDarken = useMemo<ViewStyle>(() => ({ borderColor: theme.darken }), [theme]);
+    const styleIndicator = useThemeBackground("secondary");
+    const styleIndicatorHeight = { height: indicatorHeight };
+    const styleBackground = useThemeBackground("background");
+    const styleDarken = useThemeBackground("darken");
 
     // Width of all pages. Anchors (locations and widths of the individual top tabs, the anchors start out at the given length).
     const [totalWidth, setTotalWidth] = useState(-1);
@@ -145,7 +145,7 @@ export const Pages = forwardRef<PagesRef, PagesProps>(({ style, pages, indicator
                 showsHorizontalScrollIndicator={false}
                 onLayout={(e) => setTotalWidth(e.nativeEvent.layout.width)}
             >
-                <Animated.View style={[styles.indicator, styleIndicator, dynamicIndicator]} />
+                <Animated.View style={[styles.indicator, styleIndicator, styleIndicatorHeight, dynamicIndicator]} />
                 {pages?.map((page, i) => (
                     <Page
                         key={i}

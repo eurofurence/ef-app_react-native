@@ -1,7 +1,7 @@
-import { FC, useMemo } from "react";
-import { StyleSheet, TouchableOpacity, View, ViewProps, ViewStyle } from "react-native";
+import { FC } from "react";
+import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 
-import { useTheme } from "../../context/Theme";
+import { useThemeBackground, useThemeColorValue } from "../../hooks/useThemeHooks";
 import Icon, { IconNames } from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
 
@@ -47,25 +47,24 @@ export type PageProps = {
  * @constructor
  */
 export const Page: FC<PageProps> = ({ icon, text, active = false, highlight = false, onPress, onLayout }) => {
-    const theme = useTheme();
-
     // The color to use for icon or text, i.e., foreground.
-    const colorContent = useMemo(() => (highlight ? (active ? theme.invImportant : theme.invText) : active ? theme.secondary : theme.text), [theme, active, highlight]);
+    const colorName = highlight ? (active ? "invImportant" : "invText") : active ? "secondary" : "text";
+    const colorValue = useThemeColorValue(colorName);
 
     // The style of the container and the item.
-    const styleContainer = useMemo<ViewStyle>(() => (icon ? styles.containerStatic : styles.containerGrow), [icon]);
-    const styleItem = useMemo<ViewStyle>(() => ({ backgroundColor: highlight ? theme.secondary : undefined }), [theme, highlight]);
+    const styleContainer = icon ? styles.containerStatic : styles.containerGrow;
+    const styleItem = useThemeBackground(highlight ? "secondary" : null);
 
     return (
         <View style={styleContainer} onLayout={onLayout}>
             <TouchableOpacity style={styleContainer} onPress={onPress}>
                 {icon ? (
                     <View style={[styles.item, styleItem]}>
-                        <Icon name={icon} size={iconSize} color={colorContent} />
+                        <Icon name={icon} size={iconSize} color={colorValue} />
                     </View>
                 ) : (
                     <View style={[styles.item, styleItem]}>
-                        <Label style={styles.text} color={colorContent}>
+                        <Label style={styles.text} color={colorName}>
                             {text ?? " "}
                         </Label>
                     </View>

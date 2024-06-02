@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { Label } from "../../components/Atoms/Label";
-import { useTheme, useThemeBackground } from "../../context/Theme";
+import { useTheme, useThemeBackground } from "../../hooks/useThemeHooks";
 import { appStyles } from "../AppStyles";
 
 const placeholder = require("../../../assets/images/dealer_black.png");
@@ -21,8 +21,7 @@ export type DealerCardContentProps = {
 
 export const DealerCardContent: FC<DealerCardContentProps> = memo(({ avatar, name, present, categories, offDays, onPress, onLongPress }) => {
     const { t } = useTranslation("Dealers");
-    const theme = useTheme();
-    const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: present ? theme.primary : theme.darken }), [present, theme]);
+    const stylePre = useThemeBackground(present ? "primary" : "darken");
     const description = useMemo(() => categories?.join(", "), [categories]);
     const backgroundStyle = useThemeBackground("background");
 

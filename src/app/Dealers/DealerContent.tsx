@@ -8,12 +8,12 @@ import { StyleSheet, View } from "react-native";
 import { Banner } from "../../components/Atoms/Banner";
 import { Label } from "../../components/Atoms/Label";
 import { Section } from "../../components/Atoms/Section";
-import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
+import { Badge } from "../../components/Containers/Badge";
 import { Button } from "../../components/Containers/Button";
 import { ImageExButton } from "../../components/Containers/ImageButton";
-import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useNow } from "../../hooks/useNow";
+import { useTheme } from "../../hooks/useThemeHooks";
 import { useAppSelector } from "../../store";
 import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
 import { DealerDetails } from "../../store/eurofurence.types";
@@ -36,7 +36,6 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
     const navigation = useAppNavigation("Areas");
     const { t } = useTranslation("Dealer");
     const [now] = useNow();
-    const theme = useTheme();
 
     const mapLink = useAppSelector((state) => selectValidLinksByTarget(state, dealer.Id));
 
@@ -61,9 +60,9 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
     return (
         <>
             {!markNotAttending ? null : (
-                <BadgeInvPad padding={parentPad} badgeColor={theme.warning} textColor={theme.invText}>
+                <Badge unpad={parentPad} badgeColor="warning" textColor="invText">
                     {t("not_attending")}
-                </BadgeInvPad>
+                </Badge>
             )}
 
             {!dealer.Artist ? null : (

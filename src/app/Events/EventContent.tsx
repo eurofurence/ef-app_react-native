@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/react-native";
 import moment from "moment";
 import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,15 +8,13 @@ import { Banner } from "../../components/Atoms/Banner";
 import { Label } from "../../components/Atoms/Label";
 import { MarkdownContent } from "../../components/Atoms/MarkdownContent";
 import { Section } from "../../components/Atoms/Section";
-import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
+import { Badge } from "../../components/Containers/Badge";
 import { Button } from "../../components/Containers/Button";
 import { ImageExButton } from "../../components/Containers/ImageButton";
 import { Row } from "../../components/Containers/Row";
 import { appBase, conAbbr } from "../../configuration";
-import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
 import { useEventReminder } from "../../hooks/useEventReminder";
-import { captureException } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
 import { EventDetails } from "../../store/eurofurence.types";
@@ -45,7 +44,6 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
 
     const { t } = useTranslation("Event");
     const { isFavorited, toggleReminder } = useEventReminder(event);
-    const theme = useTheme();
 
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
@@ -67,15 +65,15 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
     return (
         <>
             {!event.SuperSponsorOnly ? null : (
-                <BadgeInvPad padding={parentPad} badgeColor={theme.superSponsor} textColor={theme.superSponsorText}>
+                <Badge unpad={parentPad} badgeColor="superSponsor" textColor="superSponsorText">
                     {t("supersponsor_event")}
-                </BadgeInvPad>
+                </Badge>
             )}
 
             {!event.SponsorOnly ? null : (
-                <BadgeInvPad padding={parentPad} badgeColor={theme.sponsor} textColor={theme.sponsorText}>
+                <Badge unpad={parentPad} badgeColor="sponsor" textColor="sponsorText">
                     {t("sponsor_event")}
-                </BadgeInvPad>
+                </Badge>
             )}
 
             {!event.Poster ? null : (
@@ -90,9 +88,9 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
             </MarkdownContent>
 
             {!event.MaskRequired ? null : (
-                <BadgeInvPad padding={parentPad} icon="face-mask" textColor={theme.secondary} textType="regular" textVariant="regular">
+                <Badge unpad={parentPad} icon="face-mask" textColor="secondary" textType="regular" textVariant="regular">
                     {t("mask_required")}
-                </BadgeInvPad>
+                </Badge>
             )}
 
             <Row style={styles.marginBefore}>

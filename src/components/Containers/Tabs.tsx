@@ -1,10 +1,10 @@
 import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from "react";
-import { BackHandler, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { Tab } from "./Tab";
-import { useTheme } from "../../context/Theme";
+import { useTheme, useThemeBackground, useThemeBorder } from "../../hooks/useThemeHooks";
 import { Activity } from "../Atoms/Activity";
 import { IconNames } from "../Atoms/Icon";
 
@@ -112,13 +112,12 @@ export const useTabs = () => useContext(TabsContext);
  */
 export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "More", textLess = "Less", indicateMore, children }, ref) => {
     // Computed styles.
-    const theme = useTheme();
-    const styleDismiss = useMemo(() => ({ backgroundColor: theme.darken }), [theme]);
-    const fillBackground = useMemo(() => ({ backgroundColor: theme.background }), [theme]);
-    const bordersDarken = useMemo(() => ({ borderColor: theme.darken }), [theme]);
+    const styleDismiss = useThemeBackground("darken");
+    const fillBackground = useThemeBackground("background");
+    const bordersDarken = useThemeBorder("darken");
 
     // Height of the content rendered as children, state if currently open.
-    const [height, setHeight] = useState(425);
+    const [height, setHeight] = useState(280);
     const [state, setState] = useState<"closed" | "transitioning" | "open">("closed");
 
     // Start is used for pan gesture, offset is used to animate the actual openness.
@@ -225,6 +224,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
 
     // Connect to back handler.
     useEffect(() => {
+        if (Platform.OS === "web") return;
+
         // Add handler and return removal.
         const subscription = BackHandler.addEventListener("hardwareBackPress", () => close() ?? false);
         return () => subscription.remove();

@@ -14,8 +14,8 @@ import { Col } from "../../components/Containers/Col";
 import { Header } from "../../components/Containers/Header";
 import { Row } from "../../components/Containers/Row";
 import { NoData } from "../../components/Utilities/NoData";
-import { useTheme } from "../../context/Theme";
 import { useAppNavigation } from "../../hooks/useAppNavigation";
+import { useThemeBackground } from "../../hooks/useThemeHooks";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
 import { CommunicationRecord } from "../../store/eurofurence.types";
 import { Query } from "../../types";
@@ -55,7 +55,6 @@ const PrivateMessageItem: FC<PrivateMessageItemProps> = ({ item, onPress }) => {
 export const PrivateMessageListScreen = () => {
     const { t } = useTranslation("PrivateMessageList");
     const navigation = useAppNavigation("PrivateMessageList");
-    const theme = useTheme();
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
         refetchOnFocus: true,
     });
@@ -95,7 +94,7 @@ export const PrivateMessageListScreen = () => {
         return [...unreadSections, ...readSections];
     }, [data]);
 
-    const sectionStyle = useMemo(() => ({ backgroundColor: theme.background }), [theme]);
+    const sectionStyle = useThemeBackground("background");
 
     const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, []);
     const emptyComponent = useMemo(() => <NoData />, []);

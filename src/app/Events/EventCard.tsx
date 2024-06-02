@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { EventCardContent } from "./EventCardContent";
 import { Label } from "../../components/Atoms/Label";
 import { Col } from "../../components/Containers/Col";
-import { useTheme } from "../../context/Theme";
 import { useEventIsDone, useEventIsHappening } from "../../hooks/useEventProperties";
 import { EventDetails } from "../../store/eurofurence.types";
 
@@ -18,7 +17,6 @@ export type EventCardProps = {
 
 export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPress, onLongPress }) => {
     const { t } = useTranslation("Event");
-    const theme = useTheme();
 
     // Resolve event statuses.
     const happening = useEventIsHappening(event);
@@ -55,7 +53,7 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
                 </Col>
             );
         }
-    }, [t, type, event, done, theme]);
+    }, [t, type, event, done]);
 
     // Convert to poster source.
     const poster = useMemo(() => (event.Banner ? { uri: event.Banner.FullUrl } : undefined), [event]);

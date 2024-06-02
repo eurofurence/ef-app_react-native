@@ -1,12 +1,12 @@
 import { ImageBackground, ImageBackgroundProps } from "expo-image";
-import React, { FC, memo, ReactNode, useMemo } from "react";
-import { ColorValue, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
+import React, { FC, memo, ReactNode } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import Icon, { IconNames } from "../../components/Atoms/Icon";
 import { Indicator } from "../../components/Atoms/Indicator";
 import { Label } from "../../components/Atoms/Label";
 import { Row } from "../../components/Containers/Row";
-import { useTheme } from "../../context/Theme";
+import { useThemeBackground, useThemeColorValue } from "../../hooks/useThemeHooks";
 import { appStyles } from "../AppStyles";
 
 const glyphIconSize = 90;
@@ -27,12 +27,11 @@ export type EventCardProps = {
 };
 
 export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, poster, title, subtitle, tag, happening, done, onPress, onLongPress }) => {
-    const theme = useTheme();
-    const styleContainer = useMemo<ViewStyle>(() => ({ backgroundColor: theme.background }), [theme]);
-    const stylePre = useMemo<ViewStyle>(() => ({ backgroundColor: done ? theme.darken : theme.primary }), [done, theme]);
-    const styleBadgeFrame = useMemo<ViewStyle>(() => ({ backgroundColor: theme.secondary }), [theme]);
-    const colorBadge = useMemo<ColorValue>(() => theme.white, [theme]);
-    const colorGlyph = useMemo<ColorValue>(() => theme.lighten, [theme]);
+    const styleContainer = useThemeBackground("background");
+    const stylePre = useThemeBackground(done ? "darken" : "primary");
+    const styleBadgeFrame = useThemeBackground("secondary");
+    const colorBadge = useThemeColorValue("white");
+    const colorGlyph = useThemeColorValue("lighten");
     return (
         <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer]} onPress={onPress} onLongPress={onLongPress}>
             <View style={[styles.pre, stylePre]}>
@@ -85,7 +84,7 @@ export const EventCardContent: FC<EventCardProps> = memo(({ badges, glyph, pre, 
 
             {!happening ? null : (
                 <View style={styles.indicator}>
-                    <Indicator color={theme.white} />
+                    <Indicator color="white" />
                 </View>
             )}
         </TouchableOpacity>

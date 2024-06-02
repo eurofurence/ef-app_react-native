@@ -1,22 +1,21 @@
-import { ScopeContext } from "@sentry/types";
-import { Browser, Native } from "sentry-expo";
+import * as Sentry from "@sentry/react-native";
+import type { CaptureContext, EventHint } from "@sentry/types";
 
 /**
- * Holds either browser or native sentry.
+ * Capture parameter type enforced to CaptureContext.
  */
-export const PlatformSentry = Native ?? Browser;
-export const captureEvent = PlatformSentry.captureEvent;
-export const captureException = PlatformSentry.captureException;
+export type ContextType = CaptureContext &
+    Partial<{
+        [key in keyof EventHint]: never;
+    }>;
 
-export const captureNotificationException = (message: string, error: Error, context: Partial<ScopeContext> = {}) => {
+export const captureNotificationException = (message: string, error: Error, hint?: ContextType) => {
     console.error(message, error);
 
-    Browser.captureException(error, {
+    Sentry.captureException(error, {
         tags: {
             type: "notifications",
         },
-        ...context,
+        ...hint,
     });
 };
-
-export const useSentryProfiler = "useProfiler" in PlatformSentry ? PlatformSentry.useProfiler : () => {};

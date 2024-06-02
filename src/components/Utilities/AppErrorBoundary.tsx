@@ -1,7 +1,7 @@
+import { captureException } from "@sentry/react-native";
 import React, { ReactNode } from "react";
 
 import { AppErrorContent } from "./AppErrorContent";
-import { PlatformSentry } from "../../sentryHelpers";
 
 export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
     constructor(props: { children: ReactNode }) {
@@ -14,7 +14,7 @@ export class AppErrorBoundary extends React.PureComponent<{ children: ReactNode 
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-        PlatformSentry.captureException(error);
+        captureException(error);
 
         console.error(error, errorInfo);
     }

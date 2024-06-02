@@ -4,7 +4,6 @@ import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { AboutScreen } from "./About";
-import { ScreenEmptyParams } from "./Common/ScreenEmpty";
 import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
 import { EventScreen } from "./Events/EventScreen";
 import { FeedbackScreen } from "./Events/FeedbackScreen";
@@ -15,7 +14,7 @@ import { PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemSc
 import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
 import { SettingsScreen } from "./Settings/SettingsScreen";
-import { useTheme, useThemeType } from "../context/Theme";
+import { useTheme, useThemeName } from "../hooks/useThemeHooks";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 
 /**
@@ -42,8 +41,8 @@ export type ScreenStartParamsList = {
      * Detail screen for dealer.
      */
     Dealer: DealerScreenParams;
-    Settings: ScreenEmptyParams;
-    PrivateMessageList: ScreenEmptyParams;
+    Settings: undefined;
+    PrivateMessageList: undefined;
     PrivateMessageItem: {
         id: RecordId;
         message: CommunicationRecord;
@@ -71,7 +70,7 @@ export type ScreenStartProps = object;
 export const ScreenStart: FC<ScreenStartProps> = React.memo(() => {
     // Get the theme type for status bar configuration.
     const theme = useTheme();
-    const themeType = useThemeType();
+    const themeType = useThemeName();
 
     return (
         <View style={StyleSheet.absoluteFill}>

@@ -1,15 +1,15 @@
-import { FC, useEffect, useMemo } from "react";
-import { ColorValue, StyleSheet, ViewStyle } from "react-native";
+import { FC, useEffect } from "react";
+import { StyleSheet } from "react-native";
 import Animated, { cancelAnimation, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withTiming } from "react-native-reanimated";
 
-import { useTheme } from "../../context/Theme";
+import { ThemeColor } from "../../context/Theme";
+import { useThemeBackground } from "../../hooks/useThemeHooks";
 
 export type IndicatorProps = {
-    color: ColorValue;
+    color: ThemeColor;
 };
 
 export const Indicator: FC<IndicatorProps> = ({ color }) => {
-    const theme = useTheme();
     const at = useSharedValue(0);
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export const Indicator: FC<IndicatorProps> = ({ color }) => {
         return () => cancelAnimation(at);
     }, []);
 
-    const styleIndicator = useMemo<ViewStyle>(() => ({ backgroundColor: color }), [theme]);
+    const styleIndicator = useThemeBackground(color);
 
     const dynamicIndicator = useAnimatedStyle(
         () => ({

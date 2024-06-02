@@ -1,8 +1,8 @@
 import analytics from "@react-native-firebase/analytics";
+import { captureException, setTag, setUser } from "@sentry/react-native";
 import Constants from "expo-constants";
 import { useEffect } from "react";
 
-import { PlatformSentry, captureException } from "../../sentryHelpers";
 import { useAppSelector } from "../../store";
 
 /**
@@ -22,11 +22,11 @@ export const AnalyticsManager = () => {
 
     useEffect(() => {
         // Set user for sentry, if user is given.
-        if (user) PlatformSentry.setUser({ id: user.uid, username: user.username });
-        else PlatformSentry.setUser(null);
+        if (user) setUser({ id: user.uid, username: user.username });
+        else setUser(null);
 
         // Set app version code.
-        PlatformSentry.setTag("appVersionCode", Constants.expoConfig?.android?.versionCode);
+        setTag("appVersionCode", Constants.expoConfig?.android?.versionCode);
 
         // Initialize firebase analytics user if given.
         analytics()

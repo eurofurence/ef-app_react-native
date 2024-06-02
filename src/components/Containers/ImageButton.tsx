@@ -1,8 +1,9 @@
 import * as React from "react";
 import { FC, useMemo } from "react";
-import { ColorValue, StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 
-import { Theme, useTheme } from "../../context/Theme";
+import { ThemeColor } from "../../context/Theme";
+import { useTheme, useThemeBackground } from "../../hooks/useThemeHooks";
 import { IconNames } from "../Atoms/Icon";
 import { ImageFill, ImageFillProps } from "../Atoms/ImageFill";
 import { Marker } from "../Atoms/Marker";
@@ -30,7 +31,7 @@ export type ImageButtonProps = {
      * True if no indicator should be displayed.
      */
     noMarker?: boolean;
-    markerColor?: keyof Theme | ColorValue;
+    markerColor?: ThemeColor;
     markerType?: IconNames;
     markerSize?: number;
 
@@ -46,9 +47,7 @@ export type ImageButtonProps = {
 };
 
 export const ImageExButton: FC<ImageButtonProps> = ({ style, image, target, noMarker = false, markerColor, markerType, markerSize, onPress, onLongPress }) => {
-    const theme = useTheme();
-
-    const styleBackground = useMemo<ViewStyle>(() => ({ backgroundColor: theme.inverted }), [theme]);
+    const styleBackground = useThemeBackground("inverted");
 
     return (
         <TouchableOpacity style={[styles.container, styleBackground, style]} onPress={onPress} onLongPress={onLongPress}>

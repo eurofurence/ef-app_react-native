@@ -4,7 +4,7 @@ import { FC, useEffect, useMemo, useRef } from "react";
 import { Platform, ScrollView, StyleSheet } from "react-native";
 
 import { EventContent } from "./EventContent";
-import { useThemeBackground } from "../../context/Theme";
+import { useThemeBackground } from "../../hooks/useThemeHooks";
 import { EventDetails } from "../../store/eurofurence.types";
 
 type EventActionsSheetProps = {

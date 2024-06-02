@@ -2,7 +2,7 @@ import * as React from "react";
 import { FC, ReactNode, useMemo } from "react";
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
-import { useTheme } from "../../context/Theme";
+import { useTheme, useThemeBackground, useThemeColorValue } from "../../hooks/useThemeHooks";
 import Icon, { IconNames } from "../Atoms/Icon";
 import { Label } from "../Atoms/Label";
 
@@ -51,19 +51,19 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({ style, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
     // Computed styles.
-    const theme = useTheme();
-    const base = useMemo(() => (outline ? styles.containerOutline : styles.containerFill), [outline]);
-    const fill = useMemo(() => ({ backgroundColor: outline ? theme.background : theme.inverted }), [outline, theme]);
+    const base = outline ? styles.containerOutline : styles.containerFill;
+    const fill = useThemeBackground(outline ? "background" : "inverted");
+    const color = useThemeColorValue(outline ? "important" : "invImportant");
 
     return (
         <TouchableOpacity style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
-            {!icon ? <View style={styles.placeholder} /> : <Icon name={icon} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
+            {!icon ? <View style={styles.placeholder} /> : <Icon name={icon} size={iconSize} color={color} />}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>
                 {children}
             </Label>
 
-            {!iconRight ? <View style={styles.placeholder} /> : <Icon name={iconRight} size={iconSize} color={outline ? theme.important : theme.invImportant} />}
+            {!iconRight ? <View style={styles.placeholder} /> : <Icon name={iconRight} size={iconSize} color={color} />}
         </TouchableOpacity>
     );
 };

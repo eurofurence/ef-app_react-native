@@ -101,7 +101,7 @@ export type PagesScreenProps<ParamList extends ParamListBase, RouteName extends 
     navigation: PagesNavigationProp<ParamList, RouteName, NavigatorID>;
     route: RouteProp<ParamList, RouteName>;
 };
-
+// https://reactnavigation.org/docs/material-top-tab-navigator
 export const PagesNavigator: FC<PagesNavigatorProps> = ({ contentStyle, pagesStyle, initialRouteName, detach = true, panSlack = 15, children, screenOptions }) => {
     // Make builder from passed arguments.
     const { state, navigation, descriptors, NavigationContent } = useNavigationBuilder(TabRouter, {

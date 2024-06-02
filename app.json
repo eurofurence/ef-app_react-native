@@ -32,7 +32,9 @@
       "package": "org.eurofurence.connavigator",
       "googleServicesFile": "./assets/android/google-services.json",
       "splash": {
-        "resizeMode": "native"
+        "resizeMode": "native",
+        "image": "./assets/images/banner_2023_logo.png",
+        "backgroundColor": "#006459"
       },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/playstore.png",
@@ -68,7 +70,7 @@
       "favicon": "./assets/images/playstore.png"
     },
     "plugins": [
-      "sentry-expo",
+      "@sentry/react-native/expo",
       [
         "expo-notifications",
         {

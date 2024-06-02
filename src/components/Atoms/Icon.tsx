@@ -9,9 +9,9 @@ type FontAwesomeNames = keyof typeof FontAwesomeGlyphs;
 type MaterialCommunityNames = keyof typeof MaterialCommunityGlyphs;
 export type IconNames = FontAwesomeNames | MaterialCommunityNames;
 
-export const Icon: FC<IconProps<IconNames>> = memo(({ name, ...rest }) => {
-    if (name in MaterialCommunityGlyphs) return <MaterialCommunityIcon name={name as MaterialCommunityNames} {...rest} />;
-    else return <FontAwesome5Icon name={name as FontAwesomeNames} {...rest} />;
+export const Icon: FC<IconProps<IconNames>> = memo(({ name, color, ...rest }) => {
+    if (name in MaterialCommunityGlyphs) return <MaterialCommunityIcon name={name as MaterialCommunityNames} color={color} {...rest} />;
+    else return <FontAwesome5Icon name={name as FontAwesomeNames} color={color} {...rest} />;
 });
 
 export default Icon;

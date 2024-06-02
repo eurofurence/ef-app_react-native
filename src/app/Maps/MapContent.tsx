@@ -11,7 +11,7 @@ import { FlatList, InteractionManager, Platform, StyleSheet, View, ViewStyle } f
 import { LinkItem } from "./LinkItem";
 import { Label } from "../../components/Atoms/Label";
 import { Marker } from "../../components/Atoms/Marker";
-import { useThemeBackground } from "../../context/Theme";
+import { useThemeBackground } from "../../hooks/useThemeHooks";
 import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";
 
 const distSq = (hx: number, hy: number) => hx * hx + hy * hy;

@@ -1,8 +1,8 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { useTheme } from "../../../context/Theme";
+import { useThemeBackground } from "../../../hooks/useThemeHooks";
 
 /**
  * Props for the progress indicator.
@@ -20,9 +20,6 @@ export type ProgressProps = {
 };
 
 export const Progress: FC<ProgressProps> = ({ style, value }) => {
-    // Use theme for colors.
-    const theme = useTheme();
-
     // Shared at value.
     const at = useSharedValue(value ?? 0);
 
@@ -32,7 +29,7 @@ export const Progress: FC<ProgressProps> = ({ style, value }) => {
     }, [at, value]);
 
     // Convert theme into style.
-    const colorStyle = useMemo(() => ({ backgroundColor: theme.secondary }), [theme]);
+    const colorStyle = useThemeBackground("secondary");
 
     // Compute dynamic style animating the bar.
     const dynamicStyle = useAnimatedStyle(

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { ColorSchemeName } from "react-native";
 
-import { AppTheme } from "../context/Theme";
+import { ThemeName } from "../context/Theme";
 
 type SettingsSliceState = {
     analytics: {
@@ -8,18 +9,20 @@ type SettingsSliceState = {
         prompted: boolean;
     };
     showDevMenu?: boolean;
-    theme?: AppTheme;
+    theme?: ThemeName;
+    colorScheme?: ColorSchemeName;
 };
 
 export const settingsSlice = createSlice({
     name: "settingsSlice",
-    initialState: {
-        analytics: {
-            enabled: false,
-            prompted: false,
-        },
-        showDevMenu: false,
-    } as SettingsSliceState,
+    initialState: () =>
+        ({
+            analytics: {
+                enabled: false,
+                prompted: false,
+            },
+            showDevMenu: false,
+        }) as SettingsSliceState,
     reducers: {
         setAnalytics: (state, action: PayloadAction<boolean>) => {
             state.analytics.enabled = action.payload;
@@ -31,10 +34,13 @@ export const settingsSlice = createSlice({
         toggleDevMenu: (state, action: PayloadAction<boolean | undefined>) => {
             state.showDevMenu = action.payload !== undefined ? action.payload : !state.showDevMenu ?? true;
         },
-        setTheme: (state, action: PayloadAction<AppTheme | undefined>) => {
+        setTheme: (state, action: PayloadAction<ThemeName | undefined>) => {
             state.theme = action.payload;
+        },
+        setColorScheme: (state, action: PayloadAction<ColorSchemeName>) => {
+            state.colorScheme = action.payload;
         },
     },
 });
 
-export const { setAnalytics, showDevMenu, toggleDevMenu, setTheme } = settingsSlice.actions;
+export const { setAnalytics, showDevMenu, toggleDevMenu, setTheme, setColorScheme } = settingsSlice.actions;

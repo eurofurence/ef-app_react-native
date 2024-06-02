@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { appStyles } from "../../app/AppStyles";
-import { useTheme } from "../../context/Theme";
+import { useThemeBackground } from "../../hooks/useThemeHooks";
 
 type CardProps = PropsWithChildren<{
     onPress?: () => void;
@@ -12,10 +12,10 @@ type CardProps = PropsWithChildren<{
 }>;
 
 export const Card: FC<CardProps> = ({ children, onPress, onLongPress, style }) => {
-    const theme = useTheme();
+    const cardStyle = useThemeBackground("background");
     return (
         <TouchableOpacity
-            style={[styles.container, appStyles.shadow, { backgroundColor: theme.background }, style]}
+            style={[styles.container, appStyles.shadow, cardStyle, style]}
             onPress={onPress}
             onLongPress={onLongPress}
             disabled={onPress === undefined && onLongPress === undefined}

@@ -1,8 +1,7 @@
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { BadgeInvPad } from "../../components/Containers/BadgeInvPad";
-import { useTheme } from "../../context/Theme";
+import { Badge } from "../../components/Containers/Badge";
 
 export type LanguageWarningsProps = {
     /**
@@ -13,16 +12,15 @@ export type LanguageWarningsProps = {
 
 export const LanguageWarnings: FC<LanguageWarningsProps> = ({ parentPad = 0 }) => {
     const { t } = useTranslation("Home");
-    const theme = useTheme();
-    const notice = useMemo(() => t("content_untranslated"), [t]);
+    const notice = t("content_untranslated");
 
     if (notice === "") {
         return null;
     }
 
     return (
-        <BadgeInvPad padding={parentPad} badgeColor={theme.background} textColor={theme.text} textType="para" icon="translate">
+        <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="translate">
             {notice}
-        </BadgeInvPad>
+        </Badge>
     );
 };

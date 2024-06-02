@@ -4,7 +4,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import moment from "moment";
 import { FC, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { BackHandler, StyleSheet, View } from "react-native";
+import { BackHandler, Platform, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { EventActionsSheet } from "./EventActionsSheet";
@@ -80,6 +80,7 @@ const EventsTabsScreenContent: FC<EventsTabsScreenProps> = ({ route }) => {
 
     // Connect back handler to clearing selection.
     useEffect(() => {
+        if (Platform.OS === "web") return;
         if (!selected) return;
 
         const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
