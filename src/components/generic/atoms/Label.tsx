@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { StyleSheet, Text, TextProps, ViewStyle } from "react-native";
 
-import Icon, { IconNames } from "./Icon";
+import { Icon, IconNames } from "./Icon";
 import { ThemeColor } from "../../../context/Theme";
 import { useThemeColor, useThemeName } from "../../../hooks/themes/useThemeHooks";
 

@@ -1,4 +1,5 @@
 import { CompositeScreenProps } from "@react-navigation/core";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
 import moment from "moment";
@@ -9,7 +10,6 @@ import { DealersTabsScreenParamsList } from "./DealersTabsScreen";
 import { DealersSectionedListGeneric } from "../../components/app/dealers/DealersSectionedListGeneric";
 import { IconNames } from "../../components/generic/atoms/Icon";
 import { Label } from "../../components/generic/atoms/Label";
-import { PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
 import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { useAppSelector } from "../../store";
 import { selectDealersByDayName } from "../../store/eurofurence.selectors";
@@ -28,8 +28,8 @@ export type DealersListByDayScreenParams = object;
 export type DealersListByDayScreenProps =
     // Route carrying from dealers tabs screen at any of the day names, own navigation via own parameter list.
     CompositeScreenProps<
-        PagesScreenProps<DealersTabsScreenParamsList, "Mon" | "Tue" | "Wed">,
-        PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+        MaterialTopTabScreenProps<DealersTabsScreenParamsList, "Mon" | "Tue" | "Wed">,
+        MaterialTopTabScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
 export const DealersListByDayScreen: FC<DealersListByDayScreenProps> = ({ route }) => {

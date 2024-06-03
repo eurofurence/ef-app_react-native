@@ -70,7 +70,13 @@
       "favicon": "./assets/images/playstore.png"
     },
     "plugins": [
-      "@sentry/react-native/expo",
+      [
+        "@sentry/react-native/expo",
+        {
+          "project": "ef-app_react-native",
+          "organization": "eurofurence"
+        }
+      ],
       [
         "expo-notifications",
         {

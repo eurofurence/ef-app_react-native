@@ -1,4 +1,5 @@
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -12,7 +13,6 @@ import { Button } from "../../components/generic/containers/Button";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Row } from "../../components/generic/containers/Row";
 import { Tab } from "../../components/generic/containers/Tab";
-import { PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
 import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { useThemeBackground, useThemeMemo } from "../../hooks/themes/useThemeHooks";
 import { ScreenAreasParamsList } from "../ScreenAreas";
@@ -29,8 +29,8 @@ export type EventsSearchScreenParams = undefined;
 export type EventsSearchScreenProps =
     // Route carrying from events tabs screen at "Search", own navigation via own parameter list.
     CompositeScreenProps<
-        PagesScreenProps<EventsTabsScreenParamsList, "Search">,
-        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+        MaterialTopTabScreenProps<EventsTabsScreenParamsList, "Search">,
+        MaterialTopTabScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
 export const EventsSearchScreen: FC<EventsSearchScreenProps> = ({ navigation }) => {

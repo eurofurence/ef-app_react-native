@@ -4,16 +4,16 @@ import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { AboutScreen } from "./AboutScreen";
-import { DealerScreen, DealerScreenParams } from "./Dealers/DealerScreen";
-import { EventScreen } from "./Events/EventScreen";
-import { FeedbackScreen } from "./Events/FeedbackScreen";
-import { KnowledgeEntryScreen } from "./Knowledge/KnowledgeEntryScreen";
-import { KnowledgeGroupsScreen } from "./Knowledge/KnowledgeGroupsScreen";
-import { MapScreen } from "./Maps/MapScreen";
-import { PrivateMessageItemScreen } from "./PrivateMessages/PrivateMessageItemScreen";
-import { PrivateMessageListScreen } from "./PrivateMessages/PrivateMessageListScreen";
 import { ScreenAreas, ScreenAreasParams } from "./ScreenAreas";
-import { SettingsScreen } from "./Settings/SettingsScreen";
+import { DealerScreen, DealerScreenParams } from "./dealers/DealerScreen";
+import { EventScreen } from "./events/EventScreen";
+import { FeedbackScreen } from "./events/FeedbackScreen";
+import { KnowledgeEntryScreen } from "./kb/KnowledgeEntryScreen";
+import { KnowledgeGroupsScreen } from "./kb/KnowledgeGroupsScreen";
+import { MapScreen } from "./maps/MapScreen";
+import { PrivateMessageItemScreen } from "./pm/PrivateMessageItemScreen";
+import { PrivateMessageListScreen } from "./pm/PrivateMessageListScreen";
+import { SettingsScreen } from "./settings/SettingsScreen";
 import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
 import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
 

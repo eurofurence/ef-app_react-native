@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 
-import Icon from "../../generic/atoms/Icon";
+import { Icon } from "../../generic/atoms/Icon";
 import { Label } from "../../generic/atoms/Label";
 
 export const NoData = () => {

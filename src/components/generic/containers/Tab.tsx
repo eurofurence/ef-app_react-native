@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
 import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
-import Icon, { IconNames } from "../atoms/Icon";
+import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 
 /**

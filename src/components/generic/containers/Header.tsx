@@ -5,7 +5,7 @@ import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
 import { Row } from "./Row";
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Activity } from "../atoms/Activity";
-import Icon from "../atoms/Icon";
+import { Icon } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 
 const iconSize = 32;

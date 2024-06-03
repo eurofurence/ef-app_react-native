@@ -116,11 +116,11 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
     const fillBackground = useThemeBackground("background");
     const bordersDarken = useThemeBorder("darken");
 
-    // Height of the content rendered as children, state if currently open.
-    const [height, setHeight] = useState(280);
+    // State if currently open.
     const [state, setState] = useState<"closed" | "transitioning" | "open">("closed");
 
-    // Start is used for pan gesture, offset is used to animate the actual openness.
+    // Height of the content rendered as children. Start is used for pan gesture, offset is used to animate the actual openness.
+    const height = useSharedValue(300);
     const start = useSharedValue(0);
     const offset = useSharedValue(0);
 
@@ -147,7 +147,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
     // Derive transformation from offset.
     const dynamicContainer = useAnimatedStyle(
         () => ({
-            transform: [{ translateY: -offset.value * height }],
+            transform: [{ translateY: -offset.value * height.value }],
         }),
         [offset, height],
     );
@@ -185,7 +185,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         })
         .onUpdate((e) => {
             // Update from translation.
-            offset.value = -e.translationY / height + start.value;
+            offset.value = -e.translationY / height.value + start.value;
             offset.value = Math.max(0, Math.min(offset.value, 1));
         })
         .onEnd((e) => {
@@ -253,7 +253,12 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
                     </View>
 
                     {/* Children rendered as the expandable content. */}
-                    <View style={[styles.content, fillBackground]} onLayout={(e) => setHeight(e.nativeEvent.layout.height || height)}>
+                    <View
+                        style={[styles.content, fillBackground]}
+                        onLayout={(e) => {
+                            height.value = e.nativeEvent.layout.height || height.value;
+                        }}
+                    >
                         {children}
                     </View>
                 </Animated.View>

@@ -9,6 +9,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import App from "./App";
 import { AppErrorBoundary } from "./components/app/util/AppErrorBoundary";
 import { LoadingContextProvider } from "./context/LoadingContext";
+import { NavigationProvider } from "./context/NavigationProvider";
 import { persistor, store } from "./store";
 
 import "react-native-reanimated";
@@ -27,7 +28,9 @@ const Index: FC = () => {
                     <AppErrorBoundary>
                         <PersistGate persistor={persistor}>
                             <LoadingContextProvider>
-                                <App />
+                                <NavigationProvider>
+                                    <App />
+                                </NavigationProvider>
                             </LoadingContextProvider>
                         </PersistGate>
                     </AppErrorBoundary>

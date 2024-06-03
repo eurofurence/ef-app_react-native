@@ -3,11 +3,11 @@ import { FC, ReactNode, useCallback, useMemo } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
 import { EventCard } from "./EventCard";
-import { EventsListByDayScreenProps } from "../../../app/Events/EventsListByDayScreen";
-import { EventsListByRoomScreenProps } from "../../../app/Events/EventsListByRoomScreen";
-import { EventsListByTrackScreenProps } from "../../../app/Events/EventsListByTrackScreen";
-import { EventsListSearchResultsScreenProps } from "../../../app/Events/EventsListSearchResultsScreen";
-import { EventsSearchScreenProps } from "../../../app/Events/EventsSearchScreen";
+import { EventsListByDayScreenProps } from "../../../app/events/EventsListByDayScreen";
+import { EventsListByRoomScreenProps } from "../../../app/events/EventsListByRoomScreen";
+import { EventsListByTrackScreenProps } from "../../../app/events/EventsListByTrackScreen";
+import { EventsListSearchResultsScreenProps } from "../../../app/events/EventsListSearchResultsScreen";
+import { EventsSearchScreenProps } from "../../../app/events/EventsSearchScreen";
 import { useEventsRefreshKey } from "../../../hooks/events/useEventsRefreshKey";
 import { EventDetails } from "../../../store/eurofurence.types";
 
@@ -77,7 +77,7 @@ export const EventsListGeneric: FC<EventsListGenericProps> = ({ navigation, lead
             data={events}
             keyExtractor={keyExtractor}
             renderItem={renderItem}
-            estimatedItemSize={80}
+            estimatedItemSize={110}
             extraData={refreshKey}
         />
     );

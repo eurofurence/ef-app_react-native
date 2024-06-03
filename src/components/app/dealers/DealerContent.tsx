@@ -6,12 +6,12 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
 import { useAppNavigation } from "../../../hooks/nav/useAppNavigation";
-import { useTheme } from "../../../hooks/themes/useThemeHooks";
 import { useNow } from "../../../hooks/time/useNow";
 import { useAppSelector } from "../../../store";
 import { selectValidLinksByTarget } from "../../../store/eurofurence.selectors";
 import { DealerDetails } from "../../../store/eurofurence.types";
 import { Banner } from "../../generic/atoms/Banner";
+import { FaIcon } from "../../generic/atoms/FaIcon";
 import { Label } from "../../generic/atoms/Label";
 import { Section } from "../../generic/atoms/Section";
 import { Badge } from "../../generic/containers/Badge";
@@ -114,7 +114,11 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                 ))}
 
             {dealer.TelegramHandle && (
-                <Button style={styles.button} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)} icon="telegram-plane">
+                <Button
+                    style={styles.button}
+                    onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
+                    icon={(props) => <FaIcon name="telegram-plane" {...props} />}
+                >
                     Telegram: {dealer.TelegramHandle}
                 </Button>
             )}

@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     },
     main: {
         flex: 1,
-        padding: 16,
+        padding: 12,
     },
     tag: {
         textAlign: "right",

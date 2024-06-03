@@ -3,10 +3,10 @@ import { NavigationState } from "@react-navigation/routers";
 import { captureException, ReactNavigationInstrumentation } from "@sentry/react-native";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
-import { DealersTabsScreenParamsList } from "../app/Dealers/DealersTabsScreen";
-import { EventsTabsScreenParamsList } from "../app/Events/EventsTabsScreen";
 import { ScreenAreasParamsList } from "../app/ScreenAreas";
 import { ScreenStartParamsList } from "../app/ScreenStart";
+import { DealersTabsScreenParamsList } from "../app/dealers/DealersTabsScreen";
+import { EventsTabsScreenParamsList } from "../app/events/EventsTabsScreen";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/analytics/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/nav/useNavigationStatePersistence";
@@ -95,7 +95,7 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
         () => ({
             dark: type === "dark",
             colors: {
-                primary: theme.primary,
+                primary: theme.secondary,
                 background: theme.surface,
                 card: theme.surface,
                 text: theme.text,

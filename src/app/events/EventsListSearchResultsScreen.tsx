@@ -1,4 +1,5 @@
 import { CompositeScreenProps } from "@react-navigation/core";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
 import { FC, useCallback, useMemo } from "react";
@@ -9,7 +10,6 @@ import { EventsTabsScreenParamsList } from "./EventsTabsScreen";
 import { EventsListGeneric } from "../../components/app/events/EventsListGeneric";
 import { Section } from "../../components/generic/atoms/Section";
 import { Button } from "../../components/generic/containers/Button";
-import { PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
 import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { ScreenAreasParamsList } from "../ScreenAreas";
 import { ScreenStartParamsList } from "../ScreenStart";
@@ -25,8 +25,8 @@ export type EventsListSearchResultsScreenParams = undefined;
 export type EventsListSearchResultsScreenProps =
     // Route carrying from events tabs screen at "Results", own navigation via own parameter list.
     CompositeScreenProps<
-        PagesScreenProps<EventsTabsScreenParamsList, "Results">,
-        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+        MaterialTopTabScreenProps<EventsTabsScreenParamsList, "Results">,
+        MaterialTopTabScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
 export const EventsListSearchResultsScreen: FC<EventsListSearchResultsScreenProps> = ({ navigation }) => {

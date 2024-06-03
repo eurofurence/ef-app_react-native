@@ -3,8 +3,8 @@ import { FC, ReactNode, useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
 import { DealerCard } from "./DealerCard";
-import { DealersListAllScreenProps } from "../../../app/Dealers/DealersListAllScreen";
-import { DealersListByDayScreenProps } from "../../../app/Dealers/DealersListByDayScreen";
+import { DealersListAllScreenProps } from "../../../app/dealers/DealersListAllScreen";
+import { DealersListByDayScreenProps } from "../../../app/dealers/DealersListByDayScreen";
 import { useDealersRefreshKey } from "../../../hooks/dealers/useDealersRefreshKey";
 import { DealerDetails } from "../../../store/eurofurence.types";
 
@@ -49,7 +49,7 @@ export const DealersListGeneric: FC<DealersListGenericProps> = ({ navigation, le
             data={dealers}
             keyExtractor={keyExtractor}
             renderItem={renderItem}
-            estimatedItemSize={100}
+            estimatedItemSize={110}
             extraData={refreshKey}
         />
     );

@@ -51,7 +51,7 @@ export const DealersSectionedListGeneric: FC<DealersSectionedListGenericProps> =
             data={dealersGroups}
             getItemType={getItemType}
             renderItem={renderItem}
-            estimatedItemSize={100}
+            estimatedItemSize={110}
             extraData={refreshKey}
         />
     );

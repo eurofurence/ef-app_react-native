@@ -1,9 +1,9 @@
 import * as React from "react";
-import { FC, ReactNode, useMemo } from "react";
+import { FC, ReactElement, ReactNode } from "react";
 import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
 
-import { useTheme, useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
-import Icon, { IconNames } from "../atoms/Icon";
+import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 
 const iconSize = 20;
@@ -27,12 +27,12 @@ export type ButtonProps = {
     /**
      * If given, displayed as the button's icon.
      */
-    icon?: IconNames;
+    icon?: IconNames | ReactElement | ((props: { size: number; color: string }) => ReactNode);
 
     /**
      * If given, displayed as the button's icon, this is displayed on the right side.
      */
-    iconRight?: IconNames;
+    iconRight?: IconNames | ReactElement | ((props: { size: number; color: string }) => ReactNode);
 
     /**
      * The text of the button.
@@ -44,8 +44,14 @@ export type ButtonProps = {
      */
     onPress?: () => void;
 
+    /**
+     * If given, invoked on long press.
+     */
     onLongPress?: () => void;
 
+    /**
+     * If true, button is disabled.
+     */
     disabled?: boolean;
 };
 
@@ -55,15 +61,27 @@ export const Button: FC<ButtonProps> = ({ style, outline, icon, iconRight, child
     const fill = useThemeBackground(outline ? "background" : "inverted");
     const color = useThemeColorValue(outline ? "important" : "invImportant");
 
+    let iconComponent;
+    if (!icon) iconComponent = <View style={styles.placeholder} />;
+    else if (typeof icon === "string") iconComponent = <Icon name={icon} size={iconSize} color={color} />;
+    else if (icon instanceof Function) iconComponent = icon({ size: iconSize, color });
+    else iconComponent = icon;
+
+    let iconRightComponent;
+    if (!iconRight) iconRightComponent = <View style={styles.placeholder} />;
+    else if (typeof iconRight === "string") iconRightComponent = <Icon name={iconRight} size={iconSize} color={color} />;
+    else if (iconRight instanceof Function) iconRightComponent = iconRight({ size: iconSize, color });
+    else iconRightComponent = iconRight;
+
     return (
         <TouchableOpacity style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
-            {!icon ? <View style={styles.placeholder} /> : <Icon name={icon} size={iconSize} color={color} />}
+            {iconComponent}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>
                 {children}
             </Label>
 
-            {!iconRight ? <View style={styles.placeholder} /> : <Icon name={iconRight} size={iconSize} color={color} />}
+            {iconRightComponent}
         </TouchableOpacity>
     );
 };

@@ -3,7 +3,7 @@ import React, { FC, memo, ReactNode } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
-import Icon, { IconNames } from "../../generic/atoms/Icon";
+import { Icon, IconNames } from "../../generic/atoms/Icon";
 import { Indicator } from "../../generic/atoms/Indicator";
 import { Label } from "../../generic/atoms/Label";
 import { Row } from "../../generic/containers/Row";
@@ -126,11 +126,11 @@ const styles = StyleSheet.create({
     mainPoster: {
         height: 120,
         flex: 1,
-        padding: 16,
+        padding: 12,
     },
     mainText: {
         flex: 1,
-        padding: 16,
+        padding: 12,
     },
     title: {
         flex: 1,

@@ -66,7 +66,7 @@ export const EventsSectionedListGeneric: FC<EventsSectionedListGenericProps> = (
             data={eventsGroups}
             getItemType={getItemType}
             renderItem={renderItem}
-            estimatedItemSize={80}
+            estimatedItemSize={110}
             extraData={refreshKey}
         />
     );

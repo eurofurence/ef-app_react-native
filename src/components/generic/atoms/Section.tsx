@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import Icon, { IconNames } from "./Icon";
+import { Icon, IconNames } from "./Icon";
 import { Label, LabelProps } from "./Label";
 import { Theme } from "../../../context/Theme";
 import { useThemeColorValue } from "../../../hooks/themes/useThemeHooks";

@@ -3,7 +3,6 @@ import { wrap as sentryWrap } from "@sentry/react-native";
 
 import { ScreenStart } from "./app/ScreenStart";
 import { SynchronizationProvider } from "./components/app/sync/SynchronizationProvider";
-import { NavigationProvider } from "./context/NavigationProvider";
 import { useAnalyticsManager } from "./hooks/analytics/useAnalyticsManager";
 import { useNotificationReceivedManager } from "./hooks/notifications/useNotificationReceivedManager";
 import { useNotificationRespondedManager } from "./hooks/notifications/useNotificationRespondedManager";
@@ -24,9 +23,7 @@ function App() {
     return (
         <BottomSheetModalProvider>
             <SynchronizationProvider>
-                <NavigationProvider>
-                    <ScreenStart />
-                </NavigationProvider>
+                <ScreenStart />
             </SynchronizationProvider>
         </BottomSheetModalProvider>
     );

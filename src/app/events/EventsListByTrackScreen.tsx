@@ -1,4 +1,5 @@
 import { CompositeScreenProps } from "@react-navigation/core";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
 import moment from "moment";
@@ -11,7 +12,6 @@ import { EventSectionProps } from "../../components/app/events/EventSection";
 import { EventsSectionedListGeneric } from "../../components/app/events/EventsSectionedListGeneric";
 import { IconNames } from "../../components/generic/atoms/Icon";
 import { Label } from "../../components/generic/atoms/Label";
-import { PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
 import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { useIsEventDone } from "../../hooks/events/useEventProperties";
 import { useAppSelector } from "../../store";
@@ -30,8 +30,8 @@ export type EventsListByTrackScreenParams = object;
 export type EventsListByTrackScreenProps =
     // Route carrying from events tabs screen at "Track", own navigation via own parameter list.
     CompositeScreenProps<
-        PagesScreenProps<EventsTabsScreenParamsList, string>,
-        PagesScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+        MaterialTopTabScreenProps<EventsTabsScreenParamsList, string>,
+        MaterialTopTabScreenProps<EventsTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
 export const EventsListByTrackScreen: FC<EventsListByTrackScreenProps> = ({ route }) => {

@@ -1,4 +1,5 @@
 import { CompositeScreenProps } from "@react-navigation/core";
+import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
 import { FC, useMemo } from "react";
@@ -9,7 +10,6 @@ import { DealerSectionProps } from "../../components/app/dealers/DealerSection";
 import { DealersSectionedListGeneric } from "../../components/app/dealers/DealersSectionedListGeneric";
 import { IconNames } from "../../components/generic/atoms/Icon";
 import { Label } from "../../components/generic/atoms/Label";
-import { PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
 import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
 import { conName } from "../../configuration";
 import { useAppSelector } from "../../store";
@@ -28,8 +28,8 @@ export type DealersListAllScreenParams = object;
 export type DealersListAllScreenProps =
     // Route carrying from dealers tabs screen at "All", own navigation via own parameter list.
     CompositeScreenProps<
-        PagesScreenProps<DealersTabsScreenParamsList, "All">,
-        PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+        MaterialTopTabScreenProps<DealersTabsScreenParamsList, "All">,
+        MaterialTopTabScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
 export const DealersListAllScreen: FC<DealersListAllScreenProps> = () => {

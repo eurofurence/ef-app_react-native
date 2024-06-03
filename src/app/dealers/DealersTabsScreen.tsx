@@ -1,15 +1,17 @@
 import { CompositeScreenProps } from "@react-navigation/core";
+import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import moment from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { DealersListAllScreen, DealersListAllScreenParams } from "./DealersListAllScreen";
 import { DealersListByDayScreen, DealersListByDayScreenParams } from "./DealersListByDayScreen";
-import { createPagesNavigator, PagesScreenProps } from "../../components/generic/nav/PagesNavigator";
 import { TabScreenProps } from "../../components/generic/nav/TabsNavigator";
+import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence.selectors";
@@ -27,9 +29,9 @@ export type DealersTabsScreenParamsList = {
 };
 
 /**
- * Create an instance of the pages-navigator with the provided routes.
+ * Create an instance of the top tabs with the provided routes.
  */
-const DealersTabsScreenNavigator = createPagesNavigator<DealersTabsScreenParamsList>();
+const Tab = createMaterialTopTabNavigator<DealersTabsScreenParamsList>();
 
 /**
  * Params handled by the screen in route. Delegated parameters for the days. TODO: Verify.
@@ -43,7 +45,7 @@ export type DealersTabsScreenProps =
     // Route carrying from area screen at "Dealers", own navigation via own parameter list.
     CompositeScreenProps<
         TabScreenProps<ScreenAreasParamsList, "Dealers">,
-        PagesScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
+        MaterialTopTabScreenProps<DealersTabsScreenParamsList> & TabScreenProps<ScreenAreasParamsList> & StackScreenProps<ScreenStartParamsList>
     >;
 
 export const DealersTabsScreen: FC<DealersTabsScreenProps> = () => {
@@ -76,17 +78,27 @@ export const DealersTabsScreen: FC<DealersTabsScreenProps> = () => {
         };
     }, [now]);
 
-    // Compute the safe area.
-    const top = useSafeAreaInsets()?.top;
-    const pagesStyle = useMemo(() => ({ paddingTop: top }), [top]);
+    // // Get common tab styles.
+    const tabStyles = useTabStyles();
+    const topInset = useSafeAreaInsets().top;
 
     // If the screens require too much performance we should set detach to true again.
     return (
-        <DealersTabsScreenNavigator.Navigator pagesStyle={pagesStyle} initialRouteName="All">
-            <DealersTabsScreenNavigator.Screen name="All" options={{ title: t("all") }} component={DealersListAllScreen} />
-            <DealersTabsScreenNavigator.Screen name="Mon" options={{ title: mon, highlight: isMon }} component={DealersListByDayScreen} />
-            <DealersTabsScreenNavigator.Screen name="Tue" options={{ title: tue, highlight: isTue }} component={DealersListByDayScreen} />
-            <DealersTabsScreenNavigator.Screen name="Wed" options={{ title: wed, highlight: isWed }} component={DealersListByDayScreen} />
-        </DealersTabsScreenNavigator.Navigator>
+        <View style={StyleSheet.absoluteFill}>
+            <Tab.Navigator
+                initialRouteName="All"
+                initialLayout={{
+                    width: Dimensions.get("window").width,
+                }}
+                screenOptions={{
+                    tabBarStyle: { marginTop: topInset },
+                }}
+            >
+                <Tab.Screen name="All" options={{ title: t("all"), tabBarLabelStyle: tabStyles.normal }} component={DealersListAllScreen} />
+                <Tab.Screen name="Mon" options={{ title: mon, tabBarLabelStyle: isMon ? tabStyles.highlight : tabStyles.normal }} component={DealersListByDayScreen} />
+                <Tab.Screen name="Tue" options={{ title: tue, tabBarLabelStyle: isTue ? tabStyles.highlight : tabStyles.normal }} component={DealersListByDayScreen} />
+                <Tab.Screen name="Wed" options={{ title: wed, tabBarLabelStyle: isWed ? tabStyles.highlight : tabStyles.normal }} component={DealersListByDayScreen} />
+            </Tab.Navigator>
+        </View>
     );
 };
