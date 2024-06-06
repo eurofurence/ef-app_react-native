@@ -1,12 +1,11 @@
-import { useCallback } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { EventCard } from "./EventCard";
+import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useAppNavigation } from "../../../hooks/nav/useAppNavigation";
 import { useNow } from "../../../hooks/time/useNow";
 import { useAppSelector } from "../../../store";
 import { selectCurrentEvents } from "../../../store/eurofurence.selectors";
-import { EventDetails } from "../../../store/eurofurence.types";
 import { Section } from "../../generic/atoms/Section";
 
 export const CurrentEventList = () => {
@@ -14,15 +13,8 @@ export const CurrentEventList = () => {
 
     const navigation = useAppNavigation("Areas");
     const [now] = useNow();
-    const events = useAppSelector((state) => selectCurrentEvents(state, now));
-
-    const onPress = useCallback(
-        (event: EventDetails) =>
-            navigation.navigate("Event", {
-                id: event.Id,
-            }),
-        [navigation],
-    );
+    const eventsAll = useAppSelector((state) => selectCurrentEvents(state, now));
+    const events = useMemo(() => eventsAll.map((details) => eventInstanceForAny(details, now)), [eventsAll, now]);
 
     if (events.length === 0) {
         return null;
@@ -32,7 +24,16 @@ export const CurrentEventList = () => {
         <>
             <Section title={t("current_title")} subtitle={t("current_subtitle")} icon={"clock"} />
             {events.map((event) => (
-                <EventCard key={event.Id} event={event} type="time" onPress={onPress} />
+                <EventCard
+                    key={event.details.Id}
+                    event={event}
+                    type="time"
+                    onPress={(event) =>
+                        navigation.navigate("Event", {
+                            id: event.Id,
+                        })
+                    }
+                />
             ))}
         </>
     );

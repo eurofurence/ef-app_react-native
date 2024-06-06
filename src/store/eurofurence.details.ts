@@ -1,9 +1,7 @@
+import { Dictionary } from "@reduxjs/toolkit";
 import moment, { MomentInput } from "moment";
 
-import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors, imagesSelectors } from "./eurofurence.selectors";
 import {
-    AnnouncementDetails,
-    AnnouncementRecord,
     AttendanceDay,
     DealerDetails,
     DealerRecord,
@@ -12,21 +10,13 @@ import {
     EventDetails,
     EventRecord,
     EventRoomDetails,
-    EventRoomRecord,
     EventTrackDetails,
-    EventTrackRecord,
     ImageDetails,
     ImageRecord,
-    KnowledgeEntryDetails,
-    KnowledgeEntryRecord,
-    KnowledgeGroupDetails,
-    KnowledgeGroupRecord,
     MapDetails,
     MapEntryDetails,
-    MapEntryRecord,
     MapRecord,
 } from "./eurofurence.types";
-import { RootState } from "./index";
 import { IconNames } from "../components/generic/atoms/Icon";
 import { apiBase } from "../configuration";
 
@@ -119,8 +109,7 @@ const internalAttendanceDayNames = (dealer: DealerRecord) => {
     return result;
 };
 
-const internalAttendanceDays = (state: RootState, dealer: DealerRecord) => {
-    const days = eventDaysSelectors.selectAll(state);
+const internalAttendanceDays = (days: EventDayDetails[], dealer: DealerRecord) => {
     const result: EventDayDetails[] = [];
     for (const day of days) {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
@@ -131,21 +120,25 @@ const internalAttendanceDays = (state: RootState, dealer: DealerRecord) => {
     return result;
 };
 
-export const applyAnnouncementDetails = (state: RootState, source: AnnouncementRecord): AnnouncementDetails => source;
-
-export const applyEventDetails = (state: RootState, source: EventRecord): EventDetails => ({
+export const applyEventDetails = (
+    source: EventRecord,
+    images: Dictionary<ImageDetails>,
+    rooms: Dictionary<EventRoomDetails>,
+    days: Dictionary<EventDayDetails>,
+    tracks: Dictionary<EventTrackDetails>,
+): EventDetails => ({
     ...source,
     PartOfDay: internalCategorizeTime(source.StartDateTimeUtc),
-    Poster: !source.PosterImageId ? undefined : imagesSelectors.selectById(state, source.PosterImageId),
-    Banner: !source.BannerImageId ? undefined : imagesSelectors.selectById(state, source.BannerImageId),
+    Poster: !source.PosterImageId ? undefined : images[source.PosterImageId],
+    Banner: !source.BannerImageId ? undefined : images[source.BannerImageId],
     Badges: internalTagsToBadges(source.Tags),
     Glyph: internalTagsToIcon(source.Tags),
     SuperSponsorOnly: internalSuperSponsorOnly(source.Tags),
     SponsorOnly: internalSponsorOnly(source.Tags),
     MaskRequired: internalMaskRequired(source.Tags),
-    ConferenceRoom: !source.ConferenceRoomId ? undefined : eventRoomsSelectors.selectById(state, source.ConferenceRoomId),
-    ConferenceDay: !source.ConferenceDayId ? undefined : eventDaysSelectors.selectById(state, source.ConferenceDayId),
-    ConferenceTrack: !source.ConferenceTrackId ? undefined : eventTracksSelectors.selectById(state, source.ConferenceTrackId),
+    ConferenceRoom: !source.ConferenceRoomId ? undefined : rooms[source.ConferenceRoomId],
+    ConferenceDay: !source.ConferenceDayId ? undefined : days[source.ConferenceDayId],
+    ConferenceTrack: !source.ConferenceTrackId ? undefined : tracks[source.ConferenceTrackId],
 });
 
 const internalDealerParseTable = (dealer: DealerRecord) => {
@@ -161,40 +154,30 @@ const internalDealerParseDescriptionContent = (dealer: DealerRecord) => {
     return dealer.ShortDescription.split(/\r?\n/).slice(1).join("\n").trimStart();
 };
 
-export const applyDealerDetails = (state: RootState, source: DealerRecord): DealerDetails => ({
+export const applyDealerDetails = (source: DealerRecord, images: Dictionary<ImageDetails>, days: EventDayDetails[]): DealerDetails => ({
     ...source,
     AttendanceDayNames: internalAttendanceDayNames(source),
-    AttendanceDays: internalAttendanceDays(state, source),
-    Artist: !source.ArtistImageId ? undefined : imagesSelectors.selectById(state, source.ArtistImageId),
-    ArtistThumbnail: !source.ArtistThumbnailImageId ? undefined : imagesSelectors.selectById(state, source.ArtistThumbnailImageId),
-    ArtPreview: !source.ArtPreviewImageId ? undefined : imagesSelectors.selectById(state, source.ArtPreviewImageId),
+    AttendanceDays: internalAttendanceDays(days, source),
+    Artist: !source.ArtistImageId ? undefined : images[source.ArtistImageId],
+    ArtistThumbnail: !source.ArtistThumbnailImageId ? undefined : images[source.ArtistThumbnailImageId],
+    ArtPreview: !source.ArtPreviewImageId ? undefined : images[source.ArtPreviewImageId],
     FullName: source.DisplayName || source.AttendeeNickname,
     ShortDescriptionTable: internalDealerParseTable(source),
     ShortDescriptionContent: internalDealerParseDescriptionContent(source),
 });
 
-export const applyEventDayDetails = (state: RootState, source: EventDayRecord): EventDayDetails => ({
+export const applyEventDayDetails = (source: EventDayRecord): EventDayDetails => ({
     ...source,
     dayOfWeek: moment(source.Date).day(),
 });
 
-export const applyEventTrackDetails = (state: RootState, source: EventTrackRecord): EventTrackDetails => source;
-
-export const applyEventRoomDetails = (state: RootState, source: EventRoomRecord): EventRoomDetails => source;
-
-export const applyMapDetails = (state: RootState, source: MapRecord): MapDetails => ({
+export const applyMapDetails = (source: MapRecord, images: Dictionary<ImageDetails>): MapDetails => ({
     ...source,
-    Image: imagesSelectors.selectById(state, source.ImageId),
-    Entries: source.Entries.map((entry) => applyMapEntryDetails(state, entry)),
+    Image: images[source.ImageId],
+    Entries: source.Entries as MapEntryDetails[],
 });
 
-export const applyMapEntryDetails = (state: RootState, source: MapEntryRecord): MapEntryDetails => source;
-
-export const applyKnowledgeGroupDetails = (state: RootState, source: KnowledgeGroupRecord): KnowledgeGroupDetails => source;
-
-export const applyKnowledgeEntryDetails = (state: RootState, source: KnowledgeEntryRecord): KnowledgeEntryDetails => source;
-
-export const applyImageDetails = (state: RootState, source: ImageRecord): ImageDetails => ({
+export const applyImageDetails = (source: ImageRecord): ImageDetails => ({
     ...source,
     FullUrl: internalCreateImageUrl(source),
 });

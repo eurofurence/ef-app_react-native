@@ -1,13 +1,16 @@
+import moment from "moment/moment";
 import { FC, useCallback } from "react";
 import { Linking, StyleSheet } from "react-native";
 import { match } from "ts-pattern";
 
 import { useAppNavigation } from "../../../hooks/nav/useAppNavigation";
+import { useNow } from "../../../hooks/time/useNow";
 import { useAppSelector } from "../../../store";
 import { dealersSelectors } from "../../../store/eurofurence.selectors";
 import { LinkFragment, MapDetails, MapEntryDetails } from "../../../store/eurofurence.types";
 import { Button } from "../../generic/containers/Button";
 import { DealerCard } from "../dealers/DealerCard";
+import { isPresent, joinOffDays } from "../dealers/utils";
 
 type LinkItemProps = {
     map?: MapDetails;
@@ -16,8 +19,16 @@ type LinkItemProps = {
 };
 
 const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
+    const [now] = useNow();
+    const day1 = moment().day(1).format("dddd");
+    const day2 = moment().day(2).format("dddd");
+    const day3 = moment().day(3).format("dddd");
+
     const navigation = useAppNavigation("Areas");
     const dealer = useAppSelector((state) => dealersSelectors.selectById(state, link.Target));
+
+    const present = dealer ? isPresent(dealer, now) : false;
+    const offDays = dealer ? joinOffDays(dealer, day1, day2, day3) : "";
 
     const onPress = useCallback(() => navigation.navigate("Dealer", { id: link.Target }), [navigation, link]);
 
@@ -25,7 +36,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
         return null;
     }
 
-    return <DealerCard dealer={dealer} onPress={onPress} />;
+    return <DealerCard dealer={{ details: dealer, present, offDays }} onPress={onPress} />;
 };
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {

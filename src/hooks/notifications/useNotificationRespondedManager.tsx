@@ -35,8 +35,10 @@ export const useNotificationRespondedManager = () => {
             // Log navigation.
             console.log(`Navigating to announcement ${relatedId}`);
 
-            // Go to home screen. TODO: Opening the item not implemented.
-            return navigation.navigate("Areas", { screen: "Home" });
+            // Go to announcement item.
+            return navigation.navigate("Announcement", {
+                id: relatedId,
+            });
         }
 
         // Event is for a personal message.
@@ -44,8 +46,17 @@ export const useNotificationRespondedManager = () => {
             // Log navigation.
             console.log(`Navigating to private message ${relatedId}`);
 
-            // Go to private messages. TODO: Opening the item not implemented.
-            return navigation.navigate("PrivateMessageList");
+            // Go to private messages.
+            return navigation.navigate("PrivateMessageItem", { id: relatedId });
+        }
+        if (event === "Event") {
+            // Log navigation.
+            console.log(`Navigating to event ${relatedId}`);
+
+            // Go to event.
+            return navigation.navigate("Event", {
+                id: relatedId,
+            });
         }
     }, [navigation, response]);
 

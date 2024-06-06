@@ -1,9 +1,9 @@
 import * as React from "react";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
 
 import { ThemeColor } from "../../../context/Theme";
-import { useTheme, useThemeBackground } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 import { IconNames } from "../atoms/Icon";
 import { ImageFill, ImageFillProps } from "../atoms/ImageFill";
 import { Marker } from "../atoms/Marker";

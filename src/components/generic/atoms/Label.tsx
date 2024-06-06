@@ -3,7 +3,7 @@ import { StyleSheet, Text, TextProps, ViewStyle } from "react-native";
 
 import { Icon, IconNames } from "./Icon";
 import { ThemeColor } from "../../../context/Theme";
-import { useThemeColor, useThemeName } from "../../../hooks/themes/useThemeHooks";
+import { useThemeColor } from "../../../hooks/themes/useThemeHooks";
 
 /**
  * Props to label.

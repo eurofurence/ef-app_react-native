@@ -1,5 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { EntityId, EntitySelectors } from "@reduxjs/toolkit/src/entities/models";
+import { EntitySelectors } from "@reduxjs/toolkit/src/entities/models";
 import { TFunction } from "i18next";
 import _, { chain, Dictionary as LodashDictionary, map, mapValues } from "lodash";
 import moment, { Moment } from "moment";
@@ -17,24 +17,16 @@ import {
     knowledgeGroupsAdapter,
     mapsAdapter,
 } from "./eurofurence.cache";
-import {
-    applyAnnouncementDetails,
-    applyDealerDetails,
-    applyEventDayDetails,
-    applyEventDetails,
-    applyEventRoomDetails,
-    applyEventTrackDetails,
-    applyImageDetails,
-    applyKnowledgeEntryDetails,
-    applyKnowledgeGroupDetails,
-    applyMapDetails,
-} from "./eurofurence.details";
+import { applyDealerDetails, applyEventDayDetails, applyEventDetails, applyImageDetails, applyMapDetails } from "./eurofurence.details";
 import {
     AnnouncementDetails,
     AttendanceDay,
+    DealerDetails,
+    EventDayDetails,
     EventDayRecord,
     EventDetails,
     ImageDetails,
+    ImageRecord,
     KnowledgeEntryRecord,
     KnowledgeGroupRecord,
     LinkFragment,
@@ -49,72 +41,90 @@ type RecordSelectors<T> = EntitySelectors<T, RootState> & {
     selectIds: (state: RootState) => RecordId[];
 };
 
-/**
- * Creates a new set of selectors from the passed entity selectors and the given apply function.
- * @param from The source selectors.
- * @param transform The transform function.
- */
-const transformEntitySelector = <T, TResult>(from: EntitySelectors<T, RootState>, transform: (state: RootState, source: T) => TResult): RecordSelectors<TResult> => {
-    // Returns a bound transformation function.
-    const selectBound = (state: RootState) => (item: T) => transform(state, item);
+function mapOne<T, U>(value: T | undefined, fn: (value: T) => U): U | undefined {
+    if (value === undefined) return undefined;
+    else return fn(value);
+}
 
-    // Redefined selectors.
-    const selectTotal = from.selectTotal;
-    const selectIds = createSelector([from.selectIds], (ids) => ids.filter((id: EntityId): id is RecordId => typeof id === "string"));
-    const selectEntities = createSelector([from.selectEntities, selectBound], (entities, bound) => mapValues(entities as LodashDictionary<T>, bound));
-    const selectAll = createSelector([from.selectAll, selectBound], (all, bound) => map(all, bound));
-    const selectById = createSelector([from.selectById, selectBound], (item, bound) => (item === undefined ? undefined : bound(item)));
+export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventRooms);
 
-    // Returns combined object of them all.
-    return {
-        selectTotal,
-        selectIds,
-        selectEntities,
-        selectAll,
-        selectById,
-    };
+export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks);
+
+export const knowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
+
+export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeEntries);
+
+const baseImageSelectors = imagesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.images);
+export const imagesSelectors: RecordSelectors<ImageDetails> = {
+    selectTotal: baseImageSelectors.selectTotal,
+    selectIds: baseImageSelectors.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector([baseImageSelectors.selectEntities], (entities) => mapValues(entities as LodashDictionary<ImageRecord>, applyImageDetails)),
+    selectAll: createSelector([baseImageSelectors.selectAll], (all) => map(all, applyImageDetails)),
+    selectById: createSelector([baseImageSelectors.selectById], (item) => mapOne(item, applyImageDetails)),
 };
 
-export const eventRoomsSelectors = transformEntitySelector(
-    eventRoomsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventRooms),
-    applyEventRoomDetails,
-);
-export const eventTracksSelectors = transformEntitySelector(
-    eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks),
-    applyEventTrackDetails,
-);
-export const knowledgeGroupsSelectors = transformEntitySelector(
-    knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups),
-    applyKnowledgeGroupDetails,
-);
-export const knowledgeEntriesSelectors = transformEntitySelector(
-    knowledgeEntriesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeEntries),
-    applyKnowledgeEntryDetails,
-);
-export const imagesSelectors = transformEntitySelector(
-    imagesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.images),
-    applyImageDetails,
-);
-export const eventDaysSelectors = transformEntitySelector(
-    eventDaysAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventDays),
-    applyEventDayDetails,
-);
-export const eventsSelector = transformEntitySelector(
-    eventsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.events),
-    applyEventDetails,
-);
-export const announcementsSelectors = transformEntitySelector(
-    announcementsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.announcements),
-    applyAnnouncementDetails,
-);
-export const mapsSelectors = transformEntitySelector(
-    mapsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.maps),
-    applyMapDetails,
-);
-export const dealersSelectors = transformEntitySelector(
-    dealersAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.dealers),
-    applyDealerDetails,
-);
+const baseEventDaysSelectors = eventDaysAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventDays);
+export const eventDaysSelectors: RecordSelectors<EventDayDetails> = {
+    selectTotal: baseEventDaysSelectors.selectTotal,
+    selectIds: baseEventDaysSelectors.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector([baseEventDaysSelectors.selectEntities], (entities) => mapValues(entities as LodashDictionary<EventDayRecord>, applyEventDayDetails)),
+    selectAll: createSelector([baseEventDaysSelectors.selectAll], (all) => map(all, applyEventDayDetails)),
+    selectById: createSelector([baseEventDaysSelectors.selectById], (item) => mapOne(item, applyEventDayDetails)),
+};
+
+const baseEventsSelector = eventsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.events);
+export const eventsSelector: RecordSelectors<EventDetails> = {
+    selectTotal: baseEventsSelector.selectTotal,
+    selectIds: baseEventsSelector.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector(
+        [
+            baseEventsSelector.selectEntities,
+            imagesSelectors.selectEntities,
+            eventRoomsSelectors.selectEntities,
+            eventDaysSelectors.selectEntities,
+            eventTracksSelectors.selectEntities,
+        ],
+        (entities, images, rooms, days, tracks) => mapValues(entities, (entity) => applyEventDetails(entity!, images, rooms, days, tracks)),
+    ),
+    selectAll: createSelector(
+        [baseEventsSelector.selectAll, imagesSelectors.selectEntities, eventRoomsSelectors.selectEntities, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities],
+        (all, images, rooms, days, tracks) => map(all, (entity) => applyEventDetails(entity!, images, rooms, days, tracks)),
+    ),
+    selectById: createSelector(
+        [baseEventsSelector.selectById, imagesSelectors.selectEntities, eventRoomsSelectors.selectEntities, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities],
+        (item, images, rooms, days, tracks) => mapOne(item, (entity) => applyEventDetails(entity, images, rooms, days, tracks)),
+    ),
+};
+
+export const announcementsSelectors = announcementsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.announcements);
+
+const baseMapsSelectors = mapsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.maps);
+export const mapsSelectors: RecordSelectors<MapDetails> = {
+    selectTotal: baseMapsSelectors.selectTotal,
+    selectIds: baseMapsSelectors.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector([baseMapsSelectors.selectEntities, imagesSelectors.selectEntities], (entities, images) =>
+        mapValues(entities, (entity) => applyMapDetails(entity!, images)),
+    ),
+    selectAll: createSelector([baseMapsSelectors.selectAll, imagesSelectors.selectEntities], (all, images) => map(all, (entity) => applyMapDetails(entity!, images))),
+    selectById: createSelector([baseMapsSelectors.selectById, imagesSelectors.selectEntities], (item, images) => mapOne(item, (entity) => applyMapDetails(entity, images))),
+};
+
+const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.dealers);
+export const dealersSelectors: RecordSelectors<DealerDetails> = {
+    selectTotal: baseDealersSelectors.selectTotal,
+    selectIds: baseDealersSelectors.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector([baseDealersSelectors.selectEntities, imagesSelectors.selectEntities, eventDaysSelectors.selectAll], (entities, images, days) =>
+        mapValues(entities, (entity) => applyDealerDetails(entity!, images, days)),
+    ),
+    selectAll: createSelector([baseDealersSelectors.selectAll, imagesSelectors.selectEntities, eventDaysSelectors.selectAll], (all, images, days) =>
+        map(all, (entity) => applyDealerDetails(entity!, images, days)),
+    ),
+    selectById: createSelector([baseDealersSelectors.selectById, imagesSelectors.selectEntities, eventDaysSelectors.selectAll], (item, images, days) =>
+        mapOne(item, (entity) => applyDealerDetails(entity, images, days)),
+    ),
+};
+
+// TODO: Verify selectors below.
 
 export const selectCountdownTitle = createSelector([eventDaysSelectors.selectAll, (days, now: Moment) => now, (days, now: Moment, t: TFunction) => t], (days, now, t): string => {
     const firstDay: EventDayRecord | undefined = _.chain(days)

@@ -40,7 +40,7 @@ export type SectionProps = {
     subtitleVariant?: LabelProps["variant"];
 };
 
-export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark", title, subtitle, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
+export const Section: FC<SectionProps> = ({ style, icon = "bookmark", title, subtitle, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
     const iconColor = useThemeColorValue(titleColor ?? "important");
     return (
         <Col style={[styles.container, style]}>
@@ -61,7 +61,7 @@ export const Section: FC<SectionProps> = React.memo(({ style, icon = "bookmark",
             )}
         </Col>
     );
-});
+};
 
 const styles = StyleSheet.create({
     container: {

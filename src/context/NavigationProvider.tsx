@@ -3,14 +3,14 @@ import { NavigationState } from "@react-navigation/routers";
 import { captureException, ReactNavigationInstrumentation } from "@sentry/react-native";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
-import { ScreenAreasParamsList } from "../app/ScreenAreas";
-import { ScreenStartParamsList } from "../app/ScreenStart";
-import { DealersTabsScreenParamsList } from "../app/dealers/DealersTabsScreen";
-import { EventsTabsScreenParamsList } from "../app/events/EventsTabsScreen";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/analytics/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/nav/useNavigationStatePersistence";
 import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
+import { AreasRouterParamsList } from "../routes/AreasRouter";
+import { IndexRouterParamsList } from "../routes/IndexRouter";
+import { DealersRouterParamsList } from "../routes/dealers/DealersRouter";
+import { EventsRouterParamsList } from "../routes/events/EventsRouter";
 import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
 import { RecordId } from "../store/eurofurence.types";
@@ -29,39 +29,41 @@ type LinkingConfig<ParamsList> = {
 /**
  * Configure deep linking
  */
-const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): LinkingOptions<ScreenStartParamsList> => {
+const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): LinkingOptions<IndexRouterParamsList> => {
     // Dynamically create dynamic parts.
-    const eventsLinking: LinkingConfig<EventsTabsScreenParamsList> = {
+    const eventsLinking: LinkingConfig<EventsRouterParamsList> = {
         initialRouteName: "Events",
         screens: {
-            Favorites: "Areas/Events/Favorites",
-            Results: "Areas/Events/Results",
-            Search: "Areas/Events/Search",
+            Search: "events/search",
+            Personal: "events/personal",
+            Results: "events/results",
 
-            ...Object.fromEntries(days.map((id) => [id, `Areas/Events/Days/${id}`])),
-            ...Object.fromEntries(tracks.map((id) => [id, `Areas/Events/Tracks/${id}`])),
-            ...Object.fromEntries(rooms.map((id) => [id, `Areas/Events/Rooms/${id}`])),
+            ...Object.fromEntries(days.map((id) => [id, `events/days/${id}`])),
+            ...Object.fromEntries(tracks.map((id) => [id, `events/tracks/${id}`])),
+            ...Object.fromEntries(rooms.map((id) => [id, `events/rooms/${id}`])),
         },
     };
 
-    const dealersLinking: LinkingConfig<DealersTabsScreenParamsList> = {
+    const dealersLinking: LinkingConfig<DealersRouterParamsList> = {
         initialRouteName: "All",
         screens: {
-            All: "Areas/Dealers",
-            Mon: "Areas/Dealers/Mon",
-            Tue: "Areas/Dealers/Tue",
-            Wed: "Areas/Dealers/Wed",
+            All: "dealers",
+            Mon: "dealers/days/mon",
+            Tue: "dealers/days/tue",
+            Wed: "dealers/days/wed",
         },
     };
 
-    const areasLinking: LinkingConfig<ScreenAreasParamsList> = {
+    const areasLinking: LinkingConfig<AreasRouterParamsList> = {
         initialRouteName: "Home",
         screens: {
-            Home: "Areas/Home",
+            Home: "/",
             Events: eventsLinking,
             Dealers: dealersLinking,
         },
     };
+
+    // TODO: Check if issue with linking, prefix.
 
     // TODO: Use configuration constants here.
     // Return the composed linking object.
@@ -71,13 +73,16 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
             initialRouteName: "Areas",
             screens: {
                 Areas: areasLinking,
-                Event: "Events/:id",
-                Dealer: "Dealers/:id",
-                KnowledgeGroups: "Knowledge",
-                KnowledgeEntry: "Knowledge/:id",
-                Settings: "Settings",
-                Map: "Map/:id",
-                About: "About",
+                Announcement: "announcement/:id",
+                Event: "events/:id",
+                Dealer: "dealers/:id",
+                Settings: "settings",
+                PrivateMessageList: "pm",
+                KnowledgeGroups: "kb",
+                KnowledgeEntry: "kb/:id",
+                Map: "map/:id",
+                About: "about",
+                EventFeedback: "event/:id/feedback",
             },
         },
     };
@@ -128,8 +133,8 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
     );
 
     const days = useAppSelector(eventDaysSelectors.selectIds);
-    const tracks = useAppSelector(eventTracksSelectors.selectIds);
-    const rooms = useAppSelector(eventRoomsSelectors.selectIds);
+    const tracks = useAppSelector(eventTracksSelectors.selectIds) as string[]; // TODO FIX
+    const rooms = useAppSelector(eventRoomsSelectors.selectIds) as string[]; // TODO FIX
 
     const linking = useMemo(() => linkingFrom(days, tracks, rooms), [days, tracks, rooms]);
 

@@ -3,6 +3,7 @@ import moment from "moment";
 import { useCallback, useMemo } from "react";
 import { Platform } from "react-native";
 
+import { conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { addNotification, Notification, removeNotification } from "../../store/background.slice";
 import { EventRecord } from "../../store/eurofurence.types";
@@ -27,6 +28,11 @@ export const useEventReminder = (event: EventRecord) => {
                 content: {
                     title: event.Title,
                     subtitle: "This event is starting soon!",
+                    data: {
+                        CID: conId,
+                        Event: "Event",
+                        RelatedId: event.Id,
+                    },
                 },
                 trigger: {
                     date: scheduleDate.toDate(),

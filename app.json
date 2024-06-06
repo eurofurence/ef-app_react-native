@@ -71,13 +71,6 @@
     },
     "plugins": [
       [
-        "@sentry/react-native/expo",
-        {
-          "project": "ef-app_react-native",
-          "organization": "eurofurence"
-        }
-      ],
-      [
         "expo-notifications",
         {
           "icon": "./assets/images/notification.png",

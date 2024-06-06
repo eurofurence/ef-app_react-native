@@ -1,51 +1,135 @@
-import moment from "moment";
-import React, { FC, useCallback, useMemo } from "react";
+import { Image } from "expo-image";
+import { Moment } from "moment/moment";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { DealerCardContent } from "./DealerCardContent";
-import { useNow } from "../../../hooks/time/useNow";
+import { isPresent, joinOffDays } from "./utils";
+import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 import { DealerDetails } from "../../../store/eurofurence.types";
+import { Label } from "../../generic/atoms/Label";
+import { appStyles } from "../AppStyles";
+
+const placeholder = require("../../../../assets/images/dealer_black.png");
+
+export type DealerDetailsInstance = {
+    details: DealerDetails;
+    present: boolean;
+    offDays: string;
+};
+
+/**
+ * Creates the dealer from the time and precomputed values.
+ * @param details The details to use.
+ * @param now The moment to check against.
+ * @param day1 The first day label.
+ * @param day2 The second day label.
+ * @param day3 The third day label.
+ */
+export function dealerInstanceForAny(details: DealerDetails, now: Moment, day1: string, day2: string, day3: string) {
+    return {
+        details,
+        present: isPresent(details, now),
+        offDays: joinOffDays(details, day1, day2, day3),
+    };
+}
 
 export type DealerCardProps = {
-    dealer: DealerDetails;
+    dealer: DealerDetailsInstance;
     onPress?: (dealer: DealerDetails) => void;
     onLongPress?: (dealer: DealerDetails) => void;
 };
 
 export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }) => {
-    const { t } = useTranslation("Dealer");
-    const [now] = useNow();
+    // Details and properties dereference.
+    const name = dealer.details.FullName;
+    const present = dealer.present;
+    const description = dealer.details.Categories?.join(", ");
+    const offDays = dealer.offDays;
+    const avatar = dealer.details.ArtistThumbnail
+        ? dealer.details.ArtistThumbnail.FullUrl
+        : dealer.details.Artist
+          ? dealer.details.Artist.FullUrl
+          : require("../../../../assets/images/dealer_black.png");
 
-    const avatar = useMemo(() => {
-        if (dealer.ArtistThumbnail) return { uri: dealer.ArtistThumbnail.FullUrl };
-        else if (dealer.Artist) return { uri: dealer.Artist.FullUrl };
-        else return require("../../../../assets/images/dealer_black.png");
-    }, [dealer]);
-    const present = useMemo(() => Boolean(dealer.AttendanceDays.find((day) => now.isSame(day.Date, "day"))), [dealer, now]);
+    // Translation object.
+    const { t } = useTranslation("Dealers");
 
-    const offDays = useMemo(() => {
-        return [
-            !dealer.AttendsOnThursday && moment().day(1).format("dddd"),
-            !dealer.AttendsOnFriday && moment().day(2).format("dddd"),
-            !dealer.AttendsOnSaturday && moment().day(3).format("dddd"),
-        ]
-            .filter(Boolean)
-            .join(", ");
-    }, [dealer, t]);
-
-    // Wrap delegates.
-    const onPressDelegate = useCallback(() => onPress?.(dealer), [onPress, dealer]);
-    const onLongPressDelegate = useCallback(() => onLongPress?.(dealer), [onLongPress, dealer]);
+    // Dependent and independent styles.
+    const stylePre = useThemeBackground(present ? "primary" : "darken");
+    const backgroundStyle = useThemeBackground("background");
 
     return (
-        <DealerCardContent
-            avatar={avatar}
-            name={dealer.FullName}
-            present={present}
-            categories={dealer.Categories}
-            offDays={offDays}
-            onPress={onPressDelegate}
-            onLongPress={onLongPressDelegate}
-        />
+        <TouchableOpacity style={[styles.container, appStyles.shadow, backgroundStyle]} onPress={() => onPress?.(dealer.details)} onLongPress={() => onLongPress?.(dealer.details)}>
+            <View style={[styles.pre, stylePre]}>
+                <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={placeholder} transition={60} priority="low" />
+            </View>
+
+            <View style={styles.main}>
+                <Label type="h3">{name}</Label>
+
+                {!description ? null : (
+                    <Label type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+                        {description}
+                    </Label>
+                )}
+
+                {!offDays ? null : (
+                    <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+                        {t("not_attending_on", { offDays })}
+                    </Label>
+                )}
+            </View>
+        </TouchableOpacity>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        minHeight: 80,
+        marginVertical: 15,
+        borderRadius: 16,
+        overflow: "hidden",
+        flexDirection: "row",
+    },
+    background: {
+        position: "absolute",
+        width: undefined,
+        height: undefined,
+    },
+    pre: {
+        overflow: "hidden",
+        width: 80,
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    avatarCircle: {
+        position: "absolute",
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+    },
+    image: {
+        position: "absolute",
+        width: undefined,
+        height: undefined,
+        left: -10,
+        top: -10,
+        right: -10,
+        bottom: -10,
+    },
+    imageOverlay: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+    },
+    main: {
+        flex: 1,
+        padding: 12,
+    },
+    tag: {
+        textAlign: "right",
+    },
+});
