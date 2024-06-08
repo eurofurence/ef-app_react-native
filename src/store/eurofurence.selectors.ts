@@ -1,6 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { EntitySelectors } from "@reduxjs/toolkit/src/entities/models";
-import { TFunction } from "i18next";
 import _, { chain, Dictionary as LodashDictionary, map, mapValues } from "lodash";
 import moment, { Moment } from "moment";
 import { SectionListData } from "react-native";
@@ -17,17 +16,22 @@ import {
     knowledgeGroupsAdapter,
     mapsAdapter,
 } from "./eurofurence.cache";
-import { applyDealerDetails, applyEventDayDetails, applyEventDetails, applyImageDetails, applyMapDetails } from "./eurofurence.details";
+import { applyAnnouncementDetails, applyDealerDetails, applyEventDayDetails, applyEventDetails, applyImageDetails, applyMapDetails } from "./eurofurence.details";
 import {
     AnnouncementDetails,
+    AnnouncementRecord,
     AttendanceDay,
     DealerDetails,
     EventDayDetails,
     EventDayRecord,
     EventDetails,
+    EventRoomDetails,
+    EventTrackDetails,
     ImageDetails,
     ImageRecord,
+    KnowledgeEntryDetails,
     KnowledgeEntryRecord,
+    KnowledgeGroupDetails,
     KnowledgeGroupRecord,
     LinkFragment,
     MapDetails,
@@ -35,7 +39,6 @@ import {
     RecordId,
 } from "./eurofurence.types";
 import { RootState } from "./index";
-import { conName } from "../configuration";
 
 type RecordSelectors<T> = EntitySelectors<T, RootState> & {
     selectIds: (state: RootState) => RecordId[];
@@ -46,13 +49,15 @@ function mapOne<T, U>(value: T | undefined, fn: (value: T) => U): U | undefined 
     else return fn(value);
 }
 
-export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventRooms);
+export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventRooms) as RecordSelectors<EventRoomDetails>;
 
-export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks);
+export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks) as RecordSelectors<EventTrackDetails>;
 
-export const knowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
+export const knowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups) as RecordSelectors<KnowledgeGroupDetails>;
 
-export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeEntries);
+export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<RootState>(
+    (state) => state.eurofurenceCache.knowledgeEntries,
+) as RecordSelectors<KnowledgeEntryDetails>;
 
 const baseImageSelectors = imagesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.images);
 export const imagesSelectors: RecordSelectors<ImageDetails> = {
@@ -96,7 +101,20 @@ export const eventsSelector: RecordSelectors<EventDetails> = {
     ),
 };
 
-export const announcementsSelectors = announcementsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.announcements);
+const baseAnnouncementSelectors = announcementsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.announcements);
+export const announcementsSelectors: RecordSelectors<AnnouncementDetails> = {
+    selectTotal: baseAnnouncementSelectors.selectTotal,
+    selectIds: baseAnnouncementSelectors.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector([baseAnnouncementSelectors.selectEntities, imagesSelectors.selectEntities], (entities, images) =>
+        mapValues(entities as LodashDictionary<AnnouncementRecord>, (entity) => applyAnnouncementDetails(entity, images)),
+    ),
+    selectAll: createSelector([baseAnnouncementSelectors.selectAll, imagesSelectors.selectEntities], (all, images) =>
+        map(all, (entity) => applyAnnouncementDetails(entity, images)),
+    ),
+    selectById: createSelector([baseAnnouncementSelectors.selectById, imagesSelectors.selectEntities], (item, images) =>
+        mapOne(item, (entity) => applyAnnouncementDetails(entity, images)),
+    ),
+};
 
 const baseMapsSelectors = mapsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.maps);
 export const mapsSelectors: RecordSelectors<MapDetails> = {
@@ -124,78 +142,26 @@ export const dealersSelectors: RecordSelectors<DealerDetails> = {
     ),
 };
 
-// TODO: Verify selectors below.
-
-export const selectCountdownTitle = createSelector([eventDaysSelectors.selectAll, (days, now: Moment) => now, (days, now: Moment, t: TFunction) => t], (days, now, t): string => {
-    const firstDay: EventDayRecord | undefined = _.chain(days)
-        .orderBy((it) => it.Date, "asc")
-        .first()
-        .value();
-    const lastDay: EventDayRecord | undefined = _.chain(days)
-        .orderBy((it) => it.Date, "desc")
-        .last()
-        .value();
-    const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(it.Date, "day"));
-
-    if (currentDay) {
-        return currentDay.Name;
-    } else if (firstDay && now.isBefore(firstDay.Date, "day")) {
-        const diff = moment.duration(now.diff(firstDay.Date)).humanize();
-        return t("before_event", { conName, diff });
-    } else if (lastDay && now.isAfter(lastDay.Date, "day")) {
-        return t("after_event");
-    } else {
-        return "";
-    }
-});
-
-export const selectFavoriteEvents = createSelector([eventsSelector.selectAll, (state: RootState) => state.background.notifications], (events, notifications): EventDetails[] =>
+export const selectFavoriteEvents = createSelector([eventsSelector.selectEntities, (state: RootState) => state.background.notifications], (events, notifications): EventDetails[] =>
     _.chain(notifications)
         .filter((it) => it.type === "EventReminder")
-        .map((it): EventDetails | undefined => events.find((event) => event.Id === it.recordId))
+        .map((it): EventDetails | undefined => events[it.recordId])
         .filter((it): it is EventDetails => it !== undefined)
         .orderBy((it) => it.StartDateTimeUtc, "asc")
         .value(),
 );
 
-export const selectUpcomingFavoriteEvents = createSelector([selectFavoriteEvents, (state, now: Moment) => now], (events, now) =>
-    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc)),
+export const selectEventsByRoom = createSelector([eventsSelector.selectAll, (_state, roomId: RecordId) => roomId], (events, roomId) =>
+    events.filter((it) => it?.ConferenceRoomId === roomId),
+);
+export const selectEventsByTrack = createSelector([eventsSelector.selectAll, (_state, trackId: RecordId) => trackId], (events, trackId) =>
+    events.filter((it) => it?.ConferenceTrackId === trackId),
+);
+export const selectEventsByDay = createSelector([eventsSelector.selectAll, (_state, dayId: RecordId) => dayId], (events, dayId) =>
+    events.filter((it) => it?.ConferenceDayId === dayId),
 );
 
-export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
-    events.filter((it) => {
-        return now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc);
-    });
-export const selectCurrentEvents = createSelector([eventsSelector.selectAll, (events, now: Moment) => now], (events, now) => filterCurrentEvents(events, now));
-
-export const selectEventsByRoom = createSelector(
-    [eventsSelector.selectAll, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities, (state, itemId: RecordId) => itemId],
-    (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceRoomId === itemId),
-);
-export const selectEventsByTrack = createSelector(
-    [eventsSelector.selectAll, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities, (state, itemId: RecordId) => itemId],
-    (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceTrackId === itemId),
-);
-export const selectEventsByDay = createSelector(
-    [eventsSelector.selectAll, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities, eventRoomsSelectors.selectEntities, (state, itemId: RecordId) => itemId],
-    (events, days, tracks, rooms, itemId) => events.filter((it) => it?.ConferenceDayId === itemId),
-);
-
-export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Moment) =>
-    events.filter((it) => {
-        const startMoment = moment(it.StartDateTimeUtc, true).subtract(30, "minutes");
-        const endMoment = moment(it.StartDateTimeUtc, true);
-        return now.isBetween(startMoment, endMoment);
-    });
-export const selectUpcomingEvents = createSelector([eventsSelector.selectAll, (state, now: Moment) => now], (events, now) => filterUpcomingEvents(events, now));
-
-export const filterActiveAnnouncements = <T extends Pick<AnnouncementDetails, "ValidUntilDateTimeUtc" | "ValidFromDateTimeUtc">>(announcements: T[], now: Moment) =>
-    announcements.filter((it) => now.isBetween(it.ValidFromDateTimeUtc, it.ValidUntilDateTimeUtc, "minute"));
-export const selectActiveAnnouncements = createSelector([announcementsSelectors.selectAll, (state, now: Moment) => now], (announcements, now) =>
-    filterActiveAnnouncements(announcements, now),
-);
-
-export const selectDealersByDayName = createSelector([dealersSelectors.selectAll, eventDaysSelectors.selectEntities, (state, day: AttendanceDay) => day], (dealers, days, day) =>
+export const selectDealersByDayName = createSelector([dealersSelectors.selectAll, (_state, day: AttendanceDay) => day], (dealers, day) =>
     dealers.filter((it) => {
         if (day === "mon") return it.AttendsOnThursday;
         if (day === "tue") return it.AttendsOnFriday;
@@ -203,12 +169,11 @@ export const selectDealersByDayName = createSelector([dealersSelectors.selectAll
         return false;
     }),
 );
-
-export const filterBrowseableMaps = <T extends Pick<MapDetails, "IsBrowseable">>(maps: T[]) => maps.filter((it) => it.IsBrowseable);
-export const selectBrowseableMaps = createSelector(mapsSelectors.selectAll, (state) => filterBrowseableMaps(state));
+export const filterBrowsableMaps = <T extends Pick<MapDetails, "IsBrowseable">>(maps: T[]) => maps.filter((it) => it.IsBrowseable);
+export const selectBrowsableMaps = createSelector(mapsSelectors.selectAll, (state) => filterBrowsableMaps(state));
 
 export const selectValidLinksByTarget = createSelector(
-    [mapsSelectors.selectAll, (state, target: RecordId) => target],
+    [mapsSelectors.selectAll, (_state, target: RecordId) => target],
     (maps, target): { map: MapDetails; entry: MapEntryRecord; link: LinkFragment }[] =>
         chain(maps)
             .flatMap((map) => map.Entries.map((entry) => ({ map, entry })))
@@ -248,6 +213,31 @@ export const selectIsSynchronized = createSelector(
     (state) => state === "refreshing",
 );
 
-export const selectImagesById = createSelector([imagesSelectors.selectEntities, (state, imageIds: RecordId[]) => imageIds], (images, imageIds): ImageDetails[] =>
+export const selectImagesById = createSelector([imagesSelectors.selectEntities, (_state, imageIds: RecordId[]) => imageIds], (images, imageIds): ImageDetails[] =>
     imageIds.map((it) => images[it]).filter((it): it is ImageDetails => it !== undefined),
+);
+
+// TODO: Verify selectors below.
+
+// TODO: Not a fan of moment in selectors.
+export const selectUpcomingFavoriteEvents = createSelector([selectFavoriteEvents, (_state, now: Moment) => now], (events, now) =>
+    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc)),
+);
+
+export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
+    events.filter((it) => now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc));
+export const selectCurrentEvents = createSelector([eventsSelector.selectAll, (_state, now: Moment) => now], (events, now) => filterCurrentEvents(events, now));
+
+export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Moment) =>
+    events.filter((it) => {
+        const startMoment = moment(it.StartDateTimeUtc, true).subtract(30, "minutes");
+        const endMoment = moment(it.StartDateTimeUtc, true);
+        return now.isBetween(startMoment, endMoment);
+    });
+export const selectUpcomingEvents = createSelector([eventsSelector.selectAll, (_state, now: Moment) => now], (events, now) => filterUpcomingEvents(events, now));
+
+export const filterActiveAnnouncements = <T extends Pick<AnnouncementDetails, "ValidUntilDateTimeUtc" | "ValidFromDateTimeUtc">>(announcements: T[], now: Moment) =>
+    announcements.filter((it) => now.isBetween(it.ValidFromDateTimeUtc, it.ValidUntilDateTimeUtc, "minute"));
+export const selectActiveAnnouncements = createSelector([announcementsSelectors.selectAll, (_state, now: Moment) => now], (announcements, now) =>
+    filterActiveAnnouncements(announcements, now),
 );

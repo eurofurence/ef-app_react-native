@@ -3,7 +3,7 @@ import moment from "moment";
 import { useEffect } from "react";
 
 import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "./types/NotificationTrigger";
-import { useSynchronizer } from "../../components/app/sync/SynchronizationProvider";
+import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
 import { conId } from "../../configuration";
 import { NotificationChannels } from "../../init/NotificationChannel";
 import { captureNotificationException } from "../../sentryHelpers";

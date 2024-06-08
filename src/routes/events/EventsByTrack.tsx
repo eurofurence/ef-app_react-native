@@ -1,17 +1,16 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { CompositeScreenProps } from "@react-navigation/core";
+import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain, partition, sortBy } from "lodash";
-import moment from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventsRouterContext } from "./EventsRouterContext";
-import { eventInstanceForPassed, eventInstanceForNotPassed } from "../../components/app/events/EventCard";
-import { eventSectionForDate, eventSectionForPassed } from "../../components/app/events/EventSection";
-import { EventsSectionedList } from "../../components/app/events/EventsSectionedList";
+import { eventInstanceForPassed, eventInstanceForNotPassed } from "../../components/events/EventCard";
+import { eventSectionForDate, eventSectionForPassed } from "../../components/events/EventSection";
+import { EventsSectionedList } from "../../components/events/EventsSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
@@ -36,7 +35,8 @@ export type EventsByTrackProps =
 
 export const EventsByTrack: FC<EventsByTrackProps> = ({ navigation, route }) => {
     const { t } = useTranslation("Events");
-    const [now] = useNow();
+    const isFocused = useIsFocused();
+    const now = useNow(isFocused ? 5 : "static");
 
     const { setSelected } = useEventsRouterContext();
 

@@ -8,9 +8,9 @@ import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DealersRouterParamsList } from "./DealersRouter";
-import { dealerInstanceForAny } from "../../components/app/dealers/DealerCard";
-import { dealerSectionForLetter } from "../../components/app/dealers/DealerSection";
-import { DealersSectionedList } from "../../components/app/dealers/DealersSectionedList";
+import { dealerInstanceForAny } from "../../components/dealers/DealerCard";
+import { dealerSectionForLetter } from "../../components/dealers/DealerSection";
+import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { conName } from "../../configuration";
 import { useNow } from "../../hooks/time/useNow";
@@ -36,7 +36,7 @@ export type DealersAllProps =
 
 export const DealersAll: FC<DealersAllProps> = ({ navigation }) => {
     const { t } = useTranslation("Dealers");
-    const [now] = useNow();
+    const now = useNow();
 
     // Get the day. Use it to resolve events to display.
     const dealersAll = useAppSelector(dealersSelectors.selectAll);

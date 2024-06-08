@@ -15,8 +15,8 @@ import { EventsByTrack, EventsByTrackParams } from "./EventsByTrack";
 import { EventsResults, EventsResultsParams } from "./EventsResults";
 import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSearch, EventsSearchParams } from "./EventsSearch";
-import { EventActionsSheet } from "../../components/app/events/EventActionsSheet";
-import { PersonalSchedule, PersonalScheduleParams } from "../../components/app/events/PersonalSchedule";
+import { EventActionsSheet } from "../../components/events/EventActionsSheet";
+import { PersonalSchedule, PersonalScheduleParams } from "../../components/events/PersonalSchedule";
 import { Icon } from "../../components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { useNow } from "../../hooks/time/useNow";
@@ -74,7 +74,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
     const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), [t]);
 
     // Use now with optional time travel.
-    const [now] = useNow();
+    const now = useNow();
 
     // Use event days.
     const days = useAppSelector(eventDaysSelectors.selectAll);
@@ -128,6 +128,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
     return (
         <View style={StyleSheet.absoluteFill}>
             <Tab.Navigator
+                backBehavior="initialRoute"
                 initialRouteName={initial}
                 initialLayout={{
                     width: Dimensions.get("window").width,
@@ -171,7 +172,12 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
                     <Tab.Screen
                         key="results"
                         name="Results"
-                        options={{ tabBarIcon: ({ color }) => <Icon size={20} color={color} name="view-list" />, tabBarLabelStyle: tabStyles.normal }}
+                        options={{
+                            tabBarShowLabel: false,
+                            tabBarShowIcon: true,
+                            tabBarIcon: ({ color }) => <Icon size={20} color={color} name="view-list" />,
+                            tabBarLabelStyle: tabStyles.normal,
+                        }}
                         component={EventsResults}
                     />
                 )}

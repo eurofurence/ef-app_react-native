@@ -7,14 +7,15 @@ import { Provider as StoreProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { App } from "./App";
-import { AppErrorBoundary } from "./components/app/util/AppErrorBoundary";
-import { LoadingContextProvider } from "./context/LoadingContext";
+import { AppErrorBoundary } from "./components/util/AppErrorBoundary";
+import { AuthContextProvider } from "./context/AuthContext";
 import { NavigationProvider } from "./context/NavigationProvider";
 import { persistor, store } from "./store";
 
 import "react-native-reanimated";
 
 // Import background notification connector and handler setup.
+import "./init/auth";
 import "./init/BackgroundSyncGenerator";
 import "./init/NotificationChannel";
 import "./init/NotificationHandler";
@@ -24,17 +25,17 @@ function Index() {
     return (
         <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
             <SafeAreaProvider>
-                <StoreProvider store={store}>
-                    <AppErrorBoundary>
+                <AppErrorBoundary>
+                    <StoreProvider store={store}>
                         <PersistGate persistor={persistor}>
-                            <LoadingContextProvider>
+                            <AuthContextProvider>
                                 <NavigationProvider>
                                     <App />
                                 </NavigationProvider>
-                            </LoadingContextProvider>
+                            </AuthContextProvider>
                         </PersistGate>
-                    </AppErrorBoundary>
-                </StoreProvider>
+                    </StoreProvider>
+                </AppErrorBoundary>
             </SafeAreaProvider>
         </GestureHandlerRootView>
     );

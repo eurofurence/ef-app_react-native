@@ -1,5 +1,5 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { CompositeScreenProps } from "@react-navigation/core";
+import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { chain } from "lodash";
@@ -8,8 +8,8 @@ import { StyleSheet, View } from "react-native";
 
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventsRouterContext } from "./EventsRouterContext";
-import { eventInstanceForAny } from "../../components/app/events/EventCard";
-import { EventsList } from "../../components/app/events/EventsList";
+import { eventInstanceForAny } from "../../components/events/EventCard";
+import { EventsList } from "../../components/events/EventsList";
 import { Section } from "../../components/generic/atoms/Section";
 import { Button } from "../../components/generic/containers/Button";
 import { useNow } from "../../hooks/time/useNow";
@@ -39,7 +39,8 @@ export const EventsResults: FC<EventsResultsProps> = ({ navigation }) => {
         navigation.jumpTo("Search");
     }, [setSearch, navigation]);
 
-    const [now] = useNow();
+    const isFocused = useIsFocused();
+    const now = useNow(isFocused ? 5 : "static");
     const events = useMemo(
         () =>
             chain(results)

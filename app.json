@@ -55,6 +55,21 @@
             "BROWSABLE",
             "DEFAULT"
           ]
+        },
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "app.eurofurence.org",
+              "path": "/auth/login"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
         }
       ],
       "permissions": [
@@ -85,7 +100,8 @@
       ],
       "expo-localization",
       "expo-build-properties",
-      "@react-native-firebase/app"
+      "@react-native-firebase/app",
+      "expo-secure-store"
     ],
     "extra": {
       "eas": {

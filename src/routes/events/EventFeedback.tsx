@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { FeedbackForm } from "../../components/app/forms/feedback/FeedbackForm";
+import { FeedbackForm } from "../../components/feedback/FeedbackForm";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";

@@ -1,3 +1,4 @@
+import appData from "../app.json";
 import packageData from "../package.json";
 
 /**
@@ -44,3 +45,8 @@ export const showServices = packageData.convention.showServices;
  * True if catch-em-all game is available for this convention.
  */
 export const showCatchEm = packageData.convention.showCatchEm;
+
+export const authIssuer = packageData.auth.issuer;
+export const authScheme = appData.expo.scheme;
+export const authClientId = packageData.auth.clientId;
+export const authScopes = packageData.auth.scopes;

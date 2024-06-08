@@ -3,6 +3,7 @@ import { NavigationState } from "@react-navigation/routers";
 import { captureException, ReactNavigationInstrumentation } from "@sentry/react-native";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
+import { GettingThingsReady } from "../components/util/GettingThingsReady";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/analytics/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/nav/useNavigationStatePersistence";
@@ -82,7 +83,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
                 KnowledgeEntry: "kb/:id",
                 Map: "map/:id",
                 About: "about",
-                EventFeedback: "event/:id/feedback",
+                EventFeedback: "events/:id/feedback",
             },
         },
     };
@@ -91,7 +92,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
 export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
     const navigation = useRef<NavigationContainerRef<any> | null>(null);
     // Get navigation state from persistence.
-    const [isReady, initialState, onStateChange] = useNavigationStatePersistence();
+    const [navStateReady, navStateInitial, onNavStateChange] = useNavigationStatePersistence();
     const logEvent = useAnalytics();
 
     const theme = useTheme();
@@ -131,27 +132,29 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
         },
         [logEvent],
     );
-
+    const cacheReady = useAppSelector((state) => state.eurofurenceCache.state !== "uninitialized");
     const days = useAppSelector(eventDaysSelectors.selectIds);
-    const tracks = useAppSelector(eventTracksSelectors.selectIds) as string[]; // TODO FIX
-    const rooms = useAppSelector(eventRoomsSelectors.selectIds) as string[]; // TODO FIX
+    const tracks = useAppSelector(eventTracksSelectors.selectIds);
+    const rooms = useAppSelector(eventRoomsSelectors.selectIds);
 
     const linking = useMemo(() => linkingFrom(days, tracks, rooms), [days, tracks, rooms]);
 
-    if (!isReady) {
-        return null;
+    if (!navStateReady || !cacheReady) {
+        return <GettingThingsReady />;
     }
+
     return (
         <NavigationContainer
             theme={navTheme}
             ref={navigation}
             linking={linking}
-            initialState={initialState}
+            initialState={navStateInitial}
+            fallback={<GettingThingsReady />}
             onReady={() => {
                 sentryRoutingInstrumentation?.registerNavigationContainer(navigation.current);
             }}
             onStateChange={(state) => {
-                onStateChange(state);
+                onNavStateChange(state);
                 logAnalytics(state);
             }}
         >

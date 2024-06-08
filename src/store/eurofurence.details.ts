@@ -2,6 +2,8 @@ import { Dictionary } from "@reduxjs/toolkit";
 import moment, { MomentInput } from "moment";
 
 import {
+    AnnouncementDetails,
+    AnnouncementRecord,
     AttendanceDay,
     DealerDetails,
     DealerRecord,
@@ -169,6 +171,10 @@ export const applyDealerDetails = (source: DealerRecord, images: Dictionary<Imag
 export const applyEventDayDetails = (source: EventDayRecord): EventDayDetails => ({
     ...source,
     dayOfWeek: moment(source.Date).day(),
+});
+export const applyAnnouncementDetails = (source: AnnouncementRecord, images: Dictionary<ImageDetails>): AnnouncementDetails => ({
+    ...source,
+    Image: !source.ImageId ? undefined : images[source.ImageId],
 });
 
 export const applyMapDetails = (source: MapRecord, images: Dictionary<ImageDetails>): MapDetails => ({

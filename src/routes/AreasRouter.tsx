@@ -12,8 +12,8 @@ import { IndexRouterParamsList } from "./IndexRouter";
 import { DealersRouter, DealersRouterParams } from "./dealers/DealersRouter";
 import { EventsRouter, EventsRouterParams } from "./events/EventsRouter";
 import { Home, HomeParams } from "./home/Home";
-import { MainMenu } from "../components/app/mainmenu/MainMenu";
 import { Tabs, TabsRef } from "../components/generic/containers/Tabs";
+import { MainMenu } from "../components/mainmenu/MainMenu";
 
 /**
  * Available routes.

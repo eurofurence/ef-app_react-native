@@ -1,8 +1,8 @@
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
-import { EventContent } from "../../components/app/events/EventContent";
+import { appStyles } from "../../components/AppStyles";
+import { EventContent } from "../../components/events/EventContent";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";

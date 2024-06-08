@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FC, ReactElement, ReactNode } from "react";
-import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
@@ -14,9 +15,7 @@ const border = 2;
  * Arguments to the button.
  */
 export type ButtonProps = {
-    /**
-     * The style button.
-     */
+    containerStyle?: StyleProp<ViewStyle>;
     style?: StyleProp<ViewStyle>;
 
     /**
@@ -55,7 +54,7 @@ export type ButtonProps = {
     disabled?: boolean;
 };
 
-export const Button: FC<ButtonProps> = ({ style, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
+export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
     // Computed styles.
     const base = outline ? styles.containerOutline : styles.containerFill;
     const fill = useThemeBackground(outline ? "background" : "inverted");
@@ -74,7 +73,7 @@ export const Button: FC<ButtonProps> = ({ style, outline, icon, iconRight, child
     else iconRightComponent = iconRight;
 
     return (
-        <TouchableOpacity style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
+        <TouchableOpacity containerStyle={containerStyle} style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
             {iconComponent}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>
@@ -101,6 +100,11 @@ const styles = StyleSheet.create({
         padding: pad - border,
         borderColor: "black",
         borderWidth: border,
+    },
+    content: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
     },
     placeholder: {
         width: iconSize,

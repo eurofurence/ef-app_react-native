@@ -14,12 +14,8 @@ export const eurofurenceService = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: apiBase,
         prepareHeaders: (headers, { getState }) => {
-            const token: string | undefined = (getState() as any).authorization?.token;
-
-            if (token) {
-                headers.set("Authorization", `Bearer ${token}`);
-            }
-
+            const token: string | undefined = (getState() as any).authorization?.accessToken;
+            if (token) headers.set("Authorization", `Bearer ${token}`);
             return headers;
         },
     }),

@@ -47,7 +47,7 @@ export const store = configureStore({
 
         middleware.push(eurofurenceService.middleware, authorizationService.middleware);
 
-        if (Platform.OS === "web") middleware.push(logger as any);
+        // if (Platform.OS === "web") middleware.push(logger as any);
 
         return middleware;
     },

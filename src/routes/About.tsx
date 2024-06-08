@@ -7,7 +7,7 @@ import { Linking, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../components/app/AppStyles";
+import { appStyles } from "../components/AppStyles";
 import { Label } from "../components/generic/atoms/Label";
 import { MarkdownContent } from "../components/generic/atoms/MarkdownContent";
 import { Section } from "../components/generic/atoms/Section";
@@ -128,10 +128,10 @@ export const About = () => {
 
                 {!showHelpButtons && (
                     <>
-                        <Button style={{ marginVertical: 10 }} onPress={() => Linking.openURL("https://t.me/+lAYTadnRKdY2NDBk")} icon={"help"}>
+                        <Button containerStyle={{ marginVertical: 10 }} onPress={() => Linking.openURL("https://t.me/+lAYTadnRKdY2NDBk")} icon={"help"}>
                             {t("app_details.get_help")}
                         </Button>
-                        <Button style={{ marginVertical: 10 }} onPress={() => Linking.openURL("https://github.com/eurofurence/ef-app_react-native/issues")} icon={"bug"}>
+                        <Button containerStyle={{ marginVertical: 10 }} onPress={() => Linking.openURL("https://github.com/eurofurence/ef-app_react-native/issues")} icon={"bug"}>
                             {t("app_details.report_bug")}
                         </Button>
                     </>

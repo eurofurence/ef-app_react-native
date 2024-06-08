@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import { filterActiveAnnouncements, filterBrowseableMaps, filterCurrentEvents, filterUpcomingEvents } from "./eurofurence.selectors";
+import { filterActiveAnnouncements, filterBrowsableMaps, filterCurrentEvents, filterUpcomingEvents } from "./eurofurence.selectors";
 
 describe("eurofurence.selectors", function () {
     describe("filterActiveAnnouncements", () => {
@@ -23,13 +23,13 @@ describe("eurofurence.selectors", function () {
     describe("filterBrowseableMaps", () => {
         it("Selects browserable maps", () => {
             const maps = [{ Id: "1", IsBrowseable: true }];
-            const result = filterBrowseableMaps(maps);
+            const result = filterBrowsableMaps(maps);
 
             expect(result).toHaveLength(1);
         });
         it("Does not select unbrowserable maps", () => {
             const maps = [{ Id: "1", IsBrowseable: false }];
-            const result = filterBrowseableMaps(maps);
+            const result = filterBrowsableMaps(maps);
 
             expect(result).toHaveLength(0);
         });

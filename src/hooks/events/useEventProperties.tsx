@@ -8,7 +8,7 @@ import { useNow } from "../time/useNow";
  * @param event The event, start and end need to be present.
  */
 export const useEventIsHappening = (event: Pick<EventRecord, "StartDateTimeUtc" | "EndDateTimeUtc">) => {
-    const [now] = useNow();
+    const now = useNow();
     return useMemo(() => now.isBetween(event.StartDateTimeUtc, event.EndDateTimeUtc), [now, event]);
 };
 
@@ -17,7 +17,7 @@ export const useEventIsHappening = (event: Pick<EventRecord, "StartDateTimeUtc" 
  * @param event The event, start and end need to be present.
  */
 export const useEventIsDone = (event: Pick<EventRecord, "EndDateTimeUtc">) => {
-    const [now] = useNow();
+    const now = useNow();
     return useMemo(() => now.isAfter(event.EndDateTimeUtc), [now, event]);
 };
 
@@ -26,7 +26,7 @@ export const useEventIsDone = (event: Pick<EventRecord, "EndDateTimeUtc">) => {
  * used for example as a filter.
  */
 export const useIsEventHappening = () => {
-    const [now] = useNow();
+    const now = useNow();
     return useCallback((event: Pick<EventRecord, "StartDateTimeUtc" | "EndDateTimeUtc">) => now.isBetween(event.StartDateTimeUtc, event.EndDateTimeUtc), [now]);
 };
 
@@ -35,6 +35,6 @@ export const useIsEventHappening = () => {
  * for example as a filter.
  */
 export const useIsEventDone = () => {
-    const [now] = useNow();
+    const now = useNow();
     return useCallback((event: Pick<EventRecord, "StartDateTimeUtc" | "EndDateTimeUtc">) => now.isAfter(event.EndDateTimeUtc), [now]);
 };

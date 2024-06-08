@@ -3,11 +3,11 @@ import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
-import { LinkItem } from "../../components/app/maps/LinkItem";
+import { appStyles } from "../../components/AppStyles";
 import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
+import { LinkItem } from "../../components/maps/LinkItem";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { knowledgeEntriesSelectors, selectImagesById } from "../../store/eurofurence.selectors";

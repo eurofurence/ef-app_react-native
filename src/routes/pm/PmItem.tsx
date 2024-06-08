@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
+import { appStyles } from "../../components/AppStyles";
 import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";

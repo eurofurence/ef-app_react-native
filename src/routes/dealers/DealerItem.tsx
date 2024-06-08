@@ -2,8 +2,8 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
-import { DealerContent } from "../../components/app/dealers/DealerContent";
+import { appStyles } from "../../components/AppStyles";
+import { DealerContent } from "../../components/dealers/DealerContent";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";

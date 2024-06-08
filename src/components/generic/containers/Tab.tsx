@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
-import { StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
@@ -55,7 +56,7 @@ export const Tab: FC<TabProps> = ({ style, icon, text, indicate, active = false,
     const styleBackground = useThemeBackground("notification");
 
     return (
-        <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+        <TouchableOpacity containerStyle={[styles.container, style]} onPress={onPress}>
             <View style={styles.item}>
                 <Icon name={icon} size={24} color={colorValue} />
 

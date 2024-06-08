@@ -1,42 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-import { authorizationService } from "./authorization.service";
-import { TokenRegSysResponse } from "./authorization.types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AuthorizationState = {
-    token?: string;
-    username?: string;
-    uid?: string;
-    tokenValidUntil?: string;
-    isLoggedIn: boolean;
-    isExpired: boolean;
+    accessToken: string | null;
 };
 
 const initialState = {
-    isLoggedIn: false,
-    isExpired: false,
+    accessToken: null,
 } as AuthorizationState;
+
 export const authorizationSlice = createSlice({
     name: "authorization",
     initialState,
     reducers: {
-        logout: (state) => {
-            state.token = undefined;
-            state.username = undefined;
-            state.tokenValidUntil = undefined;
-            state.isLoggedIn = false;
+        setAccessToken: (state, action: PayloadAction<string | null>) => {
+            state.accessToken = action.payload;
         },
-    },
-    extraReducers: (builder) => {
-        builder.addMatcher(authorizationService.endpoints.postToken.matchFulfilled, (state, { payload }: { payload: TokenRegSysResponse }) => {
-            state.token = payload.Token;
-            state.username = payload.Username;
-            state.tokenValidUntil = payload.TokenValidUntil;
-            state.uid = payload.Uid;
-            state.isLoggedIn = true;
-            state.isExpired = false;
-        });
     },
 });
 
-export const { logout } = authorizationSlice.actions;
+export const { setAccessToken } = authorizationSlice.actions;

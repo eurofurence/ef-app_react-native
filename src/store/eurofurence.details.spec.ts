@@ -8,8 +8,7 @@ import {
     eventsSelector,
     mapsSelectors,
     selectActiveAnnouncements,
-    selectBrowseableMaps,
-    selectCountdownTitle,
+    selectBrowsableMaps,
     selectCurrentEvents,
     selectDealersByDayName,
     selectFavoriteEvents,
@@ -138,21 +137,6 @@ describe("Eurofurence details", () => {
     });
 
     describe("special selectors", () => {
-        it("countdown title is appropriate", async () => {
-            const t: TFunction = ((key: string) => {
-                if (key === "before_event") return `before`;
-                if (key === "after_event") return `after`;
-            }) as any;
-
-            const before = selectCountdownTitle(state, moment("2022-08-20"), t);
-            const on = selectCountdownTitle(state, moment("2022-08-25"), t);
-            const after = selectCountdownTitle(state, moment("2022-09-05"), t);
-
-            expect(before).toBe("before");
-            expect(on).toBe("Con Day 2");
-            expect(after).toBe("after");
-        });
-
         it("finds favorites", () => {
             const id = state.background.notifications.find((n) => n.type === "EventReminder")?.recordId ?? "";
             const event = eventsSelector.selectById(state, id) as EventDetails;
@@ -208,7 +192,7 @@ describe("Eurofurence details", () => {
         });
 
         it("finds browsable maps", () => {
-            const notBrowsable = selectBrowseableMaps(state).filter((map) => !map.IsBrowseable);
+            const notBrowsable = selectBrowsableMaps(state).filter((map) => !map.IsBrowseable);
 
             expect(notBrowsable).toHaveLength(0);
         });

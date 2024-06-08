@@ -54,7 +54,7 @@ export type DealersRouterProps =
  */
 export const DealersRouter: FC<DealersRouterProps> = () => {
     const { t } = useTranslation("Dealers");
-    const [now] = useNow();
+    const now = useNow();
 
     // Use days to resolve actual dates.
     const days = useAppSelector(eventDaysSelectors.selectAll);

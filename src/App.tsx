@@ -1,6 +1,6 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
-import { SynchronizationProvider } from "./components/app/sync/SynchronizationProvider";
+import { SynchronizationProvider } from "./components/sync/SynchronizationProvider";
 import { useAnalyticsManager } from "./hooks/analytics/useAnalyticsManager";
 import { useNotificationReceivedManager } from "./hooks/notifications/useNotificationReceivedManager";
 import { useNotificationRespondedManager } from "./hooks/notifications/useNotificationRespondedManager";

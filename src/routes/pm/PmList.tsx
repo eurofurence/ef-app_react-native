@@ -6,11 +6,11 @@ import { SectionList, StyleSheet } from "react-native";
 import { SectionListData } from "react-native/Libraries/Lists/SectionList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
-import { PrivateMessageCard } from "../../components/app/pm/PrivateMessageCard";
-import { NoData } from "../../components/app/util/NoData";
+import { appStyles } from "../../components/AppStyles";
 import { Label } from "../../components/generic/atoms/Label";
 import { Header } from "../../components/generic/containers/Header";
+import { PrivateMessageCard } from "../../components/pm/PrivateMessageCard";
+import { NoData } from "../../components/util/NoData";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";

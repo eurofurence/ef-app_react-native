@@ -2,7 +2,7 @@ import { FC } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 
 import { Continuous } from "./Continuous";
-import { useIsLoading } from "../../../context/LoadingContext";
+import { useSynchronizer } from "../../sync/SynchronizationProvider";
 
 /**
  * Props for the activity indicator.
@@ -15,9 +15,8 @@ export type ActivityProps = {
 };
 
 export const Activity: FC<ActivityProps> = ({ style }) => {
-    // Use the context's loading state. See LoadingContext.
-    const isLoading = useIsLoading();
+    const { isSynchronizing } = useSynchronizer();
 
     // Indicate on the context's state.
-    return <Continuous style={style} active={isLoading} />;
+    return <Continuous style={style} active={isSynchronizing} />;
 };

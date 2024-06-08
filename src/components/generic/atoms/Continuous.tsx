@@ -2,6 +2,7 @@ import { FC, useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from "react-native-reanimated";
 
+import { ThemeColor } from "../../../context/Theme";
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 
 /**
@@ -14,12 +15,17 @@ export type ContinuousProps = {
     style?: StyleProp<ViewStyle>;
 
     /**
+     * Color of the indicator.
+     */
+    color?: ThemeColor;
+
+    /**
      * True if the progress indicator should be displayed.
      */
     active?: boolean;
 };
 
-export const Continuous: FC<ContinuousProps> = ({ style, active = true }) => {
+export const Continuous: FC<ContinuousProps> = ({ style, color, active = true }) => {
     // Shared at value.
     const at = useSharedValue(0);
 
@@ -28,7 +34,7 @@ export const Continuous: FC<ContinuousProps> = ({ style, active = true }) => {
         if (active) {
             // Active, set to zero and animate.
             at.value = 0;
-            at.value = withRepeat(withDelay(600, withTiming(1, { duration: 900, easing: Easing.in(Easing.cubic) })), -1);
+            at.value = withRepeat(withDelay(600, withTiming(1, { duration: 900 })), -1);
         } else {
             // Inactive set to out of bounds.
             at.value = -1;
@@ -36,7 +42,7 @@ export const Continuous: FC<ContinuousProps> = ({ style, active = true }) => {
     }, [at, active]);
 
     // Convert theme into style.
-    const colorStyle = useThemeBackground("secondary");
+    const colorStyle = useThemeBackground(color ?? "secondary");
 
     // Compute dynamic style animating the bar.
     const dynamicStyle = useAnimatedStyle(

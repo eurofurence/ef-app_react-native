@@ -17,17 +17,14 @@ export const authorizationService = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: apiBase,
         prepareHeaders: (headers, { getState }) => {
-            const token: string | undefined = (getState() as any).authorization?.token;
-
-            if (token) {
-                headers.set("Authorization", `Bearer ${token}`);
-            }
-
+            const token: string | undefined = (getState() as any).authorization?.accessToken;
+            if (token) headers.set("Authorization", `Bearer ${token}`);
             return headers;
         },
     }),
     tagTypes: ["User"],
     endpoints: (builder) => ({
+        // TODO: Deprecated
         postToken: builder.mutation<TokenRegSysResponse, TokenRegSysRequest>({
             query: (args) => ({
                 url: "/Tokens/RegSys",
@@ -40,6 +37,7 @@ export const authorizationService = createApi({
             }),
             invalidatesTags: ["User"],
         }),
+        // TODO: Deprecated
         getWhoAmI: builder.query<TokenWhoAmIResponse, void>({
             query: () => ({
                 url: "/Tokens/WhoAmI",
@@ -107,8 +105,6 @@ export const filterByIds =
     });
 
 export const {
-    usePostTokenMutation,
-    useGetWhoAmIQuery,
     usePostDeviceRegistrationMutation,
     useCreateSyncRequestMutation,
     useSendPrivateMessageMutation,

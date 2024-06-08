@@ -4,9 +4,9 @@ import { useMemo } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
-import { MapContent, MapContentProps } from "../../components/app/maps/MapContent";
+import { appStyles } from "../../components/AppStyles";
 import { Header } from "../../components/generic/containers/Header";
+import { MapContent, MapContentProps } from "../../components/maps/MapContent";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { mapsSelectors } from "../../store/eurofurence.selectors";

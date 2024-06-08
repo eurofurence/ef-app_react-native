@@ -1,6 +1,7 @@
 import * as React from "react";
 import { FC } from "react";
-import { StyleProp, StyleSheet, TouchableOpacity, ViewStyle } from "react-native";
+import { StyleProp, StyleSheet, ViewStyle } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { ThemeColor } from "../../../context/Theme";
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
@@ -12,9 +13,7 @@ import { Marker } from "../atoms/Marker";
  * Arguments to the button.
  */
 export type ImageButtonProps = {
-    /**
-     * The style button.
-     */
+    containerStyle?: StyleProp<ViewStyle>;
     style?: StyleProp<ViewStyle>;
 
     /**
@@ -46,11 +45,11 @@ export type ImageButtonProps = {
     onLongPress?: () => void;
 };
 
-export const ImageExButton: FC<ImageButtonProps> = ({ style, image, target, noMarker = false, markerColor, markerType, markerSize, onPress, onLongPress }) => {
+export const ImageExButton: FC<ImageButtonProps> = ({ containerStyle, style, image, target, noMarker = false, markerColor, markerType, markerSize, onPress, onLongPress }) => {
     const styleBackground = useThemeBackground("inverted");
 
     return (
-        <TouchableOpacity style={[styles.container, styleBackground, style]} onPress={onPress} onLongPress={onLongPress}>
+        <TouchableOpacity containerStyle={containerStyle} style={[styles.container, styleBackground, style]} onPress={onPress} onLongPress={onLongPress}>
             {!target || !image ? null : <ImageFill image={image} target={target} />}
             {noMarker ? null : <Marker style={styles.marker} markerColor={markerColor} markerType={markerType} markerSize={markerSize} />}
         </TouchableOpacity>

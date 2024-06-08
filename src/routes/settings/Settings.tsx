@@ -3,15 +3,15 @@ import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
-import { CacheStats } from "../../components/app/settings/CacheStats";
-import { DevButtons } from "../../components/app/settings/DevButtons";
-import { RemoteMessages } from "../../components/app/settings/RemoteMessages";
-import { ScheduledNotifications } from "../../components/app/settings/ScheduledNotifications";
-import { TimeTravel } from "../../components/app/settings/TimeTravel";
-import { UserSettings } from "../../components/app/settings/UserSettings";
+import { appStyles } from "../../components/AppStyles";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
+import { CacheStats } from "../../components/settings/CacheStats";
+import { DevButtons } from "../../components/settings/DevButtons";
+import { RemoteMessages } from "../../components/settings/RemoteMessages";
+import { ScheduledNotifications } from "../../components/settings/ScheduledNotifications";
+import { TimeTravel } from "../../components/settings/TimeTravel";
+import { UserSettings } from "../../components/settings/UserSettings";
 import { useAppSelector } from "../../store";
 
 export const Settings = () => {

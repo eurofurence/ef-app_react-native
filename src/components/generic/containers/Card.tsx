@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
-import { appStyles } from "../../app/AppStyles";
+import { appStyles } from "../../AppStyles";
 
 type CardProps = PropsWithChildren<{
     onPress?: () => void;

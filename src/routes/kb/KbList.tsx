@@ -5,11 +5,11 @@ import { SectionList, StyleSheet, View } from "react-native";
 import { SectionListData } from "react-native/Libraries/Lists/SectionList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/app/AppStyles";
-import { KnowledgeEntryCard } from "../../components/app/kb/KnowledgeEntryCard";
-import { useSynchronizer } from "../../components/app/sync/SynchronizationProvider";
+import { appStyles } from "../../components/AppStyles";
 import { Section } from "../../components/generic/atoms/Section";
 import { Header } from "../../components/generic/containers/Header";
+import { KnowledgeEntryCard } from "../../components/kb/KnowledgeEntryCard";
+import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../store";
 import { selectKnowledgeItemsSections } from "../../store/eurofurence.selectors";

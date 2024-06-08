@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { FC } from "react";
-import { StyleSheet, TouchableOpacity, View, ViewProps } from "react-native";
+import { StyleSheet, View, ViewProps } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Row } from "./Row";
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
@@ -29,7 +30,7 @@ export const Header: FC<HeaderProps> = ({ style, children }) => {
 
             <View style={styles.placeholder} />
 
-            <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()} />
+            <TouchableOpacity containerStyle={styles.back} onPress={() => navigation.goBack()} />
 
             <Activity style={styles.activity} />
         </Row>
