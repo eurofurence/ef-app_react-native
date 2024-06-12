@@ -43,6 +43,7 @@ export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }
             enablePanDownToClose
             onClose={close}
         >
+            {/* TODO: Update note? */}
             <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} />}</EventActionsSheetScrollView>
         </BottomSheet>
     );

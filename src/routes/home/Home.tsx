@@ -14,6 +14,7 @@ import { Floater, padFloater } from "../../components/generic/containers/Floater
 import { CountdownHeader } from "../../components/home/CountdownHeader";
 import { DeviceSpecificWarnings } from "../../components/home/DeviceSpecificWarnings";
 import { LanguageWarnings } from "../../components/home/LanguageWarnings";
+import { TimezoneWarning } from "../../components/home/TimezoneWarning";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
 import { useNow } from "../../hooks/time/useNow";
 import { AreasRouterParamsList } from "../AreasRouter";
@@ -41,6 +42,7 @@ export const Home: FC<HomeProps> = () => {
 
             <Floater contentStyle={appStyles.trailer}>
                 <LanguageWarnings parentPad={padFloater} />
+                <TimezoneWarning parentPad={padFloater} />
                 <DeviceSpecificWarnings />
                 <AnnouncementList now={now} />
                 <UpcomingEventsList now={now} />

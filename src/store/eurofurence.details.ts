@@ -1,6 +1,7 @@
 import { Dictionary } from "@reduxjs/toolkit";
 import moment, { MomentInput } from "moment";
 
+import { Notification } from "./background.slice";
 import {
     AnnouncementDetails,
     AnnouncementRecord,
@@ -128,6 +129,7 @@ export const applyEventDetails = (
     rooms: Dictionary<EventRoomDetails>,
     days: Dictionary<EventDayDetails>,
     tracks: Dictionary<EventTrackDetails>,
+    favorite: Dictionary<Notification>,
 ): EventDetails => ({
     ...source,
     PartOfDay: internalCategorizeTime(source.StartDateTimeUtc),
@@ -141,6 +143,7 @@ export const applyEventDetails = (
     ConferenceRoom: !source.ConferenceRoomId ? undefined : rooms[source.ConferenceRoomId],
     ConferenceDay: !source.ConferenceDayId ? undefined : days[source.ConferenceDayId],
     ConferenceTrack: !source.ConferenceTrackId ? undefined : tracks[source.ConferenceTrackId],
+    Favorite: source.Id in favorite,
 });
 
 const internalDealerParseTable = (dealer: DealerRecord) => {

@@ -7,7 +7,6 @@ import { PersonalScheduleProps } from "./PersonalSchedule";
 import { EventsByDayProps } from "../../routes/events/EventsByDay";
 import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
 import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
-import { EventsResultsProps } from "../../routes/events/EventsResults";
 import { EventsSearchProps } from "../../routes/events/EventsSearch";
 import { EventDetails } from "../../store/eurofurence.types";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
@@ -18,7 +17,6 @@ import { useSynchronizer } from "../sync/SynchronizationProvider";
 export type EventsListProps = {
     navigation:
         | EventsSearchProps["navigation"]
-        | EventsResultsProps["navigation"]
         | EventsByDayProps["navigation"]
         | EventsByRoomProps["navigation"]
         | EventsByTrackProps["navigation"]
@@ -47,6 +45,7 @@ export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, se
             renderItem={({ item }) => {
                 return (
                     <EventCard
+                        containerStyle={styles.item}
                         key={item.details.Id}
                         event={item}
                         type={cardType}
@@ -68,8 +67,10 @@ export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, se
 };
 
 const styles = StyleSheet.create({
-    container: {
+    item: {
         paddingHorizontal: 20,
+    },
+    container: {
         paddingBottom: 100,
     },
 });

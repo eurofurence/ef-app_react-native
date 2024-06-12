@@ -10,11 +10,11 @@ import { EventRecord } from "../../store/eurofurence.types";
 
 export const useEventReminder = (event: EventRecord) => {
     const dispatch = useAppDispatch();
-    const timetravel = useAppSelector((state) => state.timetravel.amount);
+    const timeTravel = useAppSelector((state) => state.timetravel.amount);
     const notificationEntry = useAppSelector((state) => state.background.notifications.find((it) => it.recordId === event.Id));
 
     const createReminder = useCallback(() => {
-        const scheduleDate = moment(event.StartDateTimeUtc).subtract(timetravel, "milliseconds").subtract(30, "minutes");
+        const scheduleDate = moment(event.StartDateTimeUtc).subtract(timeTravel, "milliseconds").subtract(30, "minutes");
         const notification: Notification = {
             recordId: event.Id,
             type: "EventReminder",
@@ -38,22 +38,22 @@ export const useEventReminder = (event: EventRecord) => {
                     date: scheduleDate.toDate(),
                     channelId: "event_reminders",
                 },
-            });
+            }).catch(console.error);
         }
 
         dispatch(addNotification(notification));
-    }, [event, timetravel]);
+    }, [event, timeTravel]);
 
     const removeReminder = useCallback(() => {
         if (Platform.OS === "android" || Platform.OS === "ios") {
-            Notifications.cancelScheduledNotificationAsync(event.Id);
+            Notifications.cancelScheduledNotificationAsync(event.Id).catch(console.error);
         }
         dispatch(removeNotification(event.Id));
     }, [event]);
 
     const toggleReminder = useMemo(() => (notificationEntry ? removeReminder : createReminder), [notificationEntry, createReminder, removeReminder]);
     return {
-        isFavorited: Boolean(notificationEntry),
+        isFavorite: Boolean(notificationEntry),
         createReminder,
         removeReminder,
         toggleReminder,

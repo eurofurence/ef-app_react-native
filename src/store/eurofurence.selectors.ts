@@ -1,6 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { EntitySelectors } from "@reduxjs/toolkit/src/entities/models";
-import _, { chain, Dictionary as LodashDictionary, map, mapValues } from "lodash";
+import _, { chain, Dictionary as LodashDictionary, flatMap, groupBy, keyBy, map, mapValues, maxBy, orderBy, uniq } from "lodash";
 import moment, { Moment } from "moment";
 import { SectionListData } from "react-native";
 
@@ -77,6 +77,22 @@ export const eventDaysSelectors: RecordSelectors<EventDayDetails> = {
     selectById: createSelector([baseEventDaysSelectors.selectById], (item) => mapOne(item, applyEventDayDetails)),
 };
 
+const eventRemindersSelector = createSelector([(state: RootState) => state.background.notifications], (notifications) =>
+    notifications.filter((notification) => notification.type === "EventReminder"),
+);
+
+// TODO: Verify event reminders?
+const notificationSelector = {
+    selectTotal: createSelector([eventRemindersSelector], (notifications) => notifications.length),
+    selectRecordIds: createSelector([eventRemindersSelector], (notifications) => uniq(map(notifications, "recordId"))),
+    selectEntities: createSelector([eventRemindersSelector], (notifications) => keyBy(notifications, "recordId")),
+    selectAllEntities: createSelector([eventRemindersSelector], (notifications) => groupBy(notifications, "recordId")),
+    selectAll: createSelector([eventRemindersSelector], (notifications) => notifications),
+    selectAllById: createSelector([eventRemindersSelector, (_: RootState, id: RecordId) => id], (notifications, id) =>
+        notifications.filter((notification) => notification.recordId === id),
+    ),
+};
+
 const baseEventsSelector = eventsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.events);
 export const eventsSelector: RecordSelectors<EventDetails> = {
     selectTotal: baseEventsSelector.selectTotal,
@@ -88,16 +104,31 @@ export const eventsSelector: RecordSelectors<EventDetails> = {
             eventRoomsSelectors.selectEntities,
             eventDaysSelectors.selectEntities,
             eventTracksSelectors.selectEntities,
+            notificationSelector.selectEntities,
         ],
-        (entities, images, rooms, days, tracks) => mapValues(entities, (entity) => applyEventDetails(entity!, images, rooms, days, tracks)),
+        (entities, images, rooms, days, tracks, notifications) => mapValues(entities, (entity) => applyEventDetails(entity!, images, rooms, days, tracks, notifications)),
     ),
     selectAll: createSelector(
-        [baseEventsSelector.selectAll, imagesSelectors.selectEntities, eventRoomsSelectors.selectEntities, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities],
-        (all, images, rooms, days, tracks) => map(all, (entity) => applyEventDetails(entity!, images, rooms, days, tracks)),
+        [
+            baseEventsSelector.selectAll,
+            imagesSelectors.selectEntities,
+            eventRoomsSelectors.selectEntities,
+            eventDaysSelectors.selectEntities,
+            eventTracksSelectors.selectEntities,
+            notificationSelector.selectEntities,
+        ],
+        (all, images, rooms, days, tracks, notifications) => map(all, (entity) => applyEventDetails(entity!, images, rooms, days, tracks, notifications)),
     ),
     selectById: createSelector(
-        [baseEventsSelector.selectById, imagesSelectors.selectEntities, eventRoomsSelectors.selectEntities, eventDaysSelectors.selectEntities, eventTracksSelectors.selectEntities],
-        (item, images, rooms, days, tracks) => mapOne(item, (entity) => applyEventDetails(entity, images, rooms, days, tracks)),
+        [
+            baseEventsSelector.selectById,
+            imagesSelectors.selectEntities,
+            eventRoomsSelectors.selectEntities,
+            eventDaysSelectors.selectEntities,
+            eventTracksSelectors.selectEntities,
+            notificationSelector.selectEntities,
+        ],
+        (item, images, rooms, days, tracks, notifications) => mapOne(item, (entity) => applyEventDetails(entity, images, rooms, days, tracks, notifications)),
     ),
 };
 
@@ -142,6 +173,9 @@ export const dealersSelectors: RecordSelectors<DealerDetails> = {
     ),
 };
 
+/**
+ * @deprecated Check favorite flag // TODO
+ */
 export const selectFavoriteEvents = createSelector([eventsSelector.selectEntities, (state: RootState) => state.background.notifications], (events, notifications): EventDetails[] =>
     _.chain(notifications)
         .filter((it) => it.type === "EventReminder")
@@ -169,6 +203,45 @@ export const selectDealersByDayName = createSelector([dealersSelectors.selectAll
         return false;
     }),
 );
+
+export const selectDealersInRegular = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => !it.IsAfterDark));
+
+export const selectDealersInAd = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => it.IsAfterDark));
+
+/**
+ * TF-IDF category mapper. Returns the category for a dealer that is the most "unique" for them among all other dealers.
+ */
+export const selectDealerCategoryMapper = createSelector([dealersSelectors.selectAll], (dealers) => {
+    function tf(category: string, categories: string[]) {
+        let n = 0;
+        for (const item of categories) if (item === category) n++;
+
+        return n / (categories.length + 1);
+    }
+
+    function idf(category: string) {
+        let n = 0;
+        for (const item of dealers) {
+            if (item.Categories)
+                for (let j = 0; j < item.Categories.length; j++) {
+                    if (item.Categories[j] === category) {
+                        n++;
+                        break;
+                    }
+                }
+        }
+        return Math.log(dealers.length / (n + 1)) + 1;
+    }
+
+    const allCategories = uniq(flatMap(dealers, (dealer) => dealer.Categories ?? []));
+    const allIdf = Object.fromEntries(allCategories.map((category) => [category, idf(category)]));
+
+    return (dealer: DealerDetails) => {
+        const categories = dealer.Categories;
+        return categories ? maxBy(categories, (category) => tf(category, categories) * allIdf[category]!) : null;
+    };
+});
+
 export const filterBrowsableMaps = <T extends Pick<MapDetails, "IsBrowseable">>(maps: T[]) => maps.filter((it) => it.IsBrowseable);
 export const selectBrowsableMaps = createSelector(mapsSelectors.selectAll, (state) => filterBrowsableMaps(state));
 
@@ -182,10 +255,21 @@ export const selectValidLinksByTarget = createSelector(
             .value(),
 );
 
+export const selectKnowledgeItems = createSelector([knowledgeGroupsSelectors.selectEntities, knowledgeEntriesSelectors.selectAll], (groups, entries) =>
+    chain(entries)
+        .groupBy("KnowledgeGroupId")
+        .map((entries, groupId) => ({
+            group: groups[groupId]!, // todo null erasure?
+            entries: orderBy(entries, "Order"),
+        }))
+        .orderBy((it) => it.group.Order)
+        .value(),
+);
+
 /**
  * Selects all knowledge items in a sorted manner that is ready for a section list.
  */
-export const selectKnowledgeItems = createSelector(
+export const selectKnowledgeItemsLegacy = createSelector(
     [knowledgeGroupsSelectors.selectAll, knowledgeEntriesSelectors.selectAll],
     (groups, entries): (KnowledgeGroupRecord & { entries: KnowledgeEntryRecord[] })[] => {
         return _.chain(groups)
@@ -201,7 +285,7 @@ export const selectKnowledgeItems = createSelector(
     },
 );
 
-export const selectKnowledgeItemsSections = createSelector(selectKnowledgeItems, (items): SectionListData<KnowledgeEntryRecord, KnowledgeGroupRecord>[] =>
+export const selectKnowledgeItemsSections = createSelector(selectKnowledgeItemsLegacy, (items): SectionListData<KnowledgeEntryRecord, KnowledgeGroupRecord>[] =>
     items.map((it) => ({
         ...it,
         data: it.entries,

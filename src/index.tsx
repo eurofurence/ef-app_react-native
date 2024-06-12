@@ -15,7 +15,7 @@ import { persistor, store } from "./store";
 import "react-native-reanimated";
 
 // Import background notification connector and handler setup.
-import "./init/auth";
+import "./init/initialImages";
 import "./init/BackgroundSyncGenerator";
 import "./init/NotificationChannel";
 import "./init/NotificationHandler";

@@ -7,15 +7,15 @@ export type DealerSectionProps = SectionProps;
 
 /**
  * Creates the properties for a dealer section.
- * @param firstLetter The first letter.
+ * @param title The title.
  */
-export function dealerSectionForLetter(firstLetter: string): DealerSectionProps {
+export function dealerSectionForTitle(title: string): DealerSectionProps {
     return {
-        title: firstLetter,
-        icon: "bookmark" as IconNames,
+        title,
+        icon: "folder-image" as IconNames,
     };
 }
 
-export const DealerSection: FC<DealerSectionProps> = ({ title, subtitle, icon }) => {
-    return <Section title={title} subtitle={subtitle} icon={icon} />;
+export const DealerSection: FC<DealerSectionProps> = ({ style, title, subtitle, icon }) => {
+    return <Section style={style} title={title} subtitle={subtitle} icon={icon} />;
 };

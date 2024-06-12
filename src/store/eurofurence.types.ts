@@ -81,6 +81,7 @@ export type EventDetails = EventRecord & {
     ConferenceRoom?: EventRoomDetails;
     ConferenceDay?: EventDayDetails;
     ConferenceTrack?: EventTrackDetails;
+    Favorite: boolean;
 };
 
 export type DealerRecord = RecordMetadata & {

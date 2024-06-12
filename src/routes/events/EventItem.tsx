@@ -6,6 +6,7 @@ import { EventContent } from "../../components/events/EventContent";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
+import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence.selectors";
 
@@ -24,10 +25,13 @@ export const EventItem = () => {
     const route = useAppRoute("Event");
     const event = useAppSelector((state) => eventsSelector.selectById(state, route.params.id));
 
+    // Get update note.
+    const updated = useUpdateSinceNote(event);
+
     return (
         <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{event?.Title ?? "Viewing event"}</Header>
-            <Floater contentStyle={appStyles.trailer}>{!event ? null : <EventContent event={event} parentPad={padFloater} />}</Floater>
+            <Floater contentStyle={appStyles.trailer}>{!event ? null : <EventContent event={event} parentPad={padFloater} updated={updated} />}</Floater>
         </ScrollView>
     );
 };

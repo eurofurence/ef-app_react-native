@@ -2,9 +2,8 @@ import { FC, RefObject, useContext, useMemo } from "react";
 import { Linking } from "react-native";
 
 import { PagerPrimary } from "./PagerPrimary";
-import { AuthContext } from "../../context/AuthContext";
-import { useAdditionalServices } from "../../hooks/callbacks/useAdditionalServices";
-import { useFursuitGames } from "../../hooks/callbacks/useFursuitGames";
+import { appBase } from "../../configuration";
+import { AuthContext, getAccessToken } from "../../context/AuthContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { RecordId } from "../../store/eurofurence.types";
 import { Tab } from "../generic/containers/Tab";
@@ -14,10 +13,26 @@ export type MainMenuProps = {
     tabs: RefObject<TabsRef>;
 };
 
+const openFursuitGames = async () => {
+    const token = await getAccessToken();
+    if (!token) {
+        alert("You are not logged in.");
+        return;
+    }
+    await Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/collect&token=${token}`).catch(console.error);
+};
+
+const openAdditionalServices = async () => {
+    const token = await getAccessToken();
+    if (!token) {
+        alert("You are not logged in.");
+        return;
+    }
+    await Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/&token=${token}`).catch(console.error);
+};
+
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
     const navigation = useAppNavigation("Areas");
-    const openFursuitGames = useFursuitGames();
-    const openAdditionalServices = useAdditionalServices();
 
     const { login } = useContext(AuthContext);
     const on = useMemo(

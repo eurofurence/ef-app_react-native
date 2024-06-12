@@ -12,7 +12,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { EventsByDay, EventsByDayParams } from "./EventsByDay";
 import { EventsByRoom, EventsByRoomParams } from "./EventsByRoom";
 import { EventsByTrack, EventsByTrackParams } from "./EventsByTrack";
-import { EventsResults, EventsResultsParams } from "./EventsResults";
 import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSearch, EventsSearchParams } from "./EventsSearch";
 import { EventActionsSheet } from "../../components/events/EventActionsSheet";
@@ -35,7 +34,6 @@ export type EventsRouterParamsList = {
     Favorites: object;
     Search: EventsSearchParams;
     Personal: PersonalScheduleParams;
-    Results: EventsResultsParams;
 } & {
     /**
      * All names (days) want events-day parameters.
@@ -82,7 +80,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
     const rooms = useAppSelector(eventRoomsSelectors.selectAll);
 
     // Get context and resolve if results present and the current selection state..
-    const { hasResults, selected, setSelected } = useEventsRouterContext();
+    const { selected, setSelected } = useEventsRouterContext();
 
     // Connect back handler to clearing selection.
     useEffect(() => {
@@ -107,11 +105,10 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
     const currentDayId = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Id, [days, now]);
 
     // Get actual filter type, whether to scroll, and the initial route name.
-    const type = hasResults ? "results" : route.params?.filterType ?? "days";
+    const type = route.params?.filterType ?? "days";
     const scroll = type === "tracks" || type === "rooms";
     let initial: string | undefined = undefined;
-    if (type === "results") initial = "Results";
-    else if (type === "days") initial = currentDayId ?? days[0]?.Id;
+    if (type === "days") initial = currentDayId ?? days[0]?.Id;
     else if (type === "tracks") initial = tracks[0]?.Id;
     else if (type === "rooms") initial = rooms[0]?.Id;
 
@@ -167,20 +164,6 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
                     }}
                     component={PersonalSchedule}
                 />
-
-                {type !== "results" ? null : (
-                    <Tab.Screen
-                        key="results"
-                        name="Results"
-                        options={{
-                            tabBarShowLabel: false,
-                            tabBarShowIcon: true,
-                            tabBarIcon: ({ color }) => <Icon size={20} color={color} name="view-list" />,
-                            tabBarLabelStyle: tabStyles.normal,
-                        }}
-                        component={EventsResults}
-                    />
-                )}
 
                 {type !== "days"
                     ? null

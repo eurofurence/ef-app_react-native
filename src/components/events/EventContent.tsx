@@ -32,6 +32,11 @@ export type EventContentProps = {
      * The padding used by the parent horizontally.
      */
     parentPad?: number;
+
+    /**
+     * True if the event was updated.
+     */
+    updated?: boolean;
 };
 
 /**
@@ -39,11 +44,11 @@ export type EventContentProps = {
  */
 const placeholder = "m38D%z^%020303D+bv~m%IWF-nIrRS-mxsobE3E4f+W;s:%0oIRk";
 
-export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) => {
+export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated }) => {
     const navigation = useAppNavigation("Areas");
 
     const { t } = useTranslation("Event");
-    const { isFavorited, toggleReminder } = useEventReminder(event);
+    const { isFavorite, toggleReminder } = useEventReminder(event);
 
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
@@ -64,6 +69,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
 
     return (
         <>
+            {!updated ? null : (
+                <Badge unpad={parentPad} badgeColor="warning" textColor="white">
+                    {t("event_was_updated")}
+                </Badge>
+            )}
+
             {!event.SuperSponsorOnly ? null : (
                 <Badge unpad={parentPad} badgeColor="superSponsor" textColor="superSponsorText">
                     {t("supersponsor_event")}
@@ -82,7 +93,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
                 </View>
             )}
 
-            <Section icon={isFavorited ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
+            <Section icon={isFavorite ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
             <MarkdownContent defaultType="para" mb={20}>
                 {event.Abstract}
             </MarkdownContent>
@@ -94,8 +105,8 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0 }) =>
             )}
 
             <Row style={styles.marginBefore}>
-                <Button containerStyle={styles.rowLeft} outline={isFavorited} icon={isFavorited ? "heart-outline" : "heart"} onPress={toggleReminder}>
-                    {isFavorited ? t("remove_favorite") : t("add_favorite")}
+                <Button containerStyle={styles.rowLeft} outline={isFavorite} icon={isFavorite ? "heart-outline" : "heart"} onPress={toggleReminder}>
+                    {isFavorite ? t("remove_favorite") : t("add_favorite")}
                 </Button>
                 <Button containerStyle={styles.rowRight} icon={"share"} onPress={shareEvent}>
                     {t("share")}

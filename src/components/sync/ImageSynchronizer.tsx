@@ -12,9 +12,16 @@ export const ImageSynchronizer = () => {
     const images = useAppSelector(imagesSelectors.selectAll, isEqual);
 
     useEffect(() => {
+        let go = true;
         setIsCaching(true);
-        Image.prefetch(images.map((it) => it.FullUrl)).catch(captureException);
-        setIsCaching(false);
+        Image.prefetch(images.map((it) => it.FullUrl))
+            .catch(captureException)
+            .finally(() => {
+                if (go) setIsCaching(false);
+            });
+        return () => {
+            go = false;
+        };
     }, [images]);
 
     if (!isCaching) {

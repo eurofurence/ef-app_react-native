@@ -37,7 +37,6 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
         screens: {
             Search: "events/search",
             Personal: "events/personal",
-            Results: "events/results",
 
             ...Object.fromEntries(days.map((id) => [id, `events/days/${id}`])),
             ...Object.fromEntries(tracks.map((id) => [id, `events/tracks/${id}`])),
@@ -49,9 +48,8 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
         initialRouteName: "All",
         screens: {
             All: "dealers",
-            Mon: "dealers/days/mon",
-            Tue: "dealers/days/tue",
-            Wed: "dealers/days/wed",
+            Regular: "dealers/regular",
+            AD: "dealers/ad",
         },
     };
 

@@ -6,7 +6,6 @@ import { Platform } from "react-native";
 import { conId } from "../../configuration";
 import { useAuthContext } from "../../context/AuthContext";
 import { captureNotificationException } from "../../sentryHelpers";
-import { useAppSelector } from "../../store";
 import { usePostDeviceRegistrationMutation, usePostSubscribeToTopicMutation } from "../../store/authorization.service";
 
 /**
@@ -47,8 +46,8 @@ const retrieveToken = async () => {
  * @constructor
  */
 export const useTokenManager = () => {
-    // Use token state to trigger effect updates when login state changed.
-    const { accessToken } = useAuthContext();
+    // Use login state to trigger.
+    const { loggedIn } = useAuthContext();
 
     // Use device registration and subscription.
     const [registerDevice] = usePostDeviceRegistrationMutation();
@@ -88,7 +87,7 @@ export const useTokenManager = () => {
             (r) => console.log("Registration and subscription, performed:", r),
             (e) => captureNotificationException("Could not register and subscribe", e),
         );
-    }, [accessToken /* Remote methods depend on token implicitly. */]);
+    }, [loggedIn /* Remote methods depend on token implicitly. */]);
 
     return null;
 };

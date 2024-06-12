@@ -158,6 +158,10 @@ const types = StyleSheet.create({
         fontSize: 14,
         textDecorationLine: "underline",
     },
+    cap: {
+        fontSize: 10,
+        fontWeight: "bold",
+    },
 });
 
 /**

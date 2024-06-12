@@ -2,14 +2,12 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
-import { chain, partition, sortBy } from "lodash";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useEventOtherGroups } from "./Events.common";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventsRouterContext } from "./EventsRouterContext";
-import { eventInstanceForPassed, eventInstanceForNotPassed } from "../../components/events/EventCard";
-import { eventSectionForDate, eventSectionForPassed } from "../../components/events/EventSection";
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { useNow } from "../../hooks/time/useNow";
@@ -40,32 +38,10 @@ export const EventsByRoom: FC<EventsByRoomProps> = ({ navigation, route }) => {
 
     const { setSelected } = useEventsRouterContext();
 
-    // Get the room. Use it to resolve events to display.
+    // Use all events in room and group generically.
     const room = useAppSelector((state) => eventRoomsSelectors.selectById(state, route.name));
-    const eventsAll = useAppSelector((state) => selectEventsByRoom(state, room?.Id ?? ""));
-    const eventsGroups = useMemo(() => {
-        const [upcoming, passed] = partition(eventsAll, (it) => now.isBefore(it.EndDateTimeUtc));
-        return chain(upcoming)
-            .orderBy("StartDateTimeUtc")
-            .groupBy((event) => event.ConferenceDay?.Date)
-            .flatMap((events, date) => [
-                // Header.
-                eventSectionForDate(t, date, events.length),
-                // Event instances.
-                ...events.map((details) => eventInstanceForNotPassed(details, now)),
-            ])
-            .thru((current) =>
-                passed.length === 0
-                    ? current
-                    : current.concat([
-                          // Passed header.
-                          eventSectionForPassed(t, passed.length),
-                          // Passed event instances.
-                          ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
-                      ]),
-            )
-            .value();
-    }, [t, eventsAll, now]);
+    const eventsInRoom = useAppSelector((state) => selectEventsByRoom(state, room?.Id ?? ""));
+    const eventsGroups = useEventOtherGroups(t, now, eventsInRoom);
 
     return (
         <EventsSectionedList

@@ -1,31 +1,39 @@
 import { FlashList } from "@shopify/flash-list";
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
 import { DealerCard, DealerDetailsInstance } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
+import { DealersAdProps } from "../../routes/dealers/DealersAd";
 import { DealersAllProps } from "../../routes/dealers/DealersAll";
-import { DealersByDayProps } from "../../routes/dealers/DealersByDay";
+import { DealersRegularProps } from "../../routes/dealers/DealersRegular";
+import { findIndices } from "../../util/findIndices";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
 
 /**
  * The properties to the component.
  */
 export type DealersSectionedListProps = {
-    navigation: DealersAllProps["navigation"] | DealersByDayProps["navigation"];
+    navigation: DealersAllProps["navigation"] | DealersRegularProps["navigation"] | DealersAdProps["navigation"];
     leader?: ReactElement;
     dealersGroups: (DealerSectionProps | DealerDetailsInstance)[];
     trailer?: ReactElement;
+    sticky?: boolean;
 };
 
-export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation, leader, dealersGroups, trailer }) => {
+export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation, leader, dealersGroups, trailer, sticky = true }) => {
     const synchronizer = useSynchronizer();
+    const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !("details" in item)) : undefined), [dealersGroups, sticky]);
+    const sectionStyle = useThemeBackground("surface");
+
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
             onRefresh={synchronizer.synchronize}
             contentContainerStyle={styles.container}
             scrollEnabled={true}
+            stickyHeaderIndices={stickyIndices}
             ListHeaderComponent={leader}
             ListFooterComponent={trailer}
             data={dealersGroups}
@@ -33,9 +41,9 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
             keyExtractor={(item) => ("details" in item ? item.details.Id : item.title)}
             renderItem={({ item }) => {
                 if ("details" in item) {
-                    return <DealerCard key={item.details.Id} dealer={item} onPress={(dealer) => navigation.push("Dealer", { id: dealer.Id })} />;
+                    return <DealerCard containerStyle={styles.item} key={item.details.Id} dealer={item} onPress={(dealer) => navigation.push("Dealer", { id: dealer.Id })} />;
                 } else {
-                    return <DealerSection title={item.title} subtitle={item.subtitle} icon={item.icon} />;
+                    return <DealerSection style={[styles.item, sectionStyle]} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
                 }
             }}
             estimatedItemSize={110}
@@ -44,8 +52,10 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
 };
 
 const styles = StyleSheet.create({
-    container: {
+    item: {
         paddingHorizontal: 20,
+    },
+    container: {
         paddingBottom: 100,
     },
 });

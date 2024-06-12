@@ -10,30 +10,29 @@ import { DealersRouterParamsList } from "./DealersRouter";
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { Search } from "../../components/generic/atoms/Search";
-import { conName } from "../../configuration";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
-import { dealersSelectors } from "../../store/eurofurence.selectors";
+import { dealersSelectors, selectDealersInAd } from "../../store/eurofurence.selectors";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 
 /**
  * Params handled by the screen in route.
  */
-export type DealersAllParams = object;
+export type DealersAdParams = object;
 
 /**
  * The properties to the screen as a component.
  */
-export type DealersAllProps =
-    // Route carrying from dealers tabs screen at "All", own navigation via own parameter list.
+export type DealersAdProps =
+    // Route carrying from dealers tabs screen at any of the day names, own navigation via own parameter list.
     CompositeScreenProps<
-        MaterialTopTabScreenProps<DealersRouterParamsList, "All">,
+        MaterialTopTabScreenProps<DealersRouterParamsList, "AD">,
         MaterialTopTabScreenProps<DealersRouterParamsList> & BottomTabScreenProps<AreasRouterParamsList> & StackScreenProps<IndexRouterParamsList>
     >;
 
-export const DealersAll: FC<DealersAllProps> = ({ navigation }) => {
+export const DealersAd: FC<DealersAdProps> = ({ navigation }) => {
     // General state.
     const { t } = useTranslation("Dealers");
     const now = useNow();
@@ -41,9 +40,9 @@ export const DealersAll: FC<DealersAllProps> = ({ navigation }) => {
     // Search integration.
     const [filter, setFilter, results] = useFuseIntegration(dealersSelectors.selectAll, dealerSearchProperties, dealerSearchOptions);
 
-    // Use all dealers and group generically.
-    const dealersAll = useAppSelector(dealersSelectors.selectAll);
-    const dealersGroups = useDealerGroups(t, now, results, dealersAll);
+    // Use all dealers in after-dark and group generically.
+    const dealersAd = useAppSelector(selectDealersInAd);
+    const dealersGroups = useDealerGroups(t, now, results, dealersAd);
 
     return (
         <DealersSectionedList
@@ -52,7 +51,7 @@ export const DealersAll: FC<DealersAllProps> = ({ navigation }) => {
             leader={
                 <>
                     <Label type="h1" variant="middle" mt={30}>
-                        {t("dealers_at_convention", { convention: conName })}
+                        {t("dealers_in_ad")}
                     </Label>
                     <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />
                 </>

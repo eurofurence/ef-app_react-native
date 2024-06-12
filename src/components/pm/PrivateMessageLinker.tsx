@@ -1,13 +1,15 @@
 import { FC, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { StyleProp, ViewStyle } from "react-native";
 
-import { useAuthContext } from "../../context/AuthContext";
+import { Claims } from "../../context/AuthContext";
 import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
-import { Label } from "../generic/atoms/Label";
 import { Button } from "../generic/containers/Button";
 
 type PrivateMessageLinkerProps = {
+    containerStyle?: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
+    user: Claims | null;
     open?: boolean;
     onOpenMessages?: () => void;
 };
@@ -16,10 +18,9 @@ type PrivateMessageLinkerProps = {
  * Creates a link to the private messages screen
  * @constructor
  */
-export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMessages, open }) => {
+export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerStyle, style, user, onOpenMessages, open }) => {
     const prevOpen = useRef(open);
     const { t } = useTranslation("Menu");
-    const { user } = useAuthContext();
     const { unread, refetch } = useGetCommunicationsQuery(undefined, {
         selectFromResult: (query) => ({
             ...query,
@@ -33,32 +34,18 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ onOpenMess
             refetch();
         }
         prevOpen.current = open;
-        console.debug("Tab open has changed status", open);
     }, [open]);
 
+    // TODO: New style??
     return (
-        <View style={{ padding: 30 }}>
-            <Label variant={unread?.length ? "bold" : undefined}>{t("messages", { count: unread?.length ?? 0, name: user?.name })}</Label>
-            <Button containerStyle={styles.marginBefore} icon={unread?.length ? "email-multiple-outline" : "email-open-multiple-outline"} onPress={onOpenMessages}>
-                {t("open_messages")}
-            </Button>
-        </View>
+        <Button
+            containerStyle={containerStyle}
+            style={style}
+            outline={!unread?.length}
+            iconRight={unread?.length ? "email-multiple-outline" : "email-open-multiple-outline"}
+            onPress={onOpenMessages}
+        >
+            {unread?.length ? t("messages", { count: unread?.length ?? 0, name: user?.name }) : t("open_messages", { name: user?.name })}
+        </Button>
     );
 };
-
-const styles = StyleSheet.create({
-    marginAfter: {
-        marginBottom: 16,
-    },
-    marginBefore: {
-        marginTop: 16,
-    },
-    rowLeft: {
-        flex: 1,
-        marginRight: 8,
-    },
-    rowRight: {
-        flex: 1,
-        marginLeft: 8,
-    },
-});

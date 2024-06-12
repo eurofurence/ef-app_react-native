@@ -16,7 +16,7 @@ import { PmItem, PmItemParams } from "./pm/PmItem";
 import { PmList } from "./pm/PmList";
 import { Settings } from "./settings/Settings";
 import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
-import { CommunicationRecord, RecordId } from "../store/eurofurence.types";
+import { RecordId } from "../store/eurofurence.types";
 
 /**
  * Available routes.

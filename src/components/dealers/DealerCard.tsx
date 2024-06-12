@@ -2,7 +2,7 @@ import { Image } from "expo-image";
 import { Moment } from "moment/moment";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { isPresent, joinOffDays } from "./utils";
@@ -36,12 +36,14 @@ export function dealerInstanceForAny(details: DealerDetails, now: Moment, day1: 
 }
 
 export type DealerCardProps = {
+    containerStyle?: ViewStyle;
+    style?: ViewStyle;
     dealer: DealerDetailsInstance;
     onPress?: (dealer: DealerDetails) => void;
     onLongPress?: (dealer: DealerDetails) => void;
 };
 
-export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }) => {
+export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer, onPress, onLongPress }) => {
     // Details and properties dereference.
     const name = dealer.details.FullName;
     const present = dealer.present;
@@ -57,11 +59,16 @@ export const DealerCard: FC<DealerCardProps> = ({ dealer, onPress, onLongPress }
     const { t } = useTranslation("Dealers");
 
     // Dependent and independent styles.
-    const styleContainer = useThemeBackground("background");
+    const styleBackground = useThemeBackground("background");
     const stylePre = useThemeBackground(present ? "primary" : "darken");
 
     return (
-        <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer]} onPress={() => onPress?.(dealer.details)} onLongPress={() => onLongPress?.(dealer.details)}>
+        <TouchableOpacity
+            containerStyle={containerStyle}
+            style={[styles.container, appStyles.shadow, styleBackground, style]}
+            onPress={() => onPress?.(dealer.details)}
+            onLongPress={() => onLongPress?.(dealer.details)}
+        >
             <View style={[styles.pre, stylePre]}>
                 <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={placeholder} transition={60} priority="low" />
             </View>

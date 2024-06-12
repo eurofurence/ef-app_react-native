@@ -1,42 +1,51 @@
-import { FC, PropsWithChildren } from "react";
+import { Image } from "expo-image";
+import React, { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
-import { useAuthContext } from "../../context/AuthContext";
+import { Claims, useAuthContext } from "../../context/AuthContext";
 import { useAppSelector } from "../../store";
 import { selectBrowsableMaps } from "../../store/eurofurence.selectors";
 import { RecordId } from "../../store/eurofurence.types";
-import { Label } from "../generic/atoms/Label";
 import { Button } from "../generic/containers/Button";
 import { Col } from "../generic/containers/Col";
 import { Grid } from "../generic/containers/Grid";
+import { Row } from "../generic/containers/Row";
 import { Tab } from "../generic/containers/Tab";
 import { useTabs } from "../generic/containers/Tabs";
 import { PrivateMessageLinker } from "../pm/PrivateMessageLinker";
 
+const placeholder = require("../../../assets/images/dealer_black.png");
+
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
+    user: Claims | null;
     open: boolean;
     onMessages?: () => void;
     onLogin?: () => void;
 };
-const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, open, onMessages, onLogin }) => {
+const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, onMessages, onLogin }) => {
     const { t } = useTranslation("Menu");
-    if (loggedIn) {
-        return <PrivateMessageLinker onOpenMessages={onMessages} open={open} />;
-    } else {
-        return (
-            <View style={{ padding: 30 }}>
-                <Label style={styles.marginBefore} type="caption">
-                    {t("not_logged_in")}
-                </Label>
-                <Button containerStyle={styles.marginBefore} icon="login" onPress={onLogin}>
+
+    // TODO: Verify style of name etc.
+    return (
+        <Row style={styles.padding} type="center" variant="center">
+            <Image style={styles.avatarCircle} source={user?.avatar ?? placeholder} contentFit="contain" placeholder={placeholder} transition={60} priority="low" />
+
+            {/*<Label style={styles.marginBefore} type="caption">*/}
+            {/*    {t("not_logged_in")}*/}
+            {/*</Label>*/}
+
+            {loggedIn ? (
+                <PrivateMessageLinker containerStyle={styles.grow} style={styles.button} user={user} onOpenMessages={onMessages} open={open} />
+            ) : (
+                <Button containerStyle={styles.grow} style={styles.button} iconRight="login" onPress={onLogin}>
                     {t("logged_in_now")}
                 </Button>
-            </View>
-        );
-    }
+            )}
+        </Row>
+    );
 };
 
 /**
@@ -55,13 +64,13 @@ export type PagerMenuProps = PropsWithChildren<{
 
 export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onAbout, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");
-    const { loggedIn } = useAuthContext();
+    const { loggedIn, user } = useAuthContext();
     const maps = useAppSelector(selectBrowsableMaps);
     const tabs = useTabs();
 
     return (
         <Col type="stretch">
-            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} />}
+            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} user={user} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} />}
 
             <Grid cols={menuColumns} style={{ alignSelf: "stretch" }}>
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
@@ -84,12 +93,6 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
 };
 
 const styles = StyleSheet.create({
-    marginAfter: {
-        marginBottom: 16,
-    },
-    marginBefore: {
-        marginTop: 16,
-    },
     rowLeft: {
         flex: 1,
         marginRight: 8,
@@ -97,5 +100,20 @@ const styles = StyleSheet.create({
     rowRight: {
         flex: 1,
         marginLeft: 8,
+    },
+    padding: {
+        paddingHorizontal: 30,
+        paddingVertical: 15,
+    },
+    grow: {
+        flexGrow: 1,
+    },
+    button: {
+        marginLeft: 16,
+    },
+    avatarCircle: {
+        width: 32,
+        height: 32,
+        borderRadius: 16,
     },
 });

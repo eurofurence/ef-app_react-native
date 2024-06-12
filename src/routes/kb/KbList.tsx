@@ -1,73 +1,82 @@
-import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
-import React, { useCallback, useMemo } from "react";
+import { StackScreenProps } from "@react-navigation/stack";
+import Fuse from "fuse.js";
+import { chain } from "lodash";
+import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { SectionList, StyleSheet, View } from "react-native";
-import { SectionListData } from "react-native/Libraries/Lists/SectionList";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { appStyles } from "../../components/AppStyles";
-import { Section } from "../../components/generic/atoms/Section";
+import { Search } from "../../components/generic/atoms/Search";
 import { Header } from "../../components/generic/containers/Header";
-import { KnowledgeEntryCard } from "../../components/kb/KnowledgeEntryCard";
-import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
-import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
+import { KbSectionedList } from "../../components/kb/KbSectionedList";
+import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useAppSelector } from "../../store";
-import { selectKnowledgeItemsSections } from "../../store/eurofurence.selectors";
-import { KnowledgeEntryRecord } from "../../store/eurofurence.types";
+import { dealersSelectors, knowledgeEntriesSelectors, selectKnowledgeItems } from "../../store/eurofurence.selectors";
+import { DealerDetails, KnowledgeEntryDetails } from "../../store/eurofurence.types";
+import { IndexRouterParamsList } from "../IndexRouter";
+import { dealerSearchOptions, dealerSearchProperties } from "../dealers/Dealers.common";
 
-export const KbList = () => {
-    const { t } = useTranslation("KnowledgeGroups");
-    const synchronizer = useSynchronizer();
-    const safe = useSafeAreaInsets();
-    const entries = useAppSelector((state) => selectKnowledgeItemsSections(state));
+// TODO: FUSE refactoring
+/**
+ * Properties to use in search.
+ */
+export const kbSearchProperties: Fuse.FuseOptionKey<KnowledgeEntryDetails>[] = [
+    {
+        name: "Title",
+        weight: 1.5,
+    },
+    {
+        name: "Text",
+        weight: 1,
+    },
+];
 
-    const sectionStyle = useThemeBackground("surface");
-
-    const headerComponent = useMemo(() => <Header>{t("header")}</Header>, [t]);
-
-    const keyExtractor = useCallback(({ Id }: KnowledgeEntryRecord, index: number) => Id + index, []);
-    const renderSection = useCallback(
-        ({ section }: SectionListData<any, any>) => {
-            return <Section title={section.Name} subtitle={section.Description} style={[styles.section, sectionStyle]} />;
-        },
-        [sectionStyle],
-    );
-    const renderItem = useCallback(({ item }: ListRenderItemInfo<KnowledgeEntryRecord>) => {
-        return <KnowledgeEntryCard entry={item} key={item.Id} />;
-    }, []);
-    const renderSectionFooter = useCallback(() => {
-        return <View style={styles.footer} />;
-    }, []);
-
-    return (
-        <SectionList
-            style={[appStyles.abs, safe]}
-            onRefresh={synchronizer.synchronize}
-            refreshing={synchronizer.isSynchronizing}
-            ListHeaderComponent={headerComponent}
-            sections={entries}
-            stickySectionHeadersEnabled
-            keyExtractor={keyExtractor}
-            renderItem={renderItem}
-            renderSectionHeader={renderSection}
-            renderSectionFooter={renderSectionFooter}
-        />
-    );
+/**
+ * Search options.
+ */
+export const kbSearchOptions: Fuse.IFuseOptions<KnowledgeEntryDetails> = {
+    shouldSort: true,
+    threshold: 0.3,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: 20,
-        paddingBottom: 100,
-    },
-    footer: {
-        height: 20,
-    },
-    entryButton: {
-        marginVertical: 10,
-    },
-    section: {
-        padding: 20,
-        marginTop: 0,
-    },
-});
+/**
+ * Params handled by the screen in route, nothing so far.
+ */
+export type KbListParams = undefined; // TODO.
+
+/**
+ * The properties to the screen as a component.
+ */
+export type KbListProps = StackScreenProps<IndexRouterParamsList, "KnowledgeGroups">;
+
+export const KbList: FC<KbListProps> = ({ navigation }) => {
+    const safe = useSafeAreaInsets();
+    const { t } = useTranslation("KnowledgeGroups");
+    // Search integration.
+    const [filter, setFilter, results] = useFuseIntegration(knowledgeEntriesSelectors.selectAll, kbSearchProperties, kbSearchOptions);
+
+    const groups = useAppSelector((state) => selectKnowledgeItems(state));
+    const all = useMemo(() => {
+        if (results) return results;
+        else
+            return chain(groups)
+                .flatMap(({ group, entries }) => [group, ...entries])
+                .value();
+    }, [results, groups]);
+
+    return (
+        <View style={[appStyles.abs, safe]}>
+            <Header>{t("header")}</Header>
+            <KbSectionedList
+                navigation={navigation}
+                kbGroups={all}
+                leader={
+                    <>
+                        <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />
+                    </>
+                }
+            />
+        </View>
+    );
+};

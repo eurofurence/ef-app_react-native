@@ -52,6 +52,6 @@ export function eventSectionForDate(t: TFunction, date: string, eventsCount: num
     };
 }
 
-export const EventSection: FC<EventSectionProps> = ({ title, subtitle, icon }) => {
-    return <Section title={title} subtitle={subtitle} icon={icon} />;
+export const EventSection: FC<EventSectionProps> = ({ style, title, subtitle, icon }) => {
+    return <Section style={style} title={title} subtitle={subtitle} icon={icon} />;
 };

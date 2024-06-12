@@ -1,9 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { TokenRegSysRequest, TokenRegSysResponse, TokenWhoAmIResponse } from "./authorization.types";
-import { RecordId, RecordMetadata } from "./eurofurence.types";
 import { apiBase } from "../configuration";
-import { Query } from "../types";
+import { getAccessToken } from "../context/AuthContext";
 
 type NewPrivateMessage = {
     RecipientUid: string;
@@ -16,34 +14,14 @@ export const authorizationService = createApi({
     reducerPath: "authorizationService",
     baseQuery: fetchBaseQuery({
         baseUrl: apiBase,
-        prepareHeaders: (headers, { getState }) => {
-            const token: string | undefined = (getState() as any).authorization?.accessToken;
+        prepareHeaders: async (headers) => {
+            const token = await getAccessToken();
             if (token) headers.set("Authorization", `Bearer ${token}`);
             return headers;
         },
     }),
     tagTypes: ["User"],
     endpoints: (builder) => ({
-        // TODO: Deprecated
-        postToken: builder.mutation<TokenRegSysResponse, TokenRegSysRequest>({
-            query: (args) => ({
-                url: "/Tokens/RegSys",
-                method: "POST",
-                body: {
-                    RegNo: args.RegNo,
-                    Username: args.Username,
-                    Password: args.Password,
-                },
-            }),
-            invalidatesTags: ["User"],
-        }),
-        // TODO: Deprecated
-        getWhoAmI: builder.query<TokenWhoAmIResponse, void>({
-            query: () => ({
-                url: "/Tokens/WhoAmI",
-            }),
-            providesTags: ["User"],
-        }),
         postDeviceRegistration: builder.mutation<void, { DeviceId: string; Topics: string[] }>({
             query: (args) => ({
                 url: "/PushNotifications/FcmDeviceRegistration",
@@ -81,28 +59,6 @@ export const authorizationService = createApi({
         }),
     }),
 });
-
-export const selectById =
-    <T extends RecordMetadata>(id: RecordId) =>
-    (
-        query: Query<T[]>,
-    ): Query<T[]> & {
-        record: T | undefined;
-    } => ({
-        ...query,
-        record: query.data?.find((record: RecordMetadata) => record.Id === id),
-    });
-
-export const filterByIds =
-    <T extends RecordMetadata>(ids: RecordId[]) =>
-    (
-        query: Query<T[]>,
-    ): Query<T[]> & {
-        records: T[];
-    } => ({
-        ...query,
-        records: query.data?.filter((it: RecordMetadata) => it.Id in ids) ?? [],
-    });
 
 export const {
     usePostDeviceRegistrationMutation,

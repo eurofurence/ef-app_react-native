@@ -1,7 +1,7 @@
 import { ImageBackground } from "expo-image";
 import { Moment } from "moment";
 import React, { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { EventCardTime } from "./EventCardTime";
@@ -9,7 +9,6 @@ import { useThemeBackground, useThemeColorValue } from "../../hooks/themes/useTh
 import { EventDetails } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
 import { Icon } from "../generic/atoms/Icon";
-import { Indicator } from "../generic/atoms/Indicator";
 import { Label } from "../generic/atoms/Label";
 import { Row } from "../generic/containers/Row";
 
@@ -49,31 +48,40 @@ export function eventInstanceForPassed(details: EventDetails) {
 }
 
 export type EventCardProps = {
+    containerStyle?: ViewStyle;
+    style?: ViewStyle;
     type?: "duration" | "time";
     event: EventDetailsInstance;
     onPress?: (event: EventDetails) => void;
     onLongPress?: (event: EventDetails) => void;
 };
 
-export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPress, onLongPress }) => {
+export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "duration", event, onPress, onLongPress }) => {
     // Details and properties dereference.
     const badges = event.details.Badges;
     const glyph = event.details.Glyph;
     const title = event.details.Title;
     const subtitle = event.details.SubTitle;
     const tag = event.details.ConferenceRoom?.ShortName ?? event.details.ConferenceRoom?.Name;
+    const favorite = event.details.Favorite;
     const happening = event.happening;
     const done = event.done;
 
     // Dependent and independent styles.
     const styleContainer = useThemeBackground("background");
-    const stylePre = useThemeBackground(done ? "darken" : "primary");
+    const stylePre = useThemeBackground(done ? "darken" : favorite ? "notification" : "primary");
     const styleBadgeFrame = useThemeBackground("secondary");
     const colorBadge = useThemeColorValue("white");
     const colorGlyph = useThemeColorValue("lighten");
+    const colorHeart = useThemeColorValue(event.details.Banner ? "white" : "text");
 
     return (
-        <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer]} onPress={() => onPress?.(event.details)} onLongPress={() => onLongPress?.(event.details)}>
+        <TouchableOpacity
+            containerStyle={containerStyle}
+            style={[styles.container, appStyles.shadow, styleContainer, style]}
+            onPress={() => onPress?.(event.details)}
+            onLongPress={() => onLongPress?.(event.details)}
+        >
             <View style={[styles.pre, stylePre]}>
                 {!glyph ? null : (
                     <View style={styles.glyphContainer}>
@@ -81,6 +89,12 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
                     </View>
                 )}
                 <EventCardTime type={type} event={event.details} done={event.done} />
+
+                {!happening ? null : (
+                    <Label style={styles.happening} type="cap" color={done ? "important" : "white"}>
+                        LIVE
+                    </Label>
+                )}
             </View>
 
             {event.details.Banner ? (
@@ -122,9 +136,9 @@ export const EventCard: FC<EventCardProps> = ({ type = "duration", event, onPres
                 </View>
             )}
 
-            {!happening ? null : (
-                <View style={styles.indicator}>
-                    <Indicator color="white" />
+            {!favorite ? null : (
+                <View style={styles.favorite}>
+                    <Icon name="heart" size={20} color={colorHeart} />
                 </View>
             )}
         </TouchableOpacity>
@@ -147,6 +161,12 @@ const styles = StyleSheet.create({
         bottom: -20,
         alignItems: "center",
         justifyContent: "center",
+    },
+    happening: {
+        position: "absolute",
+        top: 0,
+        padding: 2,
+        alignItems: "center",
     },
     glyph: {
         opacity: 0.25,
@@ -213,10 +233,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
     },
-    indicator: {
+    favorite: {
         position: "absolute",
         top: 0,
-        left: 0,
-        padding: 14,
+        right: 0,
+        padding: 8,
     },
 });

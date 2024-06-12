@@ -1,20 +1,22 @@
 import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
-import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
+import { CompositeScreenProps } from "@react-navigation/core";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { FC, useCallback, useEffect } from "react";
+import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Keyboard, StyleSheet, View } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { StyleSheet } from "react-native";
 
+import { eventSearchOptions, eventSearchProperties, useEventSearchGroups } from "./Events.common";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventsRouterContext } from "./EventsRouterContext";
-import { Label } from "../../components/generic/atoms/Label";
-import { Button } from "../../components/generic/containers/Button";
-import { Floater } from "../../components/generic/containers/Floater";
+import { EventsSectionedList } from "../../components/events/EventsSectionedList";
+import { Search } from "../../components/generic/atoms/Search";
 import { Row } from "../../components/generic/containers/Row";
 import { Tab } from "../../components/generic/containers/Tab";
-import { useThemeBackground, useThemeMemo } from "../../hooks/themes/useThemeHooks";
+import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
+import { useNow } from "../../hooks/time/useNow";
+import { eventsSelector } from "../../store/eurofurence.selectors";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 
@@ -34,56 +36,61 @@ export type EventsSearchProps =
     >;
 
 export const EventsSearch: FC<EventsSearchProps> = ({ navigation }) => {
+    // General state.
     const { t } = useTranslation("Events");
-    const { search, setSearch, results } = useEventsRouterContext();
+    const now = useNow();
 
-    // Hide keyboard on navigating away from this page.
-    const isFocused = useIsFocused();
-    useEffect(() => {
-        if (!isFocused) Keyboard.dismiss();
-    }, [isFocused]);
+    const { setSelected } = useEventsRouterContext();
 
+    // Search state.
+    const [filter, setFilter, results] = useFuseIntegration(eventsSelector.selectAll, eventSearchProperties, eventSearchOptions);
+
+    // Use results and group generically.
+    const eventGroups = useEventSearchGroups(t, now, results);
+
+    // Actions
     const onDay = useCallback(() => navigation.getParent()?.setParams({ filterType: "days" }), [navigation]);
     const onRoom = useCallback(() => navigation.getParent()?.setParams({ filterType: "rooms" }), [navigation]);
     const onTrack = useCallback(() => navigation.getParent()?.setParams({ filterType: "tracks" }), [navigation]);
 
-    const searchStyle = useThemeMemo((theme) => ({ color: theme.text, borderBottomColor: theme.text }));
     const roundedStyle = useThemeBackground("secondary");
     return (
-        <Floater>
-            <View style={styles.end}>
-                <View style={styles.searchArea}>
-                    <Label type="caption">Enter your query</Label>
-                    <TextInput style={[styles.searchField, searchStyle]} value={search} onChangeText={setSearch} placeholder="Enter query" />
-
-                    {!results ? null : <Button onPress={() => navigation.jumpTo("Results")}>View all {results.length} results</Button>}
-                </View>
-                <Row style={styles.categories} type="stretch" variant="spaced">
-                    <Tab style={[styles.rounded, roundedStyle]} inverted icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
-                    <Tab style={[styles.rounded, styles.rowCenter, roundedStyle]} inverted icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
-                    <Tab style={[styles.rounded, roundedStyle]} inverted icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
-                </Row>
-            </View>
-        </Floater>
+        <EventsSectionedList
+            navigation={navigation}
+            eventsGroups={eventGroups}
+            select={setSelected}
+            leader={
+                <>
+                    <Row style={styles.row} type="stretch" variant="spaced">
+                        <Tab style={[styles.rounded, roundedStyle]} inverted icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
+                        <Tab style={[styles.rounded, styles.rowCenter, roundedStyle]} inverted icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
+                        <Tab style={[styles.rounded, roundedStyle]} inverted icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
+                    </Row>
+                    <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />
+                </>
+            }
+            cardType="time"
+        />
     );
 };
 
 const styles = StyleSheet.create({
+    row: {
+        marginTop: 15,
+    },
     end: {
         justifyContent: "flex-end",
         flex: 1,
-    },
-    categories: {
-        paddingBottom: 20,
-        marginBottom: 30,
     },
     searchArea: {
         height: 160,
     },
     searchField: {
-        paddingVertical: 5,
         borderBottomWidth: 1,
         marginVertical: 25,
+        borderRadius: 10,
+        padding: 10,
+        flex: 1,
     },
     rounded: {
         margin: 10,

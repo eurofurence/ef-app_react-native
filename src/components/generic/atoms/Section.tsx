@@ -65,8 +65,8 @@ export const Section: FC<SectionProps> = ({ style, icon = "bookmark", title, sub
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 30,
-        marginBottom: 15,
+        paddingTop: 30,
+        paddingBottom: 15,
     },
     placeholder: {
         width: iconSize,

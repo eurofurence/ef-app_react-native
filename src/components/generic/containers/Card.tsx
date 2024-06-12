@@ -8,13 +8,15 @@ import { appStyles } from "../../AppStyles";
 type CardProps = PropsWithChildren<{
     onPress?: () => void;
     onLongPress?: () => void;
+    containerStyle?: StyleProp<ViewStyle> | undefined;
     style?: StyleProp<ViewStyle> | undefined;
 }>;
 
-export const Card: FC<CardProps> = ({ children, onPress, onLongPress, style }) => {
+export const Card: FC<CardProps> = ({ children, onPress, onLongPress, containerStyle, style }) => {
     const cardStyle = useThemeBackground("background");
     return (
         <TouchableOpacity
+            containerStyle={containerStyle}
             style={[styles.container, appStyles.shadow, cardStyle, style]}
             onPress={onPress}
             onLongPress={onLongPress}

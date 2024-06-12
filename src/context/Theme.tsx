@@ -200,6 +200,24 @@ export const themes: Record<string, Theme> = {
 };
 
 /**
+ * Adds or replaces alpha
+ * @param color The original color.
+ * @param alpha The alpha value between 0 and 1.
+ */
+export const withAlpha = (color: string, alpha: number) =>
+    color.length === 7
+        ? // Had no alpha.
+          color +
+          Math.floor(alpha * 255)
+              .toString(16)
+              .padStart(2, "0")
+        : // Had alpha.
+          color.substring(0, 7) +
+          Math.floor(alpha * 255)
+              .toString(16)
+              .padStart(2, "0");
+
+/**
  * Name of defined themes.
  */
 export type ThemeName = keyof typeof themes;

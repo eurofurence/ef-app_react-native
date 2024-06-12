@@ -1,16 +1,17 @@
 import { FlashList } from "@shopify/flash-list";
-import { FC, ReactElement } from "react";
-import { StyleSheet, Vibration } from "react-native";
+import { FC, ReactElement, useMemo } from "react";
+import { StyleSheet, Vibration, View } from "react-native";
 
 import { EventCard, EventDetailsInstance } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
 import { PersonalScheduleProps } from "./PersonalSchedule";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { EventsByDayProps } from "../../routes/events/EventsByDay";
 import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
 import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
-import { EventsResultsProps } from "../../routes/events/EventsResults";
 import { EventsSearchProps } from "../../routes/events/EventsSearch";
 import { EventDetails } from "../../store/eurofurence.types";
+import { findIndices } from "../../util/findIndices";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
 
 /**
@@ -19,7 +20,6 @@ import { useSynchronizer } from "../sync/SynchronizationProvider";
 export type EventsSectionedListProps = {
     navigation:
         | EventsSearchProps["navigation"]
-        | EventsResultsProps["navigation"]
         | EventsByDayProps["navigation"]
         | EventsByRoomProps["navigation"]
         | EventsByTrackProps["navigation"]
@@ -30,16 +30,21 @@ export type EventsSectionedListProps = {
     empty?: ReactElement;
     trailer?: ReactElement;
     cardType?: "duration" | "time";
+    sticky?: boolean;
 };
 
-export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, leader, eventsGroups, select, empty, trailer, cardType = "duration" }) => {
+export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, leader, eventsGroups, select, empty, trailer, cardType = "duration", sticky = true }) => {
     const synchronizer = useSynchronizer();
+    const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !("details" in item)) : undefined), [eventsGroups, sticky]);
+    const sectionStyle = useThemeBackground("surface");
+
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
             onRefresh={synchronizer.synchronize}
             contentContainerStyle={styles.container}
             scrollEnabled={true}
+            stickyHeaderIndices={stickyIndices}
             ListHeaderComponent={leader}
             ListFooterComponent={trailer}
             ListEmptyComponent={empty}
@@ -50,6 +55,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
                 if ("details" in item) {
                     return (
                         <EventCard
+                            containerStyle={styles.item}
                             event={item}
                             type={cardType}
                             onPress={(event) =>
@@ -64,7 +70,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
                         />
                     );
                 } else {
-                    return <EventSection title={item.title} subtitle={item.subtitle} icon={item.icon} />;
+                    return <EventSection style={[styles.item, sectionStyle]} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
                 }
             }}
             estimatedItemSize={110}
@@ -73,8 +79,10 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
 };
 
 const styles = StyleSheet.create({
-    container: {
+    item: {
         paddingHorizontal: 20,
+    },
+    container: {
         paddingBottom: 100,
     },
 });

@@ -1,4 +1,3 @@
-import { TFunction } from "i18next";
 import moment from "moment";
 
 import eurofurenceCache from "./eurofurence.details.data";

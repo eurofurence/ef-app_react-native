@@ -36,12 +36,13 @@
     "viewing_dealer": "Viewing dealer"
   },
   "Dealers": {
+    "after_dark": "After dark",
     "all": "All",
     "dealers_at_convention": "Dealers at {{convention}}",
-    "dealers_count": "{{count}} dealers",
-    "dealers_on_day": "Dealers on {{day}}",
-    "dealers_on_this_day": "Dealers on this day",
-    "not_attending_on": "Not in on {{offDays}}"
+    "dealers_in_ad": "After dark dealers den",
+    "dealers_in_regular": "Regular dealers den",
+    "not_attending_on": "Not in on {{offDays}}",
+    "regular": "Regular"
   },
   "EmptyScreen": {
     "notImplemented": "Content is not implemented yet."
@@ -50,6 +51,7 @@
     "about_title": "About",
     "add_favorite": "Favorite",
     "give_feedback": "Give Feedback",
+    "event_was_updated": "Event was updated since you last viewed it",
     "label_event_description": "More about the event",
     "label_event_panelhosts": "Hosted by",
     "label_event_room": "Room",
@@ -102,6 +104,7 @@
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "announcementsTitle_zero": "There are no announcements.",
     "content_untranslated": "",
+    "different_timezone": "Your device is not set to the same timezone as {{convention}}",
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
@@ -135,7 +138,7 @@
     "messages_zero": "Hello {{name}}. You have no unread messages.",
     "more": "More",
     "not_logged_in": "You are currently not logged in",
-    "open_messages": "Open messages",
+    "open_messages": "Hello {{name}}. Open messages",
     "services": "Services",
     "settings": "Settings"
   },

@@ -18,6 +18,7 @@
     "name": "Eurofurence",
     "abbreviation": "EF",
     "identifier": "EF27",
+    "timeZone": "Europe/Amsterdam",
     "appBase": "https://app.eurofurence.org/EF27",
     "apiBase": "https://app.eurofurence.org/EF27/Api",
     "menuColumns": 3,
@@ -27,10 +28,12 @@
   },
   "auth": {
     "issuer": "https://identity.eurofurence.org",
+    "redirect": "https://app.eurofurence.org/auth/login",
     "clientId": "a46cc012-dbc8-4992-ab10-581a40c9833e",
     "scopes": [
       "openid",
       "profile",
+      "offline",
       "offline_access"
     ]
   },
@@ -44,8 +47,8 @@
     "lint": "pnpm lint:code && pnpm lint:translations",
     "lint:code": "eslint ./src --ext js,ts,jsx,tsx",
     "lint:code:fix": "eslint ./src --ext js,ts,jsx,tsx --fix",
-    "lint:translations": "eslint --rule 'prettier/prettier: off' --ext json --format node_modules/eslint-plugin-i18n-json/formatter.js ./src/i18n",
-    "lint:translations:fix": "eslint --rule 'prettier/prettier: off' --ext json --format node_modules/eslint-plugin-i18n-json/formatter.js ./src/i18n --fix",
+    "lint:translations": "eslint --ext json --format node_modules/eslint-plugin-i18n-json/formatter.js ./src/i18n",
+    "lint:translations:fix": "eslint --ext json --format node_modules/eslint-plugin-i18n-json/formatter.js ./src/i18n --fix",
     "lint:depcheck": "depcheck",
     "lint:unimported": "pnpm exec unimported",
     "test": "jest",

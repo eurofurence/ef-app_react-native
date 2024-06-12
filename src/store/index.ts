@@ -6,7 +6,7 @@ import logger from "redux-logger";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 
 import { authorizationService } from "./authorization.service";
-import { authorizationSlice } from "./authorization.slice";
+import { auxiliary } from "./auxilary";
 import { backgroundSlice } from "./background.slice";
 import { eurofurenceCache } from "./eurofurence.cache";
 import { eurofurenceService } from "./eurofurence.service";
@@ -16,11 +16,11 @@ import { timeTravelSlice } from "./timetravel.slice";
 export const reducers = combineReducers({
     [backgroundSlice.name]: backgroundSlice.reducer,
     [timeTravelSlice.name]: timeTravelSlice.reducer,
-    [authorizationSlice.name]: authorizationSlice.reducer,
     [eurofurenceCache.name]: eurofurenceCache.reducer,
     [eurofurenceService.reducerPath]: eurofurenceService.reducer,
     [authorizationService.reducerPath]: authorizationService.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
+    [auxiliary.name]: auxiliary.reducer,
 });
 
 const persistedReducer = persistReducer(
@@ -28,7 +28,7 @@ const persistedReducer = persistReducer(
         key: "root",
         version: 2,
         storage: AsyncStorage,
-        whitelist: [timeTravelSlice.name, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name, settingsSlice.name],
+        whitelist: [timeTravelSlice.name, backgroundSlice.name, eurofurenceCache.name, settingsSlice.name, auxiliary.name],
     },
     reducers,
 );
@@ -47,7 +47,7 @@ export const store = configureStore({
 
         middleware.push(eurofurenceService.middleware, authorizationService.middleware);
 
-        // if (Platform.OS === "web") middleware.push(logger as any);
+        if (Platform.OS === "web") middleware.push(logger as any);
 
         return middleware;
     },

@@ -3,6 +3,7 @@ import _ from "lodash";
 
 import { CommunicationRecord, RecordId, RecordMetadata } from "./eurofurence.types";
 import { apiBase } from "../configuration";
+import { getAccessToken } from "../context/AuthContext";
 
 const tagsFromList =
     <TagType extends string>(type: TagType) =>
@@ -13,8 +14,8 @@ export const eurofurenceService = createApi({
     reducerPath: "eurofurenceService",
     baseQuery: fetchBaseQuery({
         baseUrl: apiBase,
-        prepareHeaders: (headers, { getState }) => {
-            const token: string | undefined = (getState() as any).authorization?.accessToken;
+        prepareHeaders: async (headers) => {
+            const token = await getAccessToken();
             if (token) headers.set("Authorization", `Bearer ${token}`);
             return headers;
         },

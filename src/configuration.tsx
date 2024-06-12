@@ -1,4 +1,3 @@
-import appData from "../app.json";
 import packageData from "../package.json";
 
 /**
@@ -15,6 +14,11 @@ export const conAbbr = packageData.convention.abbreviation;
  * Convention identifier.
  */
 export const conId = packageData.convention.identifier;
+
+/**
+ * Convention time zone.
+ */
+export const conTimeZone = packageData.convention.timeZone;
 
 /**
  * App base, non-API URLs are relative to this.
@@ -47,6 +51,6 @@ export const showServices = packageData.convention.showServices;
 export const showCatchEm = packageData.convention.showCatchEm;
 
 export const authIssuer = packageData.auth.issuer;
-export const authScheme = appData.expo.scheme;
+export const authRedirect = packageData.auth.redirect;
 export const authClientId = packageData.auth.clientId;
 export const authScopes = packageData.auth.scopes;

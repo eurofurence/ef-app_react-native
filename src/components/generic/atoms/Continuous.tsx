@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from "react-native-reanimated";
 
 import { ThemeColor } from "../../../context/Theme";
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";

@@ -3,7 +3,7 @@ import { StyleSheet, TextProps, View, ViewProps } from "react-native";
 
 import { Row } from "./Row";
 import { ThemeColor } from "../../../context/Theme";
-import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label, LabelProps } from "../atoms/Label";
 
@@ -23,11 +23,12 @@ export const Badge: FC<BadgeProps> = ({ unpad, badgeColor, textColor, textType =
     const styleBadgeColor = useThemeBackground(badgeColor ?? "transparent");
     const styleContainer = { marginHorizontal: -unpad };
     const styleContent = { paddingVertical: 10, paddingHorizontal: unpad };
+    const iconColor = useThemeColorValue(textColor);
 
     return (
         <View style={[styleContainer, styleBadgeColor]}>
             <Row style={[styles.content, styleContent]}>
-                {!icon ? null : <Icon name={icon} size={iconSize} color={textColor} />}
+                {!icon ? null : <Icon name={icon} size={iconSize} color={iconColor} />}
                 <Label style={styles.text} color={textColor} ml={10} type={textType} variant={textVariant}>
                     {children}
                 </Label>
