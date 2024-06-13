@@ -4,7 +4,7 @@ import { TFunction } from "i18next";
 import { chain } from "lodash";
 import { Moment } from "moment";
 import moment from "moment/moment";
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";
 
@@ -20,10 +20,6 @@ export type CountdownHeaderProps = {
 };
 
 const bannerBreakpoint = 600;
-const bannerNarrowSrc = require("../../../assets/images/banner-ef27-narrow.png");
-const bannerFullSrc = require("../../../assets/images/banner-ef27.png");
-const logoSrc = require("../../../assets/images/banner_2023_logo.png");
-
 const useCountdownTitle = (t: TFunction, now: Moment) => {
     const days = useAppSelector(eventDaysSelectors.selectAll);
 
@@ -56,12 +52,15 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
 
     // Pick background based on device dimensions.
     const { width } = useWindowDimensions();
-    const background = useMemo(() => (width < bannerBreakpoint ? bannerNarrowSrc : bannerFullSrc), [width]);
 
     const subtitle = useCountdownTitle(t, now);
     return (
         <View style={[styles.container, style]}>
-            <ImageBackground style={styles.background} source={background} contentFit="cover" />
+            {width < bannerBreakpoint ? (
+                <ImageBackground key="banner" style={styles.background} source="banner_ef27_narrow" contentFit="cover" />
+            ) : (
+                <ImageBackground key="banner" style={styles.background} source="banner_ef27_wide" contentFit="cover" />
+            )}
 
             <Section
                 style={styles.section}
@@ -73,7 +72,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
                 titleVariant="shadow"
                 subtitleVariant="shadow"
             />
-            <Image style={styles.logo} source={logoSrc} contentFit="contain" />
+            <Image style={styles.logo} source="banner_ef27_logo" contentFit="contain" />
         </View>
     );
 };

@@ -51,7 +51,7 @@ export const DealersAll: FC<DealersAllProps> = ({ navigation }) => {
             dealersGroups={dealersGroups}
             leader={
                 <>
-                    <Label type="h1" variant="middle" mt={30}>
+                    <Label type="lead" variant="middle" mt={30}>
                         {t("dealers_at_convention", { convention: conName })}
                     </Label>
                     <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />

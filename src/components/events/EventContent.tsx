@@ -1,3 +1,4 @@
+import { useIsFocused } from "@react-navigation/core";
 import { captureException } from "@sentry/react-native";
 import moment from "moment";
 import React, { FC, useCallback } from "react";
@@ -7,12 +8,14 @@ import { Share, StyleSheet, View } from "react-native";
 import { appBase, conAbbr } from "../../configuration";
 import { useEventReminder } from "../../hooks/events/useEventReminder";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
+import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { selectValidLinksByTarget } from "../../store/eurofurence.selectors";
 import { EventDetails } from "../../store/eurofurence.types";
 import { Banner } from "../generic/atoms/Banner";
 import { Label } from "../generic/atoms/Label";
 import { MarkdownContent } from "../generic/atoms/MarkdownContent";
+import { Progress } from "../generic/atoms/Progress";
 import { Section } from "../generic/atoms/Section";
 import { Badge } from "../generic/containers/Badge";
 import { Button } from "../generic/containers/Button";
@@ -49,6 +52,11 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
     const { t } = useTranslation("Event");
     const { isFavorite, toggleReminder } = useEventReminder(event);
+    const isFocused = useIsFocused();
+    const now = useNow(isFocused ? 5 : "static");
+
+    const progress = (now.valueOf() - moment(event.StartDateTimeUtc).valueOf()) / (moment(event.EndDateTimeUtc).valueOf() - moment(event.StartDateTimeUtc).valueOf());
+    const happening = progress >= 0.0 && progress <= 1.0;
 
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
@@ -94,6 +102,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
             )}
 
             <Section icon={isFavorite ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
+            {!happening ? null : <Progress value={progress} />}
             <MarkdownContent defaultType="para" mb={20}>
                 {event.Abstract}
             </MarkdownContent>

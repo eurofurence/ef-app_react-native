@@ -1,6 +1,6 @@
 import { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { appStyles } from "../../components/AppStyles";
 import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
@@ -19,7 +19,6 @@ export const PmItem = () => {
     // Use base params.
     const navigation = useAppNavigation("PrivateMessageItem");
     const { params } = useAppRoute("PrivateMessageItem");
-    const safe = useSafeAreaInsets();
 
     // Use API connection.
     const [markRead] = useMarkCommunicationReadMutation();
@@ -59,7 +58,7 @@ export const PmItem = () => {
     }
 
     return (
-        <ScrollView style={[safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{message.Subject}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 <MarkdownContent>{message.Message}</MarkdownContent>

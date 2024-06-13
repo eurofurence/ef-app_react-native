@@ -70,6 +70,7 @@
     "react-error-overlay": "6.0.9"
   },
   "dependencies": {
+    "@expo/metro-runtime": "~3.2.1",
     "@expo/vector-icons": "^14.0.0",
     "@gorhom/bottom-sheet": "^4.4.7",
     "@hookform/resolvers": "^3.1.1",
@@ -88,6 +89,7 @@
     "@shopify/flash-list": "1.6.4",
     "expo": "~51.0.11",
     "expo-application": "~5.9.1",
+    "expo-asset": "~10.0.9",
     "expo-auth-session": "~5.5.2",
     "expo-av": "~14.0.5",
     "expo-build-properties": "~0.12.3",
@@ -101,6 +103,7 @@
     "expo-localization": "~15.0.3",
     "expo-notifications": "~0.28.7",
     "expo-secure-store": "~13.0.1",
+    "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.6",
     "expo-task-manager": "~11.8.2",

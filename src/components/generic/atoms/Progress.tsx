@@ -2,6 +2,7 @@ import { FC, useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
+import { ThemeColor, withAlpha } from "../../../context/Theme";
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 
 /**
@@ -17,9 +18,14 @@ export type ProgressProps = {
      * The value to show at between zero and one.
      */
     value?: number;
+
+    /**
+     * Foreground color.
+     */
+    color?: ThemeColor;
 };
 
-export const Progress: FC<ProgressProps> = ({ style, value }) => {
+export const Progress: FC<ProgressProps> = ({ style, value, color = "secondary" }) => {
     // Shared at value.
     const at = useSharedValue(value ?? 0);
 
@@ -29,7 +35,7 @@ export const Progress: FC<ProgressProps> = ({ style, value }) => {
     }, [at, value]);
 
     // Convert theme into style.
-    const colorStyle = useThemeBackground("secondary");
+    const colorStyle = useThemeBackground(color);
 
     // Compute dynamic style animating the bar.
     const dynamicStyle = useAnimatedStyle(
@@ -41,7 +47,7 @@ export const Progress: FC<ProgressProps> = ({ style, value }) => {
     );
 
     return (
-        <View style={[styles.container, style]}>
+        <View style={[styles.container, { backgroundColor: withAlpha(colorStyle.backgroundColor, 0.25) }, style]}>
             <Animated.View style={[styles.bar, colorStyle, dynamicStyle]} />
         </View>
     );
@@ -51,7 +57,7 @@ const styles = StyleSheet.create({
     container: {
         overflow: "hidden",
         alignSelf: "stretch",
-        height: 2,
+        height: 4,
     },
     bar: {
         position: "absolute",

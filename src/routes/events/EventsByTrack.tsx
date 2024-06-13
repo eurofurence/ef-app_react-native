@@ -49,7 +49,7 @@ export const EventsByTrack: FC<EventsByTrackProps> = ({ navigation, route }) => 
             eventsGroups={eventsGroups}
             select={setSelected}
             leader={
-                <Label type="h1" variant="middle" mt={30}>
+                <Label type="lead" variant="middle" mt={30}>
                     {track?.Name ?? ""}
                 </Label>
             }

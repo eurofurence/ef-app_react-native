@@ -1,15 +1,15 @@
 import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useMemo } from "react";
-import { StyleSheet, Vibration, View } from "react-native";
+import { StyleSheet, Vibration } from "react-native";
 
 import { EventCard, EventDetailsInstance } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
-import { PersonalScheduleProps } from "./PersonalSchedule";
-import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
 import { EventsByDayProps } from "../../routes/events/EventsByDay";
 import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
 import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
 import { EventsSearchProps } from "../../routes/events/EventsSearch";
+import { PersonalScheduleProps } from "../../routes/events/PersonalSchedule";
 import { EventDetails } from "../../store/eurofurence.types";
 import { findIndices } from "../../util/findIndices";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
@@ -34,6 +34,7 @@ export type EventsSectionedListProps = {
 };
 
 export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, leader, eventsGroups, select, empty, trailer, cardType = "duration", sticky = true }) => {
+    const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !("details" in item)) : undefined), [eventsGroups, sticky]);
     const sectionStyle = useThemeBackground("surface");
@@ -74,6 +75,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
                 }
             }}
             estimatedItemSize={110}
+            extraData={theme}
         />
     );
 };

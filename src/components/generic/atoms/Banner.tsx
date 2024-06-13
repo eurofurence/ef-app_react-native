@@ -28,7 +28,7 @@ export const Banner: FC<BannerProps> = ({ style, image, placeholder }) => {
 
     const aspect = useMemo<ImageProps["style"]>(() => (!image ? {} : { aspectRatio: image.Width / image.Height }), [image]);
 
-    return <Image style={[styles.image, aspect, style]} contentFit={undefined} source={{ uri: image.FullUrl }} placeholder={placeholder} />;
+    return <Image style={[styles.image, aspect, style]} contentFit={undefined} source={image.FullUrl} placeholder={placeholder} />;
 };
 
 const styles = StyleSheet.create({

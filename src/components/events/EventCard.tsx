@@ -1,5 +1,5 @@
 import { ImageBackground } from "expo-image";
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
 import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -10,6 +10,7 @@ import { EventDetails } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
 import { Icon } from "../generic/atoms/Icon";
 import { Label } from "../generic/atoms/Label";
+import { Progress } from "../generic/atoms/Progress";
 import { Row } from "../generic/containers/Row";
 
 const glyphIconSize = 90;
@@ -17,8 +18,7 @@ const badgeIconSize = 20;
 
 export type EventDetailsInstance = {
     details: EventDetails;
-    happening: boolean;
-    done: boolean;
+    progress: number;
 };
 
 /**
@@ -26,8 +26,9 @@ export type EventDetailsInstance = {
  * @param details The details to use.
  * @param now The moment to check against.
  */
-export function eventInstanceForAny(details: EventDetails, now: Moment) {
-    return { details, happening: now.isBetween(details.StartDateTimeUtc, details.EndDateTimeUtc), done: now.isAfter(details.EndDateTimeUtc) };
+export function eventInstanceForAny(details: EventDetails, now: Moment): EventDetailsInstance {
+    const progress = (now.valueOf() - moment(details.StartDateTimeUtc).valueOf()) / (moment(details.EndDateTimeUtc).valueOf() - moment(details.StartDateTimeUtc).valueOf());
+    return { details, progress };
 }
 
 /**
@@ -35,16 +36,17 @@ export function eventInstanceForAny(details: EventDetails, now: Moment) {
  * @param details The details to use.
  * @param now The moment to check against.
  */
-export function eventInstanceForNotPassed(details: EventDetails, now: Moment) {
-    return { details, happening: now.isBetween(details.StartDateTimeUtc, details.EndDateTimeUtc), done: false };
+export function eventInstanceForNotPassed(details: EventDetails, now: Moment): EventDetailsInstance {
+    const progress = (now.valueOf() - moment(details.StartDateTimeUtc).valueOf()) / (moment(details.EndDateTimeUtc).valueOf() - moment(details.StartDateTimeUtc).valueOf());
+    return { details, progress };
 }
 
 /**
  * Creates the event instance props for a passed event.
  * @param details The details to use.
  */
-export function eventInstanceForPassed(details: EventDetails) {
-    return { details, happening: false, done: true };
+export function eventInstanceForPassed(details: EventDetails): EventDetailsInstance {
+    return { details, progress: 1.1 };
 }
 
 export type EventCardProps = {
@@ -64,8 +66,9 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
     const subtitle = event.details.SubTitle;
     const tag = event.details.ConferenceRoom?.ShortName ?? event.details.ConferenceRoom?.Name;
     const favorite = event.details.Favorite;
-    const happening = event.happening;
-    const done = event.done;
+    const happening = event.progress >= 0.0 && event.progress <= 1.0;
+    const done = event.progress > 1.0;
+    const progress = event.progress;
 
     // Dependent and independent styles.
     const styleContainer = useThemeBackground("background");
@@ -88,7 +91,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
                         <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
                     </View>
                 )}
-                <EventCardTime type={type} event={event.details} done={event.done} />
+                <EventCardTime type={type} event={event.details} done={done} />
 
                 {!happening ? null : (
                     <Label style={styles.happening} type="cap" color={done ? "important" : "white"}>
@@ -99,7 +102,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
 
             {event.details.Banner ? (
                 <View style={styles.mainPoster}>
-                    <ImageBackground source={{ uri: event.details.Banner.FullUrl }} contentFit="cover" style={StyleSheet.absoluteFill} priority="low">
+                    <ImageBackground source={event.details.Banner.FullUrl} contentFit="cover" style={StyleSheet.absoluteFill} priority="low">
                         <View style={styles.tagArea2}>
                             <View style={styles.tagAreaInner}>
                                 <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
@@ -112,6 +115,8 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
                                 )}
                             </View>
                         </View>
+
+                        {!happening ? null : <Progress style={styles.progress} value={progress} color="white" />}
                     </ImageBackground>
                 </View>
             ) : (
@@ -133,6 +138,8 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
                     <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
                         {tag}
                     </Label>
+
+                    {!happening ? null : <Progress style={styles.progress} value={progress} />}
                 </View>
             )}
 
@@ -238,5 +245,11 @@ const styles = StyleSheet.create({
         top: 0,
         right: 0,
         padding: 8,
+    },
+    progress: {
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        right: 0,
     },
 });

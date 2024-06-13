@@ -19,7 +19,7 @@ export const AnnouncementCard: FC<{ announcement: AnnouncementDetails }> = ({ an
 
             <MarkdownContent>{announcement.Content}</MarkdownContent>
 
-            {announcement.Image && <Image source={{ uri: announcement.Image.FullUrl }} style={styles.image} />}
+            {announcement.Image && <Image source={announcement.Image.FullUrl} style={styles.image} />}
         </Card>
     );
 };

@@ -6,16 +6,16 @@ import { chain, partition, sortBy } from "lodash";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { eventInstanceForNotPassed, eventInstanceForPassed } from "./EventCard";
-import { eventSectionForDate, eventSectionForPassed } from "./EventSection";
-import { EventsSectionedList } from "./EventsSectionedList";
+import { EventsRouterParamsList } from "./EventsRouter";
+import { eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
+import { eventSectionForDate, eventSectionForPassed } from "../../components/events/EventSection";
+import { EventsSectionedList } from "../../components/events/EventsSectionedList";
+import { Label } from "../../components/generic/atoms/Label";
 import { useNow } from "../../hooks/time/useNow";
-import { AreasRouterParamsList } from "../../routes/AreasRouter";
-import { IndexRouterParamsList } from "../../routes/IndexRouter";
-import { EventsRouterParamsList } from "../../routes/events/EventsRouter";
 import { useAppSelector } from "../../store";
 import { selectFavoriteEvents } from "../../store/eurofurence.selectors";
-import { Label } from "../generic/atoms/Label";
+import { AreasRouterParamsList } from "../AreasRouter";
+import { IndexRouterParamsList } from "../IndexRouter";
 
 /**
  * Params handled by the screen in route.
@@ -65,7 +65,7 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
             eventsGroups={sections}
             cardType={"time"}
             leader={
-                <Label type="h1" variant="middle" mt={30}>
+                <Label type="lead" variant="middle" mt={30}>
                     {t("schedule_title")}
                 </Label>
             }

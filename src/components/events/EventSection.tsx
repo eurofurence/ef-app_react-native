@@ -17,7 +17,6 @@ export type EventSectionProps = SectionProps;
 export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay, eventsCount: number): EventSectionProps {
     return {
         title: t(partOfDay as PartOfDay),
-        subtitle: t("events_count", { count: eventsCount }),
         icon: ((partOfDay === "morning" && "weather-sunset-up") ||
             (partOfDay === "afternoon" && "weather-sunny") ||
             (partOfDay === "evening" && "weather-sunset-down") ||
@@ -34,7 +33,6 @@ export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay, eve
 export function eventSectionForPassed(t: TFunction, passedCount: number): EventSectionProps {
     return {
         title: t("events_done"),
-        subtitle: t("events_count", { count: passedCount }),
         icon: "calendar-clock-outline" as IconNames,
     };
 }
@@ -47,7 +45,6 @@ export function eventSectionForPassed(t: TFunction, passedCount: number): EventS
 export function eventSectionForDate(t: TFunction, date: string, eventsCount: number): EventSectionProps {
     return {
         title: moment(date).format("dddd"),
-        subtitle: t("events_count", { count: eventsCount }),
         icon: "calendar-outline" as IconNames,
     };
 }

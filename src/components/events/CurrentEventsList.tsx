@@ -1,3 +1,4 @@
+import { chain } from "lodash";
 import { Moment } from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -16,7 +17,15 @@ export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
 
     const navigation = useAppNavigation("Areas");
     const eventsAll = useAppSelector((state) => selectCurrentEvents(state, now));
-    const events = useMemo(() => eventsAll.map((details) => eventInstanceForAny(details, now)), [eventsAll, now]);
+    const events = useMemo(
+        () =>
+            // Sort by how much time of the event still left.
+            chain(eventsAll)
+                .map((details) => eventInstanceForAny(details, now))
+                .orderBy("progress", "asc")
+                .value(),
+        [eventsAll, now],
+    );
 
     if (events.length === 0) {
         return null;
@@ -29,7 +38,7 @@ export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
                 <EventCard
                     key={event.details.Id}
                     event={event}
-                    type="time"
+                    type="duration"
                     onPress={(event) =>
                         navigation.navigate("Event", {
                             id: event.Id,

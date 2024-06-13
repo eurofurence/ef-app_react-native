@@ -155,7 +155,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                     onTransform={onTransform}
                 >
                     <View style={styleContainer}>
-                        <Image style={styles.image} contentFit={undefined} source={{ uri: map.Image.FullUrl }} />
+                        <Image style={styles.image} contentFit={undefined} source={map.Image.FullUrl} />
                         {!entry ? null : <Marker style={styleMarker} markerSize={75} />}
                     </View>
                 </ZoomableView>

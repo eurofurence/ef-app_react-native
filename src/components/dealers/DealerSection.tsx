@@ -9,10 +9,20 @@ export type DealerSectionProps = SectionProps;
  * Creates the properties for a dealer section.
  * @param title The title.
  */
-export function dealerSectionForTitle(title: string): DealerSectionProps {
+export function dealerSectionForCategory(title: string): DealerSectionProps {
     return {
         title,
         icon: "folder-image" as IconNames,
+    };
+}
+/**
+ * Creates the properties for a dealer section.
+ * @param title The title.
+ */
+export function dealerSectionForLetter(title: string): DealerSectionProps {
+    return {
+        title,
+        icon: "bookmark" as IconNames,
     };
 }
 

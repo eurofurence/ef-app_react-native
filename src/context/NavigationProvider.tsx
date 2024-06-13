@@ -1,9 +1,9 @@
 import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
 import { captureException, ReactNavigationInstrumentation } from "@sentry/react-native";
+import * as SplashScreen from "expo-splash-screen";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
-import { GettingThingsReady } from "../components/util/GettingThingsReady";
 import { conId } from "../configuration";
 import { useAnalytics } from "../hooks/analytics/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/nav/useNavigationStatePersistence";
@@ -50,6 +50,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
             All: "dealers",
             Regular: "dealers/regular",
             AD: "dealers/ad",
+            Alpha: "dealers/az",
         },
     };
 
@@ -101,7 +102,7 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
             colors: {
                 primary: theme.secondary,
                 background: theme.surface,
-                card: theme.surface,
+                card: theme.background,
                 text: theme.text,
                 border: theme.darken,
                 notification: theme.notification,
@@ -138,7 +139,7 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
     const linking = useMemo(() => linkingFrom(days, tracks, rooms), [days, tracks, rooms]);
 
     if (!navStateReady || !cacheReady) {
-        return <GettingThingsReady />;
+        return null;
     }
 
     return (
@@ -147,8 +148,9 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
             ref={navigation}
             linking={linking}
             initialState={navStateInitial}
-            fallback={<GettingThingsReady />}
+            fallback={null}
             onReady={() => {
+                SplashScreen.hideAsync().catch();
                 sentryRoutingInstrumentation?.registerNavigationContainer(navigation.current);
             }}
             onStateChange={(state) => {

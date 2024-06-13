@@ -4,9 +4,7 @@ import React, { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { SectionList, StyleSheet } from "react-native";
 import { SectionListData } from "react-native/Libraries/Lists/SectionList";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/AppStyles";
 import { Label } from "../../components/generic/atoms/Label";
 import { Header } from "../../components/generic/containers/Header";
 import { PrivateMessageCard } from "../../components/pm/PrivateMessageCard";
@@ -23,7 +21,6 @@ export const PmList = () => {
     const { data, refetch, isFetching }: Query<CommunicationRecord[]> = useGetCommunicationsQuery(undefined, {
         refetchOnFocus: true,
     });
-    const safe = useSafeAreaInsets();
 
     const navigateTo = useCallback(
         (item: CommunicationRecord) =>
@@ -82,7 +79,7 @@ export const PmList = () => {
     );
     return (
         <SectionList
-            style={[appStyles.abs, safe]}
+            style={StyleSheet.absoluteFill}
             sections={sectionedData}
             keyExtractor={keyExtractor}
             stickySectionHeadersEnabled

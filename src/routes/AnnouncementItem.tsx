@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleSheet, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../components/AppStyles";
 import { AnnouncementCard } from "../components/announce/AnnouncementCard";
@@ -16,14 +16,13 @@ export type AnnouncementItemParams = {
     id: string;
 };
 export const AnnouncementItem = () => {
-    const safe = useSafeAreaInsets();
     const route = useAppRoute("Announcement");
     const announcement = useAppSelector((state) => announcementsSelectors.selectById(state, route.params.id));
 
     // TODO: Maybe wait force fetch??
 
     return (
-        <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{announcement?.Title ?? "Viewing announcement"}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 {!announcement ? null : (
@@ -36,7 +35,7 @@ export const AnnouncementItem = () => {
 
                         <MarkdownContent>{announcement.Content}</MarkdownContent>
 
-                        {announcement.Image && <Image source={{ uri: announcement.Image.FullUrl }} style={styles.image} />}
+                        {announcement.Image && <Image source={announcement.Image.FullUrl} style={styles.image} />}
                     </>
                 )}
             </Floater>

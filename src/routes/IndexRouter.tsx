@@ -1,7 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { FC } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { About } from "./About";
 import { AnnouncementItem, AnnouncementItemParams } from "./AnnouncementItem";
@@ -67,7 +68,7 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
     const themeType = useThemeName();
 
     return (
-        <View style={StyleSheet.absoluteFill}>
+        <SafeAreaView style={StyleSheet.absoluteFill}>
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Areas" component={AreasRouter} />
@@ -83,6 +84,6 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
                 <Stack.Screen name="About" component={About} />
                 <Stack.Screen name="EventFeedback" component={EventFeedback} />
             </Stack.Navigator>
-        </View>
+        </SafeAreaView>
     );
 };

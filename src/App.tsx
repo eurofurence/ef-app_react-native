@@ -1,4 +1,5 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { SynchronizationProvider } from "./components/sync/SynchronizationProvider";
 import { useAnalyticsManager } from "./hooks/analytics/useAnalyticsManager";
@@ -20,10 +21,12 @@ export function App() {
     useNotificationReceivedManager();
     useNotificationRespondedManager();
     return (
-        <BottomSheetModalProvider>
-            <SynchronizationProvider>
-                <IndexRouter />
-            </SynchronizationProvider>
-        </BottomSheetModalProvider>
+        <SafeAreaProvider>
+            <BottomSheetModalProvider>
+                <SynchronizationProvider>
+                    <IndexRouter />
+                </SynchronizationProvider>
+            </BottomSheetModalProvider>
+        </SafeAreaProvider>
     );
 }

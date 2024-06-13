@@ -67,7 +67,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
 
             {!dealer.Artist ? null : (
                 <View style={[appStyles.shadow, styles.avatarCircle]}>
-                    <Image contentFit="cover" style={styles.avatarImage} source={{ uri: dealer.Artist.FullUrl }} />
+                    <Image contentFit="cover" style={styles.avatarImage} source={dealer.Artist.FullUrl} />
                 </View>
             )}
 

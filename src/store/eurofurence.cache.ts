@@ -12,6 +12,7 @@ import {
     KnowledgeEntryRecord,
     KnowledgeGroupRecord,
     MapRecord,
+    RecordId,
 } from "./eurofurence.types";
 
 type EntitySyncState<T = unknown> = {
@@ -101,6 +102,7 @@ type EurofurenceCacheState = {
     dealers: EntityState<DealerRecord>;
     announcements: EntityState<AnnouncementRecord>;
     maps: EntityState<MapRecord>;
+    lastChanged?: RecordId[];
 };
 
 const initialState: EurofurenceCacheState = {
@@ -178,6 +180,20 @@ export const eurofurenceCache = createSlice({
             syncEntities(state.images, imagesAdapter, action.payload.Images);
             syncEntities(state.announcements, announcementsAdapter, action.payload.Announcements);
             syncEntities(state.maps, mapsAdapter, action.payload.Maps);
+
+            // TODO: Use.
+            const changedEntities = [];
+            if (action.payload.Events.ChangedEntities) for (const item of action.payload.Events.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.EventConferenceDays.ChangedEntities) for (const item of action.payload.EventConferenceDays.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.EventConferenceRooms.ChangedEntities) for (const item of action.payload.EventConferenceRooms.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.EventConferenceTracks.ChangedEntities) for (const item of action.payload.EventConferenceTracks.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.KnowledgeGroups.ChangedEntities) for (const item of action.payload.KnowledgeGroups.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.KnowledgeEntries.ChangedEntities) for (const item of action.payload.KnowledgeEntries.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.Images.ChangedEntities) for (const item of action.payload.Images.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.Dealers.ChangedEntities) for (const item of action.payload.Dealers.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.Announcements.ChangedEntities) for (const item of action.payload.Announcements.ChangedEntities) changedEntities.push(item.Id);
+            if (action.payload.Maps.ChangedEntities) for (const item of action.payload.Maps.ChangedEntities) changedEntities.push(item.Id);
+            state.lastChanged = changedEntities;
         },
         resetCache: () => {
             return initialState;

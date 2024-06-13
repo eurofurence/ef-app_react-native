@@ -16,8 +16,6 @@ import { Tab } from "../generic/containers/Tab";
 import { useTabs } from "../generic/containers/Tabs";
 import { PrivateMessageLinker } from "../pm/PrivateMessageLinker";
 
-const placeholder = require("../../../assets/images/dealer_black.png");
-
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
     user: Claims | null;
@@ -27,11 +25,10 @@ type PagerPrimaryLoginProps = {
 };
 const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, onMessages, onLogin }) => {
     const { t } = useTranslation("Menu");
-
     // TODO: Verify style of name etc.
     return (
         <Row style={styles.padding} type="center" variant="center">
-            <Image style={styles.avatarCircle} source={user?.avatar ?? placeholder} contentFit="contain" placeholder={placeholder} transition={60} priority="low" />
+            <Image style={styles.avatarCircle} source={user?.avatar ?? "ych"} contentFit="contain" placeholder="ych" transition={60} priority="low" />
 
             {/*<Label style={styles.marginBefore} type="caption">*/}
             {/*    {t("not_logged_in")}*/}

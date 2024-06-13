@@ -11,8 +11,6 @@ import { DealerDetails } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";
 
-const placeholder = require("../../../assets/images/dealer_black.png");
-
 export type DealerDetailsInstance = {
     details: DealerDetails;
     present: boolean;
@@ -49,11 +47,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     const present = dealer.present;
     const description = dealer.details.Categories?.join(", ");
     const offDays = dealer.offDays;
-    const avatar = dealer.details.ArtistThumbnail
-        ? dealer.details.ArtistThumbnail.FullUrl
-        : dealer.details.Artist
-          ? dealer.details.Artist.FullUrl
-          : require("../../../assets/images/dealer_black.png");
+    const avatar = dealer.details.ArtistThumbnail ? dealer.details.ArtistThumbnail.FullUrl : dealer.details.Artist ? dealer.details.Artist.FullUrl : "ych";
 
     // Translation object.
     const { t } = useTranslation("Dealers");
@@ -70,7 +64,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
             onLongPress={() => onLongPress?.(dealer.details)}
         >
             <View style={[styles.pre, stylePre]}>
-                <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={placeholder} transition={60} priority="low" />
+                <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder="ych" transition={60} priority="low" />
             </View>
 
             <View style={styles.main}>

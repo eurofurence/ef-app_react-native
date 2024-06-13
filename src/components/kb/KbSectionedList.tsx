@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 
 import { KbEntryCard } from "./KbEntryCard";
 import { KbSection } from "./KbSection";
-import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
 import { KbListProps } from "../../routes/kb/KbList";
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from "../../store/eurofurence.types";
 import { findIndices } from "../../util/findIndices";
@@ -24,6 +24,7 @@ export type KbSectionedListProps = {
 };
 
 export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, kbGroups, empty, trailer, sticky = true }) => {
+    const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(kbGroups, (item) => !("KnowledgeGroupId" in item)) : undefined), [kbGroups, sticky]);
     const sectionStyle = useThemeBackground("surface");
@@ -49,6 +50,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, 
                 }
             }}
             estimatedItemSize={59}
+            extraData={theme}
         />
     );
 };

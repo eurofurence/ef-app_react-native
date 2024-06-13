@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 
 import { KnowledgeEntryRecord } from "../../store/eurofurence.types";
 import { appStyles } from "../AppStyles";

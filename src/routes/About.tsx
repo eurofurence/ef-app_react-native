@@ -3,9 +3,8 @@ import { Sound } from "expo-av/build/Audio/Sound";
 import { Image } from "expo-image";
 import { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, ScrollView } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Linking, StyleSheet } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 
 import { appStyles } from "../components/AppStyles";
 import { Label } from "../components/generic/atoms/Label";
@@ -87,7 +86,7 @@ export const Credit: FC<{ uri: string; name: string; role: string; onEasterEgg?:
     <TouchableOpacity disabled={onEasterEgg === undefined} onLongPress={onEasterEgg} delayLongPress={2000}>
         <Row type={"center"} style={{ marginVertical: 5 }}>
             <Image
-                source={{ uri, height: 60, width: 60 }}
+                source={uri}
                 style={{
                     borderRadius: 100,
                     width: 60,
@@ -105,23 +104,23 @@ export const Credit: FC<{ uri: string; name: string; role: string; onEasterEgg?:
 
 export const About = () => {
     const { t } = useTranslation("About");
-    const safe = useSafeAreaInsets();
     const showHelpButtons = useAppSelector((state) => state.settingsSlice.showDevMenu ?? false);
     const dispatch = useAppDispatch();
 
+    // Load static assets.
     const requinardEgg = useCallback(async () => {
-        const { sound } = await Sound.createAsync(require("../../assets/audio/cheese.webm"));
+        const { sound } = await Sound.createAsync(require("../../assets/runtime/cheese.webm"));
         await sound.playAsync();
         dispatch(setTheme("requinard"));
     }, [dispatch]);
 
     const pazuzuEgg = useCallback(async () => {
-        const { sound } = await Sound.createAsync(require("../../assets/audio/sheesh.webm"));
+        const { sound } = await Sound.createAsync(require("../../assets/runtime/sheesh.webm"));
         await sound.playAsync();
         dispatch(setTheme("pazuzu"));
     }, [dispatch]);
     return (
-        <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{t("header")}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 <Section title={t("app_details.title")} subtitle={`${nativeApplicationVersion} - ${nativeBuildVersion}`} icon={"cellphone"} />

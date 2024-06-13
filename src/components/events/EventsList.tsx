@@ -3,11 +3,12 @@ import { FC, ReactElement } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
 import { EventCard, EventDetailsInstance } from "./EventCard";
-import { PersonalScheduleProps } from "./PersonalSchedule";
+import { useThemeName } from "../../hooks/themes/useThemeHooks";
 import { EventsByDayProps } from "../../routes/events/EventsByDay";
 import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
 import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
 import { EventsSearchProps } from "../../routes/events/EventsSearch";
+import { PersonalScheduleProps } from "../../routes/events/PersonalSchedule";
 import { EventDetails } from "../../store/eurofurence.types";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
 
@@ -30,6 +31,7 @@ export type EventsListProps = {
 };
 
 export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, select, empty, trailer, cardType = "duration" }) => {
+    const theme = useThemeName();
     const synchronizer = useSynchronizer();
     return (
         <FlashList
@@ -62,6 +64,7 @@ export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, se
                 );
             }}
             estimatedItemSize={110}
+            extraData={theme}
         />
     );
 };

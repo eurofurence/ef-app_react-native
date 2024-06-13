@@ -1,10 +1,8 @@
 import { useProfiler } from "@sentry/react-native";
 import * as React from "react";
 import { useMemo } from "react";
-import { View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleSheet, View } from "react-native";
 
-import { appStyles } from "../../components/AppStyles";
 import { Header } from "../../components/generic/containers/Header";
 import { MapContent, MapContentProps } from "../../components/maps/MapContent";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
@@ -14,7 +12,6 @@ import { mapsSelectors } from "../../store/eurofurence.selectors";
 export const Map = () => {
     // Get safe area and route.
     useProfiler("Map");
-    const safe = useSafeAreaInsets();
     const route = useAppRoute("Map");
 
     // Resolve map.
@@ -43,7 +40,7 @@ export const Map = () => {
     }, [map, link]);
 
     return (
-        <View style={[appStyles.abs, safe]}>
+        <View style={StyleSheet.absoluteFill}>
             <Header>{title}</Header>
             {!map?.Image || (route.params.entryId && !entry) || (route.params.linkId && !link) ? null : (
                 <MapContent map={map as MapContentProps["map"]} entry={entry} link={link} />

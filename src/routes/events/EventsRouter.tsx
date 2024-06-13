@@ -7,15 +7,14 @@ import moment from "moment";
 import { FC, useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { BackHandler, Dimensions, Platform, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { EventsByDay, EventsByDayParams } from "./EventsByDay";
 import { EventsByRoom, EventsByRoomParams } from "./EventsByRoom";
 import { EventsByTrack, EventsByTrackParams } from "./EventsByTrack";
 import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSearch, EventsSearchParams } from "./EventsSearch";
+import { PersonalSchedule, PersonalScheduleParams } from "./PersonalSchedule";
 import { EventActionsSheet } from "../../components/events/EventActionsSheet";
-import { PersonalSchedule, PersonalScheduleParams } from "../../components/events/PersonalSchedule";
 import { Icon } from "../../components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { useNow } from "../../hooks/time/useNow";
@@ -114,7 +113,6 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
 
     // // Get common tab styles.
     const tabStyles = useTabStyles();
-    const topInset = useSafeAreaInsets().top;
 
     // Ignore rendering if data is not loaded to prevent jumping on initialization.
     if (type === "days" && !days?.length) return null;
@@ -136,7 +134,6 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
                     tabBarItemStyle: scroll ? { width: 110 } : undefined,
                     lazy: true,
                     lazyPreloadDistance: 3,
-                    tabBarStyle: { marginTop: topInset },
                 }}
             >
                 {/*Tab for searching and filtering*/}

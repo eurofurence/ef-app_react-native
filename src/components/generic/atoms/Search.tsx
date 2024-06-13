@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import { StyleSheet } from "react-native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/core";
+import React, { FC, useCallback, useEffect } from "react";
+import { BackHandler, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 import { withAlpha } from "../../../context/Theme";
@@ -15,6 +16,19 @@ export const Search: FC<SearchProps> = ({ filter, setFilter, placeholder }) => {
     const styleLighten = useThemeBackground("inverted");
     const styleText = useThemeColor("invText");
     const colorText = useThemeColorValue("invText");
+
+    // Connect clearing search on back if focused. // TODO: Test if this feels nice.
+    const isFocused = useIsFocused();
+    useEffect(() => {
+        if (!isFocused) return;
+        if (!filter.length) return;
+
+        const subscription = BackHandler.addEventListener("hardwareBackPress", () => {
+            setFilter("");
+            return true;
+        });
+        return () => subscription.remove();
+    }, [isFocused, filter]);
 
     return (
         <TextInput

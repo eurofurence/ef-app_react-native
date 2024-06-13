@@ -10,6 +10,7 @@ import { eventSearchOptions, eventSearchProperties, useEventSearchGroups } from 
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
+import { Label } from "../../components/generic/atoms/Label";
 import { Search } from "../../components/generic/atoms/Search";
 import { Row } from "../../components/generic/containers/Row";
 import { Tab } from "../../components/generic/containers/Tab";
@@ -61,6 +62,9 @@ export const EventsSearch: FC<EventsSearchProps> = ({ navigation }) => {
             select={setSelected}
             leader={
                 <>
+                    <Label type="lead" variant="middle" mt={30}>
+                        {t("search")}
+                    </Label>
                     <Row style={styles.row} type="stretch" variant="spaced">
                         <Tab style={[styles.rounded, roundedStyle]} inverted icon="calendar-outline" text={t("filter_by_day")} onPress={onDay} />
                         <Tab style={[styles.rounded, styles.rowCenter, roundedStyle]} inverted icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />

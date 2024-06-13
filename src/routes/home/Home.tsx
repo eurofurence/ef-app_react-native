@@ -2,8 +2,8 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC } from "react";
-import { RefreshControl, ScrollView } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
+import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../../components/AppStyles";
 import { AnnouncementList } from "../../components/announce/AnnouncementList";
@@ -31,13 +31,12 @@ export type HomeParams = undefined;
 export type HomeProps = CompositeScreenProps<BottomTabScreenProps<AreasRouterParamsList, "Home">, StackScreenProps<IndexRouterParamsList>>;
 
 export const Home: FC<HomeProps> = () => {
-    const safe = useSafeAreaInsets();
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
 
     const { synchronize, isSynchronizing } = useSynchronizer();
     return (
-        <ScrollView style={[appStyles.abs, safe]} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
+        <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
             <CountdownHeader />
 
             <Floater contentStyle={appStyles.trailer}>

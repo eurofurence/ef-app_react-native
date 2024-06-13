@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
+import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { appStyles } from "../../components/AppStyles";
 import { DealerContent } from "../../components/dealers/DealerContent";
@@ -24,10 +24,9 @@ export const DealerItem = () => {
     const { t } = useTranslation("Dealer");
     const route = useAppRoute("Dealer");
     const dealer = useAppSelector((state) => dealersSelectors.selectById(state, route.params.id));
-    const safe = useSafeAreaInsets();
 
     return (
-        <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{dealer?.FullName ?? t("viewing_dealer")}</Header>
             <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} />}</Floater>
         </ScrollView>

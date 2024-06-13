@@ -4,18 +4,15 @@ import { chain } from "lodash";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { appStyles } from "../../components/AppStyles";
 import { Search } from "../../components/generic/atoms/Search";
 import { Header } from "../../components/generic/containers/Header";
 import { KbSectionedList } from "../../components/kb/KbSectionedList";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useAppSelector } from "../../store";
-import { dealersSelectors, knowledgeEntriesSelectors, selectKnowledgeItems } from "../../store/eurofurence.selectors";
-import { DealerDetails, KnowledgeEntryDetails } from "../../store/eurofurence.types";
+import { knowledgeEntriesSelectors, selectKnowledgeItems } from "../../store/eurofurence.selectors";
+import { KnowledgeEntryDetails } from "../../store/eurofurence.types";
 import { IndexRouterParamsList } from "../IndexRouter";
-import { dealerSearchOptions, dealerSearchProperties } from "../dealers/Dealers.common";
 
 // TODO: FUSE refactoring
 /**
@@ -51,7 +48,6 @@ export type KbListParams = undefined; // TODO.
 export type KbListProps = StackScreenProps<IndexRouterParamsList, "KnowledgeGroups">;
 
 export const KbList: FC<KbListProps> = ({ navigation }) => {
-    const safe = useSafeAreaInsets();
     const { t } = useTranslation("KnowledgeGroups");
     // Search integration.
     const [filter, setFilter, results] = useFuseIntegration(knowledgeEntriesSelectors.selectAll, kbSearchProperties, kbSearchOptions);
@@ -66,7 +62,7 @@ export const KbList: FC<KbListProps> = ({ navigation }) => {
     }, [results, groups]);
 
     return (
-        <View style={[appStyles.abs, safe]}>
+        <View style={StyleSheet.absoluteFill}>
             <Header>{t("header")}</Header>
             <KbSectionedList
                 navigation={navigation}

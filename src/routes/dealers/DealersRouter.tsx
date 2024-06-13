@@ -6,10 +6,10 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { DealersAd, DealersAdParams } from "./DealersAd";
 import { DealersAll, DealersAllParams } from "./DealersAll";
+import { DealersAlpha, DealersAlphaParams } from "./DealersAlpha";
 import { DealersRegular, DealersRegularParams } from "./DealersRegular";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { AreasRouterParamsList } from "../AreasRouter";
@@ -22,6 +22,7 @@ export type DealersRouterParamsList = {
     All: DealersAllParams;
     Regular: DealersRegularParams;
     AD: DealersAdParams;
+    Alpha: DealersAlphaParams;
 };
 
 /**
@@ -53,7 +54,6 @@ export const DealersRouter: FC<DealersRouterProps> = () => {
 
     // // Get common tab styles.
     const tabStyles = useTabStyles();
-    const topInset = useSafeAreaInsets().top;
 
     // If the screens require too much performance we should set detach to true again.
     return (
@@ -62,14 +62,13 @@ export const DealersRouter: FC<DealersRouterProps> = () => {
                 initialRouteName="All"
                 initialLayout={{
                     width: Dimensions.get("window").width,
-                }}
-                screenOptions={{
-                    tabBarStyle: { marginTop: topInset },
+                    height: Dimensions.get("window").height,
                 }}
             >
                 <Tab.Screen name="All" options={{ title: t("all"), tabBarLabelStyle: tabStyles.normal }} component={DealersAll} />
                 <Tab.Screen name="Regular" options={{ title: t("regular"), tabBarLabelStyle: tabStyles.normal }} component={DealersRegular} />
                 <Tab.Screen name="AD" options={{ title: t("after_dark"), tabBarLabelStyle: tabStyles.normal }} component={DealersAd} />
+                <Tab.Screen name="Alpha" options={{ title: t("alphabetical"), tabBarLabelStyle: tabStyles.normal }} component={DealersAlpha} />
             </Tab.Navigator>
         </View>
     );

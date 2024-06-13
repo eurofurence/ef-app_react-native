@@ -1,5 +1,5 @@
+import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { appStyles } from "../../components/AppStyles";
 import { EventContent } from "../../components/events/EventContent";
@@ -21,7 +21,6 @@ export type EventItemParams = {
 };
 
 export const EventItem = () => {
-    const safe = useSafeAreaInsets();
     const route = useAppRoute("Event");
     const event = useAppSelector((state) => eventsSelector.selectById(state, route.params.id));
 
@@ -29,7 +28,7 @@ export const EventItem = () => {
     const updated = useUpdateSinceNote(event);
 
     return (
-        <ScrollView style={[appStyles.abs, safe]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{event?.Title ?? "Viewing event"}</Header>
             <Floater contentStyle={appStyles.trailer}>{!event ? null : <EventContent event={event} parentPad={padFloater} updated={updated} />}</Floater>
         </ScrollView>
