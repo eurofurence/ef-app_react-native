@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { StyleProp, ViewStyle } from "react-native";
 
 import { Claims } from "../../context/AuthContext";
-import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
+import { useGetCommunicationsQuery } from "../../store/eurofurence/service";
 import { Button } from "../generic/containers/Button";
 
 type PrivateMessageLinkerProps = {

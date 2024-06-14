@@ -12,8 +12,8 @@ import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "rea
 import { conId, conName } from "../../configuration";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
-import { eventDaysSelectors } from "../../store/eurofurence.selectors";
-import { EventDayRecord } from "../../store/eurofurence.types";
+import { eventDaysSelectors } from "../../store/eurofurence/selectors/records";
+import { EventDayRecord } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
 import { Section } from "../generic/atoms/Section";
 

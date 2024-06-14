@@ -19,8 +19,8 @@ import { Icon } from "../../components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
-import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence.selectors";
-import { EventDayRecord } from "../../store/eurofurence.types";
+import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence/selectors/records";
+import { EventDayRecord } from "../../store/eurofurence/types";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 

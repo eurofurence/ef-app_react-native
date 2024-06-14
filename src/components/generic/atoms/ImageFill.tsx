@@ -3,7 +3,7 @@ import * as React from "react";
 import { FC, useCallback, useMemo, useState } from "react";
 import { LayoutChangeEvent, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { ImageDetails } from "../../../store/eurofurence.types";
+import { ImageDetails } from "../../../store/eurofurence/types";
 
 const initialSize = { width: 400, height: 300 };
 

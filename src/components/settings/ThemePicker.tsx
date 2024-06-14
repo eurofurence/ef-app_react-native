@@ -5,7 +5,7 @@ import { StyleSheet } from "react-native";
 
 import { SettingContainer } from "./SettingContainer";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setTheme } from "../../store/settings.slice";
+import { setTheme } from "../../store/settings/slice";
 import { Label } from "../generic/atoms/Label";
 import { Button } from "../generic/containers/Button";
 import { Col } from "../generic/containers/Col";

@@ -7,8 +7,8 @@ import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent"
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
 import { useAppNavigation, useAppRoute } from "../../hooks/nav/useAppNavigation";
-import { useGetCommunicationsQuery, useMarkCommunicationReadMutation } from "../../store/eurofurence.service";
-import { CommunicationRecord, RecordId } from "../../store/eurofurence.types";
+import { useGetCommunicationsQuery, useMarkCommunicationReadMutation } from "../../store/eurofurence/service";
+import { CommunicationRecord, RecordId } from "../../store/eurofurence/types";
 
 const readOpenTimeRequirement = 3_000;
 export type PmItemParams = {

@@ -1,5 +1,4 @@
 import { StackScreenProps } from "@react-navigation/stack";
-import Fuse from "fuse.js";
 import { chain } from "lodash";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,37 +9,14 @@ import { Header } from "../../components/generic/containers/Header";
 import { KbSectionedList } from "../../components/kb/KbSectionedList";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useAppSelector } from "../../store";
-import { knowledgeEntriesSelectors, selectKnowledgeItems } from "../../store/eurofurence.selectors";
-import { KnowledgeEntryDetails } from "../../store/eurofurence.types";
+import { selectKnowledgeItems } from "../../store/eurofurence/selectors/kb";
+import { selectKbAllSearchIndex } from "../../store/eurofurence/selectors/search";
 import { IndexRouterParamsList } from "../IndexRouter";
-
-// TODO: FUSE refactoring
-/**
- * Properties to use in search.
- */
-export const kbSearchProperties: Fuse.FuseOptionKey<KnowledgeEntryDetails>[] = [
-    {
-        name: "Title",
-        weight: 1.5,
-    },
-    {
-        name: "Text",
-        weight: 1,
-    },
-];
-
-/**
- * Search options.
- */
-export const kbSearchOptions: Fuse.IFuseOptions<KnowledgeEntryDetails> = {
-    shouldSort: true,
-    threshold: 0.3,
-};
 
 /**
  * Params handled by the screen in route, nothing so far.
  */
-export type KbListParams = undefined; // TODO.
+export type KbListParams = undefined;
 
 /**
  * The properties to the screen as a component.
@@ -50,7 +26,7 @@ export type KbListProps = StackScreenProps<IndexRouterParamsList, "KnowledgeGrou
 export const KbList: FC<KbListProps> = ({ navigation }) => {
     const { t } = useTranslation("KnowledgeGroups");
     // Search integration.
-    const [filter, setFilter, results] = useFuseIntegration(knowledgeEntriesSelectors.selectAll, kbSearchProperties, kbSearchOptions);
+    const [filter, setFilter, results] = useFuseIntegration(selectKbAllSearchIndex);
 
     const groups = useAppSelector((state) => selectKnowledgeItems(state));
     const all = useMemo(() => {

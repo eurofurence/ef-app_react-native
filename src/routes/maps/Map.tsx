@@ -7,7 +7,7 @@ import { Header } from "../../components/generic/containers/Header";
 import { MapContent, MapContentProps } from "../../components/maps/MapContent";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { mapsSelectors } from "../../store/eurofurence.selectors";
+import { mapsSelectors } from "../../store/eurofurence/selectors/records";
 
 export const Map = () => {
     // Get safe area and route.

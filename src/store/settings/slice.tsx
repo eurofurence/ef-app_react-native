@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ColorSchemeName } from "react-native";
 
-import { ThemeName } from "../context/Theme";
+import { ThemeName } from "../../context/Theme";
 
 type SettingsSliceState = {
     analytics: {

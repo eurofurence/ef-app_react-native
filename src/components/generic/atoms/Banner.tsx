@@ -3,7 +3,7 @@ import * as React from "react";
 import { FC, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
-import { ImageDetails } from "../../../store/eurofurence.types";
+import { ImageDetails } from "../../../store/eurofurence/types";
 
 export type BannerProps = {
     /**

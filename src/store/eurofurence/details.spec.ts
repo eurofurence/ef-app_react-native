@@ -1,21 +1,12 @@
 import moment from "moment";
 
-import eurofurenceCache from "./eurofurence.details.data";
-import {
-    announcementsSelectors,
-    dealersSelectors,
-    eventsSelector,
-    mapsSelectors,
-    selectActiveAnnouncements,
-    selectBrowsableMaps,
-    selectCurrentEvents,
-    selectDealersByDayName,
-    selectFavoriteEvents,
-    selectUpcomingEvents,
-    selectUpcomingFavoriteEvents,
-} from "./eurofurence.selectors";
-import { EventDetails } from "./eurofurence.types";
-import { RootState } from "./index";
+import eurofurenceCache from "./details.data.spec";
+import { selectActiveAnnouncements } from "./selectors/announcements";
+import { selectCurrentEvents, selectFavoriteEvents, selectUpcomingEvents, selectUpcomingFavoriteEvents } from "./selectors/events";
+import { selectBrowsableMaps } from "./selectors/maps";
+import { announcementsSelectors, dealersSelectors, eventsSelector, mapsSelectors } from "./selectors/records";
+import { EventDetails } from "./types";
+import { RootState } from "../index";
 
 const state: RootState = {
     eurofurenceCache,
@@ -178,16 +169,6 @@ describe("Eurofurence details", () => {
             const active = selectActiveAnnouncements(state, moment(announcement.ValidFromDateTimeUtc).add(1, "minute"));
 
             expect(active).toContainEqual(announcement);
-        });
-
-        it("finds dealers by proper day", () => {
-            const notOnThursday = selectDealersByDayName(state, "mon").filter((dealer) => !dealer.AttendsOnThursday);
-            const notOnFriday = selectDealersByDayName(state, "tue").filter((dealer) => !dealer.AttendsOnFriday);
-            const notOnSaturday = selectDealersByDayName(state, "wed").filter((dealer) => !dealer.AttendsOnSaturday);
-
-            expect(notOnThursday).toHaveLength(0);
-            expect(notOnFriday).toHaveLength(0);
-            expect(notOnSaturday).toHaveLength(0);
         });
 
         it("finds browsable maps", () => {

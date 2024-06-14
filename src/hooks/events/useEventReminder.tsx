@@ -5,8 +5,8 @@ import { Platform } from "react-native";
 
 import { conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { addNotification, Notification, removeNotification } from "../../store/background.slice";
-import { EventRecord } from "../../store/eurofurence.types";
+import { addNotification, Notification, removeNotification } from "../../store/background/slice";
+import { EventRecord } from "../../store/eurofurence/types";
 
 export const useEventReminder = (event: EventRecord) => {
     const dispatch = useAppDispatch();

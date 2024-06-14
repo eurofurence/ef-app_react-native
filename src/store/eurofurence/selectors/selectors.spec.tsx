@@ -1,6 +1,8 @@
 import moment from "moment";
 
-import { filterActiveAnnouncements, filterBrowsableMaps, filterCurrentEvents, filterUpcomingEvents } from "./eurofurence.selectors";
+import { filterActiveAnnouncements } from "./announcements";
+import { filterCurrentEvents, filterUpcomingEvents } from "./events";
+import { filterBrowsableMaps } from "./maps";
 
 describe("eurofurence.selectors", function () {
     describe("filterActiveAnnouncements", () => {

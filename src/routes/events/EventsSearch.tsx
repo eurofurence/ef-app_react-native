@@ -6,7 +6,7 @@ import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { eventSearchOptions, eventSearchProperties, useEventSearchGroups } from "./Events.common";
+import { useEventSearchGroups } from "./Events.common";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
@@ -17,7 +17,7 @@ import { Tab } from "../../components/generic/containers/Tab";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useNow } from "../../hooks/time/useNow";
-import { eventsSelector } from "../../store/eurofurence.selectors";
+import { selectEventsAllSearchIndex } from "../../store/eurofurence/selectors/search";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 
@@ -44,7 +44,7 @@ export const EventsSearch: FC<EventsSearchProps> = ({ navigation }) => {
     const { setSelected } = useEventsRouterContext();
 
     // Search state.
-    const [filter, setFilter, results] = useFuseIntegration(eventsSelector.selectAll, eventSearchProperties, eventSearchOptions);
+    const [filter, setFilter, results] = useFuseIntegration(selectEventsAllSearchIndex);
 
     // Use results and group generically.
     const eventGroups = useEventSearchGroups(t, now, results);

@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { isPresent, joinOffDays } from "./utils";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
-import { DealerDetails } from "../../store/eurofurence.types";
+import { DealerDetails } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";

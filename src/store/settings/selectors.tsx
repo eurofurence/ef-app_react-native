@@ -2,8 +2,8 @@ import { createSelector } from "@reduxjs/toolkit";
 import { mapValues } from "lodash";
 import { TextStyle, ViewStyle } from "react-native";
 
-import { RootState } from "./index";
-import { ThemeColor, ThemeName, themes } from "../context/Theme";
+import { ThemeColor, ThemeName, themes } from "../../context/Theme";
+import { RootState } from "../index";
 
 export const selectAppliedTheme = (state: RootState): ThemeName => state.settingsSlice.theme ?? state.settingsSlice.colorScheme ?? "light";
 

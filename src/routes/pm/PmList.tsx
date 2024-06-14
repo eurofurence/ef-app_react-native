@@ -11,8 +11,8 @@ import { PrivateMessageCard } from "../../components/pm/PrivateMessageCard";
 import { NoData } from "../../components/util/NoData";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
-import { useGetCommunicationsQuery } from "../../store/eurofurence.service";
-import { CommunicationRecord } from "../../store/eurofurence.types";
+import { useGetCommunicationsQuery } from "../../store/eurofurence/service";
+import { CommunicationRecord } from "../../store/eurofurence/types";
 import { Query } from "../../types";
 
 export const PmList = () => {

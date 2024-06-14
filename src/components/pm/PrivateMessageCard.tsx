@@ -3,7 +3,7 @@ import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { CommunicationRecord } from "../../store/eurofurence.types";
+import { CommunicationRecord } from "../../store/eurofurence/types";
 import { Icon } from "../generic/atoms/Icon";
 import { Label } from "../generic/atoms/Label";
 import { Card } from "../generic/containers/Card";

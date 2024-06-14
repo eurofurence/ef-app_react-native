@@ -2,7 +2,7 @@ import { Image } from "expo-image";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
-import { AnnouncementDetails } from "../../store/eurofurence.types";
+import { AnnouncementDetails } from "../../store/eurofurence/types";
 import { Label } from "../generic/atoms/Label";
 import { MarkdownContent } from "../generic/atoms/MarkdownContent";
 import { Card } from "../generic/containers/Card";

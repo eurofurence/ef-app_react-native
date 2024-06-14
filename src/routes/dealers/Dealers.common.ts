@@ -1,4 +1,3 @@
-import Fuse from "fuse.js";
 import { TFunction } from "i18next";
 import { chain, orderBy } from "lodash";
 import { Moment } from "moment";
@@ -8,42 +7,8 @@ import { useMemo } from "react";
 import { dealerInstanceForAny } from "../../components/dealers/DealerCard";
 import { dealerSectionForCategory, dealerSectionForLetter } from "../../components/dealers/DealerSection";
 import { useAppSelector } from "../../store";
-import { selectDealerCategoryMapper } from "../../store/eurofurence.selectors";
-import { DealerDetails } from "../../store/eurofurence.types";
-
-/**
- * Properties to use in search.
- */
-export const dealerSearchProperties: Fuse.FuseOptionKey<DealerDetails>[] = [
-    {
-        name: "FullName",
-        weight: 2,
-    },
-    {
-        name: "Categories",
-        weight: 1,
-    },
-    {
-        name: "ShortDescription",
-        weight: 1,
-    },
-    {
-        name: "AboutTheArtistText",
-        weight: 1,
-    },
-    {
-        name: "AboutTheArtText",
-        weight: 1,
-    },
-];
-
-/**
- * Search options.
- */
-export const dealerSearchOptions: Fuse.IFuseOptions<DealerDetails> = {
-    shouldSort: true,
-    threshold: 0.3,
-};
+import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/dealers";
+import { DealerDetails } from "../../store/eurofurence/types";
 
 /**
  * Returns a list of dealer instances or section headers according to conversion rules.

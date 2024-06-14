@@ -9,7 +9,7 @@ import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
 import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
 import { EventsSearchProps } from "../../routes/events/EventsSearch";
 import { PersonalScheduleProps } from "../../routes/events/PersonalSchedule";
-import { EventDetails } from "../../store/eurofurence.types";
+import { EventDetails } from "../../store/eurofurence/types";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
 
 /**

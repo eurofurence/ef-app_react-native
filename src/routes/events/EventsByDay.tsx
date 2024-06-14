@@ -12,8 +12,9 @@ import { EventsSectionedList } from "../../components/events/EventsSectionedList
 import { Label } from "../../components/generic/atoms/Label";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
-import { eventDaysSelectors, selectEventsByDay } from "../../store/eurofurence.selectors";
-import { EventDetails } from "../../store/eurofurence.types";
+import { selectEventsByDay } from "../../store/eurofurence/selectors/events";
+import { eventDaysSelectors } from "../../store/eurofurence/selectors/records";
+import { EventDetails } from "../../store/eurofurence/types";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 

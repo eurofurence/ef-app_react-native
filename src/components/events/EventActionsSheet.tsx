@@ -6,7 +6,7 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { EventContent } from "./EventContent";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
-import { EventDetails } from "../../store/eurofurence.types";
+import { EventDetails } from "../../store/eurofurence/types";
 
 type EventActionsSheetProps = {
     event: EventDetails | null;

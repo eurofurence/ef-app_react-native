@@ -6,7 +6,7 @@ import { Platform } from "react-native";
 import { conId } from "../../configuration";
 import { useAuthContext } from "../../context/AuthContext";
 import { captureNotificationException } from "../../sentryHelpers";
-import { usePostDeviceRegistrationMutation, usePostSubscribeToTopicMutation } from "../../store/authorization.service";
+import { usePostDeviceRegistrationMutation, usePostSubscribeToTopicMutation } from "../../store/auth/service";
 
 /**
  * List of topics for this device.

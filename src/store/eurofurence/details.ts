@@ -1,7 +1,7 @@
 import { Dictionary } from "@reduxjs/toolkit";
 import moment, { MomentInput } from "moment";
 
-import { Notification } from "./background.slice";
+import { Notification } from "./../background/slice";
 import {
     AnnouncementDetails,
     AnnouncementRecord,
@@ -19,9 +19,9 @@ import {
     MapDetails,
     MapEntryDetails,
     MapRecord,
-} from "./eurofurence.types";
-import { IconNames } from "../components/generic/atoms/Icon";
-import { apiBase } from "../configuration";
+} from "./types";
+import { IconNames } from "../../components/generic/atoms/Icon";
+import { apiBase } from "../../configuration";
 
 const base64encode = (input: string) => {
     const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";

@@ -6,7 +6,7 @@ import { KbEntryCard } from "./KbEntryCard";
 import { KbSection } from "./KbSection";
 import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
 import { KbListProps } from "../../routes/kb/KbList";
-import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from "../../store/eurofurence.types";
+import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from "../../store/eurofurence/types";
 import { findIndices } from "../../util/findIndices";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
 

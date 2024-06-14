@@ -4,7 +4,7 @@ import Markdown, { MarkdownProps } from "react-native-markdown-display";
 
 import { LabelProps } from "./Label";
 import { useAppSelector } from "../../../store";
-import { selectMarkdownTheme } from "../../../store/settings.selectors";
+import { selectMarkdownTheme } from "../../../store/settings/selectors";
 
 const MarkdownComponent: FC<MarkdownProps & { children?: string }> = Markdown as any;
 

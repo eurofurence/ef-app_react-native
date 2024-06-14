@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { RecordId } from "./eurofurence.types";
+import { RecordId } from "../eurofurence/types";
 
 type AuxiliaryState = {
     lastViewTimes: Record<RecordId, string>;

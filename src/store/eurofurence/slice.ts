@@ -13,7 +13,7 @@ import {
     KnowledgeGroupRecord,
     MapRecord,
     RecordId,
-} from "./eurofurence.types";
+} from "./types";
 
 type EntitySyncState<T = unknown> = {
     StorageLastChangeDateTimeUtc: string;

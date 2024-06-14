@@ -1,6 +1,6 @@
 import moment from "moment/moment";
 
-import { DealerDetails } from "../../store/eurofurence.types";
+import { DealerDetails } from "../../store/eurofurence/types";
 
 /**
  * True if for the given moment the dealer is attending.

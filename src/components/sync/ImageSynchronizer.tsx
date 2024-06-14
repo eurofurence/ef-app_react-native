@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Text } from "react-native";
 
 import { useAppSelector } from "../../store";
-import { imagesSelectors } from "../../store/eurofurence.selectors";
+import { imagesSelectors } from "../../store/eurofurence/selectors/records";
 
 export const ImageSynchronizer = () => {
     const [isCaching, setIsCaching] = useState(false);

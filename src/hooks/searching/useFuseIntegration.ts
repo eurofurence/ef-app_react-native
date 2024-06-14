@@ -1,23 +1,16 @@
 import Fuse from "fuse.js";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-import { useFuseFor } from "./useFuseFor";
-import { RootState } from "../../store";
+import { RootState, useAppSelector } from "../../store";
 
 /**
  * Uses a fuse search integrator.
  * @param selector The selector from the  app state.
- * @param keys The keys or key objects to index.
- * @param options The search options.
+ * @param limit Maximum results.
  */
-export const useFuseIntegration = <T extends object>(
-    selector: (state: RootState) => T[],
-    keys: Fuse.FuseOptionKey<T>[],
-    options: Fuse.IFuseOptions<T>,
-    limit = 30,
-): [string, Dispatch<SetStateAction<string>>, T[] | null] => {
+export const useFuseIntegration = <T extends object>(selector: (state: RootState) => Fuse<T>, limit = 30): [string, Dispatch<SetStateAction<string>>, T[] | null] => {
     // Search state.
-    const fuse = useFuseFor(selector, keys, options);
+    const fuse = useAppSelector(selector);
     const [filter, setFilter] = useState("");
     const [results, setResults] = useState<null | T[]>(null);
 

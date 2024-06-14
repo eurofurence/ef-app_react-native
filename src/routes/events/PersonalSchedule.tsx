@@ -13,7 +13,7 @@ import { EventsSectionedList } from "../../components/events/EventsSectionedList
 import { Label } from "../../components/generic/atoms/Label";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
-import { selectFavoriteEvents } from "../../store/eurofurence.selectors";
+import { selectFavoriteEvents } from "../../store/eurofurence/selectors/events";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 

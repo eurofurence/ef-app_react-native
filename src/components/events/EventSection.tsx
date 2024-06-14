@@ -2,7 +2,7 @@ import { TFunction } from "i18next";
 import moment from "moment/moment";
 import { FC } from "react";
 
-import { PartOfDay } from "../../store/eurofurence.types";
+import { PartOfDay } from "../../store/eurofurence/types";
 import { IconNames } from "../generic/atoms/Icon";
 import { Section, SectionProps } from "../generic/atoms/Section";
 

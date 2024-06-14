@@ -1,6 +1,6 @@
 import { createContext, FC, PropsWithChildren, useContext, useState } from "react";
 
-import { EventDetails } from "../../store/eurofurence.types";
+import { EventDetails } from "../../store/eurofurence/types";
 
 export type EventsRouterContextType = {
     selected: null | EventDetails;

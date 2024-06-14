@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { AnnouncementCard } from "./AnnouncementCard";
 import { useAppSelector } from "../../store";
-import { selectActiveAnnouncements } from "../../store/eurofurence.selectors";
+import { selectActiveAnnouncements } from "../../store/eurofurence/selectors/announcements";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
 

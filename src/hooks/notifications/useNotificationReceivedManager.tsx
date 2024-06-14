@@ -8,7 +8,7 @@ import { conId } from "../../configuration";
 import { NotificationChannels } from "../../init/NotificationChannel";
 import { captureNotificationException } from "../../sentryHelpers";
 import { useAppDispatch } from "../../store";
-import { logFCMMessage } from "../../store/background.slice";
+import { logFCMMessage } from "../../store/background/slice";
 
 const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger, channelId: NotificationChannels = "default") =>
     scheduleNotificationAsync({

@@ -10,7 +10,7 @@ import { Floater } from "../components/generic/containers/Floater";
 import { Header } from "../components/generic/containers/Header";
 import { useAppRoute } from "../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../store";
-import { announcementsSelectors } from "../store/eurofurence.selectors";
+import { announcementsSelectors } from "../store/eurofurence/selectors/records";
 
 export type AnnouncementItemParams = {
     id: string;

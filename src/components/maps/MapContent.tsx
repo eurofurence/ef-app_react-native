@@ -10,7 +10,7 @@ import { FlatList, InteractionManager, Platform, StyleSheet, View, ViewStyle } f
 
 import { LinkItem } from "./LinkItem";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
-import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence.types";
+import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence/types";
 import { Label } from "../generic/atoms/Label";
 import { Marker } from "../generic/atoms/Marker";
 

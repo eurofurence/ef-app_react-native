@@ -13,8 +13,8 @@ import { IndexRouterParamsList } from "../routes/IndexRouter";
 import { DealersRouterParamsList } from "../routes/dealers/DealersRouter";
 import { EventsRouterParamsList } from "../routes/events/EventsRouter";
 import { useAppSelector } from "../store";
-import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence.selectors";
-import { RecordId } from "../store/eurofurence.types";
+import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence/selectors/records";
+import { RecordId } from "../store/eurofurence/types";
 
 export const sentryRoutingInstrumentation = new ReactNavigationInstrumentation();
 

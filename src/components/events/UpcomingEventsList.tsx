@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { selectUpcomingEvents } from "../../store/eurofurence.selectors";
+import { selectUpcomingEvents } from "../../store/eurofurence/selectors/events";
 import { Section } from "../generic/atoms/Section";
 
 export type UpcomingEventsListProps = {

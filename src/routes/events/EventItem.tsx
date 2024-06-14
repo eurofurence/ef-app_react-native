@@ -8,7 +8,7 @@ import { Header } from "../../components/generic/containers/Header";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useAppSelector } from "../../store";
-import { eventsSelector } from "../../store/eurofurence.selectors";
+import { eventsSelector } from "../../store/eurofurence/selectors/records";
 
 /**
  * Params handled by the screen in route.

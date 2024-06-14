@@ -6,7 +6,7 @@ import { PagerPrimary } from "./PagerPrimary";
 import { appBase } from "../../configuration";
 import { AuthContext, getAccessToken } from "../../context/AuthContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { RecordId } from "../../store/eurofurence.types";
+import { RecordId } from "../../store/eurofurence/types";
 import { Tab } from "../generic/containers/Tab";
 import { TabsRef } from "../generic/containers/Tabs";
 

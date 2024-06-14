@@ -4,7 +4,7 @@ import { TextStyle, ViewStyle } from "react-native";
 
 import { Theme, ThemeColor } from "../../context/Theme";
 import { useAppSelector } from "../../store";
-import { selectAppliedTheme, selectBackgroundStyle, selectBorderStyle, selectColorStyle, selectTheme } from "../../store/settings.selectors";
+import { selectAppliedTheme, selectBackgroundStyle, selectBorderStyle, selectColorStyle, selectTheme } from "../../store/settings/selectors";
 
 export const useThemeName = () => useAppSelector(selectAppliedTheme);
 

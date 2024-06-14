@@ -5,13 +5,13 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import logger from "redux-logger";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 
-import { authorizationService } from "./authorization.service";
-import { auxiliary } from "./auxilary";
-import { backgroundSlice } from "./background.slice";
-import { eurofurenceCache } from "./eurofurence.cache";
-import { eurofurenceService } from "./eurofurence.service";
-import { settingsSlice } from "./settings.slice";
-import { timeTravelSlice } from "./timetravel.slice";
+import { authorizationService } from "./auth/service";
+import { auxiliary } from "./auxiliary/slice";
+import { backgroundSlice } from "./background/slice";
+import { eurofurenceService } from "./eurofurence/service";
+import { eurofurenceCache } from "./eurofurence/slice";
+import { settingsSlice } from "./settings/slice";
+import { timeTravelSlice } from "./timetravel/slice";
 
 export const reducers = combineReducers({
     [backgroundSlice.name]: backgroundSlice.reducer,

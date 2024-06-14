@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, Vibration, View } from "react-native";
 
 import { useAuthContext } from "../../context/AuthContext";
-import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/authorization.service";
+import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/auth/service";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
 

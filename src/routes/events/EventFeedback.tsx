@@ -7,7 +7,7 @@ import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { eventsSelector } from "../../store/eurofurence.selectors";
+import { eventsSelector } from "../../store/eurofurence/selectors/records";
 
 export const EventFeedback = () => {
     const { t } = useTranslation("EventFeedback");

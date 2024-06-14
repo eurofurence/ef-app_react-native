@@ -16,7 +16,7 @@ import { Floater } from "../components/generic/containers/Floater";
 import { Header } from "../components/generic/containers/Header";
 import { Row } from "../components/generic/containers/Row";
 import { useAppDispatch, useAppSelector } from "../store";
-import { setTheme } from "../store/settings.slice";
+import { setTheme } from "../store/settings/slice";
 
 const extraThanksMarkdown = `
 # Tooling

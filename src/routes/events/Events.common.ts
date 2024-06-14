@@ -1,4 +1,3 @@
-import Fuse from "fuse.js";
 import { TFunction } from "i18next";
 import { chain, partition, sortBy } from "lodash";
 import { Moment } from "moment/moment";
@@ -6,37 +5,8 @@ import { useMemo } from "react";
 
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
 import { eventSectionForDate, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "../../components/events/EventSection";
-import { EventDetails, PartOfDay } from "../../store/eurofurence.types";
+import { EventDetails, PartOfDay } from "../../store/eurofurence/types";
 
-/**
- * Properties to use in search.
- */
-export const eventSearchProperties: Fuse.FuseOptionKey<EventDetails>[] = [
-    {
-        name: "Title",
-        weight: 2,
-    },
-    {
-        name: "SubTitle",
-        weight: 1,
-    },
-    {
-        name: "Abstract",
-        weight: 0.5,
-    },
-    {
-        name: "PanelHosts",
-        weight: 0.1,
-    },
-];
-
-/**
- * Search options.
- */
-export const eventSearchOptions: Fuse.IFuseOptions<EventDetails> = {
-    shouldSort: true,
-    threshold: 0.3,
-};
 /**
  * Generates search result grouping with event detail instances prepared for
  * display standalone dates.

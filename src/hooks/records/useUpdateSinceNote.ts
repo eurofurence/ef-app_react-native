@@ -2,9 +2,9 @@ import moment from "moment/moment";
 import { useEffect, useMemo } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../store";
-import { setViewed } from "../../store/auxilary";
-import { selectLastViewed } from "../../store/auxilary.selectors";
-import { RecordMetadata } from "../../store/eurofurence.types";
+import { selectLastViewed } from "../../store/auxiliary/selectors";
+import { setViewed } from "../../store/auxiliary/slice";
+import { RecordMetadata } from "../../store/eurofurence/types";
 import { useNow } from "../time/useNow";
 
 /**

@@ -5,8 +5,8 @@ import { Vibration } from "react-native";
 import { ImageSynchronizer } from "./ImageSynchronizer";
 import { apiBase, conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { applySync, resetCache, startCacheSync } from "../../store/eurofurence.cache";
-import { selectIsSynchronized } from "../../store/eurofurence.selectors";
+import { selectIsSynchronized } from "../../store/eurofurence/selectors/sync";
+import { applySync, resetCache, startCacheSync } from "../../store/eurofurence/slice";
 
 type SynchronizationProviderProps = {
     /**

@@ -2,7 +2,7 @@ import moment from "moment/moment";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { EventDetails } from "../../store/eurofurence.types";
+import { EventDetails } from "../../store/eurofurence/types";
 import { Label } from "../generic/atoms/Label";
 import { Col } from "../generic/containers/Col";
 

@@ -9,7 +9,8 @@ import { Header } from "../../components/generic/containers/Header";
 import { LinkItem } from "../../components/maps/LinkItem";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { knowledgeEntriesSelectors, selectImagesById } from "../../store/eurofurence.selectors";
+import { selectImagesById } from "../../store/eurofurence/selectors/images";
+import { knowledgeEntriesSelectors } from "../../store/eurofurence/selectors/records";
 
 export const KbItem = () => {
     const { params } = useAppRoute("KnowledgeEntry");

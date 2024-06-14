@@ -5,7 +5,7 @@ import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { dealerSearchOptions, dealerSearchProperties, useDealerAlphabeticalGroups, useDealerGroups } from "./Dealers.common";
+import { useDealerAlphabeticalGroups } from "./Dealers.common";
 import { DealersRouterParamsList } from "./DealersRouter";
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
@@ -14,7 +14,8 @@ import { conName } from "../../configuration";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
-import { dealersSelectors } from "../../store/eurofurence.selectors";
+import { dealersSelectors } from "../../store/eurofurence/selectors/records";
+import { selectDealersAllSearchIndex } from "../../store/eurofurence/selectors/search";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 
@@ -39,7 +40,7 @@ export const DealersAlpha: FC<DealersAlphaProps> = ({ navigation }) => {
     const now = useNow();
 
     // Search integration.
-    const [filter, setFilter, results] = useFuseIntegration(dealersSelectors.selectAll, dealerSearchProperties, dealerSearchOptions);
+    const [filter, setFilter, results] = useFuseIntegration(selectDealersAllSearchIndex);
 
     // Use all dealers and group generically.
     const dealersAll = useAppSelector(dealersSelectors.selectAll);

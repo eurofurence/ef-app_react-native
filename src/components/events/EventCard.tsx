@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { EventCardTime } from "./EventCardTime";
 import { useThemeBackground, useThemeColorValue } from "../../hooks/themes/useThemeHooks";
-import { EventDetails } from "../../store/eurofurence.types";
+import { EventDetails } from "../../store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Icon } from "../generic/atoms/Icon";
 import { Label } from "../generic/atoms/Label";
