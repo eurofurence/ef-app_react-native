@@ -27,5 +27,5 @@ export function dealerSectionForLetter(title: string): DealerSectionProps {
 }
 
 export const DealerSection: FC<DealerSectionProps> = ({ style, title, subtitle, icon }) => {
-    return <Section style={style} title={title} subtitle={subtitle} icon={icon} />;
+    return <Section style={style} title={title} subtitle={subtitle} backgroundColor="surface" icon={icon} />;
 };

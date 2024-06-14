@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/react-native";
 import { FC, RefObject, useContext, useMemo } from "react";
 import { Linking } from "react-native";
 
@@ -38,9 +39,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
     const on = useMemo(
         () => ({
             login: () => {
-                login();
-                // TODO
-                // pager.current?.toRight()
+                login().catch(captureException);
             },
             messages: () => {
                 navigation.navigate("PrivateMessageList");
@@ -51,11 +50,11 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 tabs.current?.close();
             },
             catchEmAll: () => {
-                openFursuitGames();
+                openFursuitGames().catch(captureException);
                 tabs.current?.close();
             },
             services: () => {
-                openAdditionalServices();
+                openAdditionalServices().catch(captureException);
                 return tabs.current?.close();
             },
             settings: () => {

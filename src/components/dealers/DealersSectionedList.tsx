@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 
 import { DealerCard, DealerDetailsInstance } from "./DealerCard";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
-import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
+import { useThemeName } from "../../hooks/themes/useThemeHooks";
 import { DealersAdProps } from "../../routes/dealers/DealersAd";
 import { DealersAllProps } from "../../routes/dealers/DealersAll";
 import { DealersAlphaProps } from "../../routes/dealers/DealersAlpha";
@@ -27,7 +27,6 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !("details" in item)) : undefined), [dealersGroups, sticky]);
-    const sectionStyle = useThemeBackground("surface");
 
     return (
         <FlashList
@@ -45,7 +44,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
                 if ("details" in item) {
                     return <DealerCard containerStyle={styles.item} key={item.details.Id} dealer={item} onPress={(dealer) => navigation.push("Dealer", { id: dealer.Id })} />;
                 } else {
-                    return <DealerSection style={[styles.item, sectionStyle]} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
+                    return <DealerSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
                 }
             }}
             estimatedItemSize={110}

@@ -231,8 +231,6 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         return () => subscription.remove();
     }, [close]);
 
-    // TODO: Add safe area to tabs.
-
     return (
         <TabsContext.Provider value={{ close, open, closeImmediately, isOpen: offset.value > 0 }}>
             {/* Dismissal area. */}

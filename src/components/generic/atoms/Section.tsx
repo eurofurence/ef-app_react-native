@@ -3,8 +3,8 @@ import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { Icon, IconNames } from "./Icon";
 import { Label, LabelProps } from "./Label";
-import { Theme } from "../../../context/Theme";
-import { useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { ThemeColor } from "../../../context/Theme";
+import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Col } from "../containers/Col";
 import { Row } from "../containers/Row";
 
@@ -34,16 +34,18 @@ export type SectionProps = {
      */
     subtitle?: string;
 
-    titleColor?: keyof Theme;
-    subtitleColor?: keyof Theme;
+    backgroundColor?: ThemeColor;
+    titleColor?: ThemeColor;
+    subtitleColor?: ThemeColor;
     titleVariant?: LabelProps["variant"];
     subtitleVariant?: LabelProps["variant"];
 };
 
-export const Section: FC<SectionProps> = ({ style, icon = "bookmark", title, subtitle, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
+export const Section: FC<SectionProps> = ({ style, icon = "bookmark", title, subtitle, backgroundColor, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
+    const styleBackground = useThemeBackground(backgroundColor ?? null);
     const iconColor = useThemeColorValue(titleColor ?? "important");
     return (
-        <Col style={[styles.container, style]}>
+        <Col style={[styles.container, styleBackground, style]}>
             <Row type="center">
                 {!icon ? <View style={styles.placeholder} /> : <Icon color={iconColor} style={styles.icon} name={icon} size={iconSize} />}
                 <Label style={styles.containerFill} type="h1" variant={titleVariant} color={titleColor ?? "important"} ellipsizeMode="tail">

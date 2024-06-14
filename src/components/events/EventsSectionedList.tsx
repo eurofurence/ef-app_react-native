@@ -4,7 +4,7 @@ import { StyleSheet, Vibration } from "react-native";
 
 import { EventCard, EventDetailsInstance } from "./EventCard";
 import { EventSection, EventSectionProps } from "./EventSection";
-import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
+import { useThemeName } from "../../hooks/themes/useThemeHooks";
 import { EventsByDayProps } from "../../routes/events/EventsByDay";
 import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
 import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
@@ -37,7 +37,6 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !("details" in item)) : undefined), [eventsGroups, sticky]);
-    const sectionStyle = useThemeBackground("surface");
 
     return (
         <FlashList
@@ -71,7 +70,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
                         />
                     );
                 } else {
-                    return <EventSection style={[styles.item, sectionStyle]} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
+                    return <EventSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
                 }
             }}
             estimatedItemSize={110}

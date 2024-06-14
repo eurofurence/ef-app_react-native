@@ -249,7 +249,8 @@ const styles = StyleSheet.create({
     progress: {
         position: "absolute",
         left: 0,
-        bottom: 0,
+        bottom: -2,
         right: 0,
+        height: 6,
     },
 });

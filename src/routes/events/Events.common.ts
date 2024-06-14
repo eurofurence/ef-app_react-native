@@ -55,7 +55,7 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
                     ? current
                     : current.concat([
                           // Passed header.
-                          eventSectionForPassed(t, passed.length),
+                          eventSectionForPassed(t),
                           // Passed event instances.
                           ...passed.map((details) => eventInstanceForPassed(details)),
                       ]),
@@ -79,7 +79,7 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
             .groupBy("PartOfDay")
             .flatMap((events, partOfDay) => [
                 // Header.
-                eventSectionForPartOfDay(t, partOfDay as PartOfDay, events.length),
+                eventSectionForPartOfDay(t, partOfDay as PartOfDay),
                 // Event instances.
                 ...events.map((details) => eventInstanceForNotPassed(details, now)),
             ])
@@ -88,7 +88,7 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
                     ? current
                     : current.concat([
                           // Passed header.
-                          eventSectionForPassed(t, passed.length),
+                          eventSectionForPassed(t),
                           // Passed event instances.
                           ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
                       ]),
@@ -112,7 +112,7 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
             .groupBy((event) => event.ConferenceDay?.Date)
             .flatMap((events, date) => [
                 // Header.
-                eventSectionForDate(t, date, events.length),
+                eventSectionForDate(t, date),
                 // Event instances.
                 ...events.map((details) => eventInstanceForNotPassed(details, now)),
             ])
@@ -121,7 +121,7 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
                     ? current
                     : current.concat([
                           // Passed header.
-                          eventSectionForPassed(t, passed.length),
+                          eventSectionForPassed(t),
                           // Passed event instances.
                           ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
                       ]),

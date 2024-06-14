@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
 
 /**
@@ -18,8 +18,8 @@ export type ColProps = ViewProps & {
 
 export const Col: FC<ColProps> = ({ style, type, variant, children, ...rest }) => {
     // Resolve styles.
-    const resType = useMemo(() => (type ? types[type] : types.regular), [type]);
-    const resVariant = useMemo(() => (variant ? variants[variant] : variants.start), [variant]);
+    const resType = type ? types[type] : types.regular;
+    const resVariant = variant ? variants[variant] : variants.start;
     return (
         <View style={[resType, resVariant, style]} {...rest}>
             {children}

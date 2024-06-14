@@ -8,6 +8,7 @@ import { Claims, useAuthContext } from "../../context/AuthContext";
 import { useAppSelector } from "../../store";
 import { selectBrowsableMaps } from "../../store/eurofurence.selectors";
 import { RecordId } from "../../store/eurofurence.types";
+import { assetSource } from "../../util/assets";
 import { Button } from "../generic/containers/Button";
 import { Col } from "../generic/containers/Col";
 import { Grid } from "../generic/containers/Grid";
@@ -28,7 +29,7 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, o
     // TODO: Verify style of name etc.
     return (
         <Row style={styles.padding} type="center" variant="center">
-            <Image style={styles.avatarCircle} source={user?.avatar ?? "ych"} contentFit="contain" placeholder="ych" transition={60} priority="low" />
+            <Image style={styles.avatarCircle} source={user?.avatar ?? assetSource("ych")} contentFit="contain" placeholder="ych" transition={60} priority="low" />
 
             {/*<Label style={styles.marginBefore} type="caption">*/}
             {/*    {t("not_logged_in")}*/}

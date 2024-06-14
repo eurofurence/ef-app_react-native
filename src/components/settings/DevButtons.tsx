@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/react-native";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Vibration, View } from "react-native";
@@ -61,7 +62,7 @@ export const DevButtons = () => {
             <Button
                 containerStyle={styles.button}
                 onPress={() => {
-                    logout();
+                    logout().catch(captureException);
                 }}
             >
                 Logout

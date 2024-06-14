@@ -154,9 +154,6 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         try {
             const codeResponse = await promptAsync();
 
-            // TODO Remove when tested.
-            console.log("CODE RESPONSE", codeResponse);
-
             if (!(request && codeResponse?.type === "success")) return;
 
             const response = await exchangeCodeAsync(
@@ -168,9 +165,6 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                 },
                 discovery,
             );
-
-            // TODO Remove when tested.
-            console.log("CODE EXCHANGED", response);
 
             await SecureStore.setItemToAsync("accessToken", response.accessToken);
             await SecureStore.setItemToAsync("refreshToken", response.refreshToken);

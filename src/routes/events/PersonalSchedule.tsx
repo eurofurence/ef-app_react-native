@@ -42,7 +42,7 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
             .groupBy((event) => event.ConferenceDay?.Date)
             .flatMap((items, day) => [
                 // Header.
-                eventSectionForDate(t, day, items.length),
+                eventSectionForDate(t, day),
                 // Event instances.
                 ...items.map((details) => eventInstanceForNotPassed(details, now)),
             ])
@@ -51,7 +51,7 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
                     ? current
                     : current.concat([
                           // Passed header.
-                          eventSectionForPassed(t, passed.length),
+                          eventSectionForPassed(t),
                           // Passed event instances.
                           ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
                       ]),

@@ -12,9 +12,8 @@ export type EventSectionProps = SectionProps;
  * Creates the properties for a "part of day" section.
  * @param t Translation function.
  * @param partOfDay Part of day.
- * @param eventsCount Number of events in this section.
  */
-export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay, eventsCount: number): EventSectionProps {
+export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay): EventSectionProps {
     return {
         title: t(partOfDay as PartOfDay),
         icon: ((partOfDay === "morning" && "weather-sunset-up") ||
@@ -28,9 +27,8 @@ export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay, eve
 /**
  * Creates the properties for a "passed" section.
  * @param t Translation function.
- * @param passedCount Number of events in this section.
  */
-export function eventSectionForPassed(t: TFunction, passedCount: number): EventSectionProps {
+export function eventSectionForPassed(t: TFunction): EventSectionProps {
     return {
         title: t("events_done"),
         icon: "calendar-clock-outline" as IconNames,
@@ -40,9 +38,9 @@ export function eventSectionForPassed(t: TFunction, passedCount: number): EventS
 /**
  * Creates the properties for a generic "on this day" section.
  * @param t Translation function.
- * @param eventsCount Number of events in this section.
+ * @param date Date of the event.
  */
-export function eventSectionForDate(t: TFunction, date: string, eventsCount: number): EventSectionProps {
+export function eventSectionForDate(t: TFunction, date: string): EventSectionProps {
     return {
         title: moment(date).format("dddd"),
         icon: "calendar-outline" as IconNames,
@@ -50,5 +48,5 @@ export function eventSectionForDate(t: TFunction, date: string, eventsCount: num
 }
 
 export const EventSection: FC<EventSectionProps> = ({ style, title, subtitle, icon }) => {
-    return <Section style={style} title={title} subtitle={subtitle} icon={icon} />;
+    return <Section style={style} title={title} subtitle={subtitle} backgroundColor="surface" icon={icon} />;
 };

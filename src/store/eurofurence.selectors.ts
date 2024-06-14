@@ -266,32 +266,6 @@ export const selectKnowledgeItems = createSelector([knowledgeGroupsSelectors.sel
         .value(),
 );
 
-/**
- * Selects all knowledge items in a sorted manner that is ready for a section list.
- */
-export const selectKnowledgeItemsLegacy = createSelector(
-    [knowledgeGroupsSelectors.selectAll, knowledgeEntriesSelectors.selectAll],
-    (groups, entries): (KnowledgeGroupRecord & { entries: KnowledgeEntryRecord[] })[] => {
-        return _.chain(groups)
-            .orderBy((it) => it.Order)
-            .map((group) => ({
-                ...group,
-                entries: _.chain(entries)
-                    .filter((entry) => entry.KnowledgeGroupId === group.Id)
-                    .orderBy((it) => it.Order)
-                    .value(),
-            }))
-            .value();
-    },
-);
-
-export const selectKnowledgeItemsSections = createSelector(selectKnowledgeItemsLegacy, (items): SectionListData<KnowledgeEntryRecord, KnowledgeGroupRecord>[] =>
-    items.map((it) => ({
-        ...it,
-        data: it.entries,
-    })),
-);
-
 export const selectIsSynchronized = createSelector(
     (state: RootState) => state.eurofurenceCache.state,
     (state) => state === "refreshing",

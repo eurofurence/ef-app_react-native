@@ -12,7 +12,8 @@ import { eventsSelector } from "../../store/eurofurence.selectors";
 import { useSubmitEventFeedbackMutation } from "../../store/eurofurence.service";
 import { Label } from "../generic/atoms/Label";
 import { Button } from "../generic/containers/Button";
-import { ManagedRating, ManagedTextInput } from "../generic/forms";
+import { ManagedRating } from "../generic/forms/ManagedRating";
+import { ManagedTextInput } from "../generic/forms/ManagedTextInput";
 
 export const FeedbackForm = () => {
     const theme = useTheme();

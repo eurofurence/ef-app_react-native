@@ -8,6 +8,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { isPresent, joinOffDays } from "./utils";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { DealerDetails } from "../../store/eurofurence.types";
+import { assetSource } from "../../util/assets";
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";
 
@@ -47,7 +48,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     const present = dealer.present;
     const description = dealer.details.Categories?.join(", ");
     const offDays = dealer.offDays;
-    const avatar = dealer.details.ArtistThumbnail ? dealer.details.ArtistThumbnail.FullUrl : dealer.details.Artist ? dealer.details.Artist.FullUrl : "ych";
+    const avatar = dealer.details.ArtistThumbnail ? dealer.details.ArtistThumbnail.FullUrl : dealer.details.Artist ? dealer.details.Artist.FullUrl : assetSource("ych");
 
     // Translation object.
     const { t } = useTranslation("Dealers");
@@ -64,7 +65,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
             onLongPress={() => onLongPress?.(dealer.details)}
         >
             <View style={[styles.pre, stylePre]}>
-                <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder="ych" transition={60} priority="low" />
+                <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={assetSource("ych")} transition={60} priority="low" />
             </View>
 
             <View style={styles.main}>
