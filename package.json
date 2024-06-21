@@ -35,7 +35,8 @@
       "profile",
       "offline",
       "offline_access"
-    ]
+    ],
+    "settingsUrl": "https://identity.eurofurence.org/settings/profile"
   },
   "license": "MIT",
   "scripts": {

@@ -59,7 +59,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
                             event={item}
                             type={cardType}
                             onPress={(event) =>
-                                navigation.push("Event", {
+                                navigation.navigate("Event", {
                                     id: event.Id,
                                 })
                             }

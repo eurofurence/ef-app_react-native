@@ -4,7 +4,7 @@ import { Moment } from "moment/moment";
 import { useMemo } from "react";
 
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
-import { eventSectionForDate, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "../../components/events/EventSection";
+import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "../../components/events/EventSection";
 import { EventDetails, PartOfDay } from "../../store/eurofurence/types";
 
 /**
@@ -17,7 +17,8 @@ import { EventDetails, PartOfDay } from "../../store/eurofurence/types";
 export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDetails[] | null) => {
     return useMemo(() => {
         // No sorting, score is included in sort.
-        const [upcoming, passed] = partition(results ?? [], (it) => now.isBefore(it.EndDateTimeUtc));
+        const [shown, hidden] = partition(results ?? [], (item) => !item.Hidden);
+        const [upcoming, passed] = partition(shown, (item) => now.isBefore(item.EndDateTimeUtc));
         return chain(upcoming)
             .map((details) => eventInstanceForAny(details, now) as EventDetailsInstance | EventSectionProps)
             .thru((current) =>
@@ -29,6 +30,16 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
                           // Passed event instances.
                           ...passed.map((details) => eventInstanceForPassed(details)),
                       ]),
+            )
+            .thru((current) =>
+                hidden.length === 0
+                    ? current
+                    : [
+                          // Hidden marker
+                          eventSectionForHidden(t, hidden.length),
+                          // Original elements.
+                          ...current,
+                      ],
             )
             .value();
     }, [t, now, results]);
@@ -43,7 +54,8 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
  */
 export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]) => {
     return useMemo(() => {
-        const [upcoming, passed] = partition(all, (it) => now.isBefore(it.EndDateTimeUtc));
+        const [shown, hidden] = partition(all, (item) => !item.Hidden);
+        const [upcoming, passed] = partition(shown, (item) => now.isBefore(item.EndDateTimeUtc));
         return chain(upcoming)
             .orderBy("StartDateTimeUtc")
             .groupBy("PartOfDay")
@@ -54,14 +66,26 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
                 ...events.map((details) => eventInstanceForNotPassed(details, now)),
             ])
             .thru((current) =>
+                hidden.length === 0
+                    ? current
+                    : [
+                          // Hidden marker
+                          eventSectionForHidden(t, hidden.length),
+                          // Original elements.
+                          ...current,
+                      ],
+            )
+            .thru((current) =>
                 passed.length === 0
                     ? current
-                    : current.concat([
+                    : [
+                          // Original elements.
+                          ...current,
                           // Passed header.
                           eventSectionForPassed(t),
                           // Passed event instances.
                           ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
-                      ]),
+                      ],
             )
             .value();
     }, [t, now, all]);
@@ -76,7 +100,8 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
  */
 export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails[]) => {
     return useMemo(() => {
-        const [upcoming, passed] = partition(all, (it) => now.isBefore(it.EndDateTimeUtc));
+        const [shown, hidden] = partition(all, (item) => !item.Hidden);
+        const [upcoming, passed] = partition(shown, (item) => now.isBefore(item.EndDateTimeUtc));
         return chain(upcoming)
             .orderBy("StartDateTimeUtc")
             .groupBy((event) => event.ConferenceDay?.Date)
@@ -87,14 +112,26 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
                 ...events.map((details) => eventInstanceForNotPassed(details, now)),
             ])
             .thru((current) =>
+                hidden.length === 0
+                    ? current
+                    : [
+                          // Hidden marker
+                          eventSectionForHidden(t, hidden.length),
+                          // Original elements.
+                          ...current,
+                      ],
+            )
+            .thru((current) =>
                 passed.length === 0
                     ? current
-                    : current.concat([
+                    : [
+                          // Original elements.
+                          ...current,
                           // Passed header.
                           eventSectionForPassed(t),
                           // Passed event instances.
                           ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
-                      ]),
+                      ],
             )
             .value();
     }, [t, now, all]);

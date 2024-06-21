@@ -45,7 +45,7 @@ export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }
             onClose={close}
         >
             {/* TODO: Update note? */}
-            <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} />}</EventActionsSheetScrollView>
+            <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} shareButton />}</EventActionsSheetScrollView>
         </BottomSheet>
     );
 };

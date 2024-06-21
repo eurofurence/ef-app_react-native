@@ -54,3 +54,4 @@ export const authIssuer = packageData.auth.issuer;
 export const authRedirect = packageData.auth.redirect;
 export const authClientId = packageData.auth.clientId;
 export const authScopes = packageData.auth.scopes;
+export const authSettingsUrl = packageData.auth.settingsUrl;

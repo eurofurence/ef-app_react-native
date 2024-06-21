@@ -1,14 +1,17 @@
-import { StyleSheet } from "react-native";
+import { captureException } from "@sentry/react-native";
+import { Share, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../../components/AppStyles";
 import { EventContent } from "../../components/events/EventContent";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
+import { appBase, conAbbr } from "../../configuration";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
+import { EventDetails } from "../../store/eurofurence/types";
 
 /**
  * Params handled by the screen in route.
@@ -29,8 +32,20 @@ export const EventItem = () => {
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header>{event?.Title ?? "Viewing event"}</Header>
+            <Header secondaryIcon="share" secondaryPress={() => event && shareEvent(event)}>
+                {event?.Title ?? "Viewing event"}
+            </Header>
             <Floater contentStyle={appStyles.trailer}>{!event ? null : <EventContent event={event} parentPad={padFloater} updated={updated} />}</Floater>
         </ScrollView>
     );
 };
+
+export const shareEvent = (event: EventDetails) =>
+    Share.share(
+        {
+            title: event.Title,
+            url: `${appBase}/Web/events/${event.Id}`,
+            message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/events/${event.Id}`,
+        },
+        {},
+    ).catch(captureException);

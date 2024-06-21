@@ -7,7 +7,7 @@ import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/us
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 
-const iconSize = 20;
+export const buttonIconSize = 20;
 const pad = 8;
 const border = 2;
 
@@ -56,24 +56,31 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
     // Computed styles.
-    const base = outline ? styles.containerOutline : styles.containerFill;
-    const fill = useThemeBackground(outline ? "background" : "inverted");
+    const baseStyle = outline ? styles.containerOutline : styles.containerFill;
+    const disabledStyle = disabled ? styles.disabled : null;
+    const fillStyle = useThemeBackground(outline ? "transparent" : "inverted");
     const color = useThemeColorValue(outline ? "important" : "invImportant");
 
     let iconComponent;
     if (!icon) iconComponent = <View style={styles.placeholder} />;
-    else if (typeof icon === "string") iconComponent = <Icon name={icon} size={iconSize} color={color} />;
-    else if (icon instanceof Function) iconComponent = icon({ size: iconSize, color });
+    else if (typeof icon === "string") iconComponent = <Icon name={icon} size={buttonIconSize} color={color} />;
+    else if (icon instanceof Function) iconComponent = icon({ size: buttonIconSize, color });
     else iconComponent = icon;
 
     let iconRightComponent;
     if (!iconRight) iconRightComponent = <View style={styles.placeholder} />;
-    else if (typeof iconRight === "string") iconRightComponent = <Icon name={iconRight} size={iconSize} color={color} />;
-    else if (iconRight instanceof Function) iconRightComponent = iconRight({ size: iconSize, color });
+    else if (typeof iconRight === "string") iconRightComponent = <Icon name={iconRight} size={buttonIconSize} color={color} />;
+    else if (iconRight instanceof Function) iconRightComponent = iconRight({ size: buttonIconSize, color });
     else iconRightComponent = iconRight;
 
     return (
-        <TouchableOpacity containerStyle={containerStyle} style={[styles.container, base, fill, style]} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
+        <TouchableOpacity
+            containerStyle={containerStyle}
+            style={[styles.container, baseStyle, fillStyle, disabledStyle, style]}
+            onPress={onPress}
+            onLongPress={onLongPress}
+            disabled={disabled}
+        >
             {iconComponent}
 
             <Label style={styles.text} color={outline ? "important" : "invImportant"}>
@@ -101,14 +108,17 @@ const styles = StyleSheet.create({
         borderColor: "black",
         borderWidth: border,
     },
+    disabled: {
+        opacity: 0.6,
+    },
     content: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
     },
     placeholder: {
-        width: iconSize,
-        height: iconSize,
+        width: buttonIconSize,
+        height: buttonIconSize,
     },
     text: {
         textAlign: "center",

@@ -26,7 +26,7 @@ export const reducers = combineReducers({
 const persistedReducer = persistReducer(
     {
         key: "root",
-        version: 2,
+        version: 3,
         storage: AsyncStorage,
         whitelist: [timeTravelSlice.name, backgroundSlice.name, eurofurenceCache.name, settingsSlice.name, auxiliary.name],
     },

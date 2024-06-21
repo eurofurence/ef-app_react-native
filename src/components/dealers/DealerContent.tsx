@@ -1,13 +1,15 @@
 import { Image } from "expo-image";
 import * as Linking from "expo-linking";
 import moment from "moment";
-import React, { FC, useMemo } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
-import { useAppSelector } from "../../store";
+import { shareDealer } from "../../routes/dealers/DealerItem";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { toggleDealerFavorite } from "../../store/auxiliary/slice";
 import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";
 import { DealerDetails } from "../../store/eurofurence/types";
 import { appStyles } from "../AppStyles";
@@ -30,14 +32,22 @@ export type DealerContentProps = {
      * The padding used by the parent horizontally.
      */
     parentPad?: number;
+
+    /**
+     * True if a dedicated share button should be displayed.
+     */
+    shareButton?: boolean;
 };
 
-export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 }) => {
+export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, shareButton }) => {
     const navigation = useAppNavigation("Areas");
     const { t } = useTranslation("Dealer");
     const now = useNow();
 
+    const dispatch = useAppDispatch();
     const mapLink = useAppSelector((state) => selectValidLinksByTarget(state, dealer.Id));
+
+    const toggleFavorite = useCallback(() => dispatch(toggleDealerFavorite(dealer.Id)), [dispatch, dealer.Id]);
 
     const days = useMemo(
         () =>
@@ -75,6 +85,16 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
 
             <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
+            <Button containerStyle={styles.marginBefore} outline={dealer.Favorite} icon={dealer.Favorite ? "heart-outline" : "heart"} onPress={toggleFavorite}>
+                {dealer.Favorite ? t("remove_favorite") : t("add_favorite")}
+            </Button>
+
+            {!shareButton ? null : (
+                <Button containerStyle={styles.marginBefore} icon="share" onPress={() => shareDealer(dealer)}>
+                    {t("share")}
+                </Button>
+            )}
+
             <Section icon="directions-fork" title={t("about")} />
             <Label type="caption">{t("table")}</Label>
             {!dealer.ShortDescriptionTable ? null : (
@@ -105,7 +125,6 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
                     </Label>
                 </>
             )}
-
             {dealer.Links &&
                 dealer.Links.map((it) => (
                     <View style={styles.button} key={it.Name}>
@@ -143,7 +162,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
 
                     {!dealer.ArtPreview ? null : (
                         <View style={styles.posterLine}>
-                            <Banner image={dealer.ArtPreview} />
+                            <Banner image={dealer.ArtPreview} viewable />
 
                             <Label mt={10} type="caption" numberOfLines={4} ellipsizeMode="tail">
                                 {dealer.ArtPreviewCaption}
@@ -161,7 +180,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0 })
 
                     {!dealer.Artist ? null : (
                         <View style={styles.posterLine}>
-                            <Banner image={dealer.Artist} />
+                            <Banner image={dealer.Artist} viewable />
                         </View>
                     )}
 
@@ -191,6 +210,9 @@ const styles = StyleSheet.create({
     posterLine: {
         marginBottom: 20,
         alignItems: "center",
+    },
+    marginBefore: {
+        marginTop: 15,
     },
     button: {
         marginBottom: 20,

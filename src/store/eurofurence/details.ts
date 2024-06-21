@@ -1,7 +1,8 @@
+import FontAwesomeIcon from "@expo/vector-icons/FontAwesome5";
 import { Dictionary } from "@reduxjs/toolkit";
+import { parseInt } from "lodash";
 import moment, { MomentInput } from "moment";
 
-import { Notification } from "./../background/slice";
 import {
     AnnouncementDetails,
     AnnouncementRecord,
@@ -16,12 +17,16 @@ import {
     EventTrackDetails,
     ImageDetails,
     ImageRecord,
+    KnowledgeGroupDetails,
+    KnowledgeGroupRecord,
     MapDetails,
     MapEntryDetails,
     MapRecord,
+    RecordId,
 } from "./types";
 import { IconNames } from "../../components/generic/atoms/Icon";
 import { apiBase } from "../../configuration";
+import { Notification } from "../background/slice";
 
 const base64encode = (input: string) => {
     const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -130,6 +135,7 @@ export const applyEventDetails = (
     days: Dictionary<EventDayDetails>,
     tracks: Dictionary<EventTrackDetails>,
     favorite: Dictionary<Notification>,
+    hiddenIds: string[],
 ): EventDetails => ({
     ...source,
     PartOfDay: internalCategorizeTime(source.StartDateTimeUtc),
@@ -144,6 +150,7 @@ export const applyEventDetails = (
     ConferenceDay: !source.ConferenceDayId ? undefined : days[source.ConferenceDayId],
     ConferenceTrack: !source.ConferenceTrackId ? undefined : tracks[source.ConferenceTrackId],
     Favorite: source.Id in favorite,
+    Hidden: hiddenIds.includes(source.Id),
 });
 
 const internalDealerParseTable = (dealer: DealerRecord) => {
@@ -159,7 +166,7 @@ const internalDealerParseDescriptionContent = (dealer: DealerRecord) => {
     return dealer.ShortDescription.split(/\r?\n/).slice(1).join("\n").trimStart();
 };
 
-export const applyDealerDetails = (source: DealerRecord, images: Dictionary<ImageDetails>, days: EventDayDetails[]): DealerDetails => ({
+export const applyDealerDetails = (source: DealerRecord, images: Dictionary<ImageDetails>, days: EventDayDetails[], favorites: RecordId[]): DealerDetails => ({
     ...source,
     AttendanceDayNames: internalAttendanceDayNames(source),
     AttendanceDays: internalAttendanceDays(days, source),
@@ -169,6 +176,7 @@ export const applyDealerDetails = (source: DealerRecord, images: Dictionary<Imag
     FullName: source.DisplayName || source.AttendeeNickname,
     ShortDescriptionTable: internalDealerParseTable(source),
     ShortDescriptionContent: internalDealerParseDescriptionContent(source),
+    Favorite: favorites.includes(source.Id),
 });
 
 export const applyEventDayDetails = (source: EventDayRecord): EventDayDetails => ({
@@ -189,4 +197,11 @@ export const applyMapDetails = (source: MapRecord, images: Dictionary<ImageDetai
 export const applyImageDetails = (source: ImageRecord): ImageDetails => ({
     ...source,
     FullUrl: internalCreateImageUrl(source),
+});
+
+const faGlyphToName = Object.fromEntries(Object.entries(FontAwesomeIcon.getRawGlyphMap()).map(([key, value]) => [value, key]));
+
+export const applyKnowledgeGroupDetails = (source: KnowledgeGroupRecord): KnowledgeGroupDetails => ({
+    ...source,
+    FaIconName: source.FontAwesomeIconCharacterUnicodeAddress ? faGlyphToName[parseInt(source.FontAwesomeIconCharacterUnicodeAddress, 16)] : undefined,
 });

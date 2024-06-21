@@ -5,7 +5,7 @@ import moment from "moment/moment";
 import { useMemo } from "react";
 
 import { dealerInstanceForAny } from "../../components/dealers/DealerCard";
-import { dealerSectionForCategory, dealerSectionForLetter } from "../../components/dealers/DealerSection";
+import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation } from "../../components/dealers/DealerSection";
 import { useAppSelector } from "../../store";
 import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/dealers";
 import { DealerDetails } from "../../store/eurofurence/types";
@@ -50,6 +50,39 @@ export const useDealerGroups = (t: TFunction, now: Moment, results: DealerDetail
  * @param results Results for search if given.
  * @param all General results.
  */
+export const useDealerLocationGroups = (t: TFunction, now: Moment, results: DealerDetails[] | null, all: DealerDetails[]) => {
+    const categoryOf = useAppSelector(selectDealerCategoryMapper);
+    return useMemo(() => {
+        const day1 = moment().day(1).format("dddd");
+        const day2 = moment().day(2).format("dddd");
+        const day3 = moment().day(3).format("dddd");
+
+        // Sort only if not on search results, where score is included in sort.
+        return chain(results ?? all)
+            .thru((current) => (results === null ? orderBy(current, "FullName") : current))
+            .groupBy((dealer) => (dealer.IsAfterDark ? "1" : "0"))
+            .entries()
+            .flatMap(([isAfterDark, dealers]) =>
+                results === null
+                    ? [
+                          // Header
+                          dealerSectionForLocation(t, isAfterDark === "1"),
+                          // Dealer instances.
+                          ...dealers.map((details) => dealerInstanceForAny(details, now, day1, day2, day3)),
+                      ]
+                    : dealers.map((details) => dealerInstanceForAny(details, now, day1, day2, day3)),
+            )
+            .value();
+    }, [t, now, results, all, categoryOf]);
+};
+
+/**
+ * Returns a list of dealer instances or section headers according to conversion rules.
+ * @param t The translation function.
+ * @param now The current moment.
+ * @param results Results for search if given.
+ * @param all General results.
+ */
 export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: DealerDetails[] | null, all: DealerDetails[]) => {
     return useMemo(() => {
         const day1 = moment().day(1).format("dddd");
@@ -59,7 +92,7 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
         // Sort only if not on search results, where score is included in sort.
         return chain(results ?? all)
             .thru((current) => (results === null ? orderBy(current, "FullName") : current))
-            .groupBy((dealer) => dealer.FullName[0])
+            .groupBy((dealer) => dealer.FullName[0].toUpperCase())
             .entries()
             .flatMap(([firstLetter, dealers]) =>
                 results === null

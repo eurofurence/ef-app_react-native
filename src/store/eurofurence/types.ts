@@ -82,6 +82,7 @@ export type EventDetails = EventRecord & {
     ConferenceDay?: EventDayDetails;
     ConferenceTrack?: EventTrackDetails;
     Favorite: boolean;
+    Hidden: boolean;
 };
 
 export type DealerRecord = RecordMetadata & {
@@ -118,6 +119,7 @@ export type DealerDetails = DealerRecord & {
     FullName: string;
     ShortDescriptionContent?: string;
     ShortDescriptionTable?: string;
+    Favorite: boolean;
 };
 
 export type EventDayRecord = RecordMetadata & {
@@ -181,7 +183,9 @@ export type KnowledgeGroupRecord = RecordMetadata & {
     FontAwesomeIconCharacterUnicodeAddress?: string;
 };
 
-export type KnowledgeGroupDetails = KnowledgeGroupRecord & object;
+export type KnowledgeGroupDetails = KnowledgeGroupRecord & {
+    FaIconName?: string;
+};
 
 export type KnowledgeEntryRecord = RecordMetadata & {
     Title: string;

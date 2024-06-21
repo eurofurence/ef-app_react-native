@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { About } from "./About";
 import { AnnouncementItem, AnnouncementItemParams } from "./AnnouncementItem";
 import { AreasRouter, AreasRouterParams } from "./AreasRouter";
+import { Viewer, ViewerParams } from "./Viewer";
 import { DealerItem, DealerItemParams } from "./dealers/DealerItem";
 import { EventFeedback } from "./events/EventFeedback";
 import { EventItem, EventItemParams } from "./events/EventItem";
@@ -15,6 +16,7 @@ import { KbList } from "./kb/KbList";
 import { Map } from "./maps/Map";
 import { PmItem, PmItemParams } from "./pm/PmItem";
 import { PmList } from "./pm/PmList";
+import { RevealHidden } from "./settings/RevealHidden";
 import { Settings } from "./settings/Settings";
 import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
 import { RecordId } from "../store/eurofurence/types";
@@ -31,11 +33,8 @@ export type IndexRouterParamsList = {
     Event: EventItemParams;
     Dealer: DealerItemParams;
     EventFeedback: { id: string };
-
-    /**
-     * Detail screen for dealer.
-     */
     Settings: undefined;
+    RevealHidden: undefined;
     PrivateMessageList: undefined;
     PrivateMessageItem: PmItemParams;
     KnowledgeGroups: object;
@@ -48,6 +47,7 @@ export type IndexRouterParamsList = {
         linkId?: number;
     };
     About: undefined;
+    Viewer: ViewerParams;
 };
 
 const Stack = createStackNavigator<IndexRouterParamsList>();
@@ -75,14 +75,16 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
                 <Stack.Screen name="Announcement" component={AnnouncementItem} />
                 <Stack.Screen name="Event" component={EventItem} />
                 <Stack.Screen name="Dealer" component={DealerItem} />
+                <Stack.Screen name="EventFeedback" component={EventFeedback} />
                 <Stack.Screen name="Settings" component={Settings} />
+                <Stack.Screen name="RevealHidden" component={RevealHidden} />
                 <Stack.Screen name="PrivateMessageList" component={PmList} />
                 <Stack.Screen name="PrivateMessageItem" component={PmItem} />
                 <Stack.Screen name="KnowledgeGroups" component={KbList} />
                 <Stack.Screen name="KnowledgeEntry" component={KbItem} />
                 <Stack.Screen name="Map" component={Map} />
                 <Stack.Screen name="About" component={About} />
-                <Stack.Screen name="EventFeedback" component={EventFeedback} />
+                <Stack.Screen name="Viewer" component={Viewer} />
             </Stack.Navigator>
         </SafeAreaView>
     );

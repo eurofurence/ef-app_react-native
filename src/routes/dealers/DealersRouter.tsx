@@ -11,6 +11,8 @@ import { DealersAd, DealersAdParams } from "./DealersAd";
 import { DealersAll, DealersAllParams } from "./DealersAll";
 import { DealersAlpha, DealersAlphaParams } from "./DealersAlpha";
 import { DealersRegular, DealersRegularParams } from "./DealersRegular";
+import { PersonalDealers, PersonalDealersParams } from "./PersonalDealers";
+import { Icon } from "../../components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
@@ -20,6 +22,7 @@ import { IndexRouterParamsList } from "../IndexRouter";
  */
 export type DealersRouterParamsList = {
     All: DealersAllParams;
+    Personal: PersonalDealersParams;
     Regular: DealersRegularParams;
     AD: DealersAdParams;
     Alpha: DealersAlphaParams;
@@ -65,6 +68,17 @@ export const DealersRouter: FC<DealersRouterProps> = () => {
                     height: Dimensions.get("window").height,
                 }}
             >
+                <Tab.Screen
+                    name="Personal"
+                    options={{
+                        title: t("personal"),
+                        tabBarShowLabel: false,
+                        tabBarShowIcon: true,
+                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,
+                        tabBarLabelStyle: tabStyles.normal,
+                    }}
+                    component={PersonalDealers}
+                />
                 <Tab.Screen name="All" options={{ title: t("all"), tabBarLabelStyle: tabStyles.normal }} component={DealersAll} />
                 <Tab.Screen name="Regular" options={{ title: t("regular"), tabBarLabelStyle: tabStyles.normal }} component={DealersRegular} />
                 <Tab.Screen name="AD" options={{ title: t("after_dark"), tabBarLabelStyle: tabStyles.normal }} component={DealersAd} />

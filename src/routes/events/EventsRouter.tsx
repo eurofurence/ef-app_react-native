@@ -156,7 +156,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
                         title: "Your Schedule", // TODO: Translations for a bnch more
                         tabBarShowLabel: false,
                         tabBarShowIcon: true,
-                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar" />,
+                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,
                         tabBarLabelStyle: tabStyles.normal,
                     }}
                     component={PersonalSchedule}

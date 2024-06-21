@@ -1,5 +1,5 @@
-import { useFocusEffect, useIsFocused } from "@react-navigation/core";
-import React, { FC, useCallback, useEffect } from "react";
+import { useIsFocused } from "@react-navigation/core";
+import React, { FC, useEffect } from "react";
 import { BackHandler, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 

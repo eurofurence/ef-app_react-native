@@ -1,5 +1,4 @@
 import { useIsFocused } from "@react-navigation/core";
-import { useAssets } from "expo-asset";
 import { Image, ImageBackground } from "expo-image";
 import { TFunction } from "i18next";
 import { chain } from "lodash";

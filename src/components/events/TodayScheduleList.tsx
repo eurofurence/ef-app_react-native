@@ -16,7 +16,7 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
 
     const navigation = useAppNavigation("Areas");
     const eventsAll = useAppSelector((state) => selectUpcomingFavoriteEvents(state, now));
-    const events = useMemo(() => eventsAll.map((details) => eventInstanceForAny(details, now)), [eventsAll, now]);
+    const events = useMemo(() => eventsAll.filter((item) => !item.Hidden).map((details) => eventInstanceForAny(details, now)), [eventsAll, now]);
 
     if (eventsAll.length === 0) {
         return null;

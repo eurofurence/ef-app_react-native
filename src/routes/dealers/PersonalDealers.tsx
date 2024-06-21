@@ -3,15 +3,13 @@ import { CompositeScreenProps } from "@react-navigation/core";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
 import { Image } from "expo-image";
-import { chain, partition, sortBy } from "lodash";
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { EventsRouterParamsList } from "./EventsRouter";
-import { eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
-import { eventSectionForDate, eventSectionForPassed } from "../../components/events/EventSection";
-import { EventsSectionedList } from "../../components/events/EventsSectionedList";
+import { useDealerLocationGroups } from "./Dealers.common";
+import { DealersRouterParamsList } from "./DealersRouter";
+import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { padFloater } from "../../components/generic/containers/Floater";
 import { Row } from "../../components/generic/containers/Row";
@@ -19,7 +17,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
-import { selectFavoriteEvents } from "../../store/eurofurence/selectors/events";
+import { selectFavoriteDealers } from "../../store/eurofurence/selectors/dealers";
 import { assetSource } from "../../util/assets";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
@@ -27,52 +25,31 @@ import { IndexRouterParamsList } from "../IndexRouter";
 /**
  * Params handled by the screen in route.
  */
-export type PersonalScheduleParams = undefined;
+export type PersonalDealersParams = object;
 
 /**
  * The properties to the screen as a component.
  */
-export type PersonalScheduleProps = CompositeScreenProps<
-    MaterialTopTabScreenProps<EventsRouterParamsList, "Personal">,
-    MaterialTopTabScreenProps<EventsRouterParamsList> & BottomTabScreenProps<AreasRouterParamsList> & StackScreenProps<IndexRouterParamsList>
->;
+export type PersonalDealersProps =
+    // Route carrying from dealers tabs screen at any of the day names, own navigation via own parameter list.
+    CompositeScreenProps<
+        MaterialTopTabScreenProps<DealersRouterParamsList, "Personal">,
+        MaterialTopTabScreenProps<DealersRouterParamsList> & BottomTabScreenProps<AreasRouterParamsList> & StackScreenProps<IndexRouterParamsList>
+    >;
 
-export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
-    const { t } = useTranslation("Events");
+export const PersonalDealers: FC<PersonalDealersProps> = ({ navigation }) => {
+    // General state.
+    const { t } = useTranslation("Dealers");
     const now = useNow();
-    const eventsAll = useAppSelector(selectFavoriteEvents);
     const { user } = useAuthContext();
     const avatarBackground = useThemeBackground("primary");
 
-    const sections = useMemo(() => {
-        const [upcoming, passed] = partition(eventsAll, (it) => now.isBefore(it.EndDateTimeUtc));
-        return chain(upcoming)
-            .orderBy("StartDateTimeUtc")
-            .groupBy((event) => event.ConferenceDay?.Date)
-            .flatMap((items, day) => [
-                // Header.
-                eventSectionForDate(t, day),
-                // Event instances.
-                ...items.map((details) => eventInstanceForNotPassed(details, now)),
-            ])
-            .thru((current) =>
-                passed.length === 0
-                    ? current
-                    : current.concat([
-                          // Passed header.
-                          eventSectionForPassed(t),
-                          // Passed event instances.
-                          ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
-                      ]),
-            )
-            .value();
-    }, [t, eventsAll, now]);
-
+    const dealersAll = useAppSelector(selectFavoriteDealers);
+    const dealersGroups = useDealerLocationGroups(t, now, null, dealersAll);
     return (
-        <EventsSectionedList
+        <DealersSectionedList
             navigation={navigation}
-            eventsGroups={sections}
-            cardType={"time"}
+            dealersGroups={dealersGroups}
             leader={
                 <Row type="center" variant="center" style={styles.marginTop}>
                     <Image
@@ -84,13 +61,13 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
                         priority="low"
                     />
                     <Label ml={16} type="lead" variant="middle">
-                        {t("schedule_title")}
+                        {t("favorites_title")}
                     </Label>
                 </Row>
             }
             empty={
                 <Label type="para" variant="middle" style={[styles.marginTop, styles.padding]}>
-                    {t("schedule_empty")}
+                    {t("favorites_empty")}
                 </Label>
             }
         />

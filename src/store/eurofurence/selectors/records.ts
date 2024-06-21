@@ -2,8 +2,9 @@ import { createSelector } from "@reduxjs/toolkit";
 import { EntitySelectors } from "@reduxjs/toolkit/src/entities/models";
 import { groupBy, keyBy, map, mapValues, uniq, Dictionary as LodashDictionary } from "lodash";
 
+import { selectFavoriteDealerIds, selectHiddenEventIds } from "../../auxiliary/selectors";
 import { RootState } from "../../index";
-import { applyAnnouncementDetails, applyDealerDetails, applyEventDayDetails, applyEventDetails, applyImageDetails, applyMapDetails } from "../details";
+import { applyAnnouncementDetails, applyDealerDetails, applyEventDayDetails, applyEventDetails, applyImageDetails, applyKnowledgeGroupDetails, applyMapDetails } from "../details";
 import {
     announcementsAdapter,
     dealersAdapter,
@@ -29,6 +30,7 @@ import {
     ImageRecord,
     KnowledgeEntryDetails,
     KnowledgeGroupDetails,
+    KnowledgeGroupRecord,
     MapDetails,
     RecordId,
 } from "../types";
@@ -46,7 +48,17 @@ export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((st
 
 export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks) as RecordSelectors<EventTrackDetails>;
 
-export const knowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups) as RecordSelectors<KnowledgeGroupDetails>;
+export const baseknowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
+
+export const knowledgeGroupsSelectors: RecordSelectors<KnowledgeGroupDetails> = {
+    selectTotal: baseknowledgeGroupsSelectors.selectTotal,
+    selectIds: baseknowledgeGroupsSelectors.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector([baseknowledgeGroupsSelectors.selectEntities], (entities) =>
+        mapValues(entities as LodashDictionary<KnowledgeGroupRecord>, applyKnowledgeGroupDetails),
+    ),
+    selectAll: createSelector([baseknowledgeGroupsSelectors.selectAll], (all) => map(all, applyKnowledgeGroupDetails)),
+    selectById: createSelector([baseknowledgeGroupsSelectors.selectById], (item) => mapOne(item, applyKnowledgeGroupDetails)),
+};
 
 export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<RootState>(
     (state) => state.eurofurenceCache.knowledgeEntries,
@@ -96,8 +108,10 @@ export const eventsSelector: RecordSelectors<EventDetails> = {
             eventDaysSelectors.selectEntities,
             eventTracksSelectors.selectEntities,
             notificationSelector.selectEntities,
+            selectHiddenEventIds,
         ],
-        (entities, images, rooms, days, tracks, notifications) => mapValues(entities, (entity) => applyEventDetails(entity!, images, rooms, days, tracks, notifications)),
+        (entities, images, rooms, days, tracks, notifications, hiddenIds) =>
+            mapValues(entities, (entity) => applyEventDetails(entity!, images, rooms, days, tracks, notifications, hiddenIds)),
     ),
     selectAll: createSelector(
         [
@@ -107,8 +121,9 @@ export const eventsSelector: RecordSelectors<EventDetails> = {
             eventDaysSelectors.selectEntities,
             eventTracksSelectors.selectEntities,
             notificationSelector.selectEntities,
+            selectHiddenEventIds,
         ],
-        (all, images, rooms, days, tracks, notifications) => map(all, (entity) => applyEventDetails(entity!, images, rooms, days, tracks, notifications)),
+        (all, images, rooms, days, tracks, notifications, hiddenIds) => map(all, (entity) => applyEventDetails(entity!, images, rooms, days, tracks, notifications, hiddenIds)),
     ),
     selectById: createSelector(
         [
@@ -118,8 +133,9 @@ export const eventsSelector: RecordSelectors<EventDetails> = {
             eventDaysSelectors.selectEntities,
             eventTracksSelectors.selectEntities,
             notificationSelector.selectEntities,
+            selectHiddenEventIds,
         ],
-        (item, images, rooms, days, tracks, notifications) => mapOne(item, (entity) => applyEventDetails(entity, images, rooms, days, tracks, notifications)),
+        (item, images, rooms, days, tracks, notifications, hiddenIds) => mapOne(item, (entity) => applyEventDetails(entity, images, rooms, days, tracks, notifications, hiddenIds)),
     ),
 };
 
@@ -153,13 +169,16 @@ const baseDealersSelectors = dealersAdapter.getSelectors<RootState>((state) => s
 export const dealersSelectors: RecordSelectors<DealerDetails> = {
     selectTotal: baseDealersSelectors.selectTotal,
     selectIds: baseDealersSelectors.selectIds as (state: RootState) => RecordId[],
-    selectEntities: createSelector([baseDealersSelectors.selectEntities, imagesSelectors.selectEntities, eventDaysSelectors.selectAll], (entities, images, days) =>
-        mapValues(entities, (entity) => applyDealerDetails(entity!, images, days)),
+    selectEntities: createSelector(
+        [baseDealersSelectors.selectEntities, imagesSelectors.selectEntities, eventDaysSelectors.selectAll, selectFavoriteDealerIds],
+        (entities, images, days, favorites) => mapValues(entities, (entity) => applyDealerDetails(entity!, images, days, favorites)),
     ),
-    selectAll: createSelector([baseDealersSelectors.selectAll, imagesSelectors.selectEntities, eventDaysSelectors.selectAll], (all, images, days) =>
-        map(all, (entity) => applyDealerDetails(entity!, images, days)),
+    selectAll: createSelector(
+        [baseDealersSelectors.selectAll, imagesSelectors.selectEntities, eventDaysSelectors.selectAll, selectFavoriteDealerIds],
+        (all, images, days, favorites) => map(all, (entity) => applyDealerDetails(entity!, images, days, favorites)),
     ),
-    selectById: createSelector([baseDealersSelectors.selectById, imagesSelectors.selectEntities, eventDaysSelectors.selectAll], (item, images, days) =>
-        mapOne(item, (entity) => applyDealerDetails(entity, images, days)),
+    selectById: createSelector(
+        [baseDealersSelectors.selectById, imagesSelectors.selectEntities, eventDaysSelectors.selectAll, selectFavoriteDealerIds],
+        (item, images, days, favorites) => mapOne(item, (entity) => applyDealerDetails(entity, images, days, favorites)),
     ),
 };

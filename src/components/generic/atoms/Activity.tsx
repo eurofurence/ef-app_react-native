@@ -14,6 +14,9 @@ export type ActivityProps = {
     style?: StyleProp<ViewStyle>;
 };
 
+/**
+ * @deprecated Not much use, sync time shorter than show.
+ */
 export const Activity: FC<ActivityProps> = ({ style }) => {
     const { isSynchronizing } = useSynchronizer();
 

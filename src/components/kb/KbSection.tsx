@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import { Section, SectionProps } from "../generic/atoms/Section";
+import { FaSection, FaSectionProps } from "../generic/atoms/FaSection";
 
-export type KbSectionProps = SectionProps;
+export type KbSectionProps = FaSectionProps;
 
 // /**
 //  * Creates the properties for a dealer section.
@@ -16,5 +16,5 @@ export type KbSectionProps = SectionProps;
 // }
 
 export const KbSection: FC<KbSectionProps> = ({ style, title, subtitle, icon }) => {
-    return <Section style={style} title={title} subtitle={subtitle} icon={icon} />;
+    return <FaSection style={style} title={title} subtitle={subtitle} icon={icon} />;
 };

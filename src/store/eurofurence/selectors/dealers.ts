@@ -6,6 +6,8 @@ import { DealerDetails } from "../types";
 
 export const selectDealersInRegular = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => !it.IsAfterDark));
 export const selectDealersInAd = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => it.IsAfterDark));
+export const selectFavoriteDealers = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((dealer) => dealer.Favorite));
+
 /**
  * TF-IDF category mapper. Returns the category for a dealer that is the most "unique" for them among all other dealers.
  */
@@ -38,4 +40,16 @@ export const selectDealerCategoryMapper = createSelector([dealersSelectors.selec
         const categories = dealer.Categories;
         return categories ? maxBy(categories, (category) => tf(category, categories) * allIdf[category]!) : null;
     };
+});
+
+export const selectDealerCategories = createSelector([dealersSelectors.selectAll], (dealers) => {
+    const result: string[] = [];
+    for (const dealer of dealers) {
+        if (dealer.Categories) {
+            for (const category of dealer.Categories) {
+                if (!result.includes(category)) result.push(category);
+            }
+        }
+    }
+    return result;
 });

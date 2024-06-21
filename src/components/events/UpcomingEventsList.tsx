@@ -17,7 +17,7 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
     const { t } = useTranslation("Events");
 
     const eventsAll = useAppSelector((state) => selectUpcomingEvents(state, now));
-    const events = useMemo(() => eventsAll.map((details) => eventInstanceForAny(details, now)), [eventsAll, now]);
+    const events = useMemo(() => eventsAll.filter((item) => !item.Hidden).map((details) => eventInstanceForAny(details, now)), [eventsAll, now]);
 
     if (events.length === 0) {
         return null;

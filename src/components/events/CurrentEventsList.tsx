@@ -21,6 +21,7 @@ export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
         () =>
             // Sort by how much time of the event still left.
             chain(eventsAll)
+                .filter((item) => !item.Hidden)
                 .map((details) => eventInstanceForAny(details, now))
                 .orderBy("progress", "asc")
                 .value(),

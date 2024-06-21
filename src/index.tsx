@@ -6,7 +6,7 @@ import { Provider as StoreProvider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import { App } from "./App";
-import { AppErrorBoundary } from "./components/util/AppErrorBoundary";
+import { SynchronizationProvider } from "./components/sync/SynchronizationProvider";
 import { AuthContextProvider } from "./context/AuthContext";
 import { NavigationProvider } from "./context/NavigationProvider";
 import { persistor, store } from "./store";
@@ -23,17 +23,17 @@ import "./init/splash";
 function Index() {
     return (
         <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
-            <AppErrorBoundary>
-                <StoreProvider store={store}>
-                    <PersistGate persistor={persistor}>
-                        <AuthContextProvider>
+            <StoreProvider store={store}>
+                <PersistGate persistor={persistor}>
+                    <AuthContextProvider>
+                        <SynchronizationProvider>
                             <NavigationProvider>
                                 <App />
                             </NavigationProvider>
-                        </AuthContextProvider>
-                    </PersistGate>
-                </StoreProvider>
-            </AppErrorBoundary>
+                        </SynchronizationProvider>
+                    </AuthContextProvider>
+                </PersistGate>
+            </StoreProvider>
         </GestureHandlerRootView>
     );
 }

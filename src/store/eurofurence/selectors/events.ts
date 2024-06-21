@@ -41,6 +41,8 @@ export const selectEventsByRoom = createSelector([baseEventGroupSelector, (_stat
 export const selectEventsByTrack = createSelector([baseEventGroupSelector, (_state, trackId: RecordId) => trackId], (events, trackId) => events.track[trackId] ?? []);
 export const selectEventsByDay = createSelector([baseEventGroupSelector, (_state, dayId: RecordId) => dayId], (events, dayId) => events.day[dayId] ?? []);
 
+export const selectHiddenEvents = createSelector([eventsSelector.selectAll], (events) => events.filter((item) => item.Hidden));
+
 export const selectUpcomingFavoriteEvents = createSelector([selectFavoriteEvents, (_state, now: Moment) => now], (events, now) =>
     events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc)),
 );

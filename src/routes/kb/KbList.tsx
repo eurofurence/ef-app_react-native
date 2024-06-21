@@ -36,7 +36,6 @@ export const KbList: FC<KbListProps> = ({ navigation }) => {
                 .flatMap(({ group, entries }) => [group, ...entries])
                 .value();
     }, [results, groups]);
-
     return (
         <View style={StyleSheet.absoluteFill}>
             <Header>{t("header")}</Header>

@@ -2,7 +2,6 @@ import { noop } from "lodash";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { Vibration } from "react-native";
 
-import { ImageSynchronizer } from "./ImageSynchronizer";
 import { apiBase, conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectIsSynchronized } from "../../store/eurofurence/selectors/sync";
@@ -61,13 +60,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
         [synchronize],
     );
 
-    return (
-        <SynchronizationContext.Provider value={providerValues}>
-            {/* TODO: Different location? */}
-            <ImageSynchronizer />
-            {children}
-        </SynchronizationContext.Provider>
-    );
+    return <SynchronizationContext.Provider value={providerValues}>{children}</SynchronizationContext.Provider>;
 };
 
 export const useSynchronizer = () => {

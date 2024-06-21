@@ -63,6 +63,18 @@ const eventSearchProperties: Fuse.FuseOptionKey<EventDetails>[] = [
         weight: 0.5,
     },
     {
+        name: "ConferenceRoom.Name",
+        weight: 0.333,
+    },
+    {
+        name: "ConferenceTrack.Name",
+        weight: 0.333,
+    },
+    {
+        name: "Abstract",
+        weight: 0.5,
+    },
+    {
         name: "PanelHosts",
         weight: 0.1,
     },

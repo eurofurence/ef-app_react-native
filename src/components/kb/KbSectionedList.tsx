@@ -28,7 +28,6 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, 
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(kbGroups, (item) => !("KnowledgeGroupId" in item)) : undefined), [kbGroups, sticky]);
     const sectionStyle = useThemeBackground("surface");
-
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
@@ -46,7 +45,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, 
                 if ("KnowledgeGroupId" in item) {
                     return <KbEntryCard containerStyle={styles.item} entry={item} key={item.Id} onPress={(entry) => navigation.navigate("KnowledgeEntry", { id: entry.Id })} />;
                 } else {
-                    return <KbSection style={[styles.item, sectionStyle]} title={item.Name} subtitle={item.Description} />;
+                    return <KbSection style={[styles.item, sectionStyle]} title={item.Name} subtitle={item.Description} icon={item.FaIconName ?? "bookmark"} />;
                 }
             }}
             estimatedItemSize={59}

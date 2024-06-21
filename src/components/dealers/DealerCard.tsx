@@ -56,6 +56,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     // Dependent and independent styles.
     const styleBackground = useThemeBackground("background");
     const stylePre = useThemeBackground(present ? "primary" : "darken");
+    const avatarBackground = useThemeBackground("primary");
 
     return (
         <TouchableOpacity
@@ -65,7 +66,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
             onLongPress={() => onLongPress?.(dealer.details)}
         >
             <View style={[styles.pre, stylePre]}>
-                <Image style={styles.avatarCircle} source={avatar} contentFit="contain" placeholder={assetSource("ych")} transition={60} priority="low" />
+                <Image style={[avatarBackground, styles.avatarCircle]} source={avatar} contentFit="contain" placeholder={assetSource("ych")} transition={60} priority="low" />
             </View>
 
             <View style={styles.main}>

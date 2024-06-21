@@ -1,11 +1,13 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { SynchronizationProvider } from "./components/sync/SynchronizationProvider";
+import { AppErrorBoundary } from "./components/util/AppErrorBoundary";
 import { useAnalyticsManager } from "./hooks/analytics/useAnalyticsManager";
 import { useNotificationReceivedManager } from "./hooks/notifications/useNotificationReceivedManager";
 import { useNotificationRespondedManager } from "./hooks/notifications/useNotificationRespondedManager";
 import { useBackgroundSyncManager } from "./hooks/sync/useBackgroundSyncManager";
+import { useImagePrefetch } from "./hooks/sync/useImagePrefetch";
 import { useColorSchemeManager } from "./hooks/themes/useColorSchemeManager";
 import { useTokenManager } from "./hooks/tokens/useTokenManager";
 import { IndexRouter } from "./routes/IndexRouter";
@@ -17,15 +19,16 @@ export function App() {
     useAnalyticsManager();
     useColorSchemeManager();
     useBackgroundSyncManager();
+    useImagePrefetch();
     useTokenManager();
     useNotificationReceivedManager();
     useNotificationRespondedManager();
     return (
         <SafeAreaProvider>
             <BottomSheetModalProvider>
-                <SynchronizationProvider>
+                <AppErrorBoundary>
                     <IndexRouter />
-                </SynchronizationProvider>
+                </AppErrorBoundary>
             </BottomSheetModalProvider>
         </SafeAreaProvider>
     );

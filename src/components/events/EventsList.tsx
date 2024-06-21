@@ -52,7 +52,7 @@ export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, se
                         event={item}
                         type={cardType}
                         onPress={(event) =>
-                            navigation.push("Event", {
+                            navigation.navigate("Event", {
                                 id: event.Id,
                             })
                         }

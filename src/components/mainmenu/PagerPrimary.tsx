@@ -1,10 +1,13 @@
+import { captureException } from "@sentry/react-native";
 import { Image } from "expo-image";
 import React, { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
+import { authSettingsUrl, menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
 import { Claims, useAuthContext } from "../../context/AuthContext";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../store";
 import { selectBrowsableMaps } from "../../store/eurofurence/selectors/maps";
 import { RecordId } from "../../store/eurofurence/types";
@@ -26,10 +29,20 @@ type PagerPrimaryLoginProps = {
 };
 const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, onMessages, onLogin }) => {
     const { t } = useTranslation("Menu");
+    const avatarBackground = useThemeBackground("primary");
     // TODO: Verify style of name etc.
     return (
         <Row style={styles.padding} type="center" variant="center">
-            <Image style={styles.avatarCircle} source={user?.avatar ?? assetSource("ych")} contentFit="contain" placeholder="ych" transition={60} priority="low" />
+            <TouchableOpacity disabled={!loggedIn || !authSettingsUrl} onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}>
+                <Image
+                    style={[avatarBackground, styles.avatarCircle]}
+                    source={user?.avatar ?? assetSource("ych")}
+                    contentFit="contain"
+                    placeholder="ych"
+                    transition={60}
+                    priority="low"
+                />
+            </TouchableOpacity>
 
             {/*<Label style={styles.marginBefore} type="caption">*/}
             {/*    {t("not_logged_in")}*/}

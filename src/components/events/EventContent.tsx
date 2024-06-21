@@ -1,15 +1,15 @@
 import { useIsFocused } from "@react-navigation/core";
-import { captureException } from "@sentry/react-native";
 import moment from "moment";
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { Share, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import { appBase, conAbbr } from "../../configuration";
 import { useEventReminder } from "../../hooks/events/useEventReminder";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
-import { useAppSelector } from "../../store";
+import { shareEvent } from "../../routes/events/EventItem";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { toggleEventHidden } from "../../store/auxiliary/slice";
 import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";
 import { EventDetails } from "../../store/eurofurence/types";
 import { Banner } from "../generic/atoms/Banner";
@@ -40,40 +40,36 @@ export type EventContentProps = {
      * True if the event was updated.
      */
     updated?: boolean;
+
+    /**
+     * True if a dedicated share button should be displayed.
+     */
+    shareButton?: boolean;
 };
 
 /**
  * Placeholder blur hash.
  */
-const placeholder = "m38D%z^%020303D+bv~m%IWF-nIrRS-mxsobE3E4f+W;s:%0oIRk";
+const placeholder = "L38D%z^%020303D+bv~m%IWF-nIr/1309/667";
 
-export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated }) => {
+export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton }) => {
     const navigation = useAppNavigation("Areas");
 
     const { t } = useTranslation("Event");
     const { isFavorite, toggleReminder } = useEventReminder(event);
+    const dispatch = useAppDispatch();
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
 
     const progress = (now.valueOf() - moment(event.StartDateTimeUtc).valueOf()) / (moment(event.EndDateTimeUtc).valueOf() - moment(event.StartDateTimeUtc).valueOf());
     const happening = progress >= 0.0 && progress <= 1.0;
+    const feedbackDisabled = progress < 0.0;
 
     const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
 
     const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
-
-    const shareEvent = useCallback(() => {
-        Share.share(
-            {
-                title: event.Title,
-                url: `${appBase}/Web/events/${event.Id}`,
-                message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/events/${event.Id}`,
-            },
-            {},
-        ).catch(captureException);
-    }, [event]);
 
     return (
         <>
@@ -97,7 +93,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
             {!event.Poster ? null : (
                 <View style={styles.posterLine}>
-                    <Banner image={event.Poster} placeholder={placeholder} />
+                    <Banner image={event.Poster} placeholder={placeholder} viewable />
                 </View>
             )}
 
@@ -113,17 +109,23 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                 </Badge>
             )}
 
+            {!shareButton ? null : (
+                <Button icon="share" onPress={() => shareEvent(event)}>
+                    {t("share")}
+                </Button>
+            )}
+
             <Row style={styles.marginBefore}>
                 <Button containerStyle={styles.rowLeft} outline={isFavorite} icon={isFavorite ? "heart-outline" : "heart"} onPress={toggleReminder}>
                     {isFavorite ? t("remove_favorite") : t("add_favorite")}
                 </Button>
-                <Button containerStyle={styles.rowRight} icon={"share"} onPress={shareEvent}>
-                    {t("share")}
+                <Button containerStyle={styles.rowRight} icon={event.Hidden ? "eye" : "eye-off"} onPress={() => dispatch(toggleEventHidden(event.Id))} outline>
+                    {event.Hidden ? t("reveal") : t("hide")}
                 </Button>
             </Row>
 
             {event.IsAcceptingFeedback && (
-                <Button containerStyle={styles.share} icon="pencil" onPress={() => navigation.navigate("EventFeedback", { id: event.Id })}>
+                <Button disabled={feedbackDisabled} containerStyle={styles.marginBefore} icon="pencil" onPress={() => navigation.navigate("EventFeedback", { id: event.Id })}>
                     {t("give_feedback")}
                 </Button>
             )}
@@ -175,11 +177,8 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 8,
     },
-    share: {
-        marginVertical: 15,
-    },
     marginBefore: {
-        marginTop: 20,
+        marginTop: 15,
     },
     posterLine: {
         marginTop: 20,

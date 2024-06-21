@@ -103,7 +103,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
     useEffect(() => {
         if (!entry) return;
         if (!refZoom.current) return;
-        // Get arguments from current status..
+        // Get arguments from current status.
         const current = refZoom.current._getZoomableViewEventObject();
         const offsetX = current.offsetX;
         const offsetY = current.offsetY;
@@ -113,7 +113,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
         const diffX = entry.X - (map.Image.Width / 2 - offsetX);
         const diffY = entry.Y - (map.Image.Height / 2 - offsetY);
         refZoom.current.moveBy(diffX * zoom, diffY * zoom).catch(() => undefined);
-    }, [entry, refZoom]);
+    }, [entry, refZoom, map]);
 
     // Compute containers.
     const styleContainer = useMemo<ViewStyle>(() => ({ width: map.Image.Width, height: map.Image.Height }), [map]);
@@ -150,12 +150,12 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                     maxZoom={maxZoom}
                     minZoom={minZoom}
                     zoomStep={maxZoom - minZoom}
-                    initialZoom={entry ? 1.5 : minZoom}
+                    initialZoom={entry ? (minZoom + maxZoom) / 2 : minZoom}
                     bindToBorders={true}
                     onTransform={onTransform}
                 >
                     <View style={styleContainer}>
-                        <Image style={styles.image} contentFit={undefined} source={map.Image.FullUrl} />
+                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={map.Image.FullUrl} />
                         {!entry ? null : <Marker style={styleMarker} markerSize={75} />}
                     </View>
                 </ZoomableView>

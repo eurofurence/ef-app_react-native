@@ -22,6 +22,7 @@
     "about": "About",
     "about_the_art": "About the art",
     "about_the_artist": "About the artist",
+    "add_favorite": "Favorite",
     "after_dark": "After dark",
     "attends": "Attends on",
     "attends_fri": "Friday",
@@ -31,6 +32,7 @@
     "in_after_dark": "Located in the after dark section",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
+    "remove_favorite": "Unfavorite",
     "table": "Table",
     "view_on_map": "View on map",
     "viewing_dealer": "Viewing dealer"
@@ -42,8 +44,11 @@
     "dealers_at_convention": "Dealers at {{convention}}",
     "dealers_in_ad": "After dark dealers den",
     "dealers_in_regular": "Regular dealers den",
+    "favorites_empty": "You do not have any favorite dealers yet. Favorite some dealers to create your own list.",
+    "favorites_title": "Your favorites",
     "not_attending_on": "Not in on {{offDays}}",
-    "regular": "Regular"
+    "regular": "Regular",
+    "section_notice": "Dealer grouping is picked by the app based on most unique category"
   },
   "EmptyScreen": {
     "notImplemented": "Content is not implemented yet."
@@ -53,6 +58,7 @@
     "add_favorite": "Favorite",
     "event_was_updated": "Event was updated since you last viewed it",
     "give_feedback": "Give Feedback",
+    "hide": "Hide from overview",
     "label_event_description": "More about the event",
     "label_event_panelhosts": "Hosted by",
     "label_event_room": "Room",
@@ -60,6 +66,7 @@
     "label_event_when": "When",
     "mask_required": "Face masks are mandatory for this event",
     "remove_favorite": "Unfavorite",
+    "reveal": "Reveal in overview",
     "share": "Share this event",
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
@@ -84,6 +91,8 @@
     "evening": "In the evening",
     "events_count": "{{count}} events",
     "events_done": "Events concluded",
+    "events_hidden": "Hidden",
+    "events_hidden_subtitle": "{{count}} events, reveal them again in Settings",
     "favorites_subtitle": "You will receive a reminder about these events",
     "favorites_title": "Favorite Events",
     "filter_by_day": "Browse days",
@@ -156,6 +165,10 @@
     "section_title_from": "From {{authorName}}",
     "unread": "Unread"
   },
+  "RevealHidden": {
+    "lead": "Click on any event to reveal it in the overview again",
+    "title": "Reveal specific event"
+  },
   "Settings": {
     "allowAnalytics": "Allow us to collect analytics events",
     "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
@@ -193,6 +206,12 @@
       "title": "Dev Settings Menu"
     },
     "header": "Settings",
+    "hidden_events": {
+      "subtitle": "Reveal events that you have hidden",
+      "title": "Hidden events",
+      "unhide_all": "Reveal all",
+      "unhide_specific": "Reveal specific event"
+    },
     "login": {
       "back_button": "Back",
       "enter_password": "Enter your password",
@@ -202,13 +221,15 @@
       "hint_reg": "Your registration number",
       "hint_username": "Your username",
       "logged_in_as": "You are logged in as {{username}}",
+      "logged_in_now": "Log-in now",
       "logging_in": "Logging in . . .",
       "login": "Login",
       "login_button": "Log-in",
       "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
       "login_error": "Something went wrong during login. Please try again",
       "login_hint": "Your login credentials for the app are the same as for the Eurofurence Registration System.\n\nIf you do not remember or have access to them, you can ask for a PIN code\nto sign in at the registration desk or security office.",
-      "logout": "Logout"
+      "logout": "Logout",
+      "not_logged_in": "You are currently not logged in"
     },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
@@ -243,5 +264,14 @@
     "week_after": "1 week after {{conName}}",
     "week_before": "1 week before {{conName}}"
   },
-  "Todo": {}
+  "Todo": {},
+  "Viewer": {
+    "announcement": "Announcement: {{name}}",
+    "artPreview": "Art preview: {{name}}",
+    "artist": "Artist: {{name}}",
+    "artistThumbnail": "Artist thumbnail: {{name}}",
+    "eventBanner": "Banner: {{name}}",
+    "eventPoster": "Poster: {{name}}",
+    "unspecified": "Image"
+  }
 }

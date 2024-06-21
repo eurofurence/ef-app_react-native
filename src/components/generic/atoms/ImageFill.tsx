@@ -1,11 +1,11 @@
 import { Image, ImageProps } from "expo-image";
 import * as React from "react";
-import { FC, useCallback, useMemo, useState } from "react";
-import { LayoutChangeEvent, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { FC, useMemo, useState } from "react";
+import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 import { ImageDetails } from "../../../store/eurofurence/types";
 
-const initialSize = { width: 400, height: 300 };
+const initialSize = { width: Dimensions.get("window").width - 40, height: 160 };
 
 export type ImageFillTarget = {
     x: number;
@@ -33,13 +33,10 @@ export type ImageFillProps = {
 export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
     const [size, setSize] = useState<{ width: number; height: number }>(initialSize);
 
-    const onLayout = useCallback((e: LayoutChangeEvent) => setSize(e.nativeEvent.layout), []);
-
-    const arrangerStyle = useMemo<ViewStyle>(() => {
-        if (!target) return undefined!;
+    const arrangerStyle = useMemo<ViewStyle | null>(() => {
+        if (!target) return null;
 
         const scale = Math.max(size.width, size.height) / target.size;
-
         return {
             position: "absolute",
             left: 0,
@@ -48,12 +45,11 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
             bottom: 0,
             transform: [{ scale }],
         };
-    }, [target]);
+    }, [size.width, size.height, target?.size]);
 
-    const imageStyle = useMemo<ImageProps["style"]>(() => {
-        if (!image) return undefined!;
-        if (!target) return undefined!;
-        if (!size) return undefined!;
+    const imageStyle = useMemo<ImageProps["style"] | null>(() => {
+        if (!image) return null;
+        if (!target) return null;
 
         // Section, scale and translate around center.
         return {
@@ -64,19 +60,13 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
             height: image.Height,
             transform: [{ translateX: size.width / 2 - target.x }, { translateY: size.height / 2 - target.y }],
         };
-    }, [size, image, target]);
-
-    const source = useMemo<ImageProps["source"]>(() => {
-        if (!image) return undefined!;
-        return { uri: image.FullUrl };
-    }, [image]);
+    }, [size.width, size.height, image?.Width, image?.Height, target?.x, target?.y]);
 
     return (
-        <View style={[StyleSheet.absoluteFill, style]} onLayout={onLayout}>
+        <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>
+            <Image style={StyleSheet.absoluteFill} contentFit="cover" blurRadius={20} source={image?.FullUrl} />
             <View style={arrangerStyle}>
-                <View style={imageStyle}>
-                    <Image style={StyleSheet.absoluteFill} contentFit="fill" contentPosition="top left" source={source} />
-                </View>
+                <Image style={imageStyle} contentFit="fill" contentPosition="top left" source={image?.FullUrl} />
             </View>
         </View>
     );

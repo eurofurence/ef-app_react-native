@@ -10,6 +10,7 @@ import { DealersRouterParamsList } from "./DealersRouter";
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { Search } from "../../components/generic/atoms/Search";
+import { Badge } from "../../components/generic/containers/Badge";
 import { conName } from "../../configuration";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useNow } from "../../hooks/time/useNow";
@@ -52,9 +53,13 @@ export const DealersAll: FC<DealersAllProps> = ({ navigation }) => {
             dealersGroups={dealersGroups}
             leader={
                 <>
+                    <Badge unpad={0} badgeColor="lighten" textColor="text" textType="regular">
+                        {t("section_notice")}
+                    </Badge>
                     <Label type="lead" variant="middle" mt={30}>
                         {t("dealers_at_convention", { convention: conName })}
                     </Label>
+
                     <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />
                 </>
             }

@@ -46,7 +46,7 @@ export type ImageButtonProps = {
 };
 
 export const ImageExButton: FC<ImageButtonProps> = ({ containerStyle, style, image, target, noMarker = false, markerColor, markerType, markerSize, onPress, onLongPress }) => {
-    const styleBackground = useThemeBackground("inverted");
+    const styleBackground = useThemeBackground("background");
 
     return (
         <TouchableOpacity containerStyle={containerStyle} style={[styles.container, styleBackground, style]} onPress={onPress} onLongPress={onLongPress}>

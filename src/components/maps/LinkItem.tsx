@@ -1,5 +1,6 @@
+import { Image } from "expo-image";
 import moment from "moment/moment";
-import { FC, useCallback } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { Linking, StyleSheet } from "react-native";
 import { match } from "ts-pattern";
 
@@ -10,7 +11,9 @@ import { dealersSelectors } from "../../store/eurofurence/selectors/records";
 import { LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence/types";
 import { DealerCard } from "../dealers/DealerCard";
 import { isPresent, joinOffDays } from "../dealers/utils";
-import { Button } from "../generic/containers/Button";
+import { FaIcon } from "../generic/atoms/FaIcon";
+import { Icon } from "../generic/atoms/Icon";
+import { Button, ButtonProps } from "../generic/containers/Button";
 
 type LinkItemProps = {
     map?: MapDetails;
@@ -40,14 +43,50 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     return <DealerCard dealer={{ details: dealer, present, offDays }} onPress={onPress} />;
 };
 
+const hostName = (str: string) => {
+    const lower = str.toLowerCase();
+    const noScheme = lower.startsWith("https://") ? lower.substring(8) : lower.startsWith("http://") ? lower.substring(7) : lower;
+    const pathIndex = noScheme.indexOf("/");
+    const noPath = pathIndex > 0 ? noScheme.substring(0, pathIndex) : noScheme;
+    const segments = noPath.split(".");
+    return segments[segments.length - 2] + "." + segments[segments.length - 1];
+};
+
+const sanitized = (str: string) => {
+    const lower = str.toLowerCase();
+    const noScheme = lower.startsWith("https://") ? lower.substring(8) : lower.startsWith("http://") ? lower.substring(7) : lower;
+    const noWww = noScheme.startsWith("www.") ? noScheme.substring(4) : noScheme;
+    return noWww.endsWith("/") ? noWww.substring(0, noWww.length - 2) : noWww;
+};
+
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
     const onPress = useCallback(() => {
         Linking.openURL(link.Target).catch();
-    }, [link]);
+    }, [link.Target]);
+
+    const icon = useMemo<ButtonProps["icon"]>(() => {
+        const host = hostName(link.Target);
+        let icon: ButtonProps["icon"] = "web";
+
+        if (host === "etsy.com") {
+            icon = (props) => <FaIcon name="etsy" {...props} />;
+        } else if (host === "tumblr.com") {
+            icon = (props) => <FaIcon name="tumblr" {...props} />;
+        } else if (host === "trello.com") {
+            icon = (props) => <FaIcon name="trello" {...props} />;
+        } else if (host === "furaffinity.net") {
+            icon = ({ size }) => <Image style={{ width: size, height: size }} source="https://www.furaffinity.net/themes/beta/img/banners/fa_logo.png?v2" />;
+        } else if (host === "twitter.com") {
+            icon = (props) => <Icon name="twitter" {...props} />;
+        } else {
+            icon = "web";
+        }
+        return icon;
+    }, [link.Target]);
 
     return (
-        <Button containerStyle={styles.linkButton} onPress={onPress} icon={"web"}>
-            {link.Name ? link.Name : link.Target}
+        <Button containerStyle={styles.linkButton} onPress={onPress} icon={icon}>
+            {link.Name || sanitized(link.Target)}
         </Button>
     );
 };

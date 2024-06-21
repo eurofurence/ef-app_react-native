@@ -25,6 +25,19 @@ export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay): Ev
 }
 
 /**
+ * Creates the properties for a "hidden" section.
+ * @param t Translation function.
+ * @param count Number of events.
+ */
+export function eventSectionForHidden(t: TFunction, count: number): EventSectionProps {
+    return {
+        title: t("events_hidden"),
+        icon: "eye-off" as IconNames,
+        subtitle: t("events_hidden_subtitle", { count }),
+    };
+}
+
+/**
  * Creates the properties for a "passed" section.
  * @param t Translation function.
  */

@@ -10,6 +10,7 @@ import { DealersRouterParamsList } from "./DealersRouter";
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { Search } from "../../components/generic/atoms/Search";
+import { Badge } from "../../components/generic/containers/Badge";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
@@ -51,6 +52,9 @@ export const DealersAd: FC<DealersAdProps> = ({ navigation }) => {
             dealersGroups={dealersGroups}
             leader={
                 <>
+                    <Badge unpad={0} badgeColor="lighten" textColor="text" textType="regular">
+                        {t("section_notice")}
+                    </Badge>
                     <Label type="lead" variant="middle" mt={30}>
                         {t("dealers_in_ad")}
                     </Label>
