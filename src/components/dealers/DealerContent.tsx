@@ -1,10 +1,10 @@
-import { Image } from "expo-image";
 import * as Linking from "expo-linking";
 import moment from "moment";
 import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
+import { dealerShowAttendee } from "../../configuration";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
 import { shareDealer } from "../../routes/dealers/DealerItem";
@@ -15,6 +15,7 @@ import { DealerDetails } from "../../store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Banner } from "../generic/atoms/Banner";
 import { FaIcon } from "../generic/atoms/FaIcon";
+import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
 import { Badge } from "../generic/containers/Badge";
@@ -81,7 +82,11 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, s
                 </View>
             )}
 
-            <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
+            {dealerShowAttendee ? (
+                <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
+            ) : (
+                <Section icon="brush" title={dealer.FullName} />
+            )}
 
             <Label type="para">{dealer.ShortDescriptionContent}</Label>
 

@@ -1,8 +1,8 @@
-import { Image } from "expo-image";
 import { FC } from "react";
 import { StyleSheet, View } from "react-native";
 
 import { AnnouncementDetails } from "../../store/eurofurence/types";
+import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { MarkdownContent } from "../generic/atoms/MarkdownContent";
 import { Card } from "../generic/containers/Card";
@@ -11,15 +11,15 @@ export const AnnouncementCard: FC<{ announcement: AnnouncementDetails }> = ({ an
     return (
         <Card>
             <View style={styles.margin}>
-                <Label type={"h3"}>{announcement.Title}</Label>
-                <Label type={"caption"}>
+                <Label type="h3">{announcement.Title}</Label>
+                <Label type="caption">
                     {announcement.Area} - {announcement.Author}
                 </Label>
             </View>
 
             <MarkdownContent>{announcement.Content}</MarkdownContent>
 
-            {announcement.Image && <Image source={announcement.Image.FullUrl} style={styles.image} />}
+            {announcement.Image && <Image source={announcement.Image.FullUrl} style={styles.image} priority="high" />}
         </Card>
     );
 };

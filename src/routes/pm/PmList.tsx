@@ -64,7 +64,7 @@ export const PmList = () => {
     const renderSection = useCallback(
         ({ section }: SectionListData<any, any>) => {
             return (
-                <Label type={"h2"} style={[styles.section, sectionStyle]}>
+                <Label type="h2" style={[styles.section, sectionStyle]}>
                     {_.startCase(section.title)}
                 </Label>
             );

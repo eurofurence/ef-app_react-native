@@ -19,7 +19,7 @@ export const DeviceSpecificWarnings = () => {
 
     return (
         <>
-            <Section title={t("warnings.title")} subtitle={t("warnings.subtitle")} icon={"information"} />
+            <Section title={t("warnings.title")} subtitle={t("warnings.subtitle")} icon="information" />
 
             {!scheduledNotifications && <Label mt={10}>{t("warnings.no_notifications")}</Label>}
             {!pushNotifications && <Label mt={10}>{t("warnings.no_push_notifications")}</Label>}

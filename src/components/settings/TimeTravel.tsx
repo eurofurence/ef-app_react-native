@@ -37,8 +37,8 @@ export const TimeTravel = () => {
     );
 
     return (
-        <View testID={"TimeTravel"}>
-            <Section title={t("title")} icon={"airplane"} subtitle={t("subtitle")} />
+        <View testID="TimeTravel">
+            <Section title={t("title")} icon="airplane" subtitle={t("subtitle")} />
             <Label mb={5}>{t("originalTime", { time: moment().format("llll") })}</Label>
             <Label mb={5}>{t("currentTime", { time: now.format("llll") })}</Label>
             <Label mb={5}>{t("difference", { diff: moment.duration(amount, "millisecond").humanize() })}</Label>

@@ -1,22 +1,10 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { chain } from "lodash";
 import moment, { Moment } from "moment/moment";
 
 import { eventsSelector } from "./records";
-import { RootState } from "../../index";
 import { EventDetails, RecordId } from "../types";
 
-/**
- * @deprecated Check favorite flag // TODO
- */
-export const selectFavoriteEvents = createSelector([eventsSelector.selectEntities, (state: RootState) => state.background.notifications], (events, notifications): EventDetails[] =>
-    chain(notifications)
-        .filter((it) => it.type === "EventReminder")
-        .map((it): EventDetails | undefined => events[it.recordId])
-        .filter((it): it is EventDetails => it !== undefined)
-        .orderBy((it) => it.StartDateTimeUtc, "asc")
-        .value(),
-);
+export const selectFavoriteEvents = createSelector([eventsSelector.selectAll], (items) => items.filter((item) => item.Favorite));
 
 const baseEventGroupSelector = createSelector([eventsSelector.selectAll], (items) => {
     const result: {
@@ -37,22 +25,20 @@ const baseEventGroupSelector = createSelector([eventsSelector.selectAll], (items
     return result;
 });
 
+// Lists all created already, just re-referenced.
 export const selectEventsByRoom = createSelector([baseEventGroupSelector, (_state, roomId: RecordId) => roomId], (events, roomId) => events.room[roomId] ?? []);
 export const selectEventsByTrack = createSelector([baseEventGroupSelector, (_state, trackId: RecordId) => trackId], (events, trackId) => events.track[trackId] ?? []);
 export const selectEventsByDay = createSelector([baseEventGroupSelector, (_state, dayId: RecordId) => dayId], (events, dayId) => events.day[dayId] ?? []);
 
-export const selectHiddenEvents = createSelector([eventsSelector.selectAll], (events) => events.filter((item) => item.Hidden));
+export const filterHappeningTodayEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
+    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc));
 
-export const selectUpcomingFavoriteEvents = createSelector([selectFavoriteEvents, (_state, now: Moment) => now], (events, now) =>
-    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc)),
-);
 export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
     events.filter((it) => now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc));
-export const selectCurrentEvents = createSelector([eventsSelector.selectAll, (_state, now: Moment) => now], (events, now) => filterCurrentEvents(events, now));
+
 export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Moment) =>
     events.filter((it) => {
         const startMoment = moment(it.StartDateTimeUtc, true).subtract(30, "minutes");
         const endMoment = moment(it.StartDateTimeUtc, true);
         return now.isBetween(startMoment, endMoment);
     });
-export const selectUpcomingEvents = createSelector([eventsSelector.selectAll, (_state, now: Moment) => now], (events, now) => filterUpcomingEvents(events, now));

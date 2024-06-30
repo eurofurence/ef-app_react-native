@@ -17,7 +17,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ now }) => {
 
     return (
         <>
-            <Section title={t("sectionTitle")} subtitle={t("sectionSubtitle")} icon={"newspaper"} />
+            <Section title={t("sectionTitle")} subtitle={t("sectionSubtitle")} icon="newspaper" />
 
             {announcements.length === 0 ? <Label mb={15}>{t("noAnnouncements")}</Label> : announcements.map((it) => <AnnouncementCard announcement={it} key={it.Id} />)}
         </>

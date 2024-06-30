@@ -169,12 +169,16 @@
     "lead": "Click on any event to reveal it in the overview again",
     "title": "Reveal specific event"
   },
+  "Search": {
+    "placeholder": "What are you looking for"
+  },
   "Settings": {
     "allowAnalytics": "Allow us to collect analytics events",
     "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
     "cache": {
       "cache_item": "There are {{ count }} {{ type }}s",
       "cache_state": "Current state: {{ state }}",
+      "images_prefetched": "Images prefetched: {{state}}",
       "reset": "Clear cache",
       "reset_alert": "To clean the cache you need to long press this button",
       "subtitle": "Last sync: {{ time }}",
@@ -190,6 +194,7 @@
       "sync": "Force Resync {{ status }}",
       "sync_alert_done": "Told all devices to synchronize",
       "sync_alert_error": "Long hold to activate this function",
+      "sync_standard": "Sync",
       "test_message_content": "You have won a grand prize!",
       "test_message_subject": "You have won a grand prize!",
       "title": "Dev Buttons"
@@ -213,21 +218,9 @@
       "unhide_specific": "Reveal specific event"
     },
     "login": {
-      "back_button": "Back",
-      "enter_password": "Enter your password",
-      "enter_reg": "Enter your registration number",
-      "enter_username": "Enter your username",
-      "hint_password": "Your password",
-      "hint_reg": "Your registration number",
-      "hint_username": "Your username",
       "logged_in_as": "You are logged in as {{username}}",
       "logged_in_now": "Log-in now",
-      "logging_in": "Logging in . . .",
-      "login": "Login",
-      "login_button": "Log-in",
       "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "login_error": "Something went wrong during login. Please try again",
-      "login_hint": "Your login credentials for the app are the same as for the Eurofurence Registration System.\n\nIf you do not remember or have access to them, you can ask for a PIN code\nto sign in at the registration desk or security office.",
       "logout": "Logout",
       "not_logged_in": "You are currently not logged in"
     },
@@ -247,6 +240,7 @@
       "dark": "Dark",
       "description": "Configure the way the app looks. When set to System it will follow the general system theme. By changing it you can keep the app in your preferred theme.",
       "light": "Light",
+      "medium": "Medium",
       "system": "System",
       "title": "Change the application theme"
     },

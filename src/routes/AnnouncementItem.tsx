@@ -1,9 +1,9 @@
-import { Image } from "expo-image";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../components/AppStyles";
 import { AnnouncementCard } from "../components/announce/AnnouncementCard";
+import { Image } from "../components/generic/atoms/Image";
 import { Label } from "../components/generic/atoms/Label";
 import { MarkdownContent } from "../components/generic/atoms/MarkdownContent";
 import { Floater } from "../components/generic/containers/Floater";
@@ -28,14 +28,14 @@ export const AnnouncementItem = () => {
                 {!announcement ? null : (
                     <>
                         <View style={styles.margin}>
-                            <Label type={"caption"}>
+                            <Label type="caption">
                                 {announcement.Area} - {announcement.Author}
                             </Label>
                         </View>
 
                         <MarkdownContent>{announcement.Content}</MarkdownContent>
 
-                        {announcement.Image && <Image source={announcement.Image.FullUrl} style={styles.image} />}
+                        {announcement.Image && <Image source={announcement.Image.FullUrl} style={styles.image} priority="high" />}
                     </>
                 )}
             </Floater>

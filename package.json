@@ -24,7 +24,8 @@
     "menuColumns": 3,
     "showLogin": true,
     "showServices": true,
-    "showCatchEm": true
+    "showCatchEm": true,
+    "dealerShowAttendee": false
   },
   "auth": {
     "issuer": "https://identity.eurofurence.org",

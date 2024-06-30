@@ -1,16 +1,16 @@
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 import { ReactNativeZoomableView as ZoomableView, ZoomableViewEvent } from "@openspacelabs/react-native-zoomable-view";
 import { ListRenderItemInfo } from "@react-native/virtualized-lists/Lists/VirtualizedList";
-import { Image } from "expo-image";
 import { chain, clamp } from "lodash";
 import * as React from "react";
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FlatList, InteractionManager, Platform, StyleSheet, View, ViewStyle } from "react-native";
+import { Dimensions, FlatList, InteractionManager, Platform, StyleSheet, View, ViewStyle } from "react-native";
 
 import { LinkItem } from "./LinkItem";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence/types";
+import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { Marker } from "../generic/atoms/Marker";
 
@@ -120,7 +120,8 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
     const styleMarker = useMemo<ViewStyle>(() => (!entry ? { display: "none" } : { left: entry.X, top: entry.Y }), [entry]);
 
     // Determine zoom levels.
-    const [minZoom, maxZoom] = useMemo(() => (Math.max(map.Image.Width, map.Image.Height) < 2048 ? [0.5, 2] : [0.25, 1]), [map]);
+    const minZoom = Dimensions.get("window").width / map.Image.Width;
+    const maxZoom = minZoom * 5;
 
     // List header component.
     const header = useMemo(
@@ -155,7 +156,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
                     onTransform={onTransform}
                 >
                     <View style={styleContainer}>
-                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={map.Image.FullUrl} />
+                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={map.Image.FullUrl} priority="high" />
                         {!entry ? null : <Marker style={styleMarker} markerSize={75} />}
                     </View>
                 </ZoomableView>

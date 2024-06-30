@@ -90,9 +90,13 @@ export const i18t = i18next
         react: {
             useSuspense: false,
         },
-        parseMissingKeyHandler: (key) => {
-            console.warn("react-i18next", "Key not found.", key);
-            return key;
+        parseMissingKeyHandler: (key, defaultValue) => {
+            if (!defaultValue) {
+                console.warn("react-i18next", "Key not found.", key);
+                return key;
+            } else {
+                return defaultValue;
+            }
         },
     });
 

@@ -1,5 +1,4 @@
 import { captureException } from "@sentry/react-native";
-import { Image } from "expo-image";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, StyleSheet } from "react-native";
@@ -10,6 +9,7 @@ import { authSettingsUrl, conName } from "../../configuration";
 import { useAuthContext } from "../../context/AuthContext";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { assetSource } from "../../util/assets";
+import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { Button } from "../generic/containers/Button";
 
@@ -26,8 +26,8 @@ export const CurrentLogin = () => {
     if (!loggedIn || !user)
         return (
             <SettingContainer>
-                <Label variant={"bold"}>{t("not_logged_in")}</Label>
-                <Label mb={15} variant={"narrow"}>
+                <Label variant="bold">{t("not_logged_in")}</Label>
+                <Label mb={15} variant="narrow">
                     {t("login_description", { conName })}
                 </Label>
 
@@ -39,8 +39,8 @@ export const CurrentLogin = () => {
     else
         return (
             <SettingContainer>
-                <Label variant={"bold"}>{t("logged_in_as", { username: user.name })}</Label>
-                <Label variant={"narrow"}>{t("login_description", { conName })}</Label>
+                <Label variant="bold">{t("logged_in_as", { username: user.name })}</Label>
+                <Label variant="narrow">{t("login_description", { conName })}</Label>
 
                 <TouchableOpacity containerStyle={styles.avatarContainer} disabled={!authSettingsUrl} onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}>
                     <Image
@@ -49,7 +49,8 @@ export const CurrentLogin = () => {
                         contentFit="contain"
                         placeholder="ych"
                         transition={60}
-                        priority="low"
+                        cachePolicy="memory"
+                        priority="high"
                     />
                 </TouchableOpacity>
 

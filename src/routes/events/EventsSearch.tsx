@@ -70,7 +70,7 @@ export const EventsSearch: FC<EventsSearchProps> = ({ navigation }) => {
                         <Tab style={[styles.rounded, styles.rowCenter, roundedStyle]} inverted icon="bus-stop" text={t("filter_by_track")} onPress={onTrack} />
                         <Tab style={[styles.rounded, roundedStyle]} inverted icon="office-building" text={t("filter_by_room")} onPress={onRoom} />
                     </Row>
-                    <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />
+                    <Search filter={filter} setFilter={setFilter} />
                 </>
             }
             cardType="time"

@@ -1,5 +1,4 @@
 import { useIsFocused } from "@react-navigation/core";
-import { Image, ImageBackground } from "expo-image";
 import { TFunction } from "i18next";
 import { chain } from "lodash";
 import { Moment } from "moment";
@@ -14,6 +13,8 @@ import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence/selectors/records";
 import { EventDayRecord } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
+import { Image } from "../generic/atoms/Image";
+import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { Section } from "../generic/atoms/Section";
 
 export type CountdownHeaderProps = {
@@ -57,7 +58,13 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
     const subtitle = useCountdownTitle(t, now);
     return (
         <View style={[styles.container, style]}>
-            <ImageBackground key="banner" style={styles.background} source={assetSource(width < bannerBreakpoint ? "banner_ef27_narrow" : "banner_ef27_wide")} contentFit="cover" />
+            <ImageBackground
+                key="banner"
+                style={styles.background}
+                source={assetSource(width < bannerBreakpoint ? "banner_ef27_narrow" : "banner_ef27_wide")}
+                contentFit="cover"
+                priority="high"
+            />
             <Section
                 style={styles.section}
                 title={conId}
@@ -68,7 +75,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
                 titleVariant="shadow"
                 subtitleVariant="shadow"
             />
-            <Image style={styles.logo} source={assetSource("banner_ef27_logo")} contentFit="contain" />
+            <Image style={styles.logo} source={assetSource("banner_ef27_logo")} contentFit="contain" priority="high" />
         </View>
     );
 };

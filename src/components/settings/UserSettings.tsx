@@ -19,7 +19,7 @@ export const UserSettings = () => {
     return (
         <View>
             {/* User visible settings, title. */}
-            <Section title={t("settingsSection")} icon={"cog"} />
+            <Section title={t("settingsSection")} icon="cog" />
 
             {/* Allow choosing theme. */}
             <ThemePicker />

@@ -71,7 +71,7 @@ export const DealersRouter: FC<DealersRouterProps> = () => {
                 <Tab.Screen
                     name="Personal"
                     options={{
-                        title: t("personal"),
+                        title: t("favorites_title"),
                         tabBarShowLabel: false,
                         tabBarShowIcon: true,
                         tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,

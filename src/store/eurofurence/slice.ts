@@ -42,7 +42,7 @@ type SyncResponse = {
 
 export const eventsAdapter = createEntityAdapter<EventRecord>({
     selectId: (model) => model.Id,
-    sortComparer: (a, b) => moment(a.StartDateTimeUtc).subtract(b.StartDateTimeUtc).valueOf(),
+    sortComparer: (a, b) => a.StartDateTimeUtc.localeCompare(b.StartDateTimeUtc),
 });
 
 export const eventDaysAdapter = createEntityAdapter<EventDayRecord>({
@@ -76,6 +76,11 @@ export const imagesAdapter = createEntityAdapter<ImageRecord>({
 
 export const dealersAdapter = createEntityAdapter<DealerRecord>({
     selectId: (model) => model.Id,
+    sortComparer: (a, b) => {
+        const aFullName = (a.DisplayName || a.AttendeeNickname).toLowerCase();
+        const bFullName = (b.DisplayName || b.AttendeeNickname).toLowerCase();
+        return aFullName.localeCompare(bFullName);
+    },
 });
 
 export const announcementsAdapter = createEntityAdapter<AnnouncementRecord>({
@@ -91,6 +96,7 @@ export const mapsAdapter = createEntityAdapter<MapRecord>({
 type EurofurenceCacheState = {
     lastSynchronised: string;
     cid?: string;
+    cacheVersion?: number;
     state: "uninitialized" | "preview" | "refreshing" | string;
     events: EntityState<EventRecord>;
     eventDays: EntityState<EventDayRecord>;
@@ -144,14 +150,18 @@ const internalPatchDealers = (dealers: EntitySyncState<DealerRecord>) => {
     });
 };
 
+export const eurofurenceCacheVersion = 1;
+
 export const eurofurenceCache = createSlice({
     name: "eurofurenceCache",
     initialState,
     reducers: {
         applySync: (state, action: PayloadAction<SyncResponse>) => {
             // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
-            if (state.cid !== action.payload.ConventionIdentifier) {
+            if (state.cid !== action.payload.ConventionIdentifier || state.cacheVersion !== eurofurenceCacheVersion) {
                 state.cid = action.payload.ConventionIdentifier;
+                state.cacheVersion = eurofurenceCacheVersion;
+                console.log("Clearing old cache data because con ID or cache version changed");
                 eventsAdapter.removeAll(state.events);
                 eventDaysAdapter.removeAll(state.eventDays);
                 eventRoomsAdapter.removeAll(state.eventRooms);

@@ -51,11 +51,11 @@ export const ManagedTextInput = <T extends object>({ name, label, style, ...text
             name={name.toString()}
             render={({ field, fieldState }) => (
                 <>
-                    <Label type={"caption"}>{label}</Label>
+                    <Label type="caption">{label}</Label>
                     <View style={containerStyle}>
                         <TextInput {...textInputProps} style={textFieldStyle} placeholderTextColor={theme.soften} {...field} onChangeText={field.onChange} />
                         {fieldState.error && (
-                            <Label type={"minor"} color={"warning"}>
+                            <Label type="minor" color="warning">
                                 {fieldState.error.message}
                             </Label>
                         )}

@@ -5,7 +5,7 @@ import { Vibration } from "react-native";
 import { apiBase, conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { selectIsSynchronized } from "../../store/eurofurence/selectors/sync";
-import { applySync, resetCache, startCacheSync } from "../../store/eurofurence/slice";
+import { applySync, eurofurenceCacheVersion, resetCache, startCacheSync } from "../../store/eurofurence/slice";
 
 type SynchronizationProviderProps = {
     /**
@@ -26,19 +26,20 @@ const SynchronizationContext = createContext<SynchronizationProviderProps>({
 export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => {
     const dispatch = useAppDispatch();
     const cid = useAppSelector((state) => state.eurofurenceCache.cid);
+    const cacheVersion = useAppSelector((state) => state.eurofurenceCache.cacheVersion);
     const lastFetch = useAppSelector((state) => state.eurofurenceCache.lastSynchronised);
     const [count, setCount] = useState(1);
 
     useEffect(() => {
         // Sync fully if state is for a different convention.
-        const path = cid === conId ? `Sync?since=${lastFetch}` : `Sync`;
+        const path = cid === conId && cacheVersion === eurofurenceCacheVersion ? `Sync?since=${lastFetch}` : `Sync`;
 
         // Fetch and apply.
         fetch(`${apiBase}/${path}`)
             .then((r) => r.json())
             .then((data) => dispatch(applySync(data)))
             .catch(console.error);
-    }, [count]);
+    }, [cid, cacheVersion, count]);
 
     const clearCache = useCallback(() => {
         Vibration.vibrate(400);

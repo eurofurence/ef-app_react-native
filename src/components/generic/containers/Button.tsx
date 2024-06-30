@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
-import { Label } from "../atoms/Label";
+import { Label, LabelProps } from "../atoms/Label";
 
 export const buttonIconSize = 20;
 const pad = 8;
@@ -17,6 +17,8 @@ const border = 2;
 export type ButtonProps = {
     containerStyle?: StyleProp<ViewStyle>;
     style?: StyleProp<ViewStyle>;
+    labelType?: LabelProps["type"];
+    labelVariant?: LabelProps["variant"];
 
     /**
      * True if outline button instead of filled button.
@@ -54,7 +56,7 @@ export type ButtonProps = {
     disabled?: boolean;
 };
 
-export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
+export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labelVariant, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
     // Computed styles.
     const baseStyle = outline ? styles.containerOutline : styles.containerFill;
     const disabledStyle = disabled ? styles.disabled : null;
@@ -83,7 +85,7 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, outline, icon, 
         >
             {iconComponent}
 
-            <Label style={styles.text} color={outline ? "important" : "invImportant"}>
+            <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? "important" : "invImportant"}>
                 {children}
             </Label>
 

@@ -46,19 +46,11 @@ export const FeedbackForm = () => {
 
     return (
         <FormProvider {...form}>
-            <Label variant={"narrow"}>{t("explanation", { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Label>
+            <Label variant="narrow">{t("explanation", { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Label>
 
-            <ManagedRating<FeedbackSchema>
-                name={"rating"}
-                label={t("rating_title")}
-                minRating={1}
-                enableHalfStar={false}
-                color={theme.secondary}
-                style={styles.star}
-                starSize={52}
-            />
+            <ManagedRating<FeedbackSchema> name="rating" label={t("rating_title")} minRating={1} enableHalfStar={false} color={theme.secondary} style={styles.star} starSize={52} />
 
-            <ManagedTextInput<FeedbackSchema> name={"message"} label={t("message_title")} placeholder={t("message_placeholder")} numberOfLines={8} multiline />
+            <ManagedTextInput<FeedbackSchema> name="message" label={t("message_title")} placeholder={t("message_placeholder")} numberOfLines={8} multiline />
 
             <Button onPress={form.handleSubmit(submit)} disabled={feedbackResult.isLoading}>
                 {t("submit")}

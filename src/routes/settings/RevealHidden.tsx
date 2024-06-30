@@ -13,21 +13,21 @@ import { Header } from "../../components/generic/containers/Header";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { unhideEvent } from "../../store/auxiliary/slice";
-import { selectHiddenEvents } from "../../store/eurofurence/selectors/events";
+import { eventsSelector } from "../../store/eurofurence/selectors/records";
 
 export const RevealHidden = () => {
     const { t } = useTranslation("RevealHidden");
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
     const dispatch = useAppDispatch();
-    const hiddenEvents = useAppSelector(selectHiddenEvents);
-    const all = useMemo(
+    const all = useAppSelector(eventsSelector.selectAll);
+    const hidden = useMemo(
         () =>
-            chain(hiddenEvents)
-                .orderBy("StartDateTimeUtc")
+            chain(all)
+                .filter((item) => item.Hidden)
                 .map((details) => eventInstanceForAny(details, now))
                 .value(),
-        [hiddenEvents, now],
+        [all, now],
     );
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
@@ -37,7 +37,7 @@ export const RevealHidden = () => {
                     {t("lead")}
                 </Label>
 
-                {all.map((item) => (
+                {hidden.map((item) => (
                     <EventCard key={item.details.Id} event={item} type="time" onPress={() => dispatch(unhideEvent(item.details.Id))} />
                 ))}
             </Floater>

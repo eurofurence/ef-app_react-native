@@ -23,6 +23,9 @@ module.exports = {
         },
         ios: {
             supportsTablet: true,
+            infoPlist: {
+                UIBackgroundModes: ["fetch", "remote-notification"],
+            },
         },
         android: {
             package: "org.eurofurence.connavigator",

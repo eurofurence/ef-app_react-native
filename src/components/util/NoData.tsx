@@ -6,8 +6,8 @@ import { Label } from "../generic/atoms/Label";
 export const NoData = () => {
     return (
         <View style={[styles.container]}>
-            <Icon name={"calendar-alert"} size={40} style={{ marginBottom: 20 }} />
-            <Label type={"h3"} variant={"narrow"}>
+            <Icon name="calendar-alert" size={40} style={{ marginBottom: 20 }} />
+            <Label type="h3" variant="narrow">
                 There's nothing here yet . . .
             </Label>
         </View>

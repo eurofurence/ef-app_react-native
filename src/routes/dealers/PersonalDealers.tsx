@@ -2,7 +2,6 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps } from "@react-navigation/core";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
-import { Image } from "expo-image";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
@@ -10,6 +9,7 @@ import { StyleSheet } from "react-native";
 import { useDealerLocationGroups } from "./Dealers.common";
 import { DealersRouterParamsList } from "./DealersRouter";
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
+import { Image } from "../../components/generic/atoms/Image";
 import { Label } from "../../components/generic/atoms/Label";
 import { padFloater } from "../../components/generic/containers/Floater";
 import { Row } from "../../components/generic/containers/Row";
@@ -58,7 +58,8 @@ export const PersonalDealers: FC<PersonalDealersProps> = ({ navigation }) => {
                         contentFit="contain"
                         placeholder="ych"
                         transition={60}
-                        priority="low"
+                        cachePolicy="memory"
+                        priority="high"
                     />
                     <Label ml={16} type="lead" variant="middle">
                         {t("favorites_title")}

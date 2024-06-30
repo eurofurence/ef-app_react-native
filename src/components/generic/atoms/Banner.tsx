@@ -1,9 +1,9 @@
-import { Image, ImageProps } from "expo-image";
 import * as React from "react";
 import { FC } from "react";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
+import { Image, ImageProps } from "./Image";
 import { useAppNavigation } from "../../../hooks/nav/useAppNavigation";
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 import { ImageDetails } from "../../../store/eurofurence/types";

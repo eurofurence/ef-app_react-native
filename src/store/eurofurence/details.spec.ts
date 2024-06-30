@@ -2,7 +2,7 @@ import moment from "moment";
 
 import eurofurenceCache from "./details.data.spec";
 import { selectActiveAnnouncements } from "./selectors/announcements";
-import { selectCurrentEvents, selectFavoriteEvents, selectUpcomingEvents, selectUpcomingFavoriteEvents } from "./selectors/events";
+import { filterCurrentEvents, filterHappeningTodayEvents, filterUpcomingEvents, selectFavoriteEvents } from "./selectors/events";
 import { selectBrowsableMaps } from "./selectors/maps";
 import { announcementsSelectors, dealersSelectors, eventsSelector, mapsSelectors } from "./selectors/records";
 import { EventDetails } from "./types";
@@ -140,8 +140,9 @@ describe("Eurofurence details", () => {
             const id = state.background.notifications.find((n) => n.type === "EventReminder")?.recordId ?? "";
             const event = eventsSelector.selectById(state, id) as EventDetails;
 
-            const upcoming = selectUpcomingFavoriteEvents(state, moment(event.StartDateTimeUtc).subtract(1, "day"));
-            const expired = selectUpcomingFavoriteEvents(state, moment(event.StartDateTimeUtc).add(1, "day"));
+            const faved = selectFavoriteEvents(state);
+            const upcoming = filterHappeningTodayEvents(faved, moment(event.StartDateTimeUtc).subtract(1, "day"));
+            const expired = filterHappeningTodayEvents(faved, moment(event.StartDateTimeUtc).add(1, "day"));
 
             expect(upcoming).toContainEqual(event);
             expect(expired).not.toContainEqual(event);
@@ -150,7 +151,8 @@ describe("Eurofurence details", () => {
         it("finds current", () => {
             const event = eventsSelector.selectAll(state)[0];
 
-            const current = selectCurrentEvents(state, moment(event.StartDateTimeUtc).add(1, "minute"));
+            const all = eventsSelector.selectAll(state);
+            const current = filterCurrentEvents(all, moment(event.StartDateTimeUtc).add(1, "minute"));
 
             expect(current).toContainEqual(event);
         });
@@ -158,7 +160,8 @@ describe("Eurofurence details", () => {
         it("finds upcoming", () => {
             const event = eventsSelector.selectAll(state)[0];
 
-            const upcoming = selectUpcomingEvents(state, moment(event.StartDateTimeUtc).subtract(20, "minutes"));
+            const all = eventsSelector.selectAll(state);
+            const upcoming = filterUpcomingEvents(all, moment(event.StartDateTimeUtc).subtract(20, "minutes"));
 
             expect(upcoming).toContainEqual(event);
         });

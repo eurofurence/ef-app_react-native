@@ -27,13 +27,13 @@ export const ManagedRating = <T extends object>({ name, label, ...ratingProps }:
     return (
         <Controller
             render={({ field, fieldState }) => (
-                <Col type={"stretch"}>
-                    <Label variant={"bold"} mt={16}>
+                <Col type="stretch">
+                    <Label variant="bold" mt={16}>
                         {label}
                     </Label>
                     <StarRating rating={field.value} onChange={field.onChange} {...ratingProps} />
                     {fieldState.error && (
-                        <Label type={"minor"} color={"warning"}>
+                        <Label type="minor" color="warning">
                             {fieldState.error?.message}
                         </Label>
                     )}

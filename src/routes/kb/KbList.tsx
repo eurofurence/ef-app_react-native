@@ -44,7 +44,7 @@ export const KbList: FC<KbListProps> = ({ navigation }) => {
                 kbGroups={all}
                 leader={
                     <>
-                        <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />
+                        <Search filter={filter} setFilter={setFilter} />
                     </>
                 }
             />

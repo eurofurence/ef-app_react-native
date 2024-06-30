@@ -1,5 +1,6 @@
 import { useIsFocused } from "@react-navigation/core";
 import React, { FC, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { BackHandler, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
@@ -9,10 +10,11 @@ import { useThemeBackground, useThemeColor, useThemeColorValue } from "../../../
 export type SearchProps = {
     filter: string;
     setFilter: (value: string) => void;
-    placeholder: string;
+    placeholder?: string;
 };
 
 export const Search: FC<SearchProps> = ({ filter, setFilter, placeholder }) => {
+    const { t } = useTranslation("Search");
     const styleLighten = useThemeBackground("inverted");
     const styleText = useThemeColor("invText");
     const colorText = useThemeColorValue("invText");
@@ -35,7 +37,7 @@ export const Search: FC<SearchProps> = ({ filter, setFilter, placeholder }) => {
             style={[styles.searchField, styleLighten, styleText]}
             value={filter}
             onChangeText={setFilter}
-            placeholder={placeholder}
+            placeholder={placeholder ?? t("placeholder")}
             placeholderTextColor={withAlpha(colorText, 0.6)}
         />
     );

@@ -8,6 +8,21 @@ import { selectMarkdownTheme } from "../../../store/settings/selectors";
 
 const MarkdownComponent: FC<MarkdownProps & { children?: string }> = Markdown as any;
 
+/**
+ * Matches newlines with carriage return or carriage return and newline, for normalization.
+ */
+const newline = /\r\n?/gm;
+
+/**
+ * Matches sections that should be paragraph spaced.
+ */
+const paraspace = /(?<!\s)\n(?!\n|\s*\*|\s*-|\s*\+|\s*\d|#)/gm;
+
+/**
+ * Matches links, checking if they were not in a markdown link segment.
+ */
+const links = /(]\(|\[)?https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*/gi;
+
 export type MarkdownContentProps = {
     defaultType?: LabelProps["type"];
 
@@ -35,7 +50,18 @@ export type MarkdownContentProps = {
 };
 
 export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, children }) => {
-    const fixed = useMemo(() => children?.replace(/\r\n?/gm, "\n")?.replace(/(?<!\s)\n(?!\n|\s*\*|\s*-|\s*\+|\s*\d|#)/gm, " "), [children]);
+    const fixed = useMemo(
+        () =>
+            children
+                ?.replace(newline, "\n")
+                ?.replace(paraspace, " ")
+                ?.replace(links, (s, args) => {
+                    console.log(s, args);
+                    if (args?.[0]) return s;
+                    else return `[${s}](${s})`;
+                }),
+        [children],
+    );
 
     // Compute outer container margins.
     let styleMargin: ViewStyle | null = null;

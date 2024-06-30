@@ -50,6 +50,11 @@ export const showServices = packageData.convention.showServices;
  */
 export const showCatchEm = packageData.convention.showCatchEm;
 
+/**
+ * True if dealer view shows attendee.
+ */
+export const dealerShowAttendee = packageData.convention.dealerShowAttendee;
+
 export const authIssuer = packageData.auth.issuer;
 export const authRedirect = packageData.auth.redirect;
 export const authClientId = packageData.auth.clientId;

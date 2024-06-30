@@ -1,8 +1,8 @@
-import { Image } from "expo-image";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../../components/AppStyles";
+import { Image } from "../../components/generic/atoms/Image";
 import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";

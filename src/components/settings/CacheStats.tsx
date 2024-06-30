@@ -2,6 +2,8 @@ import moment from "moment";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
+import { imagePrefetchComplete } from "../../hooks/sync/useImagePrefetch";
+import { useSubscription } from "../../hooks/util/useSubscription";
 import { useAppSelector } from "../../store";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
@@ -12,11 +14,14 @@ import { useSynchronizer } from "../sync/SynchronizationProvider";
 export const CacheStats = () => {
     const { t } = useTranslation("Settings");
     const sync = useSynchronizer();
+    const imagesPrefetched = useSubscription(imagePrefetchComplete.value, (listener) => imagePrefetchComplete.addListener(listener));
+
     const cache = useAppSelector((state) => state.eurofurenceCache);
     return (
-        <View testID={"CacheStats"}>
+        <View testID="CacheStats">
             <Section title={t("cache.title")} subtitle={t("cache.subtitle", { time: moment(cache.lastSynchronised).format("lll") })} />
 
+            <Label mb={5}>{t("cache.images_prefetched", { state: imagesPrefetched })}</Label>
             <Label mb={5}>{t("cache.cache_state", { state: cache.state })}</Label>
 
             <Label>{t("cache.cache_item", { count: cache.events.ids.length, type: "event" })}</Label>
@@ -30,10 +35,10 @@ export const CacheStats = () => {
             <Label>{t("cache.cache_item", { count: cache.images.ids.length, type: "image" })}</Label>
 
             <Row style={styles.container}>
-                <Button onPress={sync.synchronize} icon={"sync"} containerStyle={styles.button}>
+                <Button onPress={sync.synchronize} icon="sync" containerStyle={styles.button}>
                     {t("cache.synchronize")}
                 </Button>
-                <Button icon="trash-can-outline" containerStyle={styles.button} onPress={() => alert(t("cache.reset_alert"))} onLongPress={sync.clear}>
+                <Button icon="trash-can-outline" containerStyle={styles.button} onPress={sync.clear}>
                     {t("cache.reset")}
                 </Button>
             </Row>

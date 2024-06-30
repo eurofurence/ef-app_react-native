@@ -85,7 +85,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             onAbout={on.about}
             onMap={on.map}
         >
-            <Tab icon={"twitter"} text={"Twitter"} onPress={() => Linking.openURL("https://twitter.com/eurofurence")} />
+            <Tab icon="twitter" text="Twitter" onPress={() => Linking.openURL("https://twitter.com/eurofurence")} />
         </PagerPrimary>
     );
 };

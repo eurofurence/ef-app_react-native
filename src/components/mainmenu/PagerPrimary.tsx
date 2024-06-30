@@ -1,5 +1,4 @@
 import { captureException } from "@sentry/react-native";
-import { Image } from "expo-image";
 import React, { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, StyleSheet } from "react-native";
@@ -12,6 +11,7 @@ import { useAppSelector } from "../../store";
 import { selectBrowsableMaps } from "../../store/eurofurence/selectors/maps";
 import { RecordId } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
+import { Image } from "../generic/atoms/Image";
 import { Button } from "../generic/containers/Button";
 import { Col } from "../generic/containers/Col";
 import { Grid } from "../generic/containers/Grid";
@@ -40,7 +40,8 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, o
                     contentFit="contain"
                     placeholder="ych"
                     transition={60}
-                    priority="low"
+                    cachePolicy="memory"
+                    priority="high"
                 />
             </TouchableOpacity>
 
@@ -94,7 +95,7 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, 
 
             <Col style={{ padding: 30, alignItems: "stretch" }}>
                 {maps.map((it) => (
-                    <Button key={it.Id} containerStyle={{ marginVertical: 10 }} icon={"map"} onPress={() => onMap && onMap(it.Id)}>
+                    <Button key={it.Id} containerStyle={{ marginVertical: 10 }} icon="map" onPress={() => onMap && onMap(it.Id)}>
                         {it.Description}
                     </Button>
                 ))}

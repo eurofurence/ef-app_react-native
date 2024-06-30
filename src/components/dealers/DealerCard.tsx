@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import { Moment } from "moment/moment";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
@@ -10,6 +9,7 @@ import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { DealerDetails } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
 import { appStyles } from "../AppStyles";
+import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 
 export type DealerDetailsInstance = {
@@ -66,7 +66,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
             onLongPress={() => onLongPress?.(dealer.details)}
         >
             <View style={[styles.pre, stylePre]}>
-                <Image style={[avatarBackground, styles.avatarCircle]} source={avatar} contentFit="contain" placeholder={assetSource("ych")} transition={60} priority="low" />
+                <Image style={[avatarBackground, styles.avatarCircle]} source={avatar} contentFit="contain" placeholder={assetSource("ych")} transition={60} />
             </View>
 
             <View style={styles.main}>

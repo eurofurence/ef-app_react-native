@@ -1,4 +1,3 @@
-import { Image } from "expo-image";
 import moment from "moment/moment";
 import React, { FC, useCallback, useMemo } from "react";
 import { Linking, StyleSheet } from "react-native";
@@ -13,6 +12,7 @@ import { DealerCard } from "../dealers/DealerCard";
 import { isPresent, joinOffDays } from "../dealers/utils";
 import { FaIcon } from "../generic/atoms/FaIcon";
 import { Icon } from "../generic/atoms/Icon";
+import { Image } from "../generic/atoms/Image";
 import { Button, ButtonProps } from "../generic/containers/Button";
 
 type LinkItemProps = {

@@ -51,8 +51,8 @@ export const LanguagePicker = () => {
 
     return (
         <SettingContainer>
-            <Label variant={"bold"}>{t("changeLanguage")}</Label>
-            <Label variant={"narrow"}>{t("currentLanguage")}</Label>
+            <Label variant="bold">{t("changeLanguage")}</Label>
+            <Label variant="narrow">{t("currentLanguage")}</Label>
             <Picker<string>
                 selectedValue={i18n.language}
                 style={style}

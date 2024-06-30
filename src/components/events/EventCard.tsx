@@ -1,4 +1,3 @@
-import { ImageBackground } from "expo-image";
 import moment, { Moment } from "moment";
 import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
@@ -9,6 +8,7 @@ import { useThemeBackground, useThemeColorValue } from "../../hooks/themes/useTh
 import { EventDetails } from "../../store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Icon } from "../generic/atoms/Icon";
+import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { Label } from "../generic/atoms/Label";
 import { Progress } from "../generic/atoms/Progress";
 import { Row } from "../generic/containers/Row";
@@ -102,7 +102,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
 
             {event.details.Banner ? (
                 <View style={styles.mainPoster}>
-                    <ImageBackground source={event.details.Banner.FullUrl} contentFit="cover" style={StyleSheet.absoluteFill} priority="low">
+                    <ImageBackground source={event.details.Banner.FullUrl} contentFit="cover" style={StyleSheet.absoluteFill}>
                         <View style={styles.tagArea2}>
                             <View style={styles.tagAreaInner}>
                                 <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>

@@ -7,12 +7,14 @@ import { useAuthContext } from "../../context/AuthContext";
 import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/auth/service";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
+import { useSynchronizer } from "../sync/SynchronizationProvider";
 
 export const DevButtons = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "dev_buttons" });
     const [createSync, syncResult] = useCreateSyncRequestMutation();
     const [sendMessage, messageResult] = useSendPrivateMessageMutation();
     const { user, logout } = useAuthContext();
+    const { synchronize } = useSynchronizer();
 
     const onSendMessage = useCallback(() => {
         if (!user) {
@@ -34,6 +36,9 @@ export const DevButtons = () => {
         <View>
             <Section title={t("title")} subtitle={t("subtitle")} />
 
+            <Button containerStyle={styles.button} icon="refresh" onPress={() => synchronize()}>
+                {t("sync_standard")}
+            </Button>
             <Button
                 containerStyle={styles.button}
                 icon="alert"

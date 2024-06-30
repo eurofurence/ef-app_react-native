@@ -38,7 +38,6 @@ export const Home: FC<HomeProps> = () => {
     return (
         <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
             <CountdownHeader />
-
             <Floater contentStyle={appStyles.trailer}>
                 <LanguageWarnings parentPad={padFloater} />
                 <TimezoneWarning parentPad={padFloater} />

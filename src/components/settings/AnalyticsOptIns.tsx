@@ -45,8 +45,8 @@ export const AnalyticsOptIns = () => {
                 delayLongPress={1000}
             >
                 <Col style={{ flex: 1 }}>
-                    <Label variant={"bold"}>{t("allowAnalytics")}</Label>
-                    <Label variant={"narrow"}>{t("allowAnalyticsSubtitle")}</Label>
+                    <Label variant="bold">{t("allowAnalytics")}</Label>
+                    <Label variant="narrow">{t("allowAnalyticsSubtitle")}</Label>
                 </Col>
 
                 <Checkbox value={analyticsEnabled} />

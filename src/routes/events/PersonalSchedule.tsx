@@ -2,16 +2,15 @@ import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
 import { CompositeScreenProps } from "@react-navigation/core";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { StackScreenProps } from "@react-navigation/stack";
-import { Image } from "expo-image";
-import { chain, partition, sortBy } from "lodash";
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
+import { useEventOtherGroups } from "./Events.common";
 import { EventsRouterParamsList } from "./EventsRouter";
-import { eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
-import { eventSectionForDate, eventSectionForPassed } from "../../components/events/EventSection";
+import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
+import { Image } from "../../components/generic/atoms/Image";
 import { Label } from "../../components/generic/atoms/Label";
 import { padFloater } from "../../components/generic/containers/Floater";
 import { Row } from "../../components/generic/containers/Row";
@@ -40,39 +39,21 @@ export type PersonalScheduleProps = CompositeScreenProps<
 export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
     const { t } = useTranslation("Events");
     const now = useNow();
-    const eventsAll = useAppSelector(selectFavoriteEvents);
+
+    const { setSelected } = useEventsRouterContext();
+
     const { user } = useAuthContext();
     const avatarBackground = useThemeBackground("primary");
 
-    const sections = useMemo(() => {
-        const [upcoming, passed] = partition(eventsAll, (it) => now.isBefore(it.EndDateTimeUtc));
-        return chain(upcoming)
-            .orderBy("StartDateTimeUtc")
-            .groupBy((event) => event.ConferenceDay?.Date)
-            .flatMap((items, day) => [
-                // Header.
-                eventSectionForDate(t, day),
-                // Event instances.
-                ...items.map((details) => eventInstanceForNotPassed(details, now)),
-            ])
-            .thru((current) =>
-                passed.length === 0
-                    ? current
-                    : current.concat([
-                          // Passed header.
-                          eventSectionForPassed(t),
-                          // Passed event instances.
-                          ...sortBy(passed, "StartDateTimeUtc").map((details) => eventInstanceForPassed(details)),
-                      ]),
-            )
-            .value();
-    }, [t, eventsAll, now]);
+    const favorites = useAppSelector(selectFavoriteEvents);
+    const eventGroups = useEventOtherGroups(t, now, favorites);
 
     return (
         <EventsSectionedList
             navigation={navigation}
-            eventsGroups={sections}
-            cardType={"time"}
+            eventsGroups={eventGroups}
+            select={setSelected}
+            cardType="time"
             leader={
                 <Row type="center" variant="center" style={styles.marginTop}>
                     <Image
@@ -81,7 +62,8 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
                         contentFit="contain"
                         placeholder="ych"
                         transition={60}
-                        priority="low"
+                        cachePolicy="memory"
+                        priority="high"
                     />
                     <Label ml={16} type="lead" variant="middle">
                         {t("schedule_title")}

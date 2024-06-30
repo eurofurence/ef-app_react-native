@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
-import { selectUpcomingFavoriteEvents } from "../../store/eurofurence/selectors/events";
+import { filterHappeningTodayEvents, selectFavoriteEvents } from "../../store/eurofurence/selectors/events";
 import { Section } from "../generic/atoms/Section";
 
 export type TodayScheduleListProps = {
@@ -15,16 +15,22 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
     const { t } = useTranslation("Events");
 
     const navigation = useAppNavigation("Areas");
-    const eventsAll = useAppSelector((state) => selectUpcomingFavoriteEvents(state, now));
-    const events = useMemo(() => eventsAll.filter((item) => !item.Hidden).map((details) => eventInstanceForAny(details, now)), [eventsAll, now]);
+    const favorites = useAppSelector(selectFavoriteEvents);
+    const events = useMemo(
+        () =>
+            filterHappeningTodayEvents(favorites, now)
+                .filter((item) => !item.Hidden)
+                .map((details) => eventInstanceForAny(details, now)),
+        [favorites, now],
+    );
 
-    if (eventsAll.length === 0) {
+    if (favorites.length === 0) {
         return null;
     }
 
     return (
         <>
-            <Section title={t("today_schedule_title")} subtitle={t("today_schedule_subtitle")} icon={"book-marker"} />
+            <Section title={t("today_schedule_title")} subtitle={t("today_schedule_subtitle")} icon="book-marker" />
             {events.map((event) => (
                 <EventCard
                     key={event.details.Id}

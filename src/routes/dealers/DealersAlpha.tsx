@@ -55,7 +55,7 @@ export const DealersAlpha: FC<DealersAlphaProps> = ({ navigation }) => {
                     <Label type="lead" variant="middle" mt={30}>
                         {t("dealers_at_convention", { convention: conName })}
                     </Label>
-                    <Search filter={filter} setFilter={setFilter} placeholder="What are you looking for" />
+                    <Search filter={filter} setFilter={setFilter} />
                 </>
             }
         />
