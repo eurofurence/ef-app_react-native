@@ -42,3 +42,8 @@ export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTime
         const endMoment = moment(it.StartDateTimeUtc, true);
         return now.isBetween(startMoment, endMoment);
     });
+
+export const selectUpdatedFavoriteEvents = createSelector([selectFavoriteEvents, (state) => state.auxiliary.lastViewTimes], (favorites, lastViewTimes) =>
+    // Is favorite and has ever been viewed and the update is after when it was viewed.
+    favorites.filter((event) => event.Id in lastViewTimes && moment(event.LastChangeDateTimeUtc).isAfter(lastViewTimes[event.Id])),
+);

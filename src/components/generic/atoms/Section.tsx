@@ -8,7 +8,7 @@ import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/us
 import { Col } from "../containers/Col";
 import { Row } from "../containers/Row";
 
-const iconSize = 32; // Matches H1 font size.
+const iconSize = 24; // Matches H1 font size.
 
 /**
  * Props to section.
@@ -48,7 +48,7 @@ export const Section: FC<SectionProps> = ({ style, icon = "bookmark", title, sub
         <Col style={[styles.container, styleBackground, style]}>
             <Row type="center">
                 {!icon ? <View style={styles.placeholder} /> : <Icon color={iconColor} style={styles.icon} name={icon} size={iconSize} />}
-                <Label style={styles.containerFill} type="h1" variant={titleVariant} color={titleColor ?? "important"} ellipsizeMode="tail">
+                <Label style={styles.containerFill} type="h2" variant={titleVariant} color={titleColor ?? "important"} ellipsizeMode="tail">
                     {title}
                 </Label>
             </Row>
@@ -56,7 +56,7 @@ export const Section: FC<SectionProps> = ({ style, icon = "bookmark", title, sub
             {!subtitle ? null : (
                 <Row type="center">
                     <View style={styles.placeholder} />
-                    <Label style={styles.containerFill} type="h3" variant={subtitleVariant} color={subtitleColor ?? "text"} ellipsizeMode="tail">
+                    <Label style={styles.containerFill} type="compact" variant={subtitleVariant} color={subtitleColor ?? "text"} ellipsizeMode="tail">
                         {subtitle}
                     </Label>
                 </Row>

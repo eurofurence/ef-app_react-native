@@ -18,6 +18,7 @@ type SynchronizationProviderProps = {
      */
     clear: () => void;
 };
+
 const SynchronizationContext = createContext<SynchronizationProviderProps>({
     synchronize: noop,
     clear: noop,
@@ -41,22 +42,22 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
             .catch(console.error);
     }, [cid, cacheVersion, count]);
 
-    const clearCache = useCallback(() => {
-        Vibration.vibrate(400);
-        dispatch(resetCache());
-        synchronize();
-    }, [dispatch]);
-
     const synchronize = useCallback((vibrate: boolean = true) => {
         dispatch(startCacheSync());
         if (vibrate) Vibration.vibrate(150);
         setCount((c) => c + 1);
     }, []);
 
+    const clear = useCallback(() => {
+        Vibration.vibrate(400);
+        dispatch(resetCache());
+        synchronize();
+    }, [dispatch]);
+
     const providerValues = useMemo(
         (): SynchronizationProviderProps => ({
             synchronize,
-            clear: clearCache,
+            clear,
         }),
         [synchronize],
     );
@@ -65,12 +66,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
 };
 
 export const useSynchronizer = () => {
-    const { synchronize, clear } = useContext(SynchronizationContext);
+    const context = useContext(SynchronizationContext);
     const isSynchronizing = useAppSelector(selectIsSynchronized);
-
-    return {
-        synchronize,
-        clear,
-        isSynchronizing,
-    };
+    return { ...context, isSynchronizing };
 };

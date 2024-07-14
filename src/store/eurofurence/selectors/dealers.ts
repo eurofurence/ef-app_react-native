@@ -1,5 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { flatMap, maxBy, uniq } from "lodash";
+import moment from "moment/moment";
 
 import { dealersSelectors } from "./records";
 import { DealerDetails } from "../types";
@@ -53,3 +54,8 @@ export const selectDealerCategories = createSelector([dealersSelectors.selectAll
     }
     return result;
 });
+
+export const selectUpdatedFavoriteDealers = createSelector([selectFavoriteDealers, (state) => state.auxiliary.lastViewTimes], (favorites, lastViewTimes) =>
+    // Is favorite and has ever been viewed and the update is after when it was viewed.
+    favorites.filter((dealer) => dealer.Id in lastViewTimes && moment(dealer.LastChangeDateTimeUtc).isAfter(lastViewTimes[dealer.Id])),
+);

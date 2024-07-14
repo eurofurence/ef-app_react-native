@@ -35,12 +35,17 @@ export type DealerContentProps = {
     parentPad?: number;
 
     /**
+     * True if the dealer was updated.
+     */
+    updated?: boolean;
+
+    /**
      * True if a dedicated share button should be displayed.
      */
     shareButton?: boolean;
 };
 
-export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, shareButton }) => {
+export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, updated, shareButton }) => {
     const navigation = useAppNavigation("Areas");
     const { t } = useTranslation("Dealer");
     const now = useNow();
@@ -70,6 +75,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, s
 
     return (
         <>
+            {!updated ? null : (
+                <Badge unpad={parentPad} badgeColor="warning" textColor="white">
+                    {t("dealer_was_updated")}
+                </Badge>
+            )}
+
             {!markNotAttending ? null : (
                 <Badge unpad={parentPad} badgeColor="warning" textColor="invText">
                     {t("not_attending")}

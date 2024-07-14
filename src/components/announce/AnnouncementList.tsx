@@ -15,6 +15,10 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ now }) => {
     const { t } = useTranslation("Announcements");
     const announcements = useAppSelector((state) => selectActiveAnnouncements(state, now));
 
+    if (!announcements.length) {
+        return null;
+    }
+
     return (
         <>
             <Section title={t("sectionTitle")} subtitle={t("sectionSubtitle")} icon="newspaper" />

@@ -9,6 +9,7 @@ import { Header } from "../../components/generic/containers/Header";
 import { appBase, conAbbr } from "../../configuration";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
+import { useLatchTrue } from "../../hooks/util/useLatchTrue";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
 import { EventDetails } from "../../store/eurofurence/types";
@@ -27,15 +28,16 @@ export const EventItem = () => {
     const route = useAppRoute("Event");
     const event = useAppSelector((state) => eventsSelector.selectById(state, route.params.id));
 
-    // Get update note.
+    // Get update note. Latch so it's displayed even if reset in background.
     const updated = useUpdateSinceNote(event);
+    const showUpdated = useLatchTrue(updated);
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header secondaryIcon="share" secondaryPress={() => event && shareEvent(event)}>
                 {event?.Title ?? "Viewing event"}
             </Header>
-            <Floater contentStyle={appStyles.trailer}>{!event ? null : <EventContent event={event} parentPad={padFloater} updated={updated} />}</Floater>
+            <Floater contentStyle={appStyles.trailer}>{!event ? null : <EventContent event={event} parentPad={padFloater} updated={showUpdated} />}</Floater>
         </ScrollView>
     );
 };

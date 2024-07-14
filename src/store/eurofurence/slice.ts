@@ -12,10 +12,9 @@ import {
     KnowledgeEntryRecord,
     KnowledgeGroupRecord,
     MapRecord,
-    RecordId,
 } from "./types";
 
-type EntitySyncState<T = unknown> = {
+export type EntitySyncState<T = unknown> = {
     StorageLastChangeDateTimeUtc: string;
     StorageDeltaStartChangeDateTimeUtc: string;
     RemoveAllBeforeInsert: string;
@@ -23,7 +22,7 @@ type EntitySyncState<T = unknown> = {
     DeletedEntities?: string[];
 };
 
-type SyncResponse = {
+export type SyncResponse = {
     ConventionIdentifier: string;
     Since?: string;
     CurrentDateTimeUtc: string;
@@ -108,7 +107,6 @@ type EurofurenceCacheState = {
     dealers: EntityState<DealerRecord>;
     announcements: EntityState<AnnouncementRecord>;
     maps: EntityState<MapRecord>;
-    lastChanged?: RecordId[];
 };
 
 const initialState: EurofurenceCacheState = {
@@ -127,17 +125,19 @@ const initialState: EurofurenceCacheState = {
 };
 
 const syncEntities = <T>(state: EntityState<T>, adapter: EntityAdapter<T>, delta: EntitySyncState<T>) => {
-    if (delta.RemoveAllBeforeInsert) {
-        adapter.removeAll(state);
-    }
+    if (delta.RemoveAllBeforeInsert) adapter.removeAll(state);
+    if (delta.ChangedEntities) adapter.upsertMany(state, delta.ChangedEntities);
+    if (delta.DeletedEntities) adapter.removeMany(state, delta.DeletedEntities);
+};
 
-    if (delta.ChangedEntities) {
-        adapter.upsertMany(state, delta.ChangedEntities);
-    }
-
-    if (delta.DeletedEntities) {
-        adapter.removeMany(state, delta.DeletedEntities);
-    }
+const amendEntities = <T>(state: EntityState<T>, adapter: EntityAdapter<T>, value: Partial<T>) => {
+    adapter.setAll(
+        state,
+        adapter
+            .getSelectors()
+            .selectAll(state)
+            .map((item) => ({ ...item, ...value })),
+    );
 };
 
 const internalPatchDealers = (dealers: EntitySyncState<DealerRecord>) => {
@@ -190,20 +190,6 @@ export const eurofurenceCache = createSlice({
             syncEntities(state.images, imagesAdapter, action.payload.Images);
             syncEntities(state.announcements, announcementsAdapter, action.payload.Announcements);
             syncEntities(state.maps, mapsAdapter, action.payload.Maps);
-
-            // TODO: Use.
-            const changedEntities = [];
-            if (action.payload.Events.ChangedEntities) for (const item of action.payload.Events.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.EventConferenceDays.ChangedEntities) for (const item of action.payload.EventConferenceDays.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.EventConferenceRooms.ChangedEntities) for (const item of action.payload.EventConferenceRooms.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.EventConferenceTracks.ChangedEntities) for (const item of action.payload.EventConferenceTracks.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.KnowledgeGroups.ChangedEntities) for (const item of action.payload.KnowledgeGroups.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.KnowledgeEntries.ChangedEntities) for (const item of action.payload.KnowledgeEntries.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.Images.ChangedEntities) for (const item of action.payload.Images.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.Dealers.ChangedEntities) for (const item of action.payload.Dealers.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.Announcements.ChangedEntities) for (const item of action.payload.Announcements.ChangedEntities) changedEntities.push(item.Id);
-            if (action.payload.Maps.ChangedEntities) for (const item of action.payload.Maps.ChangedEntities) changedEntities.push(item.Id);
-            state.lastChanged = changedEntities;
         },
         resetCache: () => {
             return initialState;
@@ -211,7 +197,20 @@ export const eurofurenceCache = createSlice({
         startCacheSync: (state) => {
             state.state = "refreshing";
         },
+        overwriteUpdateTimes: (state, action: PayloadAction<string>) => {
+            const update = { LastChangeDateTimeUtc: action.payload };
+            amendEntities(state.events, eventsAdapter, update);
+            amendEntities(state.eventDays, eventDaysAdapter, update);
+            amendEntities(state.eventRooms, eventRoomsAdapter, update);
+            amendEntities(state.eventTracks, eventTracksAdapter, update);
+            amendEntities(state.knowledgeGroups, knowledgeGroupsAdapter, update);
+            amendEntities(state.knowledgeEntries, knowledgeEntriesAdapter, update);
+            amendEntities(state.dealers, dealersAdapter, update);
+            amendEntities(state.images, imagesAdapter, update);
+            amendEntities(state.announcements, announcementsAdapter, update);
+            amendEntities(state.maps, mapsAdapter, update);
+        },
     },
 });
 
-export const { applySync, resetCache, startCacheSync } = eurofurenceCache.actions;
+export const { applySync, resetCache, startCacheSync, overwriteUpdateTimes } = eurofurenceCache.actions;

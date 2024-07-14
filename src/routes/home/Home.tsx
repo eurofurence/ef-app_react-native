@@ -13,6 +13,7 @@ import { UpcomingEventsList } from "../../components/events/UpcomingEventsList";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { CountdownHeader } from "../../components/home/CountdownHeader";
 import { DeviceSpecificWarnings } from "../../components/home/DeviceSpecificWarnings";
+import { FavoritesChangedWarning } from "../../components/home/FavoritesChangedWarning";
 import { LanguageWarnings } from "../../components/home/LanguageWarnings";
 import { TimezoneWarning } from "../../components/home/TimezoneWarning";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
@@ -42,6 +43,7 @@ export const Home: FC<HomeProps> = () => {
                 <LanguageWarnings parentPad={padFloater} />
                 <TimezoneWarning parentPad={padFloater} />
                 <DeviceSpecificWarnings />
+                <FavoritesChangedWarning />
                 <AnnouncementList now={now} />
                 <UpcomingEventsList now={now} />
                 <TodayScheduleList now={now} />

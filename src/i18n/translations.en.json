@@ -29,6 +29,7 @@
     "attends_sat": "Saturday",
     "attends_thu": "Thursday",
     "categories": "Categories",
+    "dealer_was_updated": "Dealer was updated since your last visit",
     "in_after_dark": "Located in the after dark section",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
@@ -56,7 +57,7 @@
   "Event": {
     "about_title": "About",
     "add_favorite": "Favorite",
-    "event_was_updated": "Event was updated since you last viewed it",
+    "event_was_updated": "Event was updated since your last visit",
     "give_feedback": "Give Feedback",
     "hide": "Hide from overview",
     "label_event_description": "More about the event",
@@ -120,6 +121,8 @@
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
     "warnings": {
+      "favorites_changed": "Favorites updated",
+      "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
       "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown.",
       "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
       "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
@@ -189,6 +192,7 @@
     "currentLanguage": "Your current language is English!",
     "dev_buttons": {
       "no_auth_alert": "You are not logged in. Stopping.",
+      "overwrite_update_time": "Overwrite update time",
       "send_private_message": "Receive Private Message {{ status }}",
       "subtitle": "Make the API do something.",
       "sync": "Force Resync {{ status }}",
@@ -209,6 +213,12 @@
       "disable": "Disable",
       "enable": "Enable",
       "title": "Dev Settings Menu"
+    },
+    "device_warnings": {
+      "hide_device_warnings": "Hide warnings",
+      "show_device_warnings": "Show warnings",
+      "subtitle": "Show or hide device warnigns on home screen",
+      "title": "Device warnings"
     },
     "header": "Settings",
     "hidden_events": {

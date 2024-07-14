@@ -9,6 +9,8 @@ import { Floater, padFloater } from "../../components/generic/containers/Floater
 import { Header } from "../../components/generic/containers/Header";
 import { appBase, conAbbr } from "../../configuration";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
+import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
+import { useLatchTrue } from "../../hooks/util/useLatchTrue";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence/selectors/records";
 import { DealerDetails } from "../../store/eurofurence/types";
@@ -28,12 +30,16 @@ export const DealerItem = () => {
     const route = useAppRoute("Dealer");
     const dealer = useAppSelector((state) => dealersSelectors.selectById(state, route.params.id));
 
+    // Get update note. Latch so it's displayed even if reset in background.
+    const updated = useUpdateSinceNote(dealer);
+    const showUpdated = useLatchTrue(updated);
+
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header secondaryIcon="share" secondaryPress={() => dealer && shareDealer(dealer)}>
                 {dealer?.FullName ?? t("viewing_dealer")}
             </Header>
-            <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} />}</Floater>
+            <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />}</Floater>
         </ScrollView>
     );
 };

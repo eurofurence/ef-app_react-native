@@ -102,41 +102,58 @@ const styles = StyleSheet.create({
  */
 const types = StyleSheet.create({
     lead: {
-        fontWeight: "100",
         fontSize: 20,
+        lineHeight: 20,
+        fontWeight: "100",
     },
     h1: {
-        fontWeight: "300",
         fontSize: 30,
+        lineHeight: 34,
+        fontWeight: "300",
     },
     h2: {
         fontSize: 24,
+        lineHeight: 28,
+        fontWeight: "normal",
     },
     h3: {
         fontSize: 20,
+        lineHeight: 24,
+        fontWeight: "normal",
     },
     h4: {
         fontSize: 17,
-        fontWeight: "bold",
+        lineHeight: 21,
+        fontWeight: "600",
     },
     h5: {
         fontSize: 15,
-        fontWeight: "bold",
+        lineHeight: 19,
+        fontWeight: "600",
     },
     h6: {
         fontSize: 14,
-        fontWeight: "bold",
+        lineHeight: 18,
+        fontWeight: "600",
     },
     caption: {
         fontSize: 14,
+        lineHeight: 14,
         fontWeight: "600",
         opacity: 0.666,
     },
+    compact: {
+        fontSize: 14,
+        lineHeight: 16,
+        fontWeight: "normal",
+    },
     regular: {
         fontSize: 14,
+        fontWeight: "normal",
     },
     minor: {
         fontSize: 10,
+        fontWeight: "normal",
     },
     strong: {
         fontSize: 14,
@@ -144,22 +161,27 @@ const types = StyleSheet.create({
     },
     para: {
         fontSize: 14,
+        fontWeight: "normal",
         lineHeight: 24,
     },
     del: {
         fontSize: 14,
+        fontWeight: "normal",
         textDecorationLine: "line-through",
     },
     em: {
         fontSize: 14,
+        fontWeight: "normal",
         fontStyle: "italic",
     },
     u: {
         fontSize: 14,
+        fontWeight: "normal",
         textDecorationLine: "underline",
     },
     cap: {
         fontSize: 10,
+        lineHeight: 10,
         fontWeight: "bold",
     },
 });

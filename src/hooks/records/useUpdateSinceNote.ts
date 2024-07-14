@@ -8,7 +8,7 @@ import { RecordMetadata } from "../../store/eurofurence/types";
 import { useNow } from "../time/useNow";
 
 /**
- * Gets  the last viewed time of this record and if the record has changed
+ * Gets the last viewed time of this record and if the record has changed
  * since, returns true. Also connects setting the viewed time of the item after
  * a delay.
  * @param item The item or null or undefined if not yet loaded.
@@ -24,7 +24,7 @@ export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, dela
         if (!item) return;
 
         const handle = setTimeout(() => {
-            dispatch(setViewed({ id: item.Id, now: now.format() }));
+            dispatch(setViewed({ id: item.Id, now: now.toISOString() }));
         }, delay);
         return () => {
             clearTimeout(handle);

@@ -3,6 +3,7 @@ import { View } from "react-native";
 
 import { AnalyticsOptIns } from "./AnalyticsOptIns";
 import { CurrentLogin } from "./CurrentLogin";
+import { DeviceWarnings } from "./DeviceWarnings";
 import { HiddenEvents } from "./HiddenEvents";
 import { LanguagePicker } from "./LanguagePicker";
 import { ThemePicker } from "./ThemePicker";
@@ -35,6 +36,9 @@ export const UserSettings = () => {
 
             {/* Hidden events functionality, undo. */}
             <HiddenEvents />
+
+            {/* Device warning settings */}
+            <DeviceWarnings />
         </View>
     );
 };

@@ -48,16 +48,16 @@ export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((st
 
 export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks) as RecordSelectors<EventTrackDetails>;
 
-export const baseknowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
+export const baseKnowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
 
 export const knowledgeGroupsSelectors: RecordSelectors<KnowledgeGroupDetails> = {
-    selectTotal: baseknowledgeGroupsSelectors.selectTotal,
-    selectIds: baseknowledgeGroupsSelectors.selectIds as (state: RootState) => RecordId[],
-    selectEntities: createSelector([baseknowledgeGroupsSelectors.selectEntities], (entities) =>
+    selectTotal: baseKnowledgeGroupsSelectors.selectTotal,
+    selectIds: baseKnowledgeGroupsSelectors.selectIds as (state: RootState) => RecordId[],
+    selectEntities: createSelector([baseKnowledgeGroupsSelectors.selectEntities], (entities) =>
         mapValues(entities as LodashDictionary<KnowledgeGroupRecord>, applyKnowledgeGroupDetails),
     ),
-    selectAll: createSelector([baseknowledgeGroupsSelectors.selectAll], (all) => map(all, applyKnowledgeGroupDetails)),
-    selectById: createSelector([baseknowledgeGroupsSelectors.selectById], (item) => mapOne(item, applyKnowledgeGroupDetails)),
+    selectAll: createSelector([baseKnowledgeGroupsSelectors.selectAll], (all) => map(all, applyKnowledgeGroupDetails)),
+    selectById: createSelector([baseKnowledgeGroupsSelectors.selectById], (item) => mapOne(item, applyKnowledgeGroupDetails)),
 };
 
 export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<RootState>(
