@@ -1,10 +1,4 @@
-import { useMemo } from "react";
-import { useColorScheme, ViewStyle } from "react-native";
-import { shallowEqual } from "react-redux";
-
-import { useAppSelector } from "../store";
-
-export type Theme = Record<string, string> & {
+export type Theme = {
     /**
      * Primary brand color.
      */
@@ -106,20 +100,17 @@ export type Theme = Record<string, string> & {
     marker: string;
 };
 
-// Resolve from system selection. Later, menu entry done.
-export const useThemeType = (): AppTheme => {
-    const userTheme = useAppSelector((state) => state.settingsSlice.theme, shallowEqual);
-    const systemTheme = useColorScheme();
-
-    return userTheme ? userTheme : systemTheme ? systemTheme : "light";
-};
+/**
+ * Named color in a theme.
+ */
+export type ThemeColor = keyof Theme;
 
 /**
  * All theme definitions.
  */
-const themes = {
+export const themes: Record<string, Theme> = {
     light: {
-        primary: "#006459",
+        primary: "#005953",
         secondary: "#3421bc",
         background: "#f7f7f7",
         surface: "#f0f0f0",
@@ -140,8 +131,30 @@ const themes = {
         sponsorText: "#323034",
         marker: "#ff2f66",
     },
+    medium: {
+        primary: "#005953",
+        secondary: "#3421bc",
+        background: "#989898",
+        surface: "#b6b6b6",
+        inverted: "#251c29",
+        text: "#251c29",
+        important: "#000000",
+        invText: "#fff7f0",
+        invImportant: "#ffffff",
+        warning: "#ee5e22",
+        notification: "#d91c52",
+        darken: "#251c2940",
+        lighten: "#8c8a8d80",
+        soften: "#251c29a0",
+        white: "#ffffff",
+        superSponsor: "#5300ff",
+        superSponsorText: "#fff7f0",
+        sponsor: "#ffd700",
+        sponsorText: "#323034",
+        marker: "#ff2f66",
+    },
     dark: {
-        primary: "#37726d",
+        primary: "#69a3a2",
         secondary: "#917dff",
         background: "#212121",
         surface: "#000000",
@@ -184,19 +197,49 @@ const themes = {
         sponsorText: "#323034",
         marker: "#ff2f66",
     },
+    pazuzu: {
+        primary: "#4b556c",
+        secondary: "#b1c269",
+        background: "#8c8a8d",
+        surface: "#b2b1b1",
+        inverted: "#251c29",
+        text: "#251c29",
+        important: "#000000",
+        invText: "#fff7f0",
+        invImportant: "#ffffff",
+        warning: "#ee5e22",
+        notification: "#d91c52",
+        darken: "#251c2940",
+        lighten: "#8c8a8d80",
+        soften: "#251c29a0",
+        white: "#ffffff",
+        superSponsor: "#5300ff",
+        superSponsorText: "#fff7f0",
+        sponsor: "#ffd700",
+        sponsorText: "#323034",
+        marker: "#ff2f66",
+    },
 };
 
-export type AppTheme = keyof typeof themes;
+/**
+ * Adds or replaces alpha
+ * @param color The original color.
+ * @param alpha The alpha value between 0 and 1.
+ */
+export const withAlpha = (color: string, alpha: number) =>
+    color.length === 7
+        ? // Had no alpha.
+          color +
+          Math.floor(alpha * 255)
+              .toString(16)
+              .padStart(2, "0")
+        : // Had alpha.
+          color.substring(0, 7) +
+          Math.floor(alpha * 255)
+              .toString(16)
+              .padStart(2, "0");
 
-export const useTheme = (): Theme => {
-    // Use the selected theme type and resolve the values.
-    const type = useThemeType();
-    return useMemo(() => themes[type], [type]);
-};
-
-export const useThemeColor = (color: keyof Theme) => useTheme()[color];
-
-export const useThemeBackground = (color: keyof Theme) => {
-    const backgroundColor = useThemeColor(color);
-    return useMemo<ViewStyle>(() => ({ backgroundColor }), [backgroundColor]);
-};
+/**
+ * Name of defined themes.
+ */
+export type ThemeName = keyof typeof themes;

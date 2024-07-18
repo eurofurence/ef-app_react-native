@@ -22,25 +22,34 @@
     "about": "About",
     "about_the_art": "About the art",
     "about_the_artist": "About the artist",
+    "add_favorite": "Favorite",
     "after_dark": "After dark",
     "attends": "Attends on",
     "attends_fri": "Friday",
     "attends_sat": "Saturday",
     "attends_thu": "Thursday",
     "categories": "Categories",
+    "dealer_was_updated": "Dealer was updated since your last visit",
     "in_after_dark": "Located in the after dark section",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
+    "remove_favorite": "Unfavorite",
+    "table": "Table",
     "view_on_map": "View on map",
     "viewing_dealer": "Viewing dealer"
   },
   "Dealers": {
+    "after_dark": "After dark",
     "all": "All",
+    "alphabetical": "A-Z",
     "dealers_at_convention": "Dealers at {{convention}}",
-    "dealers_count": "{{count}} dealers",
-    "dealers_on_day": "Dealers on {{day}}",
-    "dealers_on_this_day": "Dealers on this day",
-    "not_attending_on": "Not in on {{offDays}}"
+    "dealers_in_ad": "After dark dealers den",
+    "dealers_in_regular": "Regular dealers den",
+    "favorites_empty": "You do not have any favorite dealers yet. Favorite some dealers to create your own list.",
+    "favorites_title": "Your favorites",
+    "not_attending_on": "Not in on {{offDays}}",
+    "regular": "Regular",
+    "section_notice": "Dealer grouping is picked by the app based on most unique category"
   },
   "EmptyScreen": {
     "notImplemented": "Content is not implemented yet."
@@ -48,7 +57,9 @@
   "Event": {
     "about_title": "About",
     "add_favorite": "Favorite",
+    "event_was_updated": "Event was updated since your last visit",
     "give_feedback": "Give Feedback",
+    "hide": "Hide from overview",
     "label_event_description": "More about the event",
     "label_event_panelhosts": "Hosted by",
     "label_event_room": "Room",
@@ -56,6 +67,7 @@
     "label_event_when": "When",
     "mask_required": "Face masks are mandatory for this event",
     "remove_favorite": "Unfavorite",
+    "reveal": "Reveal in overview",
     "share": "Share this event",
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
@@ -80,6 +92,8 @@
     "evening": "In the evening",
     "events_count": "{{count}} events",
     "events_done": "Events concluded",
+    "events_hidden": "Hidden",
+    "events_hidden_subtitle": "{{count}} events, reveal them again in Settings",
     "favorites_subtitle": "You will receive a reminder about these events",
     "favorites_title": "Favorite Events",
     "filter_by_day": "Browse days",
@@ -90,6 +104,7 @@
     "night": "At night",
     "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
     "schedule_title": "Your Schedule",
+    "search": "Search",
     "today_schedule_subtitle": "You will receive a reminder before this event starts",
     "today_schedule_title": "Today's schedule",
     "upcoming_favorites_title": "Favorite Events",
@@ -101,10 +116,13 @@
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "announcementsTitle_zero": "There are no announcements.",
     "content_untranslated": "",
+    "different_timezone": "Your device is not set to the same timezone as {{convention}}",
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
     "warnings": {
+      "favorites_changed": "Favorites updated",
+      "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
       "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown.",
       "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
       "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
@@ -116,7 +134,8 @@
     "header": "Info Articles"
   },
   "Maps": {
-    "filtering": "Searching viewed area"
+    "filtering": "Searching viewed area",
+    "results": "In the viewed area"
   },
   "Menu": {
     "about": "About",
@@ -128,12 +147,12 @@
     "less": "Less",
     "logged_in_now": "Log-in now",
     "maps": "Maps",
-    "messages_one": "You have 1 unread message.",
-    "messages_other": "You have {{count}} unread messages",
-    "messages_zero": "You have no unread messages.",
+    "messages_one": "Hello {{name}}. You have 1 unread message.",
+    "messages_other": "Hello {{name}}. You have {{count}} unread messages",
+    "messages_zero": "Hello {{name}}. You have no unread messages.",
     "more": "More",
     "not_logged_in": "You are currently not logged in",
-    "open_messages": "Open messages",
+    "open_messages": "Hello {{name}}. Open messages",
     "services": "Services",
     "settings": "Settings"
   },
@@ -149,12 +168,20 @@
     "section_title_from": "From {{authorName}}",
     "unread": "Unread"
   },
+  "RevealHidden": {
+    "lead": "Click on any event to reveal it in the overview again",
+    "title": "Reveal specific event"
+  },
+  "Search": {
+    "placeholder": "What are you looking for"
+  },
   "Settings": {
     "allowAnalytics": "Allow us to collect analytics events",
     "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
     "cache": {
       "cache_item": "There are {{ count }} {{ type }}s",
       "cache_state": "Current state: {{ state }}",
+      "images_prefetched": "Images prefetched: {{state}}",
       "reset": "Clear cache",
       "reset_alert": "To clean the cache you need to long press this button",
       "subtitle": "Last sync: {{ time }}",
@@ -165,11 +192,13 @@
     "currentLanguage": "Your current language is English!",
     "dev_buttons": {
       "no_auth_alert": "You are not logged in. Stopping.",
+      "overwrite_update_time": "Overwrite update time",
       "send_private_message": "Receive Private Message {{ status }}",
       "subtitle": "Make the API do something.",
       "sync": "Force Resync {{ status }}",
       "sync_alert_done": "Told all devices to synchronize",
       "sync_alert_error": "Long hold to activate this function",
+      "sync_standard": "Sync",
       "test_message_content": "You have won a grand prize!",
       "test_message_subject": "You have won a grand prize!",
       "title": "Dev Buttons"
@@ -185,23 +214,25 @@
       "enable": "Enable",
       "title": "Dev Settings Menu"
     },
+    "device_warnings": {
+      "hide_device_warnings": "Hide warnings",
+      "show_device_warnings": "Show warnings",
+      "subtitle": "Show or hide device warnigns on home screen",
+      "title": "Device warnings"
+    },
     "header": "Settings",
+    "hidden_events": {
+      "subtitle": "Reveal events that you have hidden",
+      "title": "Hidden events",
+      "unhide_all": "Reveal all",
+      "unhide_specific": "Reveal specific event"
+    },
     "login": {
-      "back_button": "Back",
-      "enter_password": "Enter your password",
-      "enter_reg": "Enter your registration number",
-      "enter_username": "Enter your username",
-      "hint_password": "Your password",
-      "hint_reg": "Your registration number",
-      "hint_username": "Your username",
       "logged_in_as": "You are logged in as {{username}}",
-      "logging_in": "Logging in . . .",
-      "login": "Login",
-      "login_button": "Log-in",
+      "logged_in_now": "Log-in now",
       "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "login_error": "Something went wrong during login. Please try again",
-      "login_hint": "Your login credentials for the app are the same as for the Eurofurence Registration System.\n\nIf you do not remember or have access to them, you can ask for a PIN code\nto sign in at the registration desk or security office.",
-      "logout": "Logout"
+      "logout": "Logout",
+      "not_logged_in": "You are currently not logged in"
     },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",
@@ -219,6 +250,7 @@
       "dark": "Dark",
       "description": "Configure the way the app looks. When set to System it will follow the general system theme. By changing it you can keep the app in your preferred theme.",
       "light": "Light",
+      "medium": "Medium",
       "system": "System",
       "title": "Change the application theme"
     },
@@ -236,5 +268,14 @@
     "week_after": "1 week after {{conName}}",
     "week_before": "1 week before {{conName}}"
   },
-  "Todo": {}
+  "Todo": {},
+  "Viewer": {
+    "announcement": "Announcement: {{name}}",
+    "artPreview": "Art preview: {{name}}",
+    "artist": "Artist: {{name}}",
+    "artistThumbnail": "Artist thumbnail: {{name}}",
+    "eventBanner": "Banner: {{name}}",
+    "eventPoster": "Poster: {{name}}",
+    "unspecified": "Image"
+  }
 }

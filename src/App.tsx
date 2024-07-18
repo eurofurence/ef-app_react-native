@@ -1,38 +1,35 @@
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import { ScreenStart } from "./app/ScreenStart";
-import { AnalyticsManager } from "./components/Managers/AnalyticsManager";
-import { PlatformBackgroundSyncManager } from "./components/Managers/BackgroundSyncManager";
-import { PlatformNotificationReceivedManager } from "./components/Managers/NotificationReceivedManager";
-import { PlatformNotificationRespondedManager } from "./components/Managers/NotificationRespondedManager";
-import { PlatformTokenManager } from "./components/Managers/TokenManager";
-import { SynchronizationProvider } from "./components/Synchronization/SynchronizationProvider";
-import { NavigationProvider } from "./context/NavigationProvider";
+import { AppErrorBoundary } from "./components/util/AppErrorBoundary";
+import { useAnalyticsManager } from "./hooks/analytics/useAnalyticsManager";
+import { useNotificationReceivedManager } from "./hooks/notifications/useNotificationReceivedManager";
+import { useNotificationRespondedManager } from "./hooks/notifications/useNotificationRespondedManager";
+import { useBackgroundSyncManager } from "./hooks/sync/useBackgroundSyncManager";
+import { useImagePrefetch } from "./hooks/sync/useImagePrefetch";
+import { useColorSchemeManager } from "./hooks/themes/useColorSchemeManager";
+import { useTokenManager } from "./hooks/tokens/useTokenManager";
+import { IndexRouter } from "./routes/IndexRouter";
 
 /**
  * Base App. Handles all ui related layout stuff. Context providers go in index.tsx. Actual UI content should be in screens or components
  */
-export default function App() {
+export function App() {
+    useAnalyticsManager();
+    useColorSchemeManager();
+    useBackgroundSyncManager();
+    useImagePrefetch();
+    useTokenManager();
+    useNotificationReceivedManager();
+    useNotificationRespondedManager();
     return (
-        <BottomSheetModalProvider>
-            <SynchronizationProvider>
-                <NavigationProvider>
-                    <ScreenStart />
-
-                    {/* Handle device token acquisition. */}
-                    <PlatformTokenManager />
-
-                    {/* Handle handling notifications in foreground. */}
-                    <PlatformNotificationReceivedManager />
-                    <PlatformNotificationRespondedManager />
-
-                    {/* Handle notifications in background. */}
-                    <PlatformBackgroundSyncManager />
-
-                    {/* Set up analytics. */}
-                    <AnalyticsManager />
-                </NavigationProvider>
-            </SynchronizationProvider>
-        </BottomSheetModalProvider>
+        <SafeAreaProvider>
+            <BottomSheetModalProvider>
+                <AppErrorBoundary>
+                    <IndexRouter />
+                </AppErrorBoundary>
+            </BottomSheetModalProvider>
+        </SafeAreaProvider>
     );
 }

@@ -5,32 +5,32 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import logger from "redux-logger";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from "redux-persist";
 
-import { authorizationService } from "./authorization.service";
-import { authorizationSlice } from "./authorization.slice";
-import { backgroundSlice } from "./background.slice";
-import { eurofurenceCache } from "./eurofurence.cache";
-import { eurofurenceService } from "./eurofurence.service";
-import { settingsSlice } from "./settings.slice";
-import { timeTravelSlice } from "./timetravel.slice";
+import { authorizationService } from "./auth/service";
+import { auxiliary } from "./auxiliary/slice";
+import { backgroundSlice } from "./background/slice";
+import { eurofurenceService } from "./eurofurence/service";
+import { eurofurenceCache } from "./eurofurence/slice";
+import { settingsSlice } from "./settings/slice";
+import { timeTravelSlice } from "./timetravel/slice";
 
 export const reducers = combineReducers({
     [backgroundSlice.name]: backgroundSlice.reducer,
     [timeTravelSlice.name]: timeTravelSlice.reducer,
-    [authorizationSlice.name]: authorizationSlice.reducer,
     [eurofurenceCache.name]: eurofurenceCache.reducer,
     [eurofurenceService.reducerPath]: eurofurenceService.reducer,
     [authorizationService.reducerPath]: authorizationService.reducer,
     [settingsSlice.name]: settingsSlice.reducer,
+    [auxiliary.name]: auxiliary.reducer,
 });
 
 const persistedReducer = persistReducer(
     {
         key: "root",
-        version: 2,
+        version: 3,
         storage: AsyncStorage,
-        whitelist: [timeTravelSlice.name, backgroundSlice.name, authorizationSlice.name, eurofurenceCache.name, settingsSlice.name],
+        whitelist: [timeTravelSlice.name, backgroundSlice.name, eurofurenceCache.name, settingsSlice.name, auxiliary.name],
     },
-    reducers
+    reducers,
 );
 
 export const store = configureStore({
@@ -42,11 +42,12 @@ export const store = configureStore({
                 ignoredPaths: [eurofurenceCache.name],
                 warnAfter: 200,
             },
-        }).concat(eurofurenceService.middleware, authorizationService.middleware);
+            immutableCheck: false, // TODO: __DEV__
+        });
 
-        if (Platform.OS === "web") {
-            middleware.concat(logger);
-        }
+        middleware.push(eurofurenceService.middleware, authorizationService.middleware);
+
+        if (Platform.OS === "web") middleware.push(logger as any);
 
         return middleware;
     },
