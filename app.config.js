@@ -22,10 +22,13 @@ module.exports = {
             url: "https://u.expo.dev/a60a3199-98db-4eec-8c66-cda6c424377d",
         },
         ios: {
+            bundleIdentifier: "org.eurofurence",
+            googleServicesFile: "./assets/platform/GoogleService-Info.plist",
             supportsTablet: true,
             infoPlist: {
                 UIBackgroundModes: ["fetch", "remote-notification"],
             },
+            associatedDomains: ["applinks:app.eurofurence.org", "applinks:app.test.eurofurence.org"],
         },
         android: {
             package: "org.eurofurence.connavigator",
@@ -47,7 +50,7 @@ module.exports = {
                         {
                             scheme: "https",
                             host: "app.eurofurence.org",
-                            pathPrefix: "/EF27/Web",
+                            pathPrefix: "/EF28/Web",
                         },
                     ],
                     category: ["BROWSABLE", "DEFAULT"],
@@ -104,7 +107,17 @@ module.exports = {
                 },
             ],
             "expo-localization",
-            "expo-build-properties",
+            [
+                "expo-build-properties",
+                {
+                    ios: {
+                        deploymentTarget: "13.4",
+                        useFrameworks: "static",
+                        ccacheEnabled: true,
+                        privacyManifestAggregationEnabled: true,
+                    },
+                },
+            ],
             "@react-native-firebase/app",
             "expo-secure-store",
         ].filter(Boolean),

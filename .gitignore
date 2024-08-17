@@ -1,3 +1,7 @@
+# Expo prebuild folders
+android
+ios
+
 web-build
 
 .vscode/
