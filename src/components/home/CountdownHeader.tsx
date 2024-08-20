@@ -61,7 +61,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
             <ImageBackground
                 key="banner"
                 style={styles.background}
-                source={assetSource(width < bannerBreakpoint ? "banner_ef27_narrow" : "banner_ef27_wide")}
+                source={assetSource(width < bannerBreakpoint ? "banner_narrow" : "banner_wide")}
                 contentFit="cover"
                 priority="high"
             />
@@ -75,7 +75,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
                 titleVariant="shadow"
                 subtitleVariant="shadow"
             />
-            <Image style={styles.logo} source={assetSource("banner_ef27_logo")} contentFit="contain" priority="high" />
+            <Image style={styles.logo} source={assetSource("banner_logo")} contentFit="contain" priority="high" />
         </View>
     );
 };
