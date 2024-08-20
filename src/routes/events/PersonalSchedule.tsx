@@ -42,7 +42,7 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
 
     const { setSelected } = useEventsRouterContext();
 
-    const { user } = useAuthContext();
+    const { claims } = useAuthContext();
     const avatarBackground = useThemeBackground("primary");
 
     const favorites = useAppSelector(selectFavoriteEvents);
@@ -58,7 +58,7 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
                 <Row type="center" variant="center" style={styles.marginTop}>
                     <Image
                         style={[avatarBackground, styles.avatarCircle]}
-                        source={user?.avatar ?? assetSource("ych")}
+                        source={claims?.avatar ?? assetSource("ych")}
                         contentFit="contain"
                         placeholder="ych"
                         transition={60}

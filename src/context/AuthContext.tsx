@@ -3,8 +3,9 @@ import * as WebBrowser from "expo-web-browser";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from "react";
 
 import * as SecureStore from "./SecureStorage";
-import { authClientId, authIssuer, authRedirect, authScopes } from "../configuration";
+import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from "../configuration";
 import { useAsyncInterval } from "../hooks/util/useAsyncInterval";
+import { UserRecord } from "../store/eurofurence/types";
 
 /**
  * Discovery entries.
@@ -46,6 +47,11 @@ export type AuthContextType = {
     logout(): Promise<void>;
 
     /**
+     * Reloads user claims and info from the IDP and backend..
+     */
+    reload(): Promise<void>;
+
+    /**
      * True if logged in.
      */
     loggedIn: boolean;
@@ -53,7 +59,12 @@ export type AuthContextType = {
     /**
      * The user claims if logged in and successfully retrieved.
      */
-    user: Claims | null;
+    claims: Claims | null;
+
+    /**
+     * The user selfservice info if logged in and successfully retrieved.
+     */
+    user: UserRecord | null;
 };
 
 /**
@@ -62,7 +73,9 @@ export type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({
     login: () => Promise.resolve(),
     logout: () => Promise.resolve(),
+    reload: () => Promise.resolve(),
     loggedIn: false,
+    claims: null,
     user: null,
 });
 
@@ -75,6 +88,14 @@ export const getAccessToken = () => SecureStore.getItemAsync("accessToken");
  * Thrown by fetch methods.
  */
 class EndpointError extends Error {}
+
+/**
+ * True if the type is a JSON mime type or JSON mime type with extra K-V pairs.
+ * @param type
+ */
+const isJsonMimeType = (type: string | null) => {
+    return type !== null && (type === "application/json" || type.startsWith("application/json;"));
+};
 
 /**
  * Fetches the user info from the user info endpoint.
@@ -94,7 +115,7 @@ const fetchUserInfo = async (accessToken: string) => {
     }
     // Must be JSON.
     const contentType = response.headers.get("Content-type");
-    if (contentType !== "application/json") {
+    if (!isJsonMimeType(contentType)) {
         throw new EndpointError(`Invalid response content type: ${contentType}`);
     }
     // Parse JSON for result.
@@ -125,6 +146,31 @@ const fetchRevokeToken = async (token: string, type: "access_token" | "refresh_t
     }
 };
 
+/**
+ * Fetches the user data from the API server.
+ * @param accessToken The current access token.
+ */
+const fetchUserSelf = async (accessToken: string) => {
+    const response = await fetch(`${apiBase}/Users/:self`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+        redirect: "manual",
+    });
+
+    // Must be OK.
+    if (!response.ok) {
+        throw new EndpointError(`Invalid response status: ${response.status} ${response.statusText}`);
+    }
+    // Must be JSON.
+    const contentType = response.headers.get("Content-type");
+    if (!isJsonMimeType(contentType)) {
+        throw new EndpointError(`Invalid response content type: ${contentType}`);
+    }
+    // Parse JSON for result.
+    return await response.json();
+};
+
 // Link browser closing.
 WebBrowser.maybeCompleteAuthSession();
 
@@ -135,7 +181,8 @@ WebBrowser.maybeCompleteAuthSession();
  */
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     // Current user.
-    const [user, setUser] = useState<Claims | null>(null);
+    const [claims, setClaims] = useState<Claims | null>(null);
+    const [user, setUser] = useState<UserRecord | null>(null);
     const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
     // Auth request and login prompt.
@@ -174,7 +221,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             await SecureStore.deleteItemAsync("accessToken");
             await SecureStore.deleteItemAsync("refreshToken");
             setLoggedIn(false);
-            setUser(null);
+            setClaims(null);
             throw error;
         }
 
@@ -182,10 +229,12 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         try {
             const accessToken = await SecureStore.getItemAsync("accessToken");
             if (accessToken) {
-                const user = await fetchUserInfo(accessToken);
+                const [claims, user] = await Promise.all([fetchUserInfo(accessToken), fetchUserSelf(accessToken)]);
+                setClaims(claims);
                 setUser(user);
                 setLoggedIn(true);
             } else {
+                setClaims(null);
                 setUser(null);
                 setLoggedIn(false);
             }
@@ -194,6 +243,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             await SecureStore.deleteItemAsync("accessToken");
             await SecureStore.deleteItemAsync("refreshToken");
             setLoggedIn(false);
+            setClaims(null);
             setUser(null);
             throw error;
         }
@@ -216,9 +266,36 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             await Promise.all([accessTokenTask, refreshTokenTask]);
         } finally {
             setLoggedIn(false);
+            setClaims(null);
             setUser(null);
         }
     }, [discovery]);
+
+    // Reload method.
+    const reload = useCallback(async () => {
+        // User update part, if invalid tokens are detected here, data is properly reset.
+        try {
+            const accessToken = await SecureStore.getItemAsync("accessToken");
+            if (accessToken) {
+                const [claims, user] = await Promise.all([fetchUserInfo(accessToken), fetchUserSelf(accessToken)]);
+                setClaims(claims);
+                setUser(user);
+                setLoggedIn(true);
+            } else {
+                setClaims(null);
+                setUser(null);
+                setLoggedIn(false);
+            }
+        } catch (error) {
+            // Delete access and refresh, then rethrow.
+            await SecureStore.deleteItemAsync("accessToken");
+            await SecureStore.deleteItemAsync("refreshToken");
+            setLoggedIn(false);
+            setClaims(null);
+            setUser(null);
+            throw error;
+        }
+    }, []);
 
     // Refresh connection.
     useAsyncInterval(
@@ -247,6 +324,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                 await SecureStore.deleteItemAsync("accessToken");
                 await SecureStore.deleteItemAsync("refreshToken");
                 setLoggedIn(false);
+                setClaims(null);
                 setUser(null);
                 throw error;
             }
@@ -255,10 +333,12 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             try {
                 const accessToken = await SecureStore.getItemAsync("accessToken");
                 if (accessToken) {
-                    const user = await fetchUserInfo(accessToken);
+                    const [claims, user] = await Promise.all([fetchUserInfo(accessToken), fetchUserSelf(accessToken)]);
+                    setClaims(claims);
                     setUser(user);
                     setLoggedIn(true);
                 } else {
+                    setClaims(null);
                     setUser(null);
                     setLoggedIn(false);
                 }
@@ -267,7 +347,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                 await SecureStore.deleteItemAsync("accessToken");
                 await SecureStore.deleteItemAsync("refreshToken");
                 setLoggedIn(false);
-                setUser(null);
+                setClaims(null);
                 throw error;
             }
         },
@@ -275,7 +355,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         refreshInterval,
     );
 
-    return <AuthContext.Provider value={{ login, logout, loggedIn, user }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ login, logout, reload, loggedIn, claims, user }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => useContext(AuthContext);

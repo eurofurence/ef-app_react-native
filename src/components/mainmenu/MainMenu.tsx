@@ -41,6 +41,9 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             login: () => {
                 login().catch(captureException);
             },
+            profile: () => {
+                navigation.navigate("Profile");
+            },
             messages: () => {
                 navigation.navigate("PrivateMessageList");
                 return tabs.current?.close();
@@ -78,6 +81,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
         <PagerPrimary
             onMessages={on.messages}
             onLogin={on.login}
+            onProfile={on.profile}
             onInfo={on.info}
             onCatchEmAll={on.catchEmAll}
             onServices={on.services}

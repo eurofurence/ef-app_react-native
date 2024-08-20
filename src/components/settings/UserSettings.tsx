@@ -2,12 +2,10 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { AnalyticsOptIns } from "./AnalyticsOptIns";
-import { CurrentLogin } from "./CurrentLogin";
 import { DeviceWarnings } from "./DeviceWarnings";
 import { HiddenEvents } from "./HiddenEvents";
 import { LanguagePicker } from "./LanguagePicker";
 import { ThemePicker } from "./ThemePicker";
-import { showLogin } from "../../configuration";
 import { Section } from "../generic/atoms/Section";
 
 /**
@@ -30,9 +28,6 @@ export const UserSettings = () => {
 
             {/* Language selection mask. */}
             <LanguagePicker />
-
-            {/* Login mask, conditionally available when defined in PLC. */}
-            {!showLogin ? null : <CurrentLogin />}
 
             {/* Hidden events functionality, undo. */}
             <HiddenEvents />

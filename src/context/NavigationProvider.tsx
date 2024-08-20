@@ -34,13 +34,14 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
     // Dynamically create dynamic parts.
     const eventsLinking: LinkingConfig<EventsRouterParamsList> = {
         initialRouteName: "Events",
+        path: "events",
         screens: {
-            Search: "events/search",
-            Personal: "events/personal",
+            Search: "search",
+            Personal: "personal",
 
-            ...Object.fromEntries(days.map((id) => [id, `events/days/${id}`])),
-            ...Object.fromEntries(tracks.map((id) => [id, `events/tracks/${id}`])),
-            ...Object.fromEntries(rooms.map((id) => [id, `events/rooms/${id}`])),
+            ...Object.fromEntries(days.map((id) => [id, `days/${id}`])),
+            ...Object.fromEntries(tracks.map((id) => [id, `tracks/${id}`])),
+            ...Object.fromEntries(rooms.map((id) => [id, `rooms/${id}`])),
         },
     };
 
@@ -84,6 +85,7 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
                 KnowledgeEntry: "kb/:id",
                 Map: "map/:id",
                 About: "about",
+                Profile: "profile",
                 Viewer: "viewer/:id",
                 EventFeedback: "events/:id/feedback",
             },

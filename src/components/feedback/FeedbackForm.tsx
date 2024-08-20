@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
 import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
+import { useAuthContext } from "../../context/AuthContext";
 import { useAppNavigation, useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useTheme } from "../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../store";
@@ -18,6 +19,7 @@ import { ManagedTextInput } from "../generic/forms/ManagedTextInput";
 export const FeedbackForm = () => {
     const theme = useTheme();
     const navigation = useAppNavigation("EventFeedback");
+
     const [submitFeedback, feedbackResult] = useSubmitEventFeedbackMutation();
     const { t } = useTranslation("EventFeedback");
     const form = useForm<FeedbackSchema>({
@@ -27,6 +29,12 @@ export const FeedbackForm = () => {
             message: undefined,
         },
     });
+
+    const { loggedIn, user } = useAuthContext();
+    const attending = Boolean(user?.Roles?.includes("Attendee"));
+
+    const disabled = !loggedIn || !attending;
+    const disabledReason = (!loggedIn && t("disabled_not_logged_in")) || (!attending && t("disabled_not_attending"));
 
     const { params } = useAppRoute("EventFeedback");
     const event = useAppSelector((state) => eventsSelector.selectById(state, params.id));
@@ -52,9 +60,15 @@ export const FeedbackForm = () => {
 
             <ManagedTextInput<FeedbackSchema> name="message" label={t("message_title")} placeholder={t("message_placeholder")} numberOfLines={8} multiline />
 
-            <Button onPress={form.handleSubmit(submit)} disabled={feedbackResult.isLoading}>
+            <Button onPress={form.handleSubmit(submit)} disabled={feedbackResult.isLoading || disabled}>
                 {t("submit")}
             </Button>
+
+            {disabledReason && (
+                <Label type="caption" color="important" variant="middle" mt={16}>
+                    {disabledReason}
+                </Label>
+            )}
 
             {feedbackResult.isError && (
                 <Label style={styles.error} mt={16}>

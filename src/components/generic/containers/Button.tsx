@@ -3,7 +3,7 @@ import { FC, ReactElement, ReactNode } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label, LabelProps } from "../atoms/Label";
 
@@ -60,6 +60,7 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labe
     // Computed styles.
     const baseStyle = outline ? styles.containerOutline : styles.containerFill;
     const disabledStyle = disabled ? styles.disabled : null;
+    const borderStyle = useThemeBorder("inverted");
     const fillStyle = useThemeBackground(outline ? "transparent" : "inverted");
     const color = useThemeColorValue(outline ? "important" : "invImportant");
 
@@ -78,7 +79,7 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labe
     return (
         <TouchableOpacity
             containerStyle={containerStyle}
-            style={[styles.container, baseStyle, fillStyle, disabledStyle, style]}
+            style={[styles.container, baseStyle, fillStyle, outline && borderStyle, disabledStyle, style]}
             onPress={onPress}
             onLongPress={onLongPress}
             disabled={disabled}

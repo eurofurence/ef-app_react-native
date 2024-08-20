@@ -220,3 +220,11 @@ export type CommunicationRecord = RecordMetadata & {
     Subject?: string;
     Message?: string;
 };
+
+export type UserRecord = {
+    Roles: string[];
+    Registrations: {
+        Id: string;
+        Status: string;
+    }[];
+};

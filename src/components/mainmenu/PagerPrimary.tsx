@@ -1,10 +1,9 @@
-import { captureException } from "@sentry/react-native";
 import React, { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { authSettingsUrl, menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
+import { menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
 import { Claims, useAuthContext } from "../../context/AuthContext";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../store";
@@ -26,14 +25,15 @@ type PagerPrimaryLoginProps = {
     open: boolean;
     onMessages?: () => void;
     onLogin?: () => void;
+    onProfile?: () => void;
 };
-const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, onMessages, onLogin }) => {
+const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, onMessages, onLogin, onProfile }) => {
     const { t } = useTranslation("Menu");
     const avatarBackground = useThemeBackground("primary");
     // TODO: Verify style of name etc.
     return (
         <Row style={styles.padding} type="center" variant="center">
-            <TouchableOpacity disabled={!loggedIn || !authSettingsUrl} onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}>
+            <TouchableOpacity disabled={!loggedIn || !onProfile} onPress={() => onProfile?.()}>
                 <Image
                     style={[avatarBackground, styles.avatarCircle]}
                     source={user?.avatar ?? assetSource("ych")}
@@ -66,6 +66,7 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, o
 export type PagerMenuProps = PropsWithChildren<{
     onMessages?: () => void;
     onLogin?: () => void;
+    onProfile?: () => void;
     onInfo?: () => void;
     onCatchEmAll?: () => void;
     onServices?: () => void;
@@ -74,15 +75,15 @@ export type PagerMenuProps = PropsWithChildren<{
     onMap?: (id: RecordId) => void;
 }>;
 
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onAbout, onSettings, onMap, children }) => {
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfile, onInfo, onCatchEmAll, onServices, onAbout, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");
-    const { loggedIn, user } = useAuthContext();
+    const { loggedIn, claims } = useAuthContext();
     const maps = useAppSelector(selectBrowsableMaps);
     const tabs = useTabs();
 
     return (
         <Col type="stretch">
-            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} user={user} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} />}
+            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} user={claims} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} onProfile={onProfile} />}
 
             <Grid cols={menuColumns} style={{ alignSelf: "stretch" }}>
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
