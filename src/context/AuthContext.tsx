@@ -47,9 +47,9 @@ export type AuthContextType = {
     logout(): Promise<void>;
 
     /**
-     * Reloads user claims and info from the IDP and backend..
+     * Updates the token if a refresh token is present. Reloads user claims and info from the IDP and backend.
      */
-    reload(): Promise<void>;
+    refresh(): Promise<void>;
 
     /**
      * True if logged in.
@@ -73,7 +73,7 @@ export type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({
     login: () => Promise.resolve(),
     logout: () => Promise.resolve(),
-    reload: () => Promise.resolve(),
+    refresh: () => Promise.resolve(),
     loggedIn: false,
     claims: null,
     user: null,
@@ -273,6 +273,34 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
     // Reload method.
     const reload = useCallback(async () => {
+        // Refresh token part.
+        try {
+            const refreshToken = await SecureStore.getItemAsync("refreshToken");
+            if (refreshToken) {
+                // Refresh it.
+                const response = await refreshAsync(
+                    {
+                        clientId: authClientId,
+                        scopes: authScopes,
+                        refreshToken,
+                    },
+                    discovery,
+                );
+
+                await SecureStore.setItemToAsync("accessToken", response.accessToken);
+                await SecureStore.setItemToAsync("refreshToken", response.refreshToken ?? refreshToken);
+                setLoggedIn(true);
+            }
+        } catch (error) {
+            // Delete access and refresh, then rethrow.
+            await SecureStore.deleteItemAsync("accessToken");
+            await SecureStore.deleteItemAsync("refreshToken");
+            setLoggedIn(false);
+            setClaims(null);
+            setUser(null);
+            throw error;
+        }
+
         // User update part, if invalid tokens are detected here, data is properly reset.
         try {
             const accessToken = await SecureStore.getItemAsync("accessToken");
@@ -292,70 +320,14 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             await SecureStore.deleteItemAsync("refreshToken");
             setLoggedIn(false);
             setClaims(null);
-            setUser(null);
             throw error;
         }
     }, []);
 
     // Refresh connection.
-    useAsyncInterval(
-        async () => {
-            console.log("INVOKING REFRESH");
-            // Refresh token part.
-            try {
-                const refreshToken = await SecureStore.getItemAsync("refreshToken");
-                if (refreshToken) {
-                    // Refresh it.
-                    const response = await refreshAsync(
-                        {
-                            clientId: authClientId,
-                            scopes: authScopes,
-                            refreshToken,
-                        },
-                        discovery,
-                    );
+    useAsyncInterval(reload, [], refreshInterval);
 
-                    await SecureStore.setItemToAsync("accessToken", response.accessToken);
-                    await SecureStore.setItemToAsync("refreshToken", response.refreshToken ?? refreshToken);
-                    setLoggedIn(true);
-                }
-            } catch (error) {
-                // Delete access and refresh, then rethrow.
-                await SecureStore.deleteItemAsync("accessToken");
-                await SecureStore.deleteItemAsync("refreshToken");
-                setLoggedIn(false);
-                setClaims(null);
-                setUser(null);
-                throw error;
-            }
-
-            // User update part, if invalid tokens are detected here, data is properly reset.
-            try {
-                const accessToken = await SecureStore.getItemAsync("accessToken");
-                if (accessToken) {
-                    const [claims, user] = await Promise.all([fetchUserInfo(accessToken), fetchUserSelf(accessToken)]);
-                    setClaims(claims);
-                    setUser(user);
-                    setLoggedIn(true);
-                } else {
-                    setClaims(null);
-                    setUser(null);
-                    setLoggedIn(false);
-                }
-            } catch (error) {
-                // Delete access and refresh, then rethrow.
-                await SecureStore.deleteItemAsync("accessToken");
-                await SecureStore.deleteItemAsync("refreshToken");
-                setLoggedIn(false);
-                setClaims(null);
-                throw error;
-            }
-        },
-        [],
-        refreshInterval,
-    );
-
-    return <AuthContext.Provider value={{ login, logout, reload, loggedIn, claims, user }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ login, logout, refresh: reload, loggedIn, claims, user }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => useContext(AuthContext);

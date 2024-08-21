@@ -16,16 +16,16 @@ export const Profile = () => {
     const navigation = useAppNavigation("Profile");
 
     const { t } = useTranslation("Profile");
-    const { reload, loggedIn, claims, user } = useAuthContext();
+    const { refresh, loggedIn, claims, user } = useAuthContext();
     const [isReloading, setIsReloading] = useState(false);
     const doReload = useCallback(() => {
         setIsReloading(true);
-        reload()
+        refresh()
             .catch(captureException)
             .finally(() => {
                 setIsReloading(false);
             });
-    }, [reload]);
+    }, [refresh]);
 
     // Pop if not logged in or unable to retrieve proper user data.
     useEffect(() => {
