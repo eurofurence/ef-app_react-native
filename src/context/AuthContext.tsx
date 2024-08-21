@@ -94,7 +94,7 @@ class EndpointError extends Error {}
  * @param type
  */
 const isJsonMimeType = (type: string | null) => {
-    return type !== null && (type === "application/json" || type.startsWith("application/json;"));
+    return type?.includes("application/json");
 };
 
 /**
