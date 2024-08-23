@@ -119,7 +119,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
                 {t("idp_settings")}
             </Button>
 
-            {!roleComplex && (
+            {roleComplex && (
                 <>
                     <Section icon="account-group" title={t("roles")} subtitle={t("roles_subtitle", { conName })} />
                     <View style={styles.roles}>
