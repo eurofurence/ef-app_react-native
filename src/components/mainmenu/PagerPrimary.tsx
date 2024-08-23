@@ -70,12 +70,11 @@ export type PagerMenuProps = PropsWithChildren<{
     onInfo?: () => void;
     onCatchEmAll?: () => void;
     onServices?: () => void;
-    onAbout?: () => void;
     onSettings?: () => void;
     onMap?: (id: RecordId) => void;
 }>;
 
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfile, onInfo, onCatchEmAll, onServices, onAbout, onSettings, onMap, children }) => {
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfile, onInfo, onCatchEmAll, onServices, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");
     const { loggedIn, claims } = useAuthContext();
     const maps = useAppSelector(selectBrowsableMaps);
@@ -89,7 +88,7 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfil
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
                 {!showCatchEm ? null : <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />}
                 {!showServices ? null : <Tab icon="book-outline" text={t("services")} onPress={onServices} />}
-                <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
+                <Tab icon="card-account-details-outline" text={t("profile")} onPress={onProfile} disabled={!loggedIn} />
                 <Tab icon="cog" text={t("settings")} onPress={onSettings} />
                 {children}
             </Grid>

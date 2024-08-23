@@ -135,7 +135,6 @@
     "results": "In der Ansicht"
   },
   "Menu": {
-    "about": "Über uns",
     "catch_em": "Catch-em-all",
     "dealers": "Dealer",
     "events": "Events",
@@ -150,6 +149,7 @@
     "more": "Mehr",
     "not_logged_in": "Du bist nicht angemeldet",
     "open_messages": "Hallo {{name}}. Nachrichten öffnen",
+    "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen"
   },
@@ -173,6 +173,7 @@
     "placeholder": "Wonach suchst Du"
   },
   "Settings": {
+    "about": "Über uns",
     "allowAnalytics": "Erlaube uns, Fehler zu übermitteln",
     "allowAnalyticsSubtitle": "Wenn Du uns erlaubst Fehler zu übermitteln, können wir die die Stabilität der App verbessern. Fehlerübermittlung wird von Firebase Analytics bereitgestellt, Deine Daten werden nicht mit Drittparteien geteilt.",
     "cache": {

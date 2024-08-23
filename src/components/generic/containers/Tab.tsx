@@ -16,6 +16,11 @@ export type TabProps = {
     style?: StyleProp<ViewStyle>;
 
     /**
+     * True if item is disabled.
+     */
+    disabled?: boolean;
+
+    /**
      * The icon to display.
      */
     icon: IconNames;
@@ -50,13 +55,13 @@ export type TabProps = {
  * Tab is an icon/caption combo intended for use in the bottom-navigation control.
  * @constructor
  */
-export const Tab: FC<TabProps> = ({ style, icon, text, indicate, active = false, inverted = false, onPress }) => {
+export const Tab: FC<TabProps> = ({ style, disabled, icon, text, indicate, active = false, inverted = false, onPress }) => {
     const colorName = inverted ? (active ? "invImportant" : "invText") : active ? "secondary" : "text";
     const colorValue = useThemeColorValue(colorName);
     const styleBackground = useThemeBackground("notification");
 
     return (
-        <TouchableOpacity containerStyle={[styles.container, style]} onPress={onPress}>
+        <TouchableOpacity containerStyle={[styles.container, disabled && styles.disabled, style]} onPress={onPress} disabled={disabled}>
             <View style={styles.item}>
                 <Icon name={icon} size={24} color={colorValue} />
 
@@ -81,6 +86,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: "center",
         padding: 16,
+    },
+    disabled: {
+        opacity: 0.5,
     },
     item: {
         alignSelf: "stretch",

@@ -86,7 +86,7 @@
     "header": "Articoli Informativi"
   },
   "Menu": {
-    "about": "Crediti",
+    "about": "Profilo",
     "dealers": "Venditori",
     "events": "Eventi",
     "home": "Home",
@@ -113,6 +113,7 @@
     "unread": "Non letto"
   },
   "Settings": {
+    "about": "Crediti",
     "allowAnalytics": "Permetti la raccolta di dati analitici",
     "allowAnalyticsSubtitle": "Abilitando la raccolta di dati analitici permetterai di migliorare le funzionalità dell'applicazione. I dati sono forniti da Firebase e non sono condivisi con altre terze parti.",
     "changeLanguage": "Cambia lingua",

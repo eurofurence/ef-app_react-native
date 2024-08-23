@@ -140,7 +140,6 @@
     "results": "In the viewed area"
   },
   "Menu": {
-    "about": "About",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
@@ -155,6 +154,7 @@
     "more": "More",
     "not_logged_in": "You are currently not logged in",
     "open_messages": "Hello {{name}}. Open messages",
+    "profile": "Profile",
     "services": "Services",
     "settings": "Settings"
   },
@@ -201,6 +201,7 @@
     "placeholder": "What are you looking for"
   },
   "Settings": {
+    "about": "About",
     "allowAnalytics": "Allow us to collect analytics events",
     "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
     "cache": {
