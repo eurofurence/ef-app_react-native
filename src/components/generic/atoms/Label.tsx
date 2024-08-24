@@ -106,6 +106,11 @@ const types = StyleSheet.create({
         lineHeight: 20,
         fontWeight: "100",
     },
+    xl: {
+        fontSize: 44,
+        lineHeight: 48,
+        fontWeight: "500",
+    },
     h1: {
         fontSize: 30,
         lineHeight: 34,

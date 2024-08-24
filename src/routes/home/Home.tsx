@@ -10,14 +10,18 @@ import { AnnouncementList } from "../../components/announce/AnnouncementList";
 import { CurrentEventList } from "../../components/events/CurrentEventsList";
 import { TodayScheduleList } from "../../components/events/TodayScheduleList";
 import { UpcomingEventsList } from "../../components/events/UpcomingEventsList";
+import { Search } from "../../components/generic/atoms/Search";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { CountdownHeader } from "../../components/home/CountdownHeader";
 import { DeviceSpecificWarnings } from "../../components/home/DeviceSpecificWarnings";
 import { FavoritesChangedWarning } from "../../components/home/FavoritesChangedWarning";
+import { GlobalSearch } from "../../components/home/GlobalSearch";
 import { LanguageWarnings } from "../../components/home/LanguageWarnings";
 import { TimezoneWarning } from "../../components/home/TimezoneWarning";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
+import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useNow } from "../../hooks/time/useNow";
+import { selectGlobalSearchIndex } from "../../store/eurofurence/selectors/search";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 
@@ -31,23 +35,33 @@ export type HomeParams = undefined;
  */
 export type HomeProps = CompositeScreenProps<BottomTabScreenProps<AreasRouterParamsList, "Home">, StackScreenProps<IndexRouterParamsList>>;
 
-export const Home: FC<HomeProps> = () => {
+export const Home: FC<HomeProps> = ({ navigation }) => {
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
 
+    // Search integration.
+    const [filter, setFilter, results] = useFuseIntegration(selectGlobalSearchIndex);
+
     const { synchronize, isSynchronizing } = useSynchronizer();
     return (
-        <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
+        <ScrollView style={[StyleSheet.absoluteFill]} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
             <CountdownHeader />
             <Floater contentStyle={appStyles.trailer}>
                 <LanguageWarnings parentPad={padFloater} />
                 <TimezoneWarning parentPad={padFloater} />
                 <DeviceSpecificWarnings />
                 <FavoritesChangedWarning />
-                <AnnouncementList now={now} />
-                <UpcomingEventsList now={now} />
-                <TodayScheduleList now={now} />
-                <CurrentEventList now={now} />
+                <Search filter={filter} setFilter={setFilter} />
+                {results ? (
+                    <GlobalSearch navigation={navigation} now={now} results={results} />
+                ) : (
+                    <>
+                        <AnnouncementList now={now} />
+                        <UpcomingEventsList now={now} />
+                        <TodayScheduleList now={now} />
+                        <CurrentEventList now={now} />
+                    </>
+                )}
             </Floater>
         </ScrollView>
     );

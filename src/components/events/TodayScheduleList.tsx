@@ -24,7 +24,7 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
         [favorites, now],
     );
 
-    if (favorites.length === 0) {
+    if (events.length === 0) {
         return null;
     }
 

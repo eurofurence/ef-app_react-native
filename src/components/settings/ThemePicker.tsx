@@ -1,4 +1,4 @@
-import _, { capitalize } from "lodash";
+import { capitalize } from "lodash";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";

@@ -3,7 +3,7 @@ import { TFunction } from "i18next";
 import { chain } from "lodash";
 import { Moment } from "moment";
 import moment from "moment/moment";
-import { FC } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";
 
@@ -15,7 +15,9 @@ import { EventDayRecord } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
 import { Image } from "../generic/atoms/Image";
 import { ImageBackground } from "../generic/atoms/ImageBackground";
-import { Section } from "../generic/atoms/Section";
+import { Label } from "../generic/atoms/Label";
+import { Col } from "../generic/containers/Col";
+import { Row } from "../generic/containers/Row";
 
 export type CountdownHeaderProps = {
     style?: StyleProp<ViewStyle>;
@@ -56,49 +58,63 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
     const { width } = useWindowDimensions();
 
     const subtitle = useCountdownTitle(t, now);
+
     return (
         <View style={[styles.container, style]}>
             <ImageBackground
                 key="banner"
-                style={styles.background}
+                style={StyleSheet.absoluteFill}
                 source={assetSource(width < bannerBreakpoint ? "banner_narrow" : "banner_wide")}
                 contentFit="cover"
                 priority="high"
             />
-            <Section
-                style={styles.section}
-                title={conId}
-                icon="alarm"
-                subtitle={subtitle}
-                titleColor="white"
-                subtitleColor="white"
-                titleVariant="shadow"
-                subtitleVariant="shadow"
-            />
+            <View style={[StyleSheet.absoluteFill, styles.cover]} />
             <Image style={styles.logo} source={assetSource("banner_logo")} contentFit="contain" priority="high" />
+            <Col style={styles.textContainer}>
+                <Row type="center">
+                    <Label style={styles.textContainerFill} type="xl" variant="shadow" color="white" ellipsizeMode="tail">
+                        {conId}
+                    </Label>
+                </Row>
+
+                {!subtitle ? null : (
+                    <Row type="center">
+                        <Label style={styles.textContainerFill} type="compact" variant="shadow" color="white" ellipsizeMode="tail">
+                            {subtitle}
+                        </Label>
+                    </Row>
+                )}
+            </Col>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    background: {
-        ...StyleSheet.absoluteFillObject,
-        opacity: 0.6,
+    cover: {
+        backgroundColor: "#00000060",
     },
     container: {
-        minHeight: 180,
+        height: 160,
         paddingTop: 15,
         paddingHorizontal: 15,
         flexDirection: "column-reverse",
+    },
+    textContainer: {
+        paddingTop: 30,
+        paddingBottom: 5,
+    },
+    textContainerFill: {
+        flex: 1,
     },
     section: {
         marginTop: 0,
     },
     logo: {
-        width: "50%",
-        height: "auto",
-        maxWidth: 200,
+        position: "absolute",
+        top: 25,
+        right: 25,
+        bottom: 25,
         aspectRatio: 1,
-        alignSelf: "center",
+        maxHeight: 130,
     },
 });

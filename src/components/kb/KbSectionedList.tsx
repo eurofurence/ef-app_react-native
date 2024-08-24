@@ -21,9 +21,10 @@ export type KbSectionedListProps = {
     empty?: ReactElement;
     trailer?: ReactElement;
     sticky?: boolean;
+    padEnd?: boolean;
 };
 
-export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, kbGroups, empty, trailer, sticky = true }) => {
+export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, kbGroups, empty, trailer, sticky = true, padEnd = true }) => {
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(kbGroups, (item) => !("KnowledgeGroupId" in item)) : undefined), [kbGroups, sticky]);
@@ -32,7 +33,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, 
         <FlashList
             refreshing={synchronizer.isSynchronizing}
             onRefresh={synchronizer.synchronize}
-            contentContainerStyle={styles.container}
+            contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             stickyHeaderIndices={stickyIndices}
             ListHeaderComponent={leader}

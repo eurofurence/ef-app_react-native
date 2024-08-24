@@ -28,9 +28,10 @@ export type DealersSectionedListProps = {
     empty?: ReactElement;
     trailer?: ReactElement;
     sticky?: boolean;
+    padEnd?: boolean;
 };
 
-export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation, leader, dealersGroups, empty, trailer, sticky = true }) => {
+export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation, leader, dealersGroups, empty, trailer, sticky = true, padEnd = true }) => {
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !("details" in item)) : undefined), [dealersGroups, sticky]);
@@ -39,7 +40,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
         <FlashList
             refreshing={synchronizer.isSynchronizing}
             onRefresh={synchronizer.synchronize}
-            contentContainerStyle={styles.container}
+            contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             stickyHeaderIndices={stickyIndices}
             ListHeaderComponent={leader}
