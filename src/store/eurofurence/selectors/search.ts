@@ -1,5 +1,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import Fuse from "fuse.js";
+import { flatten } from "lodash";
 
 import { selectDealersInAd, selectDealersInRegular } from "./dealers";
 import { dealersSelectors, eventsSelector, knowledgeEntriesSelectors } from "./records";
@@ -15,6 +16,11 @@ const dealerSearchProperties: Fuse.FuseOptionKey<DealerDetails>[] = [
     },
     {
         name: "Categories",
+        weight: 1,
+    },
+    {
+        name: "Keywords",
+        getFn: (details) => (details.Keywords ? flatten(Object.values(details.Keywords)) : []),
         weight: 1,
     },
     {
