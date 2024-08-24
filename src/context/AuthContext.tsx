@@ -272,7 +272,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, [discovery]);
 
     // Reload method.
-    const reload = useCallback(async () => {
+    const refresh = useCallback(async () => {
         // Refresh token part.
         try {
             const refreshToken = await SecureStore.getItemAsync("refreshToken");
@@ -325,9 +325,9 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     // Refresh connection.
-    useAsyncInterval(reload, [], refreshInterval);
+    useAsyncInterval(refresh, [], refreshInterval);
 
-    return <AuthContext.Provider value={{ login, logout, refresh: reload, loggedIn, claims, user }}>{children}</AuthContext.Provider>;
+    return <AuthContext.Provider value={{ login, logout, refresh, loggedIn, claims, user }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuthContext = () => useContext(AuthContext);

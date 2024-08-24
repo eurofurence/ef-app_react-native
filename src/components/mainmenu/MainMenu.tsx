@@ -43,10 +43,11 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             },
             profile: () => {
                 navigation.navigate("Profile");
+                tabs.current?.close();
             },
             messages: () => {
                 navigation.navigate("PrivateMessageList");
-                return tabs.current?.close();
+                tabs.current?.close();
             },
             info: () => {
                 navigation.navigate("KnowledgeGroups", {});
@@ -58,7 +59,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             },
             services: () => {
                 openAdditionalServices().catch(captureException);
-                return tabs.current?.close();
+                tabs.current?.close();
             },
             settings: () => {
                 navigation.navigate("Settings");

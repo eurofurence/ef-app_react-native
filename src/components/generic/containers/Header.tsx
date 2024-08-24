@@ -5,6 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Row } from "./Row";
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { Continuous } from "../atoms/Continuous";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 
@@ -14,11 +15,13 @@ const iconPad = 6;
 export type HeaderProps = PropsWithChildren<
     | {
           style?: ViewStyle;
+          loading?: boolean;
       }
     | {
           style?: ViewStyle;
           secondaryIcon: IconNames;
           secondaryPress: () => void;
+          loading?: boolean;
       }
 >;
 
@@ -45,6 +48,17 @@ export const Header: FC<HeaderProps> = (props) => {
                     <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
                 </TouchableOpacity>
             )}
+
+            {
+                // Loading header. Explicitly given as false, not loading.
+                props.loading === false ? (
+                    <Continuous style={styles.loading} active={false} />
+                ) : // Explicitly given as true, loading.
+                props.loading === true ? (
+                    <Continuous style={styles.loading} active={true} />
+                ) : // Not given, therefore no element.
+                null
+            }
         </Row>
     );
 };
@@ -72,7 +86,7 @@ const styles = StyleSheet.create({
         marginRight: -iconPad,
         justifyContent: "center",
     },
-    activity: {
+    loading: {
         position: "absolute",
         left: 0,
         bottom: 0,

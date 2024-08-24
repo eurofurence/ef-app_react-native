@@ -21,13 +21,13 @@ import { PrivateMessageLinker } from "../pm/PrivateMessageLinker";
 
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
-    user: Claims | null;
+    claim: Claims | null;
     open: boolean;
     onMessages?: () => void;
     onLogin?: () => void;
     onProfile?: () => void;
 };
-const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, onMessages, onLogin, onProfile }) => {
+const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, claim, open, onMessages, onLogin, onProfile }) => {
     const { t } = useTranslation("Menu");
     const avatarBackground = useThemeBackground("primary");
     // TODO: Verify style of name etc.
@@ -36,7 +36,7 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, o
             <TouchableOpacity disabled={!loggedIn || !onProfile} onPress={() => onProfile?.()}>
                 <Image
                     style={[avatarBackground, styles.avatarCircle]}
-                    source={user?.avatar ?? assetSource("ych")}
+                    source={claim?.avatar ?? assetSource("ych")}
                     contentFit="contain"
                     placeholder="ych"
                     transition={60}
@@ -50,7 +50,7 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, o
             {/*</Label>*/}
 
             {loggedIn ? (
-                <PrivateMessageLinker containerStyle={styles.grow} style={styles.button} user={user} onOpenMessages={onMessages} open={open} />
+                <PrivateMessageLinker containerStyle={styles.grow} style={styles.button} claims={claim} onOpenMessages={onMessages} open={open} />
             ) : (
                 <Button containerStyle={styles.grow} style={styles.button} iconRight="login" onPress={onLogin}>
                     {t("logged_in_now")}
@@ -82,7 +82,7 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfil
 
     return (
         <Col type="stretch">
-            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} user={claims} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} onProfile={onProfile} />}
+            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} claim={claims} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} onProfile={onProfile} />}
 
             <Grid cols={menuColumns} style={{ alignSelf: "stretch" }}>
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
