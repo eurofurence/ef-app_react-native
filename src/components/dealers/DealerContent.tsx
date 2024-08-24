@@ -1,4 +1,5 @@
 import * as Linking from "expo-linking";
+import { TFunction } from "i18next";
 import moment from "moment";
 import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -22,6 +23,41 @@ import { Badge } from "../generic/containers/Badge";
 import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { LinkItem } from "../maps/LinkItem";
+
+const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
+    // Nothing to display for no categories.
+    if (!dealer.Categories?.length) return null;
+
+    return (
+        <>
+            <Label type="caption">{t("categories")}</Label>
+            <View style={dealerCategoriesStyles.container}>
+                {dealer.Categories.map((category: string) => {
+                    const keywords = dealer.Keywords?.[category];
+                    if (keywords?.length)
+                        return (
+                            <Label key={category} mt={5}>
+                                <Label type="strong">{category}: </Label>
+                                {keywords.join(", ")}
+                            </Label>
+                        );
+                    else
+                        return (
+                            <Label key={category} type="strong">
+                                {category}
+                            </Label>
+                        );
+                })}
+            </View>
+        </>
+    );
+};
+
+const dealerCategoriesStyles = StyleSheet.create({
+    container: {
+        marginBottom: 20,
+    },
+});
 
 /**
  * Props to the content.
@@ -133,14 +169,8 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 </>
             )}
 
-            {!dealer.Categories?.length ? null : (
-                <>
-                    <Label type="caption">{t("categories")}</Label>
-                    <Label type="h3" mb={20}>
-                        {dealer.Categories?.join(", ")}
-                    </Label>
-                </>
-            )}
+            <DealerCategories t={t} dealer={dealer} />
+
             {dealer.Links &&
                 dealer.Links.map((it) => (
                     <View style={styles.button} key={it.Name}>

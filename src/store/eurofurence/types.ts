@@ -108,6 +108,7 @@ export type DealerRecord = RecordMetadata & {
     ArtPreviewCaption?: string;
     IsAfterDark?: boolean;
     Categories?: string[];
+    Keywords?: { [category: string]: string[] };
 };
 
 export type DealerDetails = DealerRecord & {
