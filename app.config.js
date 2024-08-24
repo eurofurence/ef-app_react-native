@@ -9,13 +9,13 @@ module.exports = {
         owner: "eurofurence",
         version: "3.3.0",
         orientation: "default",
-        icon: "./assets/platform/playstore.png",
+        icon: "./assets/platform/appicon.png",
         userInterfaceStyle: "automatic",
         scheme: "eurofurence",
         splash: {
-            image: "./assets/platform/playstore.png",
+            image: "./assets/platform/splash.png",
             resizeMode: "contain",
-            backgroundColor: "#035451",
+            backgroundColor: "#231F20",
         },
         updates: {
             fallbackToCacheTimeout: 0,
@@ -36,11 +36,11 @@ module.exports = {
             splash: {
                 resizeMode: "native",
                 image: "./assets/platform/splash.png",
-                backgroundColor: "#006459",
+                backgroundColor: "#231F20",
             },
             adaptiveIcon: {
-                foregroundImage: "./assets/platform/playstore.png",
-                backgroundColor: "#006459",
+                foregroundImage: "./assets/platform/appicon.png",
+                backgroundColor: "#231F20",
             },
             intentFilters: [
                 {
@@ -73,7 +73,7 @@ module.exports = {
         },
         web: {
             bundler: "metro",
-            favicon: "./assets/platform/playstore.png",
+            favicon: "./assets/platform/appicon.png",
         },
         plugins: [
             // Run sentry plugin only if auth token is given, otherwise the build crashes.
