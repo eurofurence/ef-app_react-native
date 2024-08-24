@@ -31,9 +31,20 @@ export type EventsSectionedListProps = {
     trailer?: ReactElement;
     cardType?: "duration" | "time";
     sticky?: boolean;
+    padEnd?: boolean;
 };
 
-export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, leader, eventsGroups, select, empty, trailer, cardType = "duration", sticky = true }) => {
+export const EventsSectionedList: FC<EventsSectionedListProps> = ({
+    navigation,
+    leader,
+    eventsGroups,
+    select,
+    empty,
+    trailer,
+    cardType = "duration",
+    sticky = true,
+    padEnd = true,
+}) => {
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !("details" in item)) : undefined), [eventsGroups, sticky]);
@@ -42,7 +53,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ navigation, 
         <FlashList
             refreshing={synchronizer.isSynchronizing}
             onRefresh={synchronizer.synchronize}
-            contentContainerStyle={styles.container}
+            contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             stickyHeaderIndices={stickyIndices}
             ListHeaderComponent={leader}

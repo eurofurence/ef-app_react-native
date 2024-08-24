@@ -25,16 +25,17 @@ export type DealersListProps = {
     dealers: DealerDetailsInstance[];
     empty?: ReactElement;
     trailer?: ReactElement;
+    padEnd?: boolean;
 };
 
-export const DealersList: FC<DealersListProps> = ({ navigation, leader, dealers, empty, trailer }) => {
+export const DealersList: FC<DealersListProps> = ({ navigation, leader, dealers, empty, trailer, padEnd = true }) => {
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
             onRefresh={synchronizer.synchronize}
-            contentContainerStyle={styles.container}
+            contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             ListHeaderComponent={leader}
             ListFooterComponent={trailer}

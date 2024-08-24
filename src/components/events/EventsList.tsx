@@ -28,16 +28,17 @@ export type EventsListProps = {
     empty?: ReactElement;
     trailer?: ReactElement;
     cardType?: "duration" | "time";
+    padEnd?: boolean;
 };
 
-export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, select, empty, trailer, cardType = "duration" }) => {
+export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, select, empty, trailer, cardType = "duration", padEnd = true }) => {
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
             onRefresh={synchronizer.synchronize}
-            contentContainerStyle={styles.container}
+            contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             ListHeaderComponent={leader}
             ListFooterComponent={trailer}

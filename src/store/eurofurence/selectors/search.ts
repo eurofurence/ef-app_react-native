@@ -1,9 +1,18 @@
 import { createSelector } from "@reduxjs/toolkit";
 import Fuse from "fuse.js";
+import { flatten } from "lodash";
 
 import { selectDealersInAd, selectDealersInRegular } from "./dealers";
 import { dealersSelectors, eventsSelector, knowledgeEntriesSelectors } from "./records";
 import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "../types";
+
+/**
+ * Search options.
+ */
+const searchOptions: Fuse.IFuseOptions<any> = {
+    shouldSort: true,
+    threshold: 0.3,
+};
 
 /**
  * Properties to use in search.
@@ -15,6 +24,11 @@ const dealerSearchProperties: Fuse.FuseOptionKey<DealerDetails>[] = [
     },
     {
         name: "Categories",
+        weight: 1,
+    },
+    {
+        name: "Keywords",
+        getFn: (details) => (details.Keywords ? flatten(Object.values(details.Keywords)) : []),
         weight: 1,
     },
     {
@@ -30,22 +44,9 @@ const dealerSearchProperties: Fuse.FuseOptionKey<DealerDetails>[] = [
         weight: 1,
     },
 ];
-/**
- * Search options.
- */
-const dealerSearchOptions: Fuse.IFuseOptions<DealerDetails> = {
-    shouldSort: true,
-    threshold: 0.3,
-};
-export const selectDealersAllSearchIndex = createSelector(
-    [dealersSelectors.selectAll],
-    (data) => new Fuse(data, dealerSearchOptions, Fuse.createIndex(dealerSearchProperties, data)),
-);
-export const selectDealersInRegularSearchIndex = createSelector(
-    [selectDealersInRegular],
-    (data) => new Fuse(data, dealerSearchOptions, Fuse.createIndex(dealerSearchProperties, data)),
-);
-export const selectDealersInAdSearchIndex = createSelector([selectDealersInAd], (data) => new Fuse(data, dealerSearchOptions, Fuse.createIndex(dealerSearchProperties, data)));
+export const selectDealersAllSearchIndex = createSelector([dealersSelectors.selectAll], (data) => new Fuse(data, searchOptions, Fuse.createIndex(dealerSearchProperties, data)));
+export const selectDealersInRegularSearchIndex = createSelector([selectDealersInRegular], (data) => new Fuse(data, searchOptions, Fuse.createIndex(dealerSearchProperties, data)));
+export const selectDealersInAdSearchIndex = createSelector([selectDealersInAd], (data) => new Fuse(data, searchOptions, Fuse.createIndex(dealerSearchProperties, data)));
 /**
  * Properties to use in search.
  */
@@ -79,14 +80,8 @@ const eventSearchProperties: Fuse.FuseOptionKey<EventDetails>[] = [
         weight: 0.1,
     },
 ];
-/**
- * Search options.
- */
-const eventSearchOptions: Fuse.IFuseOptions<EventDetails> = {
-    shouldSort: true,
-    threshold: 0.3,
-};
-export const selectEventsAllSearchIndex = createSelector([eventsSelector.selectAll], (data) => new Fuse(data, eventSearchOptions, Fuse.createIndex(eventSearchProperties, data)));
+
+export const selectEventsAllSearchIndex = createSelector([eventsSelector.selectAll], (data) => new Fuse(data, searchOptions, Fuse.createIndex(eventSearchProperties, data)));
 /**
  * Properties to use in search.
  */
@@ -100,11 +95,24 @@ const kbSearchProperties: Fuse.FuseOptionKey<KnowledgeEntryDetails>[] = [
         weight: 1,
     },
 ];
-/**
- * Search options.
- */
-const kbSearchOptions: Fuse.IFuseOptions<KnowledgeEntryDetails> = {
-    shouldSort: true,
-    threshold: 0.3,
-};
-export const selectKbAllSearchIndex = createSelector([knowledgeEntriesSelectors.selectAll], (data) => new Fuse(data, kbSearchOptions, Fuse.createIndex(kbSearchProperties, data)));
+
+export const selectKbAllSearchIndex = createSelector([knowledgeEntriesSelectors.selectAll], (data) => new Fuse(data, searchOptions, Fuse.createIndex(kbSearchProperties, data)));
+
+export const selectGlobalSearchIndex = createSelector(
+    [dealersSelectors.selectAll, eventsSelector.selectAll, knowledgeEntriesSelectors.selectAll],
+    (dealers, events, knowledgeEntries) => {
+        const data = [...dealers, ...events, ...knowledgeEntries];
+        return new Fuse(
+            data,
+            searchOptions,
+            Fuse.createIndex(
+                [
+                    ...(dealerSearchProperties as Fuse.FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
+                    ...(eventSearchProperties as Fuse.FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
+                    ...(kbSearchProperties as Fuse.FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
+                ],
+                data,
+            ),
+        );
+    },
+);

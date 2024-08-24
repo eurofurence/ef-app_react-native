@@ -1,7 +1,7 @@
 import { ReactNativeZoomableView as ZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Dimensions, StyleSheet, View, Image as ReactImage } from "react-native";
+import { StyleSheet, View, Image as ReactImage } from "react-native";
 
 import { minZoomFor, shareImage } from "./Viewer.common";
 import { Image } from "../generic/atoms/Image";
