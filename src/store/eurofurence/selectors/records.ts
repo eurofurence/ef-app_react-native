@@ -4,7 +4,7 @@ import { groupBy, keyBy, map, mapValues, uniq, Dictionary as LodashDictionary } 
 
 import { selectFavoriteDealerIds, selectHiddenEventIds } from "../../auxiliary/selectors";
 import { RootState } from "../../index";
-import { applyAnnouncementDetails, applyDealerDetails, applyEventDayDetails, applyEventDetails, applyImageDetails, applyKnowledgeGroupDetails, applyMapDetails } from "../details";
+import { applyAnnouncementDetails, applyDealerDetails, applyEventDayDetails, applyEventDetails, applyKnowledgeGroupDetails, applyMapDetails } from "../details";
 import {
     announcementsAdapter,
     dealersAdapter,
@@ -64,14 +64,7 @@ export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<Ro
     (state) => state.eurofurenceCache.knowledgeEntries,
 ) as RecordSelectors<KnowledgeEntryDetails>;
 
-const baseImageSelectors = imagesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.images);
-export const imagesSelectors: RecordSelectors<ImageDetails> = {
-    selectTotal: baseImageSelectors.selectTotal,
-    selectIds: baseImageSelectors.selectIds as (state: RootState) => RecordId[],
-    selectEntities: createSelector([baseImageSelectors.selectEntities], (entities) => mapValues(entities as LodashDictionary<ImageRecord>, applyImageDetails)),
-    selectAll: createSelector([baseImageSelectors.selectAll], (all) => map(all, applyImageDetails)),
-    selectById: createSelector([baseImageSelectors.selectById], (item) => mapOne(item, applyImageDetails)),
-};
+export const imagesSelectors = imagesAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.images) as RecordSelectors<ImageDetails>;
 
 const baseEventDaysSelectors = eventDaysAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventDays);
 export const eventDaysSelectors: RecordSelectors<EventDayDetails> = {

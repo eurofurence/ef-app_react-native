@@ -199,16 +199,16 @@ export type KnowledgeEntryRecord = RecordMetadata & {
 export type KnowledgeEntryDetails = KnowledgeEntryRecord & object;
 
 export type ImageRecord = RecordMetadata & {
-    ContentHashSha1: string;
-
-    // Needed because of downsampling.
+    InternalReference: string;
     Width: number;
     Height: number;
+    SizeInBytes: number;
+    MimeType: string;
+    ContentHashSha1: string;
+    Url: string;
 };
 
-export type ImageDetails = ImageRecord & {
-    FullUrl: string;
-};
+export type ImageDetails = ImageRecord & object;
 
 export type CommunicationRecord = RecordMetadata & {
     RecipientUid: string;

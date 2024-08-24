@@ -46,7 +46,7 @@ export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable })
                 if (viewable && image) navigation.navigate("Viewer", { id: image.Id });
             }}
         >
-            <Image style={[styles.image, aspect, style]} contentFit={undefined} source={image.FullUrl} placeholder={placeholder} />
+            <Image style={[styles.image, aspect, style]} contentFit={undefined} source={image.Url} placeholder={placeholder} />
         </TouchableOpacity>
     );
 };

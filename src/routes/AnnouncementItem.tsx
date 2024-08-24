@@ -35,7 +35,7 @@ export const AnnouncementItem = () => {
 
                         <MarkdownContent>{announcement.Content}</MarkdownContent>
 
-                        {announcement.Image && <Image source={announcement.Image.FullUrl} style={styles.image} priority="high" />}
+                        {announcement.Image && <Image source={announcement.Image.Url} style={styles.image} priority="high" />}
                     </>
                 )}
             </Floater>
