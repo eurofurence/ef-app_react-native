@@ -64,9 +64,9 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
 
     return (
         <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>
-            <Image style={StyleSheet.absoluteFill} contentFit="cover" blurRadius={20} source={image?.FullUrl} priority="normal" />
+            <Image style={StyleSheet.absoluteFill} contentFit="cover" blurRadius={20} source={image?.Url} priority="normal" />
             <View style={arrangerStyle}>
-                <Image style={imageStyle} contentFit="fill" contentPosition="top left" source={image?.FullUrl} priority="normal" />
+                <Image style={imageStyle} contentFit="fill" contentPosition="top left" source={image?.Url} priority="normal" />
             </View>
         </View>
     );

@@ -48,7 +48,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     const present = dealer.present;
     const description = dealer.details.Categories?.join(", ");
     const offDays = dealer.offDays;
-    const avatar = dealer.details.ArtistThumbnail ? dealer.details.ArtistThumbnail.FullUrl : dealer.details.Artist ? dealer.details.Artist.FullUrl : assetSource("ych");
+    const avatar = dealer.details.ArtistThumbnail ? dealer.details.ArtistThumbnail.Url : dealer.details.Artist ? dealer.details.Artist.Url : assetSource("ych");
 
     // Translation object.
     const { t } = useTranslation("Dealers");

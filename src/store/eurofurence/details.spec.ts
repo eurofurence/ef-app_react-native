@@ -117,15 +117,6 @@ describe("Eurofurence details", () => {
         });
     });
 
-    describe("maps selectors", () => {
-        it("has image with hashes", () => {
-            const results = mapsSelectors.selectAll(state);
-            const withoutHash = results.filter((result) => !result.Image?.FullUrl.includes("with-hash:"));
-
-            expect(withoutHash).toHaveLength(0);
-        });
-    });
-
     describe("special selectors", () => {
         it("finds favorites", () => {
             const id = state.background.notifications.find((n) => n.type === "EventReminder")?.recordId ?? "";

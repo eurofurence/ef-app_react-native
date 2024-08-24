@@ -21,7 +21,7 @@ export const KbItem = () => {
             <Header>{entry?.Title}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 {images.map((it) => (
-                    <Image style={styles.image} source={it.FullUrl} key={it.Id} contentFit="contain" />
+                    <Image style={styles.image} source={it.Url} key={it.Id} contentFit="contain" />
                 ))}
                 <MarkdownContent>{entry?.Text ?? ""}</MarkdownContent>
                 {entry?.Links.map((link) => (

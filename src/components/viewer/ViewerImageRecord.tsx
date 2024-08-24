@@ -32,7 +32,7 @@ export const ViewerImageRecord: FC<ViewerImageRecordProps> = ({ id }) => {
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <Header secondaryIcon="share" secondaryPress={() => image && title && shareImage(image.FullUrl, title)}>
+            <Header secondaryIcon="share" secondaryPress={() => image && title && shareImage(image.Url, title)}>
                 {title}
             </Header>
             {!image ? null : (
@@ -46,7 +46,7 @@ export const ViewerImageRecord: FC<ViewerImageRecordProps> = ({ id }) => {
                     bindToBorders={true}
                 >
                     <View style={styleContainer}>
-                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={image.FullUrl} priority="high" />
+                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={image.Url} priority="high" />
                     </View>
                 </ZoomableView>
             )}

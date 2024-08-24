@@ -194,11 +194,6 @@ export const applyMapDetails = (source: MapRecord, images: Dictionary<ImageDetai
     Entries: source.Entries as MapEntryDetails[],
 });
 
-export const applyImageDetails = (source: ImageRecord): ImageDetails => ({
-    ...source,
-    FullUrl: internalCreateImageUrl(source),
-});
-
 const faGlyphToName = Object.fromEntries(Object.entries(FontAwesomeIcon.getRawGlyphMap()).map(([key, value]) => [value, key]));
 
 export const applyKnowledgeGroupDetails = (source: KnowledgeGroupRecord): KnowledgeGroupDetails => ({

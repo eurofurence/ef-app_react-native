@@ -37,7 +37,7 @@ export const useImagePrefetch = () => {
 
             // Start the prefetch.
             Image.prefetch(
-                images.map((it) => it.FullUrl),
+                images.map((it) => it.Url),
                 "memory-disk",
             )
                 .catch(captureException)
