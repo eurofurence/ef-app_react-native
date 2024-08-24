@@ -75,6 +75,8 @@
     "when": "{{day}}, {{start}} until {{finish}}."
   },
   "EventFeedback": {
+    "disabled_not_attending": "Only attendees can give feedback",
+    "disabled_not_logged_in": "Please log in to give feedback",
     "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
@@ -138,7 +140,6 @@
     "results": "In the viewed area"
   },
   "Menu": {
-    "about": "About",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
@@ -153,6 +154,7 @@
     "more": "More",
     "not_logged_in": "You are currently not logged in",
     "open_messages": "Hello {{name}}. Open messages",
+    "profile": "Profile",
     "services": "Services",
     "settings": "Settings"
   },
@@ -168,6 +170,29 @@
     "section_title_from": "From {{authorName}}",
     "unread": "Unread"
   },
+  "Profile": {
+    "header": "Profile",
+    "idp_settings": "Identity setting website",
+    "logged_in_as": "You are logged in as {{username}}",
+    "login_description": "Being logged in allows {{conName}} to send you personal messages. It also allows you to participate in the Fursuit Catch 'em All and check in at tables in the Artist Alley.",
+    "logout": "Logout",
+    "not_logged_in": "You are currently not logged in",
+    "registration_nr": "Registration #",
+    "roles": "Roles",
+    "roles_simple_attendee": "Not checked in yet",
+    "roles_simple_checked_in": "You are checked in",
+    "roles_subtitle": "Your roles in the {{conName}} app",
+    "status_names": {
+      "Approved": "Approved",
+      "Cancelled": "Cancelled",
+      "CheckedIn": "Checked In",
+      "Deleted": "Deleted",
+      "New": "New",
+      "Paid": "Paid",
+      "PartiallyPaid": "Partially Paid",
+      "Unknown": "Unknown"
+    }
+  },
   "RevealHidden": {
     "lead": "Click on any event to reveal it in the overview again",
     "title": "Reveal specific event"
@@ -176,6 +201,7 @@
     "placeholder": "What are you looking for"
   },
   "Settings": {
+    "about": "About",
     "allowAnalytics": "Allow us to collect analytics events",
     "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
     "cache": {
@@ -226,13 +252,6 @@
       "title": "Hidden events",
       "unhide_all": "Reveal all",
       "unhide_specific": "Reveal specific event"
-    },
-    "login": {
-      "logged_in_as": "You are logged in as {{username}}",
-      "logged_in_now": "Log-in now",
-      "login_description": "Being logged allows {{conName}} to send you personal messages. You can also use it to participate in the Fursuit Games and register for tables at the Artist Alley.",
-      "logout": "Logout",
-      "not_logged_in": "You are currently not logged in"
     },
     "notifications": {
       "no_notifications": "There are no scheduled notifications!",

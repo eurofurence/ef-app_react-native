@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { About } from "./About";
 import { AnnouncementItem, AnnouncementItemParams } from "./AnnouncementItem";
 import { AreasRouter, AreasRouterParams } from "./AreasRouter";
+import { Profile } from "./Profile";
 import { Viewer, ViewerParams } from "./Viewer";
 import { DealerItem, DealerItemParams } from "./dealers/DealerItem";
 import { EventFeedback } from "./events/EventFeedback";
@@ -47,6 +48,7 @@ export type IndexRouterParamsList = {
         linkId?: number;
     };
     About: undefined;
+    Profile: undefined;
     Viewer: ViewerParams;
 };
 
@@ -84,6 +86,7 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
                 <Stack.Screen name="KnowledgeEntry" component={KbItem} />
                 <Stack.Screen name="Map" component={Map} />
                 <Stack.Screen name="About" component={About} />
+                <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Viewer" component={Viewer} />
             </Stack.Navigator>
         </SafeAreaView>

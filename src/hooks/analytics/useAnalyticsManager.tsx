@@ -13,7 +13,7 @@ import { useAppSelector } from "../../store";
  */
 export const useAnalyticsManager = () => {
     // Get user and analytics-enabled status from app store.
-    const { user } = useAuthContext();
+    const { claims } = useAuthContext();
     const enabled = useAppSelector((state) => state.settingsSlice.analytics.enabled);
 
     // Enable analytics collection if enabled-flag reads true from the app store.
@@ -23,7 +23,7 @@ export const useAnalyticsManager = () => {
 
     useEffect(() => {
         // Set user for sentry, if user is given.
-        if (user) setUser({ id: user.uid as string, username: user.name as string });
+        if (claims) setUser({ id: claims.uid as string, username: claims.name as string });
         else setUser(null);
 
         // Set app version code.
@@ -31,12 +31,12 @@ export const useAnalyticsManager = () => {
 
         // Initialize firebase analytics user if given.
         analytics()
-            .setUserId((user?.uid ?? null) as string | null)
+            .setUserId((claims?.uid ?? null) as string | null)
             .catch(captureException);
 
         // Initialize firebase username if given.
         analytics()
-            .setUserProperty("username", (user?.name ?? null) as string | null)
+            .setUserProperty("username", (claims?.name ?? null) as string | null)
             .catch(captureException);
-    }, [user]);
+    }, [claims]);
 };

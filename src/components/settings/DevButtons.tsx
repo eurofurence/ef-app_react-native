@@ -17,7 +17,7 @@ export const DevButtons = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "dev_buttons" });
     const [createSync, syncResult] = useCreateSyncRequestMutation();
     const [sendMessage, messageResult] = useSendPrivateMessageMutation();
-    const { user, logout } = useAuthContext();
+    const { claims, logout } = useAuthContext();
     const { synchronize } = useSynchronizer();
 
     const dispatch = useAppDispatch();
@@ -25,20 +25,20 @@ export const DevButtons = () => {
     const now = useNow(isFocused ? 5 : "static");
 
     const onSendMessage = useCallback(() => {
-        if (!user) {
+        if (!claims) {
             alert(t("no_auth_alert"));
             return;
         }
 
         sendMessage({
-            RecipientUid: user.sub as string,
+            RecipientUid: claims.sub as string,
             AuthorName: `tester`,
             Subject: t("test_message_subject"),
             Message: t("test_message_content"),
         });
 
-        alert(`Sent a message to ${user}`);
-    }, [user]);
+        alert(`Sent a message to ${claims.sub}`);
+    }, [claims]);
 
     return (
         <View>
@@ -74,7 +74,6 @@ export const DevButtons = () => {
                 {t("send_private_message", { status: messageResult.status })}
             </Button>
 
-            {/* TODO: We should have a proper button for this. */}
             <Button
                 containerStyle={styles.button}
                 onPress={() => {

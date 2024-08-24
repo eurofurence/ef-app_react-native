@@ -92,7 +92,6 @@
     "header": "Podstawowe informacje"
   },
   "Menu": {
-    "about": "O aplikacji",
     "catch_em": "Catch-em-all",
     "dealers": "Wystawcy",
     "events": "Program",
@@ -121,6 +120,7 @@
     "unread": "Nieprzeczytane"
   },
   "Settings": {
+    "about": "O aplikacji",
     "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
     "allowAnalyticsSubtitle": "Pozwalajac nam gromadzić dane analityczne pomagasz nam udoskonalać tę aplikację. Analiza jest udostępniona poprzez Firebase i nie jest udostępniana stronom trzecim.",
     "cache": {

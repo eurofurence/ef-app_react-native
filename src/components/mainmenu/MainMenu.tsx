@@ -41,9 +41,13 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             login: () => {
                 login().catch(captureException);
             },
+            profile: () => {
+                navigation.navigate("Profile");
+                tabs.current?.close();
+            },
             messages: () => {
                 navigation.navigate("PrivateMessageList");
-                return tabs.current?.close();
+                tabs.current?.close();
             },
             info: () => {
                 navigation.navigate("KnowledgeGroups", {});
@@ -55,14 +59,10 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             },
             services: () => {
                 openAdditionalServices().catch(captureException);
-                return tabs.current?.close();
+                tabs.current?.close();
             },
             settings: () => {
                 navigation.navigate("Settings");
-                tabs.current?.close();
-            },
-            about: () => {
-                navigation.navigate("About");
                 tabs.current?.close();
             },
             map: (target: RecordId) => {
@@ -78,11 +78,11 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
         <PagerPrimary
             onMessages={on.messages}
             onLogin={on.login}
+            onProfile={on.profile}
             onInfo={on.info}
             onCatchEmAll={on.catchEmAll}
             onServices={on.services}
             onSettings={on.settings}
-            onAbout={on.about}
             onMap={on.map}
         >
             <Tab icon="twitter" text="Twitter" onPress={() => Linking.openURL("https://twitter.com/eurofurence")} />

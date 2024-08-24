@@ -1,23 +1,27 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { FC, PropsWithChildren } from "react";
-import { StyleSheet, View, ViewStyle } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { Row } from "./Row";
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { Continuous } from "../atoms/Continuous";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 
-const iconSize = 32;
+const iconSize = 26;
+const iconPad = 6;
 
 export type HeaderProps = PropsWithChildren<
     | {
           style?: ViewStyle;
+          loading?: boolean;
       }
     | {
           style?: ViewStyle;
           secondaryIcon: IconNames;
           secondaryPress: () => void;
+          loading?: boolean;
       }
 >;
 
@@ -30,21 +34,31 @@ export const Header: FC<HeaderProps> = (props) => {
 
     return (
         <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-            <Icon name="chevron-left" size={iconSize} color={colorValue} />
+            <TouchableOpacity hitSlop={{ right: 50 }} containerStyle={styles.back} onPress={() => navigation.goBack()}>
+                <Icon name="chevron-left" size={iconSize} color={colorValue} />
+            </TouchableOpacity>
 
             <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
                 {props.children}
             </Label>
 
-            <View style={styles.placeholder} />
-
             {/* Optional secondary action. */}
-            {!("secondaryIcon" in props) ? null : <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />}
+            {!("secondaryIcon" in props) ? null : (
+                <TouchableOpacity hitSlop={{ left: 50 }} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
+                    <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
+                </TouchableOpacity>
+            )}
 
-            <TouchableOpacity containerStyle={styles.back} onPress={() => navigation.goBack()} />
-
-            {/* Optional secondary touchable, placed over icon. */}
-            {!("secondaryIcon" in props) ? null : <TouchableOpacity containerStyle={styles.secondary} onPress={() => props.secondaryPress()} />}
+            {
+                // Loading header. Explicitly given as false, not loading.
+                props.loading === false ? (
+                    <Continuous style={styles.loading} active={false} />
+                ) : // Explicitly given as true, loading.
+                props.loading === true ? (
+                    <Continuous style={styles.loading} active={true} />
+                ) : // Not given, therefore no element.
+                null
+            }
         </Row>
     );
 };
@@ -58,26 +72,21 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1,
-    },
-    placeholder: {
-        width: iconSize,
-        height: iconSize,
+        justifyContent: "center",
     },
     back: {
-        position: "absolute",
-        top: 0,
-        left: 0,
-        bottom: 0,
-        width: "30%",
+        marginLeft: -iconPad,
+        width: iconSize + iconPad,
+        height: iconSize + iconPad,
+        justifyContent: "center",
     },
     secondary: {
-        position: "absolute",
-        top: 0,
-        right: 0,
-        bottom: 0,
-        width: "30%",
+        width: iconSize + iconPad,
+        height: iconSize + iconPad,
+        marginRight: -iconPad,
+        justifyContent: "center",
     },
-    activity: {
+    loading: {
         position: "absolute",
         left: 0,
         bottom: 0,

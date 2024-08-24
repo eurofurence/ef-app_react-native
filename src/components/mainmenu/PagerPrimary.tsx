@@ -1,10 +1,9 @@
-import { captureException } from "@sentry/react-native";
 import React, { FC, PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
-import { Linking, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { authSettingsUrl, menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
+import { menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
 import { Claims, useAuthContext } from "../../context/AuthContext";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../store";
@@ -22,21 +21,22 @@ import { PrivateMessageLinker } from "../pm/PrivateMessageLinker";
 
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
-    user: Claims | null;
+    claim: Claims | null;
     open: boolean;
     onMessages?: () => void;
     onLogin?: () => void;
+    onProfile?: () => void;
 };
-const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, onMessages, onLogin }) => {
+const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, claim, open, onMessages, onLogin, onProfile }) => {
     const { t } = useTranslation("Menu");
     const avatarBackground = useThemeBackground("primary");
     // TODO: Verify style of name etc.
     return (
         <Row style={styles.padding} type="center" variant="center">
-            <TouchableOpacity disabled={!loggedIn || !authSettingsUrl} onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}>
+            <TouchableOpacity disabled={!loggedIn || !onProfile} onPress={() => onProfile?.()}>
                 <Image
                     style={[avatarBackground, styles.avatarCircle]}
-                    source={user?.avatar ?? assetSource("ych")}
+                    source={claim?.avatar ?? assetSource("ych")}
                     contentFit="contain"
                     placeholder="ych"
                     transition={60}
@@ -50,7 +50,7 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, o
             {/*</Label>*/}
 
             {loggedIn ? (
-                <PrivateMessageLinker containerStyle={styles.grow} style={styles.button} user={user} onOpenMessages={onMessages} open={open} />
+                <PrivateMessageLinker containerStyle={styles.grow} style={styles.button} claims={claim} onOpenMessages={onMessages} open={open} />
             ) : (
                 <Button containerStyle={styles.grow} style={styles.button} iconRight="login" onPress={onLogin}>
                     {t("logged_in_now")}
@@ -66,29 +66,29 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, user, open, o
 export type PagerMenuProps = PropsWithChildren<{
     onMessages?: () => void;
     onLogin?: () => void;
+    onProfile?: () => void;
     onInfo?: () => void;
     onCatchEmAll?: () => void;
     onServices?: () => void;
-    onAbout?: () => void;
     onSettings?: () => void;
     onMap?: (id: RecordId) => void;
 }>;
 
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onInfo, onCatchEmAll, onServices, onAbout, onSettings, onMap, children }) => {
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfile, onInfo, onCatchEmAll, onServices, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");
-    const { loggedIn, user } = useAuthContext();
+    const { loggedIn, claims } = useAuthContext();
     const maps = useAppSelector(selectBrowsableMaps);
     const tabs = useTabs();
 
     return (
         <Col type="stretch">
-            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} user={user} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} />}
+            {!showLogin ? null : <PagerPrimaryLogin loggedIn={loggedIn} claim={claims} open={tabs.isOpen} onMessages={onMessages} onLogin={onLogin} onProfile={onProfile} />}
 
             <Grid cols={menuColumns} style={{ alignSelf: "stretch" }}>
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
                 {!showCatchEm ? null : <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />}
                 {!showServices ? null : <Tab icon="book-outline" text={t("services")} onPress={onServices} />}
-                <Tab icon="card-account-details-outline" text={t("about")} onPress={onAbout} />
+                <Tab icon="card-account-details-outline" text={t("profile")} onPress={onProfile} disabled={!loggedIn} />
                 <Tab icon="cog" text={t("settings")} onPress={onSettings} />
                 {children}
             </Grid>

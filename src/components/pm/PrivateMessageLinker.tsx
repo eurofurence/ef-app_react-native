@@ -9,7 +9,7 @@ import { Button } from "../generic/containers/Button";
 type PrivateMessageLinkerProps = {
     containerStyle?: StyleProp<ViewStyle>;
     style?: StyleProp<ViewStyle>;
-    user: Claims | null;
+    claims: Claims | null;
     open?: boolean;
     onOpenMessages?: () => void;
 };
@@ -18,7 +18,7 @@ type PrivateMessageLinkerProps = {
  * Creates a link to the private messages screen
  * @constructor
  */
-export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerStyle, style, user, onOpenMessages, open }) => {
+export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerStyle, style, claims, onOpenMessages, open }) => {
     const prevOpen = useRef(open);
     const { t } = useTranslation("Menu");
     const { unread, refetch } = useGetCommunicationsQuery(undefined, {
@@ -45,7 +45,7 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
             iconRight={unread?.length ? "email-multiple-outline" : "email-open-multiple-outline"}
             onPress={onOpenMessages}
         >
-            {unread?.length ? t("messages", { count: unread?.length ?? 0, name: user?.name }) : t("open_messages", { name: user?.name })}
+            {unread?.length ? t("messages", { count: unread?.length ?? 0, name: claims?.name }) : t("open_messages", { name: claims?.name })}
         </Button>
     );
 };

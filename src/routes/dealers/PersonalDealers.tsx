@@ -41,7 +41,7 @@ export const PersonalDealers: FC<PersonalDealersProps> = ({ navigation }) => {
     // General state.
     const { t } = useTranslation("Dealers");
     const now = useNow();
-    const { user } = useAuthContext();
+    const { claims } = useAuthContext();
     const avatarBackground = useThemeBackground("primary");
 
     const dealersAll = useAppSelector(selectFavoriteDealers);
@@ -54,7 +54,7 @@ export const PersonalDealers: FC<PersonalDealersProps> = ({ navigation }) => {
                 <Row type="center" variant="center" style={styles.marginTop}>
                     <Image
                         style={[avatarBackground, styles.avatarCircle]}
-                        source={user?.avatar ?? assetSource("ych")}
+                        source={claims?.avatar ?? assetSource("ych")}
                         contentFit="contain"
                         placeholder="ych"
                         transition={60}

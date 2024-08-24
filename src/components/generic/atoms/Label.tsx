@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
 const types = StyleSheet.create({
     lead: {
         fontSize: 20,
-        lineHeight: 20,
+        lineHeight: 24,
         fontWeight: "100",
     },
     h1: {
@@ -138,7 +138,7 @@ const types = StyleSheet.create({
     },
     caption: {
         fontSize: 14,
-        lineHeight: 14,
+        lineHeight: 18,
         fontWeight: "600",
         opacity: 0.666,
     },
