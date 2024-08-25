@@ -1,6 +1,7 @@
 import { Moment } from "moment/moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { StyleSheet, View } from "react-native";
 
 import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
@@ -31,18 +32,26 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
     return (
         <>
             <Section title={t("today_schedule_title")} subtitle={t("today_schedule_subtitle")} icon="book-marker" />
-            {events.map((event) => (
-                <EventCard
-                    key={event.details.Id}
-                    event={event}
-                    type="time"
-                    onPress={(event) =>
-                        navigation.navigate("Event", {
-                            id: event.Id,
-                        })
-                    }
-                />
-            ))}
+            <View style={styles.condense}>
+                {events.map((event) => (
+                    <EventCard
+                        key={event.details.Id}
+                        event={event}
+                        type="time"
+                        onPress={(event) =>
+                            navigation.navigate("Event", {
+                                id: event.Id,
+                            })
+                        }
+                    />
+                ))}
+            </View>
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    condense: {
+        marginVertical: -15,
+    },
+});

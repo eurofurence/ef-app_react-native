@@ -5,10 +5,11 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { About } from "./About";
-import { AnnouncementItem, AnnouncementItemParams } from "./AnnouncementItem";
 import { AreasRouter, AreasRouterParams } from "./AreasRouter";
 import { Profile } from "./Profile";
 import { Viewer, ViewerParams } from "./Viewer";
+import { AnnounceItem, AnnounceItemParams } from "./announce/AnnounceItem";
+import { AnnounceList, AnnounceListParams } from "./announce/AnnounceList";
 import { DealerItem, DealerItemParams } from "./dealers/DealerItem";
 import { EventFeedback } from "./events/EventFeedback";
 import { EventItem, EventItemParams } from "./events/EventItem";
@@ -30,7 +31,8 @@ export type IndexRouterParamsList = {
      * Primary areas.
      */
     Areas: AreasRouterParams;
-    Announcement: AnnouncementItemParams;
+    AnnounceList: AnnounceListParams;
+    AnnounceItem: AnnounceItemParams;
     Event: EventItemParams;
     Dealer: DealerItemParams;
     EventFeedback: { id: string };
@@ -74,7 +76,8 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Areas" component={AreasRouter} />
-                <Stack.Screen name="Announcement" component={AnnouncementItem} />
+                <Stack.Screen name="AnnounceList" component={AnnounceList} />
+                <Stack.Screen name="AnnounceItem" component={AnnounceItem} />
                 <Stack.Screen name="Event" component={EventItem} />
                 <Stack.Screen name="Dealer" component={DealerItem} />
                 <Stack.Screen name="EventFeedback" component={EventFeedback} />

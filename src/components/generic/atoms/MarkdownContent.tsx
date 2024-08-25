@@ -56,7 +56,6 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, chil
                 ?.replace(newline, "\n")
                 ?.replace(paraspace, " ")
                 ?.replace(links, (s, args) => {
-                    console.log(s, args);
                     if (args?.[0]) return s;
                     else return `[${s}](${s})`;
                 }),

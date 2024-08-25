@@ -9,7 +9,11 @@
     "extra_thanks": "Extra Thanks",
     "header": "About"
   },
+  "Announcement": {
+    "header": "Announcement"
+  },
   "Announcements": {
+    "header": "Announcements",
     "noAnnouncements": "There are currently no active announcements",
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
@@ -122,6 +126,8 @@
     "eventsTitle_one": "We have retrieved {{ count }} event.",
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
+    "recent_announcements": "Recent announcements",
+    "view_all_announcements": "View all announcements",
     "warnings": {
       "favorites_changed": "Favorites updated",
       "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",

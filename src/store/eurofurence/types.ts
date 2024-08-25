@@ -41,6 +41,7 @@ export type AnnouncementRecord = RecordMetadata & {
 };
 
 export type AnnouncementDetails = AnnouncementRecord & {
+    NormalizedTitle: string;
     Image?: ImageDetails;
 };
 

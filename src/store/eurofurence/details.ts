@@ -166,6 +166,21 @@ const internalDealerParseDescriptionContent = (dealer: DealerRecord) => {
     return dealer.ShortDescription.split(/\r?\n/).slice(1).join("\n").trimStart();
 };
 
+const internalFixedTitle = (title: string, content: string) => {
+    // Not ellipsized, skip.
+    if (!title.endsWith("[...]")) return title;
+
+    // Get init of title without hard ellipses. If that's not the start of the
+    // content, something else happened, skip.
+    const init = title.substring(0, title.length - 5);
+    if (!content.startsWith(init)) return title;
+
+    // Check the longest full sentence to be extracted. Use if present.
+    const index = Math.max(init.indexOf("."), init.indexOf("!"), init.indexOf("?"));
+    if (index < 0) return title;
+    return init.substring(0, index + 1);
+};
+
 export const applyDealerDetails = (source: DealerRecord, images: Dictionary<ImageDetails>, days: EventDayDetails[], favorites: RecordId[]): DealerDetails => ({
     ...source,
     AttendanceDayNames: internalAttendanceDayNames(source),
@@ -185,6 +200,7 @@ export const applyEventDayDetails = (source: EventDayRecord): EventDayDetails =>
 });
 export const applyAnnouncementDetails = (source: AnnouncementRecord, images: Dictionary<ImageDetails>): AnnouncementDetails => ({
     ...source,
+    NormalizedTitle: internalFixedTitle(source.Title, source.Content),
     Image: !source.ImageId ? undefined : images[source.ImageId],
 });
 

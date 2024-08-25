@@ -154,6 +154,7 @@ const types = StyleSheet.create({
     },
     regular: {
         fontSize: 14,
+        lineHeight: 18,
         fontWeight: "normal",
     },
     minor: {

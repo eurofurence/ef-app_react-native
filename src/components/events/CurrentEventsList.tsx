@@ -2,6 +2,7 @@ import { chain } from "lodash";
 import { Moment } from "moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { StyleSheet, View } from "react-native";
 
 import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
@@ -36,18 +37,26 @@ export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
     return (
         <>
             <Section title={t("current_title")} subtitle={t("current_subtitle")} icon="clock" />
-            {events.map((event) => (
-                <EventCard
-                    key={event.details.Id}
-                    event={event}
-                    type="duration"
-                    onPress={(event) =>
-                        navigation.navigate("Event", {
-                            id: event.Id,
-                        })
-                    }
-                />
-            ))}
+            <View style={styles.condense}>
+                {events.map((event) => (
+                    <EventCard
+                        key={event.details.Id}
+                        event={event}
+                        type="duration"
+                        onPress={(event) =>
+                            navigation.navigate("Event", {
+                                id: event.Id,
+                            })
+                        }
+                    />
+                ))}
+            </View>
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    condense: {
+        marginVertical: -15,
+    },
+});

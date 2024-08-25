@@ -6,7 +6,7 @@ import { StyleSheet } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../../components/AppStyles";
-import { AnnouncementList } from "../../components/announce/AnnouncementList";
+import { RecentAnnouncements } from "../../components/announce/RecentAnnouncements";
 import { CurrentEventList } from "../../components/events/CurrentEventsList";
 import { TodayScheduleList } from "../../components/events/TodayScheduleList";
 import { UpcomingEventsList } from "../../components/events/UpcomingEventsList";
@@ -44,19 +44,19 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
 
     const { synchronize, isSynchronizing } = useSynchronizer();
     return (
-        <ScrollView style={[StyleSheet.absoluteFill]} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
+        <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
             <CountdownHeader />
+            <Search filter={filter} setFilter={setFilter} />
             <Floater contentStyle={appStyles.trailer}>
                 <LanguageWarnings parentPad={padFloater} />
                 <TimezoneWarning parentPad={padFloater} />
                 <DeviceSpecificWarnings />
                 <FavoritesChangedWarning />
-                <Search filter={filter} setFilter={setFilter} />
                 {results ? (
                     <GlobalSearch navigation={navigation} now={now} results={results} />
                 ) : (
                     <>
-                        <AnnouncementList now={now} />
+                        <RecentAnnouncements now={now} />
                         <UpcomingEventsList now={now} />
                         <TodayScheduleList now={now} />
                         <CurrentEventList now={now} />
