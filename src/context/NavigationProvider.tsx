@@ -75,7 +75,8 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
             initialRouteName: "Areas",
             screens: {
                 Areas: areasLinking,
-                Announcement: "announcement/:id",
+                AnnounceList: "announcements",
+                AnnounceItem: "announcements/:id",
                 Event: "events/:id",
                 Dealer: "dealers/:id",
                 Settings: "settings",

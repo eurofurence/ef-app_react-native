@@ -36,7 +36,7 @@ export const useNotificationRespondedManager = () => {
             console.log(`Navigating to announcement ${relatedId}`);
 
             // Go to announcement item.
-            return navigation.navigate("Announcement", {
+            return navigation.navigate("AnnounceItem", {
                 id: relatedId,
             });
         }

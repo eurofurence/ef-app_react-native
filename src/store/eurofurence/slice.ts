@@ -84,7 +84,7 @@ export const dealersAdapter = createEntityAdapter<DealerRecord>({
 
 export const announcementsAdapter = createEntityAdapter<AnnouncementRecord>({
     selectId: (model) => model.Id,
-    sortComparer: (a, b) => a.ValidUntilDateTimeUtc.localeCompare(b.ValidUntilDateTimeUtc),
+    sortComparer: (a, b) => -a.ValidFromDateTimeUtc.localeCompare(b.ValidFromDateTimeUtc),
 });
 
 export const mapsAdapter = createEntityAdapter<MapRecord>({
@@ -150,7 +150,7 @@ const internalPatchDealers = (dealers: EntitySyncState<DealerRecord>) => {
     });
 };
 
-export const eurofurenceCacheVersion = 1;
+export const eurofurenceCacheVersion = 2;
 
 export const eurofurenceCache = createSlice({
     name: "eurofurenceCache",

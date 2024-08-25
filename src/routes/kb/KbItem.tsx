@@ -1,8 +1,9 @@
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../../components/AppStyles";
-import { Image } from "../../components/generic/atoms/Image";
+import { Banner } from "../../components/generic/atoms/Banner";
 import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
@@ -20,8 +21,10 @@ export const KbItem = () => {
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{entry?.Title}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                {images.map((it) => (
-                    <Image style={styles.image} source={it.Url} key={it.Id} contentFit="contain" />
+                {images.map((image, i) => (
+                    <View key={i} style={styles.posterLine}>
+                        <Banner image={image} viewable />
+                    </View>
                 ))}
                 <MarkdownContent>{entry?.Text ?? ""}</MarkdownContent>
                 {entry?.Links.map((link) => (
@@ -35,9 +38,8 @@ export const KbItem = () => {
 };
 
 const styles = StyleSheet.create({
-    image: {
-        width: "100%",
-        height: "auto",
-        aspectRatio: 4 / 3,
+    posterLine: {
+        marginBottom: 20,
+        alignItems: "center",
     },
 });

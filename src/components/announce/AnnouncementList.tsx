@@ -1,29 +1,61 @@
+import { FlashList } from "@shopify/flash-list";
 import { Moment } from "moment";
-import { FC } from "react";
-import { useTranslation } from "react-i18next";
+import { FC, ReactElement } from "react";
+import { StyleSheet } from "react-native";
 
-import { AnnouncementCard } from "./AnnouncementCard";
-import { useAppSelector } from "../../store";
-import { selectActiveAnnouncements } from "../../store/eurofurence/selectors/announcements";
-import { Label } from "../generic/atoms/Label";
-import { Section } from "../generic/atoms/Section";
+import { AnnouncementCard, AnnouncementDetailsInstance } from "./AnnouncementCard";
+import { useThemeName } from "../../hooks/themes/useThemeHooks";
+import { AnnounceListProps } from "../../routes/announce/AnnounceList";
+import { useSynchronizer } from "../sync/SynchronizationProvider";
 
 export type AnnouncementListProps = {
-    now: Moment;
+    navigation: AnnounceListProps["navigation"];
+    leader?: ReactElement;
+    announcements: AnnouncementDetailsInstance[];
+    empty?: ReactElement;
+    trailer?: ReactElement;
+    padEnd?: boolean;
 };
-export const AnnouncementList: FC<AnnouncementListProps> = ({ now }) => {
-    const { t } = useTranslation("Announcements");
-    const announcements = useAppSelector((state) => selectActiveAnnouncements(state, now));
 
-    if (!announcements.length) {
-        return null;
-    }
-
+export const AnnouncementList: FC<AnnouncementListProps> = ({ navigation, leader, announcements, empty, trailer, padEnd = true }) => {
+    const theme = useThemeName();
+    const synchronizer = useSynchronizer();
     return (
-        <>
-            <Section title={t("sectionTitle")} subtitle={t("sectionSubtitle")} icon="newspaper" />
-
-            {announcements.length === 0 ? <Label mb={15}>{t("noAnnouncements")}</Label> : announcements.map((it) => <AnnouncementCard announcement={it} key={it.Id} />)}
-        </>
+        <FlashList
+            refreshing={synchronizer.isSynchronizing}
+            onRefresh={synchronizer.synchronize}
+            contentContainerStyle={padEnd ? styles.container : undefined}
+            scrollEnabled={true}
+            ListHeaderComponent={leader}
+            ListFooterComponent={trailer}
+            ListEmptyComponent={empty}
+            data={announcements}
+            keyExtractor={(item) => item.details.Id}
+            renderItem={({ item }) => {
+                return (
+                    <AnnouncementCard
+                        containerStyle={styles.item}
+                        key={item.details.Id}
+                        announcement={item}
+                        onPress={(announcement) =>
+                            navigation.navigate("AnnounceItem", {
+                                id: announcement.Id,
+                            })
+                        }
+                    />
+                );
+            }}
+            estimatedItemSize={110}
+            extraData={theme}
+        />
     );
 };
+
+const styles = StyleSheet.create({
+    item: {
+        paddingHorizontal: 20,
+    },
+    container: {
+        paddingBottom: 100,
+    },
+});

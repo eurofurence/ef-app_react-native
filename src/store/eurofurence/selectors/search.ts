@@ -1,23 +1,24 @@
 import { createSelector } from "@reduxjs/toolkit";
-import Fuse from "fuse.js";
+import Fuse, { FuseOptionKey, IFuseOptions } from "fuse.js";
 import { flatten } from "lodash";
 
 import { selectDealersInAd, selectDealersInRegular } from "./dealers";
-import { dealersSelectors, eventsSelector, knowledgeEntriesSelectors } from "./records";
-import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "../types";
+import { announcementsSelectors, dealersSelectors, eventsSelector, knowledgeEntriesSelectors } from "./records";
+import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails } from "../types";
 
 /**
  * Search options.
  */
-const searchOptions: Fuse.IFuseOptions<any> = {
+const searchOptions: IFuseOptions<any> = {
     shouldSort: true,
     threshold: 0.3,
+    ignoreLocation: true,
 };
 
 /**
  * Properties to use in search.
  */
-const dealerSearchProperties: Fuse.FuseOptionKey<DealerDetails>[] = [
+const dealerSearchProperties: FuseOptionKey<DealerDetails>[] = [
     {
         name: "FullName",
         weight: 2,
@@ -50,7 +51,7 @@ export const selectDealersInAdSearchIndex = createSelector([selectDealersInAd], 
 /**
  * Properties to use in search.
  */
-const eventSearchProperties: Fuse.FuseOptionKey<EventDetails>[] = [
+const eventSearchProperties: FuseOptionKey<EventDetails>[] = [
     {
         name: "Title",
         weight: 2,
@@ -85,7 +86,7 @@ export const selectEventsAllSearchIndex = createSelector([eventsSelector.selectA
 /**
  * Properties to use in search.
  */
-const kbSearchProperties: Fuse.FuseOptionKey<KnowledgeEntryDetails>[] = [
+const kbSearchProperties: FuseOptionKey<KnowledgeEntryDetails>[] = [
     {
         name: "Title",
         weight: 1.5,
@@ -107,12 +108,38 @@ export const selectGlobalSearchIndex = createSelector(
             searchOptions,
             Fuse.createIndex(
                 [
-                    ...(dealerSearchProperties as Fuse.FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
-                    ...(eventSearchProperties as Fuse.FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
-                    ...(kbSearchProperties as Fuse.FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
+                    ...(dealerSearchProperties as FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
+                    ...(eventSearchProperties as FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
+                    ...(kbSearchProperties as FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
                 ],
                 data,
             ),
         );
     },
+);
+/**
+ * Properties to use in search.
+ */
+const announceSearchProperties: FuseOptionKey<AnnouncementDetails>[] = [
+    {
+        name: "NormalizedTitle",
+        weight: 1.5,
+    },
+    {
+        name: "Content",
+        weight: 1,
+    },
+    {
+        name: "Author",
+        weight: 0.5,
+    },
+    {
+        name: "Area",
+        weight: 0.5,
+    },
+];
+
+export const selectAnnounceAllSearchIndex = createSelector(
+    [announcementsSelectors.selectAll],
+    (data) => new Fuse(data, searchOptions, Fuse.createIndex(announceSearchProperties, data)),
 );
