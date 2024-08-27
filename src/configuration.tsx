@@ -21,6 +21,11 @@ export const conId = conventionConfig.convention.identifier;
 export const conTimeZone = conventionConfig.convention.timeZone;
 
 /**
+ * Convention website URL.
+ */
+export const conWebsite = conventionConfig.convention.website;
+
+/**
  * App base, non-API URLs are relative to this.
  */
 export const appBase = conventionConfig.convention.appBase;

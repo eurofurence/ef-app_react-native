@@ -10,7 +10,8 @@
     "showLogin": true,
     "showServices": true,
     "showCatchEm": true,
-    "dealerShowAttendee": false
+    "dealerShowAttendee": false,
+    "website": "https://www.eurofurence.org"
   },
   "auth": {
     "issuer": "https://identity.eurofurence.org",
