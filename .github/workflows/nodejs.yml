@@ -1,4 +1,3 @@
-
 name: Lint and Test
 
 on:
@@ -7,15 +6,23 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [22]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: 22.x
-          cache: 'pnpm'
-      - run: pnpm install
-      - run: pnpm run lint --max-warnings=20
-      - run: pnpm run test --forceExit
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+      - name: Install dependencies
+        run: pnpm install
+      - name: Run linter
+        run: pnpm run lint --max-warnings=20
+      - name: Copy config into place
+        run: cp convention.config.dist.json convention.config.json
+      - name: Run tests
+        run: pnpm run test --forceExit
