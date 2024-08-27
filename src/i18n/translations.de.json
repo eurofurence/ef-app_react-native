@@ -115,7 +115,7 @@
     "announcementsTitle_other": "Es gibt {{ count }} aktuelle Mitteilungen.",
     "announcementsTitle_zero": "Aktuell gibt es keine Mitteilungen.",
     "content_untranslated": "Du nutzt die Applikation in einer anderen Sprache als Englisch. Bitte beachte dass Namen und Texte von sämtlichen dynamischen Inhalten ausschliesslich auf Englisch angezeigt werden.",
-    "different_timezone": "Deine Gerätezeitzone unterscheided sich von der die bei {{convention}} genutzt wird",
+    "different_timezone": "Deine Gerätezeitzone ({{deviceTimeZone}}) unterscheidet sich von der in welcher {{convention}} ({{conTimeZone}}) stattfindet.",
     "eventsTitle_one": "Es wurden {{ count }} Event abgerufen.",
     "eventsTitle_other": "Es wurden {{ count }} Events abgerufen.",
     "eventsTitle_zero": "Keine Events.",

@@ -489,3 +489,6 @@ render.experimental.xml
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,visualstudiocode,yarn,node,reactnative
 
 *.aab
+
+# Directory for storing things locally
+_private
