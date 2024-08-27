@@ -3,15 +3,17 @@ import { BottomTabBarProps } from "@react-navigation/bottom-tabs/src/types";
 import { CompositeScreenProps } from "@react-navigation/core";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import React, { FC, useRef } from "react";
+import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { IndexRouterParamsList } from "./IndexRouter";
 import { DealersRouter, DealersRouterParams } from "./dealers/DealersRouter";
 import { EventsRouter, EventsRouterParams } from "./events/EventsRouter";
 import { Home, HomeParams } from "./home/Home";
+import { Badge } from "../components/generic/containers/Badge";
 import { Tabs, TabsRef } from "../components/generic/containers/Tabs";
 import { MainMenu } from "../components/mainmenu/MainMenu";
+import { useSynchronizer } from "../components/sync/SynchronizationProvider";
 
 /**
  * Minimum padding to use if safe area is less.
@@ -55,7 +57,19 @@ export type AreasRouterProps =
     // Route carrying from start screen at "Areas", navigation via own parameter list and parent.
     CompositeScreenProps<StackScreenProps<IndexRouterParamsList, "Areas">, BottomTabScreenProps<AreasRouterParamsList> & StackScreenProps<IndexRouterParamsList>>;
 
-const AreasTabBar: FC<BottomTabBarProps> = ({ state, descriptors, navigation, insets }) => {
+type AreasTabBarProps = BottomTabBarProps & {
+    /**
+     * True if activity should be indicated.
+     */
+    activity?: boolean;
+
+    /**
+     * If given, a notice element on top of the tabs.
+     */
+    notice?: string | ReactNode;
+};
+
+const AreasTabBar: FC<AreasTabBarProps> = ({ state, descriptors, navigation, insets, activity, notice }) => {
     const tabs = useRef<TabsRef>(null);
     const { t } = useTranslation("Menu");
     return (
@@ -87,6 +101,8 @@ const AreasTabBar: FC<BottomTabBarProps> = ({ state, descriptors, navigation, in
             })}
             textMore={t("more")}
             textLess={t("less")}
+            activity={activity}
+            notice={notice}
         >
             <MainMenu tabs={tabs} />
         </Tabs>
@@ -101,8 +117,34 @@ const AreasTabBar: FC<BottomTabBarProps> = ({ state, descriptors, navigation, in
  */
 export const AreasRouter: FC<AreasRouterProps> = () => {
     const { t } = useTranslation("Menu");
+
+    const { isSynchronizing, synchronize } = useSynchronizer();
+
+    const [notice, setNotice] = useState<string | null>(null);
+    useEffect(() => {
+        synchronize(false).catch(() => {
+            setNotice(t("sync_error"));
+            setTimeout(() => setNotice(null), 15000);
+        });
+    }, [synchronize, t]);
+
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }} tabBar={(props) => <AreasTabBar {...props} />}>
+        <Tab.Navigator
+            screenOptions={{ headerShown: false }}
+            tabBar={(props) => (
+                <AreasTabBar
+                    activity={isSynchronizing}
+                    notice={
+                        !notice ? null : (
+                            <Badge unpad={0} textType="regular" badgeColor="warning" textColor="white">
+                                {notice}
+                            </Badge>
+                        )
+                    }
+                    {...props}
+                />
+            )}
+        >
             <Tab.Screen name="Home" options={{ title: t("home"), icon: "home" } as any} component={Home} />
             <Tab.Screen name="Events" options={{ title: t("events"), icon: "calendar" } as any} component={EventsRouter} />
             <Tab.Screen name="Dealers" options={{ title: t("dealers"), icon: "cart-outline" } as any} component={DealersRouter} />

@@ -96,7 +96,7 @@ type EurofurenceCacheState = {
     lastSynchronised: string;
     cid?: string;
     cacheVersion?: number;
-    state: "uninitialized" | "preview" | "refreshing" | string;
+    state: undefined | string;
     events: EntityState<EventRecord>;
     eventDays: EntityState<EventDayRecord>;
     eventRooms: EntityState<EventRoomRecord>;
@@ -111,7 +111,7 @@ type EurofurenceCacheState = {
 
 const initialState: EurofurenceCacheState = {
     lastSynchronised: moment(0).toISOString(),
-    state: "uninitialized",
+    state: undefined,
     events: eventsAdapter.getInitialState(),
     eventDays: eventDaysAdapter.getInitialState(),
     eventRooms: eventRoomsAdapter.getInitialState(),
@@ -173,7 +173,6 @@ export const eurofurenceCache = createSlice({
                 announcementsAdapter.removeAll(state.announcements);
                 mapsAdapter.removeAll(state.maps);
             }
-
             // Fix locally for now. TODO: Remove when API is fixed.
             internalPatchDealers(action.payload.Dealers);
 
@@ -194,9 +193,6 @@ export const eurofurenceCache = createSlice({
         resetCache: () => {
             return initialState;
         },
-        startCacheSync: (state) => {
-            state.state = "refreshing";
-        },
         overwriteUpdateTimes: (state, action: PayloadAction<string>) => {
             const update = { LastChangeDateTimeUtc: action.payload };
             amendEntities(state.events, eventsAdapter, update);
@@ -213,4 +209,4 @@ export const eurofurenceCache = createSlice({
     },
 });
 
-export const { applySync, resetCache, startCacheSync, overwriteUpdateTimes } = eurofurenceCache.actions;
+export const { applySync, resetCache, overwriteUpdateTimes } = eurofurenceCache.actions;

@@ -151,7 +151,8 @@
     "open_messages": "Hallo {{name}}. Nachrichten öffnen",
     "profile": "Profil",
     "services": "Services",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal."
   },
   "Notification": {
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",

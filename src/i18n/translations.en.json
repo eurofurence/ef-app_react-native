@@ -162,7 +162,8 @@
     "open_messages": "Hello {{name}}. Open messages",
     "profile": "Profile",
     "services": "Services",
-    "settings": "Settings"
+    "settings": "Settings",
+    "sync_error": "There was an issue with getting the data, please try again later."
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",

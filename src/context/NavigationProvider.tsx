@@ -137,14 +137,14 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
         },
         [logEvent],
     );
-    const cacheReady = useAppSelector((state) => state.eurofurenceCache.state !== "uninitialized");
+
     const days = useAppSelector(eventDaysSelectors.selectIds);
     const tracks = useAppSelector(eventTracksSelectors.selectIds);
     const rooms = useAppSelector(eventRoomsSelectors.selectIds);
 
     const linking = useMemo(() => linkingFrom(days, tracks, rooms), [days, tracks, rooms]);
 
-    if (!navStateReady || !cacheReady) {
+    if (!navStateReady) {
         return null;
     }
 
