@@ -14,31 +14,6 @@
       "name": "Luchs (pinselohrkater)"
     }
   ],
-  "convention": {
-    "name": "Eurofurence",
-    "abbreviation": "EF",
-    "identifier": "EF28",
-    "timeZone": "Europe/London",
-    "appBase": "https://app.eurofurence.org/EF28",
-    "apiBase": "https://app.eurofurence.org/EF28/Api",
-    "menuColumns": 3,
-    "showLogin": true,
-    "showServices": true,
-    "showCatchEm": true,
-    "dealerShowAttendee": false
-  },
-  "auth": {
-    "issuer": "https://identity.eurofurence.org",
-    "redirect": "eurofurence://auth/login",
-    "clientId": "a46cc012-dbc8-4992-ab10-581a40c9833e",
-    "scopes": [
-      "openid",
-      "profile",
-      "offline",
-      "offline_access"
-    ],
-    "settingsUrl": "https://identity.eurofurence.org/settings/profile"
-  },
   "license": "MIT",
   "scripts": {
     "start": "expo start",

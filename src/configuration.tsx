@@ -1,62 +1,62 @@
-import packageData from "../package.json";
+import conventionConfig from "../convention.config.json";
 
 /**
  * The name of the convention.
  */
-export const conName = packageData.convention.name;
+export const conName = conventionConfig.convention.name;
 
 /**
  * The abbreviation for the convention name.
  */
-export const conAbbr = packageData.convention.abbreviation;
+export const conAbbr = conventionConfig.convention.abbreviation;
 
 /**
  * Convention identifier.
  */
-export const conId = packageData.convention.identifier;
+export const conId = conventionConfig.convention.identifier;
 
 /**
  * Convention time zone.
  */
-export const conTimeZone = packageData.convention.timeZone;
+export const conTimeZone = conventionConfig.convention.timeZone;
 
 /**
  * App base, non-API URLs are relative to this.
  */
-export const appBase = packageData.convention.appBase;
+export const appBase = conventionConfig.convention.appBase;
 
 /**
  * API base, API methods are under this URL.
  */
-export const apiBase = packageData.convention.apiBase;
+export const apiBase = conventionConfig.convention.apiBase;
 
 /**
  * Number of columns to use in main menu pager.
  */
-export const menuColumns = packageData.convention.menuColumns;
+export const menuColumns = conventionConfig.convention.menuColumns;
 
 /**
  * True if login is available for this convention.
  */
-export const showLogin = packageData.convention.showLogin;
+export const showLogin = conventionConfig.convention.showLogin;
 
 /**
  * True if services are available for this convention.
  */
-export const showServices = packageData.convention.showServices;
+export const showServices = conventionConfig.convention.showServices;
 
 /**
  * True if catch-em-all game is available for this convention.
  */
-export const showCatchEm = packageData.convention.showCatchEm;
+export const showCatchEm = conventionConfig.convention.showCatchEm;
 
 /**
  * True if dealer view shows attendee.
  */
-export const dealerShowAttendee = packageData.convention.dealerShowAttendee;
+export const dealerShowAttendee = conventionConfig.convention.dealerShowAttendee;
 
-export const authIssuer = packageData.auth.issuer;
-export const authRedirect = packageData.auth.redirect;
-export const authClientId = packageData.auth.clientId;
-export const authScopes = packageData.auth.scopes;
-export const authSettingsUrl = packageData.auth.settingsUrl;
+export const authIssuer = conventionConfig.auth.issuer;
+export const authRedirect = conventionConfig.auth.redirect;
+export const authClientId = conventionConfig.auth.clientId;
+export const authScopes = conventionConfig.auth.scopes;
+export const authSettingsUrl = conventionConfig.auth.settingsUrl;
