@@ -4,7 +4,7 @@ import { captureException, ReactNavigationInstrumentation } from "@sentry/react-
 import * as SplashScreen from "expo-splash-screen";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
-import { conId } from "../configuration";
+import { appBase } from "../configuration";
 import { useAnalytics } from "../hooks/analytics/useAnalytics";
 import { useNavigationStatePersistence } from "../hooks/nav/useNavigationStatePersistence";
 import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
@@ -34,25 +34,25 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
     // Dynamically create dynamic parts.
     const eventsLinking: LinkingConfig<EventsRouterParamsList> = {
         initialRouteName: "Events",
-        path: "events",
+        path: "Events",
         screens: {
-            Search: "search",
-            Personal: "personal",
+            Search: "Search",
+            Personal: "Personal",
 
-            ...Object.fromEntries(days.map((id) => [id, `days/${id}`])),
-            ...Object.fromEntries(tracks.map((id) => [id, `tracks/${id}`])),
-            ...Object.fromEntries(rooms.map((id) => [id, `rooms/${id}`])),
+            ...Object.fromEntries(days.map((id) => [id, `Days/${id}`])),
+            ...Object.fromEntries(tracks.map((id) => [id, `Tracks/${id}`])),
+            ...Object.fromEntries(rooms.map((id) => [id, `Rooms/${id}`])),
         },
     };
 
     const dealersLinking: LinkingConfig<DealersRouterParamsList> = {
         initialRouteName: "All",
         screens: {
-            All: "dealers",
-            Personal: "dealers/personal",
-            Regular: "dealers/regular",
-            AD: "dealers/ad",
-            Alpha: "dealers/az",
+            All: "Dealers",
+            Personal: "Dealers/Personal",
+            Regular: "Dealers/Regular",
+            AD: "Dealers/AD",
+            Alpha: "Dealers/AZ",
         },
     };
 
@@ -70,25 +70,25 @@ const linkingFrom = (days: RecordId[], tracks: RecordId[], rooms: RecordId[]): L
     // TODO: Use configuration constants here.
     // Return the composed linking object.
     return {
-        prefixes: [`https://app.eurofurence.org/${conId}/Web/`],
+        prefixes: [`${appBase}/Web/`, "eurofurence://"],
         config: {
             initialRouteName: "Areas",
             screens: {
                 Areas: areasLinking,
-                AnnounceList: "announcements",
-                AnnounceItem: "announcements/:id",
-                Event: "events/:id",
-                Dealer: "dealers/:id",
-                Settings: "settings",
-                RevealHidden: "settings/reveal-hidden",
-                PrivateMessageList: "pm",
-                KnowledgeGroups: "kb",
-                KnowledgeEntry: "kb/:id",
-                Map: "map/:id",
-                About: "about",
-                Profile: "profile",
-                Viewer: "viewer/:id",
-                EventFeedback: "events/:id/feedback",
+                AnnounceList: "Announcements",
+                AnnounceItem: "Announcements/:id",
+                Event: "Events/:id",
+                Dealer: "Dealers/:id",
+                Settings: "Settings",
+                RevealHidden: "Settings/RevealHidden",
+                PrivateMessageList: "PrivateMessages",
+                KnowledgeGroups: "KnowledgeGroups",
+                KnowledgeEntry: "KnowledgeEntries/:id",
+                Map: "Map/:id",
+                About: "About",
+                Profile: "Profile",
+                Viewer: "Viewer/:id",
+                EventFeedback: "Events/:id/Feedback",
             },
         },
     };

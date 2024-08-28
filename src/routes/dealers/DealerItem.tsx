@@ -48,8 +48,8 @@ export const shareDealer = (dealer: DealerDetails) =>
     Share.share(
         {
             title: dealer.FullName,
-            url: `${appBase}/Web/dealers/${dealer.Id}`,
-            message: `Check out ${dealer.FullName} on ${conAbbr}!\n${appBase}/Web/dealers/${dealer.Id}`,
+            url: `${appBase}/Web/Dealers/${dealer.Id}`,
+            message: `Check out ${dealer.FullName} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
         },
         {},
     ).catch(captureException);
