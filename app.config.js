@@ -52,6 +52,11 @@ module.exports = {
                             host: "app.eurofurence.org",
                             pathPrefix: "/EF28/Web",
                         },
+                        {
+                            scheme: "https",
+                            host: "app.test.eurofurence.org",
+                            pathPrefix: "/EF28/Web",
+                        },
                     ],
                     category: ["BROWSABLE", "DEFAULT"],
                 },
@@ -62,6 +67,11 @@ module.exports = {
                         {
                             scheme: "https",
                             host: "app.eurofurence.org",
+                            path: "/auth/login",
+                        },
+                        {
+                            scheme: "https",
+                            host: "app.test.eurofurence.org",
                             path: "/auth/login",
                         },
                     ],
