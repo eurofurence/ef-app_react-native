@@ -73,7 +73,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 tabs.current?.close();
             },
         }),
-        [tabs, openFursuitGames, openAdditionalServices, login],
+        [t, tabs, openFursuitGames, openAdditionalServices, login],
     );
 
     // If no login, do not return pager.
