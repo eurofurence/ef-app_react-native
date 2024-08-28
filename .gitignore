@@ -3,7 +3,8 @@ android
 ios
 
 # Actual settings
-convention.config.json
+convention.config*.json
+!convention.config.dist.json
 
 web-build
 
