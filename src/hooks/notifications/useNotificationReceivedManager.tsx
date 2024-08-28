@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/react-native";
 import { addNotificationReceivedListener, Notification, removeNotificationSubscription, scheduleNotificationAsync } from "expo-notifications";
 import moment from "moment";
 import { useEffect } from "react";
@@ -65,7 +66,7 @@ export const useNotificationReceivedManager = () => {
                 // Handle for sync, announcement, and notification.
                 if (event === "Sync") {
                     // Is sync, do synchronization silently.
-                    synchronize(false);
+                    synchronize().catch(captureException);
 
                     // Log sync.
                     console.log("Synchronized for remote Sync request");

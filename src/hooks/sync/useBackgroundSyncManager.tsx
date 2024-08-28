@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { captureException } from "@sentry/react-native";
 import { useEffect } from "react";
 import { AppState } from "react-native";
 
@@ -38,7 +39,7 @@ export const useBackgroundSyncManager = () => {
                 if (data !== "true") {
                     return false;
                 } else {
-                    synchronize();
+                    synchronize().then(captureException);
                     await AsyncStorage.removeItem(STORAGE_TAG_NAME);
                     return true;
                 }

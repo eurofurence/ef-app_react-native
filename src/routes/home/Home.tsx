@@ -42,9 +42,9 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     // Search integration.
     const [filter, setFilter, results] = useFuseIntegration(selectGlobalSearchIndex);
 
-    const { synchronize, isSynchronizing } = useSynchronizer();
+    const { synchronizeUi, isSynchronizing } = useSynchronizer();
     return (
-        <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronize} />}>
+        <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}>
             <CountdownHeader />
             <Search filter={filter} setFilter={setFilter} />
             <Floater contentStyle={appStyles.trailer}>

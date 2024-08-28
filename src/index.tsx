@@ -9,6 +9,7 @@ import { App } from "./App";
 import { SynchronizationProvider } from "./components/sync/SynchronizationProvider";
 import { AuthContextProvider } from "./context/AuthContext";
 import { NavigationProvider } from "./context/NavigationProvider";
+import { ToastContextProvider } from "./context/ToastContext";
 import { persistor, store } from "./store";
 
 import "react-native-reanimated";
@@ -25,13 +26,15 @@ function Index() {
         <GestureHandlerRootView style={[StyleSheet.absoluteFill, styles.container]}>
             <StoreProvider store={store}>
                 <PersistGate persistor={persistor}>
-                    <AuthContextProvider>
-                        <SynchronizationProvider>
-                            <NavigationProvider>
-                                <App />
-                            </NavigationProvider>
-                        </SynchronizationProvider>
-                    </AuthContextProvider>
+                    <ToastContextProvider>
+                        <AuthContextProvider>
+                            <SynchronizationProvider>
+                                <NavigationProvider>
+                                    <App />
+                                </NavigationProvider>
+                            </SynchronizationProvider>
+                        </AuthContextProvider>
+                    </ToastContextProvider>
                 </PersistGate>
             </StoreProvider>
         </GestureHandlerRootView>

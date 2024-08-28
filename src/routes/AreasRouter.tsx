@@ -5,6 +5,7 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, ReactNode, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Animated, { Easing, useSharedValue, withSequence, withTiming } from "react-native-reanimated";
 
 import { IndexRouterParamsList } from "./IndexRouter";
 import { DealersRouter, DealersRouterParams } from "./dealers/DealersRouter";
@@ -14,6 +15,7 @@ import { Badge } from "../components/generic/containers/Badge";
 import { Tabs, TabsRef } from "../components/generic/containers/Tabs";
 import { MainMenu } from "../components/mainmenu/MainMenu";
 import { useSynchronizer } from "../components/sync/SynchronizationProvider";
+import { ToastMessage, useToastMessages } from "../context/ToastContext";
 
 /**
  * Minimum padding to use if safe area is less.
@@ -110,6 +112,39 @@ const AreasTabBar: FC<AreasTabBarProps> = ({ state, descriptors, navigation, ins
 };
 
 /**
+ * Displays a fading out toast on the tabs.
+ * @param type The type of the toast.
+ * @param content The content, may be a React node.
+ * @param queued The queued and unmodified time.
+ * @param lifetime The lifetime of this toast.
+ * @constructor
+ */
+const TabsToast = ({ type, content, queued, lifetime }: Omit<ToastMessage, "id">) => {
+    const [seenTime] = useState(Date.now);
+
+    const badgeColor = (type === "error" && "notification") || (type === "warning" && "warning") || "primary";
+    const opacity = useSharedValue(1);
+
+    useEffect(() => {
+        const remainingTime = lifetime - (seenTime - queued);
+        opacity.value = withSequence(
+            // Wait.
+            withTiming(1, { duration: remainingTime }),
+            // Fade out.
+            withTiming(0, { duration: 1300, easing: Easing.in(Easing.cubic) }),
+        );
+    }, [seenTime, queued, lifetime]);
+
+    return (
+        <Animated.View style={{ opacity }}>
+            <Badge unpad={0} textType="regular" badgeColor={badgeColor} textColor="white">
+                {content}
+            </Badge>
+        </Animated.View>
+    );
+};
+
+/**
  * This is the primary router for home, event, and dealers. Stack navigation is allowed by index router.
  *
  * Events and dealers both provide a nested navigator and therefore are wrapped in their respective routers.
@@ -118,31 +153,17 @@ const AreasTabBar: FC<AreasTabBarProps> = ({ state, descriptors, navigation, ins
 export const AreasRouter: FC<AreasRouterProps> = () => {
     const { t } = useTranslation("Menu");
 
-    const { isSynchronizing, synchronize } = useSynchronizer();
-
-    const [notice, setNotice] = useState<string | null>(null);
-    useEffect(() => {
-        synchronize(false).catch(() => {
-            setNotice(t("sync_error"));
-            setTimeout(() => setNotice(null), 15000);
-        });
-    }, [synchronize, t]);
+    // Areas router is the tabs provider and therefore renders toast messages and
+    // displays the current syncing status. Be aware that this does only display
+    // on the primary area screens, not on detail pages.
+    const toastMessages = useToastMessages();
+    const { isSynchronizing } = useSynchronizer();
 
     return (
         <Tab.Navigator
             screenOptions={{ headerShown: false }}
             tabBar={(props) => (
-                <AreasTabBar
-                    activity={isSynchronizing}
-                    notice={
-                        !notice ? null : (
-                            <Badge unpad={0} textType="regular" badgeColor="warning" textColor="white">
-                                {notice}
-                            </Badge>
-                        )
-                    }
-                    {...props}
-                />
+                <AreasTabBar activity={isSynchronizing} notice={!toastMessages.length ? null : toastMessages.map((toast) => <TabsToast key={toast.id} {...toast} />)} {...props} />
             )}
         >
             <Tab.Screen name="Home" options={{ title: t("home"), icon: "home" } as any} component={Home} />

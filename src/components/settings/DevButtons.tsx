@@ -18,7 +18,7 @@ export const DevButtons = () => {
     const [createSync, syncResult] = useCreateSyncRequestMutation();
     const [sendMessage, messageResult] = useSendPrivateMessageMutation();
     const { claims, logout } = useAuthContext();
-    const { synchronize } = useSynchronizer();
+    const { synchronizeUi } = useSynchronizer();
 
     const dispatch = useAppDispatch();
     const isFocused = useIsFocused();
@@ -47,7 +47,7 @@ export const DevButtons = () => {
             <Button containerStyle={styles.button} icon="refresh" onPress={() => dispatch(overwriteUpdateTimes(now.toISOString()))}>
                 {t("overwrite_update_time")}
             </Button>
-            <Button containerStyle={styles.button} icon="refresh" onPress={() => synchronize()}>
+            <Button containerStyle={styles.button} icon="refresh" onPress={() => synchronizeUi()}>
                 {t("sync_standard")}
             </Button>
             <Button

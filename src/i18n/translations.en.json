@@ -127,6 +127,7 @@
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
     "recent_announcements": "Recent announcements",
+    "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
       "favorites_changed": "Favorites updated",
@@ -162,8 +163,7 @@
     "open_messages": "Hello {{name}}. Open messages",
     "profile": "Profile",
     "services": "Services",
-    "settings": "Settings",
-    "sync_error": "There was an issue with getting the data, please try again later."
+    "settings": "Settings"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",

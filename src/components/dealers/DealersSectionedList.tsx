@@ -39,7 +39,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronize}
+            onRefresh={synchronizer.synchronizeUi}
             contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             stickyHeaderIndices={stickyIndices}

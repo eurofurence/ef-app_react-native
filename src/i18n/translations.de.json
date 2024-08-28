@@ -119,6 +119,7 @@
     "eventsTitle_one": "Es wurden {{ count }} Event abgerufen.",
     "eventsTitle_other": "Es wurden {{ count }} Events abgerufen.",
     "eventsTitle_zero": "Keine Events.",
+    "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "warnings": {
       "no_image_caching": "Dein Gerät unterstützt kein Zwischenspeichern von Bildern. Ohne aktive Internetverbindung werden dir keine Bilder angezeigt.",
       "no_notifications": "Dein Gerät unterstützt keine zeitgesteuerten Benachrichtigungen. Du wirst keine Benachrichtigungen für anstehende Events erhalten.",
@@ -151,8 +152,7 @@
     "open_messages": "Hallo {{name}}. Nachrichten öffnen",
     "profile": "Profil",
     "services": "Services",
-    "settings": "Einstellungen",
-    "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal."
+    "settings": "Einstellungen"
   },
   "Notification": {
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",
