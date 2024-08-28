@@ -1,9 +1,11 @@
 import { captureException } from "@sentry/react-native";
+import { TFunction } from "i18next";
 import { FC, RefObject, useContext, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { Linking } from "react-native";
 
 import { PagerPrimary } from "./PagerPrimary";
-import { appBase } from "../../configuration";
+import { appBase, conWebsite } from "../../configuration";
 import { AuthContext, getAccessToken } from "../../context/AuthContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { RecordId } from "../../store/eurofurence/types";
@@ -14,25 +16,26 @@ export type MainMenuProps = {
     tabs: RefObject<TabsRef>;
 };
 
-const openFursuitGames = async () => {
+const openFursuitGames = async (t: TFunction) => {
     const token = await getAccessToken();
     if (!token) {
-        alert("You are not logged in.");
+        alert(t("not_logged_in"));
         return;
     }
     await Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/collect&token=${token}`).catch(console.error);
 };
 
-const openAdditionalServices = async () => {
+const openAdditionalServices = async (t: TFunction) => {
     const token = await getAccessToken();
     if (!token) {
-        alert("You are not logged in.");
+        alert(t("not_logged_in"));
         return;
     }
     await Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/&token=${token}`).catch(console.error);
 };
 
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
+    const { t } = useTranslation("Menu");
     const navigation = useAppNavigation("Areas");
 
     const { login } = useContext(AuthContext);
@@ -54,11 +57,11 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 tabs.current?.close();
             },
             catchEmAll: () => {
-                openFursuitGames().catch(captureException);
+                openFursuitGames(t).catch(captureException);
                 tabs.current?.close();
             },
             services: () => {
-                openAdditionalServices().catch(captureException);
+                openAdditionalServices(t).catch(captureException);
                 tabs.current?.close();
             },
             settings: () => {
@@ -70,7 +73,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 tabs.current?.close();
             },
         }),
-        [tabs, openFursuitGames, openAdditionalServices, login],
+        [t, tabs, openFursuitGames, openAdditionalServices, login],
     );
 
     // If no login, do not return pager.
@@ -85,7 +88,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             onSettings={on.settings}
             onMap={on.map}
         >
-            <Tab icon="twitter" text="Twitter" onPress={() => Linking.openURL("https://twitter.com/eurofurence")} />
+            <Tab icon="web" text={t("website")} onPress={() => Linking.openURL(conWebsite)} />
         </PagerPrimary>
     );
 };
