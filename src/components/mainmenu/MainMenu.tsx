@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Linking } from "react-native";
 
 import { PagerPrimary } from "./PagerPrimary";
-import { appBase, conWebsite } from "../../configuration";
+import { appBase, conWebsite, catchEmUrl } from "../../configuration";
 import { AuthContext, getAccessToken } from "../../context/AuthContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { RecordId } from "../../store/eurofurence/types";
@@ -31,7 +31,7 @@ const openAdditionalServices = async (t: TFunction) => {
         alert(t("not_logged_in"));
         return;
     }
-    await Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/&token=${token}`).catch(console.error);
+    await Linking.openURL(catchEmUrl).catch(console.error);
 };
 
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
