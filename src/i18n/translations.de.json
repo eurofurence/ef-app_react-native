@@ -267,6 +267,7 @@
     "artistThumbnail": "Dealer-Avatar: {{name}}",
     "eventBanner": "Banner: {{name}}",
     "eventPoster": "Poster: {{name}}",
+    "knowledgeEntryBanner": "Infoartikelbild: {{name}}",
     "unspecified": "Bild"
   }
 }

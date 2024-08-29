@@ -51,7 +51,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
             keyExtractor={(item) => ("details" in item ? item.details.Id : item.title)}
             renderItem={({ item }) => {
                 if ("details" in item) {
-                    return <DealerCard containerStyle={styles.item} key={item.details.Id} dealer={item} onPress={(dealer) => navigation.navigate("Dealer", { id: dealer.Id })} />;
+                    return <DealerCard containerStyle={styles.item} dealer={item} onPress={(dealer) => navigation.navigate("Dealer", { id: dealer.Id })} />;
                 } else {
                     return <DealerSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
                 }

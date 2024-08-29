@@ -1,6 +1,4 @@
-import FontAwesomeIcon from "@expo/vector-icons/FontAwesome5";
 import { Dictionary } from "@reduxjs/toolkit";
-import { parseInt } from "lodash";
 import moment, { MomentInput } from "moment";
 
 import {
@@ -17,8 +15,6 @@ import {
     EventTrackDetails,
     ImageDetails,
     ImageRecord,
-    KnowledgeGroupDetails,
-    KnowledgeGroupRecord,
     MapDetails,
     MapEntryDetails,
     MapRecord,
@@ -208,11 +204,4 @@ export const applyMapDetails = (source: MapRecord, images: Dictionary<ImageDetai
     ...source,
     Image: images[source.ImageId],
     Entries: source.Entries as MapEntryDetails[],
-});
-
-const faGlyphToName = Object.fromEntries(Object.entries(FontAwesomeIcon.getRawGlyphMap()).map(([key, value]) => [value, key]));
-
-export const applyKnowledgeGroupDetails = (source: KnowledgeGroupRecord): KnowledgeGroupDetails => ({
-    ...source,
-    FaIconName: source.FontAwesomeIconCharacterUnicodeAddress ? faGlyphToName[parseInt(source.FontAwesomeIconCharacterUnicodeAddress, 16)] : undefined,
 });

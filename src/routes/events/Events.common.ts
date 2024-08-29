@@ -7,6 +7,19 @@ import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, e
 import { EventDetails } from "../../store/eurofurence/types";
 
 /**
+ Returns a list of event instances according to conversion rules.
+ * @param t The translation function.
+ * @param now The current moment.
+ * @param items The items to transform.
+ */
+export const useEventInstances = (t: TFunction, now: Moment, items: EventDetails[]) => {
+    // Return direct mapping.
+    return useMemo(() => {
+        return items.map((item) => eventInstanceForAny(item, now));
+    }, [t, now, items]);
+};
+
+/**
  * Generates search result grouping with event detail instances prepared for
  * display standalone dates.
  * @param t The translation function.
