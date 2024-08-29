@@ -6,7 +6,7 @@ import { Platform } from "react-native";
 import { conId } from "../../configuration";
 import { useAuthContext } from "../../context/AuthContext";
 import { captureNotificationException } from "../../sentryHelpers";
-import { usePostDeviceRegistrationMutation, usePostSubscribeToTopicMutation } from "../../store/auth/service";
+import { usePostDeviceRegistrationMutation } from "../../store/auth/service";
 
 /**
  * List of topics for this device.
@@ -51,7 +51,6 @@ export const useTokenManager = () => {
 
     // Use device registration and subscription.
     const [registerDevice] = usePostDeviceRegistrationMutation();
-    const [subscribeToTopic] = usePostSubscribeToTopicMutation();
 
     // Connect device itself via it's token to the backend and the topics. This
     // effect specifies token as a dependency, as a change of the token results
@@ -70,16 +69,8 @@ export const useTokenManager = () => {
             // Register token as device with all topics.
             await registerDevice({
                 DeviceId: token,
-                Topics: TOPICS,
+                DeviceType: Platform.OS,
             });
-
-            // Register token individually for FCM compat.
-            for (const topic of TOPICS) {
-                await subscribeToTopic({
-                    DeviceId: token,
-                    Topic: topic,
-                });
-            }
 
             // Return actionable true.
             return true;

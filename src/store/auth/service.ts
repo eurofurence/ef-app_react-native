@@ -22,13 +22,13 @@ export const authorizationService = createApi({
     }),
     tagTypes: ["User"],
     endpoints: (builder) => ({
-        postDeviceRegistration: builder.mutation<void, { DeviceId: string; Topics: string[] }>({
+        postDeviceRegistration: builder.mutation<void, { DeviceId: string; DeviceType: string }>({
             query: (args) => ({
                 url: "/PushNotifications/FcmDeviceRegistration",
                 method: "POST",
                 body: {
                     DeviceId: args.DeviceId,
-                    Topics: args.Topics,
+                    DeviceType: args.DeviceType,
                 },
             }),
         }),
@@ -36,18 +36,6 @@ export const authorizationService = createApi({
             query: () => ({
                 url: "/PushNotifications/SyncRequest",
                 method: "POST",
-            }),
-        }),
-        postSubscribeToTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
-            query: (arg) => ({
-                url: `/PushNotifications/Topics/${arg.Topic}/${arg.DeviceId}`,
-                method: "PUT",
-            }),
-        }),
-        postUnsubscribeFromTopic: builder.mutation<void, { DeviceId: string; Topic: string }>({
-            query: (arg) => ({
-                url: `/PushNotifications/Topics/${arg.Topic}/${arg.DeviceId}`,
-                method: "DELETE",
             }),
         }),
         sendPrivateMessage: builder.mutation<string, NewPrivateMessage>({
@@ -60,10 +48,4 @@ export const authorizationService = createApi({
     }),
 });
 
-export const {
-    usePostDeviceRegistrationMutation,
-    useCreateSyncRequestMutation,
-    useSendPrivateMessageMutation,
-    usePostSubscribeToTopicMutation,
-    usePostUnsubscribeFromTopicMutation,
-} = authorizationService;
+export const { usePostDeviceRegistrationMutation, useCreateSyncRequestMutation, useSendPrivateMessageMutation } = authorizationService;
