@@ -10,6 +10,22 @@ import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/de
 import { DealerDetails } from "../../store/eurofurence/types";
 
 /**
+ * Returns a list of dealer instances according to conversion rules.
+ * @param t The translation function.
+ * @param now The current moment.
+ * @param items The items to transform.
+ */
+export const useDealerInstances = (t: TFunction, now: Moment, items: DealerDetails[]) => {
+    // Return direct mapping.
+    return useMemo(() => {
+        const day1 = moment().day(1).format("dddd");
+        const day2 = moment().day(2).format("dddd");
+        const day3 = moment().day(3).format("dddd");
+        return items.map((item) => dealerInstanceForAny(item, now, day1, day2, day3));
+    }, [t, now, items]);
+};
+
+/**
  * Returns a list of dealer instances or section headers according to conversion rules.
  * @param t The translation function.
  * @param now The current moment.

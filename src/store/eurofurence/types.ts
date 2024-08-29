@@ -182,12 +182,10 @@ export type KnowledgeGroupRecord = RecordMetadata & {
     Description: string;
     Order: number;
     showInHamburgerMenu: boolean;
-    FontAwesomeIconCharacterUnicodeAddress?: string;
+    FontAwesomeIconName?: string;
 };
 
-export type KnowledgeGroupDetails = KnowledgeGroupRecord & {
-    FaIconName?: string;
-};
+export type KnowledgeGroupDetails = KnowledgeGroupRecord & object;
 
 export type KnowledgeEntryRecord = RecordMetadata & {
     Title: string;

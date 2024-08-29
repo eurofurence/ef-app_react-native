@@ -94,12 +94,14 @@ const styles = StyleSheet.create({
         backgroundColor: "#00000060",
     },
     container: {
-        height: 160,
+        height: 240,
         paddingTop: 15,
         paddingHorizontal: 15,
-        flexDirection: "column-reverse",
+        flexDirection: "row",
+        alignItems: "flex-end",
     },
     textContainer: {
+        flex: 1,
         paddingTop: 30,
         paddingBottom: 5,
     },
@@ -110,11 +112,9 @@ const styles = StyleSheet.create({
         marginTop: 0,
     },
     logo: {
-        position: "absolute",
-        top: 25,
-        right: 25,
-        bottom: 25,
         aspectRatio: 1,
-        maxHeight: 130,
+        height: 130,
+        marginLeft: -25,
+        marginRight: -15,
     },
 });

@@ -37,13 +37,13 @@ const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }
                     if (keywords?.length)
                         return (
                             <Label key={category} mt={5}>
-                                <Label type="strong">{category}: </Label>
+                                <Label variant="bold">{category}: </Label>
                                 {keywords.join(", ")}
                             </Label>
                         );
                     else
                         return (
-                            <Label key={category} type="strong">
+                            <Label key={category} variant="bold">
                                 {category}
                             </Label>
                         );

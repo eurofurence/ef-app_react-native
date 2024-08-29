@@ -303,6 +303,7 @@
     "artistThumbnail": "Artist thumbnail: {{name}}",
     "eventBanner": "Banner: {{name}}",
     "eventPoster": "Poster: {{name}}",
+    "knowledgeEntryBanner": "Info article image: {{name}}",
     "unspecified": "Image"
   }
 }
