@@ -1,6 +1,6 @@
 import { convention } from "./convention.config.json";
 
-const urlMatcher = /^([^:]+):\/\/([^\/]+)(\/.*)$/;
+const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/;
 const [, appBaseProtocol, appBaseHost, appBasePath] = [...convention.appBase.match(urlMatcher)];
 
 module.exports = {
