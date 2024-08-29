@@ -51,9 +51,14 @@ export const showLogin = conventionConfig.convention.showLogin;
 export const showServices = conventionConfig.convention.showServices;
 
 /**
- * True if catch-em-all game is available for this convention.
+ * True if Catch 'em All game is available for this convention.
  */
 export const showCatchEm = conventionConfig.convention.showCatchEm;
+
+/**
+ * URL for accessing the Catch 'em All game for this convention.
+ */
+export const catchEmUrl = conventionConfig.convention.catchEmUrl;
 
 /**
  * True if dealer view shows attendee.
