@@ -34,7 +34,7 @@ export const Header: FC<HeaderProps> = (props) => {
 
     return (
         <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-            <TouchableOpacity hitSlop={{ right: 50 }} containerStyle={styles.back} onPress={() => navigation.goBack()}>
+            <TouchableOpacity hitSlop={50} containerStyle={styles.back} onPress={() => navigation.goBack()}>
                 <Icon name="chevron-left" size={iconSize} color={colorValue} />
             </TouchableOpacity>
 
@@ -44,7 +44,7 @@ export const Header: FC<HeaderProps> = (props) => {
 
             {/* Optional secondary action. */}
             {!("secondaryIcon" in props) ? null : (
-                <TouchableOpacity hitSlop={{ left: 50 }} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
+                <TouchableOpacity hitSlop={50} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
                     <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
                 </TouchableOpacity>
             )}

@@ -97,7 +97,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
             try {
                 return await synchronize();
             } catch (error) {
-                toast("warning", t("sync_error"));
+                toast("warning", t("sync_error"), 6000);
                 throw error;
             }
         },
