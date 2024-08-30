@@ -4,6 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppErrorBoundary } from "./components/util/AppErrorBoundary";
 import { useAnalyticsManager } from "./hooks/analytics/useAnalyticsManager";
+import { useInitialSynchronization } from "./hooks/analytics/useInitialSynchronization";
 import { useNotificationReceivedManager } from "./hooks/notifications/useNotificationReceivedManager";
 import { useNotificationRespondedManager } from "./hooks/notifications/useNotificationRespondedManager";
 import { useBackgroundSyncManager } from "./hooks/sync/useBackgroundSyncManager";
@@ -19,6 +20,7 @@ export function App() {
     useAnalyticsManager();
     useColorSchemeManager();
     useBackgroundSyncManager();
+    useInitialSynchronization();
     useImagePrefetch();
     useTokenManager();
     useNotificationReceivedManager();

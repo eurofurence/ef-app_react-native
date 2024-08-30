@@ -1,10 +1,12 @@
 import { useIsFocused } from "@react-navigation/core";
 import { captureException } from "@sentry/react-native";
+import moment from "moment";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Vibration, View } from "react-native";
 
 import { useAuthContext } from "../../context/AuthContext";
+import { useToast } from "../../context/ToastContext";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppDispatch } from "../../store";
 import { useCreateSyncRequestMutation, useSendPrivateMessageMutation } from "../../store/auth/service";
@@ -17,8 +19,9 @@ export const DevButtons = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "dev_buttons" });
     const [createSync, syncResult] = useCreateSyncRequestMutation();
     const [sendMessage, messageResult] = useSendPrivateMessageMutation();
-    const { claims, logout } = useAuthContext();
-    const { synchronize } = useSynchronizer();
+    const { claims } = useAuthContext();
+    const { synchronizeUi } = useSynchronizer();
+    const toast = useToast();
 
     const dispatch = useAppDispatch();
     const isFocused = useIsFocused();
@@ -44,10 +47,13 @@ export const DevButtons = () => {
         <View>
             <Section title={t("title")} subtitle={t("subtitle")} />
 
+            <Button containerStyle={styles.button} icon="toaster" onPress={() => toast("warning", "Toast " + moment().format(), 5000)}>
+                Test toasts
+            </Button>
             <Button containerStyle={styles.button} icon="refresh" onPress={() => dispatch(overwriteUpdateTimes(now.toISOString()))}>
                 {t("overwrite_update_time")}
             </Button>
-            <Button containerStyle={styles.button} icon="refresh" onPress={() => synchronize()}>
+            <Button containerStyle={styles.button} icon="refresh" onPress={() => synchronizeUi()}>
                 {t("sync_standard")}
             </Button>
             <Button
@@ -72,15 +78,6 @@ export const DevButtons = () => {
                 }}
             >
                 {t("send_private_message", { status: messageResult.status })}
-            </Button>
-
-            <Button
-                containerStyle={styles.button}
-                onPress={() => {
-                    logout().catch(captureException);
-                }}
-            >
-                Logout
             </Button>
         </View>
     );

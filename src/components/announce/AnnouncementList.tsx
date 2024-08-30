@@ -1,5 +1,4 @@
 import { FlashList } from "@shopify/flash-list";
-import { Moment } from "moment";
 import { FC, ReactElement } from "react";
 import { StyleSheet } from "react-native";
 
@@ -23,7 +22,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ navigation, leader
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronize}
+            onRefresh={synchronizer.synchronizeUi}
             contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             ListHeaderComponent={leader}

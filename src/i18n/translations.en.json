@@ -127,6 +127,7 @@
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
     "recent_announcements": "Recent announcements",
+    "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
       "favorites_changed": "Favorites updated",

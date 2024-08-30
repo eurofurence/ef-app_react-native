@@ -5,7 +5,7 @@ import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useDerive
 
 import { Tab } from "./Tab";
 import { useThemeBackground, useThemeBorder } from "../../../hooks/themes/useThemeHooks";
-import { Activity } from "../atoms/Activity";
+import { Continuous } from "../atoms/Continuous";
 import { IconNames } from "../atoms/Icon";
 
 /**
@@ -63,6 +63,16 @@ export type TabsProps = {
     indicateMore?: true | ReactNode;
 
     /**
+     * True if activity should be indicated.
+     */
+    activity?: boolean;
+
+    /**
+     * If given, a notice element on top of the tabs.
+     */
+    notice?: string | ReactNode;
+
+    /**
      * The content to render in the more-area.
      */
     children?: ReactNode;
@@ -110,7 +120,7 @@ export const useTabs = () => useContext(TabsContext);
  * or dragging, translates it into view and overlays the containing view with
  * a semi-opaque layer.
  */
-export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "More", textLess = "Less", indicateMore, children }, ref) => {
+export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "More", textLess = "Less", indicateMore, activity, notice, children }, ref) => {
     // Computed styles.
     const styleDismiss = useThemeBackground("darken");
     const fillBackground = useThemeBackground("background");
@@ -240,6 +250,13 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
 
             <GestureDetector gesture={gesture}>
                 <Animated.View style={dynamicContainer}>
+                    {/* TODO: Animation */}
+                    {!notice ? null : (
+                        <View style={styles.zeroFromTop}>
+                            <View style={styles.zeroFromBottom}>{notice}</View>
+                        </View>
+                    )}
+
                     <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={pointerEvents}>
                         {/* Dynamic tabs. */}
                         {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
@@ -247,7 +264,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
                         {/* More-tab. */}
                         <Tab icon={tabIcon} text={tabText} onPress={tabOnPress} indicate={indicateMore} />
 
-                        <Activity style={styles.activity} />
+                        <Continuous style={styles.activity} active={activity} />
                     </View>
 
                     {/* Children rendered as the expandable content. */}
@@ -281,6 +298,18 @@ const styles = StyleSheet.create({
         top: 0,
         right: 0,
         bottom: 0,
+    },
+    zeroFromTop: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+    },
+    zeroFromBottom: {
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        right: 0,
     },
     tabs: {
         flexDirection: "row",

@@ -37,7 +37,7 @@ export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, se
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronize}
+            onRefresh={synchronizer.synchronizeUi}
             contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             ListHeaderComponent={leader}

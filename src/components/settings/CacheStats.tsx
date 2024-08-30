@@ -35,7 +35,7 @@ export const CacheStats = () => {
             <Label>{t("cache.cache_item", { count: cache.images.ids.length, type: "image" })}</Label>
 
             <Row style={styles.container}>
-                <Button onPress={sync.synchronize} icon="sync" containerStyle={styles.button}>
+                <Button onPress={sync.synchronizeUi} icon="sync" containerStyle={styles.button}>
                     {t("cache.synchronize")}
                 </Button>
                 <Button icon="trash-can-outline" containerStyle={styles.button} onPress={sync.clear}>

@@ -1,7 +1,8 @@
+import { useNavigationState } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { FC } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { About } from "./About";
@@ -20,6 +21,8 @@ import { PmItem, PmItemParams } from "./pm/PmItem";
 import { PmList } from "./pm/PmList";
 import { RevealHidden } from "./settings/RevealHidden";
 import { Settings } from "./settings/Settings";
+import { Toast } from "../components/Toast";
+import { useToastMessages } from "../context/ToastContext";
 import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
 import { RecordId } from "../store/eurofurence/types";
 
@@ -71,6 +74,10 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
     const theme = useTheme();
     const themeType = useThemeName();
 
+    // Get toasts to render. Do not render if in areas, there, the tab control renders the toasts.
+    const toastMessages = useToastMessages();
+    const isAreas = useNavigationState((s) => (!s ? false : s.routes[s.index].name === "Areas"));
+
     return (
         <SafeAreaView style={StyleSheet.absoluteFill}>
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
@@ -92,6 +99,23 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="Viewer" component={Viewer} />
             </Stack.Navigator>
+
+            {/* Render toasts when not in an "Areas" screen and a message is present. */}
+            {isAreas || !toastMessages.length ? null : (
+                <View style={styles.toastContainer}>
+                    {toastMessages.map((toast) => (
+                        <Toast key={toast.id} {...toast} loose={true} />
+                    ))}
+                </View>
+            )}
         </SafeAreaView>
     );
 };
+const styles = StyleSheet.create({
+    toastContainer: {
+        position: "absolute",
+        left: 0,
+        right: 0,
+        bottom: 30,
+    },
+});
