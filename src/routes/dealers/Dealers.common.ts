@@ -1,10 +1,13 @@
+import { captureException } from "@sentry/react-native";
 import { TFunction } from "i18next";
 import { Moment } from "moment";
 import moment from "moment/moment";
 import { useMemo } from "react";
+import { Share } from "react-native";
 
 import { DealerDetailsInstance, dealerInstanceForAny } from "../../components/dealers/DealerCard";
 import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation, DealerSectionProps } from "../../components/dealers/DealerSection";
+import { appBase, conAbbr } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/dealers";
 import { DealerDetails } from "../../store/eurofurence/types";
@@ -157,3 +160,12 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
         return result;
     }, [t, now, results, all]);
 };
+export const shareDealer = (dealer: DealerDetails) =>
+    Share.share(
+        {
+            title: dealer.FullName,
+            url: `${appBase}/Web/Dealers/${dealer.Id}`,
+            message: `Check out ${dealer.FullName} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
+        },
+        {},
+    ).catch(captureException);

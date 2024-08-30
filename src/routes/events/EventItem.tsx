@@ -1,18 +1,16 @@
-import { captureException } from "@sentry/react-native";
-import { Share, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { shareEvent } from "./Events.common";
 import { appStyles } from "../../components/AppStyles";
 import { EventContent } from "../../components/events/EventContent";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
-import { appBase, conAbbr } from "../../configuration";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useLatchTrue } from "../../hooks/util/useLatchTrue";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
-import { EventDetails } from "../../store/eurofurence/types";
 
 /**
  * Params handled by the screen in route.
@@ -41,13 +39,3 @@ export const EventItem = () => {
         </ScrollView>
     );
 };
-
-export const shareEvent = (event: EventDetails) =>
-    Share.share(
-        {
-            title: event.Title,
-            url: `${appBase}/Web/Events/${event.Id}`,
-            message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
-        },
-        {},
-    ).catch(captureException);

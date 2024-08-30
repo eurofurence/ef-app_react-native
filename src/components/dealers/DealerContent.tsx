@@ -8,7 +8,7 @@ import { StyleSheet, View } from "react-native";
 import { dealerShowAttendee } from "../../configuration";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
-import { shareDealer } from "../../routes/dealers/DealerItem";
+import { shareDealer } from "../../routes/dealers/Dealers.common";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { toggleDealerFavorite } from "../../store/auxiliary/slice";
 import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";

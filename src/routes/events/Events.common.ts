@@ -1,9 +1,12 @@
+import { captureException } from "@sentry/react-native";
 import { TFunction } from "i18next";
 import { Moment } from "moment/moment";
 import { useMemo } from "react";
+import { Share } from "react-native";
 
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
 import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "../../components/events/EventSection";
+import { appBase, conAbbr } from "../../configuration";
 import { EventDetails } from "../../store/eurofurence/types";
 
 /**
@@ -200,3 +203,13 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
         return result;
     }, [t, now, all]);
 };
+
+export const shareEvent = (event: EventDetails) =>
+    Share.share(
+        {
+            title: event.Title,
+            url: `${appBase}/Web/Events/${event.Id}`,
+            message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
+        },
+        {},
+    ).catch(captureException);
