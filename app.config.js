@@ -1,3 +1,8 @@
+import { convention } from "./convention.config.json";
+
+const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/;
+const [, appBaseProtocol, appBaseHost, appBasePath] = [...convention.appBase.match(urlMatcher)];
+
 module.exports = {
     expo: {
         runtimeVersion: {
@@ -48,9 +53,9 @@ module.exports = {
                     autoVerify: true,
                     data: [
                         {
-                            scheme: "https",
-                            host: "app.eurofurence.org",
-                            pathPrefix: "/EF28/Web",
+                            scheme: appBaseProtocol,
+                            host: appBaseHost,
+                            pathPrefix: `${appBasePath}/Web`,
                         },
                     ],
                     category: ["BROWSABLE", "DEFAULT"],
@@ -60,8 +65,8 @@ module.exports = {
                     autoVerify: true,
                     data: [
                         {
-                            scheme: "https",
-                            host: "app.eurofurence.org",
+                            scheme: appBaseProtocol,
+                            host: appBaseHost,
                             path: "/auth/login",
                         },
                     ],

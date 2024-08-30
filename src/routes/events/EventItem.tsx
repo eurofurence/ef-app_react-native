@@ -46,8 +46,8 @@ export const shareEvent = (event: EventDetails) =>
     Share.share(
         {
             title: event.Title,
-            url: `${appBase}/Web/events/${event.Id}`,
-            message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/events/${event.Id}`,
+            url: `${appBase}/Web/Events/${event.Id}`,
+            message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
         },
         {},
     ).catch(captureException);

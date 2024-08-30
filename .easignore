@@ -4,7 +4,7 @@ ios
 
 # Actual settings
 convention.config*.json
-!convention.config.dist.json
+!convention.config.json
 
 web-build
 
