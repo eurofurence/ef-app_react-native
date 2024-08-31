@@ -129,11 +129,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 </View>
             )}
 
-            {dealerShowAttendee ? (
-                <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
-            ) : (
-                <Section icon="brush" title={dealer.FullName} />
-            )}
+            <Section icon="brush" title={dealer.FullName} />
 
             <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
@@ -190,6 +186,21 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             {dealer.TwitterHandle && (
                 <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
                     Twitter: {dealer.TwitterHandle}
+                </Button>
+            )}
+            {dealer.DiscordHandle && (
+                <Button containerStyle={styles.button} icon="discord">
+                    Discord: {dealer.DiscordHandle}
+                </Button>
+            )}
+            {dealer.MastodonHandle && (
+                <Button containerStyle={styles.button} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
+                    Mastodon: {dealer.MastodonHandle}
+                </Button>
+            )}
+            {dealer.BlueskyHandle && (
+                <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
+                    Bluesky: {dealer.BlueskyHandle}
                 </Button>
             )}
 
