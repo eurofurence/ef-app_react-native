@@ -197,7 +197,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                     onPress={async () => {
                         if (!dealer.DiscordHandle) return null;
                         await Clipboard.setStringAsync(dealer.DiscordHandle);
-                        toast("info", `Discord handle ${dealer.DiscordHandle} copied to clipboard!`, 5000);
+                        toast("info", t("discord_handle_copied", { discordHandle: dealer.DiscordHandle }), 5000);
                     }}
                     icon="discord"
                 >
