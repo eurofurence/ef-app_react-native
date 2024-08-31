@@ -10,7 +10,6 @@
     "showLogin": true,
     "showServices": true,
     "showCatchEm": true,
-    "dealerShowAttendee": false,
     "website": "https://www.eurofurence.org",
     "catchEmUrl": "https://fursuit.eurofurence.org/catch-em-all"
   },
