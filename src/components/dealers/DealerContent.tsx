@@ -1,3 +1,4 @@
+import * as Clipboard from "expo-clipboard";
 import * as Linking from "expo-linking";
 import { TFunction } from "i18next";
 import moment from "moment";
@@ -5,7 +6,7 @@ import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { dealerShowAttendee } from "../../configuration";
+import { useToast } from "../../context/ToastContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
 import { shareDealer } from "../../routes/dealers/DealerItem";
@@ -85,6 +86,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     const navigation = useAppNavigation("Areas");
     const { t } = useTranslation("Dealer");
     const now = useNow();
+    const toast = useToast();
 
     const dispatch = useAppDispatch();
     const mapLink = useAppSelector((state) => selectValidLinksByTarget(state, dealer.Id));
@@ -189,7 +191,15 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 </Button>
             )}
             {dealer.DiscordHandle && (
-                <Button containerStyle={styles.button} icon="discord">
+                <Button
+                    containerStyle={styles.button}
+                    onPress={async () => {
+                        if (!dealer.DiscordHandle) return null;
+                        await Clipboard.setStringAsync(dealer.DiscordHandle);
+                        toast("info", `Discord handle ${dealer.DiscordHandle} copied to clipboard!`, 5000);
+                    }}
+                    icon="discord"
+                >
                     Discord: {dealer.DiscordHandle}
                 </Button>
             )}
