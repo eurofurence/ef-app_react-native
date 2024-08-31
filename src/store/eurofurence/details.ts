@@ -121,9 +121,9 @@ const internalAttendanceDays = (days: EventDayDetails[], dealer: DealerRecord) =
     const result: EventDayDetails[] = [];
     for (const day of days) {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
-        if (dealer.AttendsOnThursday && day.dayOfWeek === 1) result.push(day);
-        if (dealer.AttendsOnFriday && day.dayOfWeek === 2) result.push(day);
-        if (dealer.AttendsOnSaturday && day.dayOfWeek === 3) result.push(day);
+        if (dealer.AttendsOnThursday && day.dayOfWeek === 4) result.push(day);
+        if (dealer.AttendsOnFriday && day.dayOfWeek === 5) result.push(day);
+        if (dealer.AttendsOnSaturday && day.dayOfWeek === 6) result.push(day);
     }
     return result;
 };
