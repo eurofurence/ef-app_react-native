@@ -3,13 +3,15 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { menuColumns, showCatchEm, showLogin, showServices } from "../../configuration";
+import { menuColumns, showCatchEm, showLogin } from "../../configuration";
 import { Claims, useAuthContext } from "../../context/AuthContext";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { useAppSelector } from "../../store";
 import { selectBrowsableMaps } from "../../store/eurofurence/selectors/maps";
-import { RecordId } from "../../store/eurofurence/types";
+import { useArtistAlleyOwnTableRegistrationQuery } from "../../store/eurofurence/service";
+import { ArtistAlleyOwnTableRegistrationRecord, RecordId } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
+import { Icon } from "../generic/atoms/Icon";
 import { Image } from "../generic/atoms/Image";
 import { Button } from "../generic/containers/Button";
 import { Col } from "../generic/containers/Col";
@@ -69,16 +71,38 @@ export type PagerMenuProps = PropsWithChildren<{
     onProfile?: () => void;
     onInfo?: () => void;
     onCatchEmAll?: () => void;
-    onServices?: () => void;
+    onArtistAlley?: () => void;
     onSettings?: () => void;
     onMap?: (id: RecordId) => void;
 }>;
 
-export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfile, onInfo, onCatchEmAll, onServices, onSettings, onMap, children }) => {
+const ArtistAlleyIndicator = ({ state }: { state: ArtistAlleyOwnTableRegistrationRecord["State"] }) => {
+    if (state === "Accepted" || state === "Published") {
+        return <Icon style={artistAlleyIndicatorStyles.trimMargin} name="check" size={12} color="white" />;
+    } else if (state === "Rejected") {
+        return <Icon style={artistAlleyIndicatorStyles.trimMargin} name="window-close" size={12} color="white" />;
+    } else {
+        return <Icon style={artistAlleyIndicatorStyles.trimMargin} name="timer" size={12} color="white" />;
+    }
+};
+
+const artistAlleyIndicatorStyles = StyleSheet.create({
+    trimMargin: {
+        margin: -3,
+    },
+});
+
+export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfile, onInfo, onCatchEmAll, onArtistAlley, onSettings, onMap, children }) => {
     const { t } = useTranslation("Menu");
     const { loggedIn, claims } = useAuthContext();
     const maps = useAppSelector(selectBrowsableMaps);
     const tabs = useTabs();
+
+    // Get artist alley reg data if logged in.
+    const { data } = useArtistAlleyOwnTableRegistrationQuery(undefined, {
+        skip: !loggedIn,
+        refetchOnFocus: true,
+    });
 
     return (
         <Col type="stretch">
@@ -87,7 +111,7 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfil
             <Grid cols={menuColumns} style={{ alignSelf: "stretch" }}>
                 <Tab icon="information-outline" text={t("info")} onPress={onInfo} />
                 {!showCatchEm ? null : <Tab icon="paw" text={t("catch_em")} onPress={onCatchEmAll} />}
-                {!showServices ? null : <Tab icon="book-outline" text={t("services")} onPress={onServices} />}
+                <Tab icon="image-frame" text={t("artist_alley")} onPress={onArtistAlley} indicate={data ? <ArtistAlleyIndicator state={data.State} /> : false} />
                 <Tab icon="card-account-details-outline" text={t("profile")} onPress={onProfile} disabled={!loggedIn} />
                 <Tab icon="cog" text={t("settings")} onPress={onSettings} />
                 {children}

@@ -18,9 +18,15 @@ export const EventFeedback = () => {
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>
             <Header>{t("header", { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Header>
-            <Floater containerStyle={{ marginTop: 10 }}>
+            <Floater containerStyle={styles.margin}>
                 <FeedbackForm />
             </Floater>
         </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    margin: {
+        marginTop: 10,
+    },
+});

@@ -11,6 +11,7 @@ import { Profile } from "./Profile";
 import { Viewer, ViewerParams } from "./Viewer";
 import { AnnounceItem, AnnounceItemParams } from "./announce/AnnounceItem";
 import { AnnounceList, AnnounceListParams } from "./announce/AnnounceList";
+import { ArtistAlleyReg, ArtistAlleyRegParams } from "./artistalley/ArtistAlleyReg";
 import { DealerItem, DealerItemParams } from "./dealers/DealerItem";
 import { EventFeedback } from "./events/EventFeedback";
 import { EventItem, EventItemParams } from "./events/EventItem";
@@ -34,6 +35,7 @@ export type IndexRouterParamsList = {
      * Primary areas.
      */
     Areas: AreasRouterParams;
+    ArtistAlleyReg: ArtistAlleyRegParams;
     AnnounceList: AnnounceListParams;
     AnnounceItem: AnnounceItemParams;
     Event: EventItemParams;
@@ -83,6 +85,7 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="Areas" component={AreasRouter} />
+                <Stack.Screen name="ArtistAlleyReg" component={ArtistAlleyReg} />
                 <Stack.Screen name="AnnounceList" component={AnnounceList} />
                 <Stack.Screen name="AnnounceItem" component={AnnounceItem} />
                 <Stack.Screen name="Event" component={EventItem} />
@@ -103,7 +106,7 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
             {/* Render toasts when not in an "Areas" screen and a message is present. */}
             {isAreas || !toastMessages.length ? null : (
                 <View style={styles.toastContainer}>
-                    {toastMessages.map((toast) => (
+                    {[...toastMessages].reverse().map((toast) => (
                         <Toast key={toast.id} {...toast} loose={true} />
                     ))}
                 </View>

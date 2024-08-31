@@ -230,3 +230,19 @@ export type UserRecord = {
         Status: string;
     }[];
 };
+
+export type ArtistAlleyOwnTableRegistrationRecord = {
+    LastChangeDateTimeUtc: string;
+    Id: string;
+    CreatedDateTimeUtc: string;
+    OwnerUid: string;
+    OwnerUsername: string;
+    DisplayName: string;
+    WebsiteUrl: string;
+    ShortDescription: string;
+    TelegramHandle: string;
+    Location: string;
+    ImageId: string;
+    Image: ImageRecord;
+    State: string;
+};

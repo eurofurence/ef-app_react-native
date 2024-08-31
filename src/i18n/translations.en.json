@@ -18,6 +18,43 @@
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
   },
+  "ArtistAlley": {
+    "disabled_not_attending": "Only attendees can register for a table",
+    "disabled_not_logged_in": "Please log in to register for a table",
+    "disabled_not_checked_in": "Please check in at registration to register for a table",
+    "display_name_label":"Display name",
+    "display_name_placeholder": "Your preferred display name",
+    "errors": {
+      "too_small": "This is required",
+      "invalid_string": "Incorrect format",
+      "websiteUrl_invalid_string": "Write your website like https://eurofurence.org",
+      "telegramHandle_invalid_string":"This does not look like a telegram handle"
+    },
+    "explanation": "You can request a table or change your existing registration here. Just enter the necessary information, select a picture, and submit it.",
+    "location_label":"Location",
+    "location_placeholder": "Your location",
+    "no_submission": "You haven't submitted a registration yet",
+    "short_description_label":"Short description",
+    "short_description_placeholder": "A short description of what you will be offering",
+    "status": {
+      "Accepted":"Your registration was accepted. When you change your registration, it will have to be approved again.",
+      "Pending":"Your registration is waiting to be approved. You can still change and resubmit it.",
+      "Published":"Your registration was accepted. When you change your registration, it will have to be approved again.",
+      "Rejected":"Your registration was rejected. You can see about updating your details or trying again later."
+    },
+    "submission_image_label":"Sample picture",
+    "submission_image_placeholder":"Click to select your sample picture",
+    "submit": "Submit your request",
+    "submit_failed":"Something went wrong, please try it again later",
+    "submit_in_progress": "Submitting your request",
+    "submit_succeeded":"Your registration was received",
+    "telegram_handle_label":"Telegram handle",
+    "telegram_handle_placeholder": "Your Telegram handle",
+    "title": "Artist alley registration",
+    "update": "Update your request",
+    "website_url_label":"Website",
+    "website_url_placeholder": "URL to your website"
+  },
   "Countdown": {
     "after_event": "That was it! We hope to see you again next year!",
     "before_event": "{{conName}} will start in {{diff}}"
@@ -147,6 +184,7 @@
     "results": "In the viewed area"
   },
   "Menu": {
+    "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",

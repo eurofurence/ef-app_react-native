@@ -111,6 +111,13 @@ module.exports = {
                     microphonePermission: false,
                 },
             ],
+            // Used for artist alley registration
+            [
+                "expo-image-picker",
+                {
+                    photosPermission: "The app accesses your photos if you want to register for a table in the artist alley.",
+                },
+            ],
             "expo-localization",
             [
                 "expo-build-properties",

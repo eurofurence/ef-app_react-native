@@ -95,9 +95,15 @@ importers:
       expo-device:
         specifier: ~6.0.2
         version: 6.0.2(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6)))
+      expo-file-system:
+        specifier: ~17.0.1
+        version: 17.0.1(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6)))
       expo-image:
         specifier: ~1.12.13
         version: 1.12.13(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6)))
+      expo-image-picker:
+        specifier: ~15.0.7
+        version: 15.0.7(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6)))
       expo-linking:
         specifier: ~6.3.1
         version: 6.3.1(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6)))
@@ -1448,7 +1454,7 @@ packages:
   '@gorhom/bottom-sheet@4.6.3':
     resolution: {integrity: sha512-fSuSfbtoKsjmSeyz+tG2C0GtcEL7PS63iEXI23c9M+HeCT1IFK6ffmIa2pqyqB43L1jtkR+BWkpZwqXnN4H8xA==}
     peerDependencies:
-      '@types/react': '*'
+      '@types/react': ^18
       '@types/react-native': '*'
       react: '*'
       react-native: '*'
@@ -3757,6 +3763,16 @@ packages:
 
   expo-font@12.0.9:
     resolution: {integrity: sha512-seTCyf0tbgkAnp3ZI9ZfK9QVtURQUgFnuj+GuJ5TSnN0XsOtVe1s2RxTvmMgkfuvfkzcjJ69gyRpsZS1cC8hjw==}
+    peerDependencies:
+      expo: '*'
+
+  expo-image-loader@4.7.0:
+    resolution: {integrity: sha512-cx+MxxsAMGl9AiWnQUzrkJMJH4eNOGlu7XkLGnAXSJrRoIiciGaKqzeaD326IyCTV+Z1fXvIliSgNW+DscvD8g==}
+    peerDependencies:
+      expo: '*'
+
+  expo-image-picker@15.0.7:
+    resolution: {integrity: sha512-u8qiPZNfDb+ap6PJ8pq2iTO7JKX+ikAUQ0K0c7gXGliKLxoXgDdDmXxz9/6QdICTshJBJlBvI0MwY5NWu7A/uw==}
     peerDependencies:
       expo: '*'
 
@@ -12337,6 +12353,15 @@ snapshots:
     dependencies:
       expo: 51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))
       fontfaceobserver: 2.3.0
+
+  expo-image-loader@4.7.0(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))):
+    dependencies:
+      expo: 51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))
+
+  expo-image-picker@15.0.7(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))):
+    dependencies:
+      expo: 51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))
+      expo-image-loader: 4.7.0(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6)))
 
   expo-image@1.12.13(expo@51.0.22(@babel/core@7.24.6)(@babel/preset-env@7.24.6(@babel/core@7.24.6))):
     dependencies:
