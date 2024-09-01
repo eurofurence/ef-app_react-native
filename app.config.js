@@ -27,7 +27,7 @@ module.exports = {
         },
         ios: {
             bundleIdentifier: "org.eurofurence",
-            icon: "./assets/platform/appicon.png",
+            icon: "./assets/platform/appicon-ios.png",
             googleServicesFile: "./assets/platform/GoogleService-Info.plist",
             supportsTablet: true,
             infoPlist: {
@@ -37,7 +37,7 @@ module.exports = {
         },
         android: {
             package: "org.eurofurence.connavigator",
-            icon: "./assets/platform/appicon.png",
+            icon: "./assets/platform/appicon-android.png",
             googleServicesFile: "./assets/platform/google-services.json",
             splash: {
                 resizeMode: "native",
@@ -45,7 +45,7 @@ module.exports = {
                 backgroundColor: "#231F20",
             },
             adaptiveIcon: {
-                foregroundImage: "./assets/platform/appicon.png",
+                foregroundImage: "./assets/platform/appicon-android.png",
                 backgroundColor: "#231F20",
             },
             intentFilters: [
@@ -79,7 +79,7 @@ module.exports = {
         },
         web: {
             bundler: "metro",
-            favicon: "./assets/platform/appicon.png",
+            favicon: "./assets/platform/appicon-android.png",
         },
         plugins: [
             // Run sentry plugin only if auth token is given, otherwise the build crashes.
