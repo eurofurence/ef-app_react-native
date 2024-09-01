@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { QueryReturnValue } from "@reduxjs/toolkit/dist/query/baseQueryTypes";
+import { createApi, fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
 import * as FileSystem from "expo-file-system";
 import { FileSystemSessionType, FileSystemUploadType } from "expo-file-system";
 import _ from "lodash";
@@ -55,7 +56,20 @@ export const eurofurenceService = createApi({
         }),
         artistAlleyOwnTableRegistration: builder.query<ArtistAlleyOwnTableRegistrationRecord | null, void>({
             providesTags: ["ArtistAlleyOwnTableRegistration"],
-            query: () => "/ArtistsAlley/TableRegistration/:my-latest",
+            async queryFn(_arg, _api, _extraOptions, baseQuery) {
+                // Get with default query method.
+                const response = await baseQuery("/ArtistsAlley/TableRegistration/:my-latest");
+                if (response.error && response.error.status === 404) {
+                    // Wrap Not Found responses as null results.
+                    return {
+                        data: null,
+                        error: undefined,
+                    };
+                } else {
+                    // Do not touch other responses.
+                    return response as QueryReturnValue<ArtistAlleyOwnTableRegistrationRecord | null, FetchBaseQueryError>;
+                }
+            },
         }),
 
         /**
@@ -95,7 +109,7 @@ export const eurofurenceService = createApi({
                 imageUri: string;
             }
         >({
-            queryFn: async (args) => {
+            async queryFn(args) {
                 // Get access token, use to send table request.
                 const token = await getAccessToken();
 
