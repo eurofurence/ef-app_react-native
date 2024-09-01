@@ -37,7 +37,7 @@ module.exports = {
         },
         android: {
             package: "org.eurofurence.connavigator",
-            icon: "./assets/platform/appicon_padding.png",
+            icon: "./assets/platform/appicon.png",
             googleServicesFile: "./assets/platform/google-services.json",
             splash: {
                 resizeMode: "native",
@@ -45,7 +45,7 @@ module.exports = {
                 backgroundColor: "#231F20",
             },
             adaptiveIcon: {
-                foregroundImage: "./assets/platform/appicon_padding.png",
+                foregroundImage: "./assets/platform/appicon.png",
                 backgroundColor: "#231F20",
             },
             intentFilters: [
