@@ -98,7 +98,7 @@ export const PagerPrimary: FC<PagerMenuProps> = ({ onMessages, onLogin, onProfil
     const maps = useAppSelector(selectBrowsableMaps);
     const tabs = useTabs();
 
-    // Get artist alley reg data if logged in.
+    // Get Artist Alley reg data if logged in.
     const { data } = useArtistAlleyOwnTableRegistrationQuery(undefined, {
         skip: !loggedIn,
         refetchOnFocus: true,

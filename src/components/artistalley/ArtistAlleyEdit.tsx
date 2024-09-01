@@ -66,7 +66,7 @@ export const ArtistAlleyEdit = ({ prefill, mode, onDismiss }: ArtistAlleyEditPro
 
     return (
         <FormProvider {...form}>
-            <Label type="para" mt={20} mb={40}>
+            <Label type="compact" mt={20} mb={40}>
                 {t(mode === "change" ? "explanation_edit_change" : "explanation_edit_new")}
             </Label>
 
@@ -142,6 +142,6 @@ const styles = StyleSheet.create({
         marginRight: "auto",
     },
     button: {
-        marginTop: 30,
+        marginTop: 20,
     },
 });

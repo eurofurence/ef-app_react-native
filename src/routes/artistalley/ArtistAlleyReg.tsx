@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
+import { Linking, StyleSheet } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../../components/AppStyles";
 import { ArtistAlleyEdit } from "../../components/artistalley/ArtistAlleyEdit";
 import { ArtistAlleyStatus } from "../../components/artistalley/ArtistAlleyStatus";
 import { ArtistAlleyUnauthorized } from "../../components/artistalley/ArtistAlleyUnauthorized";
+import { Label } from "../../components/generic/atoms/Label";
 import { Badge } from "../../components/generic/containers/Badge";
+import { Button } from "../../components/generic/containers/Button";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
+import { artistAlleyUrl } from "../../configuration";
 import { useAuthContext } from "../../context/AuthContext";
 import { useArtistAlleyOwnTableRegistrationQuery } from "../../store/eurofurence/service";
 
@@ -51,6 +54,12 @@ export const ArtistAlleyReg = () => {
                         {tStatus(data.State)}
                     </Badge>
                 )}
+                <Label type="compact" mt={20}>
+                    {t("intro")}
+                </Label>
+                <Button style={styles.button} icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
+                    {t("learn_more")}
+                </Button>
                 {authorized ? (
                     !isFetching ? (
                         show && data ? (
@@ -77,3 +86,9 @@ export const ArtistAlleyReg = () => {
         </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    button: {
+        marginTop: 20,
+    },
+});

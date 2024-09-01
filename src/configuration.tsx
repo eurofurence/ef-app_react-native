@@ -61,6 +61,11 @@ export const showCatchEm = conventionConfig.convention.showCatchEm;
 export const catchEmUrl = conventionConfig.convention.catchEmUrl;
 
 /**
+ * URL leading to the Artist Alley detail page for this convention.
+ */
+export const artistAlleyUrl = conventionConfig.convention.artistAlleyUrl;
+
+/**
  * True if dealer view shows attendee.
  */
 export const dealerShowAttendee = conventionConfig.convention.dealerShowAttendee;

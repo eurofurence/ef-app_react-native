@@ -21,7 +21,7 @@ export const ArtistAlleyUnauthorized = ({ loggedIn, attending, checkedIn }: Arti
 
     return (
         <View style={styles.container}>
-            <Label type="para" mt={20} mb={40}>
+            <Label type="compact" mt={20}>
                 {t("explanation_unauthorized")}
 
                 {disabledReason && (
@@ -30,7 +30,7 @@ export const ArtistAlleyUnauthorized = ({ loggedIn, attending, checkedIn }: Arti
                     </Label>
                 )}
             </Label>
-            <Button style={styles.button} onPress={() => login().catch(captureException)}>
+            <Button style={styles.button} iconRight="login" onPress={() => login().catch(captureException)}>
                 {t("log_in_now")}
             </Button>
         </View>
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
         paddingBottom: 100,
     },
     button: {
-        marginTop: 30,
+        marginTop: 20,
     },
 });

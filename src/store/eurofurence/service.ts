@@ -11,8 +11,8 @@ import { httpStatusTexts } from "../../util/httpStatusTexts";
 
 const tagsFromList =
     <TagType extends string>(type: TagType) =>
-    <ResultType extends RecordMetadata[]>(result: ResultType | undefined) =>
-        result ? result.map((it) => ({ type, id: it.Id })) : [type];
+        <ResultType extends RecordMetadata[]>(result: ResultType | undefined) =>
+            result ? result.map((it) => ({ type, id: it.Id })) : [type];
 
 export const eurofurenceService = createApi({
     reducerPath: "eurofurenceService",
@@ -73,7 +73,7 @@ export const eurofurenceService = createApi({
         }),
 
         /**
-         * Post an artist alley registration. This creates or updates the last one of the caller.
+         * Post an Artist Alley registration. This creates or updates the last one of the caller.
          */
         artistAlleyPostTableRegistrationRequest: builder.mutation<
             boolean,
@@ -129,8 +129,8 @@ export const eurofurenceService = createApi({
                 const response = await FileSystem.uploadAsync(`${apiBase}/ArtistsAlley/TableRegistrationRequest`, downloadedUri ?? args.imageUri, {
                     headers: token
                         ? {
-                              Authorization: `Bearer ${token}`,
-                          }
+                            Authorization: `Bearer ${token}`,
+                        }
                         : {},
                     httpMethod: "POST",
                     sessionType: FileSystemSessionType.FOREGROUND,
