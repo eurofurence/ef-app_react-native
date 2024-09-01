@@ -121,6 +121,9 @@
     "eventsTitle_zero": "Keine Events.",
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "warnings": {
+      "favorites_changed": "Favoriten geändert",
+      "favorites_changed_subtitle": "Infos in Deinen Favoriten wurden geändert, seitdem Du diese das letzte mal angeschaut hast",
+      "hide": "Verbergen",
       "no_image_caching": "Dein Gerät unterstützt kein Zwischenspeichern von Bildern. Ohne aktive Internetverbindung werden dir keine Bilder angezeigt.",
       "no_notifications": "Dein Gerät unterstützt keine zeitgesteuerten Benachrichtigungen. Du wirst keine Benachrichtigungen für anstehende Events erhalten.",
       "no_push_notifications": "Dein Gerät unterstützt keine Push-Nachrichten. Du wirst nicht automatisch über neue Mitteilungen oder persönliche Nachrichten informiert.",
@@ -211,6 +214,16 @@
       "disable": "Ausschalten",
       "enable": "Anschalten",
       "title": "Entwickler-Menü"
+    },
+    "device_warnings": {
+      "hide_device_warnings": "Kompatibilitätsprobleme verbergen",
+      "hide_language_warnings": "Übersetzungshinweise verbergen",
+      "hide_time_zone_warnings": "Zeitzonenhinweise verbergen",
+      "show_device_warnings": "Kompatibilitätsprobleme anzeigen",
+      "show_language_warnings": "Übersetzungshinweise anzeigen",
+      "show_time_zone_warnings": "Zeitzonenhinweise anzeigen",
+      "subtitle": "Warnungen auf dem Startbildschirm anzeigen oder verbergen",
+      "title": "Warnungen"
     },
     "header": "Einstellungen",
     "hidden_events": {

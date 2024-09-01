@@ -14,7 +14,6 @@ module.exports = {
         owner: "eurofurence",
         version: "3.3.0",
         orientation: "default",
-        icon: "./assets/platform/appicon.png",
         userInterfaceStyle: "automatic",
         scheme: "eurofurence",
         splash: {
@@ -28,6 +27,7 @@ module.exports = {
         },
         ios: {
             bundleIdentifier: "org.eurofurence",
+            icon: "./assets/platform/appicon.png",
             googleServicesFile: "./assets/platform/GoogleService-Info.plist",
             supportsTablet: true,
             infoPlist: {
@@ -37,6 +37,7 @@ module.exports = {
         },
         android: {
             package: "org.eurofurence.connavigator",
+            icon: "./assets/platform/appicon_padding.png",
             googleServicesFile: "./assets/platform/google-services.json",
             splash: {
                 resizeMode: "native",
@@ -44,7 +45,7 @@ module.exports = {
                 backgroundColor: "#231F20",
             },
             adaptiveIcon: {
-                foregroundImage: "./assets/platform/appicon.png",
+                foregroundImage: "./assets/platform/appicon_padding.png",
                 backgroundColor: "#231F20",
             },
             intentFilters: [

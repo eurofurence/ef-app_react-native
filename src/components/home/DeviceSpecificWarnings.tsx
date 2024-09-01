@@ -1,18 +1,20 @@
 import * as Device from "expo-device";
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 
-import { useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { hideDeviceWarnings } from "../../store/auxiliary/slice";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
 
 export const DeviceSpecificWarnings = () => {
-    const { t } = useTranslation("Home");
+    const { t } = useTranslation("Home", { keyPrefix: "warnings" });
     const [scheduledNotifications] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
     const [cacheImages] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
     const pushNotifications = useMemo(() => scheduledNotifications && Device.isDevice, [scheduledNotifications]);
     const warningsHidden = useAppSelector((state) => state.auxiliary.deviceWarningsHidden);
+    const dispatch = useAppDispatch();
 
     if (warningsHidden) {
         return null;
@@ -24,11 +26,23 @@ export const DeviceSpecificWarnings = () => {
 
     return (
         <>
-            <Section title={t("warnings.title")} subtitle={t("warnings.subtitle")} icon="information" />
+            <Section title={t("title")} subtitle={t("subtitle")} icon="information" />
 
-            {!scheduledNotifications && <Label mt={10}>{t("warnings.no_notifications")}</Label>}
-            {!pushNotifications && <Label mt={10}>{t("warnings.no_push_notifications")}</Label>}
-            {!cacheImages && <Label mt={10}>{t("warnings.no_image_caching")}</Label>}
+            <Label type="para">
+                {[
+                    // Scheduled notification warning.
+                    !scheduledNotifications && t("no_notifications"),
+                    // Push notification warning.
+                    !pushNotifications && t("no_push_notifications"),
+                    // Image caching on web warning.
+                    !cacheImages && t("no_image_caching"),
+                ]
+                    .filter(Boolean)
+                    .join("\n\n")}
+                <Label variant="bold" color="secondary" onPress={() => dispatch(hideDeviceWarnings())}>
+                    {" " + t("hide")}
+                </Label>
+            </Label>
         </>
     );
 };

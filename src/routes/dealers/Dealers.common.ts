@@ -13,6 +13,23 @@ import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/de
 import { DealerDetails } from "../../store/eurofurence/types";
 
 /**
+ * Compares category, checks if the categories are adult labeled.
+ * @param left Left category.
+ * @param right Right category.
+ */
+const compareCategory = (left: string, right: string) => {
+    const leftAdult = left.toLowerCase().includes("adult");
+    const rightAdult = right.toLowerCase().includes("adult");
+    if (!leftAdult) {
+        if (!rightAdult) return left < right ? -1 : left > right ? 1 : 0;
+        else return -1;
+    } else {
+        if (!rightAdult) return 1;
+        else return left < right ? -1 : left > right ? 1 : 0;
+    }
+};
+
+/**
  * Returns a list of dealer instances according to conversion rules.
  * @param t The translation function.
  * @param now The current moment.
@@ -62,7 +79,7 @@ export const useDealerGroups = (t: TFunction, now: Moment, results: DealerDetail
         }
 
         // Multiple passes needed.
-        for (const category of Object.keys(categoryMap).sort()) {
+        for (const category of Object.keys(categoryMap).sort(compareCategory)) {
             result.push(dealerSectionForCategory(category));
             result.push(...categoryMap[category]);
         }
