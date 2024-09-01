@@ -83,6 +83,7 @@
     "attends_sat": "Saturday",
     "attends_thu": "Thursday",
     "categories": "Categories",
+    "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
     "dealer_was_updated": "Dealer was updated since your last visit",
     "in_after_dark": "Located in the after dark section",
     "merchandise": "Merchandise",

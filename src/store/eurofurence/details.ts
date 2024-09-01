@@ -121,9 +121,9 @@ const internalAttendanceDays = (days: EventDayDetails[], dealer: DealerRecord) =
     const result: EventDayDetails[] = [];
     for (const day of days) {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
-        if (dealer.AttendsOnThursday && day.dayOfWeek === 1) result.push(day);
-        if (dealer.AttendsOnFriday && day.dayOfWeek === 2) result.push(day);
-        if (dealer.AttendsOnSaturday && day.dayOfWeek === 3) result.push(day);
+        if (dealer.AttendsOnThursday && day.dayOfWeek === 4) result.push(day);
+        if (dealer.AttendsOnFriday && day.dayOfWeek === 5) result.push(day);
+        if (dealer.AttendsOnSaturday && day.dayOfWeek === 6) result.push(day);
     }
     return result;
 };
@@ -181,6 +181,22 @@ const internalFixedTitle = (title: string, content: string) => {
     return init.substring(0, index + 1);
 };
 
+const internalMastodonHandleToProfileUrl = (handle: string) => {
+    // Remove the leading '@' and split the handle into username and instance
+    const parts = handle.replace(/^@/, "").split("@");
+
+    if (parts.length !== 2) {
+        return undefined;
+    }
+
+    const [username, instance] = parts;
+
+    // Construct the URL
+    const profileUrl = `https://${instance}/@${username}`;
+
+    return profileUrl;
+};
+
 export const applyDealerDetails = (source: DealerRecord, images: Dictionary<ImageDetails>, days: EventDayDetails[], favorites: RecordId[]): DealerDetails => ({
     ...source,
     AttendanceDayNames: internalAttendanceDayNames(source),
@@ -188,10 +204,11 @@ export const applyDealerDetails = (source: DealerRecord, images: Dictionary<Imag
     Artist: !source.ArtistImageId ? undefined : images[source.ArtistImageId],
     ArtistThumbnail: !source.ArtistThumbnailImageId ? undefined : images[source.ArtistThumbnailImageId],
     ArtPreview: !source.ArtPreviewImageId ? undefined : images[source.ArtPreviewImageId],
-    FullName: source.DisplayName || source.AttendeeNickname,
+    FullName: source.DisplayNameOrAttendeeNickname,
     ShortDescriptionTable: internalDealerParseTable(source),
     ShortDescriptionContent: internalDealerParseDescriptionContent(source),
     Favorite: favorites.includes(source.Id),
+    MastodonUrl: !source.MastodonHandle ? undefined : internalMastodonHandleToProfileUrl(source.MastodonHandle),
 });
 
 export const applyEventDayDetails = (source: EventDayRecord): EventDayDetails => ({

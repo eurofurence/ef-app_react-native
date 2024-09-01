@@ -79,6 +79,7 @@
     "attends_sat": "Samstag",
     "attends_thu": "Donnerstag",
     "categories": "Kategorien",
+    "discord_handle_copied": "Discord-Handle {{discordHandle}} wurde in die Zwischenablage kopiert!",
     "in_after_dark": "Im After Dark Bereich",
     "merchandise": "Angebot",
     "not_attending": "Heute nicht anwesend",

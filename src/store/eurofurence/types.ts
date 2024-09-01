@@ -87,14 +87,11 @@ export type EventDetails = EventRecord & {
 };
 
 export type DealerRecord = RecordMetadata & {
-    RegistrationNumber: number;
     ArtistImageId?: RecordId;
     ArtistThumbnailImageId?: RecordId;
     ArtPreviewImageId?: RecordId;
 
-    // TODO: Unverified API data type, carried from last version. Please review
-    // as soon as a proper API specification is presented.
-    AttendeeNickname: string;
+    DisplayNameOrAttendeeNickname: string;
     DisplayName: string;
     Merchandise: string;
     ShortDescription?: string;
@@ -102,6 +99,9 @@ export type DealerRecord = RecordMetadata & {
     AboutTheArtText?: string;
     TwitterHandle?: string;
     TelegramHandle?: string;
+    DiscordHandle?: string;
+    MastodonHandle?: string;
+    BlueskyHandle?: string;
     Links: LinkFragment[] | null;
     AttendsOnThursday?: boolean;
     AttendsOnFriday?: boolean;
@@ -122,6 +122,7 @@ export type DealerDetails = DealerRecord & {
     ShortDescriptionContent?: string;
     ShortDescriptionTable?: string;
     Favorite: boolean;
+    MastodonUrl?: string;
 };
 
 export type EventDayRecord = RecordMetadata & {
