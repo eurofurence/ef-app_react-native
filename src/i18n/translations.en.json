@@ -18,6 +18,56 @@
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
   },
+  "ArtistAlley": {
+    "dismiss": "Dismiss your edits",
+    "display_name_label": "Display name",
+    "display_name_placeholder": "Your preferred display name",
+    "edit_request": "Edit your request",
+    "errors": {
+      "invalid_string": "Incorrect format.",
+      "invalid_type": "This is required.",
+      "location_invalid_string": "Enter the number on the handout at your table.",
+      "telegramHandle_invalid_string": "This does not look like a valid Telegram handle.",
+      "too_small": "This is required.",
+      "websiteUrl_invalid_string": "Write your website like: https://eurofurence.org"
+    },
+    "explanation_edit_change": "You can change your Artist Alley table registration details here. Just update your information, select a picture, and submit it.",
+    "explanation_edit_new": "You haven't registered at a table in the Artist Alley yet, but you can change that here and now. Just pick a free table to set up at, enter the necessary information, select a picture, and submit it.",
+    "explanation_status_accepted": "Your registration has been reviewed and was accepted. If you want to register again at a later time and a new table, please make a new request below.",
+    "explanation_status_pending": "Your registration is being reviewed. If you made a mistake, you can edit your information.",
+    "explanation_status_rejected": "Your registration has been reviewed and was rejected. You can make a new request and try again.",
+    "explanation_unauthorized": "You currently cannot register at a table in the Artist Alley, which is only open to registered and checked-in attendees of the convention.",
+    "intro": "The Artist Alley provides a welcoming, creative, and safe environment for all artists and attendees. With the form below, artists can register when setting up at a table in the Artist Alley and make their presence there known to attendees.",
+    "learn_more": "Learn more about the Artist Alley",
+    "location_label": "Table number",
+    "location_placeholder": "Table number from handout on the table",
+    "log_in_now": "Log-in now to get started!",
+    "new_request": "Make a new request",
+    "no_submission": "You haven't submitted a registration yet.",
+    "short_description_label": "Short description",
+    "short_description_placeholder": "Information about you and what you will be offering",
+    "status": {
+      "Accepted": "Your registration was accepted.",
+      "Pending": "Your registration is waiting to be approved.",
+      "Published": "Your registration was accepted.",
+      "Rejected": "Your registration was rejected."
+    },
+    "submission_image_label": "Sample picture",
+    "submission_image_placeholder": "Click to select a picture of your table and wares",
+    "submit": "Submit your request",
+    "submit_failed": "Something went wrong, please try again later.",
+    "submit_in_progress": "Submitting your request…",
+    "submit_succeeded": "Thank you! Your registration was received.",
+    "telegram_handle_label": "Telegram handle (optional)",
+    "telegram_handle_placeholder": "Public Telegram handle for attendees",
+    "title": "Artist Alley Registration",
+    "unauthorized_not_attending": "Please ensure that you have a valid registration for this year's convention if you wish to register at a table in the Artist Alley.",
+    "unauthorized_not_checked_in": "Please check in and pick up your convention badge at the Registration Desk before trying to register at an Artist Alley table.",
+    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist alley.",
+    "update": "Update your request",
+    "website_url_label": "Website (optional)",
+    "website_url_placeholder": "URL to your website"
+  },
   "Countdown": {
     "after_event": "That was it! We hope to see you again next year!",
     "before_event": "{{conName}} will start in {{diff}}"
@@ -148,6 +198,7 @@
     "results": "In the viewed area"
   },
   "Menu": {
+    "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",

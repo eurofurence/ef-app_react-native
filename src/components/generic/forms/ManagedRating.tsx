@@ -31,7 +31,7 @@ export const ManagedRating = <T extends object>({ name, label, ...ratingProps }:
                     <Label variant="bold" mt={16}>
                         {label}
                     </Label>
-                    <StarRating rating={field.value} onChange={field.onChange} {...ratingProps} />
+                    <StarRating style={field.disabled ? { pointerEvents: "none" } : undefined} rating={field.value} onChange={field.onChange} {...ratingProps} />
                     {fieldState.error && (
                         <Label type="minor" color="warning">
                             {fieldState.error?.message}

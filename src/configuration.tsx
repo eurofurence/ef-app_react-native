@@ -60,6 +60,11 @@ export const showCatchEm = conventionConfig.convention.showCatchEm;
  */
 export const catchEmUrl = conventionConfig.convention.catchEmUrl;
 
+/**
+ * URL leading to the Artist Alley detail page for this convention.
+ */
+export const artistAlleyUrl = conventionConfig.convention.artistAlleyUrl;
+
 export const authIssuer = conventionConfig.auth.issuer;
 export const authRedirect = conventionConfig.auth.redirect;
 export const authClientId = conventionConfig.auth.clientId;

@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { StyleProp, TextInputProps, TextStyle, View, TextInput } from "react-native";
+import { StyleSheet, StyleProp, TextInputProps, TextStyle, View, TextInput } from "react-native";
 
 import { useTheme } from "../../../hooks/themes/useThemeHooks";
 import { Label } from "../atoms/Label";
@@ -9,15 +9,15 @@ type InnerManagedTextInputProps<FormType extends object> = {
     name: keyof FormType;
     label: string;
     style?: StyleProp<TextStyle>;
+    errorTranslator?: (name: string, type: string) => string;
 };
 
 type UnunsedTextInputProps<T extends object> = Omit<TextInputProps, keyof InnerManagedTextInputProps<T>>;
 type ManagedTextInputProps<T extends object> = InnerManagedTextInputProps<T> & UnunsedTextInputProps<T>;
 
-export const ManagedTextInput = <T extends object>({ name, label, style, ...textInputProps }: ManagedTextInputProps<T>) => {
+export const ManagedTextInput = <T extends object>({ name, label, style, errorTranslator, ...textInputProps }: ManagedTextInputProps<T>) => {
     const { control } = useFormContext();
     const theme = useTheme();
-
     const containerStyle = useMemo(
         () => ({
             borderRadius: 16,
@@ -53,10 +53,19 @@ export const ManagedTextInput = <T extends object>({ name, label, style, ...text
                 <>
                     <Label type="caption">{label}</Label>
                     <View style={containerStyle}>
-                        <TextInput {...textInputProps} style={textFieldStyle} placeholderTextColor={theme.soften} {...field} onChangeText={field.onChange} />
+                        <TextInput
+                            {...textInputProps}
+                            ref={field.ref}
+                            style={[textFieldStyle, field.disabled && styles.disabled]}
+                            placeholderTextColor={theme.soften}
+                            onBlur={field.onBlur}
+                            onChangeText={field.onChange}
+                            readOnly={field.disabled}
+                            value={field.value}
+                        />
                         {fieldState.error && (
-                            <Label type="minor" color="warning">
-                                {fieldState.error.message}
+                            <Label type="minor" mt={4} color="notification">
+                                {errorTranslator ? errorTranslator(field.name, fieldState.error.type) : fieldState.error.message}
                             </Label>
                         )}
                     </View>
@@ -65,3 +74,9 @@ export const ManagedTextInput = <T extends object>({ name, label, style, ...text
         />
     );
 };
+
+const styles = StyleSheet.create({
+    disabled: {
+        opacity: 0.4,
+    },
+});

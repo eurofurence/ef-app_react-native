@@ -27,7 +27,9 @@ export type ToastProps = ToastMessage & {
 export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps) => {
     const [seenTime] = useState(Date.now);
 
-    const styleColor = useThemeBackground((type === "error" && "notification") || (type === "warning" && "warning") || "primary");
+    const styleColor = useThemeBackground((type === "error" && "notification") || (type === "warning" && "warning") || (type === "info" && "primary") || "white");
+    const iconColor = type === "notice" ? "black" : "white";
+    const textColor = type === "notice" ? "text" : "white";
     const iconName = (type === "error" && "alert-box") || (type === "warning" && "alert") || "alert-circle";
     const opacity = useSharedValue(1);
     const dismiss = useToastDismiss();
@@ -46,11 +48,11 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
         <Animated.View style={{ opacity }}>
             <Row style={[styleColor, styles.content, loose && styles.loose]}>
                 <Icon name={iconName} size={iconSize} color="white" />
-                <Label style={styles.text} color="white" ml={10} type="regular" variant="middle">
+                <Label style={styles.text} color={textColor} ml={10} type="regular" variant="middle">
                     {content}
                 </Label>
                 <TouchableOpacity hitSlop={50} onPress={() => dismiss(id)}>
-                    <Icon name="close-box-outline" size={iconSize} color="white" />
+                    <Icon name="close-box-outline" size={iconSize} color={iconColor} />
                 </TouchableOpacity>
             </Row>
         </Animated.View>
