@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { StyleProp, TextInputProps, TextStyle, View, TextInput } from "react-native";
+import { StyleSheet, StyleProp, TextInputProps, TextStyle, View, TextInput } from "react-native";
 
 import { useTheme } from "../../../hooks/themes/useThemeHooks";
 import { Label } from "../atoms/Label";
@@ -56,10 +56,11 @@ export const ManagedTextInput = <T extends object>({ name, label, style, errorTr
                         <TextInput
                             {...textInputProps}
                             ref={field.ref}
-                            style={[textFieldStyle, field.disabled && { opacity: 0.5 }]}
+                            style={[textFieldStyle, field.disabled && styles.disabled]}
                             placeholderTextColor={theme.soften}
                             onBlur={field.onBlur}
                             onChangeText={field.onChange}
+                            readOnly={field.disabled}
                             value={field.value}
                         />
                         {fieldState.error && (
@@ -73,3 +74,9 @@ export const ManagedTextInput = <T extends object>({ name, label, style, errorTr
         />
     );
 };
+
+const styles = StyleSheet.create({
+    disabled: {
+        opacity: 0.4,
+    },
+});

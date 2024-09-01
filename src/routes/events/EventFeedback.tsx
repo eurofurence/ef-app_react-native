@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { appStyles } from "../../components/AppStyles";
 import { FeedbackForm } from "../../components/feedback/FeedbackForm";
 import { Floater } from "../../components/generic/containers/Floater";
 import { Header } from "../../components/generic/containers/Header";
@@ -18,15 +19,9 @@ export const EventFeedback = () => {
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>
             <Header>{t("header", { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Header>
-            <Floater containerStyle={styles.margin}>
+            <Floater containerStyle={appStyles.trailer}>
                 <FeedbackForm />
             </Floater>
         </ScrollView>
     );
 };
-
-const styles = StyleSheet.create({
-    margin: {
-        marginTop: 10,
-    },
-});

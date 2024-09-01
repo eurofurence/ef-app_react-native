@@ -1,5 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import * as React from "react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { StyleSheet, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -8,8 +9,6 @@ import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 import { Image, ImageProps } from "../atoms/Image";
 import { Label } from "../atoms/Label";
 import { Col } from "../containers/Col";
-
-const defaultAspectRatio = 1;
 
 type InnerManagedImagePickerProps<T extends object> = {
     /**
@@ -46,10 +45,9 @@ type InnerManagedImagePickerProps<T extends object> = {
 
 type ManagedImagePickerProps<T extends object> = InnerManagedImagePickerProps<T>;
 
-export const ManagedImagePicker = <T extends object>({ style, name, label, errorTranslator, placeholder, aspectRatio = defaultAspectRatio }: ManagedImagePickerProps<T>) => {
+export const ManagedImagePicker = <T extends object>({ style, name, label, errorTranslator, placeholder }: ManagedImagePickerProps<T>) => {
     const backgroundStyle = useThemeBackground("background");
-    const darkenStyle = useThemeBackground("darken");
-    const aspect = { aspectRatio };
+    const [aspectRatio, setAspectRatio] = useState<undefined | number>();
     return (
         <Controller
             render={({ field, fieldState }) => (
@@ -70,8 +68,13 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
                             });
                         }}
                     >
-                        <Image style={[styles.image, aspect, style]} contentFit="contain" source={field.value} placeholder={null} />
-                        {field.disabled ? <View style={[StyleSheet.absoluteFill, darkenStyle]} /> : null}
+                        <Image
+                            style={[styles.image, field.disabled && styles.disabled, { aspectRatio }, style]}
+                            contentFit={undefined}
+                            source={field.value}
+                            placeholder={null}
+                            onLoad={(e) => setAspectRatio(e.source ? e.source.width / e.source.height : undefined)}
+                        />
                         {field.value ? null : (
                             <View style={[StyleSheet.absoluteFill, styles.labelContainer]}>
                                 <Label>{placeholder}</Label>
@@ -94,9 +97,15 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         height: undefined,
+        marginTop: 6,
+        marginBottom: 16,
+    },
+    disabled: {
+        opacity: 0.4,
     },
     image: {
         width: "100%",
+        minHeight: 200,
         height: undefined,
     },
     labelContainer: {

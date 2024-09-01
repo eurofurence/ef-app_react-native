@@ -14,6 +14,54 @@
     "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
     "sectionTitle": "Mitteilungen"
   },
+  "ArtistAlley": {
+    "dismiss": "Änderungen verwerfen",
+    "display_name_label": "Anzeigename",
+    "display_name_placeholder": "Dein bevorzugter Anzeigename",
+    "edit_request": "Anfrage bearbeiten",
+    "errors": {
+      "invalid_string": "Ungültiges Format",
+      "invalid_type": "Dieses Feld ist verpflichtend",
+      "location_invalid_string": "Benutze nur Zahlen für die Tischnummer",
+      "telegramHandle_invalid_string": "Das siehz nicht nach einem Telegram-Handle aus",
+      "too_small": "Dieses Feld ist verpflichtend",
+      "websiteUrl_invalid_string": "Schreibe Deine Webseite wie https://eurofurence.org"
+    },
+    "explanation_edit_change": "Du kannst Deine Anfrage hier ändern. Gehe Deine Eingaben durch, wähle ein Bild und schicke uns die Änderungen.",
+    "explanation_edit_new": "Du hast bisher noch keine Anfrage für die Artist Alley gemacht. Dies kannst Du hier tun, fülle das Formular aus, wähle ein Bild und schicke uns deine Anfrage.",
+    "explanation_status_accepted": "Deine Anfrage wurde Kontrolliert und akzeptiert. Wenn Du eine neue Anfrage machen willst, tue das hierunter.",
+    "explanation_status_pending": "Deine Anfrage wird noch bearbeitet. Falls Du einen Fehler gemacht hast, gebe uns die Änderungen hierunter durch.",
+    "explanation_status_rejected": "Deine Anfrage wurde abgelehnt. Du kannst hier eine neue Anfrage machen und es noch einmal versuchen.",
+    "explanation_unauthorized": "Du kannst noch keine Anfrage für die Artist Alley machen.",
+    "location_label": "Tischnummer",
+    "location_placeholder": "Die Tischnummer, auf die Du dich bewirbst",
+    "log_in_now": "Jetzt Einloggen um zu starten",
+    "new_request": "Neue Anfrage machen",
+    "no_submission": "Du hast noch keine Anfrage gemacht",
+    "short_description_label": "Kurzbeschreibung",
+    "short_description_placeholder": "Eine kurze Beschreibung der Sachen, die Du anbieten willst",
+    "status": {
+      "Accepted": "Deine Anfrage wurde akzeptiert.",
+      "Pending": "Deine Anfrage wird noch bearbeitet.",
+      "Published": "Deine Anfrage wurde akzeptiert.",
+      "Rejected": "Deine Anfrage wurde abgelehnt."
+    },
+    "submission_image_label": "Beispielbild",
+    "submission_image_placeholder": "Wähle ein Beispielbild aus Deiner Gallerie",
+    "submit": "Anfrage absenden",
+    "submit_failed": "Etwas ist schiefgegangen, probiere es später noch einmal",
+    "submit_in_progress": "Anfrage wird verschickt",
+    "submit_succeeded": "Wir haben Deine Anfrage emfangen",
+    "telegram_handle_label": "Telegram-Handle (Optional)",
+    "telegram_handle_placeholder": "Dein Telegram-Handle",
+    "title": "Artist Alley Registrierung",
+    "unauthorized_not_attending": "Nur Attendees können einen Tisch in der Artist-Alley anfragen",
+    "unauthorized_not_checked_in": "Bitte Checke bei der Registration ein, um einen Tisch anzufragen",
+    "unauthorized_not_logged_in": "Melde dich mit Deinem Account an, um einen Tisch anzufragen",
+    "update": "Ändere Deine Anfrage",
+    "website_url_label": "Webseite (optional)",
+    "website_url_placeholder": "URL zu Deiner Website"
+  },
   "Countdown": {
     "after_event": "Das war's! Wir hoffen wir sehen Dich nächstes Jahr wieder!",
     "before_event": "{{conName}} beginnt in {{diff}}(n)"
@@ -136,6 +184,7 @@
     "results": "In der Ansicht"
   },
   "Menu": {
+    "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealer",
     "events": "Events",
