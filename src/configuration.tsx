@@ -65,11 +65,6 @@ export const catchEmUrl = conventionConfig.convention.catchEmUrl;
  */
 export const artistAlleyUrl = conventionConfig.convention.artistAlleyUrl;
 
-/**
- * True if dealer view shows attendee.
- */
-export const dealerShowAttendee = conventionConfig.convention.dealerShowAttendee;
-
 export const authIssuer = conventionConfig.auth.issuer;
 export const authRedirect = conventionConfig.auth.redirect;
 export const authClientId = conventionConfig.auth.clientId;
