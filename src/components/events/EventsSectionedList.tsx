@@ -2,8 +2,6 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useMemo } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
-import { EventCard, EventDetailsInstance } from "./EventCard";
-import { EventSection, EventSectionProps } from "./EventSection";
 import { useThemeName } from "../../hooks/themes/useThemeHooks";
 import { EventsByDayProps } from "../../routes/events/EventsByDay";
 import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
@@ -13,6 +11,8 @@ import { PersonalScheduleProps } from "../../routes/events/PersonalSchedule";
 import { EventDetails } from "../../store/eurofurence/types";
 import { findIndices } from "../../util/findIndices";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { EventSection, EventSectionProps } from "./EventSection";
+import { EventCard, EventDetailsInstance } from "./EventCard";
 
 /**
  * The properties to the component.

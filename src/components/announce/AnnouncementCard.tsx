@@ -4,11 +4,11 @@ import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { colorForArea } from "./utils";
 import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
 import { AnnouncementDetails } from "../../store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";
+import { colorForArea } from "./utils";
 
 export type AnnouncementDetailsInstance = {
     details: AnnouncementDetails;

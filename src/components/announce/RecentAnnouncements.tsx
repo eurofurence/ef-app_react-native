@@ -4,12 +4,12 @@ import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { AnnouncementCard, announcementInstanceForAny } from "./AnnouncementCard";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { selectActiveAnnouncements } from "../../store/eurofurence/selectors/announcements";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
+import { AnnouncementCard, announcementInstanceForAny } from "./AnnouncementCard";
 
 const recentLimit = 2;
 

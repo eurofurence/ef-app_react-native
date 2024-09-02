@@ -2,11 +2,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { SettingContainer } from "./SettingContainer";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { toggleShowDeviceWarnings, toggleShowLanguageWarnings, toggleShowTimeZoneWarnings } from "../../store/auxiliary/slice";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
+import { SettingContainer } from "./SettingContainer";
 
 export const Warnings = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "device_warnings" });

@@ -7,12 +7,12 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, FlatList, InteractionManager, Platform, StyleSheet, View, ViewStyle } from "react-native";
 
-import { LinkItem } from "./LinkItem";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence/types";
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { Marker } from "../generic/atoms/Marker";
+import { LinkItem } from "./LinkItem";
 
 const distSq = (hx: number, hy: number) => hx * hx + hy * hy;
 const circleTouches = (x1: number, y1: number, x2: number, y2: number, x: number, y: number, r: number) => {

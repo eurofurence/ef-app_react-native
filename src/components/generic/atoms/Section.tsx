@@ -1,12 +1,12 @@
 import React, { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { Icon, IconNames } from "./Icon";
-import { Label, LabelProps } from "./Label";
 import { ThemeColor } from "../../../context/Theme";
 import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Col } from "../containers/Col";
 import { Row } from "../containers/Row";
+import { Label, LabelProps } from "./Label";
+import { Icon, IconNames } from "./Icon";
 
 const iconSize = 24; // Matches H1 font size.
 

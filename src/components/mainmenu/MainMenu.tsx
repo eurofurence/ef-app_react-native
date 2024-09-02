@@ -4,13 +4,13 @@ import { FC, RefObject, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking } from "react-native";
 
-import { PagerPrimary } from "./PagerPrimary";
 import { appBase, conWebsite } from "../../configuration";
 import { AuthContext, getAccessToken } from "../../context/AuthContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { RecordId } from "../../store/eurofurence/types";
 import { Tab } from "../generic/containers/Tab";
 import { TabsRef } from "../generic/containers/Tabs";
+import { PagerPrimary } from "./PagerPrimary";
 
 export type MainMenuProps = {
     tabs: RefObject<TabsRef>;

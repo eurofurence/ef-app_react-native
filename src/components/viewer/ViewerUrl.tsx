@@ -3,9 +3,9 @@ import { FC, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, Image as ReactImage } from "react-native";
 
-import { minZoomFor, shareImage } from "./Viewer.common";
 import { Image } from "../generic/atoms/Image";
 import { Header } from "../generic/containers/Header";
+import { minZoomFor, shareImage } from "./Viewer.common";
 
 const viewerPadding = 40;
 

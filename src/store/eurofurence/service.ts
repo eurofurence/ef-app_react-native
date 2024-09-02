@@ -4,10 +4,10 @@ import * as FileSystem from "expo-file-system";
 import { FileSystemSessionType, FileSystemUploadType } from "expo-file-system";
 import _ from "lodash";
 
-import { ArtistAlleyOwnTableRegistrationRecord, CommunicationRecord, RecordId, RecordMetadata } from "./types";
 import { apiBase } from "../../configuration";
 import { getAccessToken } from "../../context/AuthContext";
 import { httpStatusTexts } from "../../util/httpStatusTexts";
+import { ArtistAlleyOwnTableRegistrationRecord, CommunicationRecord, RecordId, RecordMetadata } from "./types";
 
 const tagsFromList =
     <TagType extends string>(type: TagType) =>

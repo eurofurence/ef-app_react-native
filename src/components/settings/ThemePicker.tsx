@@ -3,12 +3,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { SettingContainer } from "./SettingContainer";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setTheme } from "../../store/settings/slice";
 import { ChoiceButtons } from "../generic/atoms/ChoiceButtons";
 import { Label } from "../generic/atoms/Label";
 import { Col } from "../generic/containers/Col";
+import { SettingContainer } from "./SettingContainer";
 
 const usableThemes = [undefined, "light", "medium", "dark"];
 

@@ -1,8 +1,8 @@
 import { createSelector } from "@reduxjs/toolkit";
 import moment, { Moment } from "moment/moment";
 
-import { eventsSelector } from "./records";
 import { EventDetails, RecordId } from "../types";
+import { eventsSelector } from "./records";
 
 export const selectFavoriteEvents = createSelector([eventsSelector.selectAll], (items) => items.filter((item) => item.Favorite));
 

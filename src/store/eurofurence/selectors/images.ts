@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import { announcementsSelectors, dealersSelectors, eventsSelector, imagesSelectors, knowledgeEntriesSelectors } from "./records";
 import { AnnouncementDetails, DealerDetails, EventDetails, ImageDetails, KnowledgeEntryDetails, RecordId } from "../types";
+import { announcementsSelectors, dealersSelectors, eventsSelector, imagesSelectors, knowledgeEntriesSelectors } from "./records";
 
 export const selectImagesById = createSelector([imagesSelectors.selectEntities, (_state, imageIds: RecordId[]) => imageIds], (images, imageIds): ImageDetails[] =>
     imageIds.map((it) => images[it]).filter((it): it is ImageDetails => it !== undefined),

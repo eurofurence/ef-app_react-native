@@ -2,8 +2,8 @@ import * as React from "react";
 import { FC, useMemo, useState } from "react";
 import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { Image, ImageProps } from "./Image";
 import { ImageDetails } from "../../../store/eurofurence/types";
+import { Image, ImageProps } from "./Image";
 
 const initialSize = { width: Dimensions.get("window").width - 40, height: 160 };
 

@@ -3,11 +3,11 @@ import React, { FC, PropsWithChildren } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { Row } from "./Row";
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
+import { Row } from "./Row";
 
 const iconSize = 26;
 const iconPad = 6;

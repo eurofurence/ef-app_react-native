@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 
-import { Continuous } from "./Continuous";
 import { useSynchronizer } from "../../sync/SynchronizationProvider";
+import { Continuous } from "./Continuous";
 
 /**
  * Props for the activity indicator.

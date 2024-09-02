@@ -1,7 +1,7 @@
 import analytics from "@react-native-firebase/analytics";
 
-import { useAnalytics } from "./useAnalytics";
 import { customRenderHook } from "../../testUtils";
+import { useAnalytics } from "./useAnalytics";
 
 describe("useAnalytics", function () {
     it("should not try to log analytics when it is not enabled", () => {

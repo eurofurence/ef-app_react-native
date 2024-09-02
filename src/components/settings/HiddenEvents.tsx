@@ -2,12 +2,12 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { SettingContainer } from "./SettingContainer";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useAppDispatch } from "../../store";
 import { unhideAllEvents } from "../../store/auxiliary/slice";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
+import { SettingContainer } from "./SettingContainer";
 
 export const HiddenEvents = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "hidden_events" });

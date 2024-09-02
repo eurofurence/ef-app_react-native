@@ -7,15 +7,15 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, StyleSheet, View } from "react-native";
 
+import { Icon } from "../../components/generic/atoms/Icon";
+import { useTabStyles } from "../../components/generic/nav/useTabStyles";
+import { AreasRouterParamsList } from "../AreasRouter";
+import { IndexRouterParamsList } from "../IndexRouter";
 import { DealersAd, DealersAdParams } from "./DealersAd";
 import { DealersAll, DealersAllParams } from "./DealersAll";
 import { DealersAlpha, DealersAlphaParams } from "./DealersAlpha";
 import { DealersRegular, DealersRegularParams } from "./DealersRegular";
 import { PersonalDealers, PersonalDealersParams } from "./PersonalDealers";
-import { Icon } from "../../components/generic/atoms/Icon";
-import { useTabStyles } from "../../components/generic/nav/useTabStyles";
-import { AreasRouterParamsList } from "../AreasRouter";
-import { IndexRouterParamsList } from "../IndexRouter";
 
 /**
  * Available routes.

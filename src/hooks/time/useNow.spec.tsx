@@ -1,7 +1,7 @@
 import moment from "moment";
 
-import { useNow } from "./useNow";
 import { customRenderHook, renderHook } from "../../testUtils";
+import { useNow } from "./useNow";
 
 describe("useNow", function () {
     beforeEach(() => {

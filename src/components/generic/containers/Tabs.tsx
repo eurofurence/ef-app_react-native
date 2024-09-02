@@ -3,10 +3,10 @@ import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from "r
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { Tab } from "./Tab";
 import { useThemeBackground, useThemeBorder } from "../../../hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
 import { IconNames } from "../atoms/Icon";
+import { Tab } from "./Tab";
 
 /**
  * Arguments to the tabs.
