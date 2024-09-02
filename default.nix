@@ -12,7 +12,7 @@ pkgs.stdenv.mkDerivation {
 
   buildInputs =
     [
-      pkgs.yarn
+      pkgs.pnpm
       pkgs.nodejs
       pkgs.nodePackages.expo-cli
       pkgs.android-tools
