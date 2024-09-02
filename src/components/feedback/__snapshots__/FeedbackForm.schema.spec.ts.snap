@@ -3,13 +3,13 @@
 exports[`feedbackSchema does not work for an empty model 1`] = `
 "[
   {
-    \\"code\\": \\"invalid_type\\",
-    \\"expected\\": \\"number\\",
-    \\"received\\": \\"undefined\\",
-    \\"path\\": [
-      \\"rating\\"
+    "code": "invalid_type",
+    "expected": "number",
+    "received": "undefined",
+    "path": [
+      "rating"
     ],
-    \\"message\\": \\"Required\\"
+    "message": "Required"
   }
 ]"
 `;
@@ -17,13 +17,14 @@ exports[`feedbackSchema does not work for an empty model 1`] = `
 exports[`feedbackSchema does not work with a large value 1`] = `
 "[
   {
-    \\"code\\": \\"too_big\\",
-    \\"maximum\\": 5,
-    \\"type\\": \\"number\\",
-    \\"inclusive\\": true,
-    \\"message\\": \\"Number must be less than or equal to 5\\",
-    \\"path\\": [
-      \\"rating\\"
+    "code": "too_big",
+    "maximum": 5,
+    "type": "number",
+    "inclusive": true,
+    "exact": false,
+    "message": "Number must be less than or equal to 5",
+    "path": [
+      "rating"
     ]
   }
 ]"
@@ -32,13 +33,14 @@ exports[`feedbackSchema does not work with a large value 1`] = `
 exports[`feedbackSchema does not work with a negative value 1`] = `
 "[
   {
-    \\"code\\": \\"too_small\\",
-    \\"minimum\\": 1,
-    \\"type\\": \\"number\\",
-    \\"inclusive\\": true,
-    \\"message\\": \\"Number must be greater than or equal to 1\\",
-    \\"path\\": [
-      \\"rating\\"
+    "code": "too_small",
+    "minimum": 1,
+    "type": "number",
+    "inclusive": true,
+    "exact": false,
+    "message": "Number must be greater than or equal to 1",
+    "path": [
+      "rating"
     ]
   }
 ]"
@@ -47,13 +49,13 @@ exports[`feedbackSchema does not work with a negative value 1`] = `
 exports[`feedbackSchema throws when the value is not a number 1`] = `
 "[
   {
-    \\"code\\": \\"invalid_type\\",
-    \\"expected\\": \\"number\\",
-    \\"received\\": \\"string\\",
-    \\"path\\": [
-      \\"rating\\"
+    "code": "invalid_type",
+    "expected": "number",
+    "received": "string",
+    "path": [
+      "rating"
     ],
-    \\"message\\": \\"Expected number, received string\\"
+    "message": "Expected number, received string"
   }
 ]"
 `;
