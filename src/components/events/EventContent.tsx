@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 import { useEventReminder } from "../../hooks/events/useEventReminder";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
-import { shareEvent } from "../../routes/events/EventItem";
+import { shareEvent } from "../../routes/events/Events.common";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { toggleEventHidden } from "../../store/auxiliary/slice";
 import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";

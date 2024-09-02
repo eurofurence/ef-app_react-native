@@ -1,9 +1,8 @@
-import { useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { StyleSheet, StyleProp, TextInputProps, TextStyle, View, TextInput } from "react-native";
 
-import { useTheme } from "../../../hooks/themes/useThemeHooks";
-import { Label } from "../atoms/Label";
+import { useTheme, useThemeMemo } from "../../../hooks/themes/useThemeHooks";
+import { Label, labelTypeStyles } from "../atoms/Label";
 
 type InnerManagedTextInputProps<FormType extends object> = {
     name: keyof FormType;
@@ -12,38 +11,15 @@ type InnerManagedTextInputProps<FormType extends object> = {
     errorTranslator?: (name: string, type: string) => string;
 };
 
-type UnunsedTextInputProps<T extends object> = Omit<TextInputProps, keyof InnerManagedTextInputProps<T>>;
-type ManagedTextInputProps<T extends object> = InnerManagedTextInputProps<T> & UnunsedTextInputProps<T>;
+type UnusedTextInputProps<T extends object> = Omit<TextInputProps, keyof InnerManagedTextInputProps<T>>;
+type ManagedTextInputProps<T extends object> = InnerManagedTextInputProps<T> & UnusedTextInputProps<T>;
 
 export const ManagedTextInput = <T extends object>({ name, label, style, errorTranslator, ...textInputProps }: ManagedTextInputProps<T>) => {
     const { control } = useFormContext();
     const theme = useTheme();
-    const containerStyle = useMemo(
-        () => ({
-            borderRadius: 16,
-            borderBottomColor: theme.invText,
-            backgroundColor: theme.background,
-            borderBottomWidth: 1,
-            padding: 8,
-            paddingLeft: 16,
-            marginTop: 6,
-            marginBottom: 16,
-        }),
-        [theme],
-    );
 
-    const textFieldStyle = useMemo<StyleProp<TextStyle>>(
-        () => [
-            {
-                color: theme.text,
-                width: "100%",
-                borderBottomColor: theme.invText,
-                borderBottomWidth: 1,
-            },
-            style,
-        ],
-        [theme],
-    );
+    const containerThemeStyle = useThemeMemo((theme) => ({ borderBottomColor: theme.invText, backgroundColor: theme.background }));
+    const textThemeStyle = useThemeMemo((theme) => ({ color: theme.text, borderBottomColor: theme.invText }));
 
     return (
         <Controller
@@ -52,11 +28,11 @@ export const ManagedTextInput = <T extends object>({ name, label, style, errorTr
             render={({ field, fieldState }) => (
                 <>
                     <Label type="caption">{label}</Label>
-                    <View style={containerStyle}>
+                    <View style={[containerThemeStyle, styles.container]}>
                         <TextInput
                             {...textInputProps}
                             ref={field.ref}
-                            style={[textFieldStyle, field.disabled && styles.disabled]}
+                            style={[textThemeStyle, field.disabled && styles.disabled, styles.text, labelTypeStyles.regular, style]}
                             placeholderTextColor={theme.soften}
                             onBlur={field.onBlur}
                             onChangeText={field.onChange}
@@ -78,5 +54,17 @@ export const ManagedTextInput = <T extends object>({ name, label, style, errorTr
 const styles = StyleSheet.create({
     disabled: {
         opacity: 0.4,
+    },
+    container: {
+        borderRadius: 16,
+        borderBottomWidth: 1,
+        padding: 8,
+        paddingLeft: 16,
+        marginTop: 6,
+        marginBottom: 16,
+    },
+    text: {
+        width: "100%",
+        borderBottomWidth: 1,
     },
 });

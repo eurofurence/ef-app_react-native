@@ -4,6 +4,9 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { conName, conTimeZone } from "../../configuration";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { hideLanguageWarnings, hideTimeZoneWarnings } from "../../store/auxiliary/slice";
+import { Label } from "../generic/atoms/Label";
 import { Badge } from "../generic/containers/Badge";
 
 export type TimezoneWarningProps = {
@@ -16,6 +19,12 @@ export type TimezoneWarningProps = {
 export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => {
     const { t } = useTranslation("Home");
     const { timeZone } = useCalendars()[0];
+    const warningsHidden = useAppSelector((state) => state.auxiliary.timeZoneWarningsHidden);
+    const dispatch = useAppDispatch();
+
+    if (warningsHidden) {
+        return null;
+    }
 
     const now = new Date();
     const conTimeZoneOffset = moment.tz(now, conTimeZone).utcOffset();
@@ -28,6 +37,9 @@ export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => 
     return (
         <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="clock">
             {t("different_timezone", { convention: conName, conTimeZone, deviceTimeZone: timeZone })}
+            <Label variant="bold" color="secondary" onPress={() => dispatch(hideTimeZoneWarnings())}>
+                {" " + t("warnings.hide")}
+            </Label>
         </Badge>
     );
 };

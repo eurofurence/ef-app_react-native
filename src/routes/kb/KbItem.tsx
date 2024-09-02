@@ -27,8 +27,8 @@ export const KbItem = () => {
                     </View>
                 ))}
                 <MarkdownContent>{entry?.Text ?? ""}</MarkdownContent>
-                {entry?.Links.map((link) => (
-                    <View style={{ marginBottom: 10 }}>
+                {entry?.Links.map((link, i) => (
+                    <View key={i} style={{ marginBottom: 10 }}>
                         <LinkItem link={link} key={link.Target} />
                     </View>
                 ))}
@@ -39,7 +39,7 @@ export const KbItem = () => {
 
 const styles = StyleSheet.create({
     posterLine: {
-        marginBottom: 20,
+        marginVertical: 10,
         alignItems: "center",
     },
 });

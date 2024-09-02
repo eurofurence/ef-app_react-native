@@ -77,8 +77,8 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
     const themeType = useThemeName();
 
     // Get toasts to render. Do not render if in areas, there, the tab control renders the toasts.
-    const toastMessages = useToastMessages();
-    const isAreas = useNavigationState((s) => (!s ? false : s.routes[s.index].name === "Areas"));
+    const toastMessages = useToastMessages(5);
+    const isAreas = useNavigationState((s) => (!s ? false : s.routes?.[s.index]?.name === "Areas"));
 
     return (
         <SafeAreaView style={StyleSheet.absoluteFill}>

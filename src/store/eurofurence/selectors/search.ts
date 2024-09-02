@@ -11,7 +11,7 @@ import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails
  */
 const searchOptions: IFuseOptions<any> = {
     shouldSort: true,
-    threshold: 0.3,
+    threshold: 0.25,
     ignoreLocation: true,
 };
 
@@ -105,7 +105,7 @@ export const selectGlobalSearchIndex = createSelector(
         const data = [...dealers, ...events, ...knowledgeEntries];
         return new Fuse(
             data,
-            searchOptions,
+            { ...searchOptions, threshold: 0.1 },
             Fuse.createIndex(
                 [
                     ...(dealerSearchProperties as FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),

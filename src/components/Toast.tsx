@@ -7,7 +7,7 @@ import { Icon } from "./generic/atoms/Icon";
 import { Label } from "./generic/atoms/Label";
 import { Row } from "./generic/containers/Row";
 import { ToastMessage, useToastDismiss } from "../context/ToastContext";
-import { useThemeBackground } from "../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeBorder } from "../hooks/themes/useThemeHooks";
 
 const iconSize = 18; // Matches regular font size.
 
@@ -31,6 +31,7 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
     const iconColor = type === "notice" ? "black" : "white";
     const textColor = type === "notice" ? "text" : "white";
     const iconName = (type === "error" && "alert-box") || (type === "warning" && "alert") || "alert-circle";
+    const styleBorder = useThemeBorder("darken");
     const opacity = useSharedValue(1);
     const dismiss = useToastDismiss();
 
@@ -46,7 +47,7 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
 
     return (
         <Animated.View style={{ opacity }}>
-            <Row style={[styleColor, styles.content, loose && styles.loose]}>
+            <Row style={[styleColor, styles.content, loose && styles.loose, styleBorder]}>
                 <Icon name={iconName} size={iconSize} color="white" />
                 <Label style={styles.text} color={textColor} ml={10} type="regular" variant="middle">
                     {content}
@@ -62,6 +63,8 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
 const styles = StyleSheet.create({
     content: {
         padding: 10,
+        overflow: "hidden",
+        borderBottomWidth: 1,
     },
     loose: {
         margin: 10,

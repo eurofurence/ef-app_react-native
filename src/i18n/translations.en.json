@@ -183,6 +183,7 @@
     "warnings": {
       "favorites_changed": "Favorites updated",
       "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
+      "hide": "Hide",
       "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown.",
       "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
       "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
@@ -301,10 +302,14 @@
       "title": "Dev Settings Menu"
     },
     "device_warnings": {
-      "hide_device_warnings": "Hide warnings",
-      "show_device_warnings": "Show warnings",
+      "hide_device_warnings": "Hide device warnings",
+      "hide_language_warnings": "Hide language warnings",
+      "hide_time_zone_warnings": "Hide time zone warnings",
+      "show_device_warnings": "Show device warnings",
+      "show_language_warnings": "Show language warnings",
+      "show_time_zone_warnings": "Show time zone warnings",
       "subtitle": "Show or hide device warnigns on home screen",
-      "title": "Device warnings"
+      "title": "Warnings on home screen"
     },
     "header": "Settings",
     "hidden_events": {
@@ -355,6 +360,7 @@
     "artistThumbnail": "Artist thumbnail: {{name}}",
     "eventBanner": "Banner: {{name}}",
     "eventPoster": "Poster: {{name}}",
+    "knowledgeEntryBanner": "Info article image: {{name}}",
     "unspecified": "Image"
   }
 }

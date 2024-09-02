@@ -128,4 +128,11 @@ export const useToastDismiss = () => useContext(ToastContext).dismiss;
 /**
  * Uses the current messages of the toast context.
  */
-export const useToastMessages = () => useContext(ToastContext).messages;
+export const useToastMessages = (limit?: number) => {
+    const result = useContext(ToastContext).messages;
+
+    if (limit === undefined) return result;
+    const start = Math.max(result.length - limit, 0);
+    const end = Math.min(start + limit, result.length);
+    return result.slice(start, end);
+};

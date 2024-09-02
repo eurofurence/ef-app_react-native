@@ -1,13 +1,49 @@
+import { captureException } from "@sentry/react-native";
 import { TFunction } from "i18next";
 import { Moment } from "moment";
 import moment from "moment/moment";
 import { useMemo } from "react";
+import { Share } from "react-native";
 
 import { DealerDetailsInstance, dealerInstanceForAny } from "../../components/dealers/DealerCard";
 import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation, DealerSectionProps } from "../../components/dealers/DealerSection";
+import { appBase, conAbbr } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/dealers";
 import { DealerDetails } from "../../store/eurofurence/types";
+
+/**
+ * Compares category, checks if the categories are adult labeled.
+ * @param left Left category.
+ * @param right Right category.
+ */
+const compareCategory = (left: string, right: string) => {
+    const leftAdult = left.toLowerCase().includes("adult");
+    const rightAdult = right.toLowerCase().includes("adult");
+    if (!leftAdult) {
+        if (!rightAdult) return left < right ? -1 : left > right ? 1 : 0;
+        else return -1;
+    } else {
+        if (!rightAdult) return 1;
+        else return left < right ? -1 : left > right ? 1 : 0;
+    }
+};
+
+/**
+ * Returns a list of dealer instances according to conversion rules.
+ * @param t The translation function.
+ * @param now The current moment.
+ * @param items The items to transform.
+ */
+export const useDealerInstances = (t: TFunction, now: Moment, items: DealerDetails[]) => {
+    // Return direct mapping.
+    return useMemo(() => {
+        const day1 = moment().day(1).format("dddd");
+        const day2 = moment().day(2).format("dddd");
+        const day3 = moment().day(3).format("dddd");
+        return items.map((item) => dealerInstanceForAny(item, now, day1, day2, day3));
+    }, [t, now, items]);
+};
 
 /**
  * Returns a list of dealer instances or section headers according to conversion rules.
@@ -43,7 +79,7 @@ export const useDealerGroups = (t: TFunction, now: Moment, results: DealerDetail
         }
 
         // Multiple passes needed.
-        for (const category of Object.keys(categoryMap).sort()) {
+        for (const category of Object.keys(categoryMap).sort(compareCategory)) {
             result.push(dealerSectionForCategory(category));
             result.push(...categoryMap[category]);
         }
@@ -141,3 +177,12 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
         return result;
     }, [t, now, results, all]);
 };
+export const shareDealer = (dealer: DealerDetails) =>
+    Share.share(
+        {
+            title: dealer.FullName,
+            url: `${appBase}/Web/Dealers/${dealer.Id}`,
+            message: `Check out ${dealer.FullName} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
+        },
+        {},
+    ).catch(captureException);

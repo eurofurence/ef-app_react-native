@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, Text, TextProps, ViewStyle } from "react-native";
 
-import { Icon, IconNames } from "./Icon";
 import { ThemeColor } from "../../../context/Theme";
 import { useThemeColor } from "../../../hooks/themes/useThemeHooks";
 
@@ -12,22 +11,17 @@ export type LabelProps = TextProps & {
     /**
      * The type, one of some predefined primary style values.
      */
-    type?: keyof typeof types;
+    type?: keyof typeof labelTypeStyles;
 
     /**
      * The variant, one of some predefined secondary style values, overriding type.
      */
-    variant?: keyof typeof variants;
+    variant?: keyof typeof labelVariantStyles;
 
     /**
      * The color name, a value from the theme.
      */
     color?: ThemeColor;
-
-    /**
-     * The icon to be displayed next to the label.
-     */
-    icon?: IconNames;
 
     /**
      * Margin left.
@@ -56,7 +50,6 @@ export type LabelProps = TextProps & {
  * @param type The type, one of some predefined primary style values.
  * @param variant The variant, one of some predefined secondary style values, overriding type.
  * @param color The color name, a value from the theme.
- * @param icon The icon to be displayed next to the label.
  * @param ml Margin left.
  * @param mt Margin top.
  * @param mr Margin right.
@@ -65,10 +58,10 @@ export type LabelProps = TextProps & {
  * @param props Additional props passed to the root text element.
  * @constructor
  */
-export const Label: FC<LabelProps> = ({ style, type, variant, color, icon, ml, mt, mr, mb, children, ...props }) => {
+export const Label: FC<LabelProps> = ({ style, type, variant, color, ml, mt, mr, mb, children, ...props }) => {
     // Value reads for named parameters.
-    const styleType = type ? types[type] : types.regular;
-    const styleVariant = variant ? variants[variant] : variants.regular;
+    const styleType = type ? labelTypeStyles[type] : labelTypeStyles.regular;
+    const styleVariant = variant ? labelVariantStyles[variant] : labelVariantStyles.regular;
     const styleColor = useThemeColor(color ?? "text");
 
     // Margin style, only created when a margin is defined.
@@ -84,118 +77,104 @@ export const Label: FC<LabelProps> = ({ style, type, variant, color, icon, ml, m
     // Return styled text.
     return (
         <Text style={[styleType, styleVariant, styleMargin, styleColor, style]} {...props}>
-            {!icon ? null : <Icon name={icon} style={styles.icon} size={styleType.fontSize * 2} />}
             {children}
         </Text>
     );
 };
 
 /**
- * Fixed component styles.
- */
-const styles = StyleSheet.create({
-    icon: { marginRight: 8, textAlignVertical: "bottom" },
-});
-
-/**
  * Label font settings.
  */
-const types = StyleSheet.create({
+export const labelTypeStyles = StyleSheet.create({
     lead: {
         fontSize: 20,
-        lineHeight: 24,
+        lineHeight: 26,
         fontWeight: "100",
     },
     xl: {
         fontSize: 44,
-        lineHeight: 48,
+        lineHeight: 58,
         fontWeight: "500",
     },
     h1: {
         fontSize: 30,
-        lineHeight: 34,
+        lineHeight: 39,
         fontWeight: "300",
     },
     h2: {
         fontSize: 24,
-        lineHeight: 28,
+        lineHeight: 32,
         fontWeight: "normal",
     },
     h3: {
         fontSize: 20,
-        lineHeight: 24,
+        lineHeight: 26,
         fontWeight: "normal",
     },
     h4: {
         fontSize: 17,
-        lineHeight: 21,
+        lineHeight: 23,
         fontWeight: "600",
     },
     h5: {
         fontSize: 15,
-        lineHeight: 19,
+        lineHeight: 20,
         fontWeight: "600",
     },
     h6: {
         fontSize: 14,
-        lineHeight: 18,
+        lineHeight: 19,
         fontWeight: "600",
     },
     caption: {
         fontSize: 14,
-        lineHeight: 18,
+        lineHeight: 19,
         fontWeight: "600",
         opacity: 0.666,
     },
     compact: {
         fontSize: 14,
-        lineHeight: 16,
+        lineHeight: 19,
         fontWeight: "normal",
     },
     regular: {
         fontSize: 14,
-        lineHeight: 18,
+        lineHeight: 19,
         fontWeight: "normal",
     },
     minor: {
         fontSize: 10,
+        lineHeight: 13,
         fontWeight: "normal",
     },
-    strong: {
-        fontSize: 14,
+    cap: {
+        fontSize: 10,
+        lineHeight: 13,
+        fontWeight: "bold",
+    },
+    bold: {
         fontWeight: "900",
+    },
+    lineThrough: {
+        textDecorationLine: "line-through",
+    },
+    italic: {
+        fontStyle: "italic",
+    },
+    underlined: {
+        textDecorationLine: "underline",
     },
     para: {
         fontSize: 14,
         fontWeight: "normal",
-        lineHeight: 24,
-    },
-    del: {
-        fontSize: 14,
-        fontWeight: "normal",
-        textDecorationLine: "line-through",
-    },
-    em: {
-        fontSize: 14,
-        fontWeight: "normal",
-        fontStyle: "italic",
-    },
-    u: {
-        fontSize: 14,
-        fontWeight: "normal",
-        textDecorationLine: "underline",
-    },
-    cap: {
-        fontSize: 10,
-        lineHeight: 10,
-        fontWeight: "bold",
+        lineHeight: 22,
     },
 });
 
 /**
  * Label variant definitions.
  */
-const variants = StyleSheet.create({
+export const labelVariantStyles = StyleSheet.create({
     regular: {},
     narrow: {
         fontWeight: "300",
@@ -203,8 +182,8 @@ const variants = StyleSheet.create({
     bold: {
         fontWeight: "900",
     },
-    striked: {
-        textDecorationLine: "underline",
+    lineThrough: {
+        textDecorationLine: "line-through",
     },
     underlined: {
         textDecorationLine: "underline",

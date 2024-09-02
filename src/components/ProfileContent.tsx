@@ -46,7 +46,7 @@ const UserRegistration: FC<{ id: string; status: string }> = ({ id, status }) =>
     const bg = useThemeBackground("secondary");
     return (
         <View style={[bg, styles.pill]}>
-            <Label type="strong" color="white">
+            <Label variant="bold" color="white">
                 {t("registration_nr")} {id} | {tStatus(status)}
             </Label>
         </View>
