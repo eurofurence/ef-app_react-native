@@ -13,8 +13,8 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 22.x
           cache: 'npm'
-      - run: yarn install
-      - run: yarn lint
-      - run: yarn test --forceExit
+      - run: pnpm install
+      - run: pnpm run lint --max-warnings=20
+      - run: pnpm test --forceExit

@@ -53,5 +53,5 @@ export const useBackgroundSyncManager = () => {
             // Remove app state subscription.
             changed.remove();
         };
-    }, []);
+    }, [synchronize]);
 };

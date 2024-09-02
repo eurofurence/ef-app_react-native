@@ -27,7 +27,6 @@ import {
     EventRoomDetails,
     EventTrackDetails,
     ImageDetails,
-    ImageRecord,
     KnowledgeEntryDetails,
     KnowledgeGroupDetails,
     KnowledgeGroupRecord,

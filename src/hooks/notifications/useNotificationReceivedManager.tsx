@@ -90,7 +90,7 @@ export const useNotificationReceivedManager = () => {
         return () => {
             removeNotificationSubscription(receive);
         };
-    }, []);
+    }, [dispatch, synchronize]);
 
     return null;
 };

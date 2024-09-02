@@ -247,7 +247,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             setUser(null);
             throw error;
         }
-    }, [promptAsync, request, discovery]);
+    }, [promptAsync, request]);
 
     // Logout method.
     const logout = useCallback(async () => {
@@ -269,7 +269,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             setClaims(null);
             setUser(null);
         }
-    }, [discovery]);
+    }, []);
 
     // Reload method.
     const refresh = useCallback(async () => {

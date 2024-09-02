@@ -3,15 +3,9 @@ import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 import { Platform } from "react-native";
 
-import { conId } from "../../configuration";
 import { useAuthContext } from "../../context/AuthContext";
 import { captureNotificationException } from "../../sentryHelpers";
 import { usePostDeviceRegistrationMutation } from "../../store/auth/service";
-
-/**
- * List of topics for this device.
- */
-const TOPICS = [`${conId}-${Platform.OS}`, `${conId}-expo`, `${conId}`];
 
 /**
  * Makes sure we can request a token. We must be on a device and have permissions. If
@@ -78,7 +72,7 @@ export const useTokenManager = () => {
             (r) => console.log("Registration and subscription, performed:", r),
             (e) => captureNotificationException("Could not register and subscribe", e),
         );
-    }, [loggedIn /* Remote methods depend on token implicitly. */]);
+    }, [loggedIn,registerDevice /* Remote methods depend on token implicitly. */]);
 
     return null;
 };

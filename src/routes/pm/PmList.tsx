@@ -54,7 +54,7 @@ export const PmList = () => {
               ];
 
         return [...unreadSections, ...readSections];
-    }, [data]);
+    }, [data, t]);
 
     const sectionStyle = useThemeBackground("background");
 

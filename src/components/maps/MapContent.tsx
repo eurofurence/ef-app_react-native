@@ -39,7 +39,7 @@ export type MapContentProps = {
  */
 const MapContentFlatList = Platform.OS === "web" ? FlatList : BottomSheetFlatList;
 
-export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
+export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
     const { t } = useTranslation("Maps");
     const refHandle = useRef<any>([0, 0]);
     const refZoom = useRef<ZoomableView>(null);
@@ -92,7 +92,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry, link }) => {
 
         // Assign handle.
         refHandle.current = ownHandle;
-    }, []);
+    }, [map]);
 
     useEffect(() => {
         if (!refSheet.current) return;

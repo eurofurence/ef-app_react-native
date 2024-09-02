@@ -31,7 +31,7 @@ export const customRenderHook = <Result, Props>(renderCallback: (props: Props) =
 
     const wrapper = ({ children }: { children: any }) => <StoreProvider store={store}>{children}</StoreProvider>;
 
-    // @ts-ignore This type somehow does not match
+    // @ts-expect-error This type somehow does not match
     return renderHook(renderCallback, { wrapper });
 };
 

@@ -1,7 +1,7 @@
 import FontAwesomeIcon from "@expo/vector-icons/FontAwesome5";
-import { Dictionary } from "@reduxjs/toolkit";
-import { parseInt } from "lodash";
-import moment, { MomentInput } from "moment";
+import {Dictionary} from "@reduxjs/toolkit";
+import {parseInt} from "lodash";
+import moment, {MomentInput} from "moment";
 
 import {
     AnnouncementDetails,
@@ -16,7 +16,6 @@ import {
     EventRoomDetails,
     EventTrackDetails,
     ImageDetails,
-    ImageRecord,
     KnowledgeGroupDetails,
     KnowledgeGroupRecord,
     MapDetails,
@@ -24,57 +23,8 @@ import {
     MapRecord,
     RecordId,
 } from "./types";
-import { IconNames } from "../../components/generic/atoms/Icon";
-import { apiBase } from "../../configuration";
-import { Notification } from "../background/slice";
-
-const base64encode = (input: string) => {
-    const keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
-    const output = [];
-    let chr1 = NaN;
-    let chr2 = NaN;
-    let chr3 = NaN;
-    let enc1 = NaN;
-    let enc2 = NaN;
-    let enc3 = NaN;
-    let enc4 = NaN;
-    let i = 0;
-
-    do {
-        chr1 = input.charCodeAt(i++);
-        chr2 = input.charCodeAt(i++);
-        chr3 = input.charCodeAt(i++);
-
-        enc1 = chr1 >> 2;
-        enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-        enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-        enc4 = chr3 & 63;
-
-        if (isNaN(chr2)) {
-            enc3 = 64;
-            enc4 = 64;
-        } else if (isNaN(chr3)) {
-            enc4 = 64;
-        }
-
-        output.push(keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4));
-        chr1 = NaN;
-        chr2 = NaN;
-        chr3 = NaN;
-        enc1 = NaN;
-        enc2 = NaN;
-        enc3 = NaN;
-        enc4 = NaN;
-    } while (i < input.length);
-
-    return output.join("");
-};
-
-/**
- * Do not use directly.
- * @param source
- */
-const internalCreateImageUrl = (source: ImageRecord): string => `${apiBase}/Images/${source.Id}/Content/with-hash:${base64encode(source.ContentHashSha1)}`;
+import {IconNames} from "../../components/generic/atoms/Icon";
+import {Notification} from "../background/slice";
 
 const internalCategorizeTime = (input: MomentInput) => {
     const hours = moment(input).hours();

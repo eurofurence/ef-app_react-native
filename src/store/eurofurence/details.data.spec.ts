@@ -1,4 +1,4 @@
-/* eslint-disable */
+ 
 export default {
     lastSynchronised: "2022-08-14T13:30:43.782Z",
     state: "preview",

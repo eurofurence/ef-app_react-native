@@ -32,12 +32,12 @@ export type BannerProps = {
 
 export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable }) => {
     const navigation = useAppNavigation("Areas");
-    // Do not render if nothing given.
-    if (!image) return null;
+
 
     const aspect = !image ? {} : { aspectRatio: image.Width / image.Height };
     const backgroundStyle = useThemeBackground("background");
-
+    // Do not render if nothing given.
+    if (!image) return null;
     return (
         <TouchableOpacity
             containerStyle={[styles.container, backgroundStyle]}

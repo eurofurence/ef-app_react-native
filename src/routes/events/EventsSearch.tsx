@@ -6,9 +6,7 @@ import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { useEventSearchGroups } from "./Events.common";
-import { EventsRouterParamsList } from "./EventsRouter";
-import { useEventsRouterContext } from "./EventsRouterContext";
+
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { Search } from "../../components/generic/atoms/Search";
@@ -20,6 +18,9 @@ import { useNow } from "../../hooks/time/useNow";
 import { selectEventsAllSearchIndex } from "../../store/eurofurence/selectors/search";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useEventsRouterContext } from "./EventsRouterContext";
+import { EventsRouterParamsList } from "./EventsRouter";
+import { useEventSearchGroups } from "./Events.common";
 
 /**
  * Params handled by the screen in route.

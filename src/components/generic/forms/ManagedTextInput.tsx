@@ -42,7 +42,7 @@ export const ManagedTextInput = <T extends object>({ name, label, style, ...text
             },
             style,
         ],
-        [theme],
+        [theme, style],
     );
 
     return (

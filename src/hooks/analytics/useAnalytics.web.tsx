@@ -16,5 +16,5 @@ export const useAnalytics = () => {
         } else {
             return async () => {};
         }
-    }, [enabled]);
+    }, [enabled, instance]);
 };

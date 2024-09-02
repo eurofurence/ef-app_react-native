@@ -8,7 +8,7 @@ export const NoData = () => {
         <View style={[styles.container]}>
             <Icon name="calendar-alert" size={40} style={{ marginBottom: 20 }} />
             <Label type="h3" variant="narrow">
-                There's nothing here yet . . .
+                There&apos;s nothing here yet . . .
             </Label>
         </View>
     );

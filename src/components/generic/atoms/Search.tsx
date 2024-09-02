@@ -30,7 +30,7 @@ export const Search: FC<SearchProps> = ({ filter, setFilter, placeholder }) => {
             return true;
         });
         return () => subscription.remove();
-    }, [isFocused, filter]);
+    }, [isFocused, filter, setFilter]);
 
     return (
         <TextInput

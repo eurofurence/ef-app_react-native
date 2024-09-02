@@ -40,7 +40,7 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
             // Fade out.
             withTiming(0, { duration: 1300, easing: Easing.in(Easing.cubic) }),
         );
-    }, [seenTime, queued, lifetime]);
+    }, [seenTime, queued, lifetime, opacity]);
 
     return (
         <Animated.View style={{ opacity }}>

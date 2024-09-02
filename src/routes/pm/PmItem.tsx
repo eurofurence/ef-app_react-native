@@ -45,7 +45,7 @@ export const PmItem = () => {
         }, readOpenTimeRequirement);
 
         return () => clearTimeout(handle);
-    }, [message]);
+    }, [message, markRead]);
 
     // If no message currently displayable, check if fetching. If not fetching
     if (!message) {

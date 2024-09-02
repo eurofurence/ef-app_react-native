@@ -25,7 +25,7 @@ export const Grid: FC<GridProps> = ({ style, cols = 2, children }) => {
         const result = Array.isArray(children) ? [...children].filter(Boolean) : [children].filter(Boolean);
         while (result.length % cols !== 0) result.push(null);
         return result;
-    }, [children]);
+    }, [children, cols]);
 
     return (
         <Col style={style} type="stretch">

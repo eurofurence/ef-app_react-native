@@ -44,13 +44,13 @@ export const FeedbackForm = () => {
             ...data,
             eventId: event!.Id,
         });
-    }, []);
+    }, [event, submitFeedback]);
 
     useEffect(() => {
         if (feedbackResult.isSuccess) {
             navigation.goBack();
         }
-    }, [feedbackResult]);
+    }, [feedbackResult, navigation]);
 
     return (
         <FormProvider {...form}>

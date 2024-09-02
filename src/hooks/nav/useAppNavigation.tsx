@@ -16,7 +16,9 @@ type ParamListMap<T> = {
  */
 type RouteMap = ParamListMap<AreasRouterParamsList> & ParamListMap<IndexRouterParamsList>;
 
+//This is used for type inference IG
 // @ts-expect-error something is off about screens but it does seem to work
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const useAppNavigation = <ScreenName extends keyof RouteMap, Screen = RouteMap[ScreenName]>(screen: ScreenName) => useNavigation<StackNavigationProp<Screen, ScreenName>>();
 
 type TypedRoute<RouteName, Params> = {
@@ -26,4 +28,6 @@ type TypedRoute<RouteName, Params> = {
     path?: string;
 };
 
+// This is used for type inference IG
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const useAppRoute = <RouteName extends keyof AllRoutes>(routeName: RouteName): TypedRoute<RouteName, AllRoutes[RouteName]> => useRoute();
