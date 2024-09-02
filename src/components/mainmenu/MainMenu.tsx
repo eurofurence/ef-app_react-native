@@ -60,8 +60,8 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 openFursuitGames(t).catch(captureException);
                 tabs.current?.close();
             },
-            services: () => {
-                openAdditionalServices(t).catch(captureException);
+            artistAlley: () => {
+                navigation.navigate("ArtistAlleyReg", {});
                 tabs.current?.close();
             },
             settings: () => {
@@ -84,7 +84,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             onProfile={on.profile}
             onInfo={on.info}
             onCatchEmAll={on.catchEmAll}
-            onServices={on.services}
+            onArtistAlley={on.artistAlley}
             onSettings={on.settings}
             onMap={on.map}
         >

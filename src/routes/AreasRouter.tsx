@@ -131,7 +131,7 @@ export const AreasRouter: FC<AreasRouterProps> = () => {
             tabBar={(props) => (
                 <AreasTabBar
                     activity={isSynchronizing}
-                    notice={!toastMessages.length ? null : toastMessages.map((toast) => <Toast key={toast.id} {...toast} loose={false} />)}
+                    notice={!toastMessages.length ? null : [...toastMessages].reverse().map((toast) => <Toast key={toast.id} {...toast} loose={false} />)}
                     {...props}
                 />
             )}
