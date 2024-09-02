@@ -1,13 +1,19 @@
-import analytics from "@react-native-firebase/analytics";
-
 import { customRenderHook } from "../../testUtils";
 import { useAnalytics } from "./useAnalytics";
 
-describe("useAnalytics", function () {
-    it("should not try to log analytics when it is not enabled", () => {
-        const spy = jest.spyOn(analytics(), "logEvent");
-        spy.mockImplementation();
+const mockLogEvent = jest.fn();
+jest.mock("@react-native-firebase/analytics", () => {
+    return () => ({
+        logEvent: mockLogEvent,
+    });
+});
 
+describe("useAnalytics", function () {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it("should not try to log analytics when it is not enabled", () => {
         const result = customRenderHook(() => useAnalytics(), {
             preloadedState: {
                 settingsSlice: {
@@ -21,13 +27,10 @@ describe("useAnalytics", function () {
 
         result.result.current("test", { test: 1 });
 
-        expect(spy).not.toHaveBeenCalled();
+        expect(mockLogEvent).not.toHaveBeenCalled();
     });
 
     it("should actually call analytics when it is enabled", () => {
-        const spy = jest.spyOn(analytics(), "logEvent");
-        spy.mockImplementation();
-
         const result = customRenderHook(() => useAnalytics(), {
             preloadedState: {
                 settingsSlice: {
@@ -41,6 +44,6 @@ describe("useAnalytics", function () {
 
         result.result.current("test", { test: 1 });
 
-        expect(spy).toHaveBeenCalledTimes(1);
+        expect(mockLogEvent).toHaveBeenCalledTimes(1);
     });
 });
