@@ -3,11 +3,11 @@ import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
 import { AnalyticsOptIns } from "./AnalyticsOptIns";
-import { DeviceWarnings } from "./DeviceWarnings";
 import { HiddenEvents } from "./HiddenEvents";
 import { LanguagePicker } from "./LanguagePicker";
 import { SettingContainer } from "./SettingContainer";
 import { ThemePicker } from "./ThemePicker";
+import { Warnings } from "./Warnings";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
@@ -44,8 +44,8 @@ export const UserSettings = () => {
             {/* Hidden events functionality, undo. */}
             <HiddenEvents />
 
-            {/* Device warning settings */}
-            <DeviceWarnings />
+            {/* Warning settings */}
+            <Warnings />
         </View>
     );
 };

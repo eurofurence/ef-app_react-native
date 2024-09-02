@@ -1,3 +1,4 @@
+import * as Clipboard from "expo-clipboard";
 import * as Linking from "expo-linking";
 import { TFunction } from "i18next";
 import moment from "moment";
@@ -5,10 +6,10 @@ import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { dealerShowAttendee } from "../../configuration";
+import { useToast } from "../../context/ToastContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
-import { shareDealer } from "../../routes/dealers/DealerItem";
+import { shareDealer } from "../../routes/dealers/Dealers.common";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { toggleDealerFavorite } from "../../store/auxiliary/slice";
 import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";
@@ -37,13 +38,13 @@ const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }
                     if (keywords?.length)
                         return (
                             <Label key={category} mt={5}>
-                                <Label type="strong">{category}: </Label>
+                                <Label variant="bold">{category}: </Label>
                                 {keywords.join(", ")}
                             </Label>
                         );
                     else
                         return (
-                            <Label key={category} type="strong">
+                            <Label key={category} variant="bold">
                                 {category}
                             </Label>
                         );
@@ -85,6 +86,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     const navigation = useAppNavigation("Areas");
     const { t } = useTranslation("Dealer");
     const now = useNow();
+    const toast = useToast();
 
     const dispatch = useAppDispatch();
     const mapLink = useAppSelector((state) => selectValidLinksByTarget(state, dealer.Id));
@@ -103,9 +105,10 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
     // Check if not-attending warning should be marked.
     const markNotAttending = useMemo(() => {
-        if (now.day() === 1 && !dealer.AttendsOnThursday) return true;
-        else if (now.day() === 2 && !dealer.AttendsOnFriday) return true;
-        else if (now.day() === 3 && !dealer.AttendsOnSaturday) return true;
+        // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
+        if (now.day() === 4 && !dealer.AttendsOnThursday) return true;
+        else if (now.day() === 5 && !dealer.AttendsOnFriday) return true;
+        else if (now.day() === 6 && !dealer.AttendsOnSaturday) return true;
         return false;
     }, [now, dealer]);
 
@@ -129,11 +132,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 </View>
             )}
 
-            {dealerShowAttendee ? (
-                <Section icon="brush" title={dealer.FullName} subtitle={`${dealer.AttendeeNickname} (${dealer.RegistrationNumber})`} />
-            ) : (
-                <Section icon="brush" title={dealer.FullName} />
-            )}
+            <Section icon="brush" title={dealer.FullName} />
 
             <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
@@ -190,6 +189,29 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             {dealer.TwitterHandle && (
                 <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
                     Twitter: {dealer.TwitterHandle}
+                </Button>
+            )}
+            {dealer.DiscordHandle && (
+                <Button
+                    containerStyle={styles.button}
+                    onPress={async () => {
+                        if (!dealer.DiscordHandle) return null;
+                        await Clipboard.setStringAsync(dealer.DiscordHandle);
+                        toast("info", t("discord_handle_copied", { discordHandle: dealer.DiscordHandle }), 5000);
+                    }}
+                    icon="discord"
+                >
+                    Discord: {dealer.DiscordHandle}
+                </Button>
+            )}
+            {dealer.MastodonHandle && (
+                <Button containerStyle={styles.button} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
+                    Mastodon: {dealer.MastodonHandle}
+                </Button>
+            )}
+            {dealer.BlueskyHandle && (
+                <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
+                    Bluesky: {dealer.BlueskyHandle}
                 </Button>
             )}
 

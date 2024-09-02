@@ -4,7 +4,7 @@ import { groupBy, keyBy, map, mapValues, uniq, Dictionary as LodashDictionary } 
 
 import { selectFavoriteDealerIds, selectHiddenEventIds } from "../../auxiliary/selectors";
 import { RootState } from "../../index";
-import { applyAnnouncementDetails, applyDealerDetails, applyEventDayDetails, applyEventDetails, applyKnowledgeGroupDetails, applyMapDetails } from "../details";
+import { applyAnnouncementDetails, applyDealerDetails, applyEventDayDetails, applyEventDetails, applyMapDetails } from "../details";
 import {
     announcementsAdapter,
     dealersAdapter,
@@ -29,7 +29,6 @@ import {
     ImageDetails,
     KnowledgeEntryDetails,
     KnowledgeGroupDetails,
-    KnowledgeGroupRecord,
     MapDetails,
     RecordId,
 } from "../types";
@@ -47,17 +46,7 @@ export const eventRoomsSelectors = eventRoomsAdapter.getSelectors<RootState>((st
 
 export const eventTracksSelectors = eventTracksAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.eventTracks) as RecordSelectors<EventTrackDetails>;
 
-export const baseKnowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups);
-
-export const knowledgeGroupsSelectors: RecordSelectors<KnowledgeGroupDetails> = {
-    selectTotal: baseKnowledgeGroupsSelectors.selectTotal,
-    selectIds: baseKnowledgeGroupsSelectors.selectIds as (state: RootState) => RecordId[],
-    selectEntities: createSelector([baseKnowledgeGroupsSelectors.selectEntities], (entities) =>
-        mapValues(entities as LodashDictionary<KnowledgeGroupRecord>, applyKnowledgeGroupDetails),
-    ),
-    selectAll: createSelector([baseKnowledgeGroupsSelectors.selectAll], (all) => map(all, applyKnowledgeGroupDetails)),
-    selectById: createSelector([baseKnowledgeGroupsSelectors.selectById], (item) => mapOne(item, applyKnowledgeGroupDetails)),
-};
+export const knowledgeGroupsSelectors = knowledgeGroupsAdapter.getSelectors<RootState>((state) => state.eurofurenceCache.knowledgeGroups) as RecordSelectors<KnowledgeGroupDetails>;
 
 export const knowledgeEntriesSelectors = knowledgeEntriesAdapter.getSelectors<RootState>(
     (state) => state.eurofurenceCache.knowledgeEntries,

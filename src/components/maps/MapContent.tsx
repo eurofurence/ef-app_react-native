@@ -126,8 +126,8 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
     // List header component.
     const header = useMemo(
         () => (
-            <Label mt={15} mb={15} type="em" variant="middle">
-                {filtering ? t("filtering") : t("results")}
+            <Label mt={15} mb={15} variant="middle">
+                <Label type="italic">{filtering ? t("filtering") : t("results")}</Label>
             </Label>
         ),
         [t, filtering],

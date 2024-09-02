@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { BackHandler, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
+import { labelTypeStyles } from "./Label";
 import { withAlpha } from "../../../context/Theme";
 import { useThemeBackground, useThemeColor, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 
@@ -34,7 +35,7 @@ export const Search: FC<SearchProps> = ({ filter, setFilter, placeholder }) => {
 
     return (
         <TextInput
-            style={[styles.searchField, styleLighten, styleText]}
+            style={[styles.searchField, styleLighten, styleText, labelTypeStyles.regular]}
             value={filter}
             onChangeText={setFilter}
             placeholder={placeholder ?? t("placeholder")}

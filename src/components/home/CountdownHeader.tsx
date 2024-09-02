@@ -15,9 +15,8 @@ import { EventDayRecord } from "../../store/eurofurence/types";
 import { assetSource } from "../../util/assets";
 import { Image } from "../generic/atoms/Image";
 import { ImageBackground } from "../generic/atoms/ImageBackground";
-import { Label } from "../generic/atoms/Label";
+import { Label, labelTypeStyles } from "../generic/atoms/Label";
 import { Col } from "../generic/containers/Col";
-import { Row } from "../generic/containers/Row";
 
 export type CountdownHeaderProps = {
     style?: StyleProp<ViewStyle>;
@@ -45,7 +44,8 @@ const useCountdownTitle = (t: TFunction, now: Moment) => {
     } else if (lastDay && now.isAfter(lastDay.Date, "day")) {
         return t("after_event");
     } else {
-        return "";
+        // This is only returned if there's no days from the API.
+        return conName;
     }
 };
 
@@ -69,21 +69,18 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
                 priority="high"
             />
             <View style={[StyleSheet.absoluteFill, styles.cover]} />
-            <Image style={styles.logo} source={assetSource("banner_logo")} contentFit="contain" priority="high" />
-            <Col style={styles.textContainer}>
-                <Row type="center">
-                    <Label style={styles.textContainerFill} type="xl" variant="shadow" color="white" ellipsizeMode="tail">
-                        {conId}
-                    </Label>
-                </Row>
+            <Image style={styles.logo} source={assetSource("banner_logo")} priority="high" />
+            <Col variant="end" style={styles.textContainer}>
+                <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
+                    {conId}
+                </Label>
 
-                {!subtitle ? null : (
-                    <Row type="center">
-                        <Label style={styles.textContainerFill} type="compact" variant="shadow" color="white" ellipsizeMode="tail">
-                            {subtitle}
-                        </Label>
-                    </Row>
-                )}
+                {/* Subtitle is pushed up a bit and to the left, as the conID label has a lot of extra whitespace before */}
+                {/* due to font characteristics. This lines that up. The bottom margin is set to negative to eliminate */}
+                {/* the extra space due to normal line height. */}
+                <Label ml={2} mb={labelTypeStyles.compact.fontSize - labelTypeStyles.compact.lineHeight} type="compact" variant="shadow" color="white" ellipsizeMode="tail">
+                    {subtitle}
+                </Label>
             </Col>
         </View>
     );
@@ -94,27 +91,17 @@ const styles = StyleSheet.create({
         backgroundColor: "#00000060",
     },
     container: {
-        height: 160,
-        paddingTop: 15,
-        paddingHorizontal: 15,
-        flexDirection: "column-reverse",
+        height: 240,
+        padding: 10,
+        flexDirection: "row",
+        alignItems: "flex-end",
+        gap: 10,
     },
     textContainer: {
-        paddingTop: 30,
-        paddingBottom: 5,
-    },
-    textContainerFill: {
         flex: 1,
     },
-    section: {
-        marginTop: 0,
-    },
     logo: {
-        position: "absolute",
-        top: 25,
-        right: 25,
-        bottom: 25,
-        aspectRatio: 1,
-        maxHeight: 130,
+        height: 130,
+        aspectRatio: 682 / 1139,
     },
 });

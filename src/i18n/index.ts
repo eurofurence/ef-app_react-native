@@ -91,7 +91,7 @@ export const i18t = i18next
             useSuspense: false,
         },
         parseMissingKeyHandler: (key, defaultValue) => {
-            if (!defaultValue) {
+            if (defaultValue === undefined) {
                 console.warn("react-i18next", "Key not found.", key);
                 return key;
             } else {

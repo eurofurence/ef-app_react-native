@@ -8,6 +8,7 @@ import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
 
 export const FavoritesChangedWarning = () => {
+    const { t: tMenu } = useTranslation("Menu");
     const { t } = useTranslation("Home");
     const changedEventFavorite = useAppSelector(selectUpdatedFavoriteEvents);
     const changedDealerFavorite = useAppSelector(selectUpdatedFavoriteDealers);
@@ -20,13 +21,15 @@ export const FavoritesChangedWarning = () => {
             <Section title={t("warnings.favorites_changed")} subtitle={t("warnings.favorites_changed_subtitle")} icon="update" />
 
             {!changedEventFavorite.length ? null : (
-                <Label type="strong">
-                    Events: <Label type="regular">{changedEventFavorite.map((event) => event.Title).join(", ")}</Label>
+                <Label mt={5}>
+                    <Label variant="bold">{tMenu("events")}: </Label>
+                    {changedEventFavorite.map((event) => event.Title).join(", ")}
                 </Label>
             )}
             {!changedDealerFavorite.length ? null : (
-                <Label type="strong">
-                    Dealers: <Label type="regular">{changedDealerFavorite.map((dealer) => dealer.FullName).join(", ")}</Label>
+                <Label mt={5}>
+                    <Label variant="bold">{tMenu("dealers")}: </Label>
+                    {changedDealerFavorite.map((dealer) => dealer.FullName).join(", ")}
                 </Label>
             )}
         </>

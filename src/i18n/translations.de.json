@@ -14,6 +14,56 @@
     "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
     "sectionTitle": "Mitteilungen"
   },
+  "ArtistAlley": {
+    "dismiss": "Änderungen verwerfen",
+    "display_name_label": "Anzeigename",
+    "display_name_placeholder": "Dein bevorzugter Anzeigename",
+    "edit_request": "Anfrage bearbeiten",
+    "errors": {
+      "invalid_string": "Ungültiges Format.",
+      "invalid_type": "Dieses Feld ist verpflichtend.",
+      "location_invalid_string": "Gib die Tischnummer vom Handout auf deinem Tisch ein.",
+      "telegramHandle_invalid_string": "Das sieht nicht nach einem gültigen Telegram-Handle aus.",
+      "too_small": "Dieses Feld ist verpflichtend.",
+      "websiteUrl_invalid_string": "Gib deine Webseite ein wie: https://eurofurence.org"
+    },
+    "explanation_edit_change": "Hier kannst du deine Tischregistrierung in der Artist Alley bearbeiten. Aktualisiere deine Eingaben, wähle ein Bild und schicke uns die Änderungen.",
+    "explanation_edit_new": "Du hast dich bisher noch an keinem Tisch in der Artist Alley registriert, aber das kannst Du hier und jetzt ändern. Suche dir einfach einen freien Tisch, fülle das Formular aus, wähle ein Bild und schicke uns deine Anfrage.",
+    "explanation_status_accepted": "Deine Anfrage wurde kontrolliert und akzeptiert. Wenn du dich später erneut an einem anderen Tisch registrieren möchtest, kannst du unten eine neue Anfrage stellen.",
+    "explanation_status_pending": "Deine Anfrage wird noch bearbeitet. Falls Du einen Fehler gemacht hast, kannst du deine Daten unten ändern.",
+    "explanation_status_rejected": "Deine Anfrage wurde abgelehnt. Du kannst eine neue Anfrage erstellen, um es erneut zu versuchen.",
+    "explanation_unauthorized": "Du kannst dich aktuell noch nicht an einem Tisch in der Artist Alley registrieren. Dies ist Attendees mit einem gültigen Ticket vor Ort vorbehalten.",
+    "intro": "Die Artist Alley bietet eine einladende, kreative und sichere Umgebung für alle Artists und Attendees. Mit dem Formular unten können sich Artists registrieren, wenn sie ihr Angebot an einem Tisch in der Artist Alley aufbauen und dies anderen Attendees bekanntgeben wollen.",
+    "learn_more": "Erfahre mehr über die Artist Alley",
+    "location_label": "Tischnummer",
+    "location_placeholder": "Tischnummer vom Handout auf deinem Tisch",
+    "log_in_now": "Melde dich jetz an!",
+    "new_request": "Neue Anfrage erstellen",
+    "no_submission": "Du hast noch keine Registrierung abgeschickt.",
+    "short_description_label": "Kurzbeschreibung",
+    "short_description_placeholder": "Informationen zu dir und deinem Angebot",
+    "status": {
+      "Accepted": "Deine Anfrage wurde akzeptiert.",
+      "Pending": "Deine Anfrage wird noch bearbeitet.",
+      "Published": "Deine Anfrage wurde akzeptiert.",
+      "Rejected": "Deine Anfrage wurde abgelehnt."
+    },
+    "submission_image_label": "Beispielbild",
+    "submission_image_placeholder": "Wähle ein Bild deines Tisches und Angebots aus",
+    "submit": "Anfrage absenden",
+    "submit_failed": "Etwas ist schiefgegangen, bitte probiere es später noch einmal.",
+    "submit_in_progress": "Anfrage wird verschickt …",
+    "submit_succeeded": "Danke! Wir haben deine Registrierung erhalten.",
+    "telegram_handle_label": "Telegram-Handle (Optional)",
+    "telegram_handle_placeholder": "Öffentliches Telegram-Handle für Attendees",
+    "title": "Artist Alley Registrierung",
+    "unauthorized_not_attending": "Bitte stelle sicher, dass du ein gültiges Ticket für die diesjährige Convention hast, wenn du dich an einem Tisch in der Artist Alley registrieren möchtest.",
+    "unauthorized_not_checked_in": "Bitte checke erst am Registration Desk ein und hole deinen Convention Badge ab, bevor du versuchst dich an einem Tisch in der Artist Alley zu registrieren.",
+    "unauthorized_not_logged_in": "Du musst dich erst in der App anmelden, bevor du dich an einem Tisch in der Artist Alley registrieren kannst.",
+    "update": "Aktualisiere deine Anfrage",
+    "website_url_label": "Webseite (optional)",
+    "website_url_placeholder": "URL zu Deiner Website"
+  },
   "Countdown": {
     "after_event": "Das war's! Wir hoffen wir sehen Dich nächstes Jahr wieder!",
     "before_event": "{{conName}} beginnt in {{diff}}(n)"
@@ -29,6 +79,7 @@
     "attends_sat": "Samstag",
     "attends_thu": "Donnerstag",
     "categories": "Kategorien",
+    "discord_handle_copied": "Discord-Handle {{discordHandle}} wurde in die Zwischenablage kopiert!",
     "in_after_dark": "Im After Dark Bereich",
     "merchandise": "Angebot",
     "not_attending": "Heute nicht anwesend",
@@ -121,6 +172,9 @@
     "eventsTitle_zero": "Keine Events.",
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "warnings": {
+      "favorites_changed": "Favoriten geändert",
+      "favorites_changed_subtitle": "Infos in Deinen Favoriten wurden geändert, seitdem Du diese das letzte mal angeschaut hast",
+      "hide": "Verbergen",
       "no_image_caching": "Dein Gerät unterstützt kein Zwischenspeichern von Bildern. Ohne aktive Internetverbindung werden dir keine Bilder angezeigt.",
       "no_notifications": "Dein Gerät unterstützt keine zeitgesteuerten Benachrichtigungen. Du wirst keine Benachrichtigungen für anstehende Events erhalten.",
       "no_push_notifications": "Dein Gerät unterstützt keine Push-Nachrichten. Du wirst nicht automatisch über neue Mitteilungen oder persönliche Nachrichten informiert.",
@@ -136,6 +190,7 @@
     "results": "In der Ansicht"
   },
   "Menu": {
+    "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealer",
     "events": "Events",
@@ -212,6 +267,16 @@
       "enable": "Anschalten",
       "title": "Entwickler-Menü"
     },
+    "device_warnings": {
+      "hide_device_warnings": "Kompatibilitätsprobleme verbergen",
+      "hide_language_warnings": "Übersetzungshinweise verbergen",
+      "hide_time_zone_warnings": "Zeitzonenhinweise verbergen",
+      "show_device_warnings": "Kompatibilitätsprobleme anzeigen",
+      "show_language_warnings": "Übersetzungshinweise anzeigen",
+      "show_time_zone_warnings": "Zeitzonenhinweise anzeigen",
+      "subtitle": "Warnungen auf dem Startbildschirm anzeigen oder verbergen",
+      "title": "Warnungen"
+    },
     "header": "Einstellungen",
     "hidden_events": {
       "subtitle": "Zeige verborgene Events wieder an",
@@ -268,6 +333,7 @@
     "artistThumbnail": "Dealer-Avatar: {{name}}",
     "eventBanner": "Banner: {{name}}",
     "eventPoster": "Poster: {{name}}",
+    "knowledgeEntryBanner": "Infoartikelbild: {{name}}",
     "unspecified": "Bild"
   }
 }

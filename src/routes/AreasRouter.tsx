@@ -122,7 +122,7 @@ export const AreasRouter: FC<AreasRouterProps> = () => {
     // Areas router is the tabs provider and therefore renders toast messages and
     // displays the current syncing status. Be aware that this does only display
     // on the primary area screens, not on detail pages.
-    const toastMessages = useToastMessages();
+    const toastMessages = useToastMessages(5);
     const { isSynchronizing } = useSynchronizer();
 
     return (
@@ -131,7 +131,7 @@ export const AreasRouter: FC<AreasRouterProps> = () => {
             tabBar={(props) => (
                 <AreasTabBar
                     activity={isSynchronizing}
-                    notice={!toastMessages.length ? null : toastMessages.map((toast) => <Toast key={toast.id} {...toast} loose={false} />)}
+                    notice={!toastMessages.length ? null : [...toastMessages].reverse().map((toast) => <Toast key={toast.id} {...toast} loose={false} />)}
                     {...props}
                 />
             )}

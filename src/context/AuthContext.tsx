@@ -199,7 +199,9 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     const login = useCallback(async () => {
         // Code exchange part.
         try {
-            const codeResponse = await promptAsync();
+            // We set show in "recents" so the web browser doesn't close when
+            // you use a MFA method that requires switching apps on android.
+            const codeResponse = await promptAsync({ showInRecents: true });
 
             if (!(request && codeResponse?.type === "success")) return;
 

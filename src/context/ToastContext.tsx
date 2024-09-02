@@ -13,7 +13,7 @@ export type ToastMessage = {
     /**
      * The type of the toast.
      */
-    type: "info" | "warning" | "error";
+    type: "notice" | "info" | "warning" | "error";
 
     /**
      * The content, can be a React node.
@@ -52,7 +52,7 @@ export type ToastContextType = {
      * @param lifetime The lifetime.
      * @param group A group key, freely pickable if multiple consumers render toasts.
      */
-    toast(type: "info" | "warning" | "error", content: ReactNode | string, lifetime?: number, group?: any): void;
+    toast(type: "notice" | "info" | "warning" | "error", content: ReactNode | string, lifetime?: number, group?: any): void;
 
     /**
      * Dismisses a toast.
@@ -87,7 +87,7 @@ export type ToastContextProviderProps = {
  */
 export const ToastContextProvider = ({ children }: ToastContextProviderProps) => {
     const [messages, setMessages] = useState<ToastMessage[]>([]);
-    const toast = useCallback((type: "info" | "warning" | "error", content: ReactNode | string, lifetime = 5000, group?: any) => {
+    const toast = useCallback((type: "notice" | "info" | "warning" | "error", content: ReactNode | string, lifetime = 5000, group?: any) => {
         const queued = Date.now();
         const message = { id: randomUUID(), type, content, queued, lifetime, group };
 
@@ -128,4 +128,11 @@ export const useToastDismiss = () => useContext(ToastContext).dismiss;
 /**
  * Uses the current messages of the toast context.
  */
-export const useToastMessages = () => useContext(ToastContext).messages;
+export const useToastMessages = (limit?: number) => {
+    const result = useContext(ToastContext).messages;
+
+    if (limit === undefined) return result;
+    const start = Math.max(result.length - limit, 0);
+    const end = Math.min(start + limit, result.length);
+    return result.slice(start, end);
+};

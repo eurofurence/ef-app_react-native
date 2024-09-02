@@ -6,11 +6,17 @@
   "build": {
     "development": {
       "developmentClient": true,
+      "android": {
+        "gradleCommand": ":app:assembleRelease --parallel --no-daemon"
+      },
       "distribution": "internal"
     },
     "preview": {
       "distribution": "internal",
       "channel": "preview",
+      "android": {
+        "gradleCommand": ":app:assembleRelease --parallel --no-daemon"
+      },
       "ios": {
         "simulator": true
       }

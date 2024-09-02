@@ -46,7 +46,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ navigation, leader, 
                 if ("KnowledgeGroupId" in item) {
                     return <KbEntryCard containerStyle={styles.item} entry={item} key={item.Id} onPress={(entry) => navigation.navigate("KnowledgeEntry", { id: entry.Id })} />;
                 } else {
-                    return <KbSection style={[styles.item, sectionStyle]} title={item.Name} subtitle={item.Description} icon={item.FaIconName ?? "bookmark"} />;
+                    return <KbSection style={[styles.item, sectionStyle]} title={item.Name} subtitle={item.Description} icon={item.FontAwesomeIconName ?? "bookmark"} />;
                 }
             }}
             estimatedItemSize={59}

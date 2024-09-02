@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { Linking } from "react-native";
 
 import { PagerPrimary } from "./PagerPrimary";
-import { appBase, conWebsite, catchEmUrl } from "../../configuration";
+import { appBase, conWebsite } from "../../configuration";
 import { AuthContext, getAccessToken } from "../../context/AuthContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { RecordId } from "../../store/eurofurence/types";
@@ -23,15 +23,6 @@ const openFursuitGames = async (t: TFunction) => {
         return;
     }
     await Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/collect&token=${token}`).catch(console.error);
-};
-
-const openAdditionalServices = async (t: TFunction) => {
-    const token = await getAccessToken();
-    if (!token) {
-        alert(t("not_logged_in"));
-        return;
-    }
-    await Linking.openURL(catchEmUrl).catch(console.error);
 };
 
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
@@ -60,8 +51,8 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
                 openFursuitGames(t).catch(captureException);
                 tabs.current?.close();
             },
-            services: () => {
-                openAdditionalServices(t).catch(captureException);
+            artistAlley: () => {
+                navigation.navigate("ArtistAlleyReg", {});
                 tabs.current?.close();
             },
             settings: () => {
@@ -84,7 +75,7 @@ export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
             onProfile={on.profile}
             onInfo={on.info}
             onCatchEmAll={on.catchEmAll}
-            onServices={on.services}
+            onArtistAlley={on.artistAlley}
             onSettings={on.settings}
             onMap={on.map}
         >

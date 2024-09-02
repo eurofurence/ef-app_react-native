@@ -7,12 +7,16 @@ type AuxiliaryState = {
     hiddenEvents?: RecordId[];
     favoriteDealers?: RecordId[];
     deviceWarningsHidden?: boolean;
+    languageWarningsHidden?: boolean;
+    timeZoneWarningsHidden?: boolean;
 };
 const initialState: AuxiliaryState = {
     lastViewTimes: {},
     hiddenEvents: [],
     favoriteDealers: [],
     deviceWarningsHidden: false,
+    languageWarningsHidden: false,
+    timeZoneWarningsHidden: false,
 };
 
 export const auxiliary = createSlice({
@@ -65,13 +69,31 @@ export const auxiliary = createSlice({
             else state.favoriteDealers.push(action.payload);
         },
         hideDeviceWarnings(state) {
-            state.deviceWarningsHidden = false;
+            state.deviceWarningsHidden = true;
         },
         showDeviceWarnings(state) {
-            state.deviceWarningsHidden = true;
+            state.deviceWarningsHidden = false;
         },
         toggleShowDeviceWarnings(state) {
             state.deviceWarningsHidden = !state.deviceWarningsHidden;
+        },
+        hideLanguageWarnings(state) {
+            state.languageWarningsHidden = true;
+        },
+        showLanguageWarnings(state) {
+            state.languageWarningsHidden = false;
+        },
+        toggleShowLanguageWarnings(state) {
+            state.languageWarningsHidden = !state.languageWarningsHidden;
+        },
+        hideTimeZoneWarnings(state) {
+            state.timeZoneWarningsHidden = true;
+        },
+        showTimeZoneWarnings(state) {
+            state.timeZoneWarningsHidden = false;
+        },
+        toggleShowTimeZoneWarnings(state) {
+            state.timeZoneWarningsHidden = !state.timeZoneWarningsHidden;
         },
     },
 });
@@ -88,4 +110,10 @@ export const {
     hideDeviceWarnings,
     showDeviceWarnings,
     toggleShowDeviceWarnings,
+    hideLanguageWarnings,
+    showLanguageWarnings,
+    toggleShowLanguageWarnings,
+    hideTimeZoneWarnings,
+    showTimeZoneWarnings,
+    toggleShowTimeZoneWarnings,
 } = auxiliary.actions;

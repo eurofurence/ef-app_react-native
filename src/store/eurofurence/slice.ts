@@ -76,8 +76,8 @@ export const imagesAdapter = createEntityAdapter<ImageRecord>({
 export const dealersAdapter = createEntityAdapter<DealerRecord>({
     selectId: (model) => model.Id,
     sortComparer: (a, b) => {
-        const aFullName = (a.DisplayName || a.AttendeeNickname).toLowerCase();
-        const bFullName = (b.DisplayName || b.AttendeeNickname).toLowerCase();
+        const aFullName = a.DisplayNameOrAttendeeNickname.toLowerCase();
+        const bFullName = b.DisplayNameOrAttendeeNickname.toLowerCase();
         return aFullName.localeCompare(bFullName);
     },
 });

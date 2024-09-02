@@ -40,7 +40,7 @@ export const Home: FC<HomeProps> = ({ navigation }) => {
     const now = useNow(isFocused ? 5 : "static");
 
     // Search integration.
-    const [filter, setFilter, results] = useFuseIntegration(selectGlobalSearchIndex);
+    const [filter, setFilter, results] = useFuseIntegration(selectGlobalSearchIndex, 15);
 
     const { synchronizeUi, isSynchronizing } = useSynchronizer();
     return (

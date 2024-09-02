@@ -1,10 +1,26 @@
+import { captureException } from "@sentry/react-native";
 import { TFunction } from "i18next";
 import { Moment } from "moment/moment";
 import { useMemo } from "react";
+import { Share } from "react-native";
 
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
 import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "../../components/events/EventSection";
+import { appBase, conAbbr } from "../../configuration";
 import { EventDetails } from "../../store/eurofurence/types";
+
+/**
+ Returns a list of event instances according to conversion rules.
+ * @param t The translation function.
+ * @param now The current moment.
+ * @param items The items to transform.
+ */
+export const useEventInstances = (t: TFunction, now: Moment, items: EventDetails[]) => {
+    // Return direct mapping.
+    return useMemo(() => {
+        return items.map((item) => eventInstanceForAny(item, now));
+    }, [t, now, items]);
+};
 
 /**
  * Generates search result grouping with event detail instances prepared for
@@ -187,3 +203,13 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
         return result;
     }, [t, now, all]);
 };
+
+export const shareEvent = (event: EventDetails) =>
+    Share.share(
+        {
+            title: event.Title,
+            url: `${appBase}/Web/Events/${event.Id}`,
+            message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
+        },
+        {},
+    ).catch(captureException);

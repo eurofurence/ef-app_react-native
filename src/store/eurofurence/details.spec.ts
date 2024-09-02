@@ -20,6 +20,12 @@ const state: RootState = {
             },
         ],
     },
+    auxiliary: {
+        lastViewTimes: {},
+        hiddenEvents: [],
+        favoriteDealers: [],
+        deviceWarningsHidden: false,
+    },
 } as any;
 
 describe("Eurofurence details", () => {
