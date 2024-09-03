@@ -39,12 +39,15 @@ export const FeedbackForm = () => {
     const { params } = useAppRoute("EventFeedback");
     const event = useAppSelector((state) => eventsSelector.selectById(state, params.id));
 
-    const submit = useCallback((data: FeedbackSchema) => {
-        submitFeedback({
-            ...data,
-            eventId: event!.Id,
-        });
-    }, [event, submitFeedback]);
+    const submit = useCallback(
+        (data: FeedbackSchema) => {
+            submitFeedback({
+                ...data,
+                eventId: event!.Id,
+            });
+        },
+        [event, submitFeedback],
+    );
 
     useEffect(() => {
         if (feedbackResult.isSuccess) {

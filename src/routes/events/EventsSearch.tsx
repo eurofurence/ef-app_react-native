@@ -6,7 +6,6 @@ import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { Search } from "../../components/generic/atoms/Search";

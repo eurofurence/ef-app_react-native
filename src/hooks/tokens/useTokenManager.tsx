@@ -72,7 +72,7 @@ export const useTokenManager = () => {
             (r) => console.log("Registration and subscription, performed:", r),
             (e) => captureNotificationException("Could not register and subscribe", e),
         );
-    }, [loggedIn,registerDevice /* Remote methods depend on token implicitly. */]);
+    }, [loggedIn, registerDevice /* Remote methods depend on token implicitly. */]);
 
     return null;
 };

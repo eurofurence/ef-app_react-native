@@ -1,27 +1,27 @@
-import {BottomTabScreenProps} from "@react-navigation/bottom-tabs";
-import {CompositeScreenProps, useIsFocused} from "@react-navigation/core";
-import {createMaterialTopTabNavigator, MaterialTopTabScreenProps} from "@react-navigation/material-top-tabs";
-import {NavigatorScreenParams} from "@react-navigation/native";
-import {StackScreenProps} from "@react-navigation/stack";
+import { BottomTabScreenProps } from "@react-navigation/bottom-tabs";
+import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
+import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
+import { NavigatorScreenParams } from "@react-navigation/native";
+import { StackScreenProps } from "@react-navigation/stack";
 import moment from "moment";
-import {FC, useCallback, useEffect, useMemo} from "react";
-import {BackHandler, Dimensions, Platform, StyleSheet, View} from "react-native";
+import { FC, useCallback, useEffect, useMemo } from "react";
+import { BackHandler, Dimensions, Platform, StyleSheet, View } from "react-native";
 
-import {EventActionsSheet} from "../../components/events/EventActionsSheet";
-import {Icon} from "../../components/generic/atoms/Icon";
-import {useTabStyles} from "../../components/generic/nav/useTabStyles";
-import {useNow} from "../../hooks/time/useNow";
-import {useAppSelector} from "../../store";
-import {eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors} from "../../store/eurofurence/selectors/records";
-import {EventDayRecord} from "../../store/eurofurence/types";
-import {AreasRouterParamsList} from "../AreasRouter";
-import {IndexRouterParamsList} from "../IndexRouter";
-import {PersonalSchedule, PersonalScheduleParams} from "./PersonalSchedule";
-import {EventsSearch, EventsSearchParams} from "./EventsSearch";
-import {EventsRouterContextProvider, useEventsRouterContext} from "./EventsRouterContext";
-import {EventsByTrack, EventsByTrackParams} from "./EventsByTrack";
-import {EventsByRoom, EventsByRoomParams} from "./EventsByRoom";
-import {EventsByDay, EventsByDayParams} from "./EventsByDay";
+import { EventActionsSheet } from "../../components/events/EventActionsSheet";
+import { Icon } from "../../components/generic/atoms/Icon";
+import { useTabStyles } from "../../components/generic/nav/useTabStyles";
+import { useNow } from "../../hooks/time/useNow";
+import { useAppSelector } from "../../store";
+import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../../store/eurofurence/selectors/records";
+import { EventDayRecord } from "../../store/eurofurence/types";
+import { AreasRouterParamsList } from "../AreasRouter";
+import { IndexRouterParamsList } from "../IndexRouter";
+import { PersonalSchedule, PersonalScheduleParams } from "./PersonalSchedule";
+import { EventsSearch, EventsSearchParams } from "./EventsSearch";
+import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
+import { EventsByTrack, EventsByTrackParams } from "./EventsByTrack";
+import { EventsByRoom, EventsByRoomParams } from "./EventsByRoom";
+import { EventsByDay, EventsByDayParams } from "./EventsByDay";
 
 // TODO: Might have an distinction between days, tracks, rooms as param.
 
@@ -55,7 +55,7 @@ export type EventsRouterParams = NavigatorScreenParams<EventsRouterParamsList> &
  * The properties to the screen as a component.
  */
 export type EventsRouterProps =
-// Route carrying from area screen at "Events", navigation via own parameter list and parents.
+    // Route carrying from area screen at "Events", navigation via own parameter list and parents.
     CompositeScreenProps<
         BottomTabScreenProps<AreasRouterParamsList, "Events">,
         MaterialTopTabScreenProps<EventsRouterParamsList> & BottomTabScreenProps<AreasRouterParamsList> & StackScreenProps<IndexRouterParamsList>
@@ -65,7 +65,7 @@ export type EventsRouterProps =
  * Controls and provides routing to event lists. Event items and feedback are pushed via the index router.
  * @constructor
  */
-const EventsRouterContent: FC<EventsRouterProps> = ({route}) => {
+const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
     const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), []);
 
     // Use now with optional time travel.
@@ -77,7 +77,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({route}) => {
     const rooms = useAppSelector(eventRoomsSelectors.selectAll);
 
     // Get context and resolve if results present and the current selection state..
-    const {selected, setSelected} = useEventsRouterContext();
+    const { selected, setSelected } = useEventsRouterContext();
 
     // Connect back handler to clearing selection.
     useEffect(() => {
@@ -129,7 +129,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({route}) => {
                 }}
                 screenOptions={{
                     tabBarScrollEnabled: scroll,
-                    tabBarItemStyle: scroll ? {width: 110} : undefined,
+                    tabBarItemStyle: scroll ? { width: 110 } : undefined,
                     lazy: true,
                     lazyPreloadDistance: 3,
                 }}
@@ -141,7 +141,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({route}) => {
                     options={{
                         tabBarShowLabel: false,
                         tabBarShowIcon: true,
-                        tabBarIcon: ({color}) => <Icon size={20} color={color} name="table-search"/>,
+                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="table-search" />,
                         tabBarLabelStyle: tabStyles.normal,
                     }}
                     component={EventsSearch}
@@ -154,7 +154,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({route}) => {
                         title: "Your Schedule", // TODO: Translations for a bnch more
                         tabBarShowLabel: false,
                         tabBarShowIcon: true,
-                        tabBarIcon: ({color}) => <Icon size={20} color={color} name="calendar-heart"/>,
+                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,
                         tabBarLabelStyle: tabStyles.normal,
                     }}
                     component={PersonalSchedule}
@@ -163,36 +163,36 @@ const EventsRouterContent: FC<EventsRouterProps> = ({route}) => {
                 {type !== "days"
                     ? null
                     : days.map((day) => (
-                        <Tab.Screen
-                            key={day.Id}
-                            name={day.Id}
-                            component={EventsByDay}
-                            options={{
-                                title: formatDay(day),
-                                tabBarLabelStyle: day.Name === currentDayId ? tabStyles.highlight : tabStyles.normal,
-                            }}
-                        />
-                    ))}
+                          <Tab.Screen
+                              key={day.Id}
+                              name={day.Id}
+                              component={EventsByDay}
+                              options={{
+                                  title: formatDay(day),
+                                  tabBarLabelStyle: day.Name === currentDayId ? tabStyles.highlight : tabStyles.normal,
+                              }}
+                          />
+                      ))}
 
                 {type !== "tracks"
                     ? null
                     : tracks.map((track) => (
-                        <Tab.Screen key={track.Id} name={track.Id} component={EventsByTrack} options={{title: track.Name, tabBarLabelStyle: tabStyles.normal}}/>
-                    ))}
+                          <Tab.Screen key={track.Id} name={track.Id} component={EventsByTrack} options={{ title: track.Name, tabBarLabelStyle: tabStyles.normal }} />
+                      ))}
 
                 {type !== "rooms"
                     ? null
                     : rooms.map((room) => (
-                        <Tab.Screen key={room.Id} name={room.Id} component={EventsByRoom} options={{title: room.ShortName ?? room.Name, tabBarLabelStyle: tabStyles.normal}}/>
-                    ))}
+                          <Tab.Screen key={room.Id} name={room.Id} component={EventsByRoom} options={{ title: room.ShortName ?? room.Name, tabBarLabelStyle: tabStyles.normal }} />
+                      ))}
             </Tab.Navigator>
-            <EventActionsSheet event={selected} onClose={() => setSelected(null)}/>
+            <EventActionsSheet event={selected} onClose={() => setSelected(null)} />
         </View>
     );
 };
 
-export const EventsRouter: FC<EventsRouterProps> = ({navigation, route}) => (
+export const EventsRouter: FC<EventsRouterProps> = ({ navigation, route }) => (
     <EventsRouterContextProvider>
-        <EventsRouterContent navigation={navigation} route={route}/>
+        <EventsRouterContent navigation={navigation} route={route} />
     </EventsRouterContextProvider>
 );

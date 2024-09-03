@@ -59,7 +59,7 @@ export const PmList = () => {
     const sectionStyle = useThemeBackground("background");
 
     const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, []);
-    const emptyComponent = useMemo(() => <NoData />, []);
+    const emptyComponent = useMemo(() => <NoData text={t("no_data")} />, [t]);
     const headerComponent = useMemo(() => <Header>Private Messages</Header>, []);
     const renderSection = useCallback(
         ({ section }: SectionListData<any, any>) => {

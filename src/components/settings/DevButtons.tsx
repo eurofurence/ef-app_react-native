@@ -40,7 +40,7 @@ export const DevButtons = () => {
         });
 
         alert(`Sent a message to ${claims.sub}`);
-    }, [claims,sendMessage, t]);
+    }, [claims, sendMessage, t]);
 
     return (
         <View>

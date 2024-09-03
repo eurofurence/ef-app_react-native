@@ -49,7 +49,7 @@ export const useEventReminder = (event: EventRecord) => {
             Notifications.cancelScheduledNotificationAsync(event.Id).catch(console.error);
         }
         dispatch(removeNotification(event.Id));
-    }, [dispatch,event]);
+    }, [dispatch, event]);
 
     const toggleReminder = useMemo(() => (notificationEntry ? removeReminder : createReminder), [notificationEntry, createReminder, removeReminder]);
     return {

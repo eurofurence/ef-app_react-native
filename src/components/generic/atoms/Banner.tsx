@@ -33,7 +33,6 @@ export type BannerProps = {
 export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable }) => {
     const navigation = useAppNavigation("Areas");
 
-
     const aspect = !image ? {} : { aspectRatio: image.Width / image.Height };
     const backgroundStyle = useThemeBackground("background");
     // Do not render if nothing given.

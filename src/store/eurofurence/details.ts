@@ -1,10 +1,9 @@
+import { Dictionary } from "@reduxjs/toolkit";
 
-import {Dictionary} from "@reduxjs/toolkit";
+import moment, { MomentInput } from "moment";
 
-import moment, {MomentInput} from "moment";
-
-import {IconNames} from "../../components/generic/atoms/Icon";
-import {Notification} from "../background/slice";
+import { IconNames } from "../../components/generic/atoms/Icon";
+import { Notification } from "../background/slice";
 import {
     AnnouncementDetails,
     AnnouncementRecord,

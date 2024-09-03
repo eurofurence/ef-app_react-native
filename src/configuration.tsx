@@ -55,7 +55,6 @@ export const showServices = conventionConfig.convention.showServices;
  */
 export const showCatchEm = conventionConfig.convention.showCatchEm;
 
-
 /**
  * URL leading to the Artist Alley detail page for this convention.
  */

@@ -81,7 +81,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
             // If this one is still the authority, unset synchronizing.
             if (invocation.current === ownInvocation) setIsSynchronizing(false);
         }
-    }, [invocation, dispatch,store]);
+    }, [invocation, dispatch, store]);
 
     // Dependent function.
     const clear = useCallback(() => {

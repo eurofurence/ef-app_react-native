@@ -50,49 +50,52 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
 
     const [results, setResults] = useState<FilterResult[]>([]);
     const [filtering, setFiltering] = useState(false);
-    const onTransform = useCallback((event: ZoomableViewEvent) => {
-        // Mark filtering start.
-        setFiltering(true);
+    const onTransform = useCallback(
+        (event: ZoomableViewEvent) => {
+            // Mark filtering start.
+            setFiltering(true);
 
-        // Clear last handle if it did not run yet.
-        clearTimeout(refHandle.current);
+            // Clear last handle if it did not run yet.
+            clearTimeout(refHandle.current);
 
-        // Create timeout with handle.
-        const ownHandle = setTimeout(() => {
-            InteractionManager.runAfterInteractions(() => {
-                // Get arguments from event.
-                const targetWidth = event.originalWidth;
-                const targetHeight = event.originalHeight;
-                const offsetX = event.offsetX;
-                const offsetY = event.offsetY;
-                const zoom = event.zoomLevel;
+            // Create timeout with handle.
+            const ownHandle = setTimeout(() => {
+                InteractionManager.runAfterInteractions(() => {
+                    // Get arguments from event.
+                    const targetWidth = event.originalWidth;
+                    const targetHeight = event.originalHeight;
+                    const offsetX = event.offsetX;
+                    const offsetY = event.offsetY;
+                    const zoom = event.zoomLevel;
 
-                // Get area and area center.
-                const x1 = ((map.Image.Width * zoom) / 2 - offsetX * zoom - targetWidth / 2) / zoom;
-                const x2 = x1 + targetWidth / zoom;
-                const y1 = ((map.Image.Height * zoom) / 2 - offsetY * zoom - targetHeight / 2) / zoom;
-                const y2 = y1 + targetHeight / zoom;
-                const centerX = (x1 + x2) / 2;
-                const centerY = (y1 + y2) / 2;
+                    // Get area and area center.
+                    const x1 = ((map.Image.Width * zoom) / 2 - offsetX * zoom - targetWidth / 2) / zoom;
+                    const x2 = x1 + targetWidth / zoom;
+                    const y1 = ((map.Image.Height * zoom) / 2 - offsetY * zoom - targetHeight / 2) / zoom;
+                    const y2 = y1 + targetHeight / zoom;
+                    const centerX = (x1 + x2) / 2;
+                    const centerY = (y1 + y2) / 2;
 
-                // Filter all that touch the view. Order ascending by square distance and then add all their links.
-                const results = chain(map?.Entries)
-                    .filter((entry) => circleTouches(x1, y1, x2, y2, entry.X, entry.Y, entry.TapRadius))
-                    .orderBy((entry) => distSq(entry.X - centerX, entry.Y - centerY), "asc")
-                    .flatMap((entry) => entry.Links.map((link, i) => ({ key: `${map.Id}/${entry.Id}#${i}`, map, entry, link })))
-                    .value();
+                    // Filter all that touch the view. Order ascending by square distance and then add all their links.
+                    const results = chain(map?.Entries)
+                        .filter((entry) => circleTouches(x1, y1, x2, y2, entry.X, entry.Y, entry.TapRadius))
+                        .orderBy((entry) => distSq(entry.X - centerX, entry.Y - centerY), "asc")
+                        .flatMap((entry) => entry.Links.map((link, i) => ({ key: `${map.Id}/${entry.Id}#${i}`, map, entry, link })))
+                        .value();
 
-                // Assign if this is still the active handle.
-                if (refHandle.current === ownHandle) {
-                    setResults(results);
-                    setFiltering(false);
-                }
-            });
-        }, 350);
+                    // Assign if this is still the active handle.
+                    if (refHandle.current === ownHandle) {
+                        setResults(results);
+                        setFiltering(false);
+                    }
+                });
+            }, 350);
 
-        // Assign handle.
-        refHandle.current = ownHandle;
-    }, [map]);
+            // Assign handle.
+            refHandle.current = ownHandle;
+        },
+        [map],
+    );
 
     useEffect(() => {
         if (!refSheet.current) return;
