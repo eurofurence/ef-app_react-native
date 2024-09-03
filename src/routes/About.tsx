@@ -30,9 +30,11 @@ And Sentry helps us out with exception tracing.
 
 # People
 
-## Program Management
+## App Team Alumni
 
-- Zefiro
+- [Luchs](https://github.com/Pinselohrkater) (IT vice director & app team lead)
+- [Shez](https://github.com/ShezHsky) (iOS app developer)
+- Zefiro (IT director)
 
 ## Other Special People
 
@@ -41,23 +43,26 @@ And Sentry helps us out with exception tracing.
 - Atkelar
 - Cairyn
 - Carenath Stormwind
+- IceTiger
 - Jul
 - Liam
 - NordicFuzzCon (Catch'em all)
 - Pattarchus
 - Snow-wolf
 - StreifiGreif
+- [Wane](https://github.com/pavelsinkevich)
 - Xil
-- IceTiger
 
 ## English Translations
 
+- Fenrikur
 - Luchs
 - Pazuzu
 - Requinard
 
 ## German Translations
 
+- Fenrikur
 - Luchs
 - Pazuzu
 - Requinard
@@ -152,11 +157,12 @@ export const About = () => {
                 )}
 
                 <Section title={t("developed_by")} icon="code-json" />
-                <Credit url="https://avatars.githubusercontent.com/u/3359222" name="Fenrikur" role="Project management and getting us to move our butts in gear" />
+                <Credit url="https://avatars.githubusercontent.com/u/3359222" name="Fenrikur" role="App Team Director and getting us to move our butts in gear" />
                 <Credit url="https://avatars.githubusercontent.com/u/5929561" name="Pazuzu" role="React Development" onEasterEgg={pazuzuEgg} />
                 <Credit url="https://avatars.githubusercontent.com/u/5537850" name="Requinard" role="React Development support" onEasterEgg={requinardEgg} />
-                <Credit url="https://avatars.githubusercontent.com/u/12624320" name="Shez" role="iOS Development" />
-                <Credit url="https://avatars.githubusercontent.com/u/13329381" name="Luchs" role="Former project management, helped us start off with everything" />
+                <Credit url="https://avatars.githubusercontent.com/u/76539710" name="Meta" role="Backend Development" />
+                <Credit url="https://avatars.githubusercontent.com/u/1616683" name="Rain" role="Backend Development" />
+                <Credit url="https://avatars.githubusercontent.com/u/29598855" name="Maakinoh" role="Backend Development" />
                 <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
             </Floater>
         </ScrollView>
