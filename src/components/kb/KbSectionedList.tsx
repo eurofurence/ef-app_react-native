@@ -2,13 +2,13 @@ import { FlashList } from "@shopify/flash-list";
 import React, { FC, ReactElement, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
-import { KbEntryCard } from "./KbEntryCard";
-import { KbSection } from "./KbSection";
 import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
 import { KbListProps } from "../../routes/kb/KbList";
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from "../../store/eurofurence/types";
 import { findIndices } from "../../util/findIndices";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { KbSection } from "./KbSection";
+import { KbEntryCard } from "./KbEntryCard";
 
 /**
  * The properties to the component.

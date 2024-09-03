@@ -3,6 +3,8 @@ import {Dictionary} from "@reduxjs/toolkit";
 
 import moment, {MomentInput} from "moment";
 
+import {IconNames} from "../../components/generic/atoms/Icon";
+import {Notification} from "../background/slice";
 import {
     AnnouncementDetails,
     AnnouncementRecord,
@@ -21,8 +23,6 @@ import {
     MapRecord,
     RecordId,
 } from "./types";
-import {IconNames} from "../../components/generic/atoms/Icon";
-import {Notification} from "../background/slice";
 
 const internalCategorizeTime = (input: MomentInput) => {
     const hours = moment(input).hours();

@@ -86,7 +86,7 @@ export default tseslint.config(
             ...ImportRules.configs.recommended.rules,
             "import/no-unresolved": "off",
             "import/imports-first": "warn",
-            "import/order": "off" // for now
+            "import/order": "warn"
         }
     }
 );

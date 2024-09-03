@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 import { BackHandler, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
-import { labelTypeStyles } from "./Label";
 import { withAlpha } from "../../../context/Theme";
 import { useThemeBackground, useThemeColor, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { labelTypeStyles } from "./Label";
 
 export type SearchProps = {
     filter: string;

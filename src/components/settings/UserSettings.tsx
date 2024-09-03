@@ -2,15 +2,15 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
+import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
+import { Section } from "../generic/atoms/Section";
+import { Button } from "../generic/containers/Button";
 import { AnalyticsOptIns } from "./AnalyticsOptIns";
 import { HiddenEvents } from "./HiddenEvents";
 import { LanguagePicker } from "./LanguagePicker";
 import { SettingContainer } from "./SettingContainer";
 import { ThemePicker } from "./ThemePicker";
 import { Warnings } from "./Warnings";
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { Section } from "../generic/atoms/Section";
-import { Button } from "../generic/containers/Button";
 
 /**
  * User settings section of the settings screen.

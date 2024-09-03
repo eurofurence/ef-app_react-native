@@ -1,12 +1,12 @@
 import moment from "moment";
 
+import { RootState } from "../index";
 import eurofurenceCache from "./details.data.spec";
 import { selectActiveAnnouncements } from "./selectors/announcements";
 import { filterCurrentEvents, filterHappeningTodayEvents, filterUpcomingEvents, selectFavoriteEvents } from "./selectors/events";
 import { selectBrowsableMaps } from "./selectors/maps";
 import { announcementsSelectors, dealersSelectors, eventsSelector } from "./selectors/records";
 import { EventDetails } from "./types";
-import { RootState } from "../index";
 
 const state: RootState = {
     eurofurenceCache,

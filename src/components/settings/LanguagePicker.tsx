@@ -3,10 +3,10 @@ import { captureException } from "@sentry/react-native";
 import { orderBy } from "lodash";
 import { useTranslation } from "react-i18next";
 
-import { SettingContainer } from "./SettingContainer";
 import { useThemeColor } from "../../hooks/themes/useThemeHooks";
 import { setMomentLocale, Translations } from "../../i18n";
 import { Label } from "../generic/atoms/Label";
+import { SettingContainer } from "./SettingContainer";
 
 /**
  * Element of languages that the picker displays.

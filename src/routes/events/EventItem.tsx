@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { shareEvent } from "./Events.common";
 import { appStyles } from "../../components/AppStyles";
 import { EventContent } from "../../components/events/EventContent";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
@@ -11,6 +10,7 @@ import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useLatchTrue } from "../../hooks/util/useLatchTrue";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
+import { shareEvent } from "./Events.common";
 
 /**
  * Params handled by the screen in route.

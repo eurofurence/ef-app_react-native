@@ -2,10 +2,10 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement } from "react";
 import { StyleSheet } from "react-native";
 
-import { AnnouncementCard, AnnouncementDetailsInstance } from "./AnnouncementCard";
 import { useThemeName } from "../../hooks/themes/useThemeHooks";
 import { AnnounceListProps } from "../../routes/announce/AnnounceList";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { AnnouncementCard, AnnouncementDetailsInstance } from "./AnnouncementCard";
 
 export type AnnouncementListProps = {
     navigation: AnnounceListProps["navigation"];

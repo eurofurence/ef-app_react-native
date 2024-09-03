@@ -2,7 +2,6 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { shareDealer } from "./Dealers.common";
 import { appStyles } from "../../components/AppStyles";
 import { DealerContent } from "../../components/dealers/DealerContent";
 import { Floater, padFloater } from "../../components/generic/containers/Floater";
@@ -12,6 +11,7 @@ import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useLatchTrue } from "../../hooks/util/useLatchTrue";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence/selectors/records";
+import { shareDealer } from "./Dealers.common";
 
 /**
  * Params handled by the screen in route.

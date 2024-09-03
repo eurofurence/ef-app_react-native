@@ -2,9 +2,9 @@ import * as React from "react";
 import { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { Icon, IconNames } from "./Icon";
 import { ThemeColor } from "../../../context/Theme";
 import { useTheme } from "../../../hooks/themes/useThemeHooks";
+import { Icon, IconNames } from "./Icon";
 
 export type MarkerProps = {
     style?: StyleProp<ViewStyle>;

@@ -5,8 +5,6 @@ import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useDealerGroups } from "./Dealers.common";
-import { DealersRouterParamsList } from "./DealersRouter";
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { Search } from "../../components/generic/atoms/Search";
@@ -18,6 +16,8 @@ import { selectDealersInAd } from "../../store/eurofurence/selectors/dealers";
 import { selectDealersInAdSearchIndex } from "../../store/eurofurence/selectors/search";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { DealersRouterParamsList } from "./DealersRouter";
+import { useDealerGroups } from "./Dealers.common";
 
 /**
  * Params handled by the screen in route.

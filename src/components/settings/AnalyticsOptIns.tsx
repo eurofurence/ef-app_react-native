@@ -4,11 +4,11 @@ import { useTranslation } from "react-i18next";
 import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { SettingContainer } from "./SettingContainer";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { setAnalytics, toggleDevMenu } from "../../store/settings/slice";
 import { Label } from "../generic/atoms/Label";
 import { Col } from "../generic/containers/Col";
+import { SettingContainer } from "./SettingContainer";
 
 /**
  * Analytics opt-in section with a checkbox to allow analytics.

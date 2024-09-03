@@ -4,13 +4,13 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { artistAlleySchema, ArtistAlleySchema } from "./ArtistAlleyForm.schema";
 import { useToast } from "../../context/ToastContext";
 import { useArtistAlleyPostTableRegistrationRequestMutation } from "../../store/eurofurence/service";
 import { Label } from "../generic/atoms/Label";
 import { Button } from "../generic/containers/Button";
 import { ManagedImagePicker } from "../generic/forms/ManagedImagePicker";
 import { ManagedTextInput } from "../generic/forms/ManagedTextInput";
+import { artistAlleySchema, ArtistAlleySchema } from "./ArtistAlleyForm.schema";
 
 export type ArtistAlleyEditProps = {
     prefill: ArtistAlleySchema;

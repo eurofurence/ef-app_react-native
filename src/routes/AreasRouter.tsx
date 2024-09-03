@@ -6,15 +6,15 @@ import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { IndexRouterParamsList } from "./IndexRouter";
-import { DealersRouter, DealersRouterParams } from "./dealers/DealersRouter";
-import { EventsRouter, EventsRouterParams } from "./events/EventsRouter";
-import { Home, HomeParams } from "./home/Home";
 import { Toast } from "../components/Toast";
 import { Tabs, TabsRef } from "../components/generic/containers/Tabs";
 import { MainMenu } from "../components/mainmenu/MainMenu";
 import { useSynchronizer } from "../components/sync/SynchronizationProvider";
 import { useToastMessages } from "../context/ToastContext";
+import { Home, HomeParams } from "./home/Home";
+import { EventsRouter, EventsRouterParams } from "./events/EventsRouter";
+import { DealersRouter, DealersRouterParams } from "./dealers/DealersRouter";
+import { IndexRouterParamsList } from "./IndexRouter";
 
 /**
  * Minimum padding to use if safe area is less.
