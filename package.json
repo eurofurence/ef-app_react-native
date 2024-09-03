@@ -25,7 +25,7 @@
     "lint:depcheck": "depcheck",
     "lint:unimported": "pnpm exec unimported",
     "test": "jest",
-    "eas-build-post-install": "tsc --noEmit && pnpm lint:translations && pnpm lint:code",
+    "eas-build-post-install": "tsc --noEmit && pnpm lint",
     "bundle:android": "pnpm bundle:android:production",
     "bundle:android:development": "eas build --platform android --profile development",
     "bundle:android:preview": "eas build --platform android --profile preview",
