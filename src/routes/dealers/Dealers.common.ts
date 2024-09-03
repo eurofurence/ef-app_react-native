@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/react-native";
 import { TFunction } from "i18next";
-import { Moment } from "moment";
-import moment from "moment/moment";
+import moment, { Moment } from "moment";
+
 import { useMemo } from "react";
 import { Share } from "react-native";
 

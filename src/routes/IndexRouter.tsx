@@ -5,6 +5,10 @@ import React, { FC } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import { Toast } from "../components/Toast";
+import { useToastMessages } from "../context/ToastContext";
+import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
+import { RecordId } from "../store/eurofurence/types";
 import { About } from "./About";
 import { AreasRouter, AreasRouterParams } from "./AreasRouter";
 import { Profile } from "./Profile";
@@ -22,10 +26,6 @@ import { PmItem, PmItemParams } from "./pm/PmItem";
 import { PmList } from "./pm/PmList";
 import { RevealHidden } from "./settings/RevealHidden";
 import { Settings } from "./settings/Settings";
-import { Toast } from "../components/Toast";
-import { useToastMessages } from "../context/ToastContext";
-import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
-import { RecordId } from "../store/eurofurence/types";
 
 /**
  * Available routes.

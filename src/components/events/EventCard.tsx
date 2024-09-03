@@ -3,7 +3,6 @@ import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { EventCardTime } from "./EventCardTime";
 import { useThemeBackground, useThemeColorValue } from "../../hooks/themes/useThemeHooks";
 import { EventDetails } from "../../store/eurofurence/types";
 import { appStyles } from "../AppStyles";
@@ -12,6 +11,7 @@ import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { Label } from "../generic/atoms/Label";
 import { Progress } from "../generic/atoms/Progress";
 import { Row } from "../generic/containers/Row";
+import { EventCardTime } from "./EventCardTime";
 
 const glyphIconSize = 90;
 const badgeIconSize = 20;

@@ -3,13 +3,13 @@ import { addNotificationReceivedListener, Notification, removeNotificationSubscr
 import moment from "moment";
 import { useEffect } from "react";
 
-import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "./types/NotificationTrigger";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
 import { conId } from "../../configuration";
 import { NotificationChannels } from "../../init/NotificationChannel";
 import { captureNotificationException } from "../../sentryHelpers";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
+import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "./types/NotificationTrigger";
 
 const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger, channelId: NotificationChannels = "default") =>
     scheduleNotificationAsync({
@@ -90,7 +90,7 @@ export const useNotificationReceivedManager = () => {
         return () => {
             removeNotificationSubscription(receive);
         };
-    }, []);
+    }, [dispatch, synchronize]);
 
     return null;
 };

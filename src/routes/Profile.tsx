@@ -6,7 +6,6 @@ import { ScrollView } from "react-native-gesture-handler";
 
 import { appStyles } from "../components/AppStyles";
 import { ProfileContent } from "../components/ProfileContent";
-import { Continuous } from "../components/generic/atoms/Continuous";
 import { Floater, padFloater } from "../components/generic/containers/Floater";
 import { Header } from "../components/generic/containers/Header";
 import { useAuthContext } from "../context/AuthContext";

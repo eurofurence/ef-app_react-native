@@ -3,13 +3,13 @@ import { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { minZoomFor, shareImage } from "./Viewer.common";
 import { useAppSelector } from "../../store";
 import { selectImageLocations } from "../../store/eurofurence/selectors/images";
 import { imagesSelectors } from "../../store/eurofurence/selectors/records";
 import { RecordId } from "../../store/eurofurence/types";
 import { Image } from "../generic/atoms/Image";
 import { Header } from "../generic/containers/Header";
+import { minZoomFor, shareImage } from "./Viewer.common";
 
 const viewerPadding = 40;
 

@@ -2,10 +2,10 @@ import { exchangeCodeAsync, refreshAsync, useAuthRequest } from "expo-auth-sessi
 import * as WebBrowser from "expo-web-browser";
 import { createContext, FC, PropsWithChildren, useCallback, useContext, useState } from "react";
 
-import * as SecureStore from "./SecureStorage";
 import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from "../configuration";
 import { useAsyncInterval } from "../hooks/util/useAsyncInterval";
 import { UserRecord } from "../store/eurofurence/types";
+import * as SecureStore from "./SecureStorage";
 
 /**
  * Discovery entries.
@@ -249,7 +249,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             setUser(null);
             throw error;
         }
-    }, [promptAsync, request, discovery]);
+    }, [promptAsync, request]);
 
     // Logout method.
     const logout = useCallback(async () => {
@@ -271,7 +271,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             setClaims(null);
             setUser(null);
         }
-    }, [discovery]);
+    }, []);
 
     // Reload method.
     const refresh = useCallback(async () => {

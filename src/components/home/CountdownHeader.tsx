@@ -1,8 +1,8 @@
 import { useIsFocused } from "@react-navigation/core";
 import { TFunction } from "i18next";
 import { chain } from "lodash";
-import { Moment } from "moment";
-import moment from "moment/moment";
+import moment, { Moment } from "moment";
+
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";

@@ -1,5 +1,4 @@
 import { useIsFocused } from "@react-navigation/core";
-import { captureException } from "@sentry/react-native";
 import moment from "moment";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
@@ -41,7 +40,7 @@ export const DevButtons = () => {
         });
 
         alert(`Sent a message to ${claims.sub}`);
-    }, [claims]);
+    }, [claims, sendMessage, t]);
 
     return (
         <View>

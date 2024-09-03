@@ -100,7 +100,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 .map((day) => moment(day.Date).format("dddd"))
                 // Join comma separated.
                 .join(", "),
-        [dealer, t],
+        [dealer],
     );
 
     // Check if not-attending warning should be marked.

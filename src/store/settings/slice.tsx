@@ -32,7 +32,7 @@ export const settingsSlice = createSlice({
             state.showDevMenu = action.payload;
         },
         toggleDevMenu: (state, action: PayloadAction<boolean | undefined>) => {
-            state.showDevMenu = action.payload !== undefined ? action.payload : !state.showDevMenu ?? true;
+            state.showDevMenu = action.payload !== undefined ? action.payload : state.showDevMenu !== undefined ? state.showDevMenu : true;
         },
         setTheme: (state, action: PayloadAction<ThemeName | undefined>) => {
             state.theme = action.payload;

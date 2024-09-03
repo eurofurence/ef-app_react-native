@@ -1,14 +1,18 @@
 import { StyleSheet, View } from "react-native";
 
+import { ReactNode } from "react";
 import { Icon } from "../generic/atoms/Icon";
 import { Label } from "../generic/atoms/Label";
 
-export const NoData = () => {
+export type NoDataProps = {
+    text: ReactNode | string;
+};
+export const NoData = ({ text }: NoDataProps) => {
     return (
         <View style={[styles.container]}>
             <Icon name="calendar-alert" size={40} style={{ marginBottom: 20 }} />
             <Label type="h3" variant="narrow">
-                There's nothing here yet . . .
+                {text}
             </Label>
         </View>
     );

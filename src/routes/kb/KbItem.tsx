@@ -27,8 +27,8 @@ export const KbItem = () => {
                     </View>
                 ))}
                 <MarkdownContent>{entry?.Text ?? ""}</MarkdownContent>
-                {entry?.Links.map((link, i) => (
-                    <View key={i} style={{ marginBottom: 10 }}>
+                {entry?.Links.map((link) => (
+                    <View style={{ marginBottom: 10 }} key={link.Target}>
                         <LinkItem link={link} key={link.Target} />
                     </View>
                 ))}

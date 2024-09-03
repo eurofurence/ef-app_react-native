@@ -2,8 +2,8 @@ import * as React from "react";
 import { FC, useMemo, useState } from "react";
 import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { Image, ImageProps } from "./Image";
 import { ImageDetails } from "../../../store/eurofurence/types";
+import { Image, ImageProps } from "./Image";
 
 const initialSize = { width: Dimensions.get("window").width - 40, height: 160 };
 
@@ -45,7 +45,7 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
             bottom: 0,
             transform: [{ scale }],
         };
-    }, [size.width, size.height, target?.size]);
+    }, [target, size.width, size.height]);
 
     const imageStyle = useMemo<ImageProps["style"] | null>(() => {
         if (!image) return null;
@@ -60,7 +60,7 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
             height: image.Height,
             transform: [{ translateX: size.width / 2 - target.x }, { translateY: size.height / 2 - target.y }],
         };
-    }, [size.width, size.height, image?.Width, image?.Height, target?.x, target?.y]);
+    }, [size.width, size.height, target, image]);
 
     return (
         <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>

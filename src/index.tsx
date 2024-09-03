@@ -3,6 +3,7 @@ import { registerRootComponent } from "expo";
 import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider as StoreProvider } from "react-redux";
+// eslint-disable-next-line import/namespace
 import { PersistGate } from "redux-persist/integration/react";
 
 import { App } from "./App";

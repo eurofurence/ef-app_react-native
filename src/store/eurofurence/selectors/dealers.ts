@@ -2,8 +2,8 @@ import { createSelector } from "@reduxjs/toolkit";
 import { flatMap, maxBy, uniq } from "lodash";
 import moment from "moment/moment";
 
-import { dealersSelectors } from "./records";
 import { DealerDetails } from "../types";
+import { dealersSelectors } from "./records";
 
 export const selectDealersInRegular = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => !it.IsAfterDark));
 export const selectDealersInAd = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => it.IsAfterDark));

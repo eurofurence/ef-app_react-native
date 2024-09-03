@@ -56,11 +56,6 @@ export const showServices = conventionConfig.convention.showServices;
 export const showCatchEm = conventionConfig.convention.showCatchEm;
 
 /**
- * URL for accessing the Catch 'em All game for this convention.
- */
-export const catchEmUrl = conventionConfig.convention.catchEmUrl;
-
-/**
  * URL leading to the Artist Alley detail page for this convention.
  */
 export const artistAlleyUrl = conventionConfig.convention.artistAlleyUrl;

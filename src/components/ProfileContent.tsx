@@ -3,16 +3,16 @@ import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, StyleSheet, View } from "react-native";
 
-import { Image } from "./generic/atoms/Image";
-import { Label } from "./generic/atoms/Label";
-import { Section } from "./generic/atoms/Section";
-import { Badge } from "./generic/containers/Badge";
-import { Button } from "./generic/containers/Button";
 import { authSettingsUrl, conName } from "../configuration";
 import { Claims, useAuthContext } from "../context/AuthContext";
 import { useThemeBackground } from "../hooks/themes/useThemeHooks";
 import { UserRecord } from "../store/eurofurence/types";
 import { assetSource } from "../util/assets";
+import { Image } from "./generic/atoms/Image";
+import { Label } from "./generic/atoms/Label";
+import { Section } from "./generic/atoms/Section";
+import { Badge } from "./generic/containers/Badge";
+import { Button } from "./generic/containers/Button";
 
 /**
  * User role pill.

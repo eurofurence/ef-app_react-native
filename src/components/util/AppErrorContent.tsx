@@ -25,7 +25,7 @@ export const AppErrorContent: FC<AppErrorContentProps> = ({ error }) => {
                 </Label>
 
                 <Label type="para" mt={20} mb={20}>
-                    Please let us know that there's something going wrong. You can try clearing the cache, this will however also remove your preferences.
+                    Please let us know that there&aspos;s something going wrong. You can try clearing the cache, this will however also remove your preferences.
                 </Label>
                 <Button icon="trash-can-outline" onPress={clear}>
                     Clear the cache

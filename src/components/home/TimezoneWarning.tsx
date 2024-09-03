@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import { conName, conTimeZone } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { hideLanguageWarnings, hideTimeZoneWarnings } from "../../store/auxiliary/slice";
+import { hideTimeZoneWarnings } from "../../store/auxiliary/slice";
 import { Label } from "../generic/atoms/Label";
 import { Badge } from "../generic/containers/Badge";
 

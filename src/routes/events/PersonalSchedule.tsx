@@ -6,9 +6,6 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { useEventOtherGroups } from "./Events.common";
-import { EventsRouterParamsList } from "./EventsRouter";
-import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
 import { Image } from "../../components/generic/atoms/Image";
 import { Label } from "../../components/generic/atoms/Label";
@@ -22,6 +19,9 @@ import { selectFavoriteEvents } from "../../store/eurofurence/selectors/events";
 import { assetSource } from "../../util/assets";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useEventsRouterContext } from "./EventsRouterContext";
+import { EventsRouterParamsList } from "./EventsRouter";
+import { useEventOtherGroups } from "./Events.common";
 
 /**
  * Params handled by the screen in route.

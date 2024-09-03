@@ -122,12 +122,14 @@ export const About = () => {
 
     // Load static assets.
     const requinardEgg = useCallback(async () => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         const { sound } = await Sound.createAsync(require("../../assets/runtime/cheese.webm"));
         await sound.playAsync();
         dispatch(setTheme("requinard"));
     }, [dispatch]);
 
     const pazuzuEgg = useCallback(async () => {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         const { sound } = await Sound.createAsync(require("../../assets/runtime/sheesh.webm"));
         await sound.playAsync();
         dispatch(setTheme("pazuzu"));

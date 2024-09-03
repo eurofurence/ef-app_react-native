@@ -42,14 +42,14 @@ export const useEventReminder = (event: EventRecord) => {
         }
 
         dispatch(addNotification(notification));
-    }, [event, timeTravel]);
+    }, [event, timeTravel, dispatch]);
 
     const removeReminder = useCallback(() => {
         if (Platform.OS === "android" || Platform.OS === "ios") {
             Notifications.cancelScheduledNotificationAsync(event.Id).catch(console.error);
         }
         dispatch(removeNotification(event.Id));
-    }, [event]);
+    }, [dispatch, event]);
 
     const toggleReminder = useMemo(() => (notificationEntry ? removeReminder : createReminder), [notificationEntry, createReminder, removeReminder]);
     return {

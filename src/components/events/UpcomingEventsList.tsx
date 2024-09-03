@@ -3,12 +3,12 @@ import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { filterUpcomingEvents } from "../../store/eurofurence/selectors/events";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
 import { Section } from "../generic/atoms/Section";
+import { EventCard, eventInstanceForAny } from "./EventCard";
 
 export type UpcomingEventsListProps = {
     now: Moment;

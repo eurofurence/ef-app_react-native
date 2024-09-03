@@ -6,8 +6,6 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { useDealerLocationGroups } from "./Dealers.common";
-import { DealersRouterParamsList } from "./DealersRouter";
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
 import { Image } from "../../components/generic/atoms/Image";
 import { Label } from "../../components/generic/atoms/Label";
@@ -21,6 +19,8 @@ import { selectFavoriteDealers } from "../../store/eurofurence/selectors/dealers
 import { assetSource } from "../../util/assets";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { DealersRouterParamsList } from "./DealersRouter";
+import { useDealerLocationGroups } from "./Dealers.common";
 
 /**
  * Params handled by the screen in route.

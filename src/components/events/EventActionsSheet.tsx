@@ -4,9 +4,9 @@ import { FC, useEffect, useMemo, useRef } from "react";
 import { Platform, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { EventContent } from "./EventContent";
 import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
 import { EventDetails } from "../../store/eurofurence/types";
+import { EventContent } from "./EventContent";
 
 type EventActionsSheetProps = {
     event: EventDetails | null;

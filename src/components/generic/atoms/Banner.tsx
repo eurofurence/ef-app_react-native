@@ -3,10 +3,10 @@ import { FC } from "react";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { Image, ImageProps } from "./Image";
 import { useAppNavigation } from "../../../hooks/nav/useAppNavigation";
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 import { ImageDetails } from "../../../store/eurofurence/types";
+import { Image, ImageProps } from "./Image";
 
 export type BannerProps = {
     /**
@@ -32,12 +32,11 @@ export type BannerProps = {
 
 export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable }) => {
     const navigation = useAppNavigation("Areas");
-    // Do not render if nothing given.
-    if (!image) return null;
 
     const aspect = !image ? {} : { aspectRatio: image.Width / image.Height };
     const backgroundStyle = useThemeBackground("background");
-
+    // Do not render if nothing given.
+    if (!image) return null;
     return (
         <TouchableOpacity
             containerStyle={[styles.container, backgroundStyle]}

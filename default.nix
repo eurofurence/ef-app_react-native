@@ -12,16 +12,10 @@ pkgs.stdenv.mkDerivation {
 
   buildInputs =
     [
-      pkgs.yarn
+      pkgs.pnpm
       pkgs.nodejs
       pkgs.nodePackages.expo-cli
       pkgs.android-tools
-      pkgs.androidenv.androidPkgs_9_0.androidsdk
-      pkgs.jdk11
     ];
 
-  shellHook = ''
-    export ANDROID_SDK_ROOT=${pkgs.androidenv.androidPkgs_9_0.androidsdk}
-    export ANDROID_HOME=$ANDROID_SDK_ROOT
-    '';
 }

@@ -5,9 +5,6 @@ import { StackScreenProps } from "@react-navigation/stack";
 import { FC } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useEventOtherGroups } from "./Events.common";
-import { EventsRouterParamsList } from "./EventsRouter";
-import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsSectionedList } from "../../components/events/EventsSectionedList";
 import { Label } from "../../components/generic/atoms/Label";
 import { useNow } from "../../hooks/time/useNow";
@@ -16,6 +13,9 @@ import { selectEventsByTrack } from "../../store/eurofurence/selectors/events";
 import { eventTracksSelectors } from "../../store/eurofurence/selectors/records";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useEventsRouterContext } from "./EventsRouterContext";
+import { EventsRouterParamsList } from "./EventsRouter";
+import { useEventOtherGroups } from "./Events.common";
 
 /**
  * Params handled by the screen in route.

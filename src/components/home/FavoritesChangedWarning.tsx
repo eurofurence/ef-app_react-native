@@ -7,7 +7,7 @@ import { selectUpdatedFavoriteEvents } from "../../store/eurofurence/selectors/e
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
 
-export const FavoritesChangedWarning = ({ parentPad = 0 }) => {
+export const FavoritesChangedWarning = () => {
     const { t: tMenu } = useTranslation("Menu");
     const { t } = useTranslation("Home");
     const changedEventFavorite = useAppSelector(selectUpdatedFavoriteEvents);

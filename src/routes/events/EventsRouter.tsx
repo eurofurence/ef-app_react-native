@@ -5,15 +5,8 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import moment from "moment";
 import { FC, useCallback, useEffect, useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import { BackHandler, Dimensions, Platform, StyleSheet, View } from "react-native";
 
-import { EventsByDay, EventsByDayParams } from "./EventsByDay";
-import { EventsByRoom, EventsByRoomParams } from "./EventsByRoom";
-import { EventsByTrack, EventsByTrackParams } from "./EventsByTrack";
-import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
-import { EventsSearch, EventsSearchParams } from "./EventsSearch";
-import { PersonalSchedule, PersonalScheduleParams } from "./PersonalSchedule";
 import { EventActionsSheet } from "../../components/events/EventActionsSheet";
 import { Icon } from "../../components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
@@ -23,6 +16,12 @@ import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from ".
 import { EventDayRecord } from "../../store/eurofurence/types";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { PersonalSchedule, PersonalScheduleParams } from "./PersonalSchedule";
+import { EventsSearch, EventsSearchParams } from "./EventsSearch";
+import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
+import { EventsByTrack, EventsByTrackParams } from "./EventsByTrack";
+import { EventsByRoom, EventsByRoomParams } from "./EventsByRoom";
+import { EventsByDay, EventsByDayParams } from "./EventsByDay";
 
 // TODO: Might have an distinction between days, tracks, rooms as param.
 
@@ -67,8 +66,7 @@ export type EventsRouterProps =
  * @constructor
  */
 const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
-    const { t } = useTranslation("Events");
-    const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), [t]);
+    const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), []);
 
     // Use now with optional time travel.
     const now = useNow();
@@ -92,13 +90,13 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
         });
 
         return () => subscription.remove();
-    }, [selected]);
+    }, [selected, setSelected]);
 
     // Deselect on unfocus.
     const isFocused = useIsFocused();
     useEffect(() => {
         if (!isFocused) setSelected(null);
-    }, [isFocused]);
+    }, [isFocused, setSelected]);
 
     // Get the current day ID.
     const currentDayId = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Id, [days, now]);

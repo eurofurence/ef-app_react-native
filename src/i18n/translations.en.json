@@ -227,6 +227,7 @@
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
     "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
+    "no_data": "There's nothing here yet",
     "read": "Read",
     "section_title_from": "From {{authorName}}",
     "unread": "Unread"

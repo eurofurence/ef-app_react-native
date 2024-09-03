@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 
-import { LabelProps } from "./Label";
 import { Button } from "../containers/Button";
 import { Row } from "../containers/Row";
+import { LabelProps } from "./Label";
 
 export type ChoiceButtonsProps<T = string> = {
     style?: ViewStyle;

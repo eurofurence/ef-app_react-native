@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 
-import { mapsSelectors } from "./records";
 import { LinkFragment, MapDetails, MapEntryRecord, RecordId } from "../types";
+import { mapsSelectors } from "./records";
 
 export const filterBrowsableMaps = <T extends Pick<MapDetails, "IsBrowseable">>(maps: T[]) => maps.filter((it) => it.IsBrowseable);
 export const selectBrowsableMaps = createSelector(mapsSelectors.selectAll, (state) => filterBrowsableMaps(state));

@@ -2,9 +2,9 @@ import { createSelector } from "@reduxjs/toolkit";
 import Fuse, { FuseOptionKey, IFuseOptions } from "fuse.js";
 import { flatten } from "lodash";
 
+import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails } from "../types";
 import { selectDealersInAd, selectDealersInRegular } from "./dealers";
 import { announcementsSelectors, dealersSelectors, eventsSelector, knowledgeEntriesSelectors } from "./records";
-import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails } from "../types";
 
 /**
  * Search options.

@@ -2,7 +2,6 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement } from "react";
 import { StyleSheet } from "react-native";
 
-import { DealerCard, DealerDetailsInstance } from "./DealerCard";
 import { useThemeName } from "../../hooks/themes/useThemeHooks";
 import { DealersAdProps } from "../../routes/dealers/DealersAd";
 import { DealersAllProps } from "../../routes/dealers/DealersAll";
@@ -10,6 +9,7 @@ import { DealersAlphaProps } from "../../routes/dealers/DealersAlpha";
 import { DealersRegularProps } from "../../routes/dealers/DealersRegular";
 import { PersonalDealersProps } from "../../routes/dealers/PersonalDealers";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { DealerCard, DealerDetailsInstance } from "./DealerCard";
 
 /**
  * The properties to the component.

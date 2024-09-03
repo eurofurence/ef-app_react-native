@@ -34,7 +34,7 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
             refetch();
         }
         prevOpen.current = open;
-    }, [open]);
+    }, [open, refetch]);
 
     // TODO: New style??
     return (
