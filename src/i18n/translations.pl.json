@@ -38,9 +38,6 @@
   "Dealers": {
     "all": "Wszyscy",
     "dealers_at_convention": "Wystawcy na {{convention}}",
-    "dealers_count": "{{count}} wystawców",
-    "dealers_on_day": "Wystawcy w: {{day}}",
-    "dealers_on_this_day": "Dzisiejsi wystawcy",
     "not_attending_on": "Nie biorą udziału w {{offDays}}"
   },
   "EmptyScreen": {
@@ -68,7 +65,6 @@
     "finished": "Zakończony",
     "morning": "Rano",
     "night": "W nocy",
-    "upcoming_favorites_subtitle": "Otrzymasz powiadomienie kiedy wydarzenie się rozpocznie",
     "upcoming_favorites_title": "Ulubione punkty programu",
     "upcoming_subtitle": "Te punkty programu zaczną się w przeciągu 30 minut",
     "upcoming_title": "Nadchodzące wydarzenia"
@@ -92,7 +88,6 @@
     "header": "Podstawowe informacje"
   },
   "Menu": {
-    "catch_em": "Catch-em-all",
     "dealers": "Wystawcy",
     "events": "Program",
     "home": "Start",
@@ -118,6 +113,11 @@
     "read": "Wyświetl wiadomość",
     "section_title_from": "Od {{authorName}}",
     "unread": "Nieprzeczytane"
+  },
+  "Profile": {
+    "logged_in_as": "Jesteś zalogowany jako {{username}}",
+    "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
+    "logout": "Wyloguj się"
   },
   "Settings": {
     "about": "O aplikacji",
@@ -157,12 +157,6 @@
       "title": "Menu ustawień deweloperskich"
     },
     "header": "Ustawienia",
-    "login": {
-      "logged_in_as": "Jesteś zalogowany jako {{username}}",
-      "login": "Zaloguj się",
-      "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
-      "logout": "Wyloguj się"
-    },
     "notifications": {
       "no_notifications": "Brak zaplanowanych powiadomień!",
       "notification_item": "{{ identifier }} zaplanowane na {{ time }}",
@@ -186,6 +180,5 @@
     "reset": "Resetuj",
     "subtitle": "Dostosuj czas dla testów i debugowania",
     "title": "Podróże w czasie"
-  },
-  "Todo": {}
+  }
 }
