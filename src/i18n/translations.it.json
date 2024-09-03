@@ -37,9 +37,6 @@
   "Dealers": {
     "all": "Tutti",
     "dealers_at_convention": "Venditori a {{convention}}",
-    "dealers_count": "{{count}} venditori",
-    "dealers_on_day": "Venditori del {{day}}",
-    "dealers_on_this_day": "Venditori di oggi",
     "not_attending_on": "Non disponibile il {{offDays}}"
   },
   "Event": {
@@ -64,7 +61,6 @@
     "finished": "Conclusi",
     "morning": "Al mattino",
     "night": "Alla notte",
-    "upcoming_favorites_subtitle": "Eventi preferiti che si svolgeranno oggi",
     "upcoming_favorites_title": "La tua agenda",
     "upcoming_subtitle": "Questi eventi inizieranno nei prossimi 30 minuti",
     "upcoming_title": "Eventi in arrivo"
@@ -86,15 +82,13 @@
     "header": "Articoli Informativi"
   },
   "Menu": {
-    "about": "Profilo",
     "dealers": "Venditori",
     "events": "Eventi",
-    "home": "Home",
     "info": "Articoli informativi",
     "less": "Di meno",
     "logged_in_now": "Accedi ora",
     "maps": "Mappe",
-    "messages": "Hai {{count}} nuovi messaggi",
+    "messages_other": "Hai {{count}} nuovi messaggi",
     "more": "Di più",
     "not_logged_in": "Non hai effettuato l'accesso",
     "open_messages": "Apri i messaggi",
@@ -120,6 +114,5 @@
     "currentLanguage": "La tua lingua è Italiano 🤌",
     "header": "Impostazioni",
     "settingsSection": "Impostazioni"
-  },
-  "Todo": {}
+  }
 }
