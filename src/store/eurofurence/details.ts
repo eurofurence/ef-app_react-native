@@ -35,6 +35,7 @@ const internalTagsToIcon = (tags?: string[]): IconNames | undefined => {
     if (!tags) return;
     if (tags.includes("supersponsors_only")) return "star-circle";
     if (tags.includes("sponsors_only")) return "star";
+    if (tags.includes("ticketed")) return "ticket";
     if (tags.includes("kage")) return "bug";
     if (tags.includes("art_show")) return "image-frame";
     if (tags.includes("dealers_den")) return "shopping";
