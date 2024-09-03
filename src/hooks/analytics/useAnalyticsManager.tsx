@@ -22,21 +22,25 @@ export const useAnalyticsManager = () => {
     }, [enabled]);
 
     useEffect(() => {
-        // Set user for sentry, if user is given.
-        if (claims) setUser({ id: claims.uid as string, username: claims.name as string });
-        else setUser(null);
+        if (process.env.EXPO_PUBLIC_BUILD_WITH_USERNAME_LOGGING) {
+            if (claims && enabled) {
+                // Set user for sentry, if user is given.
+                setUser({ id: claims?.uid as string, username: claims.name as string });
+                // Initialize firebase analytics user if given.
+                analytics()
+                    .setUserId((claims?.uid ?? null) as string | null)
+                    .catch(captureException);
+
+                // Initialize firebase username if given.
+                analytics()
+                    .setUserProperty("username", (claims?.name ?? null) as string | null)
+                    .catch(captureException);
+            } else {
+                setUser(null);
+            }
+        }
 
         // Set app version code.
         setTag("appVersionCode", Constants.expoConfig?.android?.versionCode);
-
-        // Initialize firebase analytics user if given.
-        analytics()
-            .setUserId((claims?.uid ?? null) as string | null)
-            .catch(captureException);
-
-        // Initialize firebase username if given.
-        analytics()
-            .setUserProperty("username", (claims?.name ?? null) as string | null)
-            .catch(captureException);
-    }, [claims]);
+    }, [claims, enabled]);
 };
