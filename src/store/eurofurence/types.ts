@@ -118,7 +118,6 @@ export type DealerDetails = DealerRecord & {
     Artist?: ImageDetails;
     ArtistThumbnail?: ImageDetails;
     ArtPreview?: ImageDetails;
-    FullName: string;
     ShortDescriptionContent?: string;
     ShortDescriptionTable?: string;
     Favorite: boolean;

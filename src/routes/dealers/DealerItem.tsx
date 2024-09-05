@@ -35,7 +35,7 @@ export const DealerItem = () => {
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header secondaryIcon="share" secondaryPress={() => dealer && shareDealer(dealer)}>
-                {dealer?.FullName ?? t("viewing_dealer")}
+                {dealer?.DisplayNameOrAttendeeNickname ?? t("viewing_dealer")}
             </Header>
             <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />}</Floater>
         </ScrollView>

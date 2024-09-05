@@ -132,7 +132,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 </View>
             )}
 
-            <Section icon="brush" title={dealer.FullName} />
+            <Section icon="brush" title={dealer.DisplayNameOrAttendeeNickname} />
 
             <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
@@ -244,7 +244,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
             {!dealer.AboutTheArtistText && !dealer.ArtistImageId ? null : (
                 <>
-                    <Section icon="account-circle-outline" title={t("about_the_artist", { name: dealer.FullName })} />
+                    <Section icon="account-circle-outline" title={t("about_the_artist", { name: dealer.DisplayNameOrAttendeeNickname })} />
 
                     {!dealer.Artist ? null : (
                         <View style={styles.posterLine}>

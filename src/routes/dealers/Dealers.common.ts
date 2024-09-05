@@ -164,7 +164,7 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
                 // Search is not sectioned.
                 result.push(dealerInstanceForAny(item, now, day1, day2, day3));
             } else {
-                const firstLetter = item.FullName[0].toUpperCase();
+                const firstLetter = item.DisplayNameOrAttendeeNickname[0].toUpperCase();
                 if (!(firstLetter in sectionedLetters)) {
                     result.push(dealerSectionForLetter(firstLetter));
                     sectionedLetters[firstLetter] = true;
@@ -180,9 +180,9 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
 export const shareDealer = (dealer: DealerDetails) =>
     Share.share(
         {
-            title: dealer.FullName,
+            title: dealer.DisplayNameOrAttendeeNickname,
             url: `${appBase}/Web/Dealers/${dealer.Id}`,
-            message: `Check out ${dealer.FullName} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
+            message: `Check out ${dealer.DisplayNameOrAttendeeNickname} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
         },
         {},
     ).catch(captureException);
