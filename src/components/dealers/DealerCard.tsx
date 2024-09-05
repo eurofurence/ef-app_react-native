@@ -44,7 +44,7 @@ export type DealerCardProps = {
 
 export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer, onPress, onLongPress }) => {
     // Details and properties dereference.
-    const name = dealer.details.FullName;
+    const name = dealer.details.DisplayNameOrAttendeeNickname;
     const present = dealer.present;
     const description = dealer.details.Categories?.join(", ");
     const offDays = dealer.offDays;

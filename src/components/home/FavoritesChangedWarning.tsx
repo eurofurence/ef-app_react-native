@@ -29,7 +29,7 @@ export const FavoritesChangedWarning = () => {
             {!changedDealerFavorite.length ? null : (
                 <Label mt={5}>
                     <Label variant="bold">{tMenu("dealers")}: </Label>
-                    {changedDealerFavorite.map((dealer) => dealer.FullName).join(", ")}
+                    {changedDealerFavorite.map((dealer) => dealer.DisplayNameOrAttendeeNickname).join(", ")}
                 </Label>
             )}
         </>

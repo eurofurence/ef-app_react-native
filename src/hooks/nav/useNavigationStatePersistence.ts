@@ -10,9 +10,15 @@ import { Linking, Platform } from "react-native";
  */
 export const useNavigationStatePersistence = (persistenceKey = "NAVIGATION_STATE"): [boolean, InitialState | undefined, (state: NavigationState | undefined) => void] => {
     const [isReady, setIsReady] = useState<boolean>(false);
-    const [initialState, setInitialState] = useState<InitialState>();
+    const [initialState, setInitialState] = useState<InitialState | undefined>(undefined);
 
-    const onStateChange = useCallback((state: NavigationState | undefined) => AsyncStorage.setItem(persistenceKey, JSON.stringify(state)), [persistenceKey]);
+    const onStateChange = useCallback(
+        (state: NavigationState | undefined) => {
+            const content = state === undefined ? "undefined" : JSON.stringify(state);
+            return AsyncStorage.setItem(persistenceKey, content);
+        },
+        [persistenceKey],
+    );
 
     useEffect(() => {
         // Already ready, skip.
@@ -27,7 +33,7 @@ export const useNavigationStatePersistence = (persistenceKey = "NAVIGATION_STATE
             if (Platform.OS === "web" || initialUrl !== null) return;
 
             // If given, assign it as parsed from JSON.
-            if (typeof savedStateString === "string") {
+            if (typeof savedStateString === "string" && savedStateString !== "undefined") {
                 setInitialState(JSON.parse(savedStateString));
             }
         })()

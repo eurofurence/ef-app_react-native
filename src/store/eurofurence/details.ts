@@ -152,7 +152,6 @@ export const applyDealerDetails = (source: DealerRecord, images: Dictionary<Imag
     Artist: !source.ArtistImageId ? undefined : images[source.ArtistImageId],
     ArtistThumbnail: !source.ArtistThumbnailImageId ? undefined : images[source.ArtistThumbnailImageId],
     ArtPreview: !source.ArtPreviewImageId ? undefined : images[source.ArtPreviewImageId],
-    FullName: source.DisplayNameOrAttendeeNickname,
     ShortDescriptionTable: internalDealerParseTable(source),
     ShortDescriptionContent: internalDealerParseDescriptionContent(source),
     Favorite: favorites.includes(source.Id),

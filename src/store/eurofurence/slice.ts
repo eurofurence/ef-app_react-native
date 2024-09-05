@@ -150,7 +150,7 @@ const internalPatchDealers = (dealers: EntitySyncState<DealerRecord>) => {
     });
 };
 
-export const eurofurenceCacheVersion = 2;
+export const eurofurenceCacheVersion = 3;
 
 export const eurofurenceCache = createSlice({
     name: "eurofurenceCache",

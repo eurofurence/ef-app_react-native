@@ -71,8 +71,16 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
         const path = cid === conId && cacheVersion === eurofurenceCacheVersion && lastSynchronised ? `Sync?since=${lastSynchronised}` : `Sync`;
 
         try {
-            // Fetch and apply.
+            // Fetch and verify response status.
             const response = await fetch(`${apiBase}/${path}`, { signal: invocation.current.signal });
+            if (!response.ok) {
+                throw new Error("API response not OK");
+            }
+            if (!response.headers.get("Content-type")?.includes("application/json")) {
+                throw new Error("API response is not JSON");
+            }
+
+            // Get content.
             const data = await response.json();
 
             // If this one is still the authority, apply this sync.

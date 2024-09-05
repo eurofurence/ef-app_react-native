@@ -1,8 +1,14 @@
 import * as SecureStore from "expo-secure-store";
+import { SecureStoreOptions } from "expo-secure-store";
 
-export const getItemAsync = (key: string) => SecureStore.getItemAsync(key);
-export const setItemAsync = (key: string, value: string) => SecureStore.setItemAsync(key, value);
-export const deleteItemAsync = (key: string) => SecureStore.deleteItemAsync(key);
+const options: SecureStoreOptions = {
+    // Option for iOS keychain.
+    keychainAccessible: SecureStore.ALWAYS_THIS_DEVICE_ONLY,
+};
+
+export const getItemAsync = (key: string) => SecureStore.getItemAsync(key, options);
+export const setItemAsync = (key: string, value: string) => SecureStore.setItemAsync(key, value, options);
+export const deleteItemAsync = (key: string) => SecureStore.deleteItemAsync(key, options);
 
 export const setItemToAsync = (key: string, value: string | null | undefined) =>
-    value === undefined || value === null ? SecureStore.deleteItemAsync(key) : SecureStore.setItemAsync(key, value);
+    value === undefined || value === null ? SecureStore.deleteItemAsync(key, options) : SecureStore.setItemAsync(key, value, options);

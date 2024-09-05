@@ -42,9 +42,21 @@ export const selectImageLocations = createSelector(
             if (event.BannerImageId) result[event.BannerImageId] = { type: "Event", location: "eventBanner", source: event, title: event.Title };
         }
         for (const dealer of dealers) {
-            if (dealer.ArtistImageId) result[dealer.ArtistImageId] = { type: "Dealer", location: "artist", source: dealer, title: dealer.FullName };
-            if (dealer.ArtistThumbnailImageId) result[dealer.ArtistThumbnailImageId] = { type: "Dealer", location: "artistThumbnail", source: dealer, title: dealer.FullName };
-            if (dealer.ArtPreviewImageId) result[dealer.ArtPreviewImageId] = { type: "Dealer", location: "artPreview", source: dealer, title: dealer.FullName };
+            if (dealer.ArtistImageId) result[dealer.ArtistImageId] = { type: "Dealer", location: "artist", source: dealer, title: dealer.DisplayNameOrAttendeeNickname };
+            if (dealer.ArtistThumbnailImageId)
+                result[dealer.ArtistThumbnailImageId] = {
+                    type: "Dealer",
+                    location: "artistThumbnail",
+                    source: dealer,
+                    title: dealer.DisplayNameOrAttendeeNickname,
+                };
+            if (dealer.ArtPreviewImageId)
+                result[dealer.ArtPreviewImageId] = {
+                    type: "Dealer",
+                    location: "artPreview",
+                    source: dealer,
+                    title: dealer.DisplayNameOrAttendeeNickname,
+                };
         }
         for (const announcement of announcements) {
             if (announcement.ImageId) result[announcement.ImageId] = { type: "Announcement", location: "announcement", source: announcement, title: announcement.Title };
