@@ -3,7 +3,6 @@ import { registerTaskAsync } from "expo-notifications";
 import { defineTask, TaskManagerTaskBody } from "expo-task-manager";
 import { Platform } from "react-native";
 
-import { conId } from "../configuration";
 import { requestSyncFromBackground } from "../hooks/sync/useBackgroundSyncManager";
 import { captureNotificationException } from "../sentryHelpers";
 
@@ -15,22 +14,25 @@ import { captureNotificationException } from "../sentryHelpers";
 const BG_NOTIFICATIONS_NAME = "background_notifications";
 
 // Define task for notification handling.
-defineTask(BG_NOTIFICATIONS_NAME, ({ data, error, executionInfo }: TaskManagerTaskBody<{ notification?: any }>) => {
+defineTask(BG_NOTIFICATIONS_NAME, (body: TaskManagerTaskBody<any>) => {
     // Skip method if error was given to be handled.
-    if (error) {
-        captureEvent(error);
+    if (body.error) {
+        captureEvent(body.error);
         return;
     }
 
+    // Parse from proper source.
+    const data: Record<string, string> = (Platform.OS === "ios" ? body.data : body.data?.notification?.data) ?? {};
+
     // Log that a notification was received.
-    console.log("Received data in background", data, "App state", executionInfo.appState);
+    console.log("Received data in background", data, "App state", body.executionInfo.appState);
 
     // Get event data.
-    const cid = data?.notification?.data?.CID;
-    const event = data?.notification?.data?.Event;
+    // const cid = data.CID;
+    const event = data.Event;
 
-    // Skip if not for this convention.
-    if (cid !== conId) return;
+    // // Skip if not for this convention.
+    // if (cid !== conId) return;
 
     // Handle for Sync events only.
     if (event === "Sync") {

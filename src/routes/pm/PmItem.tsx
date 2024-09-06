@@ -48,21 +48,16 @@ export const PmItem = () => {
     }, [message, markRead]);
 
     // If no message currently displayable, check if fetching. If not fetching
-    if (!message) {
-        if (ready) {
-            return null;
-        } else {
+    useEffect(() => {
+        if (ready && !message) {
             navigation.pop();
-            return null;
         }
-    }
+    }, [message, ready, navigation]);
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header>{message.Subject}</Header>
-            <Floater contentStyle={appStyles.trailer}>
-                <MarkdownContent>{message.Message}</MarkdownContent>
-            </Floater>
+            <Header>{!message ? "Viewing message" : message.Subject}</Header>
+            <Floater contentStyle={appStyles.trailer}>{!message ? null : <MarkdownContent>{message.Message}</MarkdownContent>}</Floater>
         </ScrollView>
     );
 };

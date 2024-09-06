@@ -6,16 +6,16 @@ import { captureNotificationException } from "../sentryHelpers";
 
 // Set general notification handling strategy.
 setNotificationHandler({
-    handleNotification: ({ request: { content } }) => {
+    handleNotification: async ({ request: { content } }) => {
         // Mark handling notification.
         console.log("Handling notification", content);
 
         // Show if it's a notification trigger.
-        return Promise.resolve({
+        return {
             shouldShowAlert: typeof content?.title === "string" || typeof content?.body === "string",
             shouldPlaySound: false,
             shouldSetBadge: false,
-        });
+        };
     },
     handleSuccess: (id) => {
         // Log success.

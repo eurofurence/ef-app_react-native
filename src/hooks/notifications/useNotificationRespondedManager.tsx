@@ -1,12 +1,10 @@
 import { useLastNotificationResponse } from "expo-notifications";
 import moment from "moment";
 import { useEffect } from "react";
-
-import { conId } from "../../configuration";
 import { useAppNavigation } from "../nav/useAppNavigation";
 
 /**
- * Manages the foreground part notification response handling.
+ * This handles interacting with scheduled notifications from the received manager.
  * @constructor
  */
 export const useNotificationRespondedManager = () => {
@@ -15,6 +13,8 @@ export const useNotificationRespondedManager = () => {
 
     // Setup handler for notification response.
     useEffect(() => {
+        if (!response) return;
+
         // Track when the response was observed.
         const dateResponded = moment().toISOString();
 
@@ -23,12 +23,12 @@ export const useNotificationRespondedManager = () => {
 
         // Get the data object. Resolve CID, type, and related ID.
         const data = response?.notification?.request?.content?.data;
-        const cid = data?.CID;
+        // const cid = data?.CID;
         const event = data?.Event;
         const relatedId = data?.RelatedId;
 
-        // Check ID match.
-        if (cid !== conId) return;
+        // // Check ID match.
+        // if (cid !== conId) return;
 
         // Event is for an announcement.
         if (event === "Announcement") {

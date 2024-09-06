@@ -3,26 +3,11 @@ import { addNotificationReceivedListener, Notification, removeNotificationSubscr
 import moment from "moment";
 import { useEffect } from "react";
 
+import { Platform } from "react-native";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
-import { conId } from "../../configuration";
-import { NotificationChannels } from "../../init/NotificationChannel";
 import { captureNotificationException } from "../../sentryHelpers";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
-import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "./types/NotificationTrigger";
-
-const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger, channelId: NotificationChannels = "default") =>
-    scheduleNotificationAsync({
-        identifier: source.remoteMessage.messageId ?? undefined,
-        content: {
-            title: source.remoteMessage.notification.title ?? undefined,
-            body: source.remoteMessage.notification.body ?? undefined,
-            data: source.remoteMessage.data,
-        },
-        trigger: {
-            channelId,
-        },
-    });
 
 /**
  * Manages the foreground part of notification handling, as well as handling sync requests
@@ -39,11 +24,7 @@ export const useNotificationReceivedManager = () => {
     // Setup notification received handler.
     useEffect(() => {
         const receive = addNotificationReceivedListener(({ request: { content, trigger, identifier } }: Notification) => {
-            // Prevent reentrant error when scheduling a notification locally from a remote message.
-            if (!isTrigger(trigger)) {
-                console.log("Skipping empty message from remote");
-                return;
-            }
+            if (trigger?.type !== "push") return;
 
             // Track immediately when the message came in.
             const dateReceived = moment().toISOString();
@@ -51,39 +32,54 @@ export const useNotificationReceivedManager = () => {
             // Always log receiving of the message.
             console.log(`Received at ${dateReceived}:`, trigger);
 
-            // Always dispatch a state update tracking the message.
-            dispatch(logFCMMessage({ dateReceived, content, trigger, identifier }));
+            const data = (Platform.OS === "ios" ? trigger.payload : trigger.remoteMessage?.data) ?? {};
+            const event = data.Event;
+            // const cid = data.CID;
+            const title: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.title : trigger.remoteMessage?.notification?.title;
+            const body: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.body : trigger.remoteMessage?.notification?.body;
 
-            // Check if data trigger. Otherwise, not actionable.
-            if (isTriggerWithData(trigger)) {
-                // Get CID and event type.
-                const cid = trigger.remoteMessage.data.CID;
-                const event = trigger.remoteMessage.data.Event;
+            console.log("Parsed as push notification:", { event, title, body, data });
 
-                // Skip if not for this convention.
-                if (cid !== conId) return;
+            // // Check ID match.
+            // if (cid !== conId) return;
 
-                // Handle for sync, announcement, and notification.
-                if (event === "Sync") {
+            switch (event) {
+                case "Sync": {
                     // Is sync, do synchronization silently.
                     synchronize().catch(captureException);
 
                     // Log sync.
                     console.log("Synchronized for remote Sync request");
-                } else if (event === "Announcement" && isTriggerWithNotification(trigger)) {
+                    break;
+                }
+
+                case "Announcement": {
                     // Schedule it.
-                    scheduleNotificationFromTrigger(trigger, "announcements").then(
+                    scheduleNotificationAsync({
+                        content: { title, body, data },
+                        trigger: null, // { channelId: "announcements" },
+                    }).then(
                         () => console.log("Announcement scheduled"),
                         (e) => captureNotificationException("Unable to schedule announcement", e),
                     );
-                } else if (event === "Notification" && isTriggerWithNotification(trigger)) {
+                    break;
+                }
+
+                case "Notification": {
                     // Schedule it.
-                    scheduleNotificationFromTrigger(trigger, "private_messages").then(
+                    scheduleNotificationAsync({
+                        content: { title, body, data },
+                        trigger: null, // { channelId: "private_messages" },
+                    }).then(
                         () => console.log("Personal message scheduled"),
-                        (e) => captureNotificationException("Unable to schedule personal message", e),
+                        (e) => captureNotificationException("Unable to schedule announcement", e),
                     );
+                    break;
                 }
             }
+
+            // Always dispatch a state update tracking the message.
+            dispatch(logFCMMessage({ dateReceived, content, trigger, identifier }));
         });
 
         // Return removal of subscription.
