@@ -4,7 +4,7 @@ import { FC, RefObject, useContext, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking } from "react-native";
 
-import { appBase, conWebsite } from "../../configuration";
+import { conWebsite, catchEmUrl } from "../../configuration";
 import { AuthContext, getAccessToken } from "../../context/AuthContext";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { RecordId } from "../../store/eurofurence/types";
@@ -22,7 +22,7 @@ const openFursuitGames = async (t: TFunction) => {
         alert(t("not_logged_in"));
         return;
     }
-    await Linking.openURL(`${appBase}/companion/#/login?embedded=false&returnPath=/collect&token=${token}`).catch(console.error);
+    await Linking.openURL(catchEmUrl).catch(console.error);
 };
 
 export const MainMenu: FC<MainMenuProps> = ({ tabs }) => {
