@@ -7,6 +7,7 @@ import { Platform } from "react-native";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
+import { invalidateCommunicationsQuery } from "../../store/eurofurence/service";
 
 /**
  * Manages the foreground part of notification handling, as well as handling sync requests
@@ -58,7 +59,7 @@ export const useNotificationReceivedManager = () => {
                         await synchronize().catch();
                         await scheduleNotificationAsync({
                             content: { title, body, data },
-                            trigger: { channelId: "announcements" },
+                            trigger: { channelId: "announcements", seconds: 1 },
                         });
                         console.log("Announcement scheduled");
                         break;
@@ -66,9 +67,10 @@ export const useNotificationReceivedManager = () => {
 
                     case "Notification": {
                         // Schedule announcement
+                        dispatch(invalidateCommunicationsQuery());
                         await scheduleNotificationAsync({
                             content: { title, body, data },
-                            trigger: { channelId: "private_messages" },
+                            trigger: { channelId: "private_messages", seconds: 1 },
                         });
                         console.log("Personal message scheduled");
                         break;

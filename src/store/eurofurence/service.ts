@@ -179,3 +179,5 @@ export const {
     useArtistAlleyOwnTableRegistrationQuery,
     useArtistAlleyPostTableRegistrationRequestMutation,
 } = eurofurenceService;
+
+export const invalidateCommunicationsQuery = () => eurofurenceService.util.invalidateTags(["Communication"]);
