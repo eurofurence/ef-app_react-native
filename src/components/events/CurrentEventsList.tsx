@@ -1,5 +1,5 @@
 import { chain } from "lodash";
-import { Moment } from "moment";
+import type { Moment } from "moment-timezone";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";

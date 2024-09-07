@@ -4,6 +4,7 @@ import { Moment } from "moment/moment";
 import { useMemo } from "react";
 import { Share } from "react-native";
 
+import moment from "moment-timezone";
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from "../../components/events/EventCard";
 import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "../../components/events/EventSection";
 import { appBase, conAbbr } from "../../configuration";
@@ -45,7 +46,7 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
         for (const item of results) {
             if (item.Hidden) {
                 hidden++;
-            } else if (now.isBefore(item.EndDateTimeUtc)) {
+            } else if (now.isBefore(moment.utc(item.EndDateTimeUtc))) {
                 result.push(eventInstanceForAny(item, now));
             }
         }
@@ -57,7 +58,7 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
 
         // Second pass not hidden and passed.
         for (const item of results) {
-            if (!item.Hidden && !now.isBefore(item.EndDateTimeUtc)) {
+            if (!item.Hidden && !now.isBefore(moment.utc(item.EndDateTimeUtc))) {
                 if (!sectionedPassed) {
                     result.push(eventSectionForPassed(t));
                     sectionedPassed = true;
@@ -96,7 +97,7 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
         for (const item of all) {
             if (item.Hidden) {
                 hidden++;
-            } else if (now.isBefore(item.EndDateTimeUtc)) {
+            } else if (now.isBefore(moment.utc(item.EndDateTimeUtc))) {
                 // First pass not passed.
                 if (item.PartOfDay === "morning") {
                     if (!sectionedMorning) {
@@ -137,7 +138,7 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
 
         // Second pass not hidden and passed.
         for (const item of all) {
-            if (!item.Hidden && !now.isBefore(item.EndDateTimeUtc)) {
+            if (!item.Hidden && !now.isBefore(moment.utc(item.EndDateTimeUtc))) {
                 if (!sectionedPassed) {
                     result.push(eventSectionForPassed(t));
                     sectionedPassed = true;
@@ -174,7 +175,7 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
                 hidden++;
             } else if (!item.ConferenceDay) {
                 // Nothing, not applicable.
-            } else if (now.isBefore(item.EndDateTimeUtc)) {
+            } else if (now.isBefore(moment.utc(item.EndDateTimeUtc))) {
                 if (!(item.ConferenceDay.Date in sectionedDays)) {
                     result.push(eventSectionForDate(t, item.ConferenceDay.Date));
                     sectionedDays[item.ConferenceDay.Date] = true;
@@ -191,7 +192,7 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
 
         // Second pass not hidden and passed.
         for (const item of all) {
-            if (!item.Hidden && !now.isBefore(item.EndDateTimeUtc)) {
+            if (!item.Hidden && !now.isBefore(moment.utc(item.EndDateTimeUtc))) {
                 if (!sectionedPassed) {
                     result.push(eventSectionForPassed(t));
                     sectionedPassed = true;

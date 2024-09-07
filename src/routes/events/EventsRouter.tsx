@@ -3,7 +3,7 @@ import { CompositeScreenProps, useIsFocused } from "@react-navigation/core";
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import moment from "moment";
+import moment from "moment-timezone";
 import { FC, useCallback, useEffect, useMemo } from "react";
 import { BackHandler, Dimensions, Platform, StyleSheet, View } from "react-native";
 
@@ -16,6 +16,7 @@ import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from ".
 import { EventDayRecord } from "../../store/eurofurence/types";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { conTimeZone } from "../../configuration";
 import { PersonalSchedule, PersonalScheduleParams } from "./PersonalSchedule";
 import { EventsSearch, EventsSearchParams } from "./EventsSearch";
 import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
@@ -66,7 +67,7 @@ export type EventsRouterProps =
  * @constructor
  */
 const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
-    const formatDay = useCallback((day: EventDayRecord) => moment(day.Date).format("ddd"), []);
+    const formatDay = useCallback((day: EventDayRecord) => moment.tz(day.Date, conTimeZone).format("ddd"), []);
 
     // Use now with optional time travel.
     const now = useNow();
@@ -99,7 +100,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
     }, [isFocused, setSelected]);
 
     // Get the current day ID.
-    const currentDayId = useMemo(() => days.find((day) => moment(day.Date).isSame(now, "day"))?.Id, [days, now]);
+    const currentDayId = useMemo(() => days.find((day) => moment.tz(day.Date, conTimeZone).isSame(now, "day"))?.Id, [days, now]);
 
     // Get actual filter type, whether to scroll, and the initial route name.
     const type = route.params?.filterType ?? "days";

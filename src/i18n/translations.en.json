@@ -120,6 +120,7 @@
     "label_event_room": "Room",
     "label_event_track": "Track",
     "label_event_when": "When",
+    "label_event_when_local": "Local time",
     "mask_required": "Face masks are mandatory for this event",
     "remove_favorite": "Unfavorite",
     "reveal": "Reveal in overview",

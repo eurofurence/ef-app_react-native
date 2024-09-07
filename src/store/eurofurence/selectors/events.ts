@@ -31,19 +31,19 @@ export const selectEventsByTrack = createSelector([baseEventGroupSelector, (_sta
 export const selectEventsByDay = createSelector([baseEventGroupSelector, (_state, dayId: RecordId) => dayId], (events, dayId) => events.day[dayId] ?? []);
 
 export const filterHappeningTodayEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
-    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(it.EndDateTimeUtc));
+    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(moment.utc(it.EndDateTimeUtc)));
 
 export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
-    events.filter((it) => now.isBetween(it.StartDateTimeUtc, it.EndDateTimeUtc));
+    events.filter((it) => now.isBetween(moment.utc(it.StartDateTimeUtc), moment.utc(it.EndDateTimeUtc)));
 
 export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Moment) =>
     events.filter((it) => {
-        const startMoment = moment(it.StartDateTimeUtc, true).subtract(30, "minutes");
-        const endMoment = moment(it.StartDateTimeUtc, true);
+        const startMoment = moment.utc(it.StartDateTimeUtc, true).subtract(30, "minutes");
+        const endMoment = moment.utc(it.StartDateTimeUtc, true);
         return now.isBetween(startMoment, endMoment);
     });
 
-export const selectUpdatedFavoriteEvents = createSelector([selectFavoriteEvents, (state) => state.auxiliary.lastViewTimes], (favorites, lastViewTimes) =>
+export const selectUpdatedFavoriteEvents = createSelector([selectFavoriteEvents, (state) => state.auxiliary.lastViewTimesUtc], (favorites, lastViewTimesUtc) =>
     // Is favorite and has ever been viewed and the update is after when it was viewed.
-    favorites.filter((event) => event.Id in lastViewTimes && moment(event.LastChangeDateTimeUtc).isAfter(lastViewTimes[event.Id])),
+    favorites.filter((event) => lastViewTimesUtc && event.Id in lastViewTimesUtc && moment.utc(event.LastChangeDateTimeUtc).isAfter(moment.utc(lastViewTimesUtc[event.Id]))),
 );

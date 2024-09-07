@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 import { RootState } from "../index";
 import eurofurenceCache from "./details.data.spec";
@@ -21,7 +21,7 @@ const state: RootState = {
         ],
     },
     auxiliary: {
-        lastViewTimes: {},
+        lastViewTimesUtc: {},
         hiddenEvents: [],
         favoriteDealers: [],
         deviceWarningsHidden: false,
@@ -138,8 +138,8 @@ describe("Eurofurence details", () => {
             const event = eventsSelector.selectById(state, id) as EventDetails;
 
             const faved = selectFavoriteEvents(state);
-            const upcoming = filterHappeningTodayEvents(faved, moment(event.StartDateTimeUtc).subtract(1, "day"));
-            const expired = filterHappeningTodayEvents(faved, moment(event.StartDateTimeUtc).add(1, "day"));
+            const upcoming = filterHappeningTodayEvents(faved, moment.utc(event.StartDateTimeUtc).subtract(1, "day"));
+            const expired = filterHappeningTodayEvents(faved, moment.utc(event.StartDateTimeUtc).add(1, "day"));
 
             expect(upcoming).toContainEqual(event);
             expect(expired).not.toContainEqual(event);
@@ -149,7 +149,7 @@ describe("Eurofurence details", () => {
             const event = eventsSelector.selectAll(state)[0];
 
             const all = eventsSelector.selectAll(state);
-            const current = filterCurrentEvents(all, moment(event.StartDateTimeUtc).add(1, "minute"));
+            const current = filterCurrentEvents(all, moment.utc(event.StartDateTimeUtc).add(1, "minute"));
 
             expect(current).toContainEqual(event);
         });
@@ -158,7 +158,7 @@ describe("Eurofurence details", () => {
             const event = eventsSelector.selectAll(state)[0];
 
             const all = eventsSelector.selectAll(state);
-            const upcoming = filterUpcomingEvents(all, moment(event.StartDateTimeUtc).subtract(20, "minutes"));
+            const upcoming = filterUpcomingEvents(all, moment.utc(event.StartDateTimeUtc).subtract(20, "minutes"));
 
             expect(upcoming).toContainEqual(event);
         });
@@ -166,7 +166,7 @@ describe("Eurofurence details", () => {
         it("finds active announcements", () => {
             const announcement = announcementsSelectors.selectAll(state)[0];
 
-            const active = selectActiveAnnouncements(state, moment(announcement.ValidFromDateTimeUtc).add(1, "minute"));
+            const active = selectActiveAnnouncements(state, moment.utc(announcement.ValidFromDateTimeUtc).add(1, "minute"));
 
             expect(active).toContainEqual(announcement);
         });

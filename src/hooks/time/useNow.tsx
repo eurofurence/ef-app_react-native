@@ -1,4 +1,4 @@
-import moment, { Moment } from "moment";
+import moment, { Moment } from "moment-timezone";
 import { useEffect, useState } from "react";
 
 import { useAppSelector } from "../../store";
@@ -26,7 +26,6 @@ export const useNow = (resolution: "static" | number = "static"): Moment => {
     const amount = useAppSelector((state) => (state.timetravel.enabled ? state.timetravel.amount : 0));
 
     const [now, setNow] = useState(() => nowWithOffset(amount));
-
     useEffect(() => {
         setNow(nowWithOffset(amount));
         if (resolution === "static") return;

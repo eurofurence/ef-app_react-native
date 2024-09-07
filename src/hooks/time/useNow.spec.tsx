@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 import { customRenderHook, renderHook } from "../../testUtils";
 import { useNow } from "./useNow";

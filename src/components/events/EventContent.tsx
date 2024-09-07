@@ -1,5 +1,5 @@
 import { useIsFocused } from "@react-navigation/core";
-import moment from "moment";
+import moment from "moment-timezone";
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
@@ -21,6 +21,7 @@ import { Badge } from "../generic/containers/Badge";
 import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { Row } from "../generic/containers/Row";
+import { conTimeZone } from "../../configuration";
 
 /**
  * Props to the content.
@@ -61,15 +62,26 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
 
-    const progress = (now.valueOf() - moment(event.StartDateTimeUtc).valueOf()) / (moment(event.EndDateTimeUtc).valueOf() - moment(event.StartDateTimeUtc).valueOf());
+    const progress = now.diff(moment.utc(event.StartDateTimeUtc)) / moment.utc(event.EndDateTimeUtc).diff(moment.utc(event.StartDateTimeUtc));
     const happening = progress >= 0.0 && progress <= 1.0;
     const feedbackDisabled = progress < 0.0;
 
-    const day = event.ConferenceDay;
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
 
     const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
+
+    // Get time components. Order is IMPORTANT as local() mutates the instance.
+    const start = moment.utc(event.StartDateTimeUtc).tz(conTimeZone);
+    const end = moment.utc(event.EndDateTimeUtc).tz(conTimeZone);
+
+    const day = start.format("dddd");
+    const startTime = start.format("LT");
+    const endTime = end.format("LT");
+
+    const dayLocal = start.local().format("dddd");
+    const startTimeLocal = start.local().format("LT");
+    const endTimeLocal = end.local().format("LT");
 
     return (
         <>
@@ -138,8 +150,25 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
             <Label type="caption">{t("label_event_when")}</Label>
             <Label type="h3" mb={20}>
-                {t("when", { day: day && moment(day.Date).format("dddd"), start: moment(event.StartDateTimeUtc).format("LT"), finish: moment(event.EndDateTimeUtc).format("LT") })}
+                {t("when", {
+                    day: day,
+                    start: startTime,
+                    finish: endTime,
+                })}
             </Label>
+
+            {startTime === startTimeLocal ? null : (
+                <>
+                    <Label type="caption">{t("label_event_when_local")}</Label>
+                    <Label type="h3" mb={20}>
+                        {t("when", {
+                            day: dayLocal,
+                            start: startTimeLocal,
+                            finish: endTimeLocal,
+                        })}
+                    </Label>
+                </>
+            )}
 
             <Label type="caption">{t("label_event_track")}</Label>
             <Label type="h3" mb={20}>

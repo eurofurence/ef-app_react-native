@@ -1,9 +1,12 @@
 import { useIsFocused } from "@react-navigation/core";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Vibration, View } from "react-native";
+import * as Clipboard from "expo-clipboard";
+import * as Notifications from "expo-notifications";
 
+import { captureException } from "@sentry/react-native";
 import { useAuthContext } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 import { useNow } from "../../hooks/time/useNow";
@@ -48,6 +51,24 @@ export const DevButtons = () => {
 
             <Button containerStyle={styles.button} icon="toaster" onPress={() => toast("warning", "Toast " + moment().format(), 5000)}>
                 Test toasts
+            </Button>
+            <Button
+                containerStyle={styles.button}
+                icon="file-key"
+                onPress={() => {
+                    // Copy device token to clipboard if it can be acquired.
+                    Notifications.getDevicePushTokenAsync()
+                        .then((token) => Clipboard.setStringAsync(token.data))
+                        .then(() => {
+                            toast("info", "Token copied to clipboard", 5000);
+                        })
+                        .catch((error) => {
+                            toast("warning", "Failed to get or copy token", 5000);
+                            captureException(error);
+                        });
+                }}
+            >
+                Copy native Messaging token
             </Button>
             <Button containerStyle={styles.button} icon="refresh" onPress={() => dispatch(overwriteUpdateTimes(now.toISOString()))}>
                 {t("overwrite_update_time")}

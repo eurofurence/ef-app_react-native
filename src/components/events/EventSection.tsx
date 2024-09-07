@@ -5,6 +5,7 @@ import { FC } from "react";
 import { PartOfDay } from "../../store/eurofurence/types";
 import { IconNames } from "../generic/atoms/Icon";
 import { Section, SectionProps } from "../generic/atoms/Section";
+import { conTimeZone } from "../../configuration";
 
 export type EventSectionProps = SectionProps;
 
@@ -51,11 +52,11 @@ export function eventSectionForPassed(t: TFunction): EventSectionProps {
 /**
  * Creates the properties for a generic "on this day" section.
  * @param t Translation function.
- * @param date Date of the event.
+ * @param date Date of the event, in con time zone.
  */
 export function eventSectionForDate(t: TFunction, date: string): EventSectionProps {
     return {
-        title: moment(date).format("dddd"),
+        title: moment.tz(date, conTimeZone).format("dddd"),
         icon: "calendar-outline" as IconNames,
     };
 }

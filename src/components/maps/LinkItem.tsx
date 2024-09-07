@@ -1,8 +1,8 @@
-import moment from "moment/moment";
 import React, { FC, useCallback, useMemo } from "react";
 import { Linking, StyleSheet } from "react-native";
 import { match } from "ts-pattern";
 
+import moment from "moment-timezone";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
@@ -66,7 +66,7 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
 
     const icon = useMemo<ButtonProps["icon"]>(() => {
         const host = hostName(link.Target);
-        let icon: ButtonProps["icon"] = "web";
+        let icon: ButtonProps["icon"];
 
         if (host === "etsy.com") {
             icon = (props) => <FaIcon name="etsy" {...props} />;

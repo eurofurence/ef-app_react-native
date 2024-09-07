@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
@@ -34,7 +34,7 @@ export const AnnounceItem = () => {
                             {announcement.NormalizedTitle}
                         </Label>
                         <Row style={styles.byline} variant="spaced">
-                            <Label type="compact">{moment(announcement.ValidFromDateTimeUtc).format("lll")}</Label>
+                            <Label type="compact">{moment.utc(announcement.ValidFromDateTimeUtc).local().format("lll")}</Label>
 
                             <Label style={[styles.tag]} type="regular" ellipsizeMode="head" numberOfLines={1}>
                                 {announcement.Area} - {announcement.Author}

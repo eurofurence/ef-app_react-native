@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Constants from "expo-constants";
-import moment from "moment";
+import moment from "moment-timezone";
 
 interface TimeTravelState {
     amount: number;

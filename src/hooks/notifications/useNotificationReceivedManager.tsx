@@ -1,11 +1,10 @@
 import { captureException } from "@sentry/react-native";
 import { addNotificationReceivedListener, Notification, removeNotificationSubscription, scheduleNotificationAsync } from "expo-notifications";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useEffect } from "react";
 
 import { Platform } from "react-native";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
-import { captureNotificationException } from "../../sentryHelpers";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
 
@@ -23,63 +22,71 @@ export const useNotificationReceivedManager = () => {
 
     // Setup notification received handler.
     useEffect(() => {
-        const receive = addNotificationReceivedListener(({ request: { content, trigger, identifier } }: Notification) => {
-            if (trigger?.type !== "push") return;
+        const receive = addNotificationReceivedListener(async ({ request: { content, trigger, identifier } }: Notification) => {
+            try {
+                if (trigger?.type !== "push") return;
 
-            // Track immediately when the message came in.
-            const dateReceived = moment().toISOString();
+                // Track immediately when the message came in.
+                const now = moment();
 
-            // Always log receiving of the message.
-            console.log(`Received at ${dateReceived}:`, trigger);
+                // Always log receiving of the message.
+                console.log(`Received at ${now.format()}:`, trigger);
 
-            const data = (Platform.OS === "ios" ? trigger.payload : trigger.remoteMessage?.data) ?? {};
-            const event = data.Event;
-            // const cid = data.CID;
-            const title: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.title : trigger.remoteMessage?.notification?.title;
-            const body: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.body : trigger.remoteMessage?.notification?.body;
+                const data = (Platform.OS === "ios" ? trigger.payload : trigger.remoteMessage?.data) ?? {};
+                const event = data.Event;
+                // const cid = data.CID;
+                const title: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.title : trigger.remoteMessage?.notification?.title;
+                const body: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.body : trigger.remoteMessage?.notification?.body;
 
-            console.log("Parsed as push notification:", { event, title, body, data });
+                console.log("Parsed as push notification:", { event, title, body, data });
 
-            // // Check ID match.
-            // if (cid !== conId) return;
+                // // Check ID match.
+                // if (cid !== conId) return;
 
-            switch (event) {
-                case "Sync": {
-                    // Is sync, do synchronization silently.
-                    synchronize().catch(captureException);
+                switch (event) {
+                    case "Sync": {
+                        // Is sync, do synchronization silently.
+                        await synchronize();
 
-                    // Log sync.
-                    console.log("Synchronized for remote Sync request");
-                    break;
+                        // Log sync.
+                        console.log("Synchronized for remote Sync request");
+                        break;
+                    }
+
+                    case "Announcement": {
+                        // Try synchronizing. Schedule notification.
+                        await synchronize().catch();
+                        await scheduleNotificationAsync({
+                            content: { title, body, data },
+                            trigger: { channelId: "announcements" },
+                        });
+                        console.log("Announcement scheduled");
+                        break;
+                    }
+
+                    case "Notification": {
+                        // Schedule announcement
+                        await scheduleNotificationAsync({
+                            content: { title, body, data },
+                            trigger: { channelId: "private_messages" },
+                        });
+                        console.log("Personal message scheduled");
+                        break;
+                    }
                 }
 
-                case "Announcement": {
-                    // Schedule it.
-                    scheduleNotificationAsync({
-                        content: { title, body, data },
-                        trigger: null, // { channelId: "announcements" },
-                    }).then(
-                        () => console.log("Announcement scheduled"),
-                        (e) => captureNotificationException("Unable to schedule announcement", e),
-                    );
-                    break;
-                }
-
-                case "Notification": {
-                    // Schedule it.
-                    scheduleNotificationAsync({
-                        content: { title, body, data },
-                        trigger: null, // { channelId: "private_messages" },
-                    }).then(
-                        () => console.log("Personal message scheduled"),
-                        (e) => captureNotificationException("Unable to schedule announcement", e),
-                    );
-                    break;
-                }
+                // Always dispatch a state update tracking the message. Format message
+                // as UTC, so that it can be sorted lexicographically.
+                const dateReceivedUtc = now.clone().utc().format();
+                dispatch(logFCMMessage({ dateReceivedUtc, content, trigger, identifier }));
+            } catch (error) {
+                // Capture scheduling errors, tag as notification.
+                captureException(error, {
+                    tags: {
+                        type: "notifications",
+                    },
+                });
             }
-
-            // Always dispatch a state update tracking the message.
-            dispatch(logFCMMessage({ dateReceived, content, trigger, identifier }));
         });
 
         // Return removal of subscription.

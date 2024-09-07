@@ -2,7 +2,7 @@ import moment from "moment/moment";
 import { useEffect, useMemo } from "react";
 
 import { useAppDispatch, useAppSelector } from "../../store";
-import { selectLastViewed } from "../../store/auxiliary/selectors";
+import { selectLastViewedUtc } from "../../store/auxiliary/selectors";
 import { setViewed } from "../../store/auxiliary/slice";
 import { RecordMetadata } from "../../store/eurofurence/types";
 import { useNow } from "../time/useNow";
@@ -17,14 +17,14 @@ import { useNow } from "../time/useNow";
 export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 3_000) => {
     const now = useNow();
     const dispatch = useAppDispatch();
-    const lastViewed = useAppSelector((state) => (item ? selectLastViewed(state, item.Id) : null));
-    const updated = useMemo(() => Boolean(item && lastViewed && moment(item.LastChangeDateTimeUtc).isAfter(lastViewed)), [item, lastViewed]);
+    const lastViewed = useAppSelector((state) => (item ? selectLastViewedUtc(state, item.Id) : null));
+    const updated = useMemo(() => Boolean(item && lastViewed && moment.utc(item.LastChangeDateTimeUtc).isAfter(lastViewed)), [item, lastViewed]);
 
     useEffect(() => {
         if (!item) return;
 
         const handle = setTimeout(() => {
-            dispatch(setViewed({ id: item.Id, now: now.toISOString() }));
+            dispatch(setViewed({ id: item.Id, nowUtc: now.clone().utc().format() }));
         }, delay);
         return () => {
             clearTimeout(handle);

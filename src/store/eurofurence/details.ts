@@ -1,9 +1,10 @@
 import { Dictionary } from "@reduxjs/toolkit";
 
-import moment, { MomentInput } from "moment";
+import moment, { MomentInput } from "moment-timezone";
 
 import { IconNames } from "../../components/generic/atoms/Icon";
 import { Notification } from "../background/slice";
+import { conTimeZone } from "../../configuration";
 import {
     AnnouncementDetails,
     AnnouncementRecord,
@@ -86,7 +87,7 @@ export const applyEventDetails = (
     hiddenIds: string[],
 ): EventDetails => ({
     ...source,
-    PartOfDay: internalCategorizeTime(source.StartDateTimeUtc),
+    PartOfDay: internalCategorizeTime(moment.utc(source.StartDateTimeUtc).tz(conTimeZone)),
     Poster: !source.PosterImageId ? undefined : images[source.PosterImageId],
     Banner: !source.BannerImageId ? undefined : images[source.BannerImageId],
     Badges: internalTagsToBadges(source.Tags),
@@ -160,7 +161,7 @@ export const applyDealerDetails = (source: DealerRecord, images: Dictionary<Imag
 
 export const applyEventDayDetails = (source: EventDayRecord): EventDayDetails => ({
     ...source,
-    dayOfWeek: moment(source.Date).day(),
+    dayOfWeek: moment.tz(source.Date, conTimeZone).day(),
 });
 export const applyAnnouncementDetails = (source: AnnouncementRecord, images: Dictionary<ImageDetails>): AnnouncementDetails => ({
     ...source,

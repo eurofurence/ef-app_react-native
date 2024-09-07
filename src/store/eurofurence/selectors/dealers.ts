@@ -55,7 +55,7 @@ export const selectDealerCategories = createSelector([dealersSelectors.selectAll
     return result;
 });
 
-export const selectUpdatedFavoriteDealers = createSelector([selectFavoriteDealers, (state) => state.auxiliary.lastViewTimes], (favorites, lastViewTimes) =>
+export const selectUpdatedFavoriteDealers = createSelector([selectFavoriteDealers, (state) => state.auxiliary.lastViewTimesUtc], (favorites, lastViewTimesUtc) =>
     // Is favorite and has ever been viewed and the update is after when it was viewed.
-    favorites.filter((dealer) => dealer.Id in lastViewTimes && moment(dealer.LastChangeDateTimeUtc).isAfter(lastViewTimes[dealer.Id])),
+    favorites.filter((dealer) => lastViewTimesUtc && dealer.Id in lastViewTimesUtc && moment.utc(dealer.LastChangeDateTimeUtc).isAfter(moment.utc(lastViewTimesUtc[dealer.Id]))),
 );

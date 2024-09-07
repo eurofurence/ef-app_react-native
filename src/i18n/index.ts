@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Localization from "expo-localization";
 import i18next from "i18next";
 import { noop, partial } from "lodash";
-import moment from "moment";
+import moment from "moment-timezone";
 import { initReactI18next } from "react-i18next";
 import { match, P } from "ts-pattern";
 

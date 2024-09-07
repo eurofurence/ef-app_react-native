@@ -28,7 +28,7 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ item, onPress 
                         <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
                             {t("message_item_subtitle", {
                                 status: item.ReadDateTimeUtc === null ? t("unread") : t("read"),
-                                time: moment(item.CreatedDateTimeUtc).format("llll"),
+                                time: moment.utc(item.CreatedDateTimeUtc).local().format("llll"),
                             })}
                         </Label>
                     </Col>

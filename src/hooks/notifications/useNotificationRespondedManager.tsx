@@ -1,5 +1,5 @@
 import { useLastNotificationResponse } from "expo-notifications";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useEffect } from "react";
 import { useAppNavigation } from "../nav/useAppNavigation";
 
@@ -16,7 +16,7 @@ export const useNotificationRespondedManager = () => {
         if (!response) return;
 
         // Track when the response was observed.
-        const dateResponded = moment().toISOString();
+        const dateResponded = moment.utc().format();
 
         // Always log receiving of the message.
         console.log(`Response observed at ${dateResponded}:`, response);
@@ -30,27 +30,22 @@ export const useNotificationRespondedManager = () => {
         // // Check ID match.
         // if (cid !== conId) return;
 
-        // Event is for an announcement.
         if (event === "Announcement") {
-            // Log navigation.
+            // Event is for an announcement.
             console.log(`Navigating to announcement ${relatedId}`);
 
             // Go to announcement item.
             return navigation.navigate("AnnounceItem", {
                 id: relatedId,
             });
-        }
-
-        // Event is for a personal message.
-        if (event === "Notification") {
-            // Log navigation.
+        } else if (event === "Notification") {
+            // Event is for a personal message.
             console.log(`Navigating to private message ${relatedId}`);
 
             // Go to private messages.
             return navigation.navigate("PrivateMessageItem", { id: relatedId });
-        }
-        if (event === "Event") {
-            // Log navigation.
+        } else if (event === "Event") {
+            // Event is for a reminder.
             console.log(`Navigating to event ${relatedId}`);
 
             // Go to event.

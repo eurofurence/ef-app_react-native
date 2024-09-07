@@ -12,14 +12,7 @@ export type KbEntryCardProps = {
     onPress: (entry: KnowledgeEntryRecord) => void;
     entry: KnowledgeEntryRecord;
 };
-// /**
-//  * Creates the event instance props for an upcoming or running event.
-//  * @param details The details to use.
-//  * @param now The moment to check against.
-//  */
-// export function eventInstanceForAny(details: EventDetails, now: Moment) {
-//     return { details, happening: now.isBetween(details.StartDateTimeUtc, details.EndDateTimeUtc), done: now.isAfter(details.EndDateTimeUtc) };
-// }
+
 export const KbEntryCard: FC<KbEntryCardProps> = ({ containerStyle, style, entry, onPress }) => {
     return (
         <Card containerStyle={containerStyle} style={[styles.container, appStyles.shadow, style]} onPress={() => onPress(entry)}>

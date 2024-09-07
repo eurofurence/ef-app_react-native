@@ -1,4 +1,4 @@
-import moment, { Moment } from "moment";
+import moment, { Moment } from "moment-timezone";
 import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -27,7 +27,7 @@ export type EventDetailsInstance = {
  * @param now The moment to check against.
  */
 export function eventInstanceForAny(details: EventDetails, now: Moment): EventDetailsInstance {
-    const progress = (now.valueOf() - moment(details.StartDateTimeUtc).valueOf()) / (moment(details.EndDateTimeUtc).valueOf() - moment(details.StartDateTimeUtc).valueOf());
+    const progress = now.diff(moment.utc(details.StartDateTimeUtc)) / moment.utc(details.EndDateTimeUtc).diff(moment.utc(details.StartDateTimeUtc));
     return { details, progress };
 }
 
@@ -37,7 +37,7 @@ export function eventInstanceForAny(details: EventDetails, now: Moment): EventDe
  * @param now The moment to check against.
  */
 export function eventInstanceForNotPassed(details: EventDetails, now: Moment): EventDetailsInstance {
-    const progress = (now.valueOf() - moment(details.StartDateTimeUtc).valueOf()) / (moment(details.EndDateTimeUtc).valueOf() - moment(details.StartDateTimeUtc).valueOf());
+    const progress = now.diff(moment.utc(details.StartDateTimeUtc)) / moment.utc(details.EndDateTimeUtc).diff(moment.utc(details.StartDateTimeUtc));
     return { details, progress };
 }
 
