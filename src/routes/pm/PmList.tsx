@@ -73,7 +73,7 @@ export const PmList = () => {
     );
     const renderItem = useCallback(
         ({ item }: ListRenderItemInfo<CommunicationRecord>) => {
-            return <PrivateMessageCard key={item.Id} onPress={onPress} item={item} />;
+            return <PrivateMessageCard key={item.Id} containerStyle={styles.item} onPress={onPress} item={item} />;
         },
         [onPress],
     );
@@ -81,6 +81,7 @@ export const PmList = () => {
         <SectionList
             style={StyleSheet.absoluteFill}
             sections={sectionedData}
+            contentContainerStyle={styles.container}
             keyExtractor={keyExtractor}
             stickySectionHeadersEnabled
             onRefresh={refetch}
@@ -94,14 +95,14 @@ export const PmList = () => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        alignItems: "baseline",
-        marginVertical: 15,
-        paddingHorizontal: 20,
-    },
     section: { padding: 20 },
     action: {
         flex: 3,
+    },
+    item: {
+        paddingHorizontal: 20,
+    },
+    container: {
+        paddingBottom: 100,
     },
 });

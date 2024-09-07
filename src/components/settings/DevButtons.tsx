@@ -1,12 +1,13 @@
 import { useIsFocused } from "@react-navigation/core";
 import moment from "moment-timezone";
-import { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Vibration, View } from "react-native";
 import * as Clipboard from "expo-clipboard";
 import * as Notifications from "expo-notifications";
 
 import { captureException } from "@sentry/react-native";
+import { TextInput } from "react-native-gesture-handler";
 import { useAuthContext } from "../../context/AuthContext";
 import { useToast } from "../../context/ToastContext";
 import { useNow } from "../../hooks/time/useNow";
@@ -16,18 +17,27 @@ import { overwriteUpdateTimes } from "../../store/eurofurence/slice";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { labelTypeStyles } from "../generic/atoms/Label";
+import { withAlpha } from "../../context/Theme";
+import { useThemeBackground, useThemeColor, useThemeColorValue } from "../../hooks/themes/useThemeHooks";
+import * as SecureStore from "../../context/SecureStorage";
 
 export const DevButtons = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "dev_buttons" });
     const [createSync, syncResult] = useCreateSyncRequestMutation();
     const [sendMessage, messageResult] = useSendPrivateMessageMutation();
-    const { claims } = useAuthContext();
+    const [token, setToken] = useState("");
+    const { claims, refresh } = useAuthContext();
     const { synchronizeUi } = useSynchronizer();
     const toast = useToast();
 
     const dispatch = useAppDispatch();
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
+
+    const styleLighten = useThemeBackground("inverted");
+    const styleText = useThemeColor("invText");
+    const colorText = useThemeColorValue("invText");
 
     const onSendMessage = useCallback(() => {
         if (!claims) {
@@ -70,7 +80,30 @@ export const DevButtons = () => {
             >
                 Copy native Messaging token
             </Button>
-            <Button containerStyle={styles.button} icon="refresh" onPress={() => dispatch(overwriteUpdateTimes(now.toISOString()))}>
+
+            <Button
+                containerStyle={styles.button}
+                icon="key-variant"
+                onPress={() => {
+                    (async () => {
+                        await SecureStore.setItemToAsync("accessToken", token);
+                        await SecureStore.deleteItemAsync("refreshToken");
+                        await refresh();
+                    })().catch(captureException);
+                }}
+            >
+                Set access token manually
+            </Button>
+
+            <TextInput
+                style={[styles.tokenField, styleLighten, styleText, labelTypeStyles.regular]}
+                value={token}
+                onChangeText={setToken}
+                placeholder="Access token"
+                placeholderTextColor={withAlpha(colorText, 0.6)}
+            />
+
+            <Button containerStyle={styles.button} icon="timer-cog" onPress={() => dispatch(overwriteUpdateTimes(now.toISOString()))}>
                 {t("overwrite_update_time")}
             </Button>
             <Button containerStyle={styles.button} icon="refresh" onPress={() => synchronizeUi()}>
@@ -106,5 +139,11 @@ export const DevButtons = () => {
 const styles = StyleSheet.create({
     button: {
         marginVertical: 5,
+    },
+    tokenField: {
+        marginHorizontal: 5,
+        marginVertical: 15,
+        borderRadius: 10,
+        padding: 10,
     },
 });

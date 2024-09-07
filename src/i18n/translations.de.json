@@ -214,6 +214,11 @@
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",
     "private_message": "Du hast eine Nachricht erhalten"
   },
+  "PrivateMessageItem": {
+    "from": "Von {{authorName}}",
+    "header": "Private Nachricht",
+    "read_at": "Gelesen um {{time}}"
+  },
   "PrivateMessageList": {
     "from": "Von {{ author }}",
     "from_unknown": "Author unbekannt",

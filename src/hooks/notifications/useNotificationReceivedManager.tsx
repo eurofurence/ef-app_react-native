@@ -5,9 +5,10 @@ import { useEffect } from "react";
 
 import { Platform } from "react-native";
 import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppStore } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
 import { invalidateCommunicationsQuery } from "../../store/eurofurence/service";
+import { announcementsSelectors } from "../../store/eurofurence/selectors/records";
 
 /**
  * Manages the foreground part of notification handling, as well as handling sync requests
@@ -16,6 +17,7 @@ import { invalidateCommunicationsQuery } from "../../store/eurofurence/service";
  */
 export const useNotificationReceivedManager = () => {
     // Use dispatch to handle logging of notifications.
+    const store = useAppStore();
     const dispatch = useAppDispatch();
 
     // Use synchronizer for performing data refresh.
@@ -34,7 +36,8 @@ export const useNotificationReceivedManager = () => {
                 console.log(`Received at ${now.format()}:`, trigger);
 
                 const data = (Platform.OS === "ios" ? trigger.payload : trigger.remoteMessage?.data) ?? {};
-                const event = data.Event;
+                const event = data.Event as string | undefined;
+                const relatedId = data.RelatedId as string | undefined;
                 // const cid = data.CID;
                 const title: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.title : trigger.remoteMessage?.notification?.title;
                 const body: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.body : trigger.remoteMessage?.notification?.body;
@@ -55,22 +58,38 @@ export const useNotificationReceivedManager = () => {
                     }
 
                     case "Announcement": {
-                        // Try synchronizing. Schedule notification.
-                        await synchronize().catch();
+                        // Try synchronizing. If it fails, log but continue.
+                        await synchronize().catch((error) => {
+                            captureException(error, {
+                                tags: {
+                                    type: "notifications",
+                                },
+                            });
+                        });
+
+                        // Schedule notification either at the validity time but at least one second in the future.
+                        // Scheduling with seconds is used because of an API issue where scheduleNotificationAsync does not accept
+                        // channelId without any form of schedule.
+                        const announcement = relatedId ? announcementsSelectors.selectById(store.getState(), relatedId) : null;
+                        const delay = announcement ? Math.max(1, moment.utc(announcement?.ValidFromDateTimeUtc).diff(now, "seconds")) : 1;
                         await scheduleNotificationAsync({
                             content: { title, body, data },
-                            trigger: { channelId: "announcements", seconds: 1 },
+                            trigger: { channelId: "announcements", seconds: delay },
                         });
                         console.log("Announcement scheduled");
                         break;
                     }
 
                     case "Notification": {
-                        // Schedule announcement
+                        // Invalidate the communication queries, as those will need to refetch for the list
+                        // of all communications, as well as the item itself.
                         dispatch(invalidateCommunicationsQuery());
+
+                        // Schedule in one second. See "Announcement" comment for explanation.
+                        const delay = 1;
                         await scheduleNotificationAsync({
                             content: { title, body, data },
-                            trigger: { channelId: "private_messages", seconds: 1 },
+                            trigger: { channelId: "private_messages", seconds: delay },
                         });
                         console.log("Personal message scheduled");
                         break;
@@ -95,7 +114,7 @@ export const useNotificationReceivedManager = () => {
         return () => {
             removeNotificationSubscription(receive);
         };
-    }, [dispatch, synchronize]);
+    }, [dispatch, store, synchronize]);
 
     return null;
 };
