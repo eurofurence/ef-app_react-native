@@ -48,6 +48,8 @@ export const DevButtons = () => {
         sendMessage({
             RecipientUid: claims.sub as string,
             AuthorName: `tester`,
+            ToastTitle: t("test_message_subject"),
+            ToastMessage: t("test_message_content"),
             Subject: t("test_message_subject"),
             Message: t("test_message_content"),
         });

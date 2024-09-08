@@ -6,6 +6,8 @@ import { getAccessToken } from "../../context/AuthContext";
 type NewPrivateMessage = {
     RecipientUid: string;
     AuthorName: string;
+    ToastTitle: string;
+    ToastMessage: string;
     Subject: string;
     Message: string;
 };

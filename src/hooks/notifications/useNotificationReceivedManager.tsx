@@ -4,11 +4,9 @@ import moment from "moment-timezone";
 import { useEffect } from "react";
 
 import { Platform } from "react-native";
-import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
-import { useAppDispatch, useAppStore } from "../../store";
+import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
-import { invalidateCommunicationsQuery } from "../../store/eurofurence/service";
-import { announcementsSelectors } from "../../store/eurofurence/selectors/records";
+import { useNotificationInteractionUtils } from "./useNotificationInteractionUtils";
 
 /**
  * Manages the foreground part of notification handling, as well as handling sync requests
@@ -16,12 +14,9 @@ import { announcementsSelectors } from "../../store/eurofurence/selectors/record
  * @constructor
  */
 export const useNotificationReceivedManager = () => {
-    // Use dispatch to handle logging of notifications.
-    const store = useAppStore();
+    // Use dispatch for logging and interaction utils.
     const dispatch = useAppDispatch();
-
-    // Use synchronizer for performing data refresh.
-    const { synchronize } = useSynchronizer();
+    const { assertSynchronized, assertAnnouncement, assertPrivateMessage } = useNotificationInteractionUtils();
 
     // Setup notification received handler.
     useEffect(() => {
@@ -50,7 +45,7 @@ export const useNotificationReceivedManager = () => {
                 switch (event) {
                     case "Sync": {
                         // Is sync, do synchronization silently.
-                        await synchronize();
+                        await assertSynchronized();
 
                         // Log sync.
                         console.log("Synchronized for remote Sync request");
@@ -58,20 +53,11 @@ export const useNotificationReceivedManager = () => {
                     }
 
                     case "Announcement": {
-                        // Try synchronizing. If it fails, log but continue.
-                        await synchronize().catch((error) => {
-                            captureException(error, {
-                                tags: {
-                                    type: "notifications",
-                                },
-                            });
-                        });
-
                         // Schedule notification either at the validity time but at least one second in the future.
                         // Scheduling with seconds is used because of an API issue where scheduleNotificationAsync does not accept
                         // channelId without any form of schedule.
-                        const announcement = relatedId ? announcementsSelectors.selectById(store.getState(), relatedId) : null;
-                        const delay = announcement ? Math.max(1, moment.utc(announcement?.ValidFromDateTimeUtc).diff(now, "seconds")) : 1;
+                        const announcement = await assertAnnouncement(relatedId);
+                        const delay = announcement ? Math.max(1, moment.utc(announcement.ValidFromDateTimeUtc).diff(now, "seconds")) : 1;
                         await scheduleNotificationAsync({
                             content: { title, body, data },
                             trigger: { channelId: "announcements", seconds: delay },
@@ -81,9 +67,8 @@ export const useNotificationReceivedManager = () => {
                     }
 
                     case "Notification": {
-                        // Invalidate the communication queries, as those will need to refetch for the list
-                        // of all communications, as well as the item itself.
-                        dispatch(invalidateCommunicationsQuery());
+                        // Force refetch the communication queries.
+                        await assertPrivateMessage(relatedId);
 
                         // Schedule in one second. See "Announcement" comment for explanation.
                         const delay = 1;
@@ -114,7 +99,7 @@ export const useNotificationReceivedManager = () => {
         return () => {
             removeNotificationSubscription(receive);
         };
-    }, [dispatch, store, synchronize]);
+    }, [assertAnnouncement, assertPrivateMessage, assertSynchronized, dispatch]);
 
     return null;
 };
