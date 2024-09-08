@@ -14,6 +14,7 @@ import { eventDaysSelectors } from "../../store/eurofurence/selectors/records";
 import { EventDetails } from "../../store/eurofurence/types";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventDayGroups } from "./Events.common";
@@ -41,9 +42,10 @@ export const EventsByDay: FC<EventsByDayProps> = ({ navigation, route }) => {
     const { setSelected } = useEventsRouterContext();
 
     // Use all events on the day and group generically.
+    const zone = useZoneAbbr();
     const day = useAppSelector((state) => eventDaysSelectors.selectById(state, route.name));
     const eventsOnDay: EventDetails[] = useAppSelector((state) => selectEventsByDay(state, day?.Id ?? ""));
-    const eventsGroups = useEventDayGroups(t, now, eventsOnDay);
+    const eventsGroups = useEventDayGroups(t, now, zone, eventsOnDay);
 
     return (
         <EventsSectionedList

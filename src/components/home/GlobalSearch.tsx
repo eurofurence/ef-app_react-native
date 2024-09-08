@@ -11,6 +11,7 @@ import { DealerCard } from "../dealers/DealerCard";
 import { EventCard } from "../events/EventCard";
 import { Section } from "../generic/atoms/Section";
 import { KbEntryCard } from "../kb/KbEntryCard";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 
 export type GlobalSearchProps = {
     navigation: HomeProps["navigation"];
@@ -23,9 +24,12 @@ export const GlobalSearch = ({ navigation, now, results }: GlobalSearchProps) =>
     const { t: tDealers } = useTranslation("Dealers");
     const { t: tEvents } = useTranslation("Events");
 
+    // Zone abbreviation for events.
+    const zone = useZoneAbbr();
+
     // Use all dealers and group generically.
     const dealers = useDealerInstances(tDealers, now, results?.filter((r) => "RegistrationNumber" in r) as DealerDetails[]);
-    const events = useEventInstances(tEvents, now, results?.filter((r) => "StartDateTimeUtc" in r) as EventDetails[]);
+    const events = useEventInstances(tEvents, now, zone, results?.filter((r) => "StartDateTimeUtc" in r) as EventDetails[]);
     const kbGroups = results?.filter((r) => "KnowledgeGroupId" in r) as KnowledgeEntryDetails[];
 
     if (!results) return null;

@@ -14,20 +14,22 @@ import { useNow } from "../../hooks/time/useNow";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { unhideEvent } from "../../store/auxiliary/slice";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 
 export const RevealHidden = () => {
     const { t } = useTranslation("RevealHidden");
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
     const dispatch = useAppDispatch();
+    const zone = useZoneAbbr();
     const all = useAppSelector(eventsSelector.selectAll);
     const hidden = useMemo(
         () =>
             chain(all)
                 .filter((item) => item.Hidden)
-                .map((details) => eventInstanceForAny(details, now))
+                .map((details) => eventInstanceForAny(details, now, zone))
                 .value(),
-        [all, now],
+        [all, now, zone],
     );
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>

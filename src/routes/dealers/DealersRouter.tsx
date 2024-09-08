@@ -3,9 +3,9 @@ import { CompositeScreenProps } from "@react-navigation/core";
 import { createMaterialTopTabNavigator, MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { StyleSheet, useWindowDimensions, View } from "react-native";
 
 import { Icon } from "../../components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
@@ -58,31 +58,38 @@ export const DealersRouter: FC<DealersRouterProps> = () => {
     // // Get common tab styles.
     const tabStyles = useTabStyles();
 
+    // Get window dimensions and use it to prevent initial shrinkage on the screens.
+    const dimensions = useWindowDimensions();
+    const layout = useMemo(() => ({ width: dimensions.width, height: dimensions.height }), [dimensions.height, dimensions.width]);
+    const scene = useMemo(() => ({ width: dimensions.width, minHeight: dimensions.height - 200 }), [dimensions.height, dimensions.width]);
+
+    const defaultScreens = useMemo(
+        () => [
+            <Tab.Screen
+                key="personal"
+                name="Personal"
+                options={{
+                    title: t("favorites_title"),
+                    tabBarShowLabel: false,
+                    tabBarShowIcon: true,
+                    tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,
+                    tabBarLabelStyle: tabStyles.normal,
+                }}
+                component={PersonalDealers}
+            />,
+            <Tab.Screen key="all" name="All" options={{ title: t("all"), tabBarLabelStyle: tabStyles.normal }} component={DealersAll} />,
+            <Tab.Screen key="regular" name="Regular" options={{ title: t("regular"), tabBarLabelStyle: tabStyles.normal }} component={DealersRegular} />,
+            <Tab.Screen key="ad" name="AD" options={{ title: t("after_dark"), tabBarLabelStyle: tabStyles.normal }} component={DealersAd} />,
+            <Tab.Screen key="alpha" name="Alpha" options={{ title: t("alphabetical"), tabBarLabelStyle: tabStyles.normal }} component={DealersAlpha} />,
+        ],
+        [t, tabStyles.normal],
+    );
+
     // If the screens require too much performance we should set detach to true again.
     return (
         <View style={StyleSheet.absoluteFill}>
-            <Tab.Navigator
-                initialRouteName="All"
-                initialLayout={{
-                    width: Dimensions.get("window").width,
-                    height: Dimensions.get("window").height,
-                }}
-            >
-                <Tab.Screen
-                    name="Personal"
-                    options={{
-                        title: t("favorites_title"),
-                        tabBarShowLabel: false,
-                        tabBarShowIcon: true,
-                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,
-                        tabBarLabelStyle: tabStyles.normal,
-                    }}
-                    component={PersonalDealers}
-                />
-                <Tab.Screen name="All" options={{ title: t("all"), tabBarLabelStyle: tabStyles.normal }} component={DealersAll} />
-                <Tab.Screen name="Regular" options={{ title: t("regular"), tabBarLabelStyle: tabStyles.normal }} component={DealersRegular} />
-                <Tab.Screen name="AD" options={{ title: t("after_dark"), tabBarLabelStyle: tabStyles.normal }} component={DealersAd} />
-                <Tab.Screen name="Alpha" options={{ title: t("alphabetical"), tabBarLabelStyle: tabStyles.normal }} component={DealersAlpha} />
+            <Tab.Navigator initialRouteName="All" initialLayout={layout} sceneContainerStyle={scene}>
+                {defaultScreens}
             </Tab.Navigator>
         </View>
     );

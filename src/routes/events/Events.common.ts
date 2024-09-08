@@ -14,12 +14,13 @@ import { EventDetails } from "../../store/eurofurence/types";
  Returns a list of event instances according to conversion rules.
  * @param t The translation function.
  * @param now The current moment.
+ * @param zone Zone abbreviation.
  * @param items The items to transform.
  */
-export const useEventInstances = (t: TFunction, now: Moment, items: EventDetails[]) => {
+export const useEventInstances = (t: TFunction, now: Moment, zone: string, items: EventDetails[]) => {
     // Return direct mapping.
     return useMemo(() => {
-        return items.map((item) => eventInstanceForAny(item, now));
+        return items.map((item) => eventInstanceForAny(item, now, zone));
     }, [t, now, items]);
 };
 
@@ -28,9 +29,10 @@ export const useEventInstances = (t: TFunction, now: Moment, items: EventDetails
  * display standalone dates.
  * @param t The translation function.
  * @param now The current moment.
+ * @param zone Zone abbreviation.
  * @param results Results for search if given.
  */
-export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDetails[] | null) => {
+export const useEventSearchGroups = (t: TFunction, now: Moment, zone: string, results: EventDetails[] | null) => {
     return useMemo(() => {
         if (!results) return [];
 
@@ -47,7 +49,7 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
             if (item.Hidden) {
                 hidden++;
             } else if (now.isBefore(moment.utc(item.EndDateTimeUtc))) {
-                result.push(eventInstanceForAny(item, now));
+                result.push(eventInstanceForAny(item, now, zone));
             }
         }
 
@@ -63,12 +65,12 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
                     result.push(eventSectionForPassed(t));
                     sectionedPassed = true;
                 }
-                result.push(eventInstanceForPassed(item));
+                result.push(eventInstanceForPassed(item, zone));
             }
         }
 
         return result;
-    }, [t, now, results]);
+    }, [t, now, zone, results]);
 };
 
 /**
@@ -76,9 +78,10 @@ export const useEventSearchGroups = (t: TFunction, now: Moment, results: EventDe
  * display dates with the context of the current day.
  * @param t The translation function.
  * @param now The current moment.
+ * @param zone Zone abbreviation.
  * @param all The events on that day.
  */
-export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]) => {
+export const useEventDayGroups = (t: TFunction, now: Moment, zone: string, all: EventDetails[]) => {
     return useMemo(() => {
         let hidden = 0;
 
@@ -105,28 +108,28 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
                         sectionedMorning = true;
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now));
+                    result.push(eventInstanceForNotPassed(item, now, zone));
                 } else if (item.PartOfDay === "afternoon") {
                     if (!sectionedAfternoon) {
                         result.push(eventSectionForPartOfDay(t, "afternoon"));
                         sectionedAfternoon = true;
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now));
+                    result.push(eventInstanceForNotPassed(item, now, zone));
                 } else if (item.PartOfDay === "evening") {
                     if (!sectionedEvening) {
                         result.push(eventSectionForPartOfDay(t, "evening"));
                         sectionedEvening = true;
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now));
+                    result.push(eventInstanceForNotPassed(item, now, zone));
                 } else if (item.PartOfDay === "night") {
                     if (!sectionedNight) {
                         result.push(eventSectionForPartOfDay(t, "night"));
                         sectionedNight = true;
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now));
+                    result.push(eventInstanceForNotPassed(item, now, zone));
                 }
             }
         }
@@ -143,12 +146,12 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
                     result.push(eventSectionForPassed(t));
                     sectionedPassed = true;
                 }
-                result.push(eventInstanceForPassed(item));
+                result.push(eventInstanceForPassed(item, zone));
             }
         }
 
         return result;
-    }, [t, now, all]);
+    }, [t, now, zone, all]);
 };
 
 /**
@@ -156,9 +159,10 @@ export const useEventDayGroups = (t: TFunction, now: Moment, all: EventDetails[]
  display standalone dates.
  * @param t The translation function.
  * @param now The current moment.
+ * @param zone Zone abbreviation.
  * @param all The events on that day.
  */
-export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails[]) => {
+export const useEventOtherGroups = (t: TFunction, now: Moment, zone: string, all: EventDetails[]) => {
     return useMemo(() => {
         let hidden = 0;
 
@@ -181,7 +185,7 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
                     sectionedDays[item.ConferenceDay.Date] = true;
                 }
 
-                result.push(eventInstanceForNotPassed(item, now));
+                result.push(eventInstanceForNotPassed(item, now, zone));
             }
         }
 
@@ -197,12 +201,12 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, all: EventDetails
                     result.push(eventSectionForPassed(t));
                     sectionedPassed = true;
                 }
-                result.push(eventInstanceForPassed(item));
+                result.push(eventInstanceForPassed(item, zone));
             }
         }
 
         return result;
-    }, [t, now, all]);
+    }, [t, now, zone, all]);
 };
 
 export const shareEvent = (event: EventDetails) =>

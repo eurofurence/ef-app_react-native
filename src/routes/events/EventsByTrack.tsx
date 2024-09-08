@@ -13,6 +13,7 @@ import { selectEventsByTrack } from "../../store/eurofurence/selectors/events";
 import { eventTracksSelectors } from "../../store/eurofurence/selectors/records";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventOtherGroups } from "./Events.common";
@@ -40,9 +41,10 @@ export const EventsByTrack: FC<EventsByTrackProps> = ({ navigation, route }) => 
     const { setSelected } = useEventsRouterContext();
 
     // Use all events in track and group generically.
+    const zone = useZoneAbbr();
     const track = useAppSelector((state) => eventTracksSelectors.selectById(state, route.name));
     const eventsInTrack = useAppSelector((state) => selectEventsByTrack(state, track?.Id ?? ""));
-    const eventsGroups = useEventOtherGroups(t, now, eventsInTrack);
+    const eventsGroups = useEventOtherGroups(t, now, zone, eventsInTrack);
 
     return (
         <EventsSectionedList

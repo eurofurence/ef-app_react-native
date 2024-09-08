@@ -5,7 +5,7 @@ import { NavigatorScreenParams } from "@react-navigation/native";
 import { StackScreenProps } from "@react-navigation/stack";
 import moment from "moment-timezone";
 import { FC, useCallback, useEffect, useMemo } from "react";
-import { BackHandler, Dimensions, Platform, StyleSheet, View } from "react-native";
+import { BackHandler, Platform, StyleSheet, useWindowDimensions, View } from "react-native";
 
 import { EventActionsSheet } from "../../components/events/EventActionsSheet";
 import { Icon } from "../../components/generic/atoms/Icon";
@@ -128,7 +128,7 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
                 component={EventsSearch}
             />,
             <Tab.Screen
-                key="schedule"
+                key="personal"
                 name="Personal"
                 options={{
                     title: "Your Schedule", // TODO: Translations for a bnch more
@@ -175,6 +175,11 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
         [rooms, tabStyles.normal],
     );
 
+    // Get window dimensions and use it to prevent initial shrinkage on the screens.
+    const dimensions = useWindowDimensions();
+    const layout = useMemo(() => ({ width: dimensions.width, height: dimensions.height }), [dimensions.height, dimensions.width]);
+    const scene = useMemo(() => ({ width: dimensions.width, minHeight: dimensions.height - 200 }), [dimensions.height, dimensions.width]);
+
     // Ignore rendering if data is not loaded to prevent jumping on initialization.
     if (type === "days" && !days?.length) return null;
     if (type === "tracks" && !tracks?.length) return null;
@@ -186,10 +191,8 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
             <Tab.Navigator
                 backBehavior="initialRoute"
                 initialRouteName={initial}
-                initialLayout={{
-                    width: Dimensions.get("window").width,
-                    height: Dimensions.get("window").height,
-                }}
+                initialLayout={layout}
+                sceneContainerStyle={scene}
                 screenOptions={{
                     tabBarScrollEnabled: scroll,
                     tabBarItemStyle: scroll ? { width: 110 } : undefined,
