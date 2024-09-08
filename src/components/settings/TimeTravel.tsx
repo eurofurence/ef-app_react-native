@@ -1,9 +1,9 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { conName } from "../../configuration";
+import { conName, conTimeZone } from "../../configuration";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence/selectors/records";
@@ -23,24 +23,23 @@ export const TimeTravel = () => {
     const now = useNow();
     const { amount, enabled } = useAppSelector((state) => state.timetravel);
     const days = useAppSelector(eventDaysSelectors.selectAll);
-    const [weekBefore, weekAfter] = useMemo(
+    const weekBefore = useMemo(() => (!days.length ? null : moment.tz(days[0].Date, conTimeZone).subtract(1, "week").toISOString()), [days]);
+    const weekAfter = useMemo(
         () =>
             !days.length
-                ? [null, null]
-                : [
-                      moment(days[0].Date).subtract(1, "week").toISOString(),
-                      moment(days[days.length - 1].Date)
-                          .add(1, "week")
-                          .toISOString(),
-                  ],
+                ? null
+                : moment
+                      .tz(days[days.length - 1].Date, conTimeZone)
+                      .add(1, "week")
+                      .toISOString(),
         [days],
     );
 
     return (
         <View testID="TimeTravel">
             <Section title={t("title")} icon="airplane" subtitle={t("subtitle")} />
-            <Label mb={5}>{t("originalTime", { time: moment().format("llll") })}</Label>
-            <Label mb={5}>{t("currentTime", { time: now.format("llll") })}</Label>
+            <Label mb={5}>{t("originalTime", { time: moment().format() })}</Label>
+            <Label mb={5}>{t("currentTime", { time: now.format() })}</Label>
             <Label mb={5}>{t("difference", { diff: moment.duration(amount, "millisecond").humanize() })}</Label>
             <Row style={styles.row}>
                 <Button containerStyle={styles.button} outline={enabled} onPress={() => dispatch(enableTimeTravel(!enabled))}>
@@ -73,7 +72,12 @@ export const TimeTravel = () => {
                 {!days
                     ? null
                     : days.map((day) => (
-                          <Button key={day.Id} containerStyle={styles.button} icon="calendar-cursor" onPress={() => dispatch(travelToDate(moment(day.Date).toISOString()))}>
+                          <Button
+                              key={day.Id}
+                              containerStyle={styles.button}
+                              icon="calendar-cursor"
+                              onPress={() => dispatch(travelToDate(moment.tz(day.Date, conTimeZone).toISOString()))}
+                          >
                               {day.Name}
                           </Button>
                       ))}

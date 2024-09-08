@@ -1,53 +1,72 @@
 import moment from "moment/moment";
-import React, { FC, useCallback } from "react";
+import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { CommunicationRecord } from "../../store/eurofurence/types";
 import { Icon } from "../generic/atoms/Icon";
 import { Label } from "../generic/atoms/Label";
-import { Card } from "../generic/containers/Card";
 import { Col } from "../generic/containers/Col";
 import { Row } from "../generic/containers/Row";
+import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
+import { appStyles } from "../AppStyles";
 
 export type PrivateMessageCardProps = {
-    onPress: (item: CommunicationRecord) => void;
+    containerStyle?: ViewStyle;
+    style?: ViewStyle;
     item: CommunicationRecord;
+    onPress: (item: CommunicationRecord) => void;
 };
 
-export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ item, onPress }) => {
+export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle, style, item, onPress }) => {
     const { t } = useTranslation("PrivateMessageList");
-    const onPressDelegate = useCallback(() => onPress(item), [onPress, item]);
+    const styleContainer = useThemeBackground("background");
 
     return (
-        <View style={styles.itemPadding}>
-            <Card onPress={onPressDelegate}>
-                <Row>
-                    <Col style={styles.title}>
-                        <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>{item.Subject}</Label>
-                        <Label variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}>
-                            {t("message_item_subtitle", {
-                                status: item.ReadDateTimeUtc === null ? t("unread") : t("read"),
-                                time: moment(item.CreatedDateTimeUtc).format("llll"),
-                            })}
-                        </Label>
-                    </Col>
-                    <View style={styles.itemChevron}>
-                        <Icon name="chevron-right" size={30} />
-                    </View>
-                </Row>
-            </Card>
-        </View>
+        <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
+            <Row style={styles.main}>
+                <Col style={styles.title}>
+                    <Label
+                        type="h4"
+                        mb={10}
+                        variant={item.ReadDateTimeUtc === null ? "bold" : "regular"}
+                        color={item.ReadDateTimeUtc === null ? "important" : "soften"}
+                        ellipsizeMode="tail"
+                    >
+                        {item.Subject}
+                    </Label>
+                    <Label color={item.ReadDateTimeUtc === null ? "important" : "soften"}>
+                        {t("message_item_subtitle", {
+                            status: item.ReadDateTimeUtc === null ? t("unread") : t("read"),
+                            time: moment.utc(item.CreatedDateTimeUtc).local().format("llll"),
+                        })}
+                    </Label>
+                </Col>
+                <View style={styles.itemChevron}>
+                    <Icon name="chevron-right" size={30} />
+                </View>
+            </Row>
+        </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        minHeight: 80,
+        marginVertical: 15,
+        borderRadius: 16,
+        overflow: "hidden",
+        flexDirection: "row",
+    },
+    main: {
+        flex: 1,
+        padding: 12,
+    },
     title: {
         flex: 6,
     },
-    itemPadding: {
-        paddingHorizontal: 20,
-    },
+
     itemChevron: {
         display: "flex",
         justifyContent: "center",

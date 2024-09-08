@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
@@ -14,6 +14,7 @@ import { Row } from "../../components/generic/containers/Row";
 import { useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { announcementsSelectors } from "../../store/eurofurence/selectors/records";
+import { Rule } from "../../components/generic/atoms/Rule";
 
 export type AnnounceItemParams = {
     id: string;
@@ -33,13 +34,15 @@ export const AnnounceItem = () => {
                         <Label type="h1" mt={30} mb={10}>
                             {announcement.NormalizedTitle}
                         </Label>
-                        <Row style={styles.byline} variant="spaced">
-                            <Label type="compact">{moment(announcement.ValidFromDateTimeUtc).format("lll")}</Label>
 
-                            <Label style={[styles.tag]} type="regular" ellipsizeMode="head" numberOfLines={1}>
+                        <Row style={styles.byline} variant="spaced">
+                            <Label>{moment.utc(announcement.ValidFromDateTimeUtc).local().format("lll")}</Label>
+
+                            <Label style={styles.tag} ellipsizeMode="head" numberOfLines={1}>
                                 {announcement.Area} - {announcement.Author}
                             </Label>
                         </Row>
+                        <Rule style={styles.rule} />
 
                         {!announcement.Image ? null : (
                             <View style={styles.posterLine}>
@@ -57,6 +60,9 @@ export const AnnounceItem = () => {
 
 const styles = StyleSheet.create({
     byline: {
+        marginTop: 10,
+    },
+    rule: {
         marginTop: 10,
         marginBottom: 30,
     },

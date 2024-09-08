@@ -6,12 +6,12 @@ import { RecordId } from "../eurofurence/types";
 export type Notification = {
     recordId: RecordId;
     type: "EventReminder";
-    dateScheduled: string;
-    dateCreated: string;
+    dateScheduledUtc: string;
+    dateCreatedUtc: string;
 };
 
 export type FCMMessage = {
-    dateReceived: string;
+    dateReceivedUtc: string;
     content: object;
     trigger: object;
     identifier: string;
@@ -39,7 +39,7 @@ export const backgroundSlice = createSlice({
         logFCMMessage: (state, action: PayloadAction<FCMMessage>) => {
             state.fcmMessages = _.chain(state.fcmMessages)
                 .concat(action.payload)
-                .orderBy((it) => it.dateReceived, "desc")
+                .orderBy((it) => it.dateReceivedUtc, "desc")
                 .value();
         },
     },

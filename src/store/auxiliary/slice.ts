@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RecordId } from "../eurofurence/types";
 
 type AuxiliaryState = {
-    lastViewTimes?: Record<RecordId, string>;
+    lastViewTimesUtc?: Record<RecordId, string>;
     hiddenEvents?: RecordId[];
     favoriteDealers?: RecordId[];
     deviceWarningsHidden?: boolean;
@@ -11,7 +11,7 @@ type AuxiliaryState = {
     timeZoneWarningsHidden?: boolean;
 };
 const initialState: AuxiliaryState = {
-    lastViewTimes: {},
+    lastViewTimesUtc: {},
     hiddenEvents: [],
     favoriteDealers: [],
     deviceWarningsHidden: false,
@@ -23,14 +23,14 @@ export const auxiliary = createSlice({
     name: "auxiliary",
     initialState,
     reducers: {
-        setViewed(state, action: PayloadAction<{ id: RecordId | RecordId[]; now: string }>) {
-            state.lastViewTimes ??= {};
+        setViewed(state, action: PayloadAction<{ id: RecordId | RecordId[]; nowUtc: string }>) {
+            state.lastViewTimesUtc ??= {};
             if (Array.isArray(action.payload.id)) {
                 for (const id in action.payload.id) {
-                    state.lastViewTimes[id] = action.payload.now;
+                    state.lastViewTimesUtc[id] = action.payload.nowUtc;
                 }
             } else {
-                state.lastViewTimes[action.payload.id] = action.payload.now;
+                state.lastViewTimesUtc[action.payload.id] = action.payload.nowUtc;
             }
         },
         hideEvent(state, action: PayloadAction<RecordId>) {

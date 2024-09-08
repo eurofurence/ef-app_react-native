@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";
 
@@ -17,7 +17,7 @@ export const RemoteMessages = () => {
             {messages.length === 0 && <Label mb={15}>{t("no_messages")}</Label>}
 
             {messages.map((message) => (
-                <Label mb={15} key={message.dateReceived}>{`${moment(message.dateReceived).format("llll")} - ${JSON.stringify(message.content)}`}</Label>
+                <Label mb={15} key={message.dateReceivedUtc}>{`${moment.utc(message.dateReceivedUtc).local().format("llll")} - ${JSON.stringify(message.content)}`}</Label>
             ))}
         </View>
     );

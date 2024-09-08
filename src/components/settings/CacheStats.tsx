@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -19,11 +19,12 @@ export const CacheStats = () => {
     const cache = useAppSelector((state) => state.eurofurenceCache);
     return (
         <View testID="CacheStats">
-            <Section title={t("cache.title")} subtitle={t("cache.subtitle", { time: moment(cache.lastSynchronised).format("lll") })} />
+            <Section title={t("cache.title")} subtitle={t("cache.subtitle", { time: moment.utc(cache.lastSynchronised).local().format("lll") })} />
 
             <Label mb={5}>{t("cache.images_prefetched", { state: imagesPrefetched })}</Label>
             <Label mb={5}>{t("cache.cache_state", { state: cache.state })}</Label>
 
+            <Label>{t("cache.cache_item", { count: cache.announcements.ids.length, type: "announcements" })}</Label>
             <Label>{t("cache.cache_item", { count: cache.events.ids.length, type: "event" })}</Label>
             <Label>{t("cache.cache_item", { count: cache.eventRooms.ids.length, type: "room" })}</Label>
             <Label>{t("cache.cache_item", { count: cache.eventDays.ids.length, type: "day" })}</Label>

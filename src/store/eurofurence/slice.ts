@@ -1,5 +1,5 @@
 import { createEntityAdapter, createSlice, EntityAdapter, EntityState, PayloadAction } from "@reduxjs/toolkit";
-import moment from "moment";
+import moment from "moment-timezone";
 
 import {
     AnnouncementRecord,
@@ -110,7 +110,7 @@ type EurofurenceCacheState = {
 };
 
 const initialState: EurofurenceCacheState = {
-    lastSynchronised: moment(0).toISOString(),
+    lastSynchronised: moment.utc(0).format(),
     state: undefined,
     events: eventsAdapter.getInitialState(),
     eventDays: eventDaysAdapter.getInitialState(),

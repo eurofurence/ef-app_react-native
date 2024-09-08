@@ -83,7 +83,7 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
     return (
         <SafeAreaView style={StyleSheet.absoluteFill}>
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator screenOptions={{ headerShown: false, detachPreviousScreen: false }}>
                 <Stack.Screen name="Areas" component={AreasRouter} />
                 <Stack.Screen name="ArtistAlleyReg" component={ArtistAlleyReg} />
                 <Stack.Screen name="AnnounceList" component={AnnounceList} />

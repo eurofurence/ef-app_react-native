@@ -133,8 +133,8 @@ export const labelTypeStyles = StyleSheet.create({
         opacity: 0.666,
     },
     compact: {
-        fontSize: 14,
-        lineHeight: 19,
+        fontSize: 13,
+        lineHeight: 18,
         fontWeight: "normal",
     },
     regular: {
@@ -153,6 +153,9 @@ export const labelTypeStyles = StyleSheet.create({
         fontWeight: "bold",
     },
     bold: {
+        fontWeight: "bold",
+    },
+    extraBold: {
         fontWeight: "900",
     },
     lineThrough: {

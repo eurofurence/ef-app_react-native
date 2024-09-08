@@ -19,6 +19,7 @@ import { selectFavoriteEvents } from "../../store/eurofurence/selectors/events";
 import { assetSource } from "../../util/assets";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventOtherGroups } from "./Events.common";
@@ -46,7 +47,8 @@ export const PersonalSchedule: FC<PersonalScheduleProps> = ({ navigation }) => {
     const avatarBackground = useThemeBackground("primary");
 
     const favorites = useAppSelector(selectFavoriteEvents);
-    const eventGroups = useEventOtherGroups(t, now, favorites);
+    const zone = useZoneAbbr();
+    const eventGroups = useEventOtherGroups(t, now, zone, favorites);
 
     return (
         <EventsSectionedList

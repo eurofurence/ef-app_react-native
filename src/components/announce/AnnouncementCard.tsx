@@ -1,5 +1,5 @@
 import { ImageBackground } from "expo-image";
-import moment, { Moment } from "moment";
+import moment, { Moment } from "moment-timezone";
 import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -21,7 +21,7 @@ export type AnnouncementDetailsInstance = {
  * @param now The moment to check against.
  */
 export function announcementInstanceForAny(details: AnnouncementDetails, now: Moment): AnnouncementDetailsInstance {
-    return { details, time: moment.duration(moment(details.ValidFromDateTimeUtc).diff(now)).humanize(true) };
+    return { details, time: moment.duration(moment.utc(details.ValidFromDateTimeUtc).diff(now)).humanize(true) };
 }
 
 export type AnnouncementCardProps = {

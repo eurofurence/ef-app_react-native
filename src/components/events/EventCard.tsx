@@ -1,4 +1,4 @@
-import moment, { Moment } from "moment";
+import moment, { Moment } from "moment-timezone";
 import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -11,42 +11,78 @@ import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { Label } from "../generic/atoms/Label";
 import { Progress } from "../generic/atoms/Progress";
 import { Row } from "../generic/containers/Row";
+import { conTimeZone } from "../../configuration";
 import { EventCardTime } from "./EventCardTime";
 
 const glyphIconSize = 90;
 const badgeIconSize = 20;
 
+const eventTimingInfo = (details: EventDetails, now: Moment | "done") => {
+    // Parse.
+    const eventStart = moment.utc(details.StartDateTimeUtc);
+    const eventEnd = moment.utc(details.EndDateTimeUtc);
+
+    // Generate progress. If no time is given
+    const progress = now !== "done" ? now.diff(eventStart) / eventEnd.diff(eventStart) : 1.1;
+
+    // Convert to con time zone.
+    eventStart.tz(conTimeZone);
+
+    // Convert start and day.
+    const start = eventStart.format("LT");
+    const day = eventStart.format("ddd");
+
+    // Convert to local, start and day.
+    eventStart.local();
+    const startLocal = eventStart.format("LT");
+    const dayLocal = eventStart.format("ddd");
+
+    // Duration conversion.
+    const duration = moment.duration(details.Duration);
+    const runtime = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
+
+    return {
+        progress,
+        start,
+        day,
+        startLocal,
+        dayLocal,
+        runtime,
+    };
+};
+
 export type EventDetailsInstance = {
     details: EventDetails;
-    progress: number;
-};
+    zone: string;
+} & ReturnType<typeof eventTimingInfo>;
 
 /**
  * Creates the event instance props for an upcoming or running event.
  * @param details The details to use.
  * @param now The moment to check against.
+ * @param zone Zone abbreviation.
  */
-export function eventInstanceForAny(details: EventDetails, now: Moment): EventDetailsInstance {
-    const progress = (now.valueOf() - moment(details.StartDateTimeUtc).valueOf()) / (moment(details.EndDateTimeUtc).valueOf() - moment(details.StartDateTimeUtc).valueOf());
-    return { details, progress };
+export function eventInstanceForAny(details: EventDetails, now: Moment, zone: string): EventDetailsInstance {
+    return { details, zone, ...eventTimingInfo(details, now) };
 }
 
 /**
  * Creates the event instance props for an upcoming or running event.
  * @param details The details to use.
  * @param now The moment to check against.
+ * @param zone Zone abbreviation.
  */
-export function eventInstanceForNotPassed(details: EventDetails, now: Moment): EventDetailsInstance {
-    const progress = (now.valueOf() - moment(details.StartDateTimeUtc).valueOf()) / (moment(details.EndDateTimeUtc).valueOf() - moment(details.StartDateTimeUtc).valueOf());
-    return { details, progress };
+export function eventInstanceForNotPassed(details: EventDetails, now: Moment, zone: string): EventDetailsInstance {
+    return { details, zone, ...eventTimingInfo(details, now) };
 }
 
 /**
  * Creates the event instance props for a passed event.
  * @param details The details to use.
+ * @param zone Zone abbreviation.
  */
-export function eventInstanceForPassed(details: EventDetails): EventDetailsInstance {
-    return { details, progress: 1.1 };
+export function eventInstanceForPassed(details: EventDetails, zone: string): EventDetailsInstance {
+    return { details, zone, ...eventTimingInfo(details, "done") };
 }
 
 export type EventCardProps = {
@@ -87,14 +123,14 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
         >
             <View style={[styles.pre, stylePre]}>
                 {!glyph ? null : (
-                    <View style={styles.glyphContainer}>
+                    <View key="eventGlyph" style={styles.glyphContainer}>
                         <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
                     </View>
                 )}
-                <EventCardTime type={type} event={event.details} done={done} />
+                <EventCardTime type={type} event={event} done={done} zone={event.zone} />
 
                 {!happening ? null : (
-                    <Label style={styles.happening} type="cap" color={done ? "important" : "white"}>
+                    <Label key="eventHappening" style={styles.happening} type="cap" color={done ? "important" : "white"}>
                         LIVE
                     </Label>
                 )}
@@ -116,7 +152,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
                             </View>
                         </View>
 
-                        {!happening ? null : <Progress style={styles.progress} value={progress} color="white" />}
+                        {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} color="white" />}
                     </ImageBackground>
                 </View>
             ) : (
@@ -139,12 +175,12 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
                         {tag}
                     </Label>
 
-                    {!happening ? null : <Progress style={styles.progress} value={progress} />}
+                    {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} />}
                 </View>
             )}
 
             {!favorite ? null : (
-                <View style={styles.favorite}>
+                <View key="eventFavorite" style={styles.favorite}>
                     <Icon name="heart" size={20} color={colorHeart} />
                 </View>
             )}

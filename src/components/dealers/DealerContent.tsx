@@ -1,7 +1,7 @@
 import * as Clipboard from "expo-clipboard";
 import * as Linking from "expo-linking";
 import { TFunction } from "i18next";
-import moment from "moment";
+import moment from "moment-timezone";
 import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
@@ -24,6 +24,7 @@ import { Badge } from "../generic/containers/Badge";
 import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { LinkItem } from "../maps/LinkItem";
+import { conTimeZone } from "../../configuration";
 
 const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
     // Nothing to display for no categories.
@@ -97,7 +98,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         () =>
             dealer.AttendanceDays
                 // Convert to long representation.
-                .map((day) => moment(day.Date).format("dddd"))
+                .map((day) => moment.tz(day.Date, conTimeZone).format("dddd"))
                 // Join comma separated.
                 .join(", "),
         [dealer],

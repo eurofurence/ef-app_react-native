@@ -1,47 +1,55 @@
-import moment from "moment/moment";
 import React, { FC } from "react";
-import { useTranslation } from "react-i18next";
 
-import { EventDetails } from "../../store/eurofurence/types";
 import { Label } from "../generic/atoms/Label";
 import { Col } from "../generic/containers/Col";
+import { EventDetailsInstance } from "./EventCard";
 
 export type EventCardTimeProps = {
     type?: "duration" | "time";
-    event: EventDetails;
+    event: EventDetailsInstance;
     done: boolean;
+    zone: string;
 };
 
-export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done }) => {
-    // Renders the override or default. The override will receive if it needs to
-    // render on inverted color, i.e., background.
-
-    useTranslation("Event");
-
-    // Convert event start and duration to readable.
-    const start = moment(event.StartDateTimeUtc);
-    const duration = moment.duration(event.Duration);
-    const time = start.format("LT");
-
+export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done, zone }) => {
+    const textColor = done ? "important" : "white";
     if (type === "duration") {
-        const runtime = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
         // Return simple label with duration text.
         return (
             <Col type="center">
-                <Label type="caption" color={done ? "important" : "white"}>
-                    {time}
+                <Label key="startLocal" type="caption" color={textColor}>
+                    {event.startLocal}
                 </Label>
-                <Label color={done ? "important" : "white"}>{runtime}</Label>
+                {event.start === event.startLocal ? null : (
+                    <Label key="zoneInfo" type="minor" color={textColor}>
+                        {zone}
+                        {event.day === event.dayLocal ? null : (
+                            <Label key="zoneDayInfo" type="minor" color={textColor}>
+                                , {event.dayLocal}
+                            </Label>
+                        )}
+                    </Label>
+                )}
+                <Label color={textColor}>{event.runtime}</Label>
             </Col>
         );
     } else {
-        const day = start.format("ddd");
         return (
             <Col type="center">
-                <Label type="caption" color={done ? "important" : "white"}>
-                    {time}
+                <Label key="startLocal" type="caption" color={textColor}>
+                    {event.startLocal}
                 </Label>
-                <Label color={done ? "important" : "white"}>{day}</Label>
+                {event.start === event.startLocal ? null : (
+                    <Label key="zoneInfo" type="minor" color={textColor}>
+                        {zone}
+                        {event.day === event.dayLocal ? null : (
+                            <Label key="zoneDayInfo" type="minor" color={textColor}>
+                                , {event.dayLocal}
+                            </Label>
+                        )}
+                    </Label>
+                )}
+                <Label color={textColor}>{event.day}</Label>
             </Col>
         );
     }

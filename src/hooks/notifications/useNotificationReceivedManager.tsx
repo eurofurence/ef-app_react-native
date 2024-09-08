@@ -1,28 +1,12 @@
 import { captureException } from "@sentry/react-native";
 import { addNotificationReceivedListener, Notification, removeNotificationSubscription, scheduleNotificationAsync } from "expo-notifications";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useEffect } from "react";
 
-import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
-import { conId } from "../../configuration";
-import { NotificationChannels } from "../../init/NotificationChannel";
-import { captureNotificationException } from "../../sentryHelpers";
+import { Platform } from "react-native";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
-import { FirebaseNotificationTrigger, isTrigger, isTriggerWithData, isTriggerWithNotification } from "./types/NotificationTrigger";
-
-const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger, channelId: NotificationChannels = "default") =>
-    scheduleNotificationAsync({
-        identifier: source.remoteMessage.messageId ?? undefined,
-        content: {
-            title: source.remoteMessage.notification.title ?? undefined,
-            body: source.remoteMessage.notification.body ?? undefined,
-            data: source.remoteMessage.data,
-        },
-        trigger: {
-            channelId,
-        },
-    });
+import { useNotificationInteractionUtils } from "./useNotificationInteractionUtils";
 
 /**
  * Manages the foreground part of notification handling, as well as handling sync requests
@@ -30,59 +14,84 @@ const scheduleNotificationFromTrigger = (source: FirebaseNotificationTrigger, ch
  * @constructor
  */
 export const useNotificationReceivedManager = () => {
-    // Use dispatch to handle logging of notifications.
+    // Use dispatch for logging and interaction utils.
     const dispatch = useAppDispatch();
-
-    // Use synchronizer for performing data refresh.
-    const { synchronize } = useSynchronizer();
+    const { assertSynchronized, assertAnnouncement, assertPrivateMessage } = useNotificationInteractionUtils();
 
     // Setup notification received handler.
     useEffect(() => {
-        const receive = addNotificationReceivedListener(({ request: { content, trigger, identifier } }: Notification) => {
-            // Prevent reentrant error when scheduling a notification locally from a remote message.
-            if (!isTrigger(trigger)) {
-                console.log("Skipping empty message from remote");
-                return;
-            }
+        const receive = addNotificationReceivedListener(async ({ request: { content, trigger, identifier } }: Notification) => {
+            try {
+                if (trigger?.type !== "push") return;
 
-            // Track immediately when the message came in.
-            const dateReceived = moment().toISOString();
+                // Track immediately when the message came in.
+                const now = moment();
 
-            // Always log receiving of the message.
-            console.log(`Received at ${dateReceived}:`, trigger);
+                // Always log receiving of the message.
+                console.log(`Received at ${now.format()}:`, trigger);
 
-            // Always dispatch a state update tracking the message.
-            dispatch(logFCMMessage({ dateReceived, content, trigger, identifier }));
+                const data = (Platform.OS === "ios" ? trigger.payload : trigger.remoteMessage?.data) ?? {};
+                const event = data.Event as string | undefined;
+                const relatedId = data.RelatedId as string | undefined;
+                // const cid = data.CID;
+                const title: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.title : trigger.remoteMessage?.notification?.title;
+                const body: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.body : trigger.remoteMessage?.notification?.body;
 
-            // Check if data trigger. Otherwise, not actionable.
-            if (isTriggerWithData(trigger)) {
-                // Get CID and event type.
-                const cid = trigger.remoteMessage.data.CID;
-                const event = trigger.remoteMessage.data.Event;
+                console.log("Parsed as push notification:", { event, title, body, data });
 
-                // Skip if not for this convention.
-                if (cid !== conId) return;
+                // // Check ID match.
+                // if (cid !== conId) return;
 
-                // Handle for sync, announcement, and notification.
-                if (event === "Sync") {
-                    // Is sync, do synchronization silently.
-                    synchronize().catch(captureException);
+                switch (event) {
+                    case "Sync": {
+                        // Is sync, do synchronization silently.
+                        await assertSynchronized();
 
-                    // Log sync.
-                    console.log("Synchronized for remote Sync request");
-                } else if (event === "Announcement" && isTriggerWithNotification(trigger)) {
-                    // Schedule it.
-                    scheduleNotificationFromTrigger(trigger, "announcements").then(
-                        () => console.log("Announcement scheduled"),
-                        (e) => captureNotificationException("Unable to schedule announcement", e),
-                    );
-                } else if (event === "Notification" && isTriggerWithNotification(trigger)) {
-                    // Schedule it.
-                    scheduleNotificationFromTrigger(trigger, "private_messages").then(
-                        () => console.log("Personal message scheduled"),
-                        (e) => captureNotificationException("Unable to schedule personal message", e),
-                    );
+                        // Log sync.
+                        console.log("Synchronized for remote Sync request");
+                        break;
+                    }
+
+                    case "Announcement": {
+                        // Schedule notification either at the validity time but at least one second in the future.
+                        // Scheduling with seconds is used because of an API issue where scheduleNotificationAsync does not accept
+                        // channelId without any form of schedule.
+                        const announcement = await assertAnnouncement(relatedId);
+                        const delay = announcement ? Math.max(1, moment.utc(announcement.ValidFromDateTimeUtc).diff(now, "seconds")) : 1;
+                        await scheduleNotificationAsync({
+                            content: { title, body, data },
+                            trigger: { channelId: "announcements", seconds: delay },
+                        });
+                        console.log("Announcement scheduled");
+                        break;
+                    }
+
+                    case "Notification": {
+                        // Force refetch the communication queries.
+                        await assertPrivateMessage(relatedId);
+
+                        // Schedule in one second. See "Announcement" comment for explanation.
+                        const delay = 1;
+                        await scheduleNotificationAsync({
+                            content: { title, body, data },
+                            trigger: { channelId: "private_messages", seconds: delay },
+                        });
+                        console.log("Personal message scheduled");
+                        break;
+                    }
                 }
+
+                // Always dispatch a state update tracking the message. Format message
+                // as UTC, so that it can be sorted lexicographically.
+                const dateReceivedUtc = now.clone().utc().format();
+                dispatch(logFCMMessage({ dateReceivedUtc, content, trigger, identifier }));
+            } catch (error) {
+                // Capture scheduling errors, tag as notification.
+                captureException(error, {
+                    tags: {
+                        type: "notifications",
+                    },
+                });
             }
         });
 
@@ -90,7 +99,7 @@ export const useNotificationReceivedManager = () => {
         return () => {
             removeNotificationSubscription(receive);
         };
-    }, [dispatch, synchronize]);
+    }, [assertAnnouncement, assertPrivateMessage, assertSynchronized, dispatch]);
 
     return null;
 };

@@ -1,11 +1,12 @@
 import * as Notifications from "expo-notifications";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useCallback, useMemo } from "react";
 import { Platform } from "react-native";
 
+import { captureException } from "@sentry/react-native";
 import { conId } from "../../configuration";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { addNotification, Notification, removeNotification } from "../../store/background/slice";
+import { addNotification, removeNotification } from "../../store/background/slice";
 import { EventRecord } from "../../store/eurofurence/types";
 
 export const useEventReminder = (event: EventRecord) => {
@@ -14,17 +15,13 @@ export const useEventReminder = (event: EventRecord) => {
     const notificationEntry = useAppSelector((state) => state.background.notifications.find((it) => it.recordId === event.Id));
 
     const createReminder = useCallback(() => {
-        const scheduleDate = moment(event.StartDateTimeUtc).subtract(timeTravel, "milliseconds").subtract(30, "minutes");
-        const notification: Notification = {
-            recordId: event.Id,
-            type: "EventReminder",
-            dateCreated: moment().toISOString(),
-            dateScheduled: scheduleDate.toISOString(),
-        };
+        const dateCreatedUtc = moment.utc();
+        const dateScheduleUtc = moment.utc(event.StartDateTimeUtc).subtract(timeTravel, "milliseconds").subtract(30, "minutes");
 
+        // Platform schedule the notification.
         if (Platform.OS === "android" || Platform.OS === "ios") {
             Notifications.scheduleNotificationAsync({
-                identifier: notification.recordId,
+                identifier: event.Id,
                 content: {
                     title: event.Title,
                     subtitle: "This event is starting soon!",
@@ -35,13 +32,21 @@ export const useEventReminder = (event: EventRecord) => {
                     },
                 },
                 trigger: {
-                    date: scheduleDate.toDate(),
+                    date: dateScheduleUtc.toDate(),
                     channelId: "event_reminders",
                 },
-            }).catch(console.error);
+            }).catch(captureException);
         }
 
-        dispatch(addNotification(notification));
+        // Save to data.
+        dispatch(
+            addNotification({
+                recordId: event.Id,
+                type: "EventReminder",
+                dateCreatedUtc: dateCreatedUtc.format(),
+                dateScheduledUtc: dateScheduleUtc.format(),
+            }),
+        );
     }, [event, timeTravel, dispatch]);
 
     const removeReminder = useCallback(() => {

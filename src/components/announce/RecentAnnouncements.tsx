@@ -1,5 +1,5 @@
 import { orderBy } from "lodash";
-import { Moment } from "moment";
+import type { Moment } from "moment-timezone";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";

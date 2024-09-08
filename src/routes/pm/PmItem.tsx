@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 
+import { useTranslation } from "react-i18next";
+import moment from "moment-timezone";
 import { appStyles } from "../../components/AppStyles";
 import { MarkdownContent } from "../../components/generic/atoms/MarkdownContent";
 import { Floater } from "../../components/generic/containers/Floater";
@@ -9,6 +11,9 @@ import { Header } from "../../components/generic/containers/Header";
 import { useAppNavigation, useAppRoute } from "../../hooks/nav/useAppNavigation";
 import { useGetCommunicationsQuery, useMarkCommunicationReadMutation } from "../../store/eurofurence/service";
 import { CommunicationRecord, RecordId } from "../../store/eurofurence/types";
+import { Label } from "../../components/generic/atoms/Label";
+import { Row } from "../../components/generic/containers/Row";
+import { Rule } from "../../components/generic/atoms/Rule";
 
 const readOpenTimeRequirement = 3_000;
 export type PmItemParams = {
@@ -19,6 +24,7 @@ export const PmItem = () => {
     // Use base params.
     const navigation = useAppNavigation("PrivateMessageItem");
     const { params } = useAppRoute("PrivateMessageItem");
+    const { t } = useTranslation("PrivateMessageItem");
 
     // Use API connection.
     const [markRead] = useMarkCommunicationReadMutation();
@@ -48,21 +54,54 @@ export const PmItem = () => {
     }, [message, markRead]);
 
     // If no message currently displayable, check if fetching. If not fetching
-    if (!message) {
-        if (ready) {
-            return null;
-        } else {
+    useEffect(() => {
+        if (ready && !message) {
             navigation.pop();
-            return null;
         }
-    }
+    }, [message, ready, navigation]);
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header>{message.Subject}</Header>
+            <Header>{t("header")}</Header>
             <Floater contentStyle={appStyles.trailer}>
-                <MarkdownContent>{message.Message}</MarkdownContent>
+                {!message ? null : (
+                    <>
+                        <Label type="h1" mt={30} mb={10}>
+                            {message.Subject}
+                        </Label>
+
+                        <Row style={styles.byline} variant="spaced">
+                            <Label>
+                                <Label>{moment.utc(message.ReceivedDateTimeUtc).local().format("lll")}</Label>
+                            </Label>
+
+                            <Label style={styles.tag} ellipsizeMode="head" numberOfLines={1}>
+                                {t("from", { authorName: message.AuthorName })}
+                            </Label>
+                        </Row>
+                        <Rule style={styles.rule} />
+
+                        <MarkdownContent>{message.Message}</MarkdownContent>
+                    </>
+                )}
             </Floater>
         </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    byline: {
+        marginTop: 10,
+    },
+    rule: {
+        marginTop: 10,
+        marginBottom: 30,
+    },
+    tag: {
+        textAlign: "right",
+    },
+    posterLine: {
+        marginBottom: 20,
+        alignItems: "center",
+    },
+});

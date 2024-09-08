@@ -73,13 +73,13 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
                 <Label type="h3">{name}</Label>
 
                 {!description ? null : (
-                    <Label type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+                    <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
                         {description}
                     </Label>
                 )}
 
                 {!offDays ? null : (
-                    <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+                    <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
                         {t("not_attending_on", { offDays })}
                     </Label>
                 )}

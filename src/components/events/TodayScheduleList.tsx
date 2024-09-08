@@ -7,6 +7,7 @@ import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useAppSelector } from "../../store";
 import { filterHappeningTodayEvents, selectFavoriteEvents } from "../../store/eurofurence/selectors/events";
 import { Section } from "../generic/atoms/Section";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { EventCard, eventInstanceForAny } from "./EventCard";
 
 export type TodayScheduleListProps = {
@@ -17,12 +18,13 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
 
     const navigation = useAppNavigation("Areas");
     const favorites = useAppSelector(selectFavoriteEvents);
+    const zone = useZoneAbbr();
     const events = useMemo(
         () =>
             filterHappeningTodayEvents(favorites, now)
                 .filter((item) => !item.Hidden)
-                .map((details) => eventInstanceForAny(details, now)),
-        [favorites, now],
+                .map((details) => eventInstanceForAny(details, now, zone)),
+        [favorites, now, zone],
     );
 
     if (events.length === 0) {

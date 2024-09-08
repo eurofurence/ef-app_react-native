@@ -13,6 +13,7 @@ import { selectEventsByRoom } from "../../store/eurofurence/selectors/events";
 import { eventRoomsSelectors } from "../../store/eurofurence/selectors/records";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventOtherGroups } from "./Events.common";
@@ -40,9 +41,10 @@ export const EventsByRoom: FC<EventsByRoomProps> = ({ navigation, route }) => {
     const { setSelected } = useEventsRouterContext();
 
     // Use all events in room and group generically.
+    const zone = useZoneAbbr();
     const room = useAppSelector((state) => eventRoomsSelectors.selectById(state, route.name));
     const eventsInRoom = useAppSelector((state) => selectEventsByRoom(state, room?.Id ?? ""));
-    const eventsGroups = useEventOtherGroups(t, now, eventsInRoom);
+    const eventsGroups = useEventOtherGroups(t, now, zone, eventsInRoom);
 
     return (
         <EventsSectionedList

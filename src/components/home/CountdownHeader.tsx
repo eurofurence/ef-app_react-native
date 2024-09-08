@@ -1,13 +1,13 @@
 import { useIsFocused } from "@react-navigation/core";
 import { TFunction } from "i18next";
 import { chain } from "lodash";
-import moment, { Moment } from "moment";
+import moment, { Moment } from "moment-timezone";
 
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";
 
-import { conId, conName } from "../../configuration";
+import { conId, conName, conTimeZone } from "../../configuration";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";
 import { eventDaysSelectors } from "../../store/eurofurence/selectors/records";
@@ -35,18 +35,27 @@ const useCountdownTitle = (t: TFunction, now: Moment) => {
         .last()
         .value();
 
-    const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(it.Date, "day"));
+    // Try finding current day.
+    const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(moment.tz(it.Date, conTimeZone), "day"));
     if (currentDay) {
         return currentDay.Name;
-    } else if (firstDay && now.isBefore(firstDay.Date, "day")) {
-        const diff = moment.duration(now.diff(firstDay.Date)).humanize();
-        return t("before_event", { conName, diff });
-    } else if (lastDay && now.isAfter(lastDay.Date, "day")) {
-        return t("after_event");
-    } else {
-        // This is only returned if there's no days from the API.
-        return conName;
     }
+
+    // Check if before first day.
+    const firstDateMoment = moment.tz(firstDay.Date, conTimeZone);
+    if (firstDay && now.isBefore(firstDateMoment, "day")) {
+        const diff = moment.duration(now.diff(firstDateMoment)).humanize();
+        return t("before_event", { conName, diff });
+    }
+
+    // Check if after last day.
+    const lastDateMoment = moment.tz(lastDay.Date, conTimeZone);
+    if (lastDay && now.isAfter(lastDateMoment, "day")) {
+        return t("after_event");
+    }
+
+    // This is only returned if there's no days from the API.
+    return conName;
 };
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {

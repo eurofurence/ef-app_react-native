@@ -17,6 +17,7 @@ import { useNow } from "../../hooks/time/useNow";
 import { selectEventsAllSearchIndex } from "../../store/eurofurence/selectors/search";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { useEventsRouterContext } from "./EventsRouterContext";
 import { EventsRouterParamsList } from "./EventsRouter";
 import { useEventSearchGroups } from "./Events.common";
@@ -47,7 +48,8 @@ export const EventsSearch: FC<EventsSearchProps> = ({ navigation }) => {
     const [filter, setFilter, results] = useFuseIntegration(selectEventsAllSearchIndex);
 
     // Use results and group generically.
-    const eventGroups = useEventSearchGroups(t, now, results);
+    const zone = useZoneAbbr();
+    const eventGroups = useEventSearchGroups(t, now, zone, results);
 
     // Actions
     const onDay = useCallback(() => navigation.getParent()?.setParams({ filterType: "days" }), [navigation]);

@@ -3,9 +3,12 @@ import { createSelector } from "@reduxjs/toolkit";
 import { RecordId } from "../eurofurence/types";
 import { RootState } from "../index";
 
-export const selectLastViewed = createSelector([(state: RootState) => state.auxiliary.lastViewTimes, (_state, id: RecordId) => id], (lastViewedTimes, id): string | null => {
-    return lastViewedTimes?.[id] ?? null;
-});
+export const selectLastViewedUtc = createSelector(
+    [(state: RootState) => state.auxiliary.lastViewTimesUtc, (_state, id: RecordId) => id],
+    (lastViewedTimesUtc, id): string | null => {
+        return lastViewedTimesUtc?.[id] ?? null;
+    },
+);
 
 export const selectHiddenEventIds = createSelector([(state: RootState) => state.auxiliary.hiddenEvents], (ids) => ids ?? []);
 

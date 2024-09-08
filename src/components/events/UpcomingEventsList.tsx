@@ -8,6 +8,7 @@ import { useAppSelector } from "../../store";
 import { filterUpcomingEvents } from "../../store/eurofurence/selectors/events";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
 import { Section } from "../generic/atoms/Section";
+import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { EventCard, eventInstanceForAny } from "./EventCard";
 
 export type UpcomingEventsListProps = {
@@ -18,13 +19,14 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
 
     const { t } = useTranslation("Events");
 
+    const zone = useZoneAbbr();
     const all = useAppSelector(eventsSelector.selectAll);
     const events = useMemo(
         () =>
             filterUpcomingEvents(all, now)
                 .filter((item) => !item.Hidden)
-                .map((details) => eventInstanceForAny(details, now)),
-        [all, now],
+                .map((details) => eventInstanceForAny(details, now, zone)),
+        [all, now, zone],
     );
 
     if (events.length === 0) {

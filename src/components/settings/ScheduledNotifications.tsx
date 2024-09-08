@@ -1,6 +1,6 @@
 import { isDevice } from "expo-device";
 import { getAllScheduledNotificationsAsync, NotificationRequest } from "expo-notifications";
-import moment from "moment";
+import moment from "moment-timezone";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View } from "react-native";

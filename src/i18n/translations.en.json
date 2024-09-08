@@ -127,7 +127,8 @@
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
-    "when": "{{day}}, {{start}} until {{finish}}."
+    "when": "{{day}}, {{start}} until {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
   },
   "EventFeedback": {
     "disabled_not_attending": "Only attendees can give feedback",
@@ -222,6 +223,11 @@
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",
     "private_message": "You received a new private message"
+  },
+  "PrivateMessageItem": {
+    "from": "From {{authorName}}",
+    "header": "Private Message",
+    "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {
     "from": "From {{ author }}",

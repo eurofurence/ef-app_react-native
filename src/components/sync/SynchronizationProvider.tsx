@@ -72,7 +72,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
 
         try {
             // Fetch and verify response status.
-            const response = await fetch(`${apiBase}/${path}`, { signal: invocation.current.signal });
+            const response = await fetch(`${apiBase}/${path}`, { signal: ownInvocation.signal });
             if (!response.ok) {
                 throw new Error("API response not OK");
             }
@@ -105,8 +105,10 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
             try {
                 return await synchronize();
             } catch (error) {
-                toast("warning", t("sync_error"), 6000);
-                throw error;
+                if ((error as any)?.name !== "AbortError") {
+                    toast("warning", t("sync_error"), 6000);
+                    throw error;
+                }
             }
         },
         [t, toast, synchronize],

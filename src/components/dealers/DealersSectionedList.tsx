@@ -1,5 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
-import { FC, ReactElement, useMemo } from "react";
+import { FC, ReactElement, useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
 import { useThemeName } from "../../hooks/themes/useThemeHooks";
@@ -10,6 +10,7 @@ import { DealersRegularProps } from "../../routes/dealers/DealersRegular";
 import { PersonalDealersProps } from "../../routes/dealers/PersonalDealers";
 import { findIndices } from "../../util/findIndices";
 import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { DealerDetails } from "../../store/eurofurence/types";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
 import { DealerCard, DealerDetailsInstance } from "./DealerCard";
 
@@ -35,7 +36,12 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !("details" in item)) : undefined), [dealersGroups, sticky]);
-
+    const onPress = useCallback(
+        (dealer: DealerDetails) => {
+            navigation.navigate("Dealer", { id: dealer.Id });
+        },
+        [navigation],
+    );
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
@@ -51,7 +57,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation
             keyExtractor={(item) => ("details" in item ? item.details.Id : item.title)}
             renderItem={({ item }) => {
                 if ("details" in item) {
-                    return <DealerCard containerStyle={styles.item} dealer={item} onPress={(dealer) => navigation.navigate("Dealer", { id: dealer.Id })} />;
+                    return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} />;
                 } else {
                     return <DealerSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
                 }
