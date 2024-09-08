@@ -1,9 +1,10 @@
 import { useIsFocused } from "@react-navigation/core";
 import moment from "moment-timezone";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
+import { useCalendars } from "expo-localization";
 import { useEventReminder } from "../../hooks/events/useEventReminder";
 import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
 import { useNow } from "../../hooks/time/useNow";
@@ -71,17 +72,32 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
     const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
 
-    // Get time components. Order is IMPORTANT as local() mutates the instance.
-    const start = moment.utc(event.StartDateTimeUtc).tz(conTimeZone);
-    const end = moment.utc(event.EndDateTimeUtc).tz(conTimeZone);
+    const calendar = useCalendars();
+    const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
+        // Start parsing.
+        const zone = moment.tz(calendar[0]?.timeZone ?? conTimeZone).zoneAbbr();
+        const eventStart = moment.utc(event.StartDateTimeUtc).tz(conTimeZone);
+        const eventEnd = moment.utc(event.EndDateTimeUtc).tz(conTimeZone);
 
-    const day = start.format("dddd");
-    const startTime = start.format("LT");
-    const endTime = end.format("LT");
+        // Convert event start and duration to readable. Reorder with caution, as
+        // local moves the timezones.
+        const start = eventStart.format("LT");
+        const end = eventEnd.format("LT");
+        const day = eventStart.format("ddd");
+        const startLocal = eventStart.local().format("LT");
+        const endLocal = eventEnd.local().format("LT");
+        const dayLocal = eventStart.local().format("ddd");
 
-    const dayLocal = start.local().format("dddd");
-    const startTimeLocal = start.local().format("LT");
-    const endTimeLocal = end.local().format("LT");
+        return {
+            zone,
+            start,
+            end,
+            day,
+            startLocal,
+            endLocal,
+            dayLocal,
+        };
+    }, [calendar, event.EndDateTimeUtc, event.StartDateTimeUtc]);
 
     return (
         <>
@@ -152,23 +168,21 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
             <Label type="h3" mb={20}>
                 {t("when", {
                     day: day,
-                    start: startTime,
-                    finish: endTime,
+                    start: start,
+                    finish: end,
                 })}
-            </Label>
-
-            {startTime === startTimeLocal ? null : (
-                <>
-                    <Label type="caption">{t("label_event_when_local")}</Label>
-                    <Label type="h3" mb={20}>
-                        {t("when", {
-                            day: dayLocal,
-                            start: startTimeLocal,
-                            finish: endTimeLocal,
-                        })}
+                {start === startLocal ? null : (
+                    <Label type="bold">
+                        {" " +
+                            t("when_local", {
+                                day: dayLocal,
+                                start: startLocal,
+                                finish: endLocal,
+                                zone: zone,
+                            })}
                     </Label>
-                </>
-            )}
+                )}
+            </Label>
 
             <Label type="caption">{t("label_event_track")}</Label>
             <Label type="h3" mb={20}>

@@ -1,5 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useCallback } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
 import { useThemeName } from "../../hooks/themes/useThemeHooks";
@@ -34,6 +34,21 @@ export type EventsListProps = {
 export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, select, empty, trailer, cardType = "duration", padEnd = true }) => {
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
+    const onPress = useCallback(
+        (event: EventDetails) => {
+            navigation.navigate("Event", {
+                id: event.Id,
+            });
+        },
+        [navigation],
+    );
+    const onLongPress = useCallback(
+        (event: EventDetails) => {
+            Vibration.vibrate(50);
+            select?.(event);
+        },
+        [select],
+    );
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
@@ -46,23 +61,7 @@ export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, se
             data={events}
             keyExtractor={(item) => item.details.Id}
             renderItem={({ item }) => {
-                return (
-                    <EventCard
-                        containerStyle={styles.item}
-                        key={item.details.Id}
-                        event={item}
-                        type={cardType}
-                        onPress={(event) =>
-                            navigation.navigate("Event", {
-                                id: event.Id,
-                            })
-                        }
-                        onLongPress={(event) => {
-                            Vibration.vibrate(50);
-                            select?.(event);
-                        }}
-                    />
-                );
+                return <EventCard containerStyle={styles.item} key={item.details.Id} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />;
             }}
             estimatedItemSize={110}
             extraData={theme}

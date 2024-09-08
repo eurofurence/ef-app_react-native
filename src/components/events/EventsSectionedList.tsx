@@ -1,5 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
-import { FC, ReactElement, useMemo } from "react";
+import { FC, ReactElement, useCallback, useMemo } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
 import { useThemeName } from "../../hooks/themes/useThemeHooks";
@@ -48,7 +48,21 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
     const theme = useThemeName();
     const synchronizer = useSynchronizer();
     const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !("details" in item)) : undefined), [eventsGroups, sticky]);
-
+    const onPress = useCallback(
+        (event: EventDetails) => {
+            navigation.navigate("Event", {
+                id: event.Id,
+            });
+        },
+        [navigation],
+    );
+    const onLongPress = useCallback(
+        (event: EventDetails) => {
+            Vibration.vibrate(50);
+            select?.(event);
+        },
+        [select],
+    );
     return (
         <FlashList
             refreshing={synchronizer.isSynchronizing}
@@ -64,22 +78,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
             keyExtractor={(item) => ("details" in item ? item.details.Id : item.title)}
             renderItem={({ item }) => {
                 if ("details" in item) {
-                    return (
-                        <EventCard
-                            containerStyle={styles.item}
-                            event={item}
-                            type={cardType}
-                            onPress={(event) =>
-                                navigation.navigate("Event", {
-                                    id: event.Id,
-                                })
-                            }
-                            onLongPress={(event) => {
-                                Vibration.vibrate(50);
-                                select?.(event);
-                            }}
-                        />
-                    );
+                    return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />;
                 } else {
                     return <EventSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
                 }

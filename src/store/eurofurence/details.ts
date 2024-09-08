@@ -125,8 +125,8 @@ const internalFixedTitle = (title: string, content: string) => {
     if (!content.startsWith(init)) return title;
 
     // Check the longest full sentence to be extracted. Use if present.
-    const index = Math.max(init.indexOf("."), init.indexOf("!"), init.indexOf("?"));
-    if (index < 0) return title;
+    const index = Math.max(init.indexOf("."), init.indexOf("!"), init.indexOf("?"), init.indexOf("\n"));
+    if (index < 0) return init;
     return init.substring(0, index + 1);
 };
 

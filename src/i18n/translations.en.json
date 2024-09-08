@@ -120,7 +120,6 @@
     "label_event_room": "Room",
     "label_event_track": "Track",
     "label_event_when": "When",
-    "label_event_when_local": "Local time",
     "mask_required": "Face masks are mandatory for this event",
     "remove_favorite": "Unfavorite",
     "reveal": "Reveal in overview",
@@ -128,7 +127,8 @@
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
-    "when": "{{day}}, {{start}} until {{finish}}."
+    "when": "{{day}}, {{start}} until {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
   },
   "EventFeedback": {
     "disabled_not_attending": "Only attendees can give feedback",

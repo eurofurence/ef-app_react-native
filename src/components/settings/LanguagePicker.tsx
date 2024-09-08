@@ -4,7 +4,7 @@ import { orderBy } from "lodash";
 import { useTranslation } from "react-i18next";
 
 import { useThemeColor } from "../../hooks/themes/useThemeHooks";
-import { setMomentLocale, Translations } from "../../i18n";
+import { setMomentLocale, Translation } from "../../i18n";
 import { Label } from "../generic/atoms/Label";
 import { SettingContainer } from "./SettingContainer";
 
@@ -15,7 +15,7 @@ type Language = {
     /**
      * Language code, must be one of our translations.
      */
-    code: Translations;
+    code: Translation;
 
     /**
      * Display name with flag code.

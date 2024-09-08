@@ -110,8 +110,70 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
     else if (type === "tracks") initial = tracks[0]?.Id;
     else if (type === "rooms") initial = rooms[0]?.Id;
 
-    // // Get common tab styles.
+    // Get common tab styles.
     const tabStyles = useTabStyles();
+
+    // Screens that are always present.
+    const defaultScreens = useMemo(
+        () => [
+            <Tab.Screen
+                key="search"
+                name="Search"
+                options={{
+                    tabBarShowLabel: false,
+                    tabBarShowIcon: true,
+                    tabBarIcon: ({ color }) => <Icon size={20} color={color} name="table-search" />,
+                    tabBarLabelStyle: tabStyles.normal,
+                }}
+                component={EventsSearch}
+            />,
+            <Tab.Screen
+                key="schedule"
+                name="Personal"
+                options={{
+                    title: "Your Schedule", // TODO: Translations for a bnch more
+                    tabBarShowLabel: false,
+                    tabBarShowIcon: true,
+                    tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,
+                    tabBarLabelStyle: tabStyles.normal,
+                }}
+                component={PersonalSchedule}
+            />,
+        ],
+        [tabStyles.normal],
+    );
+
+    // Day screens.
+    const dayScreens = useMemo(
+        () =>
+            days.map((day) => (
+                <Tab.Screen
+                    key={day.Id}
+                    name={day.Id}
+                    component={EventsByDay}
+                    options={{
+                        title: formatDay(day),
+                        tabBarLabelStyle: day.Name === currentDayId ? tabStyles.highlight : tabStyles.normal,
+                    }}
+                />
+            )),
+        [currentDayId, days, formatDay, tabStyles.highlight, tabStyles.normal],
+    );
+
+    // Track screens.
+    const trackScreens = useMemo(
+        () => tracks.map((track) => <Tab.Screen key={track.Id} name={track.Id} component={EventsByTrack} options={{ title: track.Name, tabBarLabelStyle: tabStyles.normal }} />),
+        [tabStyles.normal, tracks],
+    );
+
+    // Room screens.
+    const roomScreens = useMemo(
+        () =>
+            rooms.map((room) => (
+                <Tab.Screen key={room.Id} name={room.Id} component={EventsByRoom} options={{ title: room.ShortName ?? room.Name, tabBarLabelStyle: tabStyles.normal }} />
+            )),
+        [rooms, tabStyles.normal],
+    );
 
     // Ignore rendering if data is not loaded to prevent jumping on initialization.
     if (type === "days" && !days?.length) return null;
@@ -135,57 +197,11 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
                     lazyPreloadDistance: 3,
                 }}
             >
-                {/*Tab for searching and filtering*/}
-                <Tab.Screen
-                    key="search"
-                    name="Search"
-                    options={{
-                        tabBarShowLabel: false,
-                        tabBarShowIcon: true,
-                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="table-search" />,
-                        tabBarLabelStyle: tabStyles.normal,
-                    }}
-                    component={EventsSearch}
-                />
+                {/* Always show default screens. */}
+                {defaultScreens}
 
-                <Tab.Screen
-                    key="schedule"
-                    name="Personal"
-                    options={{
-                        title: "Your Schedule", // TODO: Translations for a bnch more
-                        tabBarShowLabel: false,
-                        tabBarShowIcon: true,
-                        tabBarIcon: ({ color }) => <Icon size={20} color={color} name="calendar-heart" />,
-                        tabBarLabelStyle: tabStyles.normal,
-                    }}
-                    component={PersonalSchedule}
-                />
-
-                {type !== "days"
-                    ? null
-                    : days.map((day) => (
-                          <Tab.Screen
-                              key={day.Id}
-                              name={day.Id}
-                              component={EventsByDay}
-                              options={{
-                                  title: formatDay(day),
-                                  tabBarLabelStyle: day.Name === currentDayId ? tabStyles.highlight : tabStyles.normal,
-                              }}
-                          />
-                      ))}
-
-                {type !== "tracks"
-                    ? null
-                    : tracks.map((track) => (
-                          <Tab.Screen key={track.Id} name={track.Id} component={EventsByTrack} options={{ title: track.Name, tabBarLabelStyle: tabStyles.normal }} />
-                      ))}
-
-                {type !== "rooms"
-                    ? null
-                    : rooms.map((room) => (
-                          <Tab.Screen key={room.Id} name={room.Id} component={EventsByRoom} options={{ title: room.ShortName ?? room.Name, tabBarLabelStyle: tabStyles.normal }} />
-                      ))}
+                {/* Pick based on type. */}
+                {type === "days" ? dayScreens : type === "rooms" ? roomScreens : type === "tracks" ? trackScreens : null}
             </Tab.Navigator>
             <EventActionsSheet event={selected} onClose={() => setSelected(null)} />
         </View>
