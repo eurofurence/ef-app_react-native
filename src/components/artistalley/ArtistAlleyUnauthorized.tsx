@@ -30,9 +30,11 @@ export const ArtistAlleyUnauthorized = ({ loggedIn, attending, checkedIn }: Arti
                     </Label>
                 )}
             </Label>
-            <Button style={styles.button} iconRight="login" onPress={() => login().catch(captureException)}>
-                {t("log_in_now")}
-            </Button>
+            {loggedIn ? null : (
+                <Button style={styles.button} iconRight="login" onPress={() => login().catch(captureException)}>
+                    {t("log_in_now")}
+                </Button>
+            )}
         </View>
     );
 };
