@@ -17,22 +17,24 @@ export async function scheduleEventReminder(dispatch: AppDispatch, event: EventR
 
     // If platform is on device, schedule actual notification.
     if (Platform.OS === "android" || Platform.OS === "ios") {
-        await Notifications.scheduleNotificationAsync({
-            identifier: event.Id,
-            content: {
-                title: event.Title,
-                subtitle: "This event is starting soon!",
-                data: {
-                    CID: conId,
-                    Event: "Event",
-                    RelatedId: event.Id,
+        if (dateCreatedUtc.isBefore(dateScheduleUtc)) {
+            await Notifications.scheduleNotificationAsync({
+                identifier: event.Id,
+                content: {
+                    title: event.Title,
+                    subtitle: "This event is starting soon!",
+                    data: {
+                        CID: conId,
+                        Event: "Event",
+                        RelatedId: event.Id,
+                    },
                 },
-            },
-            trigger: {
-                date: dateScheduleUtc.toDate(),
-                channelId: "event_reminders",
-            },
-        });
+                trigger: {
+                    date: dateScheduleUtc.toDate(),
+                    channelId: "event_reminders",
+                },
+            });
+        }
     }
 
     // Dispatch writing notification. On device, this is preempted if the
