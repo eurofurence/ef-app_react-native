@@ -42,16 +42,20 @@ const useCountdownTitle = (t: TFunction, now: Moment) => {
     }
 
     // Check if before first day.
-    const firstDateMoment = moment.tz(firstDay.Date, conTimeZone);
-    if (firstDay && now.isBefore(firstDateMoment, "day")) {
-        const diff = moment.duration(now.diff(firstDateMoment)).humanize();
-        return t("before_event", { conName, diff });
+    if (firstDay) {
+        const firstDateMoment = moment.tz(firstDay.Date, conTimeZone);
+        if (now.isBefore(firstDateMoment, "day")) {
+            const diff = moment.duration(now.diff(firstDateMoment)).humanize();
+            return t("before_event", { conName, diff });
+        }
     }
 
     // Check if after last day.
-    const lastDateMoment = moment.tz(lastDay.Date, conTimeZone);
-    if (lastDay && now.isAfter(lastDateMoment, "day")) {
-        return t("after_event");
+    if (lastDay) {
+        const lastDateMoment = moment.tz(lastDay.Date, conTimeZone);
+        if (now.isAfter(lastDateMoment, "day")) {
+            return t("after_event");
+        }
     }
 
     // This is only returned if there's no days from the API.
