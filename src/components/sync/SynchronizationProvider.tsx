@@ -105,7 +105,6 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
 
                     // Check if the event still exists. Should.
                     if (event) {
-                        console.log("Rescheduling", event);
                         // Exists, reschedule.
                         await rescheduleEventReminder(dispatch, event, timeTravel).catch((error) =>
                             captureException(error, {
@@ -113,7 +112,6 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
                             }),
                         );
                     } else {
-                        console.log("Cancelling", event);
                         // Does not exist, remove.
                         await cancelEventReminder(dispatch, reminder.recordId).catch((error) =>
                             captureException(error, {
