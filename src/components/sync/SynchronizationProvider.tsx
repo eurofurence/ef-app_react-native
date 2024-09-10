@@ -2,10 +2,13 @@ import { createContext, FC, PropsWithChildren, useCallback, useContext, useRef, 
 import { useTranslation } from "react-i18next";
 import { Vibration } from "react-native";
 
+import { captureException } from "@sentry/react-native";
 import { apiBase, conId } from "../../configuration";
 import { useToast } from "../../context/ToastContext";
 import { useAppDispatch, useAppStore } from "../../store";
 import { applySync, eurofurenceCacheVersion, resetCache } from "../../store/eurofurence/slice";
+import { selectEventReminders } from "../../store/background/selectors";
+import { cancelEventReminder, rescheduleEventReminder } from "../../hooks/events/useEventReminder";
 
 export type SynchronizationProviderProps = {
     /**
@@ -84,7 +87,42 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
             const data = await response.json();
 
             // If this one is still the authority, apply this sync.
-            if (invocation.current === ownInvocation) dispatch(applySync(data));
+            if (invocation.current === ownInvocation) {
+                // Finally, apply sync.
+                dispatch(applySync(data));
+
+                // Get new state after synchronization.
+                const synchronizedState = store.getState();
+
+                // Get time travel amount for development.
+                const { enabled, amount } = synchronizedState.timetravel;
+                const timeTravel = enabled ? amount : 0;
+
+                // Reschedule each reminder.
+                for (const reminder of selectEventReminders(synchronizedState)) {
+                    // Get the event from the new synchronized state.
+                    const event = synchronizedState.eurofurenceCache.events.entities[reminder.recordId];
+
+                    // Check if the event still exists. Should.
+                    if (event) {
+                        console.log("Rescheduling", event);
+                        // Exists, reschedule.
+                        await rescheduleEventReminder(dispatch, event, timeTravel).catch((error) =>
+                            captureException(error, {
+                                level: "warning",
+                            }),
+                        );
+                    } else {
+                        console.log("Cancelling", event);
+                        // Does not exist, remove.
+                        await cancelEventReminder(dispatch, reminder.recordId).catch((error) =>
+                            captureException(error, {
+                                level: "warning",
+                            }),
+                        );
+                    }
+                }
+            }
         } finally {
             // If this one is still the authority, unset synchronizing.
             if (invocation.current === ownInvocation) setIsSynchronizing(false);
