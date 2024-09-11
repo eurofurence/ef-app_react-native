@@ -7,6 +7,10 @@ import { View } from "react-native";
 
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
+import { useAppSelector } from "../../store";
+import { eventsSelector } from "../../store/eurofurence/selectors/records";
+import { Col } from "../generic/containers/Col";
+import { selectEventReminders } from "../../store/background/selectors";
 
 /**
  * Shows all scheduled notifications
@@ -14,6 +18,10 @@ import { Section } from "../generic/atoms/Section";
  */
 export const ScheduledNotifications = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "notifications" });
+
+    const reminders = useAppSelector(selectEventReminders);
+    const events = useAppSelector(eventsSelector.selectEntities);
+
     const [notifications, setNotifications] = useState<NotificationRequest[]>([]);
 
     useEffect(() => {
@@ -26,14 +34,20 @@ export const ScheduledNotifications = () => {
     return (
         <View>
             <Section title={t("title")} subtitle={t("subtitle")} icon="notification-clear-all" />
-            {!notifications.length && <Label mb={15}>{t("no_notifications")}</Label>}
+            {!reminders.length && <Label mb={15}>{t("no_notifications")}</Label>}
 
-            {notifications.map((item) => (
-                <Label key={item.identifier} mb={15}>
-                    {/* @ts-expect-error Value does not really exist yet */}
-                    {t("notification_item", { identifier: item.identifier, time: moment(item.trigger?.value).format("llll") })}
-                </Label>
-            ))}
+            <Col gap={10}>
+                {reminders.map((item) => (
+                    <Col key={item.recordId}>
+                        <Label type="h4">{events?.[item.recordId]?.Title ?? item.recordId}</Label>
+                        <Label ml={15}>{t("scheduled_at", { time: moment.utc(item.dateCreatedUtc).local().format("llll") })}</Label>
+                        <Label ml={15}>{t("scheduled_for", { time: moment.utc(item.dateScheduledUtc).local().format("llll") })}</Label>
+                        <Label ml={15}>
+                            {notifications.find((notification) => notification.identifier === item.recordId) ? t("is_device_scheduled") : t("is_not_device_scheduled")}
+                        </Label>
+                    </Col>
+                ))}
+            </Col>
         </View>
     );
 };

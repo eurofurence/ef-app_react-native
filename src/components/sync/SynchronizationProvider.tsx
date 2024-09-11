@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Vibration } from "react-native";
 
 import { captureException } from "@sentry/react-native";
+import moment from "moment-timezone";
 import { apiBase, conId } from "../../configuration";
 import { useToast } from "../../context/ToastContext";
 import { useAppDispatch, useAppStore } from "../../store";
@@ -101,18 +102,21 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
                 // Reschedule each reminder.
                 for (const reminder of selectEventReminders(synchronizedState)) {
                     // Get the event from the new synchronized state.
-                    const event = synchronizedState.eurofurenceCache.events.entities[reminder.recordId];
+                    const event = synchronizedState.eurofurenceCache?.events?.entities?.[reminder.recordId];
 
-                    // Check if the event still exists. Should.
+                    // Check if the event still exists. Should, but might not be from this convention.
                     if (event) {
-                        // Exists, reschedule.
-                        await rescheduleEventReminder(dispatch, event, timeTravel).catch((error) =>
-                            captureException(error, {
-                                level: "warning",
-                            }),
-                        );
+                        // Check if the event was changed after it was scheduled for notification.
+                        if (moment.utc(event.LastChangeDateTimeUtc).isAfter(moment.utc(reminder.dateCreatedUtc))) {
+                            // Exists and was changed, reschedule.
+                            await rescheduleEventReminder(dispatch, event, timeTravel).catch((error) =>
+                                captureException(error, {
+                                    level: "warning",
+                                }),
+                            );
+                        }
                     } else {
-                        // Does not exist, remove.
+                        // Does not exist anymore, remove.
                         await cancelEventReminder(dispatch, reminder.recordId).catch((error) =>
                             captureException(error, {
                                 level: "warning",

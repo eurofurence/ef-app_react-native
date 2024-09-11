@@ -298,7 +298,6 @@
     },
     "notifications": {
       "no_notifications": "Aktuell gibt es keine geplanten Benachrichtigungen!",
-      "notification_item": "{{ identifier }} geplant für {{ time }}",
       "subtitle": "Geplante Benachrichtigungen für einen späteren Zeitpunkt",
       "title": "Benachrichtigungen"
     },

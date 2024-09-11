@@ -81,7 +81,6 @@
     "header": "Instellingen",
     "notifications": {
       "no_notifications": "Er zijn geen notificaties ingepland!",
-      "notification_item": "{{ identifier }} geplanned voor {{ time }}",
       "subtitle": "Alle ingeplande notificaties op dit apparaat",
       "title": "Notificaties"
     },
