@@ -73,9 +73,9 @@
     "before_event": "{{conName}} will start in {{diff}}"
   },
   "Dealer": {
-    "about": "About",
-    "about_the_art": "About the art",
-    "about_the_artist": "About the artist",
+    "about": "Informations",
+    "about_the_art": "About the Offerings",
+    "about_the_artist": "About {{name}}",
     "add_favorite": "Favorite",
     "after_dark": "After dark",
     "attends": "Attends on",
@@ -118,7 +118,7 @@
     "label_event_description": "More about the event",
     "label_event_panelhosts": "Hosted by",
     "label_event_room": "Room",
-    "label_event_track": "Track",
+    "label_event_track": "Category",
     "label_event_when": "When",
     "mask_required": "Face masks are mandatory for this event",
     "remove_favorite": "Unfavorite",
@@ -156,7 +156,7 @@
     "favorites_title": "Favorite Events",
     "filter_by_day": "Browse days",
     "filter_by_room": "Browse rooms",
-    "filter_by_track": "Browse tracks",
+    "filter_by_track": "Browse categories",
     "finished": "Finished",
     "morning": "In the morning",
     "night": "At night",
@@ -266,7 +266,7 @@
     "title": "Reveal specific event"
   },
   "Search": {
-    "placeholder": "What are you looking for"
+    "placeholder": "Search..."
   },
   "Settings": {
     "about": "About",
