@@ -159,7 +159,6 @@
     "header": "Ustawienia",
     "notifications": {
       "no_notifications": "Brak zaplanowanych powiadomień!",
-      "notification_item": "{{ identifier }} zaplanowane na {{ time }}",
       "subtitle": "Wszystkie zaplanowane powiadomienia na tym urządzeniu",
       "title": "Powiadomienia"
     },

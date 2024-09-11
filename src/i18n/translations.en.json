@@ -326,8 +326,11 @@
       "unhide_specific": "Reveal specific event"
     },
     "notifications": {
+      "is_device_scheduled": "Scheduled on device",
+      "is_not_device_scheduled": "Not schedule on device",
       "no_notifications": "There are no scheduled notifications!",
-      "notification_item": "{{ identifier }} scheduled on {{ time }}",
+      "scheduled_at": "Scheduled on {{ time }}",
+      "scheduled_for": "Scheduled for {{ time }}",
       "subtitle": "All scheduled notifications on this device",
       "title": "Notifications"
     },
