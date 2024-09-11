@@ -40,8 +40,8 @@ export const ScheduledNotifications = () => {
                 {reminders.map((item) => (
                     <Col key={item.recordId}>
                         <Label type="h4">{events?.[item.recordId]?.Title ?? item.recordId}</Label>
-                        <Label ml={15}>{t("scheduled_at", { time: moment.utc(item.dateCreatedUtc).format("llll") })}</Label>
-                        <Label ml={15}>{t("scheduled_for", { time: moment.utc(item.dateScheduledUtc).format("llll") })}</Label>
+                        <Label ml={15}>{t("scheduled_at", { time: moment.utc(item.dateCreatedUtc).local().format("llll") })}</Label>
+                        <Label ml={15}>{t("scheduled_for", { time: moment.utc(item.dateScheduledUtc).local().format("llll") })}</Label>
                         <Label ml={15}>
                             {notifications.find((notification) => notification.identifier === item.recordId) ? t("is_device_scheduled") : t("is_not_device_scheduled")}
                         </Label>
