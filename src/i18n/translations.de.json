@@ -9,6 +9,9 @@
     "extra_thanks": "Besonderen Dank",
     "header": "Über uns"
   },
+  "Announcement": {
+    "header": "Mitteilungen"
+  },
   "Announcements": {
     "noAnnouncements": "Momentan gibt es keine Mitteilungen",
     "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
@@ -92,10 +95,10 @@
     "after_dark": "After Dark",
     "all": "Alle",
     "alphabetical": "A-Z",
-    "dealers_at_convention": "Dealer an der Eurofurence",
+    "dealers_at_convention": "Dealer auf der Eurofurence",
     "dealers_in_ad": "Im After Dark Bereich",
     "dealers_in_regular": "Im regulären Bereich",
-    "favorites_empty": "Du hast noch keine Dealer in Deinen Favoriten. Füge Dealer zu Deinen Favoriten hinzu, um sie für später Vorzumerken.",
+    "favorites_empty": "Du hast noch keine Dealer in Deinen Favoriten. Füge Dealer zu Deinen Favoriten hinzu, um sie für später vorzumerken.",
     "favorites_title": "Favoriten",
     "not_attending_on": "Nicht da am {{offDays}}",
     "regular": "Regulär",
@@ -122,9 +125,12 @@
     "sponsor_event": "Sponsor-Event",
     "supersponsor_event": "Supersponsor-Event",
     "view_on_map": "Auf der Karte ansehen",
-    "when": "{{ day }}, {{ start }} bis {{ finish }}."
+    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} bis {{finish}}."
   },
   "EventFeedback": {
+    "disabled_not_attending": "Nur Teilnehmer können Feedback geben",
+    "disabled_not_logged_in": "Bitte melden Sie sich an, um Feedback zu geben",
     "explanation": "Lass uns wissen, wie du {{ eventTitle }} fandest. Gib eine Bewertung und optional eine Nachricht ein, und wir schauen, dass diese bei der richtigen Person landen.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Wenn du spezifische Anmerkungen an die Veranstaltenden hast, schreibe diese hier auf.",
@@ -227,12 +233,35 @@
     "section_title_from": "Von {{authorName}}",
     "unread": "Ungelesen"
   },
+  "Profile": {
+    "header": "Profil",
+    "idp_settings": "Eurofurence Identity Webseite",
+    "logged_in_as": "Angemeldet als {{username}}",
+    "login_description": "Wenn Du angemeldet bist, kann {{conName}} dir Private Nachrichten in der App zusenden. Außerdem kannst Du bei den Fursuit Catch 'em All Spielen teilnehmen und dir Tische in der Artist Alley registieren.",
+    "logout": "Abmelden",
+    "not_logged_in": "Du bist nicht angemeldet",
+    "registration_nr": "Registration #",
+    "roles": "Rollen",
+    "roles_simple_attendee": "Noch nicht eingecheckt",
+    "roles_simple_checked_in": "Du bist eingecheckt",
+    "roles_subtitle": "Deine Rollen in der {{conName}} App",
+    "status_names": {
+      "Approved": "Genehmigt",
+      "Cancelled": "Storniert",
+      "CheckedIn": "Eingecheckt",
+      "Deleted": "Gelöscht",
+      "New": "Neu",
+      "Paid": "Bezahlt",
+      "PartiallyPaid": "Teilweise Bezahlt",
+      "Unknown": "Unbekannt"
+    }
+  },
   "RevealHidden": {
     "lead": "Klicke auf die Events, um diese in der Übersicht wider anzuzeigen",
     "title": "Events anzeigen"
   },
   "Search": {
-    "placeholder": "Wonach suchst Du"
+    "placeholder": "Suche..."
   },
   "Settings": {
     "about": "Über uns",
@@ -289,15 +318,12 @@
       "unhide_all": "Alle wieder anzeigen",
       "unhide_specific": "Spezifisches Event anzeigen"
     },
-    "login": {
-      "logged_in_as": "Angemeldet als {{username}}",
-      "logged_in_now": "Jetzt anmelden",
-      "login_description": "Wenn Du angemeldet bist, kann {{conName}} dir Private Nachrichten in der App zusenden. Außerdem kannst Du bei den Fursuit-Spielen teilnehmen und Dir Tische in der Artist Alley registieren.",
-      "logout": "Abmelden",
-      "not_logged_in": "Du bist nicht angemeldet"
-    },
     "notifications": {
+      "is_device_scheduled": "Auf dem Gerät geplant",
+      "is_not_device_scheduled": "Nicht auf dem Gerät geplant",
       "no_notifications": "Aktuell gibt es keine geplanten Benachrichtigungen!",
+      "scheduled_at": "Geplant um {{ time }}",
+      "scheduled_for": "Geplant für {{ time }}",
       "subtitle": "Geplante Benachrichtigungen für einen späteren Zeitpunkt",
       "title": "Benachrichtigungen"
     },
