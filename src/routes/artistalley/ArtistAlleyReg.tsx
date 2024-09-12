@@ -46,7 +46,11 @@ export const ArtistAlleyReg = () => {
     const [show, setShow] = useState(true);
 
     return (
-        <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />} stickyHeaderIndices={[0]}>
+        <ScrollView
+            style={StyleSheet.absoluteFill}
+            refreshControl={authorized ? <RefreshControl refreshing={isFetching} onRefresh={refetch} /> : undefined}
+            stickyHeaderIndices={[0]}
+        >
             <Header>{t("title")}</Header>
             <Floater containerStyle={appStyles.trailer}>
                 {!data?.State ? null : (

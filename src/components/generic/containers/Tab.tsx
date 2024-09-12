@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: "center",
-        padding: 16,
+        paddingVertical: 16,
+        paddingHorizontal: 4,
     },
     disabled: {
         opacity: 0.5,

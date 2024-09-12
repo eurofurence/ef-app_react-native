@@ -25,7 +25,7 @@ const redirectUri = authRedirect;
 /**
  * Token refresh interval.
  */
-const refreshInterval = 600_000;
+const refreshInterval = 3_600_000;
 
 /**
  * User claims record.

@@ -31,10 +31,9 @@ export const Header: FC<HeaderProps> = (props) => {
     const styleBorder = useThemeBorder("darken");
 
     const navigation = useNavigation();
-
     return (
         <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-            <TouchableOpacity hitSlop={50} containerStyle={styles.back} onPress={() => navigation.goBack()}>
+            <TouchableOpacity hitSlop={180} containerStyle={styles.back} onPress={() => navigation.goBack()}>
                 <Icon name="chevron-left" size={iconSize} color={colorValue} />
             </TouchableOpacity>
 
@@ -79,12 +78,14 @@ const styles = StyleSheet.create({
         width: iconSize + iconPad,
         height: iconSize + iconPad,
         justifyContent: "center",
+        zIndex: 20,
     },
     secondary: {
         width: iconSize + iconPad,
         height: iconSize + iconPad,
         marginRight: -iconPad,
         justifyContent: "center",
+        zIndex: 20,
     },
     loading: {
         position: "absolute",

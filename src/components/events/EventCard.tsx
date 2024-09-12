@@ -1,5 +1,5 @@
 import moment, { Moment } from "moment-timezone";
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -114,13 +114,11 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = "d
     const colorGlyph = useThemeColorValue("lighten");
     const colorHeart = useThemeColorValue(event.details.Banner ? "white" : "text");
 
+    const onPressBind = useCallback(() => onPress?.(event.details), [event.details, onPress]);
+    const onLongPressBind = useCallback(() => onLongPress?.(event.details), [event.details, onLongPress]);
+
     return (
-        <TouchableOpacity
-            containerStyle={containerStyle}
-            style={[styles.container, appStyles.shadow, styleContainer, style]}
-            onPress={() => onPress?.(event.details)}
-            onLongPress={() => onLongPress?.(event.details)}
-        >
+        <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
             <View style={[styles.pre, stylePre]}>
                 {!glyph ? null : (
                     <View key="eventGlyph" style={styles.glyphContainer}>

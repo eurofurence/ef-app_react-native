@@ -165,18 +165,20 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
                 </ZoomableView>
             </View>
 
-            <BottomSheet ref={refSheet} backgroundStyle={styleBackground} handleStyle={styles.handle} handleIndicatorStyle={styleHandle} snapPoints={["17%", "75%"]} index={0}>
-                <MapContentFlatList
-                    initialNumToRender={2}
-                    maxToRenderPerBatch={1}
-                    ListHeaderComponent={header}
-                    windowSize={5}
-                    data={results}
-                    keyExtractor={keyExtractor}
-                    renderItem={renderItem}
-                    contentContainerStyle={styles.mapContentContainer}
-                />
-            </BottomSheet>
+            {!map?.Entries?.length ? null : (
+                <BottomSheet ref={refSheet} backgroundStyle={styleBackground} handleStyle={styles.handle} handleIndicatorStyle={styleHandle} snapPoints={["17%", "75%"]} index={0}>
+                    <MapContentFlatList
+                        initialNumToRender={2}
+                        maxToRenderPerBatch={1}
+                        ListHeaderComponent={header}
+                        windowSize={5}
+                        data={results}
+                        keyExtractor={keyExtractor}
+                        renderItem={renderItem}
+                        contentContainerStyle={styles.mapContentContainer}
+                    />
+                </BottomSheet>
+            )}
         </>
     );
 };
