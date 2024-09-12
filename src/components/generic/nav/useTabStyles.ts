@@ -8,8 +8,7 @@ export const useTabStyles = () => {
             fontWeight: "bold",
             textTransform: "none",
             borderRadius: 6,
-            padding: 6,
-            paddingHorizontal: 10,
+            marginHorizontal: -10,
             color: theme.invText,
             backgroundColor: theme.secondary,
         }),
@@ -22,5 +21,6 @@ const styles = StyleSheet.create({
     normal: {
         fontWeight: "bold",
         textTransform: "none",
+        marginHorizontal: -10,
     },
 });

@@ -10,7 +10,7 @@ type SettingsSliceState = {
     };
     showDevMenu?: boolean;
     theme?: ThemeName;
-    colorScheme?: ColorSchemeName;
+    colorScheme?: "light" | "medium" | "dark" | null | undefined;
 };
 
 export const settingsSlice = createSlice({

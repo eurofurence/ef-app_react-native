@@ -56,6 +56,7 @@ export const LanguagePicker = () => {
             <Picker<string>
                 selectedValue={i18n.language}
                 style={style}
+                itemStyle={style}
                 dropdownIconColor={style.color}
                 prompt={t("changeLanguage")}
                 onValueChange={(it: string) => {

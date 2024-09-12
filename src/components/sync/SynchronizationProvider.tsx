@@ -140,7 +140,7 @@ export const SynchronizationProvider: FC<PropsWithChildren> = ({ children }) => 
 
     // Dependent function.
     const synchronizeUi = useCallback(
-        async (vibrate: boolean = true) => {
+        async (vibrate: boolean = false) => {
             if (vibrate) Vibration.vibrate(400);
             try {
                 return await synchronize();

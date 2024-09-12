@@ -1,5 +1,5 @@
 import { Moment } from "moment/moment";
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -58,13 +58,11 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     const stylePre = useThemeBackground(present ? "primary" : "darken");
     const avatarBackground = useThemeBackground("primary");
 
+    const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress]);
+    const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress]);
+
     return (
-        <TouchableOpacity
-            containerStyle={containerStyle}
-            style={[styles.container, appStyles.shadow, styleBackground, style]}
-            onPress={() => onPress?.(dealer.details)}
-            onLongPress={() => onLongPress?.(dealer.details)}
-        >
+        <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
             <View style={[styles.pre, stylePre]}>
                 <Image style={[avatarBackground, styles.avatarCircle]} source={avatar} contentFit="contain" placeholder={assetSource("ych")} transition={60} />
             </View>
