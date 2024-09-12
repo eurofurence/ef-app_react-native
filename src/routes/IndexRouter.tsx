@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import { Toast } from "../components/Toast";
 import { useToastMessages } from "../context/ToastContext";
-import { useTheme, useThemeName } from "../hooks/themes/useThemeHooks";
+import { useTheme, useThemeMemo, useThemeName } from "../hooks/themes/useThemeHooks";
 import { RecordId } from "../store/eurofurence/types";
 import { About } from "./About";
 import { AreasRouter, AreasRouterParams } from "./AreasRouter";
@@ -80,8 +80,10 @@ export const IndexRouter: FC<IndexRouterProps> = () => {
     const toastMessages = useToastMessages(5);
     const isAreas = useNavigationState((s) => (!s ? false : s.routes?.[s.index]?.name === "Areas"));
 
+    const safeAreaStyle = useThemeMemo((theme) => ({ ...StyleSheet.absoluteFillObject, backgroundColor: theme.background }));
+
     return (
-        <SafeAreaView style={StyleSheet.absoluteFill}>
+        <SafeAreaView style={safeAreaStyle}>
             <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
             <Stack.Navigator screenOptions={{ headerShown: false, detachPreviousScreen: false }}>
                 <Stack.Screen name="Areas" component={AreasRouter} />
