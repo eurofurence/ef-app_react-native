@@ -145,7 +145,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
             )}
 
             <Row style={styles.marginBefore}>
-                <Button containerStyle={styles.rowLeft} outline={isFavorite} icon={isFavorite ? "heart-outline" : "heart"} onPress={() => toggleReminder().catch(captureException)}>
+                <Button
+                    containerStyle={styles.rowLeft}
+                    outline={isFavorite}
+                    icon={isFavorite ? "heart-minus" : "heart-plus-outline"}
+                    onPress={() => toggleReminder().catch(captureException)}
+                >
                     {isFavorite ? t("remove_favorite") : t("add_favorite")}
                 </Button>
                 <Button containerStyle={styles.rowRight} icon={event.Hidden ? "eye" : "eye-off"} onPress={() => dispatch(toggleEventHidden(event.Id))} outline>

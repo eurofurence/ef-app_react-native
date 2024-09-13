@@ -137,7 +137,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
             <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
-            <Button containerStyle={styles.marginBefore} outline={dealer.Favorite} icon={dealer.Favorite ? "heart-outline" : "heart"} onPress={toggleFavorite}>
+            <Button containerStyle={styles.marginBefore} outline={dealer.Favorite} icon={dealer.Favorite ? "heart-minus" : "heart-plus-outline"} onPress={toggleFavorite}>
                 {dealer.Favorite ? t("remove_favorite") : t("add_favorite")}
             </Button>
 
