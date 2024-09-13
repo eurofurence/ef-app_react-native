@@ -1,10 +1,11 @@
-import { exchangeCodeAsync, refreshAsync, useAuthRequest } from "expo-auth-session";
+import { exchangeCodeAsync, refreshAsync, TokenResponse, useAuthRequest } from "expo-auth-session";
 import * as WebBrowser from "expo-web-browser";
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, FC, PropsWithChildren, useContext, useMemo, useState } from "react";
 
 import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from "../configuration";
 import { useAsyncInterval } from "../hooks/util/useAsyncInterval";
 import { UserRecord } from "../store/eurofurence/types";
+import { useAsyncCallbackOnce } from "../hooks/util/useAsyncCallbackOnce";
 import * as SecureStore from "./SecureStorage";
 
 /**
@@ -25,7 +26,12 @@ const redirectUri = authRedirect;
 /**
  * Token refresh interval.
  */
-const refreshInterval = 3_600_000;
+const refreshInterval = 600_000;
+
+/**
+ * When to start requesting a new token.
+ */
+const refreshMarginSeconds = 600;
 
 /**
  * User claims record.
@@ -210,7 +216,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     );
 
     // For an existing access token, fetches and applies user claims and settings.
-    const update = useCallback(async () => {
+    const update = useAsyncCallbackOnce(async () => {
         try {
             const accessToken = await SecureStore.getItemAsync("accessToken");
             if (accessToken) {
@@ -230,6 +236,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             // Delete access and refresh if actual authorization error, then rethrow.
             if (error instanceof EndpointError && (error.statusCode === 401 || error.statusCode === 403)) {
                 await SecureStore.deleteItemAsync("accessToken");
+                await SecureStore.deleteItemAsync("accessTokenData");
                 await SecureStore.deleteItemAsync("refreshToken");
                 setLoggedIn(false);
                 setClaims(null);
@@ -240,7 +247,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     // Login method.
-    const login = useCallback(async () => {
+    const login = useAsyncCallbackOnce(async () => {
         // Code exchange part.
         try {
             // We set show in "recents" so the web browser doesn't close when
@@ -260,11 +267,13 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
             );
 
             await SecureStore.setItemToAsync("accessToken", response.accessToken);
+            await SecureStore.setItemToAsync("accessTokenData", JSON.stringify(response.getRequestConfig()));
             await SecureStore.setItemToAsync("refreshToken", response.refreshToken);
             setLoggedIn(true);
         } catch (error) {
             // Delete access and refresh, then rethrow.
             await SecureStore.deleteItemAsync("accessToken");
+            await SecureStore.deleteItemAsync("accessTokenData");
             await SecureStore.deleteItemAsync("refreshToken");
             setLoggedIn(false);
             setClaims(null);
@@ -276,12 +285,13 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, [promptAsync, request, update]);
 
     // Logout method.
-    const logout = useCallback(async () => {
+    const logout = useAsyncCallbackOnce(async () => {
         try {
             // Get tokens and delete from store.
             const accessToken = await SecureStore.getItemAsync("accessToken");
             const refreshToken = await SecureStore.getItemAsync("refreshToken");
             await SecureStore.deleteItemAsync("accessToken");
+            await SecureStore.deleteItemAsync("accessTokenData");
             await SecureStore.deleteItemAsync("refreshToken");
 
             // Revoke all present tokens.
@@ -298,28 +308,37 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, []);
 
     // Reload method.
-    const refresh = useCallback(async () => {
+    const refresh = useAsyncCallbackOnce(async () => {
         // Refresh token part.
         try {
             const refreshToken = await SecureStore.getItemAsync("refreshToken");
             if (refreshToken) {
-                // Refresh it.
-                const response = await refreshAsync(
-                    {
-                        clientId: authClientId,
-                        scopes: authScopes,
-                        refreshToken,
-                    },
-                    discovery,
-                );
+                // Check if we have token data stored. If it's present, check
+                // if it reports itself as needing to be refreshed.
+                const refreshTokenData = await SecureStore.getItemAsync("accessTokenData");
+                const refreshTokenConfig = refreshTokenData ? new TokenResponse(JSON.parse(refreshTokenData)) : null;
 
-                await SecureStore.setItemToAsync("accessToken", response.accessToken);
-                await SecureStore.setItemToAsync("refreshToken", response.refreshToken ?? refreshToken);
-                setLoggedIn(true);
+                if (!refreshTokenConfig || TokenResponse.isTokenFresh(refreshTokenConfig, refreshMarginSeconds)) {
+                    // Refresh it.
+                    const response = await refreshAsync(
+                        {
+                            clientId: authClientId,
+                            scopes: authScopes,
+                            refreshToken,
+                        },
+                        discovery,
+                    );
+
+                    await SecureStore.setItemToAsync("accessToken", response.accessToken);
+                    await SecureStore.setItemToAsync("accessTokenData", JSON.stringify(response.getRequestConfig()));
+                    await SecureStore.setItemToAsync("refreshToken", response.refreshToken ?? refreshToken);
+                    setLoggedIn(true);
+                }
             }
         } catch (error) {
             // Delete access and refresh, then rethrow.
             await SecureStore.deleteItemAsync("accessToken");
+            await SecureStore.deleteItemAsync("accessTokenData");
             await SecureStore.deleteItemAsync("refreshToken");
             setLoggedIn(false);
             setClaims(null);

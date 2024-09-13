@@ -64,7 +64,14 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     return (
         <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
             <View style={[styles.pre, stylePre]}>
-                <Image style={[avatarBackground, styles.avatarCircle]} source={avatar} contentFit="contain" placeholder={assetSource("ych")} transition={60} />
+                <Image
+                    style={[avatarBackground, styles.avatarCircle]}
+                    source={avatar}
+                    contentFit="contain"
+                    placeholder={assetSource("ych")}
+                    transition={60}
+                    recyclingKey={dealer.details.Id}
+                />
             </View>
 
             <View style={styles.main}>

@@ -15,7 +15,7 @@ import { Label } from "../../components/generic/atoms/Label";
 import { Row } from "../../components/generic/containers/Row";
 import { Rule } from "../../components/generic/atoms/Rule";
 
-const readOpenTimeRequirement = 3_000;
+const readOpenTimeRequirement = 1_500;
 export type PmItemParams = {
     id: RecordId;
     message?: CommunicationRecord;
