@@ -222,13 +222,14 @@
   },
   "PrivateMessageItem": {
     "from": "Von {{authorName}}",
-    "header": "Private Nachricht",
+    "header": "Private Nachrichten",
     "read_at": "Gelesen um {{time}}"
   },
   "PrivateMessageList": {
     "from": "Von {{ author }}",
     "from_unknown": "Author unbekannt",
     "message_item_subtitle": "{{ status }} - Gesendet {{ time }}",
+    "no_data": "Noch keine Nachrichten",
     "read": "Gelesen",
     "section_title_from": "Von {{authorName}}",
     "unread": "Ungelesen"
