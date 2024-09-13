@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/core";
 import React, { FC, PropsWithChildren } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native-gesture-handler";
 
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
@@ -25,6 +25,26 @@ export type HeaderProps = PropsWithChildren<
       }
 >;
 
+/**
+ * Hit slop for the back button.
+ */
+const backHitSlop: TouchableOpacityProps["hitSlop"] = {
+    left: 15,
+    top: 15,
+    bottom: 15,
+    right: 160,
+};
+
+/**
+ * Hit slop for the secondary button if present.
+ */
+const secondaryHitSlop: TouchableOpacityProps["hitSlop"] = {
+    right: 15,
+    top: 15,
+    bottom: 15,
+    left: 50,
+};
+
 export const Header: FC<HeaderProps> = (props) => {
     const colorValue = useThemeColorValue("text");
     const styleBackground = useThemeBackground("background");
@@ -33,7 +53,7 @@ export const Header: FC<HeaderProps> = (props) => {
     const navigation = useNavigation();
     return (
         <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-            <TouchableOpacity hitSlop={180} containerStyle={styles.back} onPress={() => navigation.goBack()}>
+            <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={() => navigation.goBack()}>
                 <Icon name="chevron-left" size={iconSize} color={colorValue} />
             </TouchableOpacity>
 
@@ -43,7 +63,7 @@ export const Header: FC<HeaderProps> = (props) => {
 
             {/* Optional secondary action. */}
             {!("secondaryIcon" in props) ? null : (
-                <TouchableOpacity hitSlop={50} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
+                <TouchableOpacity hitSlop={secondaryHitSlop} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
                     <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
                 </TouchableOpacity>
             )}

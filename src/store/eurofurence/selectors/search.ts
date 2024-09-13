@@ -7,6 +7,11 @@ import { selectDealersInAd, selectDealersInRegular } from "./dealers";
 import { announcementsSelectors, dealersSelectors, eventsSelector, knowledgeEntriesSelectors } from "./records";
 
 /**
+ * T with a Type tag.
+ */
+export type WithType<T, TType> = T & { type: TType };
+
+/**
  * Search options.
  */
 const searchOptions: IFuseOptions<any> = {
@@ -102,7 +107,13 @@ export const selectKbAllSearchIndex = createSelector([knowledgeEntriesSelectors.
 export const selectGlobalSearchIndex = createSelector(
     [dealersSelectors.selectAll, eventsSelector.selectAll, knowledgeEntriesSelectors.selectAll],
     (dealers, events, knowledgeEntries) => {
-        const data = [...dealers, ...events, ...knowledgeEntries];
+        const data = new Array<WithType<DealerDetails, "dealer"> | WithType<EventDetails, "event"> | WithType<KnowledgeEntryDetails, "knowledgeEntry">>(
+            dealers.length + events.length + knowledgeEntries.length,
+        );
+        for (const dealer of dealers) data.push({ ...dealer, type: "dealer" });
+        for (const event of events) data.push({ ...event, type: "event" });
+        for (const knowledgeEntry of knowledgeEntries) data.push({ ...knowledgeEntry, type: "knowledgeEntry" });
+
         return new Fuse(
             data,
             { ...searchOptions, threshold: 0.1 },

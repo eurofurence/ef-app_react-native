@@ -145,8 +145,8 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
     }, []);
 
     return (
-        <>
-            <View style={styles.container}>
+        <View style={styles.container} testID="mapContainer">
+            <View style={styles.map}>
                 <ZoomableView
                     ref={refZoom}
                     contentWidth={map.Image.Width}
@@ -164,9 +164,8 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
                     </View>
                 </ZoomableView>
             </View>
-
             {!map?.Entries?.length ? null : (
-                <BottomSheet ref={refSheet} backgroundStyle={styleBackground} handleStyle={styles.handle} handleIndicatorStyle={styleHandle} snapPoints={["17%", "75%"]} index={0}>
+                <BottomSheet ref={refSheet} backgroundStyle={styleBackground} handleStyle={styles.handle} handleIndicatorStyle={styleHandle} snapPoints={[170, "75%"]} index={0}>
                     <MapContentFlatList
                         initialNumToRender={2}
                         maxToRenderPerBatch={1}
@@ -179,18 +178,21 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
                     />
                 </BottomSheet>
             )}
-        </>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
     handle: {
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
     },
-    container: {
+    map: {
         flex: 1,
-        paddingBottom: "17%",
+        marginBottom: 190,
     },
     image: {
         width: "100%",

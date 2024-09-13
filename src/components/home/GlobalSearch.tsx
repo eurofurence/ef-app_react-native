@@ -12,11 +12,12 @@ import { EventCard } from "../events/EventCard";
 import { Section } from "../generic/atoms/Section";
 import { KbEntryCard } from "../kb/KbEntryCard";
 import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
+import { WithType } from "../../store/eurofurence/selectors/search";
 
 export type GlobalSearchProps = {
     navigation: HomeProps["navigation"];
     now: Moment;
-    results: (DealerDetails | EventDetails | KnowledgeEntryDetails)[] | null;
+    results: (WithType<DealerDetails, "dealer"> | WithType<EventDetails, "event"> | WithType<KnowledgeEntryDetails, "knowledgeEntry">)[] | null;
 };
 
 export const GlobalSearch = ({ navigation, now, results }: GlobalSearchProps) => {
@@ -28,9 +29,9 @@ export const GlobalSearch = ({ navigation, now, results }: GlobalSearchProps) =>
     const zone = useZoneAbbr();
 
     // Use all dealers and group generically.
-    const dealers = useDealerInstances(tDealers, now, results?.filter((r) => "RegistrationNumber" in r) as DealerDetails[]);
-    const events = useEventInstances(tEvents, now, zone, results?.filter((r) => "StartDateTimeUtc" in r) as EventDetails[]);
-    const kbGroups = results?.filter((r) => "KnowledgeGroupId" in r) as KnowledgeEntryDetails[];
+    const dealers = useDealerInstances(tDealers, now, results?.filter((r) => r.type === "dealer") as DealerDetails[]);
+    const events = useEventInstances(tEvents, now, zone, results?.filter((r) => r.type === "event") as EventDetails[]);
+    const kbGroups = results?.filter((r) => r.type === "knowledgeEntry") as KnowledgeEntryDetails[];
 
     if (!results) return null;
     return (
