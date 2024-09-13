@@ -20,6 +20,7 @@ import { Row } from "../generic/containers/Row";
 import { Tab } from "../generic/containers/Tab";
 import { useTabs } from "../generic/containers/Tabs";
 import { PrivateMessageLinker } from "../pm/PrivateMessageLinker";
+import { Label } from "../generic/atoms/Label";
 
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
@@ -34,27 +35,30 @@ const PagerPrimaryLogin: FC<PagerPrimaryLoginProps> = ({ loggedIn, claim, open, 
     const avatarBackground = useThemeBackground("primary");
     // TODO: Verify style of name etc.
     return (
-        <Row style={styles.padding} type="center" variant="center">
+        <Row style={styles.padding} type="start" variant="center">
             <TouchableOpacity disabled={!loggedIn || !onProfile} onPress={() => onProfile?.()}>
-                <Image
-                    style={[avatarBackground, styles.avatarCircle]}
-                    source={claim?.avatar ?? assetSource("ych")}
-                    contentFit="contain"
-                    placeholder="ych"
-                    transition={60}
-                    cachePolicy="memory"
-                    priority="high"
-                />
+                <Col type="center">
+                    <Image
+                        style={[avatarBackground, styles.avatarCircle]}
+                        source={claim?.avatar ?? assetSource("ych")}
+                        contentFit="contain"
+                        placeholder="ych"
+                        transition={60}
+                        cachePolicy="memory"
+                        priority="high"
+                    />
+                </Col>
+                {!claim?.name ? null : (
+                    <Label style={styles.name} type="minor" mt={4} ellipsizeMode="tail" numberOfLines={1}>
+                        {claim.name}
+                    </Label>
+                )}
             </TouchableOpacity>
 
-            {/*<Label style={styles.marginBefore} type="caption">*/}
-            {/*    {t("not_logged_in")}*/}
-            {/*</Label>*/}
-
             {loggedIn ? (
-                <PrivateMessageLinker containerStyle={styles.grow} style={styles.button} claims={claim} onOpenMessages={onMessages} open={open} />
+                <PrivateMessageLinker containerStyle={styles.buttonContainer} style={styles.button} onOpenMessages={onMessages} open={open} />
             ) : (
-                <Button containerStyle={styles.grow} style={styles.button} iconRight="login" onPress={onLogin}>
+                <Button containerStyle={styles.buttonContainer} style={styles.button} iconRight="login" onPress={onLogin}>
                     {t("logged_in_now")}
                 </Button>
             )}
@@ -141,15 +145,20 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingVertical: 15,
     },
-    grow: {
+    buttonContainer: {
         flexGrow: 1,
+        flexShrink: 1,
+    },
+    name: {
+        maxWidth: 60,
+        textAlign: "center",
     },
     button: {
         marginLeft: 16,
     },
     avatarCircle: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
+        width: 36,
+        height: 36,
+        borderRadius: 18,
     },
 });

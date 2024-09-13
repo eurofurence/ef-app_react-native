@@ -37,6 +37,10 @@ const types = StyleSheet.create({
         flexDirection: "column",
         alignItems: "flex-start",
     },
+    start: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+    },
     center: {
         flexDirection: "column",
         alignItems: "center",

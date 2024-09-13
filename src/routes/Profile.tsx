@@ -35,7 +35,7 @@ export const Profile = () => {
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header secondaryIcon="refresh" secondaryPress={() => doReload()} loading={isReloading}>
+            <Header secondaryIcon="refresh" secondaryPress={isReloading ? () => undefined : doReload} loading={isReloading}>
                 {t("header")}
             </Header>
             <Floater contentStyle={appStyles.trailer}>{!claims || !user ? null : <ProfileContent claims={claims} user={user} parentPad={padFloater} />}</Floater>
