@@ -11,6 +11,7 @@ import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useLatchTrue } from "../../hooks/util/useLatchTrue";
 import { useAppSelector } from "../../store";
 import { dealersSelectors } from "../../store/eurofurence/selectors/records";
+import { platformShareIcon } from "../../components/generic/atoms/Icon";
 import { shareDealer } from "./Dealers.common";
 
 /**
@@ -34,7 +35,7 @@ export const DealerItem = () => {
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header secondaryIcon="share" secondaryPress={() => dealer && shareDealer(dealer)}>
+            <Header secondaryIcon={platformShareIcon} secondaryPress={() => dealer && shareDealer(dealer)}>
                 {dealer?.DisplayNameOrAttendeeNickname ?? t("viewing_dealer")}
             </Header>
             <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />}</Floater>

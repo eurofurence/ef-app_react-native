@@ -24,6 +24,7 @@ import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { Row } from "../generic/containers/Row";
 import { conTimeZone } from "../../configuration";
+import { platformShareIcon } from "../generic/atoms/Icon";
 
 /**
  * Props to the content.
@@ -139,7 +140,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
             )}
 
             {!shareButton ? null : (
-                <Button icon="share" onPress={() => shareEvent(event)}>
+                <Button icon={platformShareIcon} onPress={() => shareEvent(event)}>
                     {t("share")}
                 </Button>
             )}

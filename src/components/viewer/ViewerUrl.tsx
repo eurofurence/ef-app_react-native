@@ -5,9 +5,10 @@ import { StyleSheet, View, Image as ReactImage } from "react-native";
 
 import { Image } from "../generic/atoms/Image";
 import { Header } from "../generic/containers/Header";
+import { platformShareIcon } from "../generic/atoms/Icon";
 import { minZoomFor, shareImage } from "./Viewer.common";
 
-const viewerPadding = 40;
+const viewerPadding = 20;
 
 export type ViewerUrlProps = {
     url: string;
@@ -24,13 +25,11 @@ export const ViewerUrl: FC<ViewerUrlProps> = ({ url, title }) => {
         ReactImage.getSize(
             url,
             (width, height) => {
-                console.log("GOT SIZE", width, height);
                 // Gotten successfully.
                 setWidth(width);
                 setHeight(height);
             },
             () => {
-                console.log("SIZE FAIL");
                 // Failed, set to 0 so that expo image starts loading.
                 setWidth(0);
                 setHeight(0);
@@ -44,7 +43,7 @@ export const ViewerUrl: FC<ViewerUrlProps> = ({ url, title }) => {
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <Header secondaryIcon="share" secondaryPress={() => title && shareImage(url, title)}>
+            <Header secondaryIcon={platformShareIcon} secondaryPress={() => title && shareImage(url, title)}>
                 {title ?? t("unspecified")}
             </Header>
 
@@ -57,7 +56,7 @@ export const ViewerUrl: FC<ViewerUrlProps> = ({ url, title }) => {
                     contentHeight={height + viewerPadding * 2}
                     minZoom={minZoom}
                     maxZoom={maxZoom}
-                    initialZoom={minZoom}
+                    initialZoom={minZoom * 1.2}
                     bindToBorders={true}
                 >
                     <View style={{ width, height }}>
@@ -68,7 +67,6 @@ export const ViewerUrl: FC<ViewerUrlProps> = ({ url, title }) => {
                             source={url}
                             priority="high"
                             onLoad={(event) => {
-                                console.log("EXPO GOT SIZE", event.source.width, event.source.height);
                                 setWidth(event.source.width);
                                 setHeight(event.source.height);
                             }}

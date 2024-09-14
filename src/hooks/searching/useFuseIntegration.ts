@@ -8,7 +8,7 @@ import { RootState, useAppSelector } from "../../store";
  * @param selector The selector from the  app state.
  * @param limit Maximum results.
  */
-export const useFuseIntegration = <T extends object>(selector: (state: RootState) => Fuse<T>, limit = 30): [string, Dispatch<SetStateAction<string>>, T[] | null] => {
+export const useFuseIntegration = <T extends object>(selector: (state: RootState) => Fuse<T>, limit = 100): [string, Dispatch<SetStateAction<string>>, T[] | null] => {
     // Search state.
     const fuse = useAppSelector(selector);
     const [filter, setFilter] = useState("");

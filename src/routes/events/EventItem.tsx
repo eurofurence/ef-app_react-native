@@ -10,6 +10,7 @@ import { useUpdateSinceNote } from "../../hooks/records/useUpdateSinceNote";
 import { useLatchTrue } from "../../hooks/util/useLatchTrue";
 import { useAppSelector } from "../../store";
 import { eventsSelector } from "../../store/eurofurence/selectors/records";
+import { platformShareIcon } from "../../components/generic/atoms/Icon";
 import { shareEvent } from "./Events.common";
 
 /**
@@ -32,7 +33,7 @@ export const EventItem = () => {
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header secondaryIcon="share" secondaryPress={() => event && shareEvent(event)}>
+            <Header secondaryIcon={platformShareIcon} secondaryPress={() => event && shareEvent(event)}>
                 {event?.Title ?? "Viewing event"}
             </Header>
             <Floater contentStyle={appStyles.trailer}>{!event ? null : <EventContent event={event} parentPad={padFloater} updated={showUpdated} />}</Floater>
