@@ -25,7 +25,7 @@ const searchOptions: IFuseOptions<any> = {
  */
 const dealerSearchProperties: FuseOptionKey<DealerDetails>[] = [
     {
-        name: "FullName",
+        name: "DisplayNameOrAttendeeNickname",
         weight: 2,
     },
     {

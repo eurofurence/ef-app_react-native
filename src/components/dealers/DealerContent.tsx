@@ -25,6 +25,7 @@ import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { LinkItem } from "../maps/LinkItem";
 import { conTimeZone } from "../../configuration";
+import { platformShareIcon } from "../generic/atoms/Icon";
 
 const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
     // Nothing to display for no categories.
@@ -142,7 +143,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             </Button>
 
             {!shareButton ? null : (
-                <Button containerStyle={styles.marginBefore} icon="share" onPress={() => shareDealer(dealer)}>
+                <Button containerStyle={styles.marginBefore} icon={platformShareIcon} onPress={() => shareDealer(dealer)}>
                     {t("share")}
                 </Button>
             )}

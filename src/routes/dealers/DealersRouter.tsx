@@ -11,6 +11,7 @@ import { Icon } from "../../components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
+import { TabLabel } from "../../components/generic/atoms/TabLabel";
 import { DealersAd, DealersAdParams } from "./DealersAd";
 import { DealersAll, DealersAllParams } from "./DealersAll";
 import { DealersAlpha, DealersAlphaParams } from "./DealersAlpha";
@@ -88,7 +89,18 @@ export const DealersRouter: FC<DealersRouterProps> = () => {
     // If the screens require too much performance we should set detach to true again.
     return (
         <View style={StyleSheet.absoluteFill}>
-            <Tab.Navigator initialRouteName="All" initialLayout={layout} sceneContainerStyle={scene}>
+            <Tab.Navigator
+                initialRouteName="All"
+                initialLayout={layout}
+                sceneContainerStyle={scene}
+                screenOptions={{
+                    tabBarLabel: ({ focused, children }) => (
+                        <TabLabel wide={false} focused={focused}>
+                            {children}
+                        </TabLabel>
+                    ),
+                }}
+            >
                 {defaultScreens}
             </Tab.Navigator>
         </View>

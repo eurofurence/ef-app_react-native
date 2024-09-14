@@ -9,9 +9,10 @@ import { imagesSelectors } from "../../store/eurofurence/selectors/records";
 import { RecordId } from "../../store/eurofurence/types";
 import { Image } from "../generic/atoms/Image";
 import { Header } from "../generic/containers/Header";
+import { platformShareIcon } from "../generic/atoms/Icon";
 import { minZoomFor, shareImage } from "./Viewer.common";
 
-const viewerPadding = 40;
+const viewerPadding = 20;
 
 export type ViewerImageRecordProps = {
     id: RecordId;
@@ -32,7 +33,7 @@ export const ViewerImageRecord: FC<ViewerImageRecordProps> = ({ id }) => {
 
     return (
         <View style={StyleSheet.absoluteFill}>
-            <Header secondaryIcon="share" secondaryPress={() => image && title && shareImage(image.Url, title)}>
+            <Header secondaryIcon={platformShareIcon} secondaryPress={() => image && title && shareImage(image.Url, title)}>
                 {title}
             </Header>
             {!image ? null : (
@@ -42,7 +43,7 @@ export const ViewerImageRecord: FC<ViewerImageRecordProps> = ({ id }) => {
                     contentHeight={image.Height + viewerPadding * 2}
                     minZoom={minZoom}
                     maxZoom={maxZoom}
-                    initialZoom={minZoom}
+                    initialZoom={minZoom * 1.2}
                     bindToBorders={true}
                 >
                     <View style={styleContainer}>

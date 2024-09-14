@@ -17,6 +17,7 @@ import { EventDayRecord } from "../../store/eurofurence/types";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
 import { conTimeZone } from "../../configuration";
+import { TabLabel } from "../../components/generic/atoms/TabLabel";
 import { PersonalSchedule, PersonalScheduleParams } from "./PersonalSchedule";
 import { EventsSearch, EventsSearchParams } from "./EventsSearch";
 import { EventsRouterContextProvider, useEventsRouterContext } from "./EventsRouterContext";
@@ -196,6 +197,11 @@ const EventsRouterContent: FC<EventsRouterProps> = ({ route }) => {
                 screenOptions={{
                     tabBarScrollEnabled: scroll,
                     tabBarItemStyle: scroll ? { width: 110 } : undefined,
+                    tabBarLabel: ({ focused, children }) => (
+                        <TabLabel wide={scroll} focused={focused}>
+                            {children}
+                        </TabLabel>
+                    ),
                     lazy: true,
                     lazyPreloadDistance: 3,
                 }}

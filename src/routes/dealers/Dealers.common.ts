@@ -177,6 +177,7 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
         return result;
     }, [t, now, results, all]);
 };
+
 export const shareDealer = (dealer: DealerDetails) =>
     Share.share(
         {
