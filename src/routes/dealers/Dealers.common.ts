@@ -11,6 +11,7 @@ import { appBase, conAbbr } from "../../configuration";
 import { useAppSelector } from "../../store";
 import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/dealers";
 import { DealerDetails } from "../../store/eurofurence/types";
+import { debounceOnAndroid } from "../../util/debounceOnAndroid";
 
 /**
  * Compares category, checks if the categories are adult labeled.
@@ -177,7 +178,8 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
         return result;
     }, [t, now, results, all]);
 };
-export const shareDealer = (dealer: DealerDetails) =>
+
+export const shareDealer = debounceOnAndroid((dealer: DealerDetails) =>
     Share.share(
         {
             title: dealer.DisplayNameOrAttendeeNickname,
@@ -185,4 +187,5 @@ export const shareDealer = (dealer: DealerDetails) =>
             message: `Check out ${dealer.DisplayNameOrAttendeeNickname} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
         },
         {},
-    ).catch(captureException);
+    ).catch(captureException),
+);
