@@ -9,7 +9,6 @@ import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, e
 import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "../../components/events/EventSection";
 import { appBase, conAbbr } from "../../configuration";
 import { EventDetails } from "../../store/eurofurence/types";
-import { debounceOnAndroid } from "../../util/debounceOnAndroid";
 
 /**
  Returns a list of event instances according to conversion rules.
@@ -210,7 +209,7 @@ export const useEventOtherGroups = (t: TFunction, now: Moment, zone: string, all
     }, [t, now, zone, all]);
 };
 
-export const shareEvent = debounceOnAndroid((event: EventDetails) =>
+export const shareEvent = (event: EventDetails) =>
     Share.share(
         {
             title: event.Title,
@@ -218,5 +217,4 @@ export const shareEvent = debounceOnAndroid((event: EventDetails) =>
             message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
         },
         {},
-    ).catch(captureException),
-);
+    ).catch(captureException);
