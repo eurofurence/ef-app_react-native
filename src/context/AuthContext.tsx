@@ -318,7 +318,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                 const refreshTokenData = await SecureStore.getItemAsync("accessTokenData");
                 const refreshTokenConfig = refreshTokenData ? new TokenResponse(JSON.parse(refreshTokenData)) : null;
 
-                if (!refreshTokenConfig || TokenResponse.isTokenFresh(refreshTokenConfig, refreshMarginSeconds)) {
+                if (!refreshTokenConfig || !TokenResponse.isTokenFresh(refreshTokenConfig, refreshMarginSeconds)) {
                     // Refresh it.
                     const response = await refreshAsync(
                         {
