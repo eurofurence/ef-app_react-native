@@ -3,7 +3,7 @@ import { TFunction } from "i18next";
 import moment, { Moment } from "moment-timezone";
 
 import { useMemo } from "react";
-import { Platform, Share } from "react-native";
+import { Share } from "react-native";
 
 import { DealerDetailsInstance, dealerInstanceForAny } from "../../components/dealers/DealerCard";
 import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation, DealerSectionProps } from "../../components/dealers/DealerSection";
@@ -177,12 +177,8 @@ export const useDealerAlphabeticalGroups = (t: TFunction, now: Moment, results: 
         return result;
     }, [t, now, results, all]);
 };
-export const shareDealer = (dealer: DealerDetails) => {
-    if (Platform.OS === "web") {
-        console.log("share");
-        return;
-    }
-    return Share.share(
+export const shareDealer = (dealer: DealerDetails) =>
+    Share.share(
         {
             title: dealer.DisplayNameOrAttendeeNickname,
             url: `${appBase}/Web/Dealers/${dealer.Id}`,
@@ -190,4 +186,3 @@ export const shareDealer = (dealer: DealerDetails) => {
         },
         {},
     ).catch(captureException);
-};

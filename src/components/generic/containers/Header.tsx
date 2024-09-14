@@ -7,7 +7,6 @@ import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../..
 import { Continuous } from "../atoms/Continuous";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
-import { useDebounce } from "../../../hooks/util/useDebounce";
 import { Row } from "./Row";
 
 const iconSize = 26;
@@ -52,13 +51,9 @@ export const Header: FC<HeaderProps> = (props) => {
     const styleBorder = useThemeBorder("darken");
 
     const navigation = useNavigation();
-
-    const onBack = useDebounce(() => navigation.goBack(), [navigation]);
-    const onSecondary = useDebounce(() => ("secondaryIcon" in props ? props.secondaryPress() : undefined), [props]);
-
     return (
         <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-            <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={onBack}>
+            <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={() => navigation.goBack()}>
                 <Icon name="chevron-left" size={iconSize} color={colorValue} />
             </TouchableOpacity>
 
@@ -68,7 +63,7 @@ export const Header: FC<HeaderProps> = (props) => {
 
             {/* Optional secondary action. */}
             {!("secondaryIcon" in props) ? null : (
-                <TouchableOpacity hitSlop={secondaryHitSlop} containerStyle={styles.secondary} onPress={onSecondary}>
+                <TouchableOpacity hitSlop={secondaryHitSlop} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
                     <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
                 </TouchableOpacity>
             )}
