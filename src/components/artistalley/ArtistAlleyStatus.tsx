@@ -7,6 +7,7 @@ import { ArtistAlleyOwnTableRegistrationRecord } from "../../store/eurofurence/t
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { Button } from "../generic/containers/Button";
+import { sourceFromImage } from "../generic/atoms/Image.common";
 
 export type ArtistAlleyStatusProps = {
     data: ArtistAlleyOwnTableRegistrationRecord;
@@ -45,7 +46,12 @@ export const ArtistAlleyStatus = ({ data, onEdit }: ArtistAlleyStatusProps) => {
             </Label>
             <Label type="caption">{t("submission_image_label")}</Label>
             <View style={[styles.imageContainer, backgroundStyle]}>
-                <Image style={[styles.image, { aspectRatio: data.Image.Width / data.Image.Height }]} contentFit={undefined} source={data.Image.Url} placeholder={null} />
+                <Image
+                    style={[styles.image, { aspectRatio: data.Image.Width / data.Image.Height }]}
+                    contentFit={undefined}
+                    source={sourceFromImage(data.Image)}
+                    placeholder={null}
+                />
             </View>
 
             <Button style={styles.button} onPress={onEdit}>

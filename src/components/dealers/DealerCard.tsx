@@ -10,6 +10,7 @@ import { assetSource } from "../../util/assets";
 import { appStyles } from "../AppStyles";
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
+import { sourceFromImage } from "../generic/atoms/Image.common";
 import { isPresent, joinOffDays } from "./utils";
 
 export type DealerDetailsInstance = {
@@ -48,7 +49,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     const present = dealer.present;
     const description = dealer.details.Categories?.join(", ");
     const offDays = dealer.offDays;
-    const avatar = dealer.details.ArtistThumbnail ? dealer.details.ArtistThumbnail.Url : dealer.details.Artist ? dealer.details.Artist.Url : assetSource("ych");
+    const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? assetSource("ych");
 
     // Translation object.
     const { t } = useTranslation("Dealers");

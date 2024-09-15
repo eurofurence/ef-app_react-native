@@ -1,4 +1,3 @@
-import { ImageBackground } from "expo-image";
 import moment, { Moment } from "moment-timezone";
 import React, { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
@@ -8,6 +7,8 @@ import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHoo
 import { AnnouncementDetails } from "../../store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";
+import { ImageBackground } from "../generic/atoms/ImageBackground";
+import { sourceFromImage } from "../generic/atoms/Image.common";
 import { colorForArea } from "./utils";
 
 export type AnnouncementDetailsInstance = {
@@ -45,7 +46,7 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, st
             onPress={() => onPress?.(announcement.details)}
             onLongPress={() => onLongPress?.(announcement.details)}
         >
-            <ImageBackground style={[styles.pre, stylePre]} source={announcement.details.Image?.Url ?? null}>
+            <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(announcement.details.Image)}>
                 <View style={[styles.areaIndicator, styleAreaIndicator]} />
             </ImageBackground>
 

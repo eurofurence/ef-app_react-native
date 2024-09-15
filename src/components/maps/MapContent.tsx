@@ -12,6 +12,7 @@ import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../s
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { Marker } from "../generic/atoms/Marker";
+import { sourceFromImage } from "../generic/atoms/Image.common";
 import { LinkItem } from "./LinkItem";
 
 const distSq = (hx: number, hy: number) => hx * hx + hy * hy;
@@ -159,7 +160,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
                     onTransform={onTransform}
                 >
                     <View style={styleContainer}>
-                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={map.Image.Url} priority="high" />
+                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={sourceFromImage(map.Image)} priority="high" />
                         {!entry ? null : <Marker style={styleMarker} markerSize={75} />}
                     </View>
                 </ZoomableView>

@@ -4,6 +4,7 @@ import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from "react-native
 
 import { ImageDetails } from "../../../store/eurofurence/types";
 import { Image, ImageProps } from "./Image";
+import { sourceFromImage } from "./Image.common";
 
 const initialSize = { width: Dimensions.get("window").width - 40, height: 160 };
 
@@ -64,9 +65,9 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
 
     return (
         <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>
-            <Image style={StyleSheet.absoluteFill} contentFit="cover" blurRadius={20} source={image?.Url} priority="normal" />
+            <Image style={StyleSheet.absoluteFill} contentFit="cover" blurRadius={20} source={sourceFromImage(image)} priority="normal" />
             <View style={arrangerStyle}>
-                <Image style={imageStyle} contentFit="fill" contentPosition="top left" source={image?.Url} priority="normal" />
+                <Image style={imageStyle} contentFit="fill" contentPosition="top left" source={sourceFromImage(image)} priority="normal" />
             </View>
         </View>
     );
