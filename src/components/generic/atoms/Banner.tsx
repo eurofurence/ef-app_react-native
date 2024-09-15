@@ -7,6 +7,7 @@ import { useAppNavigation } from "../../../hooks/nav/useAppNavigation";
 import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
 import { ImageDetails } from "../../../store/eurofurence/types";
 import { Image, ImageProps } from "./Image";
+import { sourceFromImage } from "./Image.common";
 
 export type BannerProps = {
     /**
@@ -45,7 +46,7 @@ export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable })
                 if (viewable && image) navigation.navigate("Viewer", { id: image.Id });
             }}
         >
-            <Image style={[styles.image, aspect, style]} contentFit={undefined} source={image.Url} placeholder={placeholder} />
+            <Image style={[styles.image, aspect, style]} contentFit={undefined} source={sourceFromImage(image)} placeholder={placeholder} />
         </TouchableOpacity>
     );
 };

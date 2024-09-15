@@ -10,6 +10,7 @@ import { RecordId } from "../../store/eurofurence/types";
 import { Image } from "../generic/atoms/Image";
 import { Header } from "../generic/containers/Header";
 import { platformShareIcon } from "../generic/atoms/Icon";
+import { sourceFromImage } from "../generic/atoms/Image.common";
 import { minZoomFor, shareImage } from "./Viewer.common";
 
 const viewerPadding = 20;
@@ -47,7 +48,7 @@ export const ViewerImageRecord: FC<ViewerImageRecordProps> = ({ id }) => {
                     bindToBorders={true}
                 >
                     <View style={styleContainer}>
-                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={image.Url} priority="high" />
+                        <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={sourceFromImage(image)} priority="high" />
                     </View>
                 </ZoomableView>
             )}

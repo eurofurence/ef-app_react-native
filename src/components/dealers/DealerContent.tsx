@@ -26,6 +26,7 @@ import { ImageExButton } from "../generic/containers/ImageButton";
 import { LinkItem } from "../maps/LinkItem";
 import { conTimeZone } from "../../configuration";
 import { platformShareIcon } from "../generic/atoms/Icon";
+import { sourceFromImage } from "../generic/atoms/Image.common";
 
 const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
     // Nothing to display for no categories.
@@ -130,7 +131,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
             {!dealer.Artist ? null : (
                 <View style={[appStyles.shadow, styles.avatarCircle]}>
-                    <Image contentFit="cover" style={styles.avatarImage} source={dealer.Artist.Url} />
+                    <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.Artist)} />
                 </View>
             )}
 
