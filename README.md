@@ -17,4 +17,4 @@ with React Native we can easily push this out to mobile devices.
 
 ## Security
 
-For security issues, kindly email us at [it@eurofurence.org](mailto:it@eurofurence.org) instead of posting a public issue on GitHub.
+For security issues, kindly message us instead of posting a public issue on GitHub.
