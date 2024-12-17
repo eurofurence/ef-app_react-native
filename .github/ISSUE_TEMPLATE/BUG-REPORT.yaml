@@ -12,7 +12,7 @@ body:
       validations:
           required: true
       attributes:
-          label: "👟 Reproduction steps"
+          label: "Reproduction steps"
           description: "How do you trigger this bug? Please walk us through it step by step."
           placeholder: "When I ..."
     - type: textarea
