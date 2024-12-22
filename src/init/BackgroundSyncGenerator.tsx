@@ -14,7 +14,7 @@ import { captureNotificationException } from "../sentryHelpers";
 const BG_NOTIFICATIONS_NAME = "background_notifications";
 
 // Define task for notification handling.
-defineTask(BG_NOTIFICATIONS_NAME, (body: TaskManagerTaskBody<any>) => {
+defineTask(BG_NOTIFICATIONS_NAME, async (body: TaskManagerTaskBody<any>) => {
     // Skip method if error was given to be handled.
     if (body.error) {
         captureEvent(body.error);

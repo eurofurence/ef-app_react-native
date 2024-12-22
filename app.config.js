@@ -125,9 +125,9 @@ module.exports = {
                 "expo-build-properties",
                 {
                     ios: {
-                        deploymentTarget: "13.4",
+                        deploymentTarget: "15.1",
                         useFrameworks: "static",
-                        ccacheEnabled: true,
+                        cacheEnabled: true,
                         privacyManifestAggregationEnabled: true,
                     },
                 },
