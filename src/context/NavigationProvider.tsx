@@ -1,6 +1,6 @@
 import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
-import { captureException, reactNavigationIntegration } from "@sentry/react-native";
+import { captureException } from "@sentry/react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
