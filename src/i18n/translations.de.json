@@ -136,6 +136,7 @@
     "thank_you": "Vielen Dank für dein Feedback zu {{ eventTitle }}."
   },
   "Events": {
+    "long_running": "Läuft länger",
     "afternoon": "Nachmittags",
     "current_subtitle": "Diese Events finden gerade jetzt statt",
     "current_title": "Aktuelle Events",
