@@ -23,16 +23,19 @@ export type CountdownHeaderProps = {
 };
 
 const bannerBreakpoint = 600;
+
 const useCountdownTitle = (t: TFunction, now: Moment) => {
     const days = useAppSelector(eventDaysSelectors.selectAll);
 
+    // Corrected sorting
     const firstDay: EventDayRecord | undefined = chain(days)
-        .orderBy((it) => it.Date, "asc")
-        .first()
+        .orderBy((it) => it.Date, "asc") // Sort ascending for first day
+        .first() // Pick earliest event date
         .value();
+
     const lastDay: EventDayRecord | undefined = chain(days)
-        .orderBy((it) => it.Date, "desc")
-        .last()
+        .orderBy((it) => it.Date, "desc") // Sort descending for last day
+        .first() // Pick latest event date
         .value();
 
     // Try finding current day.
@@ -45,7 +48,7 @@ const useCountdownTitle = (t: TFunction, now: Moment) => {
     if (firstDay) {
         const firstDateMoment = moment.tz(firstDay.Date, conTimeZone);
         if (now.isBefore(firstDateMoment, "day")) {
-            const diff = moment.duration(now.diff(firstDateMoment)).humanize();
+            const diff = moment.duration(firstDateMoment.diff(now)).humanize();
             return t("before_event", { conName, diff });
         }
     }
@@ -58,7 +61,7 @@ const useCountdownTitle = (t: TFunction, now: Moment) => {
         }
     }
 
-    // This is only returned if there's no days from the API.
+    // This is only returned if there are no event days from the API.
     return conName;
 };
 
