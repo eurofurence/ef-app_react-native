@@ -21,6 +21,7 @@ export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay): Ev
             (partOfDay === "afternoon" && "weather-sunny") ||
             (partOfDay === "evening" && "weather-sunset-down") ||
             (partOfDay === "night" && "weather-night") ||
+            (partOfDay === "long_running" && "calendar-range") ||
             "weather-sunny") as IconNames,
     };
 }
