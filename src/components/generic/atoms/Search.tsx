@@ -1,8 +1,9 @@
 import { useIsFocused } from "@react-navigation/core";
 import React, { FC, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { BackHandler, StyleSheet } from "react-native";
+import { BackHandler, StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
+import SearchPlus from "@expo/vector-icons/FontAwesome5";
 
 import { withAlpha } from "../../../context/Theme";
 import { useThemeBackground, useThemeColor, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
@@ -34,21 +35,36 @@ export const Search: FC<SearchProps> = ({ filter, setFilter, placeholder }) => {
     }, [isFocused, filter, setFilter]);
 
     return (
-        <TextInput
-            style={[styles.searchField, styleLighten, styleText, labelTypeStyles.regular]}
-            value={filter}
-            onChangeText={setFilter}
-            placeholder={placeholder ?? t("placeholder")}
-            placeholderTextColor={withAlpha(colorText, 0.6)}
-        />
+        <View style={[styles.container, styleLighten]}>
+            <SearchPlus name="search" size={18} color={colorText} style={styles.icon} />
+            <TextInput
+                style={[styles.searchField, styleText, labelTypeStyles.regular]}
+                value={filter}
+                onChangeText={setFilter}
+                placeholder={placeholder ?? t("placeholder")}
+                placeholderTextColor={withAlpha(colorText, 0.6)}
+            />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
-    searchField: {
+    container: {
+        flexDirection: "row",
+        alignItems: "center",
+        borderRadius: 10,
         marginHorizontal: 5,
         marginVertical: 15,
-        borderRadius: 10,
-        padding: 10,
+        paddingHorizontal: 10,
+        backgroundColor: "white", // You can replace this with dynamic theming
+    },
+    icon: {
+        marginRight: 8,
+    },
+    searchField: {
+        flex: 1,
+        paddingVertical: 10,
+        fontSize: 16,
+        borderWidth: 0,
     },
 });
