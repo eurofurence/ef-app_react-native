@@ -25,5 +25,9 @@
       "offline_access"
     ],
     "settingsUrl": "https://identity.eurofurence.org/settings/profile"
+  },
+  "sentry": {
+    "dsn": "",
+    "enabled": false
   }
 }
