@@ -1,9 +1,11 @@
 import { reactNativeTracingIntegration } from "@sentry/react-native";
 import { init as sentryInit } from "@sentry/react-native/dist/js/sdk";
+import conventionConfig from "../../convention.config.json";
 
 sentryInit({
-    dsn: "https://696266a343bdef6d646954f75ee6ea72@o4507884376621056.ingest.de.sentry.io/4507884381732944",
+    dsn: conventionConfig.sentry.dsn,
     tracesSampleRate: 1,
+    enabled: conventionConfig.sentry.enabled || false,
     debug: false,
     integrations: [
         reactNativeTracingIntegration({
