@@ -19,11 +19,6 @@ const discovery = {
 };
 
 /**
- * Redirect url.
- */
-const redirectUri = authRedirect;
-
-/**
  * Token refresh interval.
  */
 const refreshInterval = 600_000;
@@ -210,7 +205,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         {
             clientId: authClientId,
             scopes: authScopes,
-            redirectUri,
+            redirectUri: authRedirect,
         },
         discovery,
     );
@@ -261,7 +256,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
                     clientId: authClientId,
                     code: codeResponse.params.code,
                     extraParams: request.codeVerifier ? { code_verifier: request.codeVerifier } : undefined,
-                    redirectUri,
+                    redirectUri: authRedirect,
                 },
                 discovery,
             );

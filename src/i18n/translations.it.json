@@ -47,6 +47,7 @@
     "when": "{{day}}, {{start}} fino alle {{finish}}."
   },
   "Events": {
+    "long_running": "Funziona più a lungo",
     "afternoon": "Al pomeriggio",
     "current_subtitle": "Questi eventi si stanno svolgendo ora",
     "current_title": "Eventi in corso",

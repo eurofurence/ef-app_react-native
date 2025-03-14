@@ -4,6 +4,7 @@ import moment from "moment-timezone";
 import { useEffect } from "react";
 
 import { Platform } from "react-native";
+import { PushNotificationTrigger } from "expo-notifications/src/Notifications.types";
 import { useAppDispatch } from "../../store";
 import { logFCMMessage } from "../../store/background/slice";
 import { useNotificationInteractionUtils } from "./useNotificationInteractionUtils";
@@ -22,7 +23,7 @@ export const useNotificationReceivedManager = () => {
     useEffect(() => {
         const receive = addNotificationReceivedListener(async ({ request: { content, trigger, identifier } }: Notification) => {
             try {
-                if (trigger?.type !== "push") return;
+                if ((trigger as PushNotificationTrigger).type !== "push") return;
 
                 // Track immediately when the message came in.
                 const now = moment();
@@ -30,12 +31,18 @@ export const useNotificationReceivedManager = () => {
                 // Always log receiving of the message.
                 console.log(`Received at ${now.format()}:`, trigger);
 
-                const data = (Platform.OS === "ios" ? trigger.payload : trigger.remoteMessage?.data) ?? {};
+                const data = (Platform.OS === "ios" ? (trigger as PushNotificationTrigger)?.payload : (trigger as PushNotificationTrigger)?.remoteMessage?.data) ?? {};
                 const event = data.Event as string | undefined;
                 const relatedId = data.RelatedId as string | undefined;
                 // const cid = data.CID;
-                const title: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.title : trigger.remoteMessage?.notification?.title;
-                const body: string = Platform.OS === "ios" ? (trigger.payload as any).aps?.alert?.body : trigger.remoteMessage?.notification?.body;
+                const title: string =
+                    Platform.OS === "ios"
+                        ? ((trigger as PushNotificationTrigger)?.payload as any).aps?.alert?.title
+                        : (trigger as PushNotificationTrigger)?.remoteMessage?.notification?.title;
+                const body: string =
+                    Platform.OS === "ios"
+                        ? ((trigger as PushNotificationTrigger)?.payload as any).aps?.alert?.body
+                        : (trigger as PushNotificationTrigger)?.remoteMessage?.notification?.body;
 
                 console.log("Parsed as push notification:", { event, title, body, data });
 
@@ -84,7 +91,7 @@ export const useNotificationReceivedManager = () => {
                 // Always dispatch a state update tracking the message. Format message
                 // as UTC, so that it can be sorted lexicographically.
                 const dateReceivedUtc = now.clone().utc().format();
-                dispatch(logFCMMessage({ dateReceivedUtc, content, trigger, identifier }));
+                dispatch(logFCMMessage({ dateReceivedUtc, content, trigger: trigger as PushNotificationTrigger, identifier }));
             } catch (error) {
                 // Capture scheduling errors, tag as notification.
                 captureException(error, {

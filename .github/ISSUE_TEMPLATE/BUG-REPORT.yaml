@@ -1,0 +1,66 @@
+name: 🪲 Bug Report
+description: File a bug report.
+title: "🪲 [Bug]: "
+labels: ["bug", "priority:low"]
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this report!
+    - type: textarea
+      id: steps-to-reproduce
+      validations:
+          required: true
+      attributes:
+          label: "Reproduction steps"
+          description: "How do you trigger this bug? Please walk us through it step by step."
+          placeholder: "When I ..."
+    - type: textarea
+      id: expected-behavior
+      validations:
+          required: true
+      attributes:
+          label: "👍 Expected behavior"
+          description: "What did you think would happen?"
+          placeholder: "It should ..."
+    - type: textarea
+      id: actual-behavior
+      validations:
+          required: true
+      attributes:
+          label: "👎 Actual Behavior"
+          description: "What did actually happen? Add screenshots, if applicable."
+          placeholder: "It actually ..."
+    - type: input
+      id: version
+      attributes:
+          label: Version
+          description: What version are you running?
+          placeholder: ex. 5.0.1
+      validations:
+          required: true
+    - type: dropdown
+      id: operating-system
+      attributes:
+          label: "Operating system"
+          description: "What OS is your device running on?"
+          options:
+              - Android
+              - iOS
+              - Something else
+      validations:
+          required: true
+    - type: textarea
+      id: logs
+      attributes:
+          label: Relevant log output
+          description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+          render: shell
+    - type: checkboxes
+      id: no-duplicate-issues
+      attributes:
+          label: "👀 No duplicate issues?"
+          description: "Have you checked for similar issues?"
+          options:
+              - label: "I checked and didn't find similar issue"
+                required: true

@@ -6,7 +6,7 @@ import { IconNames } from "../../components/generic/atoms/Icon";
 /**
  * Time categorized in part of day.
  */
-export type PartOfDay = "morning" | "afternoon" | "evening" | "night";
+export type PartOfDay = "morning" | "afternoon" | "evening" | "night" | "long_running";
 
 /**
  * Attendance day for dealers.

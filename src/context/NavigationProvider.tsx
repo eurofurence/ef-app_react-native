@@ -1,6 +1,6 @@
 import { LinkingOptions, NavigationContainer, NavigationContainerRef } from "@react-navigation/native";
 import { NavigationState } from "@react-navigation/routers";
-import { captureException, ReactNavigationInstrumentation } from "@sentry/react-native";
+import { captureException } from "@sentry/react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { FC, PropsWithChildren, useCallback, useMemo, useRef } from "react";
 
@@ -16,7 +16,10 @@ import { useAppSelector } from "../store";
 import { eventDaysSelectors, eventRoomsSelectors, eventTracksSelectors } from "../store/eurofurence/selectors/records";
 import { RecordId } from "../store/eurofurence/types";
 
-export const sentryRoutingInstrumentation = new ReactNavigationInstrumentation();
+/**
+ * This should no longer be needed.
+ */
+//export const sentryRoutingInstrumentation = reactNavigationIntegration();
 
 type LinkingConfig<ParamsList> = {
     initialRouteName?: keyof ParamsList;
@@ -158,7 +161,7 @@ export const NavigationProvider: FC<PropsWithChildren> = ({ children }) => {
             fallback={null}
             onReady={() => {
                 SplashScreen.hideAsync().catch();
-                sentryRoutingInstrumentation?.registerNavigationContainer(navigation.current);
+                //sentryRoutingInstrumentation?.registerNavigationContainer(navigation.current);
             }}
             onStateChange={(state) => {
                 onNavStateChange(state);

@@ -144,6 +144,7 @@
     "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}."
   },
   "Events": {
+    "long_running": "Runs longer",
     "afternoon": "In the afternoon",
     "current_subtitle": "These events are currently happening",
     "current_title": "Current Events",

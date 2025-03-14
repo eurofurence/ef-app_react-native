@@ -51,6 +51,7 @@
     "when": "{{day}}, {{start}} do {{finish}}."
   },
   "Events": {
+    "long_running": "Trwa dłużej",
     "afternoon": "Po południu",
     "current_subtitle": "Te punkty programu odbywają się w tej chwili",
     "current_title": "Bieżące punkty programu",

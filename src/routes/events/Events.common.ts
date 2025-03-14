@@ -93,6 +93,7 @@ export const useEventDayGroups = (t: TFunction, now: Moment, zone: string, all: 
         let sectionedEvening = false;
         let sectionedNight = false;
         let sectionedPassed = false;
+        let sectionedLongRunning = false;
 
         const result: (EventSectionProps | EventDetailsInstance)[] = [];
 
@@ -102,7 +103,14 @@ export const useEventDayGroups = (t: TFunction, now: Moment, zone: string, all: 
                 hidden++;
             } else if (now.isBefore(moment.utc(item.EndDateTimeUtc))) {
                 // First pass not passed.
-                if (item.PartOfDay === "morning") {
+                if (moment.utc(item.EndDateTimeUtc).diff(moment.utc(item.StartDateTimeUtc), "hours") > 4) {
+                    if (!sectionedLongRunning) {
+                        result.push(eventSectionForPartOfDay(t, "long_running"));
+                        sectionedLongRunning = true;
+                    }
+
+                    result.push(eventInstanceForNotPassed(item, now, zone));
+                } else if (item.PartOfDay === "morning") {
                     if (!sectionedMorning) {
                         result.push(eventSectionForPartOfDay(t, "morning"));
                         sectionedMorning = true;

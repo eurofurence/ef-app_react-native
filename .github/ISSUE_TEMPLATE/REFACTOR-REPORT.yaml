@@ -1,0 +1,33 @@
+name: 🚀 Enhancement
+description: Submit a proposal for a new feature or change
+title: "🚀 [Enhancement]: "
+labels: ["refactor", "priority:low"]
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this form!
+    - type: textarea
+      id: enhancement-description
+      validations:
+          required: true
+      attributes:
+          label: "Enhancement description"
+          description: "A clear and concise description of what the enhancement is."
+          placeholder: "You should add ..."
+    - type: textarea
+      id: pitch
+      validations:
+          required: true
+      attributes:
+          label: "Pitch"
+          description: "Please explain why this should be implemented and how it would be used. Add examples, if applicable."
+          placeholder: "In my use-case, ..."
+    - type: checkboxes
+      id: no-duplicate-issues
+      attributes:
+          label: "👀 No duplicate issues?"
+          description: "Have you checked for similar issues?"
+          options:
+              - label: "I checked and didn't find similar issue"
+                required: true
