@@ -12,7 +12,7 @@ export default tseslint.config(
     eslint.configs.recommended,
     ...tseslint.configs.recommended,
     {
-        // Override for some typescript we actuall kinda like
+        // Override for some typescript we actually kinda like
         rules: {
             "@typescript-eslint/no-explicit-any": "off",
         },
@@ -44,7 +44,7 @@ export default tseslint.config(
         },
     },
     {
-        // override for testing related stuff
+        // Override for testing related stuff
         files: ["**/setupTests.js"],
         extends: [tseslint.configs.disableTypeChecked],
         rules: {
@@ -72,14 +72,14 @@ export default tseslint.config(
         },
     },
     {
-        // Enfore importing rules
+        // Enforce importing rules
         files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
         plugins: {
             import: fixupPluginRules(ImportRules),
         },
         settings: {
             "import/resolver": {
-                typescript: true,
+                typescript: true, // Make sure TypeScript resolver is set up for imports
             },
         },
         rules: {
@@ -89,6 +89,18 @@ export default tseslint.config(
             "import/namespace": "warn",
             "import/imports-first": "warn",
             "import/order": "warn",
+        },
+    },
+    {
+        // Add support for parsing date-fns and related modules
+        files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+        parserOptions: {
+            ecmaVersion: 2020, // Ensure ECMAScript 2020 for module imports
+            sourceType: "module", // Enable ES module syntax
+        },
+        rules: {
+            // Additional rule overrides for date-fns handling
+            "import/no-unresolved": "off", // Ignore unresolved for modules like date-fns-tz
         },
     },
 );

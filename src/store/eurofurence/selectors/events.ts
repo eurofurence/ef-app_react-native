@@ -1,12 +1,11 @@
-import { createSelector } from "@reduxjs/toolkit";
-import moment, { Moment } from "moment/moment";
-
+import { isSameDay, isBefore, isWithinInterval, subMinutes } from "date-fns";
 import { EventDetails, RecordId } from "../types";
-import { eventsSelector } from "./records";
 
-export const selectFavoriteEvents = createSelector([eventsSelector.selectAll], (items) => items.filter((item) => item.Favorite));
+// Replace Redux selectors with plain functions that operate on an array of events.
 
-const baseEventGroupSelector = createSelector([eventsSelector.selectAll], (items) => {
+export const selectFavoriteEvents = (events: EventDetails[]): EventDetails[] => events.filter((event) => event.Favorite);
+
+export const baseEventGroup = (events: EventDetails[]) => {
     const result: {
         room: Record<string, EventDetails[]>;
         track: Record<string, EventDetails[]>;
@@ -17,33 +16,48 @@ const baseEventGroupSelector = createSelector([eventsSelector.selectAll], (items
         day: {},
     };
 
-    for (const event of items) {
+    for (const event of events) {
         if (event.ConferenceRoomId) (result.room[event.ConferenceRoomId] ??= []).push(event);
         if (event.ConferenceTrackId) (result.track[event.ConferenceTrackId] ??= []).push(event);
         if (event.ConferenceDayId) (result.day[event.ConferenceDayId] ??= []).push(event);
     }
     return result;
-});
+};
 
-// Lists all created already, just re-referenced.
-export const selectEventsByRoom = createSelector([baseEventGroupSelector, (_state, roomId: RecordId) => roomId], (events, roomId) => events.room[roomId] ?? []);
-export const selectEventsByTrack = createSelector([baseEventGroupSelector, (_state, trackId: RecordId) => trackId], (events, trackId) => events.track[trackId] ?? []);
-export const selectEventsByDay = createSelector([baseEventGroupSelector, (_state, dayId: RecordId) => dayId], (events, dayId) => events.day[dayId] ?? []);
+export const selectEventsByRoom = (events: EventDetails[], roomId: RecordId): EventDetails[] => {
+    const groups = baseEventGroup(events);
+    return groups.room[roomId] ?? [];
+};
 
-export const filterHappeningTodayEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
-    events.filter((it) => now.isSame(it.StartDateTimeUtc, "day")).filter((it) => now.isBefore(moment.utc(it.EndDateTimeUtc)));
+export const selectEventsByTrack = (events: EventDetails[], trackId: RecordId): EventDetails[] => {
+    const groups = baseEventGroup(events);
+    return groups.track[trackId] ?? [];
+};
 
-export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Moment) =>
-    events.filter((it) => now.isBetween(moment.utc(it.StartDateTimeUtc), moment.utc(it.EndDateTimeUtc)));
+export const selectEventsByDay = (events: EventDetails[], dayId: RecordId): EventDetails[] => {
+    const groups = baseEventGroup(events);
+    return groups.day[dayId] ?? [];
+};
 
-export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Moment) =>
+export const filterHappeningTodayEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Date): T[] =>
+    events.filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc))).filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)));
+
+export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeUtc" | "EndDateTimeUtc">>(events: T[], now: Date): T[] =>
+    events.filter((it) =>
+        isWithinInterval(now, {
+            start: new Date(it.StartDateTimeUtc),
+            end: new Date(it.EndDateTimeUtc),
+        }),
+    );
+
+export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Date): T[] =>
     events.filter((it) => {
-        const startMoment = moment.utc(it.StartDateTimeUtc, true).subtract(30, "minutes");
-        const endMoment = moment.utc(it.StartDateTimeUtc, true);
-        return now.isBetween(startMoment, endMoment);
+        const startDate = new Date(it.StartDateTimeUtc);
+        const startMinus30 = subMinutes(startDate, 30);
+        return isWithinInterval(now, { start: startMinus30, end: startDate });
     });
 
-export const selectUpdatedFavoriteEvents = createSelector([selectFavoriteEvents, (state) => state.auxiliary.lastViewTimesUtc], (favorites, lastViewTimesUtc) =>
-    // Is favorite and has ever been viewed and the update is after when it was viewed.
-    favorites.filter((event) => lastViewTimesUtc && event.Id in lastViewTimesUtc && moment.utc(event.LastChangeDateTimeUtc).isAfter(moment.utc(lastViewTimesUtc[event.Id]))),
-);
+export const selectUpdatedFavoriteEvents = (favorites: EventDetails[], lastViewTimesUtc?: Record<string, string>): EventDetails[] => {
+    if (!lastViewTimesUtc) return favorites;
+    return favorites.filter((event) => event.Id in lastViewTimesUtc && new Date(event.LastChangeDateTimeUtc) > new Date(lastViewTimesUtc[event.Id]));
+};

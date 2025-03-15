@@ -1,18 +1,35 @@
-import { createSelector } from "@reduxjs/toolkit";
 import { flatMap, maxBy, uniq } from "lodash";
-import moment from "moment/moment";
+import { parseISO, isAfter } from "date-fns";
 
 import { DealerDetails } from "../types";
-import { dealersSelectors } from "./records";
+import { useDataCache } from "@/context/DataCacheProvider";
 
-export const selectDealersInRegular = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => !it.IsAfterDark));
-export const selectDealersInAd = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((it) => it.IsAfterDark));
-export const selectFavoriteDealers = createSelector([dealersSelectors.selectAll], (dealers) => dealers.filter((dealer) => dealer.Favorite));
+export const useDealersData = () => {
+    const { getAllCacheSync } = useDataCache();
+    return getAllCacheSync<DealerDetails[]>("dealers") || [];
+};
+
+export const selectDealersInRegular = () => {
+    const dealers = useDealersData();
+    return dealers.filter((it) => !it.data[0].IsAfterDark);
+};
+
+export const selectDealersInAd = () => {
+    const dealers = useDealersData();
+    return dealers.filter((it) => it.data[0].IsAfterDark);
+};
+
+export const selectFavoriteDealers = () => {
+    const dealers = useDealersData();
+    return dealers.filter((dealer) => dealer.data[0].Favorite);
+};
 
 /**
  * TF-IDF category mapper. Returns the category for a dealer that is the most "unique" for them among all other dealers.
  */
-export const selectDealerCategoryMapper = createSelector([dealersSelectors.selectAll], (dealers) => {
+export const selectDealerCategoryMapper = () => {
+    const dealers = useDealersData();
+
     function tf(category: string, categories: string[]) {
         let n = 0;
         for (const item of categories) if (item === category) n++;
@@ -23,9 +40,9 @@ export const selectDealerCategoryMapper = createSelector([dealersSelectors.selec
     function idf(category: string) {
         let n = 0;
         for (const item of dealers) {
-            if (item.Categories)
-                for (let j = 0; j < item.Categories.length; j++) {
-                    if (item.Categories[j] === category) {
+            if (item.data[0].Categories)
+                for (let j = 0; j < item.data[0].Categories.length; j++) {
+                    if (item.data[0].Categories[j] === category) {
                         n++;
                         break;
                     }
@@ -34,28 +51,35 @@ export const selectDealerCategoryMapper = createSelector([dealersSelectors.selec
         return Math.log(dealers.length / (n + 1)) + 1;
     }
 
-    const allCategories = uniq(flatMap(dealers, (dealer) => dealer.Categories ?? []));
+    const allCategories = uniq(flatMap(dealers, (dealer) => dealer.data[0].Categories ?? []));
     const allIdf = Object.fromEntries(allCategories.map((category) => [category, idf(category)]));
 
     return (dealer: DealerDetails) => {
         const categories = dealer.Categories;
         return categories ? maxBy(categories, (category) => tf(category, categories) * allIdf[category]!) : null;
     };
-});
+};
 
-export const selectDealerCategories = createSelector([dealersSelectors.selectAll], (dealers) => {
+export const selectDealerCategories = () => {
+    const dealers = useDealersData();
     const result: string[] = [];
     for (const dealer of dealers) {
-        if (dealer.Categories) {
-            for (const category of dealer.Categories) {
+        if (dealer.data[0].Categories) {
+            for (const category of dealer.data[0].Categories) {
                 if (!result.includes(category)) result.push(category);
             }
         }
     }
     return result;
-});
+};
 
-export const selectUpdatedFavoriteDealers = createSelector([selectFavoriteDealers, (state) => state.auxiliary.lastViewTimesUtc], (favorites, lastViewTimesUtc) =>
-    // Is favorite and has ever been viewed and the update is after when it was viewed.
-    favorites.filter((dealer) => lastViewTimesUtc && dealer.Id in lastViewTimesUtc && moment.utc(dealer.LastChangeDateTimeUtc).isAfter(moment.utc(lastViewTimesUtc[dealer.Id]))),
-);
+export const selectUpdatedFavoriteDealers = () => {
+    const dealers = useDealersData();
+    const { getCacheSync } = useDataCache();
+    const lastViewTimesUtc = getCacheSync<Record<string, string>>("auxiliary", "lastViewTimesUtc")?.data || {};
+
+    return dealers.filter(
+        (dealer) =>
+            lastViewTimesUtc && dealer.data[0].Id in lastViewTimesUtc && isAfter(parseISO(dealer.data[0].LastChangeDateTimeUtc), parseISO(lastViewTimesUtc[dealer.data[0].Id])),
+    );
+};

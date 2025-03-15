@@ -6,9 +6,9 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DealersSectionedList } from "../../components/dealers/DealersSectionedList";
-import { Label } from "../../components/generic/atoms/Label";
-import { Search } from "../../components/generic/atoms/Search";
-import { Badge } from "../../components/generic/containers/Badge";
+import { Label } from "@/components/generic/atoms/Label";
+import { Search } from "@/components/generic/atoms/Search";
+import { Badge } from "@/components/generic/containers/Badge";
 import { useFuseIntegration } from "../../hooks/searching/useFuseIntegration";
 import { useNow } from "../../hooks/time/useNow";
 import { useAppSelector } from "../../store";

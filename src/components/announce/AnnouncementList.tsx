@@ -2,13 +2,11 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement } from "react";
 import { StyleSheet } from "react-native";
 
-import { useThemeName } from "../../hooks/themes/useThemeHooks";
-import { AnnounceListProps } from "../../routes/announce/AnnounceList";
-import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { router } from "expo-router";
 import { AnnouncementCard, AnnouncementDetailsInstance } from "./AnnouncementCard";
+import { useThemeName } from "@/hooks/themes/useThemeHooks";
 
 export type AnnouncementListProps = {
-    navigation: AnnounceListProps["navigation"];
     leader?: ReactElement;
     announcements: AnnouncementDetailsInstance[];
     empty?: ReactElement;
@@ -16,13 +14,10 @@ export type AnnouncementListProps = {
     padEnd?: boolean;
 };
 
-export const AnnouncementList: FC<AnnouncementListProps> = ({ navigation, leader, announcements, empty, trailer, padEnd = true }) => {
+export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announcements, empty, trailer, padEnd = true }) => {
     const theme = useThemeName();
-    const synchronizer = useSynchronizer();
     return (
         <FlashList
-            refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronizeUi}
             contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             ListHeaderComponent={leader}
@@ -37,8 +32,9 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ navigation, leader
                         key={item.details.Id}
                         announcement={item}
                         onPress={(announcement) =>
-                            navigation.navigate("AnnounceItem", {
-                                id: announcement.Id,
+                            router.navigate({
+                                pathname: "/announcements/[announcementId]",
+                                params: { announcementId: announcement.Id },
                             })
                         }
                     />

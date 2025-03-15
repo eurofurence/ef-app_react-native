@@ -1,15 +1,17 @@
-import { createSelector } from "@reduxjs/toolkit";
-
+import { useAuxiliary } from "@/store/auxiliary/slice";
 import { RecordId } from "../eurofurence/types";
-import { RootState } from "../index";
 
-export const selectLastViewedUtc = createSelector(
-    [(state: RootState) => state.auxiliary.lastViewTimesUtc, (_state, id: RecordId) => id],
-    (lastViewedTimesUtc, id): string | null => {
-        return lastViewedTimesUtc?.[id] ?? null;
-    },
-);
+export const selectLastViewedUtc = (id: RecordId) => {
+    const { state } = useAuxiliary();
+    return state.lastViewTimesUtc?.[id] ?? null;
+};
 
-export const selectHiddenEventIds = createSelector([(state: RootState) => state.auxiliary.hiddenEvents], (ids) => ids ?? []);
+export const selectHiddenEventIds = () => {
+    const { state } = useAuxiliary();
+    return state.hiddenEvents ?? [];
+};
 
-export const selectFavoriteDealerIds = createSelector([(state: RootState) => state.auxiliary.favoriteDealers], (ids) => ids ?? []);
+export const selectFavoriteDealerIds = () => {
+    const { state } = useAuxiliary();
+    return state.favoriteDealers ?? [];
+};

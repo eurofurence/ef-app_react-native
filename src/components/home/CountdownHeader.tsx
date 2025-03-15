@@ -1,75 +1,81 @@
 import { useIsFocused } from "@react-navigation/core";
 import { TFunction } from "i18next";
 import { chain } from "lodash";
-import moment, { Moment } from "moment-timezone";
-
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";
 
-import { conId, conName, conTimeZone } from "../../configuration";
-import { useNow } from "../../hooks/time/useNow";
-import { useAppSelector } from "../../store";
-import { eventDaysSelectors } from "../../store/eurofurence/selectors/records";
-import { EventDayRecord } from "../../store/eurofurence/types";
-import { assetSource } from "../../util/assets";
+import { fromZonedTime } from "date-fns-tz"; // Import from date-fns-tz package
+import { parseISO, isSameDay } from "date-fns"; // Import date-fns utilities
 import { Image } from "../generic/atoms/Image";
 import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { Label, labelTypeStyles } from "../generic/atoms/Label";
 import { Col } from "../generic/containers/Col";
+import { useNow } from "@/hooks/time/useNow";
+import { useDataCache } from "@/context/DataCacheProvider"; // Replace Redux
+import { conId, conName, conTimeZone } from "@/configuration";
+import { assetSource } from "@/util/assets";
+import { EventDayRecord } from "@/store/eurofurence/types";
 
 export type CountdownHeaderProps = {
     style?: StyleProp<ViewStyle>;
 };
 
 const bannerBreakpoint = 600;
-const useCountdownTitle = (t: TFunction, now: Moment) => {
-    const days = useAppSelector(eventDaysSelectors.selectAll);
 
-    const firstDay: EventDayRecord | undefined = chain(days)
+/**
+ * Checks if a given Date is the same day as another, considering the provided timezone.
+ */
+const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
+    const localDate1 = fromZonedTime(date1, timezone); // Convert date1 to UTC based on the timezone
+    const localDate2 = fromZonedTime(parseISO(date2), timezone); // Convert date2 (event date) to UTC based on the timezone
+
+    return isSameDay(localDate1, localDate2); // Compare the two dates
+};
+
+/**
+ * Calculates the countdown title based on current time and event days.
+ */
+const useCountdownTitle = (t: TFunction, now: Date) => {
+    const { getCacheSync } = useDataCache();
+    const days = getCacheSync<EventDayRecord[]>("eventDays", "all")?.data ?? [];
+
+    const sortedDays = chain(days)
         .orderBy((it) => it.Date, "asc")
-        .first()
         .value();
-    const lastDay: EventDayRecord | undefined = chain(days)
-        .orderBy((it) => it.Date, "desc")
-        .last()
-        .value();
+    const firstDay = sortedDays[0];
+    const lastDay = sortedDays[sortedDays.length - 1];
 
     // Try finding current day.
-    const currentDay: EventDayRecord | undefined = days.find((it) => now.isSame(moment.tz(it.Date, conTimeZone), "day"));
-    if (currentDay) {
-        return currentDay.Name;
-    }
+    const currentDay = days.find((it) => isSameDayInTimezone(now, it.Date, conTimeZone));
+    if (currentDay) return currentDay.Name;
 
     // Check if before first day.
     if (firstDay) {
-        const firstDateMoment = moment.tz(firstDay.Date, conTimeZone);
-        if (now.isBefore(firstDateMoment, "day")) {
-            const diff = moment.duration(now.diff(firstDateMoment)).humanize();
+        const firstDate = new Date(firstDay.Date);
+        if (now < firstDate) {
+            const diff = Math.ceil((firstDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
             return t("before_event", { conName, diff });
         }
     }
 
     // Check if after last day.
     if (lastDay) {
-        const lastDateMoment = moment.tz(lastDay.Date, conTimeZone);
-        if (now.isAfter(lastDateMoment, "day")) {
+        const lastDate = new Date(lastDay.Date);
+        if (now > lastDate) {
             return t("after_event");
         }
     }
 
-    // This is only returned if there's no days from the API.
-    return conName;
+    return conName; // Fallback if no event days exist.
 };
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
     const { t } = useTranslation("Countdown");
     const isFocused = useIsFocused();
-    const now = useNow(isFocused ? 60 : "static");
+    const now = useNow(isFocused ? 60 : "static"); // Convert to Date
 
-    // Pick background based on device dimensions.
     const { width } = useWindowDimensions();
-
     const subtitle = useCountdownTitle(t, now);
 
     return (
@@ -87,10 +93,6 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
                 <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
                     {conId}
                 </Label>
-
-                {/* Subtitle is pushed up a bit and to the left, as the conID label has a lot of extra whitespace before */}
-                {/* due to font characteristics. This lines that up. The bottom margin is set to negative to eliminate */}
-                {/* the extra space due to normal line height. */}
                 <Label ml={2} mb={labelTypeStyles.compact.fontSize - labelTypeStyles.compact.lineHeight} type="compact" variant="shadow" color="white" ellipsizeMode="tail">
                     {subtitle}
                 </Label>

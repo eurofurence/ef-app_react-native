@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 

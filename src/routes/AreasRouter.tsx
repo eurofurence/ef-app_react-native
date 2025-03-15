@@ -1,20 +1,15 @@
-import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs/src/types";
-import { CompositeScreenProps } from "@react-navigation/core";
-import { NavigatorScreenParams } from "@react-navigation/native";
-import { StackScreenProps } from "@react-navigation/stack";
 import React, { FC, ReactNode, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Toast } from "../components/Toast";
-import { Tabs, TabsRef } from "../components/generic/containers/Tabs";
+import { Toast } from "@/components/Toast";
+import { Tabs, TabsRef } from "@/components/generic/containers/Tabs";
 import { MainMenu } from "../components/mainmenu/MainMenu";
-import { useSynchronizer } from "../components/sync/SynchronizationProvider";
-import { useToastMessages } from "../context/ToastContext";
+import { useToastMessages } from "@/context/ToastContext";
 import { Home, HomeParams } from "./home/Home";
 import { EventsRouter, EventsRouterParams } from "./events/EventsRouter";
 import { DealersRouter, DealersRouterParams } from "./dealers/DealersRouter";
-import { IndexRouterParamsList } from "./IndexRouter";
 
 /**
  * Minimum padding to use if safe area is less.
@@ -45,18 +40,6 @@ export type AreasRouterParamsList = {
  * Create an instance of the tabs-navigator with the provided routes.
  */
 export const Tab = createBottomTabNavigator<AreasRouterParamsList>();
-
-/**
- * Params handled by the screen in route. Delegated parameters for the areas.
- */
-export type AreasRouterParams = NavigatorScreenParams<AreasRouterParamsList>;
-
-/**
- * The properties to the screen as a component. Delegated parameters for the areas. TODO: Verify.
- */
-export type AreasRouterProps =
-    // Route carrying from start screen at "Areas", navigation via own parameter list and parent.
-    CompositeScreenProps<StackScreenProps<IndexRouterParamsList, "Areas">, BottomTabScreenProps<AreasRouterParamsList> & StackScreenProps<IndexRouterParamsList>>;
 
 type AreasTabBarProps = BottomTabBarProps & {
     /**
@@ -116,24 +99,19 @@ const AreasTabBar: FC<AreasTabBarProps> = ({ state, descriptors, navigation, ins
  * Events and dealers both provide a nested navigator and therefore are wrapped in their respective routers.
  * @constructor
  */
-export const AreasRouter: FC<AreasRouterProps> = () => {
+export const AreasRouter: FC = () => {
     const { t } = useTranslation("Menu");
 
     // Areas router is the tabs provider and therefore renders toast messages and
     // displays the current syncing status. Be aware that this does only display
     // on the primary area screens, not on detail pages.
     const toastMessages = useToastMessages(5);
-    const { isSynchronizing } = useSynchronizer();
 
     return (
         <Tab.Navigator
             screenOptions={{ headerShown: false }}
             tabBar={(props) => (
-                <AreasTabBar
-                    activity={isSynchronizing}
-                    notice={!toastMessages.length ? null : [...toastMessages].reverse().map((toast) => <Toast key={toast.id} {...toast} loose={false} />)}
-                    {...props}
-                />
+                <AreasTabBar notice={!toastMessages.length ? null : [...toastMessages].reverse().map((toast) => <Toast key={toast.id} {...toast} loose={false} />)} {...props} />
             )}
         >
             <Tab.Screen name="Home" options={{ title: t("home"), icon: "home" } as any} component={Home} />

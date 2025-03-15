@@ -1,28 +1,20 @@
-import { createSelector } from "@reduxjs/toolkit";
+import React, { useEffect, useMemo, useState } from "react";
 import Fuse, { FuseOptionKey, IFuseOptions } from "fuse.js";
 import { flatten } from "lodash";
-
+import { useDataCache } from "@/context/DataCacheProvider";
 import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails } from "../types";
-import { selectDealersInAd, selectDealersInRegular } from "./dealers";
-import { announcementsSelectors, dealersSelectors, eventsSelector, knowledgeEntriesSelectors } from "./records";
 
-/**
- * T with a Type tag.
- */
-export type WithType<T, TType> = T & { type: TType };
+// Global type for search results
+export type GlobalSearchResult = (DealerDetails & { type: "dealer" }) | (EventDetails & { type: "event" }) | (KnowledgeEntryDetails & { type: "knowledgeEntry" });
 
-/**
- * Search options.
- */
+// ----- Search Options -----
 const searchOptions: IFuseOptions<any> = {
     shouldSort: true,
     threshold: 0.25,
     ignoreLocation: true,
 };
 
-/**
- * Properties to use in search.
- */
+// ----- Dealer Search Properties -----
 const dealerSearchProperties: FuseOptionKey<DealerDetails>[] = [
     {
         name: "DisplayNameOrAttendeeNickname",
@@ -50,107 +42,124 @@ const dealerSearchProperties: FuseOptionKey<DealerDetails>[] = [
         weight: 1,
     },
 ];
-export const selectDealersAllSearchIndex = createSelector([dealersSelectors.selectAll], (data) => new Fuse(data, searchOptions, Fuse.createIndex(dealerSearchProperties, data)));
-export const selectDealersInRegularSearchIndex = createSelector([selectDealersInRegular], (data) => new Fuse(data, searchOptions, Fuse.createIndex(dealerSearchProperties, data)));
-export const selectDealersInAdSearchIndex = createSelector([selectDealersInAd], (data) => new Fuse(data, searchOptions, Fuse.createIndex(dealerSearchProperties, data)));
-/**
- * Properties to use in search.
- */
+
+// ----- Event Search Properties -----
 const eventSearchProperties: FuseOptionKey<EventDetails>[] = [
-    {
-        name: "Title",
-        weight: 2,
-    },
-    {
-        name: "SubTitle",
-        weight: 1,
-    },
-    {
-        name: "Abstract",
-        weight: 0.5,
-    },
-    {
-        name: "ConferenceRoom.Name",
-        weight: 0.333,
-    },
-    {
-        name: "ConferenceTrack.Name",
-        weight: 0.333,
-    },
-    {
-        name: "Abstract",
-        weight: 0.5,
-    },
-    {
-        name: "PanelHosts",
-        weight: 0.1,
-    },
+    { name: "Title", weight: 2 },
+    { name: "SubTitle", weight: 1 },
+    { name: "Abstract", weight: 0.5 },
+    { name: "ConferenceRoom.Name", weight: 0.333 },
+    { name: "ConferenceTrack.Name", weight: 0.333 },
+    { name: "Abstract", weight: 0.5 },
+    { name: "PanelHosts", weight: 0.1 },
 ];
 
-export const selectEventsAllSearchIndex = createSelector([eventsSelector.selectAll], (data) => new Fuse(data, searchOptions, Fuse.createIndex(eventSearchProperties, data)));
-/**
- * Properties to use in search.
- */
+// ----- Knowledge Entry Search Properties -----
 const kbSearchProperties: FuseOptionKey<KnowledgeEntryDetails>[] = [
-    {
-        name: "Title",
-        weight: 1.5,
-    },
-    {
-        name: "Text",
-        weight: 1,
-    },
+    { name: "Title", weight: 1.5 },
+    { name: "Text", weight: 1 },
 ];
 
-export const selectKbAllSearchIndex = createSelector([knowledgeEntriesSelectors.selectAll], (data) => new Fuse(data, searchOptions, Fuse.createIndex(kbSearchProperties, data)));
-
-export const selectGlobalSearchIndex = createSelector(
-    [dealersSelectors.selectAll, eventsSelector.selectAll, knowledgeEntriesSelectors.selectAll],
-    (dealers, events, knowledgeEntries) => {
-        const data = new Array<WithType<DealerDetails, "dealer"> | WithType<EventDetails, "event"> | WithType<KnowledgeEntryDetails, "knowledgeEntry">>(
-            dealers.length + events.length + knowledgeEntries.length,
-        );
-        for (const dealer of dealers) data.push({ ...dealer, type: "dealer" });
-        for (const event of events) data.push({ ...event, type: "event" });
-        for (const knowledgeEntry of knowledgeEntries) data.push({ ...knowledgeEntry, type: "knowledgeEntry" });
-
-        return new Fuse(
-            data,
-            { ...searchOptions, threshold: 0.1 },
-            Fuse.createIndex(
-                [
-                    ...(dealerSearchProperties as FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
-                    ...(eventSearchProperties as FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
-                    ...(kbSearchProperties as FuseOptionKey<DealerDetails | EventDetails | KnowledgeEntryDetails>[]),
-                ],
-                data,
-            ),
-        );
-    },
-);
-/**
- * Properties to use in search.
- */
+// ----- Announcement Search Properties -----
 const announceSearchProperties: FuseOptionKey<AnnouncementDetails>[] = [
-    {
-        name: "NormalizedTitle",
-        weight: 1.5,
-    },
-    {
-        name: "Content",
-        weight: 1,
-    },
-    {
-        name: "Author",
-        weight: 0.5,
-    },
-    {
-        name: "Area",
-        weight: 0.5,
-    },
+    { name: "NormalizedTitle", weight: 1.5 },
+    { name: "Content", weight: 1 },
+    { name: "Author", weight: 0.5 },
+    { name: "Area", weight: 0.5 },
 ];
 
-export const selectAnnounceAllSearchIndex = createSelector(
-    [announcementsSelectors.selectAll],
-    (data) => new Fuse(data, searchOptions, Fuse.createIndex(announceSearchProperties, data)),
-);
+// ----- Hooks to create Fuse Search Indexes using DataCacheProvider -----
+
+export const useDealersSearchIndex = () => {
+    const { getAllCache } = useDataCache();
+    const [dealers, setDealers] = useState<DealerDetails[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const cached = await getAllCache<DealerDetails>("dealers");
+            setDealers(cached.map((item) => item.data));
+        })();
+    }, [getAllCache]);
+
+    return useMemo(() => new Fuse(dealers, searchOptions, Fuse.createIndex(dealerSearchProperties, dealers)), [dealers]);
+};
+
+export const useEventsSearchIndex = () => {
+    const { getAllCache } = useDataCache();
+    const [events, setEvents] = useState<EventDetails[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const cached = await getAllCache<EventDetails>("events");
+            setEvents(cached.map((item) => item.data));
+        })();
+    }, [getAllCache]);
+
+    return useMemo(() => new Fuse(events, searchOptions, Fuse.createIndex(eventSearchProperties, events)), [events]);
+};
+
+export const useKbSearchIndex = () => {
+    const { getAllCache } = useDataCache();
+    const [entries, setEntries] = useState<KnowledgeEntryDetails[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const cached = await getAllCache<KnowledgeEntryDetails>("knowledgeEntries");
+            setEntries(cached.map((item) => item.data));
+        })();
+    }, [getAllCache]);
+
+    return useMemo(() => new Fuse(entries, searchOptions, Fuse.createIndex(kbSearchProperties, entries)), [entries]);
+};
+
+export const useAnnounceSearchIndex = () => {
+    const { getAllCache } = useDataCache();
+    const [announcements, setAnnouncements] = useState<AnnouncementDetails[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const cached = await getAllCache<AnnouncementDetails>("announcements");
+            setAnnouncements(cached.map((item) => item.data));
+        })();
+    }, [getAllCache]);
+
+    return useMemo(() => new Fuse(announcements, searchOptions, Fuse.createIndex(announceSearchProperties, announcements)), [announcements]);
+};
+
+export const useGlobalSearchIndex = () => {
+    const { getAllCache } = useDataCache();
+    const [dealers, setDealers] = useState<DealerDetails[]>([]);
+    const [events, setEvents] = useState<EventDetails[]>([]);
+    const [knowledgeEntries, setKnowledgeEntries] = useState<KnowledgeEntryDetails[]>([]);
+
+    useEffect(() => {
+        (async () => {
+            const cachedDealers = await getAllCache<DealerDetails>("dealers");
+            const cachedEvents = await getAllCache<EventDetails>("events");
+            const cachedKb = await getAllCache<KnowledgeEntryDetails>("knowledgeEntries");
+            setDealers(cachedDealers.map((item) => item.data));
+            setEvents(cachedEvents.map((item) => item.data));
+            setKnowledgeEntries(cachedKb.map((item) => item.data));
+        })();
+    }, [getAllCache]);
+
+    const data: GlobalSearchResult[] = useMemo(() => {
+        return [
+            ...dealers.map((dealer) => ({ ...dealer, type: "dealer" })),
+            ...events.map((event) => ({ ...event, type: "event" })),
+            ...knowledgeEntries.map((entry) => ({ ...entry, type: "knowledgeEntry" })),
+        ];
+    }, [dealers, events, knowledgeEntries]);
+
+    return useMemo(
+        () =>
+            new Fuse<GlobalSearchResult>(
+                data,
+                { ...searchOptions, threshold: 0.1 },
+                Fuse.createIndex([...dealerSearchProperties, ...eventSearchProperties, ...kbSearchProperties] as FuseOptionKey<GlobalSearchResult>[], data),
+            ),
+        [data],
+    );
+};
+
+export { searchOptions, dealerSearchProperties, eventSearchProperties, kbSearchProperties, announceSearchProperties };
