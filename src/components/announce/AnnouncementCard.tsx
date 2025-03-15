@@ -1,29 +1,19 @@
-import moment, { Moment } from "moment-timezone";
-import React, { FC } from "react";
+import { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
-import { useThemeBackground, useThemeName } from "../../hooks/themes/useThemeHooks";
-import { AnnouncementDetails } from "../../store/eurofurence/types";
+import { formatDistanceToNow, parseISO } from "date-fns"; // Importing date-fns functions
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";
 import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { sourceFromImage } from "../generic/atoms/Image.common";
 import { colorForArea } from "./utils";
+import { AnnouncementDetails } from "@/store/eurofurence/types";
+import { useThemeBackground, useThemeName } from "@/hooks/themes/useThemeHooks";
 
 export type AnnouncementDetailsInstance = {
     details: AnnouncementDetails;
     time: string;
 };
-
-/**
- * Creates the announcement instance props for an upcoming or running announcement.
- * @param details The details to use.
- * @param now The moment to check against.
- */
-export function announcementInstanceForAny(details: AnnouncementDetails, now: Moment): AnnouncementDetailsInstance {
-    return { details, time: moment.duration(moment.utc(details.ValidFromDateTimeUtc).diff(now)).humanize(true) };
-}
 
 export type AnnouncementCardProps = {
     containerStyle?: ViewStyle;
@@ -39,6 +29,7 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, st
     const saturationValue = useThemeName() === "dark" ? 0.5 : 0.7;
     const stylePre = useThemeBackground("primary");
     const styleAreaIndicator = { backgroundColor: colorForArea(announcement.details.Area, saturationValue, 0.76) };
+
     return (
         <TouchableOpacity
             containerStyle={containerStyle}

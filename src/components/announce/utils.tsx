@@ -1,4 +1,4 @@
-import { colorFromHsv } from "../../util/colorFromHsv";
+import { colorFromHsv } from "@/util/colorFromHsv";
 
 /**
  * Computes a color to display for an announcement area.

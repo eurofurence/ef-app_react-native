@@ -3,7 +3,7 @@ import React, { FC, PropsWithChildren } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native-gesture-handler";
 
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";

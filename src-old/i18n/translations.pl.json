@@ -1,0 +1,184 @@
+{
+  "About": {
+    "app_details": {
+      "get_help": "Pomoc",
+      "report_bug": "Zgłoś błąd",
+      "title": "Szczegóły aplikacji"
+    },
+    "developed_by": "Stworzone przez",
+    "extra_thanks": "Szczególne podziękowania",
+    "header": "O aplikacji"
+  },
+  "Announcements": {
+    "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",
+    "sectionSubtitle": "Na żywo z konwentu",
+    "sectionTitle": "Ogłoszenia"
+  },
+  "Countdown": {
+    "after_event": "I to na tyle! Do zobaczenia w przyszłym roku!",
+    "before_event": "{{conName}} zacznie się za {{diff}}"
+  },
+  "Dealer": {
+    "about": "Podsumowanie",
+    "about_the_art": "Opis oferty",
+    "about_the_artist": "O artyście",
+    "after_dark": "After dark",
+    "attends": "Bierze udział w dniach",
+    "attends_fri": "Piątek",
+    "attends_sat": "Sobotę",
+    "attends_thu": "Czwartek",
+    "categories": "Kategorie",
+    "in_after_dark": "Znajduje się w sekcji after dark",
+    "merchandise": "Oferuje",
+    "not_attending": "Dziś nie bierze udziału",
+    "table": "Tabela",
+    "view_on_map": "Zobacz na mapie",
+    "viewing_dealer": "Przeglądany wystawca"
+  },
+  "Dealers": {
+    "all": "Wszyscy",
+    "dealers_at_convention": "Wystawcy na {{convention}}",
+    "not_attending_on": "Nie biorą udziału w {{offDays}}"
+  },
+  "EmptyScreen": {
+    "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
+  },
+  "Event": {
+    "mask_required": "Maseczki są obowiązkowe podczas tego punktu programu",
+    "sponsor_event": "Punkt programu dla sponsorów",
+    "supersponsor_event": "Punkt programu dla supersponsorów",
+    "view_on_map": "Pokaż na mapie",
+    "when": "{{day}}, {{start}} do {{finish}}."
+  },
+  "Events": {
+    "long_running": "Trwa dłużej",
+    "afternoon": "Po południu",
+    "current_subtitle": "Te punkty programu odbywają się w tej chwili",
+    "current_title": "Bieżące punkty programu",
+    "evening": "Wieczorem",
+    "events_count": "",
+    "events_done": "Punkt programu zakończył się",
+    "favorites_subtitle": "Otrzymasz powiadomienie o tym wydarzeniu",
+    "favorites_title": "Ulubione punkty programu",
+    "filter_by_day": "Przeglądaj wg. dni",
+    "filter_by_room": "Przeglądaj wg. sal",
+    "filter_by_track": "Przeglądaj wg. ścieżek",
+    "finished": "Zakończony",
+    "morning": "Rano",
+    "night": "W nocy",
+    "upcoming_favorites_title": "Ulubione punkty programu",
+    "upcoming_subtitle": "Te punkty programu zaczną się w przeciągu 30 minut",
+    "upcoming_title": "Nadchodzące wydarzenia"
+  },
+  "Home": {
+    "announcementsTitle_one": "Jest {{ count }} ogłoszenie.",
+    "announcementsTitle_other": "Jest {{ count }} ogłoszeń.",
+    "announcementsTitle_zero": "Brak ogłoszeń.",
+    "eventsTitle_one": "Pobraliśmy {{ count }} wydarzenie.",
+    "eventsTitle_other": "Pobraliśmy {{ count }} wydarzeń.",
+    "eventsTitle_zero": "Brak wydarzeń.",
+    "warnings": {
+      "no_image_caching": "Twoje urządzenie nie może przechowywać obrazów w pamięci podręcznej. Bez połączenia z internetem grafiki nie będą pokazywane.",
+      "no_notifications": "Twoje urządzenie nie wspiera planowanych powiadomień. Nie będziesz otrzymywał komunikatów o nadchodzących wydarzeniach.",
+      "no_push_notifications": "Twoje urządzenie nie wspiera powiadomień push. Nie będziesz powiadamiany o ogłoszeniach ani o prywatnych wiadomościach.",
+      "subtitle": "Z powodu ograniczeń twojego urządzenia część funkcjonalności może nie działać",
+      "title": "Problemy z urządzeniem"
+    }
+  },
+  "KnowledgeGroups": {
+    "header": "Podstawowe informacje"
+  },
+  "Menu": {
+    "dealers": "Wystawcy",
+    "events": "Program",
+    "home": "Start",
+    "info": "Informacje",
+    "less": "Ukryj",
+    "logged_in_now": "Zaloguj się",
+    "maps": "Mapy",
+    "messages": "Masz {{count}} nowych wiadomości",
+    "more": "Menu",
+    "not_logged_in": "Nie jesteś zalogowany",
+    "open_messages": "Otwórz prywatne wiadomości",
+    "services": "Usługi",
+    "settings": "Ustawienia"
+  },
+  "Notification": {
+    "announcement": "Nowe ogłoszenie od {{conName}}",
+    "private_message": "Dostałeś nową prywatną wiadomość"
+  },
+  "PrivateMessageList": {
+    "from": "Od {{ author }}",
+    "from_unknown": "Od nieznanego nadawcy",
+    "message_item_subtitle": "{{ status }} - Wysłana: {{ time }}",
+    "read": "Wyświetl wiadomość",
+    "section_title_from": "Od {{authorName}}",
+    "unread": "Nieprzeczytane"
+  },
+  "Profile": {
+    "logged_in_as": "Jesteś zalogowany jako {{username}}",
+    "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
+    "logout": "Wyloguj się"
+  },
+  "Settings": {
+    "about": "O aplikacji",
+    "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
+    "allowAnalyticsSubtitle": "Pozwalajac nam gromadzić dane analityczne pomagasz nam udoskonalać tę aplikację. Analiza jest udostępniona poprzez Firebase i nie jest udostępniana stronom trzecim.",
+    "cache": {
+      "cache_item": "Jest {{ count }} {{ type }}ów",
+      "cache_state": "Aktualny stan: {{ state }}",
+      "reset": "Wyczyść pamięć podręczną",
+      "reset_alert": "Aby wyczyścić pamięć podręczną musisz przytrzymać ten przycisk",
+      "subtitle": "Ostatnia synchronizacja: {{ time }}",
+      "synchronize": "Synchronizuj",
+      "title": "Pamięć podręczna - statystyki"
+    },
+    "changeLanguage": "Zmień język",
+    "currentLanguage": "Twój aktualnie używany język to polski! 🥟",
+    "dev_buttons": {
+      "no_auth_alert": "Nie jesteś zalogowany - zatrzymywanie...",
+      "send_private_message": "Odbierz prywatną wiadomość {{ status }}",
+      "subtitle": "Zmuś API żeby coś zrobiło.",
+      "sync": "Wymuszona synchronizacja {{ status }}",
+      "sync_alert_done": "Wszystkie urządzenia zsynchronizowane",
+      "sync_alert_error": "Przytrzymaj aby aktywować tę funkcję",
+      "test_message_content": "Właśnie wygrałeś mega nagrodę!",
+      "test_message_subject": "Właśnie wygrałeś mega nagrodę!",
+      "title": "Guziczki deweloperów"
+    },
+    "developer_settings": {
+      "subtitle": "Nie powinieneś tego ruszać o ile wiesz co robisz.",
+      "title": "Ustawienia deweloperskie"
+    },
+    "developer_settings_alert": {
+      "body": "Czy chcesz włączyć ustawienia deweloperskie? Zrób to tylko jeśli wiesz co robisz i jeśli jesteś w stanie posprzątać po sobie ten cały bałagan.",
+      "cancel": "Anuluj",
+      "disable": "Wyłącz",
+      "enable": "Włącz",
+      "title": "Menu ustawień deweloperskich"
+    },
+    "header": "Ustawienia",
+    "notifications": {
+      "no_notifications": "Brak zaplanowanych powiadomień!",
+      "subtitle": "Wszystkie zaplanowane powiadomienia na tym urządzeniu",
+      "title": "Powiadomienia"
+    },
+    "remote_messages": {
+      "no_messages": "Nie otrzymaliśmy żadnych wiadomości od FCM",
+      "subtitle": "Wiadomości otrzymane z FCM",
+      "title": "Wiadomości sdalne"
+    },
+    "settingsSection": "Ustawienia aplikacji",
+    "timeTravel": "Pokaż ustawienia podróży w czasie."
+  },
+  "TimeTravel": {
+    "currentTime": "Bieżący: {{ time }}",
+    "difference": "Różnica w czasie wynosi {{ diff }}",
+    "disable": "Wyłącz",
+    "enable": "Włącz",
+    "originalTime": "Oryginalny: {{ time }}",
+    "reset": "Resetuj",
+    "subtitle": "Dostosuj czas dla testów i debugowania",
+    "title": "Podróże w czasie"
+  }
+}

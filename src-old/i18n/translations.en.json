@@ -1,0 +1,374 @@
+{
+  "About": {
+    "app_details": {
+      "get_help": "Get Help",
+      "report_bug": "Report a Bug",
+      "title": "App Details"
+    },
+    "developed_by": "Developed by",
+    "extra_thanks": "Extra Thanks",
+    "header": "About"
+  },
+  "Announcement": {
+    "header": "Announcement"
+  },
+  "Announcements": {
+    "header": "Announcements",
+    "noAnnouncements": "There are currently no active announcements",
+    "sectionSubtitle": "Live updates from the convention",
+    "sectionTitle": "Announcements"
+  },
+  "ArtistAlley": {
+    "dismiss": "Dismiss your edits",
+    "display_name_label": "Display name",
+    "display_name_placeholder": "Your preferred display name",
+    "edit_request": "Edit your request",
+    "errors": {
+      "invalid_string": "Incorrect format.",
+      "invalid_type": "This is required.",
+      "location_invalid_string": "Enter the number on the handout at your table.",
+      "telegramHandle_invalid_string": "This does not look like a valid Telegram handle.",
+      "too_small": "This is required.",
+      "websiteUrl_invalid_string": "Write your website like: https://eurofurence.org"
+    },
+    "explanation_edit_change": "You can change your Artist Alley table registration details here. Just update your information, select a picture, and submit it.",
+    "explanation_edit_new": "You haven't registered at a table in the Artist Alley yet, but you can change that here and now. Just pick a free table to set up at, enter the necessary information, select a picture, and submit it.",
+    "explanation_status_accepted": "Your registration has been reviewed and was accepted. If you want to register again at a later time and a new table, please make a new request below.",
+    "explanation_status_pending": "Your registration is being reviewed. If you made a mistake, you can edit your information.",
+    "explanation_status_rejected": "Your registration has been reviewed and was rejected. You can make a new request and try again.",
+    "explanation_unauthorized": "You currently cannot register at a table in the Artist Alley, which is only open to registered and checked-in attendees of the convention.",
+    "intro": "The Artist Alley provides a welcoming, creative, and safe environment for all artists and attendees. With the form below, artists can register when setting up at a table in the Artist Alley and make their presence there known to attendees.",
+    "learn_more": "Learn more about the Artist Alley",
+    "location_label": "Table number",
+    "location_placeholder": "Table number from handout on the table",
+    "log_in_now": "Log-in now to get started!",
+    "new_request": "Make a new request",
+    "no_submission": "You haven't submitted a registration yet.",
+    "short_description_label": "Short description",
+    "short_description_placeholder": "Information about you and what you will be offering",
+    "status": {
+      "Accepted": "Your registration was accepted.",
+      "Pending": "Your registration is waiting to be approved.",
+      "Published": "Your registration was accepted.",
+      "Rejected": "Your registration was rejected."
+    },
+    "submission_image_label": "Sample picture",
+    "submission_image_placeholder": "Click to select a picture of your table and wares",
+    "submit": "Submit your request",
+    "submit_failed": "Something went wrong, please try again later.",
+    "submit_in_progress": "Submitting your request…",
+    "submit_succeeded": "Thank you! Your registration was received.",
+    "telegram_handle_label": "Telegram handle (optional)",
+    "telegram_handle_placeholder": "Public Telegram handle for attendees",
+    "title": "Artist Alley Registration",
+    "unauthorized_not_attending": "Please ensure that you have a valid registration for this year's convention if you wish to register at a table in the Artist Alley.",
+    "unauthorized_not_checked_in": "Please check in and pick up your convention badge at the Registration Desk before trying to register at an Artist Alley table.",
+    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist alley.",
+    "update": "Update your request",
+    "website_url_label": "Website (optional)",
+    "website_url_placeholder": "URL to your website"
+  },
+  "Countdown": {
+    "after_event": "That was it! We hope to see you again next year!",
+    "before_event": "{{conName}} will start in {{diff}}"
+  },
+  "Dealer": {
+    "about": "About",
+    "about_the_art": "About the art",
+    "about_the_artist": "About the artist",
+    "add_favorite": "Favorite",
+    "after_dark": "After dark",
+    "attends": "Attends on",
+    "attends_fri": "Friday",
+    "attends_sat": "Saturday",
+    "attends_thu": "Thursday",
+    "categories": "Categories",
+    "dealer_was_updated": "Dealer was updated since your last visit",
+    "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
+    "in_after_dark": "Located in the after dark section",
+    "merchandise": "Merchandise",
+    "not_attending": "Not attending today",
+    "remove_favorite": "Unfavorite",
+    "table": "Table",
+    "view_on_map": "View on map",
+    "viewing_dealer": "Viewing dealer"
+  },
+  "Dealers": {
+    "after_dark": "After dark",
+    "all": "All",
+    "alphabetical": "A-Z",
+    "dealers_at_convention": "Dealers at {{convention}}",
+    "dealers_in_ad": "After dark dealers den",
+    "dealers_in_regular": "Regular dealers den",
+    "favorites_empty": "You do not have any favorite dealers yet. Favorite some dealers to create your own list.",
+    "favorites_title": "Your favorites",
+    "not_attending_on": "Not in on {{offDays}}",
+    "regular": "Regular",
+    "section_notice": "Dealer grouping is picked by the app based on most unique category"
+  },
+  "EmptyScreen": {
+    "notImplemented": "Content is not implemented yet."
+  },
+  "Event": {
+    "about_title": "About",
+    "add_favorite": "Favorite",
+    "event_was_updated": "Event was updated since your last visit",
+    "give_feedback": "Give Feedback",
+    "hide": "Hide from overview",
+    "label_event_description": "More about the event",
+    "label_event_panelhosts": "Hosted by",
+    "label_event_room": "Room",
+    "label_event_track": "Track",
+    "label_event_when": "When",
+    "mask_required": "Face masks are mandatory for this event",
+    "remove_favorite": "Unfavorite",
+    "reveal": "Reveal in overview",
+    "share": "Share this event",
+    "sponsor_event": "Sponsor event",
+    "supersponsor_event": "Supersponsor event",
+    "view_on_map": "View on map",
+    "when": "{{day}}, {{start}} until {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
+  },
+  "EventFeedback": {
+    "disabled_not_attending": "Only attendees can give feedback",
+    "disabled_not_logged_in": "Please log in to give feedback",
+    "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
+    "header": "Feedback: {{ eventTitle }}",
+    "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
+    "message_title": "Feedback message",
+    "rating_title": "How much did you like this event?",
+    "submit": "Submit feedback",
+    "submit_failed": "Something went wrong during submitting. Please try again . . .",
+    "submit_in_progress": "Submitting . . .",
+    "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}."
+  },
+  "Events": {
+    "long_running": "Runs longer",
+    "afternoon": "In the afternoon",
+    "current_subtitle": "These events are currently happening",
+    "current_title": "Current Events",
+    "evening": "In the evening",
+    "events_count": "{{count}} events",
+    "events_done": "Events concluded",
+    "events_hidden": "Hidden",
+    "events_hidden_subtitle": "{{count}} events, reveal them again in Settings",
+    "favorites_subtitle": "You will receive a reminder about these events",
+    "favorites_title": "Favorite Events",
+    "filter_by_day": "Browse days",
+    "filter_by_room": "Browse rooms",
+    "filter_by_track": "Browse tracks",
+    "finished": "Finished",
+    "morning": "In the morning",
+    "night": "At night",
+    "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
+    "schedule_title": "Your Schedule",
+    "search": "Search",
+    "today_schedule_subtitle": "You will receive a reminder before this event starts",
+    "today_schedule_title": "Today's schedule",
+    "upcoming_favorites_title": "Favorite Events",
+    "upcoming_subtitle": "These events are starting in the next 30 minutes",
+    "upcoming_title": "Upcoming Events"
+  },
+  "Home": {
+    "announcementsTitle_one": "There is {{ count }} announcements.",
+    "announcementsTitle_other": "There are {{ count }} announcements.",
+    "announcementsTitle_zero": "There are no announcements.",
+    "content_untranslated": "",
+    "different_timezone": "Your device is set to a different time zone ({{deviceTimeZone}}) than that of {{convention}} ({{conTimeZone}}).",
+    "eventsTitle_one": "We have retrieved {{ count }} event.",
+    "eventsTitle_other": "We have retrieved {{ count }} events.",
+    "eventsTitle_zero": "There are no events.",
+    "recent_announcements": "Recent announcements",
+    "sync_error": "There was an issue with getting the data, please try again later.",
+    "view_all_announcements": "View all announcements",
+    "warnings": {
+      "favorites_changed": "Favorites updated",
+      "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
+      "hide": "Hide",
+      "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown.",
+      "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
+      "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
+      "subtitle": "Due to your device some functionality might not work",
+      "title": "Device Issues"
+    }
+  },
+  "KnowledgeGroups": {
+    "header": "Info Articles"
+  },
+  "Maps": {
+    "filtering": "Searching viewed area",
+    "results": "In the viewed area"
+  },
+  "Menu": {
+    "artist_alley": "Artist alley",
+    "catch_em": "Catch-em-all",
+    "dealers": "Dealers",
+    "events": "Events",
+    "home": "Home",
+    "info": "Info articles",
+    "less": "Less",
+    "logged_in_now": "Log-in now",
+    "maps": "Maps",
+    "more": "More",
+    "not_logged_in": "You are currently not logged in.",
+    "open_messages": "View messages",
+    "profile": "Profile",
+    "services": "Services",
+    "settings": "Settings",
+    "website": "Website"
+  },
+  "Notification": {
+    "announcement": "There is an announcement from {{conName}}",
+    "private_message": "You received a new private message"
+  },
+  "PrivateMessageItem": {
+    "from": "From {{authorName}}",
+    "header": "Private Message",
+    "read_at": "Read at {{time}}"
+  },
+  "PrivateMessageList": {
+    "from": "From {{ author }}",
+    "from_unknown": "From unknown author",
+    "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
+    "no_data": "There's nothing here yet",
+    "read": "Read",
+    "section_title_from": "From {{authorName}}",
+    "unread": "Unread"
+  },
+  "Profile": {
+    "header": "Profile",
+    "idp_settings": "Identity setting website",
+    "logged_in_as": "You are logged in as {{username}}",
+    "login_description": "Being logged in allows {{conName}} to send you personal messages. It also allows you to participate in the Fursuit Catch 'em All and check in at tables in the Artist Alley.",
+    "logout": "Logout",
+    "not_logged_in": "You are currently not logged in",
+    "registration_nr": "Registration #",
+    "roles": "Roles",
+    "roles_simple_attendee": "Not checked in yet",
+    "roles_simple_checked_in": "You are checked in",
+    "roles_subtitle": "Your roles in the {{conName}} app",
+    "status_names": {
+      "Approved": "Approved",
+      "Cancelled": "Cancelled",
+      "CheckedIn": "Checked In",
+      "Deleted": "Deleted",
+      "New": "New",
+      "Paid": "Paid",
+      "PartiallyPaid": "Partially Paid",
+      "Unknown": "Unknown"
+    }
+  },
+  "RevealHidden": {
+    "lead": "Click on any event to reveal it in the overview again",
+    "title": "Reveal specific event"
+  },
+  "Search": {
+    "placeholder": "What are you looking for"
+  },
+  "Settings": {
+    "about": "About",
+    "allowAnalytics": "Allow us to collect analytics events",
+    "allowAnalyticsSubtitle": "By allowing us to collect analytics we can improve the functioning of the app. Analytics is provided by Firebase and is not shared with any other third parties",
+    "cache": {
+      "cache_item": "There are {{ count }} {{ type }}s",
+      "cache_state": "Current state: {{ state }}",
+      "images_prefetched": "Images prefetched: {{state}}",
+      "reset": "Clear cache",
+      "reset_alert": "To clean the cache you need to long press this button",
+      "subtitle": "Last sync: {{ time }}",
+      "synchronize": "Synchronize",
+      "title": "Cache Stats"
+    },
+    "changeLanguage": "Change language",
+    "currentLanguage": "Your current language is English!",
+    "dev_buttons": {
+      "no_auth_alert": "You are not logged in. Stopping.",
+      "overwrite_update_time": "Overwrite update time",
+      "send_private_message": "Receive Private Message {{ status }}",
+      "subtitle": "Make the API do something.",
+      "sync": "Force Resync {{ status }}",
+      "sync_alert_done": "Told all devices to synchronize",
+      "sync_alert_error": "Long hold to activate this function",
+      "sync_standard": "Sync",
+      "test_message_content": "You have won a grand prize!",
+      "test_message_subject": "You have won a grand prize!",
+      "title": "Dev Buttons"
+    },
+    "developer_settings": {
+      "subtitle": "You shouldn't touch these unless you know what you're doing.",
+      "title": "Developer Settings"
+    },
+    "developer_settings_alert": {
+      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
+      "cancel": "Cancel",
+      "disable": "Disable",
+      "enable": "Enable",
+      "title": "Dev Settings Menu"
+    },
+    "device_warnings": {
+      "hide_device_warnings": "Hide device warnings",
+      "hide_language_warnings": "Hide language warnings",
+      "hide_time_zone_warnings": "Hide time zone warnings",
+      "show_device_warnings": "Show device warnings",
+      "show_language_warnings": "Show language warnings",
+      "show_time_zone_warnings": "Show time zone warnings",
+      "subtitle": "Show or hide device warnigns on home screen",
+      "title": "Warnings on home screen"
+    },
+    "header": "Settings",
+    "hidden_events": {
+      "subtitle": "Reveal events that you have hidden",
+      "title": "Hidden events",
+      "unhide_all": "Reveal all",
+      "unhide_specific": "Reveal specific event"
+    },
+    "notifications": {
+      "is_device_scheduled": "Scheduled on device",
+      "is_not_device_scheduled": "Not schedule on device",
+      "no_notifications": "There are no scheduled notifications!",
+      "scheduled_at": "Scheduled on {{ time }}",
+      "scheduled_for": "Scheduled for {{ time }}",
+      "subtitle": "All scheduled notifications on this device",
+      "title": "Notifications"
+    },
+    "remote_messages": {
+      "no_messages": "We have not received any messages from FCM",
+      "subtitle": "Messages that we got from FCM",
+      "title": "Remote Messages"
+    },
+    "settingsSection": "Settings",
+    "theme": {
+      "dark": "Dark",
+      "description": "Configure the way the app looks. When set to System it will follow the general system theme. By changing it you can keep the app in your preferred theme.",
+      "light": "Light",
+      "medium": "Medium",
+      "system": "System",
+      "title": "Change the application theme"
+    },
+    "timeTravel": "Show time travel settings."
+  },
+  "TimeTravel": {
+    "currentTime": "Current: {{ time }}",
+    "difference": "Your time difference is {{ diff }}",
+    "disable": "Disable",
+    "enable": "Enable",
+    "originalTime": "Original: {{ time }}",
+    "reset": "Reset",
+    "subtitle": "Adjust time settings for testing and debugging",
+    "title": "Time Travel",
+    "week_after": "1 week after {{conName}}",
+    "week_before": "1 week before {{conName}}"
+  },
+  "Todo": {},
+  "Viewer": {
+    "announcement": "Announcement: {{name}}",
+    "artPreview": "Art preview: {{name}}",
+    "artist": "Artist: {{name}}",
+    "artistThumbnail": "Artist thumbnail: {{name}}",
+    "eventBanner": "Banner: {{name}}",
+    "eventPoster": "Poster: {{name}}",
+    "knowledgeEntryBanner": "Info article image: {{name}}",
+    "unspecified": "Image"
+  }
+}

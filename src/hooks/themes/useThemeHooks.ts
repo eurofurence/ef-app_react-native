@@ -1,14 +1,12 @@
-// Resolve from system selection. Later, menu entry done.
 import { useMemo } from "react";
 import { TextStyle, ViewStyle } from "react-native";
 
-import { Theme, ThemeColor } from "../../context/Theme";
-import { useAppSelector } from "../../store";
-import { selectAppliedTheme, selectBackgroundStyle, selectBorderStyle, selectColorStyle, selectTheme } from "../../store/settings/selectors";
+import { useAppliedTheme, useBackgroundStyle, useBorderStyle, useColorStyle, useTheme as useThemeFromSelectors } from "../../store/settings/selectors";
+import { Theme, ThemeColor } from "@/context/Theme";
 
-export const useThemeName = () => useAppSelector(selectAppliedTheme);
+export const useThemeName = () => useAppliedTheme();
 
-export const useTheme = () => useAppSelector(selectTheme);
+export const useTheme = () => useThemeFromSelectors();
 
 export const useThemeColorValue = (color: ThemeColor) => useTheme()[color];
 
@@ -16,7 +14,7 @@ export function useThemeColor(color: ThemeColor | "transparent"): Pick<TextStyle
 export function useThemeColor(color: null): null;
 export function useThemeColor(color: ThemeColor | "transparent" | null): (Pick<TextStyle, "color"> & { color: string }) | null;
 export function useThemeColor(color: ThemeColor | "transparent" | null) {
-    const styles = useAppSelector(selectColorStyle);
+    const styles = useColorStyle();
     return color ? styles[color] : null;
 }
 
@@ -24,7 +22,7 @@ export function useThemeBorder(color: ThemeColor | "transparent"): Pick<ViewStyl
 export function useThemeBorder(color: null): null;
 export function useThemeBorder(color: ThemeColor | "transparent" | null): (Pick<ViewStyle, "borderColor"> & { borderColor: string }) | null;
 export function useThemeBorder(color: ThemeColor | "transparent" | null) {
-    const styles = useAppSelector(selectBorderStyle);
+    const styles = useBorderStyle();
     return color ? styles[color] : null;
 }
 
@@ -32,7 +30,7 @@ export function useThemeBackground(color: ThemeColor | "transparent"): Pick<View
 export function useThemeBackground(color: null): null;
 export function useThemeBackground(color: ThemeColor | "transparent" | null): (Pick<ViewStyle, "backgroundColor"> & { backgroundColor: string }) | null;
 export function useThemeBackground(color: ThemeColor | "transparent" | null) {
-    const styles = useAppSelector(selectBackgroundStyle);
+    const styles = useBackgroundStyle();
     return color ? styles[color] : null;
 }
 

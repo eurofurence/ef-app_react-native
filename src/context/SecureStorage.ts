@@ -3,7 +3,7 @@ import { SecureStoreOptions } from "expo-secure-store";
 
 const options: SecureStoreOptions = {
     // Option for iOS keychain.
-    keychainAccessible: SecureStore.ALWAYS_THIS_DEVICE_ONLY,
+    keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK_THIS_DEVICE_ONLY,
 };
 
 export const getItemAsync = (key: string) => SecureStore.getItemAsync(key, options);

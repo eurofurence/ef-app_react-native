@@ -3,11 +3,11 @@ import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Animated, { Easing, useSharedValue, withSequence, withTiming } from "react-native-reanimated";
 
-import { ToastMessage, useToastDismiss } from "../context/ToastContext";
-import { useThemeBackground, useThemeBorder } from "../hooks/themes/useThemeHooks";
 import { Icon } from "./generic/atoms/Icon";
 import { Label } from "./generic/atoms/Label";
 import { Row } from "./generic/containers/Row";
+import { ToastMessage, useToastDismiss } from "@/context/ToastContext";
+import { useThemeBackground, useThemeBorder } from "@/hooks/themes/useThemeHooks";
 
 const iconSize = 18; // Matches regular font size.
 

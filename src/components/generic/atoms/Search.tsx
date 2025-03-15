@@ -5,8 +5,8 @@ import { BackHandler, StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import SearchPlus from "@expo/vector-icons/FontAwesome5";
 
-import { withAlpha } from "../../../context/Theme";
-import { useThemeBackground, useThemeColor, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { withAlpha } from "@/context/Theme";
+import { useThemeBackground, useThemeColor, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { labelTypeStyles } from "./Label";
 
 export type SearchProps = {

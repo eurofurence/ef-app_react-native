@@ -7,11 +7,11 @@ import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 
-import { Icon } from "../../components/generic/atoms/Icon";
+import { Icon } from "@/components/generic/atoms/Icon";
 import { useTabStyles } from "../../components/generic/nav/useTabStyles";
 import { AreasRouterParamsList } from "../AreasRouter";
 import { IndexRouterParamsList } from "../IndexRouter";
-import { TabLabel } from "../../components/generic/atoms/TabLabel";
+import { TabLabel } from "@/components/generic/atoms/TabLabel";
 import { DealersAd, DealersAdParams } from "./DealersAd";
 import { DealersAll, DealersAllParams } from "./DealersAll";
 import { DealersAlpha, DealersAlphaParams } from "./DealersAlpha";

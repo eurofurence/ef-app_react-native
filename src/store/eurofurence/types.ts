@@ -1,7 +1,7 @@
 /**
  * A URL leading to an image.
  */
-import { IconNames } from "../../components/generic/atoms/Icon";
+import { IconNames } from "@/components/generic/atoms/Icon";
 
 /**
  * Time categorized in part of day.

@@ -2,8 +2,8 @@ import * as React from "react";
 import { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { ThemeColor } from "../../../context/Theme";
-import { useTheme } from "../../../hooks/themes/useThemeHooks";
+import { ThemeColor } from "@/context/Theme";
+import { useTheme } from "@/hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "./Icon";
 
 export type MarkerProps = {

@@ -2,11 +2,11 @@ import { exchangeCodeAsync, refreshAsync, TokenResponse, useAuthRequest } from "
 import * as WebBrowser from "expo-web-browser";
 import { createContext, FC, PropsWithChildren, useContext, useMemo, useState } from "react";
 
-import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from "../configuration";
-import { useAsyncInterval } from "../hooks/util/useAsyncInterval";
-import { UserRecord } from "../store/eurofurence/types";
-import { useAsyncCallbackOnce } from "../hooks/util/useAsyncCallbackOnce";
 import * as SecureStore from "./SecureStorage";
+import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from "@/configuration";
+import { useAsyncInterval } from "@/hooks/util/useAsyncInterval";
+import { UserRecord } from "@/store/eurofurence/types";
+import { useAsyncCallbackOnce } from "@/hooks/util/useAsyncCallbackOnce";
 
 /**
  * Discovery entries.
