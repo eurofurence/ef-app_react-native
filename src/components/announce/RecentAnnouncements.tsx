@@ -21,20 +21,24 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
         const fetchAnnouncements = async () => {
             try {
                 const cachedAnnouncements = await getAllCache<AnnouncementRecord>("announcements");
-                if (cachedAnnouncements) {
-                    const filtered = cachedAnnouncements
-                        .map((item) => item.data)
+                
+                // Ensure we have an array and extract data from cache items
+                const filtered = Array.isArray(cachedAnnouncements) 
+                    ? cachedAnnouncements
+                        .filter(item => item?.data) // Filter out any null/undefined items
+                        .map(item => item.data)
                         .filter((it) => {
                             const validFrom = parseISO(it.ValidFromDateTimeUtc);
                             const validUntil = parseISO(it.ValidUntilDateTimeUtc);
 
                             return isAfter(now, subMinutes(validFrom, 5)) && isBefore(now, addMinutes(validUntil, 5));
-                        });
+                        })
+                    : [];
 
-                    setAnnouncements(filtered);
-                }
+                setAnnouncements(filtered);
             } catch (error) {
                 console.error("Failed to fetch announcements:", error);
+                setAnnouncements([]); // Set empty array on error
             }
         };
 
