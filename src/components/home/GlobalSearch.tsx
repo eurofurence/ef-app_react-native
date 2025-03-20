@@ -1,26 +1,24 @@
-import { Moment } from "moment/moment";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { useDealerInstances } from "../../routes/dealers/Dealers.common";
-import { useEventInstances } from "../../routes/events/Events.common";
-import { HomeProps } from "../../routes/home/Home";
-import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "../../store/eurofurence/types";
+import { useDealerInstances } from "@/routes/dealers/Dealers.common";
+import { useEventInstances } from "@/routes/events/Events.common";
+import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "@/store/eurofurence/types";
 import { DealerCard } from "../dealers/DealerCard";
 import { EventCard } from "../events/EventCard";
 import { Section } from "../generic/atoms/Section";
 import { KbEntryCard } from "../kb/KbEntryCard";
-import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
-import { WithType } from "../../store/eurofurence/selectors/search";
+import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
+import { GlobalSearchResult } from "@/store/eurofurence/selectors/search";
+import { router } from "expo-router";
 
 export type GlobalSearchProps = {
-    navigation: HomeProps["navigation"];
-    now: Moment;
-    results: (WithType<DealerDetails, "dealer"> | WithType<EventDetails, "event"> | WithType<KnowledgeEntryDetails, "knowledgeEntry">)[] | null;
+    now: Date;
+    results: GlobalSearchResult[] | null;
 };
 
-export const GlobalSearch = ({ navigation, now, results }: GlobalSearchProps) => {
+export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
     const { t: tMenu } = useTranslation("Menu");
     const { t: tDealers } = useTranslation("Dealers");
     const { t: tEvents } = useTranslation("Events");
@@ -36,15 +34,25 @@ export const GlobalSearch = ({ navigation, now, results }: GlobalSearchProps) =>
     if (!results) return null;
     return (
         <>
-            {!dealers?.length ? null : (
+            {dealers && dealers.length > 0 && (
                 <>
                     <Section icon="card-search" title={tMenu("dealers")} />
                     {dealers.map((item) => (
-                        <DealerCard key={item.details.Id} containerStyle={styles.item} dealer={item} onPress={(dealer) => navigation.navigate("Dealer", { id: dealer.Id })} />
+                        <DealerCard
+                            key={item.details.Id}
+                            containerStyle={styles.item}
+                            dealer={item}
+                            onPress={(dealer) =>
+                                router.navigate({
+                                    pathname: "/dealers/[dealerId]",
+                                    params: { dealerId: dealer.Id },
+                                })
+                            }
+                        />
                     ))}
                 </>
             )}
-            {!events?.length ? null : (
+            {events && events.length > 0 && (
                 <>
                     <Section icon="card-search" title={tMenu("events")} />
                     {events.map((item) => (
@@ -54,19 +62,30 @@ export const GlobalSearch = ({ navigation, now, results }: GlobalSearchProps) =>
                             event={item}
                             type="time"
                             onPress={(event) =>
-                                navigation.navigate("Event", {
-                                    id: event.Id,
+                                router.navigate({
+                                    pathname: "/events/[eventId]",
+                                    params: { eventId: event.Id },
                                 })
                             }
                         />
                     ))}
                 </>
             )}
-            {!kbGroups?.length ? null : (
+            {kbGroups && kbGroups.length > 0 && (
                 <>
                     <Section icon="card-search" title={tMenu("info")} />
                     {kbGroups.map((item) => (
-                        <KbEntryCard containerStyle={styles.item} entry={item} key={item.Id} onPress={(entry) => navigation.navigate("KnowledgeEntry", { id: entry.Id })} />
+                        <KbEntryCard
+                            containerStyle={styles.item}
+                            entry={item}
+                            key={item.Id}
+                            onPress={(entry) =>
+                                router.navigate({
+                                    pathname: "/knowledge/[knowledgeId]",
+                                    params: { knowledgeId: entry.Id },
+                                })
+                            }
+                        />
                     ))}
                 </>
             )}

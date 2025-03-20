@@ -6,7 +6,7 @@ import { formatInTimeZone } from "date-fns-tz";
 import { conName, conTimeZone } from "@/configuration";
 import { Label } from "../generic/atoms/Label";
 import { Badge } from "../generic/containers/Badge";
-import { useAuxiliary } from "@/store/auxiliary/slice";
+import { useWarningState } from "@/hooks/warnings/useWarningState";
 
 export type TimezoneWarningProps = {
     /**
@@ -26,12 +26,9 @@ const getUtcOffset = (date: Date, timeZone: string): number => {
 export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => {
     const { t } = useTranslation("Home");
     const { timeZone } = useCalendars()[0];
+    const { isHidden, hideWarning } = useWarningState("timeZoneWarningsHidden");
 
-    // Using Context Instead of Redux
-    const { state, dispatch } = useAuxiliary();
-    const warningsHidden = state.timeZoneWarningsHidden;
-
-    if (warningsHidden) {
+    if (isHidden) {
         return null;
     }
 
@@ -46,7 +43,7 @@ export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => 
     return (
         <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="clock">
             {t("different_timezone", { convention: conName, conTimeZone, deviceTimeZone: timeZone })}
-            <Label variant="bold" color="secondary" onPress={() => dispatch({ type: "HIDE_TIMEZONE_WARNINGS" })}>
+            <Label variant="bold" color="secondary" onPress={hideWarning}>
                 {" " + t("warnings.hide")}
             </Label>
         </Badge>

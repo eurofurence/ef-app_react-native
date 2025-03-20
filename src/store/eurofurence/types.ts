@@ -14,6 +14,15 @@ export type PartOfDay = "morning" | "afternoon" | "evening" | "night" | "long_ru
 export type AttendanceDay = "mon" | "tue" | "wed";
 
 /**
+ * A cache item.
+ */
+export type CacheItem<T> = {
+    id: string;
+    data: T;
+    timestamp: number;
+};
+
+/**
  * Named type to use when referencing other records.
  */
 export type RecordId = string;
@@ -243,4 +252,10 @@ export type ArtistAlleyOwnTableRegistrationRecord = {
     ImageId: string;
     Image: ImageRecord;
     State: string;
+};
+
+export type Auxiliary = {
+    timetravel: {
+        amount: number;
+    };
 };

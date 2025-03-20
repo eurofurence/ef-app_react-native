@@ -12,7 +12,7 @@ import { AnnouncementRecord, AnnouncementDetails } from "@/store/eurofurence/typ
 
 const recentLimit = 2;
 
-export const RecentAnnouncements = () => {
+export const RecentAnnouncements = ({ now }: { now: Date }) => {
     const { t } = useTranslation("Home");
     const { getAllCache } = useDataCache();
     const [announcements, setAnnouncements] = useState<AnnouncementRecord[]>([]);
@@ -27,7 +27,6 @@ export const RecentAnnouncements = () => {
                         .filter((it) => {
                             const validFrom = parseISO(it.ValidFromDateTimeUtc);
                             const validUntil = parseISO(it.ValidUntilDateTimeUtc);
-                            const now = new Date(); // Current time
 
                             return isAfter(now, subMinutes(validFrom, 5)) && isBefore(now, addMinutes(validUntil, 5));
                         });

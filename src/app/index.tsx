@@ -13,15 +13,21 @@ import { DeviceSpecificWarnings } from "@/components/home/DeviceSpecificWarnings
 import { useFuseIntegration } from "@/hooks/searching/useFuseIntegration";
 import { TimezoneWarning } from "@/components/home/TimezoneWarning";
 import { FavoritesChangedWarning } from "@/components/home/FavoritesChangedWarning";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { useGlobalSearchIndex } from "@/store/eurofurence/selectors/search";
+import { UpcomingEventsList } from "@/components/events/UpcomingEventsList";
+import { TodayScheduleList } from "@/components/events/TodayScheduleList";
+import { CurrentEventList } from "@/components/events/CurrentEventsList";
 
 export default function IndexScreen() {
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
+    const { synchronizeUi, isSynchronizing } = useDataCache();
 
     // Search integration.
-    const [filter, setFilter, results] = useFuseIntegration(selectGlobalSearchIndex, 15);
+    const globalSearchIndex = useGlobalSearchIndex();
+    const [filter, setFilter, results] = useFuseIntegration(globalSearchIndex, 15);
 
-    const { synchronizeUi, isSynchronizing } = useSynchronizer();
     return (
         <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}>
             <CountdownHeader />
@@ -32,7 +38,7 @@ export default function IndexScreen() {
                 <DeviceSpecificWarnings />
                 <FavoritesChangedWarning />
                 {results ? (
-                    <GlobalSearch navigation={navigation} now={now} results={results} />
+                    <GlobalSearch now={now} results={results} />
                 ) : (
                     <>
                         <RecentAnnouncements now={now} />
@@ -45,16 +51,3 @@ export default function IndexScreen() {
         </ScrollView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 20,
-    },
-    link: {
-        marginTop: 15,
-        paddingVertical: 15,
-    },
-});
