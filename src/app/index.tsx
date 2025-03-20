@@ -18,7 +18,7 @@ import { useGlobalSearchIndex } from "@/store/eurofurence/selectors/search";
 import { UpcomingEventsList } from "@/components/events/UpcomingEventsList";
 import { TodayScheduleList } from "@/components/events/TodayScheduleList";
 import { CurrentEventList } from "@/components/events/CurrentEventsList";
-
+import React from "react";
 export default function IndexScreen() {
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");

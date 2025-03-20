@@ -69,7 +69,7 @@ export const useEventReminder = (event: EventRecord) => {
     // Using DataCacheProvider
     const { getCacheSync, saveCache, removeCache } = useDataCache();
     // Retrieve timeTravel value from cache, default to 0
-    const timeTravel = getCacheSync<Auxiliary>("auxiliary", "timetravel")?.data?.timetravel?.amount ?? 0;
+    const timeTravel = getCacheSync<number>("timetravel", "amount")?.data ?? 0;
     // Retrieve the reminder from cache
     const reminder = getCacheSync<any>("notifications", event.Id);
 

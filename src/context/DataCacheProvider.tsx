@@ -199,10 +199,10 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         setIsSynchronizing(true);
 
         // Retrieve last synchronised time and other auxiliary values from cache
-        const auxiliaryCache = await getCache("auxiliary", "lastSynchronised");
+        const auxiliaryCache = await getCache("settings", "lastSynchronised");
         const lastSynchronised = auxiliaryCache ? auxiliaryCache.data : null;
-        const cachedCid = await getCache("auxiliary", "cid");
-        const cachedCacheVersion = await getCache("auxiliary", "cacheVersion");
+        const cachedCid = await getCache("settings", "cid");
+        const cachedCacheVersion = await getCache("settings", "cacheVersion");
 
         const path = lastSynchronised && cachedCid?.data === conId && cachedCacheVersion?.data === eurofurenceCacheVersion ? `Sync?since=${lastSynchronised}` : `Sync`;
 

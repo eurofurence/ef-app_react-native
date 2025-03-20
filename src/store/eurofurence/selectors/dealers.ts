@@ -76,10 +76,10 @@ export const selectDealerCategories = () => {
 export const selectUpdatedFavoriteDealers = () => {
     const dealers = useDealersData();
     const { getCacheSync } = useDataCache();
-    const lastViewTimesUtc = getCacheSync<Record<string, string>>("auxiliary", "lastViewTimesUtc")?.data || {};
-
+    const lastViewTimes = getCacheSync<Record<string, string>>("settings", "lastViewTimes")?.data || {};
+    
     return dealers.filter(
         (dealer) =>
-            lastViewTimesUtc && dealer.data[0].Id in lastViewTimesUtc && isAfter(parseISO(dealer.data[0].LastChangeDateTimeUtc), parseISO(lastViewTimesUtc[dealer.data[0].Id])),
+            lastViewTimes && dealer.data[0].Id in lastViewTimes && isAfter(parseISO(dealer.data[0].LastChangeDateTimeUtc), parseISO(lastViewTimes[dealer.data[0].Id])),
     );
 };

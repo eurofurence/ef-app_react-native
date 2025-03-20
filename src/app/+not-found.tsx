@@ -1,6 +1,7 @@
 import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import { Label } from "@/components/generic/atoms/Label";
+import React from "react";
 
 export default function NotFoundScreen() {
     return (

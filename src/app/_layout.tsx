@@ -22,9 +22,11 @@ import "@/i18n";
  */
 export default function RootLayout() {
     return (
-        <DataCacheProvider>
-            <MainLayout />
-        </DataCacheProvider>
+        <GestureHandlerRootView>
+            <DataCacheProvider>
+                <MainLayout />
+            </DataCacheProvider>
+        </GestureHandlerRootView>
     );
 }
 
@@ -42,7 +44,6 @@ export function MainLayout() {
 
     useBackgroundSyncManager();
     return (
-        <GestureHandlerRootView>
             <BottomSheetModalProvider>
                 <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
                     <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
@@ -67,6 +68,5 @@ export function MainLayout() {
                     </SafeAreaView>
                 </ThemeProvider>
             </BottomSheetModalProvider>
-        </GestureHandlerRootView>
     );
 }
