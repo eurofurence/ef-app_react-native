@@ -4,19 +4,17 @@ import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
-import { useAuxiliary } from "@/store/auxiliary/slice";
+import { useWarningState } from "@/hooks/warnings/useWarningState";
 
 export const DeviceSpecificWarnings = () => {
     const { t } = useTranslation("Home", { keyPrefix: "warnings" });
     const [scheduledNotifications] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
     const [cacheImages] = useState(() => Platform.OS === "android" || Platform.OS === "ios");
     const pushNotifications = useMemo(() => scheduledNotifications && Device.isDevice, [scheduledNotifications]);
+    
+    const { isHidden, hideWarning } = useWarningState("deviceWarningsHidden");
 
-    // NEW: Using Context Instead of Redux
-    const { state, dispatch } = useAuxiliary();
-    const { deviceWarningsHidden } = state;
-
-    if (deviceWarningsHidden) {
+    if (isHidden) {
         return null;
     }
     if (scheduledNotifications && pushNotifications && cacheImages) {
@@ -31,7 +29,7 @@ export const DeviceSpecificWarnings = () => {
                 {[!scheduledNotifications && t("no_notifications"), !pushNotifications && t("no_push_notifications"), !cacheImages && t("no_image_caching")]
                     .filter(Boolean)
                     .join("\n\n")}
-                <Label variant="bold" color="secondary" onPress={() => dispatch({ type: "TOGGLE_DEVICE_WARNINGS" })}>
+                <Label variant="bold" color="secondary" onPress={hideWarning}>
                     {" " + t("hide")}
                 </Label>
             </Label>

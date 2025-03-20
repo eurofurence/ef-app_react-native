@@ -1,41 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useDataCache } from "@/context/DataCacheProvider";
-import { useAuxiliary } from "@/store/auxiliary/slice";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
-import { DealerDetails, EventDetails } from "@/store/eurofurence/types";
+import { useFavoritesState } from "@/hooks/favorites/useFavoritesState";
 
 export const FavoritesChangedWarning = () => {
     const { t: tMenu } = useTranslation("Menu");
     const { t } = useTranslation("Home");
-    const { getAllCache } = useDataCache();
-    const { state } = useAuxiliary();
-    const [favoriteEvents, setFavoriteEvents] = useState<EventDetails[]>([]);
-    const [favoriteDealers, setFavoriteDealers] = useState<DealerDetails[]>([]);
+    const { favoriteEvents, favoriteDealers, lastViewTimes } = useFavoritesState();
 
-    useEffect(() => {
-        async function loadFavorites() {
-            // Retrieve cached events and dealers from DataCacheProvider
-            const eventCache = await getAllCache<EventDetails>("events");
-            const dealerCache = await getAllCache<DealerDetails>("dealers");
-            // Extract data and filter for favorites
-            const events = eventCache.map((item) => item.data).filter((event: EventDetails) => event.Favorite);
-            const dealers = dealerCache.map((item) => item.data).filter((dealer: DealerDetails) => dealer.Favorite);
-            setFavoriteEvents(events);
-            setFavoriteDealers(dealers);
-        }
-        loadFavorites();
-    }, [getAllCache]);
+    const { changedEventFavorite, changedDealerFavorite } = useMemo(() => {
+        const changedEvents = favoriteEvents.filter(
+            (event) => lastViewTimes && event.Id in lastViewTimes && new Date(event.LastChangeDateTimeUtc) > new Date(lastViewTimes[event.Id]),
+        );
 
-    // Compute updated favorites based on lastViewTimesUtc from auxiliary state
-    const changedEventFavorite = favoriteEvents.filter(
-        (event) => state.lastViewTimesUtc && event.Id in state.lastViewTimesUtc && new Date(event.LastChangeDateTimeUtc) > new Date(state.lastViewTimesUtc[event.Id]),
-    );
+        const changedDealers = favoriteDealers.filter(
+            (dealer) => lastViewTimes && dealer.Id in lastViewTimes && new Date(dealer.LastChangeDateTimeUtc) > new Date(lastViewTimes[dealer.Id]),
+        );
 
-    const changedDealerFavorite = favoriteDealers.filter(
-        (dealer) => state.lastViewTimesUtc && dealer.Id in state.lastViewTimesUtc && new Date(dealer.LastChangeDateTimeUtc) > new Date(state.lastViewTimesUtc[dealer.Id]),
-    );
+        return { changedEventFavorite: changedEvents, changedDealerFavorite: changedDealers };
+    }, [favoriteEvents, favoriteDealers, lastViewTimes]);
 
     if (!changedEventFavorite.length && !changedDealerFavorite.length) {
         return null;

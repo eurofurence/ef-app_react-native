@@ -1,10 +1,8 @@
 import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
-
-import { useAppDispatch, useAppSelector } from "../../store";
-import { hideLanguageWarnings } from "../../store/auxiliary/slice";
 import { Label } from "../generic/atoms/Label";
 import { Badge } from "../generic/containers/Badge";
+import { useWarningState } from "@/hooks/warnings/useWarningState";
 
 export type LanguageWarningsProps = {
     /**
@@ -16,10 +14,9 @@ export type LanguageWarningsProps = {
 export const LanguageWarnings: FC<LanguageWarningsProps> = ({ parentPad = 0 }) => {
     const { t } = useTranslation("Home");
     const notice = t("content_untranslated");
-    const warningsHidden = useAppSelector((state) => state.auxiliary.languageWarningsHidden);
-    const dispatch = useAppDispatch();
+    const { isHidden, hideWarning } = useWarningState("languageWarningsHidden");
 
-    if (warningsHidden) {
+    if (isHidden) {
         return null;
     }
     if (notice === "") {
@@ -29,7 +26,7 @@ export const LanguageWarnings: FC<LanguageWarningsProps> = ({ parentPad = 0 }) =
     return (
         <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="translate">
             {notice}
-            <Label variant="bold" color="secondary" onPress={() => dispatch(hideLanguageWarnings())}>
+            <Label variant="bold" color="secondary" onPress={hideWarning}>
                 {" " + t("warnings.hide")}
             </Label>
         </Badge>

@@ -11,7 +11,9 @@ import { useColorScheme } from "@/hooks/themes/useColorScheme";
 import { DrawerProps, DrawerScreensData } from "@/components/data/DrawerScreensData";
 import { DataCacheProvider } from "@/context/DataCacheProvider";
 import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager";
-import { AuxiliaryProvider } from "@/store/auxiliary/slice";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+// Import i18n configuration
+import "@/i18n";
 
 /**
  * The root layout for the application.
@@ -20,9 +22,11 @@ import { AuxiliaryProvider } from "@/store/auxiliary/slice";
  */
 export default function RootLayout() {
     return (
-        <DataCacheProvider>
-            <MainLayout />
-        </DataCacheProvider>
+        <GestureHandlerRootView>
+            <DataCacheProvider>
+                <MainLayout />
+            </DataCacheProvider>
+        </GestureHandlerRootView>
     );
 }
 
@@ -40,31 +44,29 @@ export function MainLayout() {
 
     useBackgroundSyncManager();
     return (
-        <BottomSheetModalProvider>
-            <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-                <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
-                <SafeAreaView style={safeAreaStyle}>
-                    <AuxiliaryProvider>
-                        <Stack>
-                            {DrawerScreensData.map((screen: DrawerProps) => (
-                                <Stack.Screen
-                                    key={screen.location}
-                                    name={screen.location}
-                                    options={{
-                                        keyboardHandlingEnabled: true,
-                                        headerTitleAlign: "left",
-                                        headerShown: screen.headerShown,
-                                        headerTitle: screen.title,
-                                        headerLargeTitle: screen.headerLargeTitle,
-                                        headerLeft: () => screen.headerLeft,
-                                        headerRight: () => screen.headerRight,
-                                    }}
-                                />
-                            ))}
-                        </Stack>
-                    </AuxiliaryProvider>
-                </SafeAreaView>
-            </ThemeProvider>
-        </BottomSheetModalProvider>
+            <BottomSheetModalProvider>
+                <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+                    <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
+                    <SafeAreaView style={safeAreaStyle}>
+                            <Stack>
+                                {DrawerScreensData.map((screen: DrawerProps) => (
+                                    <Stack.Screen
+                                        key={screen.location}
+                                        name={screen.location}
+                                        options={{
+                                            keyboardHandlingEnabled: true,
+                                            headerTitleAlign: "left",
+                                            headerShown: screen.headerShown,
+                                            headerTitle: screen.title,
+                                            headerLargeTitle: screen.headerLargeTitle,
+                                            headerLeft: () => screen.headerLeft,
+                                            headerRight: () => screen.headerRight,
+                                        }}
+                                    />
+                                ))}
+                            </Stack>
+                    </SafeAreaView>
+                </ThemeProvider>
+            </BottomSheetModalProvider>
     );
 }

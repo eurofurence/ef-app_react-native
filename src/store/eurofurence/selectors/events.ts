@@ -50,7 +50,7 @@ export const filterCurrentEvents = <T extends Pick<EventDetails, "StartDateTimeU
         }),
     );
 
-export const filterUpcomingEvents = <T extends Pick<EventDetails, "StartDateTimeUtc">>(events: T[], now: Date): T[] =>
+export const filterUpcomingEvents = (events: EventDetails[], now: Date) =>
     events.filter((it) => {
         const startDate = new Date(it.StartDateTimeUtc);
         const startMinus30 = subMinutes(startDate, 30);

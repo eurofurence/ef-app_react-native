@@ -1,15 +1,14 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useState } from "react";
-import { Platform } from "react-native";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { Platform, Vibration } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { isAfter, parseISO } from "date-fns";
+import { apiBase, conId, eurofurenceCacheVersion } from "@/configuration";
+import { cancelEventReminder, rescheduleEventReminder } from "@/hooks/events/useEventReminder";
+import { CacheItem, EventRecord } from "@/store/eurofurence/types";
+import { Notification } from "@/store/background/slice";
 
 const CACHE_EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours
-const storeNames = ["theme", "announcements", "dealers", "images", "timetravel", "auxiliary", "fuseSearch"];
-
-type CacheItem<T> = {
-    id: string;
-    data: T;
-    timestamp: number;
-};
+const storeNames = ["theme", "announcements", "notifications", "dealers", "images", "settings", "fuseSearch"];
 
 type CacheState = Record<string, any>;
 
@@ -40,6 +39,11 @@ type DataCacheContextType = {
     getAllCache: <T>(storeName: string) => Promise<CacheItem<T>[]>;
     saveAllCache: <T>(storeName: string, data: T[]) => void;
     containsKey: (storeName: string, key: string) => Promise<boolean>;
+    // New synchronization properties
+    isSynchronizing: boolean;
+    synchronize: () => Promise<void>;
+    synchronizeUi: (vibrate?: boolean) => Promise<void>;
+    clear: () => Promise<void>;
 };
 
 const DataCacheContext = createContext<DataCacheContextType | undefined>(undefined);
@@ -65,6 +69,8 @@ const storage = {
 export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [loading, setLoading] = useState(true);
     const [cacheData, dispatch] = useReducer(cacheReducer, {});
+    const [isSynchronizing, setIsSynchronizing] = useState(false);
+    const invocation = useRef<AbortController | null>(null);
 
     useEffect(() => {
         const initCache = async () => {
@@ -185,6 +191,87 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         return key in parsedCache;
     }, []);
 
+    // Synchronization functions
+    const synchronize = useCallback(async () => {
+        const ownInvocation = new AbortController();
+        invocation.current?.abort();
+        invocation.current = ownInvocation;
+        setIsSynchronizing(true);
+
+        // Retrieve last synchronised time and other auxiliary values from cache
+        const auxiliaryCache = await getCache("settings", "lastSynchronised");
+        const lastSynchronised = auxiliaryCache ? auxiliaryCache.data : null;
+        const cachedCid = await getCache("settings", "cid");
+        const cachedCacheVersion = await getCache("settings", "cacheVersion");
+
+        const path = lastSynchronised && cachedCid?.data === conId && cachedCacheVersion?.data === eurofurenceCacheVersion ? `Sync?since=${lastSynchronised}` : `Sync`;
+
+        try {
+            const response = await fetch(`${apiBase}/${path}`, { signal: ownInvocation.signal });
+            if (!response.ok) {
+                throw new Error("API response not OK");
+            }
+            if (!response.headers.get("Content-type")?.includes("application/json")) {
+                throw new Error("API response is not JSON");
+            }
+            const data = await response.json();
+
+            // Apply sync: assume data is an object with keys corresponding to storeNames
+            for (const storeName of storeNames) {
+                if (data[storeName]) {
+                    await saveAllCache(storeName, data[storeName]);
+                }
+            }
+
+            // Reschedule each event reminder
+            const eventCache = await getAllCache<EventRecord>("events");
+            const notificationsCache = await getAllCache<Notification>("notifications");
+
+            for (const reminder of notificationsCache) {
+                const reminderData = reminder.data;
+                // Find event corresponding to reminder.recordId in eventCache using the correct property
+                const eventEntry = eventCache.find((item: any) => item.data.Id === reminderData.recordId);
+                const event = eventEntry ? eventEntry.data : null;
+                if (event) {
+                    if (isAfter(parseISO(event.LastChangeDateTimeUtc), parseISO(reminderData.dateCreatedUtc))) {
+                        // Reschedule reminder; timeTravel default to 0 for now.
+                        await rescheduleEventReminder(event, 0, saveCache, removeCache).catch((error) => console.warn("Reschedule error:", error));
+                    }
+                } else {
+                    // Cancel reminder if event no longer exists
+                    await cancelEventReminder(reminderData.recordId, removeCache).catch((error) => console.warn("Cancel reminder error:", error));
+                }
+            }
+        } finally {
+            if (invocation.current === ownInvocation) {
+                setIsSynchronizing(false);
+            }
+        }
+    }, [getCache, getAllCache, saveAllCache, saveCache, removeCache]);
+
+    const clear = useCallback(async () => {
+        Vibration.vibrate(400);
+        // Clear all caches for each storeName
+        for (const storeName of storeNames) {
+            await storage.setItem(storeName, JSON.stringify({}));
+        }
+        dispatch({ type: "INIT_CACHE", data: {} });
+        await synchronize();
+    }, [synchronize]);
+
+    const synchronizeUi = useCallback(
+        async (vibrate: boolean = false) => {
+            if (vibrate) Vibration.vibrate(400);
+            try {
+                return await synchronize();
+            } catch (error) {
+                console.warn("Synchronization error:", error);
+                throw error;
+            }
+        },
+        [synchronize],
+    );
+
     const contextValue = useMemo(
         () => ({
             getCache,
@@ -195,8 +282,13 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             saveAllCache,
             containsKey,
             getAllCacheSync,
+            // New synchronization properties
+            isSynchronizing,
+            synchronize,
+            synchronizeUi,
+            clear,
         }),
-        [getCache, saveCache, removeCache, getCacheSync, getAllCache, saveAllCache, containsKey, getAllCacheSync],
+        [getCache, saveCache, removeCache, getCacheSync, getAllCache, saveAllCache, containsKey, getAllCacheSync, isSynchronizing, synchronize, synchronizeUi, clear],
     );
 
     return <DataCacheContext.Provider value={contextValue}>{loading ? null : children}</DataCacheContext.Provider>;
