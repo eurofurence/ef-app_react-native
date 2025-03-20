@@ -3,7 +3,7 @@ import { Platform, Vibration } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isAfter, parseISO } from "date-fns";
 import { apiBase, conId, eurofurenceCacheVersion } from "@/configuration";
-import { cancelEventReminder, rescheduleEventReminder } from "@/hooks/events/useEventReminder";
+import { cancelEventReminder, rescheduleEventReminder } from "@/utils/eventReminders";
 import { CacheItem, EventRecord } from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
 
@@ -39,7 +39,6 @@ type DataCacheContextType = {
     getAllCache: <T>(storeName: string) => Promise<CacheItem<T>[]>;
     saveAllCache: <T>(storeName: string, data: T[]) => void;
     containsKey: (storeName: string, key: string) => Promise<boolean>;
-    // New synchronization properties
     isSynchronizing: boolean;
     synchronize: () => Promise<void>;
     synchronizeUi: (vibrate?: boolean) => Promise<void>;
@@ -88,6 +87,7 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 }, {} as CacheState);
 
                 dispatch({ type: "INIT_CACHE", data: formattedCacheData });
+                synchronize();
             } catch (error) {
                 console.error("Error initializing cache:", error);
             } finally {
@@ -102,7 +102,9 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     const getAllCache = useCallback(async <T,>(storeName: string): Promise<CacheItem<T>[]> => {
         const cache = await storage.getItem(storeName);
-        return cache ? JSON.parse(cache) : [];
+        if (!cache) return [];
+        const parsedCache = JSON.parse(cache) as Record<string, CacheItem<T>>;
+        return Object.values(parsedCache).filter(item => item && !isCacheExpired(item.timestamp));
     }, []);
 
     const getCache = useCallback(async <T,>(storeName: string, key: string): Promise<CacheItem<T> | null> => {
@@ -282,7 +284,6 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             saveAllCache,
             containsKey,
             getAllCacheSync,
-            // New synchronization properties
             isSynchronizing,
             synchronize,
             synchronizeUi,
