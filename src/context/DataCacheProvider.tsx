@@ -25,6 +25,7 @@ const STORE_NAMES = {
     KNOWLEDGE_ENTRIES: "knowledgeEntries",
     MAPS: "maps",
     TIMETRAVEL: "timetravel",
+    WARNINGS: "warnings",
 } as const;
 
 // Create type for store names
@@ -53,6 +54,7 @@ export interface StoreTypes {
     [STORE_NAMES.KNOWLEDGE_ENTRIES]: KnowledgeEntryDetails;
     [STORE_NAMES.MAPS]: MapDetails;
     [STORE_NAMES.TIMETRAVEL]: number;
+    [STORE_NAMES.WARNINGS]: Record<string, boolean>;
 }
 
 // Helper type to get the correct type for a store
@@ -314,7 +316,7 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
             // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
             if (data.ConventionIdentifier !== conId || currentCacheVersion !== eurofurenceCacheVersion) {
-                console.log("Convention identifier or cache version mismatch, clearing all data");
+                console.log(data.ConventionIdentifier, conId)
                 await clear();
                 // Set the new cache version after clearing
                 await saveCache("settings", "cacheVersion", eurofurenceCacheVersion);

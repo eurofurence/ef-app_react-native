@@ -14,25 +14,27 @@ export const DeviceSpecificWarnings = () => {
     
     const { isHidden, hideWarning } = useWarningState("deviceWarningsHidden");
 
-    if (isHidden) {
-        return null;
-    }
-    if (scheduledNotifications && pushNotifications && cacheImages) {
+    // Return null while loading or if hidden
+    if (isHidden === null || isHidden === true) {
         return null;
     }
 
-    return (
-        <>
-            <Section title={t("title")} subtitle={t("subtitle")} icon="information" />
+    if (!scheduledNotifications || !pushNotifications || !cacheImages) {
+        return (
+            <>
+                <Section title={t("title")} subtitle={t("subtitle")} icon="information" />
 
-            <Label type="para">
-                {[!scheduledNotifications && t("no_notifications"), !pushNotifications && t("no_push_notifications"), !cacheImages && t("no_image_caching")]
-                    .filter(Boolean)
-                    .join("\n\n")}
-                <Label variant="bold" color="secondary" onPress={hideWarning}>
-                    {" " + t("hide")}
+                <Label type="para">
+                    {[!scheduledNotifications && t("no_notifications"), !pushNotifications && t("no_push_notifications"), !cacheImages && t("no_image_caching")]
+                        .filter(Boolean)
+                        .join("\n\n")}
+                    <Label variant="bold" color="secondary" onPress={hideWarning}>
+                        {" " + t("hide")}
+                    </Label>
                 </Label>
-            </Label>
-        </>
-    );
+            </>
+        );
+    }
+
+    return null;
 };
