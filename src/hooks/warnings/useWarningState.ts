@@ -3,7 +3,7 @@ import { useDataCache } from "@/context/DataCacheProvider";
 
 export function useWarningState(warningKey: string) {
     const { getCache, saveCache } = useDataCache();
-    const [isHidden, setIsHidden] = useState(false);
+    const [isHidden, setIsHidden] = useState<boolean | null>(null);
     const cacheRef = useRef({ getCache, saveCache });
 
     // Update ref if cache functions change
@@ -14,9 +14,10 @@ export function useWarningState(warningKey: string) {
     useEffect(() => {
         let mounted = true;
         const loadWarningState = async () => {
-            const cache = await cacheRef.current.getCache<boolean>("settings", warningKey);
+            const cache = await cacheRef.current.getCache("warnings", "states");
+            const warningStates = cache?.data ?? {};
             if (mounted) {
-                setIsHidden(cache?.data ?? false);
+                setIsHidden(!!warningStates[warningKey]);
             }
         };
         loadWarningState();
@@ -24,7 +25,12 @@ export function useWarningState(warningKey: string) {
     }, [warningKey]);
 
     const hideWarning = useCallback(async () => {
-        await cacheRef.current.saveCache("settings", warningKey, true);
+        const cache = await cacheRef.current.getCache("warnings", "states");
+        const warningStates = cache?.data ?? {};
+        cacheRef.current.saveCache("warnings", "states", {
+            ...warningStates,
+            [warningKey]: true
+        });
         setIsHidden(true);
     }, [warningKey]);
 

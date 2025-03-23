@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from "react-native";
 
 import { fromZonedTime } from "date-fns-tz"; // Import from date-fns-tz package
-import { parseISO, isSameDay } from "date-fns"; // Import date-fns utilities
+import { parseISO, isSameDay, formatDistance } from "date-fns"; // Import date-fns utilities
 import { Image } from "../generic/atoms/Image";
 import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { Label, labelTypeStyles } from "../generic/atoms/Label";
@@ -43,6 +43,7 @@ const useCountdownTitle = (t: TFunction, now: Date) => {
     const sortedDays = chain(days)
         .orderBy((it: EventDayRecord) => it.Date, "asc")
         .value();
+
     const firstDay = sortedDays[0];
     const lastDay = sortedDays[sortedDays.length - 1];
 
@@ -54,7 +55,7 @@ const useCountdownTitle = (t: TFunction, now: Date) => {
     if (firstDay) {
         const firstDate = new Date(firstDay.Date);
         if (now < firstDate) {
-            const diff = Math.ceil((firstDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+            const diff = formatDistance(firstDate, now);
             return t("before_event", { conName, diff });
         }
     }
