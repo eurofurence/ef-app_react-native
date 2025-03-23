@@ -67,7 +67,7 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
     };
 
     const recentAnnouncements = useMemo(
-        () => orderBy(announcements, "ValidFromDateTimeUtc", "desc").slice(0, recentLimit).map(announcementInstanceForAny), // Now it works without errors
+        () => orderBy(announcements, "ValidFromDateTimeUtc", "desc").slice(0, recentLimit).map(announcementInstanceForAny),
         [announcements],
     );
 
