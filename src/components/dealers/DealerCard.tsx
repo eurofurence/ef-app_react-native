@@ -5,7 +5,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { DealerDetails } from "@/store/eurofurence/types";
-import { assetSource } from "@/util/assets";
 import { appStyles } from "../AppStyles";
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
@@ -48,7 +47,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     const present = dealer.present;
     const description = dealer.details.Categories?.join(", ");
     const offDays = dealer.offDays;
-    const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? assetSource("ych");
+    const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require("@/assets/static/ych.png");
 
     // Translation object.
     const { t } = useTranslation("Dealers");
@@ -68,7 +67,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
                     style={[avatarBackground, styles.avatarCircle]}
                     source={avatar}
                     contentFit="contain"
-                    placeholder={assetSource("ych")}
+                    placeholder={require("@/assets/static/ych.png")}
                     transition={60}
                     recyclingKey={dealer.details.Id}
                 />
