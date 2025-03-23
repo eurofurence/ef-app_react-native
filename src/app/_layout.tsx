@@ -1,4 +1,4 @@
-import { DrawerProps, DrawerScreensData } from "@/components/data/DrawerScreensData";
+import { DrawerProps, useDrawerScreensData } from "@/components/data/DrawerScreensData";
 import { DataCacheProvider } from "@/context/DataCacheProvider";
 import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager";
 import { useColorScheme } from "@/hooks/themes/useColorScheme";
@@ -44,6 +44,7 @@ export function MainLayout() {
     const themeType = useThemeName();
 
     const safeAreaStyle = useThemeMemo((theme) => ({ ...StyleSheet.absoluteFillObject, backgroundColor: theme.background }));
+    const DrawerScreensData = useDrawerScreensData();
 
     useBackgroundSyncManager();
     return (
@@ -65,7 +66,7 @@ export function MainLayout() {
                                             headerLargeTitle: screen.headerLargeTitle,
                                             headerLeft: () => screen.headerLeft,
                                             headerRight: () => screen.headerRight,
-                                            gestureEnabled: screen.swipeEnabled,
+                                            gestureEnabled: screen.swipeEnabled || false,
                                         }}
                                     />
                                 ))}

@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { formatDistanceToNow, parseISO } from "date-fns"; // Importing date-fns functions
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";
 import { ImageBackground } from "../generic/atoms/ImageBackground";

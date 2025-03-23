@@ -33,7 +33,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
     }, [getAllCacheSync]);
 
     const handleNavigation = useCallback((path: string) => {
-        router.push(path);
+        router.navigate(path);
         tabs.current?.close();
     }, [tabs]);
 
@@ -69,7 +69,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
                 <Tab 
                     icon="information-outline" 
                     text={t("info")} 
-                    onPress={() => handleNavigation("/info")} 
+                    onPress={() => handleNavigation("/knowledge")} 
                 />
                 {showCatchEm && (
                     <Tab 
