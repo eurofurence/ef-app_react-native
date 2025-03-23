@@ -6,7 +6,7 @@ import { apiBase, conId, eurofurenceCacheVersion, syncDebug, cacheDebug } from "
 import { cancelEventReminder, rescheduleEventReminder } from "@/util/eventReminders";
 import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementDetails, CommunicationRecord } from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
-import { applyAnnouncementDetails, applyMapDetails } from "@/store/eurofurence/details";
+import { applyAnnouncementDetails, applyDealerDetails, applyMapDetails } from "@/store/eurofurence/details";
 
 // Define store names as const to enable literal type inference
 const STORE_NAMES = {
@@ -264,6 +264,17 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                         data: applyMapDetails(item.data, images)
                     } as CacheItem<T>;
                 }
+                if (storeName === STORE_NAMES.DEALERS) {
+                    const images = getImagesDict();
+                    const eventDaysCache = Object.entries(cacheData)
+                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_DAYS}-`))
+                        .map(([, value]) => value.data as EventDayDetails);
+                    const favorites: string[] = []; // TODO: Implement favorites
+                    return {
+                        ...item,
+                        data: applyDealerDetails(item.data, images, eventDaysCache, favorites)
+                    } as CacheItem<T>;
+                }
                 return item;
             }
             return null;
@@ -292,6 +303,17 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 return storeEntries.map(item => ({
                     ...item,
                     data: applyMapDetails(item.data, images)
+                })) as CacheItem<T>[];
+            }
+            if (storeName === STORE_NAMES.DEALERS) {
+                const images = getImagesDict();
+                const eventDaysCache = Object.entries(cacheData)
+                    .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_DAYS}-`))
+                    .map(([, value]) => value.data as EventDayDetails);
+                const favorites: string[] = []; // TODO: Implement favorites
+                return storeEntries.map(item => ({
+                    ...item,
+                    data: applyDealerDetails(item.data, images, eventDaysCache, favorites)
                 })) as CacheItem<T>[];
             }
 

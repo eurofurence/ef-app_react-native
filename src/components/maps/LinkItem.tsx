@@ -18,7 +18,6 @@ type LinkItemProps = {
     link: LinkFragment;
 };
 
-// TODO: Fix?
 const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     const now = new Date();
     const day1 = format(setDay(now, 1), "EEEE");
@@ -27,7 +26,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
     const router = useRouter();
     const { getCacheSync } = useDataCache();
-    const dealerCache = getCacheSync<DealerDetails>("dealers", link.Target);
+    const dealerCache = getCacheSync("dealers", link.Target);
     const dealer = dealerCache?.data;
 
     const present = dealer ? isPresent(dealer, now) : false;
@@ -35,7 +34,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
     const onPress = useCallback(() => router.push(`/dealer/${link.Target}`), [router, link.Target]);
 
-    if (dealer === undefined) {
+    if (!dealerCache || !dealer) {
         return null;
     }
 
