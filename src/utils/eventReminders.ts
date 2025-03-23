@@ -4,9 +4,10 @@ import { captureException } from "@sentry/react-native";
 import { format, isBefore, subMilliseconds, subMinutes } from "date-fns";
 import { conId } from "@/configuration";
 import { EventRecord, RecordId } from "@/store/eurofurence/types";
+import { StoreNames, StoreType } from "@/context/DataCacheProvider";
 
-type SaveCacheFunction = <T>(storeName: string, key: string, data: T) => void;
-type RemoveCacheFunction = (storeName: string, key: string) => void;
+type SaveCacheFunction = <T extends StoreNames>(storeName: T, key: string, data: StoreType<T>) => void;
+type RemoveCacheFunction = (storeName: StoreNames, key: string) => void;
 
 export async function scheduleEventReminder(
     event: EventRecord, 

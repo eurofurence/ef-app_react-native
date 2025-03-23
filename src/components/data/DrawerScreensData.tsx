@@ -12,8 +12,9 @@ export interface DrawerProps {
 
 export const DrawerScreensData: DrawerProps[] = [
     {
-        location: "(areas)/index",
+        location: "(areas)",
         headerShown: false,
+        title: "Home",
     },
     {
         location: "+not-found",

@@ -4,15 +4,69 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isAfter, parseISO } from "date-fns";
 import { apiBase, conId, eurofurenceCacheVersion } from "@/configuration";
 import { cancelEventReminder, rescheduleEventReminder } from "@/utils/eventReminders";
-import { CacheItem, EventRecord } from "@/store/eurofurence/types";
+import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementRecord, AnnouncementDetails } from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
+import { applyAnnouncementDetails } from "@/store/eurofurence/details";
+
+// Define store names as const to enable literal type inference
+const STORE_NAMES = {
+    THEME: "theme",
+    ANNOUNCEMENTS: "announcements",
+    NOTIFICATIONS: "notifications",
+    DEALERS: "dealers",
+    IMAGES: "images",
+    SETTINGS: "settings",
+    FUSE_SEARCH: "fuseSearch",
+    EVENTS: "events",
+    EVENT_DAYS: "eventDays",
+    EVENT_ROOMS: "eventRooms",
+    EVENT_TRACKS: "eventTracks",
+    KNOWLEDGE_GROUPS: "knowledgeGroups",
+    KNOWLEDGE_ENTRIES: "knowledgeEntries",
+    MAPS: "maps",
+    TIMETRAVEL: "timetravel",
+} as const;
+
+// Create type for store names
+export type StoreNames = typeof STORE_NAMES[keyof typeof STORE_NAMES];
+
+// Define the data types for each store
+export interface StoreTypes {
+    [STORE_NAMES.THEME]: { applied: string };
+    [STORE_NAMES.ANNOUNCEMENTS]: AnnouncementDetails;
+    [STORE_NAMES.NOTIFICATIONS]: Notification;
+    [STORE_NAMES.DEALERS]: DealerDetails;
+    [STORE_NAMES.IMAGES]: ImageDetails;
+    [STORE_NAMES.SETTINGS]: {
+        cid: string;
+        cacheVersion: string;
+        lastSynchronised: string;
+        state: any; // Replace with proper type
+        lastViewTimes: Record<string, string>;
+    };
+    [STORE_NAMES.FUSE_SEARCH]: any; // Replace with proper type
+    [STORE_NAMES.EVENTS]: EventDetails;
+    [STORE_NAMES.EVENT_DAYS]: EventDayDetails;
+    [STORE_NAMES.EVENT_ROOMS]: any; // Replace with proper type
+    [STORE_NAMES.EVENT_TRACKS]: any; // Replace with proper type
+    [STORE_NAMES.KNOWLEDGE_GROUPS]: KnowledgeGroupDetails;
+    [STORE_NAMES.KNOWLEDGE_ENTRIES]: KnowledgeEntryDetails;
+    [STORE_NAMES.MAPS]: MapDetails;
+    [STORE_NAMES.TIMETRAVEL]: number;
+}
+
+// Helper type to get the correct type for a store
+export type StoreType<T extends StoreNames> = StoreTypes[T];
 
 const CACHE_EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours
-const storeNames = ["theme", "announcements", "notifications", "dealers", "images", "settings", "fuseSearch"];
+const storeNames = Object.values(STORE_NAMES);
 
 type CacheState = Record<string, any>;
 
-type CacheAction = { type: "SET_CACHE"; key: string; data: any } | { type: "REMOVE_CACHE"; key: string } | { type: "INIT_CACHE"; data: CacheState };
+type CacheAction = 
+    | { type: "SET_CACHE"; key: string; data: any }
+    | { type: "REMOVE_CACHE"; key: string }
+    | { type: "INIT_CACHE"; data: CacheState };
 
 const cacheReducer = (state: CacheState, action: CacheAction): CacheState => {
     switch (action.type) {
@@ -31,14 +85,14 @@ const cacheReducer = (state: CacheState, action: CacheAction): CacheState => {
 };
 
 type DataCacheContextType = {
-    getCache: <T>(storeName: string, key: string) => Promise<CacheItem<T> | null>;
-    saveCache: <T>(storeName: string, key: string, data: T) => void;
-    removeCache: (storeName: string, key: string) => void;
-    getCacheSync: <T>(storeName: string, key: string) => CacheItem<T> | null;
-    getAllCacheSync: <T>(storeName: string) => CacheItem<T>[];
-    getAllCache: <T>(storeName: string) => Promise<CacheItem<T>[]>;
-    saveAllCache: <T>(storeName: string, data: T[]) => void;
-    containsKey: (storeName: string, key: string) => Promise<boolean>;
+    getCache: <T extends StoreNames>(storeName: T, key: string) => Promise<CacheItem<StoreType<T>> | null>;
+    saveCache: <T extends StoreNames>(storeName: T, key: string, data: StoreType<T>) => void;
+    removeCache: (storeName: StoreNames, key: string) => void;
+    getCacheSync: <T extends StoreNames>(storeName: T, key: string) => CacheItem<StoreType<T>> | null;
+    getAllCacheSync: <T extends StoreNames>(storeName: T) => CacheItem<StoreType<T>>[];
+    getAllCache: <T extends StoreNames>(storeName: T) => Promise<CacheItem<StoreType<T>>[]>;
+    saveAllCache: <T extends StoreNames>(storeName: T, data: StoreType<T>[]) => void;
+    containsKey: (storeName: StoreNames, key: string) => Promise<boolean>;
     isSynchronizing: boolean;
     synchronize: () => Promise<void>;
     synchronizeUi: (vibrate?: boolean) => Promise<void>;
@@ -86,8 +140,11 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                     return acc;
                 }, {} as CacheState);
 
+                // Initialize with default cache version if not present
+                await saveCache("settings", "cacheVersion", eurofurenceCacheVersion);
+                
                 dispatch({ type: "INIT_CACHE", data: formattedCacheData });
-                synchronize();
+                synchronizeUi();
             } catch (error) {
                 console.error("Error initializing cache:", error);
             } finally {
@@ -127,6 +184,11 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }, []);
 
     const saveAllCache = useCallback(async <T,>(storeName: string, data: T[]) => {
+        if (!Array.isArray(data)) {
+            console.warn(`Invalid data format for ${storeName}: expected array but got ${typeof data}`);
+            return;
+        }
+
         const cache = data.reduce(
             (acc, item) => {
                 // @ts-expect-error: We know that item has an "Id" property, fix types later
@@ -170,6 +232,16 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             const cacheKey = `${storeName}-${key}`;
             const item = cacheData[cacheKey];
             if (item && !isCacheExpired(item.timestamp)) {
+                // Apply transformations based on store type
+                if (storeName === STORE_NAMES.ANNOUNCEMENTS) {
+                    const images = getAllCacheSync<ImageDetails>(STORE_NAMES.IMAGES)
+                        .reduce((acc, item) => ({ ...acc, [item.data.Id]: item.data }), {} as Record<string, ImageDetails>);
+                    
+                    return {
+                        ...item,
+                        data: applyAnnouncementDetails(item.data, images)
+                    } as CacheItem<T>;
+                }
                 return item;
             }
             return null;
@@ -179,8 +251,24 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     const getAllCacheSync = useCallback(
         <T,>(storeName: string): CacheItem<T>[] => {
-            const cache = cacheData[storeName];
-            return cache ? Object.values(cache) : [];
+            // Filter all cache entries that start with the storeName prefix
+            const storeEntries = Object.entries(cacheData)
+                .filter(([key]) => key.startsWith(`${storeName}-`))
+                .map(([, value]) => value)
+                .filter(item => item && !isCacheExpired(item.timestamp));
+
+            // Apply transformations based on store type
+            if (storeName === STORE_NAMES.ANNOUNCEMENTS) {
+                const images = getAllCacheSync<ImageDetails>(STORE_NAMES.IMAGES)
+                    .reduce((acc, item) => ({ ...acc, [item.data.Id]: item.data }), {} as Record<string, ImageDetails>);
+                
+                return storeEntries.map(item => ({
+                    ...item,
+                    data: applyAnnouncementDetails(item.data, images)
+                })) as CacheItem<T>[];
+            }
+
+            return storeEntries;
         },
         [cacheData],
     );
@@ -201,11 +289,12 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         setIsSynchronizing(true);
 
         // Retrieve last synchronised time and other auxiliary values from cache
-        const auxiliaryCache = await getCache("settings", "lastSynchronised");
-        const lastSynchronised = auxiliaryCache ? auxiliaryCache.data : null;
+        const lastSynchronisedCache = await getCache("settings", "lastSynchronised");
+        const lastSynchronised = lastSynchronisedCache ? lastSynchronisedCache.data : null;
         const cachedCid = await getCache("settings", "cid");
         const cachedCacheVersion = await getCache("settings", "cacheVersion");
 
+        // Sync fully if state is for a different convention.
         const path = lastSynchronised && cachedCid?.data === conId && cachedCacheVersion?.data === eurofurenceCacheVersion ? `Sync?since=${lastSynchronised}` : `Sync`;
 
         try {
@@ -215,16 +304,63 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             }
             if (!response.headers.get("Content-type")?.includes("application/json")) {
                 throw new Error("API response is not JSON");
-            }
+            }       
             const data = await response.json();
+            console.log("API Response structure:", Object.keys(data));
+            console.log("Events structure:", data.Events ? Object.keys(data.Events) : "No Events data");
 
-            // Apply sync: assume data is an object with keys corresponding to storeNames
-            for (const storeName of storeNames) {
-                if (data[storeName]) {
-                    await saveAllCache(storeName, data[storeName]);
-                }
+            const cacheVersion = getCacheSync("settings", "cacheVersion");
+            const currentCacheVersion = cacheVersion?.data || eurofurenceCacheVersion;
+
+            // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
+            if (data.ConventionIdentifier !== conId || currentCacheVersion !== eurofurenceCacheVersion) {
+                console.log("Convention identifier or cache version mismatch, clearing all data");
+                await clear();
+                // Set the new cache version after clearing
+                await saveCache("settings", "cacheVersion", eurofurenceCacheVersion);
             }
 
+            // Apply sync to each storeName with Promise.all
+            const syncPromises = [];
+
+            // Helper function to safely add sync tasks
+            const addSyncTask = (storeName: string, dataObject: any) => {
+                if (dataObject && Array.isArray(dataObject.ChangedEntities)) {
+                    console.log(`Syncing ${storeName} with ${dataObject.ChangedEntities.length} items`);
+                    syncPromises.push(saveAllCache(storeName, dataObject.ChangedEntities));
+                } else {
+                    console.warn(`Skipping sync for ${storeName}: invalid data format`, 
+                        dataObject ? `(has properties: ${Object.keys(dataObject)})` : '(is undefined)');
+                }
+            };
+
+            // Add sync tasks for each data type
+            addSyncTask("events", data.Events);
+            addSyncTask("eventDays", data.EventConferenceDays);
+            addSyncTask("eventRooms", data.EventConferenceRooms);
+            addSyncTask("eventTracks", data.EventConferenceTracks);
+            addSyncTask("knowledgeGroups", data.KnowledgeGroups);
+            addSyncTask("knowledgeEntries", data.KnowledgeEntries);
+            addSyncTask("dealers", data.Dealers);
+            addSyncTask("images", data.Images);
+            addSyncTask("announcements", data.Announcements);
+            addSyncTask("maps", data.Maps);
+
+            // Add settings sync tasks
+            if (data.ConventionIdentifier) {
+                syncPromises.push(saveCache("settings", "cid", data.ConventionIdentifier));
+            }
+            syncPromises.push(saveCache("settings", "cacheVersion", eurofurenceCacheVersion));
+            if (data.CurrentDateTimeUtc) {
+                syncPromises.push(saveCache("settings", "lastSynchronised", data.CurrentDateTimeUtc));
+            }
+            if (data.State) {
+                syncPromises.push(saveCache("settings", "state", data.State));
+            }
+
+            // Wait for all sync tasks to complete
+            await Promise.all(syncPromises);
+            
             // Reschedule each event reminder
             const eventCache = await getAllCache<EventRecord>("events");
             const notificationsCache = await getAllCache<Notification>("notifications");
@@ -258,8 +394,7 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             await storage.setItem(storeName, JSON.stringify({}));
         }
         dispatch({ type: "INIT_CACHE", data: {} });
-        await synchronize();
-    }, [synchronize]);
+    }, []);
 
     const synchronizeUi = useCallback(
         async (vibrate: boolean = false) => {

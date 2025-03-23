@@ -8,19 +8,20 @@ import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
 import { AnnouncementCard } from "./AnnouncementCard";
 import { useDataCache } from "@/context/DataCacheProvider";
-import { AnnouncementRecord, AnnouncementDetails } from "@/store/eurofurence/types";
+import { AnnouncementRecord, AnnouncementDetails, ImageDetails } from "@/store/eurofurence/types";
+import { applyAnnouncementDetails } from "@/store/eurofurence/details";
 
 const recentLimit = 2;
 
 export const RecentAnnouncements = ({ now }: { now: Date }) => {
     const { t } = useTranslation("Home");
-    const { getAllCache } = useDataCache();
+    const { getAllCache, getAllCacheSync } = useDataCache();
     const [announcements, setAnnouncements] = useState<AnnouncementRecord[]>([]);
 
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {
-                const cachedAnnouncements = await getAllCache<AnnouncementRecord>("announcements");
+                const cachedAnnouncements = await getAllCache("announcements");
                 
                 // Ensure we have an array and extract data from cache items
                 const filtered = Array.isArray(cachedAnnouncements) 
@@ -53,11 +54,14 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
         const validFromDate = parseISO(details.ValidFromDateTimeUtc);
         const time = formatDistanceToNow(validFromDate, { addSuffix: true });
 
-        // Convert AnnouncementRecord to AnnouncementDetails
-        const announcementDetails: AnnouncementDetails = {
-            ...details,
-            NormalizedTitle: details.Title, // Assuming NormalizedTitle is similar to Title
-        };
+        // Get all images from cache to properly apply announcement details
+        const images = getAllCacheSync("images")
+            .reduce((acc, item) => ({ ...acc, [item.data.Id]: item.data }), {} as Record<string, ImageDetails>);
+
+        // Convert AnnouncementRecord to AnnouncementDetails using the proper function
+        const announcementDetails = applyAnnouncementDetails(details, images);
+
+        console.log("announcementDetails", announcementDetails);
 
         return { details: announcementDetails, time };
     };

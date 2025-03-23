@@ -12,11 +12,6 @@ import { useDataCache } from "@/context/DataCacheProvider";
 import { Tabs as CustomTabs, TabsRef } from "@/components/generic/containers/Tabs";
 import { MainMenu } from "@/components/mainmenu/MainMenu";
 
-/**
- * Minimum padding to use if safe area is less.
- */
-const minSafeAreaPadding = 15;
-
 function getIconNameFromTabBarIcon(
     tabBarIcon: ((props: { focused: boolean; color: string; size: number }) => React.ReactNode) | undefined,
     isFocused: boolean,
@@ -44,7 +39,6 @@ function AreasTabBar(props: BottomTabBarProps) {
 
     return (
         <CustomTabs
-            style={{ paddingBottom: Math.max(minSafeAreaPadding, insets.bottom) }}
             ref={tabs}
             tabs={props.state.routes.map((route, i) => {
                 const { options } = props.descriptors[route.key];
