@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { captureException } from "@sentry/react-native";
 import { EventRecord } from "@/store/eurofurence/types";
 import { useDataCache } from "@/context/DataCacheProvider";
-import { scheduleEventReminder, cancelEventReminder } from "@/utils/eventReminders";
+import { scheduleEventReminder, cancelEventReminder } from "@/util/eventReminders";
 
 export const useEventReminder = (event: EventRecord) => {
     const { getCacheSync, saveCache, removeCache } = useDataCache();

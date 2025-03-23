@@ -12,7 +12,7 @@ import { Progress } from "../generic/atoms/Progress";
 import { Row } from "../generic/containers/Row";
 import { sourceFromImage } from "../generic/atoms/Image.common";
 import { EventCardTime } from "./EventCardTime";
-import { calculateEventTiming } from "../../utils/eventTiming";
+import { calculateEventTiming } from "../../util/eventTiming";
 
 const glyphIconSize = 90;
 const badgeIconSize = 20;

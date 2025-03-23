@@ -3,7 +3,7 @@ import { Platform, Vibration } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isAfter, parseISO } from "date-fns";
 import { apiBase, conId, eurofurenceCacheVersion } from "@/configuration";
-import { cancelEventReminder, rescheduleEventReminder } from "@/utils/eventReminders";
+import { cancelEventReminder, rescheduleEventReminder } from "@/util/eventReminders";
 import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementRecord, AnnouncementDetails } from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
 import { applyAnnouncementDetails } from "@/store/eurofurence/details";

@@ -3,7 +3,7 @@ import { FC } from "react";
 import { PartOfDay } from "../../store/eurofurence/types";
 import { IconNames } from "../generic/atoms/Icon";
 import { Section, SectionProps } from "../generic/atoms/Section";
-import { formatWeekdayInConventionTimezone } from "../../utils/eventTiming";
+import { formatWeekdayInConventionTimezone } from "../../util/eventTiming";
 
 export type EventSectionProps = SectionProps;
 
