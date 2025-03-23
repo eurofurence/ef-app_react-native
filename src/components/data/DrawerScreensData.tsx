@@ -15,8 +15,11 @@ export const DrawerScreensData: DrawerProps[] = [
         location: "(areas)",
         headerShown: false,
         title: "Home",
+        swipeEnabled: false,
     },
     {
         location: "+not-found",
+        headerShown: false,
+        swipeEnabled: false,
     },
 ];

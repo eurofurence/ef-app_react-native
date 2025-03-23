@@ -63,6 +63,7 @@ export function MainLayout() {
                                             headerLargeTitle: screen.headerLargeTitle,
                                             headerLeft: () => screen.headerLeft,
                                             headerRight: () => screen.headerRight,
+                                            gestureEnabled: screen.swipeEnabled,
                                         }}
                                     />
                                 ))}
