@@ -14,7 +14,6 @@ import { Col } from "../generic/containers/Col";
 import { useNow } from "@/hooks/time/useNow";
 import { useDataCache } from "@/context/DataCacheProvider"; // Replace Redux
 import { conId, conName, conTimeZone } from "@/configuration";
-import { assetSource } from "@/util/assets";
 import { EventDayRecord } from "@/store/eurofurence/types";
 
 export type CountdownHeaderProps = {
@@ -84,12 +83,12 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
             <ImageBackground
                 key="banner"
                 style={StyleSheet.absoluteFill}
-                source={assetSource(width < bannerBreakpoint ? "banner_narrow" : "banner_wide")}
+                source={width < bannerBreakpoint ? require("@/assets/static/banner_narrow.png") : require("@/assets/static/banner_wide.png")}
                 contentFit="cover"
                 priority="high"
             />
             <View style={[StyleSheet.absoluteFill, styles.cover]} />
-            <Image style={styles.logo} source={assetSource("banner_logo")} priority="high" />
+            <Image style={styles.logo} source={require("@/assets/static/banner_logo.png")} priority="high" />
             <Col variant="end" style={styles.textContainer}>
                 <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
                     {conId}
