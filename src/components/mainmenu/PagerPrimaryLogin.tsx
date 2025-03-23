@@ -10,7 +10,6 @@ import { Label } from "@/components/generic/atoms/Label";
 import { Button } from "@/components/generic/containers/Button";
 import { Col } from "@/components/generic/containers/Col";
 import { Row } from "@/components/generic/containers/Row";
-import { assetSource } from "@/utils/assets";
 
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
@@ -31,7 +30,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, open, onMessages, onLogin, 
                 <Col type="center">
                     <Image
                         style={[avatarBackground, styles.avatarCircle]}
-                        source={claim?.avatar ?? assetSource("ych")}
+                        source={claim?.avatar ?? require("@/assets/static/ych.png")}
                         contentFit="contain"
                         cachePolicy="memory-disk"
                         priority="high"
@@ -45,19 +44,19 @@ export function PagerPrimaryLogin({ loggedIn, claim, open, onMessages, onLogin, 
             </TouchableOpacity>
 
             {loggedIn ? (
-                <Button 
-                    containerStyle={styles.buttonContainer} 
-                    style={styles.button} 
-                    icon="message" 
+                <Button
+                    containerStyle={styles.buttonContainer}
+                    style={styles.button}
+                    icon="message"
                     onPress={onMessages}
                 >
                     {t("open_messages")}
                 </Button>
             ) : (
-                <Button 
-                    containerStyle={styles.buttonContainer} 
-                    style={styles.button} 
-                    iconRight="login" 
+                <Button
+                    containerStyle={styles.buttonContainer}
+                    style={styles.button}
+                    iconRight="login"
                     onPress={onLogin}
                 >
                     {t("logged_in_now")}
