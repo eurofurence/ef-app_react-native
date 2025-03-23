@@ -37,17 +37,17 @@ const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
  * Calculates the countdown title based on current time and event days.
  */
 const useCountdownTitle = (t: TFunction, now: Date) => {
-    const { getCacheSync } = useDataCache();
-    const days = getCacheSync<EventDayRecord[]>("eventDays", "all")?.data ?? [];
+    const { getAllCacheSync } = useDataCache();
+    const days = getAllCacheSync("eventDays").map(item => item.data);
 
     const sortedDays = chain(days)
-        .orderBy((it) => it.Date, "asc")
+        .orderBy((it: EventDayRecord) => it.Date, "asc")
         .value();
     const firstDay = sortedDays[0];
     const lastDay = sortedDays[sortedDays.length - 1];
 
     // Try finding current day.
-    const currentDay = days.find((it) => isSameDayInTimezone(now, it.Date, conTimeZone));
+    const currentDay = days.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone));
     if (currentDay) return currentDay.Name;
 
     // Check if before first day.

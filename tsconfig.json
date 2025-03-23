@@ -12,6 +12,7 @@
   "include": [
     "./src",
     "./node_modules/moment/locale",
-    "./package.json"
+    "./package.json",
+    "nativewind-env.d.ts"
   ]
 }

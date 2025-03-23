@@ -14,6 +14,8 @@ import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager"
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 // Import i18n configuration
 import "@/i18n";
+// Import global tailwind css
+import "@/css/globals.css";
 
 /**
  * The root layout for the application.
@@ -61,6 +63,7 @@ export function MainLayout() {
                                             headerLargeTitle: screen.headerLargeTitle,
                                             headerLeft: () => screen.headerLeft,
                                             headerRight: () => screen.headerRight,
+                                            gestureEnabled: screen.swipeEnabled,
                                         }}
                                     />
                                 ))}

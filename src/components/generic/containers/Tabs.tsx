@@ -1,7 +1,7 @@
 import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
 
 import { useThemeBackground, useThemeBorder } from "@/hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
@@ -141,6 +141,21 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         else runOnJS(setState)("transitioning");
     }, [offset]);
 
+    // Derive isOpen state from offset
+    const isOpen = useDerivedValue(() => offset.value > 0, [offset]);
+    
+    // Track isOpen state in React state for context
+    const [isOpenState, setIsOpenState] = useState(false);
+    
+    // Use animated reaction to update React state
+    useAnimatedReaction(
+        () => isOpen.value,
+        (value) => {
+            runOnJS(setIsOpenState)(value);
+        },
+        [isOpen]
+    );
+
     // Derive opacity from offset. If completely closed, translate out.
     const dynamicDismiss = useAnimatedStyle(
         () => ({
@@ -242,7 +257,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
     }, [close]);
 
     return (
-        <TabsContext.Provider value={{ close, open, closeImmediately, isOpen: offset.value > 0 }}>
+        <TabsContext.Provider value={{ close, open, closeImmediately, isOpen: isOpenState }}>
             {/* Dismissal area. */}
             <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
                 <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
