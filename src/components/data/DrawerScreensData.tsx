@@ -44,6 +44,11 @@ export const useDrawerScreensData = (): DrawerProps[] => {
             headerShown: true,
         },
         {
+            location: "maps/[...slug]",
+            headerLeft: goBackCustom(),
+            headerShown: true,
+        },
+        {
             location: "+not-found",
             headerShown: false,
         },

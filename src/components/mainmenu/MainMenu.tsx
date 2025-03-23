@@ -107,7 +107,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
                         key={map.Id} 
                         containerStyle={styles.mapButton} 
                         icon="map" 
-                        onPress={() => handleNavigation(`/map/${map.Id}`)}
+                        onPress={() => handleNavigation(`/maps/${map.Id}`)}
                     >
                         {map.Description}
                     </Button>

@@ -2,11 +2,11 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { Platform, Vibration } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isAfter, parseISO } from "date-fns";
-import { apiBase, conId, eurofurenceCacheVersion } from "@/configuration";
+import { apiBase, conId, eurofurenceCacheVersion, syncDebug, cacheDebug } from "@/configuration";
 import { cancelEventReminder, rescheduleEventReminder } from "@/util/eventReminders";
-import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementRecord, AnnouncementDetails } from "@/store/eurofurence/types";
+import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementDetails, CommunicationRecord } from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
-import { applyAnnouncementDetails } from "@/store/eurofurence/details";
+import { applyAnnouncementDetails, applyMapDetails } from "@/store/eurofurence/details";
 
 // Define store names as const to enable literal type inference
 const STORE_NAMES = {
@@ -26,6 +26,7 @@ const STORE_NAMES = {
     MAPS: "maps",
     TIMETRAVEL: "timetravel",
     WARNINGS: "warnings",
+    COMMUNICATIONS: "communications",
 } as const;
 
 // Create type for store names
@@ -55,6 +56,7 @@ export interface StoreTypes {
     [STORE_NAMES.MAPS]: MapDetails;
     [STORE_NAMES.TIMETRAVEL]: number;
     [STORE_NAMES.WARNINGS]: Record<string, boolean>;
+    [STORE_NAMES.COMMUNICATIONS]: CommunicationRecord;
 }
 
 // Helper type to get the correct type for a store
@@ -229,6 +231,19 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         dispatch({ type: "REMOVE_CACHE", key: `${storeName}-${key}` });
     }, []);
 
+    // Helper function to get images dictionary
+    const getImagesDict = useCallback(() => {
+        const imageEntries = Object.entries(cacheData)
+            .filter(([key]) => key.startsWith(`${STORE_NAMES.IMAGES}-`))
+            .map(([, value]) => value)
+            .filter(item => item && !isCacheExpired(item.timestamp));
+
+        return imageEntries.reduce(
+            (acc, item) => ({ ...acc, [item.data.Id]: item.data }), 
+            {} as Record<string, ImageDetails>
+        );
+    }, [cacheData]);
+
     const getCacheSync = useCallback(
         <T,>(storeName: string, key: string): CacheItem<T> | null => {
             const cacheKey = `${storeName}-${key}`;
@@ -236,19 +251,24 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             if (item && !isCacheExpired(item.timestamp)) {
                 // Apply transformations based on store type
                 if (storeName === STORE_NAMES.ANNOUNCEMENTS) {
-                    const images = getAllCacheSync<ImageDetails>(STORE_NAMES.IMAGES)
-                        .reduce((acc, item) => ({ ...acc, [item.data.Id]: item.data }), {} as Record<string, ImageDetails>);
-                    
+                    const images = getImagesDict();
                     return {
                         ...item,
                         data: applyAnnouncementDetails(item.data, images)
+                    } as CacheItem<T>;
+                }
+                if (storeName === STORE_NAMES.MAPS) {
+                    const images = getImagesDict();
+                    return {
+                        ...item,
+                        data: applyMapDetails(item.data, images)
                     } as CacheItem<T>;
                 }
                 return item;
             }
             return null;
         },
-        [cacheData],
+        [cacheData, getImagesDict],
     );
 
     const getAllCacheSync = useCallback(
@@ -261,18 +281,23 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
             // Apply transformations based on store type
             if (storeName === STORE_NAMES.ANNOUNCEMENTS) {
-                const images = getAllCacheSync<ImageDetails>(STORE_NAMES.IMAGES)
-                    .reduce((acc, item) => ({ ...acc, [item.data.Id]: item.data }), {} as Record<string, ImageDetails>);
-                
+                const images = getImagesDict();
                 return storeEntries.map(item => ({
                     ...item,
                     data: applyAnnouncementDetails(item.data, images)
                 })) as CacheItem<T>[];
             }
+            if (storeName === STORE_NAMES.MAPS) {
+                const images = getImagesDict();
+                return storeEntries.map(item => ({
+                    ...item,
+                    data: applyMapDetails(item.data, images)
+                })) as CacheItem<T>[];
+            }
 
             return storeEntries;
         },
-        [cacheData],
+        [cacheData, getImagesDict],
     );
 
     const containsKey = useCallback(async (storeName: string, key: string): Promise<boolean> => {
@@ -308,8 +333,10 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 throw new Error("API response is not JSON");
             }       
             const data = await response.json();
-            console.log("API Response structure:", Object.keys(data));
-            console.log("Events structure:", data.Events ? Object.keys(data.Events) : "No Events data");
+            if (syncDebug) {
+                console.log("API Response structure:", Object.keys(data));
+                console.log("Events structure:", data.Events ? Object.keys(data.Events) : "No Events data");
+            }
 
             const cacheVersion = getCacheSync("settings", "cacheVersion");
             const currentCacheVersion = cacheVersion?.data || eurofurenceCacheVersion;
@@ -324,15 +351,16 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
             // Apply sync to each storeName with Promise.all
             const syncPromises = [];
+            const debugInfo: Record<string, number> = {};
 
             // Helper function to safely add sync tasks
             const addSyncTask = (storeName: string, dataObject: any) => {
                 if (dataObject && Array.isArray(dataObject.ChangedEntities)) {
-                    console.log(`Syncing ${storeName} with ${dataObject.ChangedEntities.length} items`);
+                    const count = dataObject.ChangedEntities.length;
+                    debugInfo[storeName] = count;
                     syncPromises.push(saveAllCache(storeName, dataObject.ChangedEntities));
                 } else {
-                    console.warn(`Skipping sync for ${storeName}: invalid data format`, 
-                        dataObject ? `(has properties: ${Object.keys(dataObject)})` : '(is undefined)');
+                    debugInfo[storeName] = 0;
                 }
             };
 
@@ -347,6 +375,21 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             addSyncTask("images", data.Images);
             addSyncTask("announcements", data.Announcements);
             addSyncTask("maps", data.Maps);
+
+            // Add settings sync tasks and debug info
+            const settingsInfo = {
+                conventionId: data.ConventionIdentifier || 'not set',
+                cacheVersion: eurofurenceCacheVersion,
+                lastSyncTime: data.CurrentDateTimeUtc || 'not set',
+                hasState: !!data.State
+            };
+
+            if (cacheDebug) {
+                console.log('Cache Sync Summary:', {
+                    stores: debugInfo,
+                    settings: settingsInfo
+                });
+            }
 
             // Add settings sync tasks
             if (data.ConventionIdentifier) {

@@ -40,5 +40,9 @@
     "messagingSenderId": "",
     "appId": "",
     "measurementId": ""
+  },
+  "debug": {
+    "showSync": false,
+    "showCache": false
   }
 }
