@@ -1,20 +1,21 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import "react-native-reanimated";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { SafeAreaView } from "react-native-safe-area-context";
-import React from "react";
-import { StyleSheet } from "react-native";
-import { useTheme, useThemeMemo, useThemeName } from "@/hooks/themes/useThemeHooks";
-import { useColorScheme } from "@/hooks/themes/useColorScheme";
 import { DrawerProps, DrawerScreensData } from "@/components/data/DrawerScreensData";
 import { DataCacheProvider } from "@/context/DataCacheProvider";
 import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager";
+import { useColorScheme } from "@/hooks/themes/useColorScheme";
+import { useTheme, useThemeMemo, useThemeName } from "@/hooks/themes/useThemeHooks";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import "react-native-reanimated";
+import { SafeAreaView } from "react-native-safe-area-context";
 // Import i18n configuration
 import "@/i18n";
 // Import global tailwind css
+import { AuthContextProvider } from "@/context/AuthContext";
 import "@/css/globals.css";
 
 /**
@@ -48,6 +49,7 @@ export function MainLayout() {
     return (
             <BottomSheetModalProvider>
                 <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+                    <AuthContextProvider>
                     <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
                     <SafeAreaView style={safeAreaStyle}>
                             <Stack>
@@ -68,7 +70,8 @@ export function MainLayout() {
                                     />
                                 ))}
                             </Stack>
-                    </SafeAreaView>
+                        </SafeAreaView>
+                    </AuthContextProvider>
                 </ThemeProvider>
             </BottomSheetModalProvider>
     );
