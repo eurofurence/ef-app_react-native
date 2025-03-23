@@ -13,6 +13,7 @@ import { useDataCache } from "@/context/DataCacheProvider";
 import { Button } from "@/components/generic/containers/Button";
 import { MapRecord } from "@/store/eurofurence/types";
 import { PagerPrimaryLogin } from "@/components/mainmenu/PagerPrimaryLogin";
+import { captureException } from "@sentry/react-native";
 
 export type MainMenuProps = {
     tabs: RefObject<TabsRef>;
@@ -36,8 +37,9 @@ export function MainMenu({ tabs }: MainMenuProps) {
         tabs.current?.close();
     }, [tabs]);
 
+    // TODO: Check why a page is not being opened.
     const handleLogin = useCallback(() => {
-        login().catch(console.error);
+        login().catch(captureException);
     }, [login]);
 
     const handleCatchEmAll = useCallback(async () => {
