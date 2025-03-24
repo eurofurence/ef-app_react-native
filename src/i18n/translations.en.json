@@ -213,6 +213,7 @@
     "more": "More",
     "not_logged_in": "You are currently not logged in.",
     "open_messages": "View messages",
+    "pm": "Private messages",
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
@@ -228,6 +229,7 @@
     "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {
+    "header": "Private Messages",
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
     "message_item_subtitle": "{{ status }} - Sent on {{ time }}",

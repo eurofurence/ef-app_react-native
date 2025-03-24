@@ -1,10 +1,11 @@
-import { Stack, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import * as React from "react";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Header } from "@/components/generic/containers/Header";
 import { MapContent, MapContentProps } from "@/components/maps/MapContent";
 import { useDataCache } from "@/context/DataCacheProvider";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 export default function Map() {
     const params = useLocalSearchParams<{ slug: string[] }>();
@@ -13,6 +14,7 @@ export default function Map() {
     const mapId = params.slug?.[0];
     const entryId = params.slug?.[1];
     const linkId = params.slug?.[2];
+    const backgroundStyle = useThemeBackground("background");
 
     const { getCacheSync } = useDataCache();
 
@@ -46,8 +48,7 @@ export default function Map() {
     }, [mapCache, link]);
 
     return (
-        <View style={StyleSheet.absoluteFill}>
-            <Stack.Screen options={{ title: titleText }} />
+        <View style={[StyleSheet.absoluteFill, backgroundStyle]}>
             <Header>{titleText}</Header>
             {!mapCache?.Image || (entryId && !entry) || (linkId && !link) ? null : (
                 <MapContent map={mapCache as MapContentProps["map"]} entry={entry} link={link} />

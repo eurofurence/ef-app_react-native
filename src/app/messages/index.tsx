@@ -1,22 +1,16 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { SectionList, StyleSheet, SectionListData } from "react-native";
+import { SectionList, StyleSheet, ScrollView } from "react-native";
 import { chain, partition, isEmpty, startCase } from "lodash";
 import { router } from "expo-router";
 
 import { Label } from "@/components/generic/atoms/Label";
 import { Header } from "@/components/generic/containers/Header";
-import { PrivateMessageCard } from "@/components/pm/PrivateMessageCard";
-import { View, Text } from "react-native";
+import { PrivateMessageCard } from "@/components/messages/PrivateMessageCard";
 import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { CommunicationRecord } from "@/store/eurofurence/types";
-
-const NoData: React.FC<{ text: string }> = ({ text }) => (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{text}</Text>
-    </View>
-);
+import { NoData } from "@/components/generic/containers/NoData";
 
 type Section = {
     title: string;
@@ -32,7 +26,7 @@ export default function PmList() {
     const navigateTo = useCallback(
         (item: CommunicationRecord) =>
             router.push({
-                pathname: "/pm/[messageId]",
+                pathname: "/messages/[messageId]",
                 params: { messageId: item.Id }
             }),
         []
@@ -66,8 +60,8 @@ export default function PmList() {
 
     const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, []);
     const emptyComponent = useMemo(() => <NoData text={t("no_data")} />, [t]);
-    const headerComponent = useMemo(() => <Header>Private Messages</Header>, []);
-    
+    const headerComponent = useMemo(() => <Header>{t("header")}</Header>, []);
+
     const renderSection = useCallback(
         ({ section }: { section: Section }) => (
             <Label type="h2" style={[styles.section, sectionStyle]}>
@@ -89,9 +83,11 @@ export default function PmList() {
         [navigateTo]
     );
 
+    const backgroundStyle = useThemeBackground("background");
+
     return (
         <SectionList<CommunicationRecord, Section>
-            style={StyleSheet.absoluteFill}
+            style={[StyleSheet.absoluteFill, backgroundStyle]}
             sections={sectionedData}
             contentContainerStyle={styles.container}
             keyExtractor={keyExtractor}

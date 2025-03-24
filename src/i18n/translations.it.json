@@ -93,6 +93,7 @@
     "more": "Di più",
     "not_logged_in": "Non hai effettuato l'accesso",
     "open_messages": "Apri i messaggi",
+    "pm": "Messaggi privati",
     "services": "Servizi",
     "settings": "Impostazioni"
   },
@@ -101,6 +102,7 @@
     "private_message": "Hai ricevuto un nuovo messaggio privato"
   },
   "PrivateMessageList": {
+    "header": "Messaggi privati",
     "from": "Da {{ author }}",
     "message_item_subtitle": "{{ status }} - Inviato {{ time }}",
     "read": "Letto",

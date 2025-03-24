@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { StyleSheet, ScrollView } from "react-native";
 import { useTranslation } from "react-i18next";
 import { parseISO, format } from "date-fns";
 import { useLocalSearchParams, router } from "expo-router";
@@ -14,6 +13,7 @@ import { Row } from "@/components/generic/containers/Row";
 import { Rule } from "@/components/generic/atoms/Rule";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { CommunicationRecord } from "@/store/eurofurence/types";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 const readOpenTimeRequirement = 1500;
 
@@ -21,6 +21,7 @@ export default function PmItem() {
     const { messageId } = useLocalSearchParams<{ messageId: string }>();
     const { t } = useTranslation("PrivateMessageItem");
     const { getAllCacheSync, saveCache } = useDataCache();
+    const backgroundStyle = useThemeBackground("background");
 
     // Get message from cache
     const messages = getAllCacheSync("communications");
@@ -55,8 +56,12 @@ export default function PmItem() {
     const formattedDate = message.ReceivedDateTimeUtc ? format(parseISO(message.ReceivedDateTimeUtc), 'PPpp') : '';
 
     return (
-        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header>{t("header")}</Header>
+        <ScrollView 
+            style={[StyleSheet.absoluteFill, backgroundStyle]} 
+            stickyHeaderIndices={[0]} 
+            stickyHeaderHiddenOnScroll
+        >
+            <Header>{message.AuthorName}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 <Label type="h1" mt={30} mb={10}>
                     {message.Subject}

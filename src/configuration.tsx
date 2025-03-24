@@ -84,3 +84,4 @@ export const authSettingsUrl = conventionConfig.auth.settingsUrl;
  */
 export const syncDebug = conventionConfig.debug.showSync;
 export const cacheDebug = conventionConfig.debug.showCache;
+export const devMenu = conventionConfig.debug.devMenu;

@@ -220,6 +220,7 @@
     "read_at": "Gelesen um {{time}}"
   },
   "PrivateMessageList": {
+    "header": "Private Nachrichten",
     "from": "Von {{ author }}",
     "from_unknown": "Author unbekannt",
     "message_item_subtitle": "{{ status }} - Gesendet {{ time }}",

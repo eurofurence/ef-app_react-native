@@ -7,10 +7,10 @@ import { cancelEventReminder, rescheduleEventReminder } from "@/util/eventRemind
 import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementDetails, CommunicationRecord } from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
 import { applyAnnouncementDetails, applyDealerDetails, applyMapDetails } from "@/store/eurofurence/details";
+import { ThemeName } from "@/context/Theme";
 
 // Define store names as const to enable literal type inference
 const STORE_NAMES = {
-    THEME: "theme",
     ANNOUNCEMENTS: "announcements",
     NOTIFICATIONS: "notifications",
     DEALERS: "dealers",
@@ -34,7 +34,6 @@ export type StoreNames = typeof STORE_NAMES[keyof typeof STORE_NAMES];
 
 // Define the data types for each store
 export interface StoreTypes {
-    [STORE_NAMES.THEME]: { applied: string };
     [STORE_NAMES.ANNOUNCEMENTS]: AnnouncementDetails;
     [STORE_NAMES.NOTIFICATIONS]: Notification;
     [STORE_NAMES.DEALERS]: DealerDetails;
@@ -45,8 +44,15 @@ export interface StoreTypes {
         lastSynchronised: string;
         state: any; // Replace with proper type
         lastViewTimes: Record<string, string>;
+        theme?: ThemeName;
+        analytics?: {
+            enabled: boolean;
+        };
+        devMenu?: boolean;
+        language?: string;
+        hiddenEvents?: string[];
     };
-    [STORE_NAMES.FUSE_SEARCH]: any; // Replace with proper type
+    [STORE_NAMES.FUSE_SEARCH]: any;
     [STORE_NAMES.EVENTS]: EventDetails;
     [STORE_NAMES.EVENT_DAYS]: EventDayDetails;
     [STORE_NAMES.EVENT_ROOMS]: any; // Replace with proper type

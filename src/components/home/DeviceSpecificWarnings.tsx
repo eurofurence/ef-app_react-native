@@ -6,6 +6,7 @@ import { Platform } from "react-native";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
 
+// TODO: When showing warnings in Warnings.tsx, then going back to home, the warnings are not shown.
 export const DeviceSpecificWarnings = () => {
     const { t } = useTranslation("Home", { keyPrefix: "warnings" });
     const [scheduledNotifications] = useState(() => Platform.OS === "android" || Platform.OS === "ios");

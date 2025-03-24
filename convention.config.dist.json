@@ -43,6 +43,7 @@
   },
   "debug": {
     "showSync": false,
-    "showCache": false
+    "showCache": false,
+    "devMenu": false
   }
 }

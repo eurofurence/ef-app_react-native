@@ -6,10 +6,13 @@ import { Floater } from "@/components/generic/containers/Floater";
 import { LinkItem } from "@/components/maps/LinkItem";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { LinkFragment } from "@/store/eurofurence/types";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { Header } from "@/components/generic/containers/Header";
 
 export default function KnowledgeId() {
     const { knowledgeId } = useLocalSearchParams();
     const { getCacheSync, getAllCacheSync } = useDataCache();
+    const backgroundStyle = useThemeBackground("background");
 
     // Get the knowledge entry from cache
     const entry = getCacheSync("knowledgeEntries", knowledgeId as string)?.data;
@@ -23,8 +26,8 @@ export default function KnowledgeId() {
         : [];
 
     return (
-        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Stack.Screen options={{ headerTitle: entry?.Title }} />
+        <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+            <Header>{entry?.Title}</Header>
             <Floater>
                 {images.map((image, i) => (
                     <View key={i} style={styles.posterLine}>

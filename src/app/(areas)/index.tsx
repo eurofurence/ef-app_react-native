@@ -19,18 +19,23 @@ import { UpcomingEventsList } from "@/components/events/UpcomingEventsList";
 import { TodayScheduleList } from "@/components/events/TodayScheduleList";
 import { CurrentEventList } from "@/components/events/CurrentEventsList";
 import React from "react";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 export default function IndexScreen() {
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
     const { synchronizeUi, isSynchronizing } = useDataCache();
+    const backgroundStyle = useThemeBackground("background");
 
     // Search integration.
     const globalSearchIndex = useGlobalSearchIndex();
     const [filter, setFilter, results] = useFuseIntegration(globalSearchIndex, 15);
 
     return (
-        <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}>
+        <ScrollView 
+            style={[StyleSheet.absoluteFill, backgroundStyle]} 
+            refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}
+        >
             <CountdownHeader />
             <Search filter={filter} setFilter={setFilter} />
             <Floater contentStyle={appStyles.trailer}>
