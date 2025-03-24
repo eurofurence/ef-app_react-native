@@ -6,7 +6,7 @@ import { ThemeColor, ThemeName, themes } from "@/context/Theme";
 
 export const useAppliedTheme = (): ThemeName => {
     const { getCacheSync } = useDataCache();
-    return getCacheSync<ThemeName>("theme", "applied")?.data ?? "light";
+    return getCacheSync("settings", "settings")?.data?.theme ?? "light";
 };
 
 export const useTheme = () => {

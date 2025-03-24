@@ -4,7 +4,6 @@ import { captureException } from "@sentry/react-native";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { Observable } from "@/util/Observable";
 import { ResettableTimeout } from "@/util/ResettableTimeout";
-import { ImageRecord } from "@/store/eurofurence/types";
 
 /**
  * Resettable timeout waiting for load completion.
@@ -31,7 +30,7 @@ export const useImagePrefetch = () => {
         const fetchImages = async () => {
             try {
                 // Assuming "images" is the storeName in your cache
-                const cacheData = await getAllCache<ImageRecord>("images");
+                const cacheData = await getAllCache("images");
                 const imageUrls = cacheData.map((item) => item.data.Url);
                 setImages(imageUrls);
             } catch (error) {

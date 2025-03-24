@@ -8,7 +8,6 @@ import { EventCard, eventInstanceForAny } from "./EventCard";
 import React from "react";
 import { router } from "expo-router";
 import { useDataCache } from "../../context/DataCacheProvider";
-import { EventDetails } from "../../store/eurofurence/types";
 
 export type TodayScheduleListProps = {
     now: Date;
@@ -20,7 +19,7 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
     const zone = useZoneAbbr();
 
     const events = useMemo(() => {
-        const allEvents = getAllCacheSync<EventDetails>("events").map(item => item.data);
+        const allEvents = getAllCacheSync("events").map(item => item.data);
         const favorites = allEvents.filter(event => event.Favorite && !event.Hidden);
         
         return filterHappeningTodayEvents(favorites, now)

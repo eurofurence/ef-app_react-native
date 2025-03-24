@@ -74,8 +74,9 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     React.useEffect(() => {
         if (room) {
             async function loadMapLinks() {
-                const maps = getAllCacheSync<MapDetails[]>("maps");
+                const maps = getAllCacheSync("maps");
                 if (maps.length > 0) {
+                    // TODO: Fix this.
                     // @ts-expect-error: See later.
                     const validLinks = getValidLinksByTarget(maps, room.Id);
                     setMapLink(validLinks);

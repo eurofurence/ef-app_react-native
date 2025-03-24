@@ -2,13 +2,13 @@ import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { filterUpcomingEvents } from "@/store/eurofurence/selectors/events";
-import { Section } from "../generic/atoms/Section";
-import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
-import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useDataCache } from "@/context/DataCacheProvider";
-import { EventDetails } from "@/store/eurofurence/types";
+import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
+import { filterUpcomingEvents } from "@/store/eurofurence/selectors/events";
 import { router } from "expo-router";
+import React from "react";
+import { Section } from "../generic/atoms/Section";
+import { EventCard, eventInstanceForAny } from "./EventCard";
 
 export type UpcomingEventsListProps = {
     now: Date;
@@ -18,7 +18,7 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
     const { getAllCacheSync } = useDataCache();
 
     const zone = useZoneAbbr();
-    const all = getAllCacheSync<EventDetails>("events").map((item) => item.data);
+    const all = getAllCacheSync("events").map((item) => item.data);
 
     const events = useMemo(
         () =>

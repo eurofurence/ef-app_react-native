@@ -18,9 +18,9 @@ export function useFavoritesState() {
         let mounted = true;
         async function loadData() {
             const [eventCache, dealerCache, lastViewCache] = await Promise.all([
-                cacheRef.current.getAllCache<EventDetails>("events"),
-                cacheRef.current.getAllCache<DealerDetails>("dealers"),
-                cacheRef.current.getCache<Record<string, string>>("settings", "lastViewTimes")
+                cacheRef.current.getAllCache("events"),
+                cacheRef.current.getAllCache("dealers"),
+                cacheRef.current.getCache("settings", "lastViewTimes")
             ]);
 
             if (!mounted) return;
@@ -30,8 +30,15 @@ export function useFavoritesState() {
             
             setFavoriteEvents(events);
             setFavoriteDealers(dealers);
-            setLastViewTimes(lastViewCache?.data || {});
-            cacheRef.current.saveCache("settings", "lastViewTimes", lastViewCache?.data || {});
+            const lastViewTimesData = lastViewCache?.data?.lastViewTimes || {};
+            setLastViewTimes(lastViewTimesData);
+            cacheRef.current.saveCache("settings", "settings", {
+                cid: lastViewCache?.data?.cid || "",
+                cacheVersion: lastViewCache?.data?.cacheVersion || "",
+                lastSynchronised: lastViewCache?.data?.lastSynchronised || "",
+                state: lastViewCache?.data?.state || {},
+                lastViewTimes: lastViewTimesData
+            });
         }
         loadData();
         return () => { mounted = false; };
