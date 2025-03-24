@@ -93,7 +93,8 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     const { getAllCacheSync, saveCache } = useDataCache();
     const [isFavorite, setIsFavorite] = React.useState(dealer.Favorite);
 
-    const maps = getAllCacheSync<MapDetails[]>("maps");
+    const maps = getAllCacheSync("maps");
+    // TODO: Fix this.
     // @ts-expect-error: See later.
     const mapLink = getValidLinksByTarget(maps, dealer.Id);
 

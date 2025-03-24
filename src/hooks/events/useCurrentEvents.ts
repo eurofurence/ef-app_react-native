@@ -18,7 +18,7 @@ export function useCurrentEvents(now: Date, zone: string) {
     useEffect(() => {
         let mounted = true;
         async function loadData() {
-            const eventCache = await cacheRef.current.getAllCache<EventDetails>("events");
+            const eventCache = await cacheRef.current.getAllCache("events");
             if (!mounted) return;
 
             const allEvents = eventCache.map(item => item.data);

@@ -58,7 +58,7 @@ export const useDealersSearchIndex = () => {
 
     useEffect(() => {
         (async () => {
-            const cache = await getAllCache<DealerDetails>("dealers");
+            const cache = await getAllCache("dealers");
             setDealers(cache.map((item) => item.data));
         })();
     }, [getAllCache]);
@@ -72,7 +72,7 @@ export const useEventsSearchIndex = () => {
 
     useEffect(() => {
         (async () => {
-            const cache = await getAllCache<EventDetails>("events");
+            const cache = await getAllCache("events");
             setEvents(cache.map((item) => item.data));
         })();
     }, [getAllCache]);
@@ -86,7 +86,7 @@ export const useKbSearchIndex = () => {
 
     useEffect(() => {
         (async () => {
-            const cache = await getAllCache<KnowledgeEntryDetails>("knowledgeEntries");
+            const cache = await getAllCache("knowledgeEntries");
             setEntries(cache.map((item) => item.data));
         })();
     }, [getAllCache]);
@@ -100,7 +100,7 @@ export const useAnnounceSearchIndex = () => {
 
     useEffect(() => {
         (async () => {
-            const cache = await getAllCache<AnnouncementDetails>("announcements");
+            const cache = await getAllCache("announcements");
             setAnnouncements(cache.map((item) => item.data));
         })();
     }, [getAllCache]);
@@ -118,9 +118,9 @@ export const useGlobalSearchIndex = () => {
 
     useEffect(() => {
         (async () => {
-            const dealerCache = await getAllCache<DealerDetails>("dealers");
-            const eventsCache = await getAllCache<EventDetails>("events");
-            const kbCache = await getAllCache<KnowledgeEntryDetails>("knowledgeEntries");
+            const dealerCache = await getAllCache("dealers");
+            const eventsCache = await getAllCache("events");
+            const kbCache = await getAllCache("knowledgeEntries");
             setDealers(dealerCache.map((item) => item.data));
             setEvents(eventsCache.map((item) => item.data));
             setEntries(kbCache.map((item) => item.data));

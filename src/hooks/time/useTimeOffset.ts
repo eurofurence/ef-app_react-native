@@ -8,7 +8,7 @@ export const useTimeOffset = () => {
 
     // Retrieve the cached time offset
     const getTimeOffset = () => {
-        const cacheItem = getCacheSync<number>("timetravel", "timeOffset");
+        const cacheItem = getCacheSync("timetravel", "timeOffset");
         return cacheItem ? cacheItem.data : 0; // Default to 0 if not found
     };
 

@@ -12,7 +12,7 @@ export const useFuseIntegration = <T extends object>(searchSource: string | Fuse
     let fuse: Fuse<T> | null = null;
     const { getCacheSync } = useDataCache();
     if (typeof searchSource === "string") {
-        const cacheItem = getCacheSync<any>("fuseSearch", searchSource);
+        const cacheItem = getCacheSync("fuseSearch", searchSource);
         fuse = cacheItem ? new Fuse(cacheItem.data, { keys: ["name", "description"], threshold: 0.3 }) : null;
     } else {
         // If it's already a Fuse instance, use it directly.

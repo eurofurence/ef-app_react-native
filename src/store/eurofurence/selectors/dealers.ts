@@ -6,22 +6,22 @@ import { useDataCache } from "@/context/DataCacheProvider";
 
 export const useDealersData = () => {
     const { getAllCacheSync } = useDataCache();
-    return getAllCacheSync<DealerDetails[]>("dealers") || [];
+    return getAllCacheSync("dealers") || [];
 };
 
 export const selectDealersInRegular = () => {
     const dealers = useDealersData();
-    return dealers.filter((it) => !it.data[0].IsAfterDark);
+    return dealers.filter((it) => !it.data.IsAfterDark);
 };
 
 export const selectDealersInAd = () => {
     const dealers = useDealersData();
-    return dealers.filter((it) => it.data[0].IsAfterDark);
+    return dealers.filter((it) => it.data.IsAfterDark);
 };
 
 export const selectFavoriteDealers = () => {
     const dealers = useDealersData();
-    return dealers.filter((dealer) => dealer.data[0].Favorite);
+    return dealers.filter((dealer) => dealer.data.Favorite);
 };
 
 /**
@@ -40,9 +40,9 @@ export const selectDealerCategoryMapper = () => {
     function idf(category: string) {
         let n = 0;
         for (const item of dealers) {
-            if (item.data[0].Categories)
-                for (let j = 0; j < item.data[0].Categories.length; j++) {
-                    if (item.data[0].Categories[j] === category) {
+            if (item.data.Categories)
+                for (let j = 0; j < item.data.Categories.length; j++) {
+                    if (item.data.Categories[j] === category) {
                         n++;
                         break;
                     }
@@ -51,7 +51,7 @@ export const selectDealerCategoryMapper = () => {
         return Math.log(dealers.length / (n + 1)) + 1;
     }
 
-    const allCategories = uniq(flatMap(dealers, (dealer) => dealer.data[0].Categories ?? []));
+    const allCategories = uniq(flatMap(dealers, (dealer) => dealer.data.Categories ?? []));
     const allIdf = Object.fromEntries(allCategories.map((category) => [category, idf(category)]));
 
     return (dealer: DealerDetails) => {
@@ -64,8 +64,8 @@ export const selectDealerCategories = () => {
     const dealers = useDealersData();
     const result: string[] = [];
     for (const dealer of dealers) {
-        if (dealer.data[0].Categories) {
-            for (const category of dealer.data[0].Categories) {
+        if (dealer.data.Categories) {
+            for (const category of dealer.data.Categories) {
                 if (!result.includes(category)) result.push(category);
             }
         }
@@ -76,10 +76,10 @@ export const selectDealerCategories = () => {
 export const selectUpdatedFavoriteDealers = () => {
     const dealers = useDealersData();
     const { getCacheSync } = useDataCache();
-    const lastViewTimes = getCacheSync<Record<string, string>>("settings", "lastViewTimes")?.data || {};
+    const lastViewTimes = (getCacheSync("settings", "lastViewTimes")?.data || {}) as Record<string, string>;
     
     return dealers.filter(
         (dealer) =>
-            lastViewTimes && dealer.data[0].Id in lastViewTimes && isAfter(parseISO(dealer.data[0].LastChangeDateTimeUtc), parseISO(lastViewTimes[dealer.data[0].Id])),
+            lastViewTimes && dealer.data.Id in lastViewTimes && isAfter(parseISO(dealer.data.LastChangeDateTimeUtc), parseISO(lastViewTimes[dealer.data.Id])),
     );
 };
