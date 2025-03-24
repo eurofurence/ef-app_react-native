@@ -105,6 +105,7 @@
     "notImplemented": "Inhalt noch nicht implementiert."
   },
   "Event": {
+    "viewing_event": "Event ansehen",
     "about_title": "Details",
     "add_favorite": "Favorit hinzufügen",
     "event_was_updated": "Es gab Änderungen am Event, seitdem Du es das letzte Mal aufgerufen hast",
@@ -122,9 +123,12 @@
     "sponsor_event": "Sponsor-Event",
     "supersponsor_event": "Supersponsor-Event",
     "view_on_map": "Auf der Karte ansehen",
-    "when": "{{ day }}, {{ start }} bis {{ finish }}."
+    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
+    "when_local": "{{ zone }}: {{ day }}, {{ start }} bis {{ finish }}."
   },
   "EventFeedback": {
+    "disabled_not_attending": "Nur Attendees können Feedback geben",
+    "disabled_not_logged_in": "Bitte melde dich an, um Feedback zu geben",
     "explanation": "Lass uns wissen, wie du {{ eventTitle }} fandest. Gib eine Bewertung und optional eine Nachricht ein, und wir schauen, dass diese bei der richtigen Person landen.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Wenn du spezifische Anmerkungen an die Veranstaltenden hast, schreibe diese hier auf.",

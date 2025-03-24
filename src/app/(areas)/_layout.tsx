@@ -2,7 +2,6 @@ import { Tabs } from "expo-router";
 import React, { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 
 import { Toast } from "@/components/Toast";
@@ -33,7 +32,6 @@ function getIconNameFromTabBarIcon(
 function AreasTabBar(props: BottomTabBarProps) {
     const tabs = useRef<TabsRef>(null);
     const { t } = useTranslation("Menu");
-    const insets = useSafeAreaInsets();
     const toastMessages = useToastMessages(5);
     const { isSynchronizing } = useDataCache();
 

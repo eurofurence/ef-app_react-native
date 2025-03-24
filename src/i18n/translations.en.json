@@ -110,6 +110,7 @@
     "notImplemented": "Content is not implemented yet."
   },
   "Event": {
+    "viewing_event": "Viewing event",
     "about_title": "About",
     "add_favorite": "Favorite",
     "event_was_updated": "Event was updated since your last visit",

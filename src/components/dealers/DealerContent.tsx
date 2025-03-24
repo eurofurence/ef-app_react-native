@@ -1,7 +1,7 @@
 import * as Clipboard from "expo-clipboard";
 import * as Linking from "expo-linking";
 import { TFunction } from "i18next";
-import React, { FC, useMemo } from "react";
+import React, { FC, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -107,12 +107,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         [dealer],
     );
 
-    const toggleFavorite = React.useCallback(() => {
+    const toggleFavorite = useCallback(() => {
         // Toggle the favorite state.
         const newFavorite = !isFavorite;
         setIsFavorite(newFavorite);
         saveCache("dealers", dealer.Id, { ...dealer, Favorite: newFavorite });
-    }, [dealer.Id, saveCache]);
+    }, [dealer, isFavorite, saveCache]);
 
     // Check if not-attending warning should be marked.
     const markNotAttending = useMemo(() => {
@@ -152,7 +152,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             </Button>
 
             {!shareButton ? null : (
-                <Button containerStyle={styles.marginBefore} icon={platformShareIcon} onPress={() => shareDealer(dealer)}>
+                <Button containerStyle={styles.marginBefore} icon="share" onPress={() => shareDealer(dealer)}>
                     {t("share")}
                 </Button>
             )}
@@ -170,7 +170,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 {days}
             </Label>
 
-            {!dealer.IsAfterDark ? null : (
+            {dealer.IsAfterDark && (
                 <>
                     <Label type="caption">{t("after_dark")}</Label>
                     <Label type="h3" mb={20}>

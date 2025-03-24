@@ -1,5 +1,5 @@
 import { useIsFocused } from "@react-navigation/core";
-import React, { FC, useMemo } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -8,7 +8,7 @@ import { captureException } from "@sentry/react-native";
 import { useEventReminder } from "@/hooks/events/useEventReminder";
 import { useNow } from "@/hooks/time/useNow";
 import { shareEvent } from "@/components/events/Events.common";
-import { EventDetails, MapDetails } from "@/store/eurofurence/types";
+import { EventDetails, MapDetails, MapEntryDetails, LinkFragment } from "@/store/eurofurence/types";
 import { Banner } from "../generic/atoms/Banner";
 import { Label } from "../generic/atoms/Label";
 import { MarkdownContent } from "../generic/atoms/MarkdownContent";
@@ -25,6 +25,12 @@ import { differenceInMilliseconds } from "date-fns";
 import { toZonedTime, format } from "date-fns-tz";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { getValidLinksByTarget } from "@/store/eurofurence/selectors/maps";
+
+interface MapLink {
+    map: MapDetails;
+    entry: MapEntryDetails;
+    link: LinkFragment;
+}
 
 /**
  * Props to the content.
@@ -49,6 +55,11 @@ export type EventContentProps = {
      * True if a dedicated share button should be displayed.
      */
     shareButton?: boolean;
+
+    /**
+     * Callback when the event's hidden state is toggled.
+     */
+    onToggleHidden?: (event: EventDetails) => void;
 };
 
 /**
@@ -56,7 +67,7 @@ export type EventContentProps = {
  */
 const placeholder = "L38D%z^%020303D+bv~m%IWF-nIr/1309/667";
 
-export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton }) => {
+export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton, onToggleHidden }) => {
     const { t } = useTranslation("Event");
     const { isFavorite, toggleReminder } = useEventReminder(event);
     const isFocused = useIsFocused();
@@ -69,9 +80,10 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
 
-    const { getAllCacheSync } = useDataCache();
-    const [mapLink, setMapLink] = React.useState<any>([]);
-    React.useEffect(() => {
+    const { getAllCacheSync, saveCache } = useDataCache();
+    const [mapLink, setMapLink] = React.useState<MapLink[]>([]);
+
+    useEffect(() => {
         if (room) {
             async function loadMapLinks() {
                 const maps = getAllCacheSync("maps");
@@ -103,11 +115,11 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         return { zone, start, end, day, startLocal, endLocal, dayLocal };
     }, [calendar, event.StartDateTimeUtc, event.EndDateTimeUtc]);
 
-    const toggleEventHidden = React.useCallback(async () => {
-        const { saveCache } = useDataCache();
-        const newHidden = !event.Hidden;
-        saveCache("events", event.Id, { ...event, Hidden: newHidden });
-    }, [event.Id, event.Hidden]);
+    const toggleEventHidden = React.useCallback(() => {
+        if (onToggleHidden) {
+            onToggleHidden({ ...event, Hidden: !event.Hidden });
+        }
+    }, [event, onToggleHidden]);
 
     return (
         <>
@@ -221,7 +233,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
             {!mapLink
                 ? null
-                : mapLink.map(({ map, entry, link }, i) => (
+                : mapLink.map(({ map, entry, link }: MapLink, i: number) => (
                       <ImageExButton
                           key={i}
                           image={map.Image}

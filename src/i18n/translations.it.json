@@ -40,11 +40,26 @@
     "not_attending_on": "Non disponibile il {{offDays}}"
   },
   "Event": {
-    "mask_required": "La mascherina è obbligatoria per questo evento",
-    "sponsor_event": "Eventi per sponsor",
-    "supersponsor_event": "Eventi per supersponsor",
+    "viewing_event": "Visualizzando l'evento",
+    "about_title": "Informazioni",
+    "add_favorite": "Favorito",
+    "event_was_updated": "L'evento è stato aggiornato dalla tua ultima visita",
+    "give_feedback": "Invia feedback",
+    "hide": "Nascondi dall'elenco",
+    "label_event_description": "Informazioni sull'evento",
+    "label_event_panelhosts": "Organizzato da",
+    "label_event_room": "Stanza",
+    "label_event_track": "Tracciato",
+    "label_event_when": "Quando",
+    "mask_required": "Le maschere sono obbligatorie per questo evento",
+    "remove_favorite": "Rimuovi da preferiti",
+    "reveal": "Rileva nell'elenco",
+    "share": "Condividi questo evento",
+    "sponsor_event": "Evento per sponsor",
+    "supersponsor_event": "Evento per supersponsor",
     "view_on_map": "Vedi sulla mappa",
-    "when": "{{day}}, {{start}} fino alle {{finish}}."
+    "when": "{{day}}, {{start}} fino alle {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} fino alle {{finish}}."
   },
   "Events": {
     "long_running": "Funziona più a lungo",
