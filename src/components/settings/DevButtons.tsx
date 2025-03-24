@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { View, TextInput, StyleSheet, Vibration } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { Label } from '@/components/generic/atoms/Label';
 import { useDataCache } from '@/context/DataCacheProvider';
 import { Button } from '@/components/generic/containers/Button';
 import { captureException } from '@sentry/react-native';
@@ -19,7 +18,7 @@ import { withAlpha } from '@/context/Theme';
 
 export function DevButtons() {
     const { t } = useTranslation("Settings", { keyPrefix: "dev_buttons" });
-    const { clear, synchronizeUi, saveCache } = useDataCache();
+    const { synchronizeUi, saveCache } = useDataCache();
     const toast = useToast();
     const [token, setToken] = useState("");
     const { claims, refresh } = useAuthContext();

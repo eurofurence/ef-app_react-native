@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 type ThemeChoice = ThemeName | "system";
 
-const usableThemes: ThemeChoice[] = ["light", "dark", "system"];
+const usableThemes: ThemeChoice[] = ["light", "medium", "dark", "system"];
 
 export const ThemePicker = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "theme" });

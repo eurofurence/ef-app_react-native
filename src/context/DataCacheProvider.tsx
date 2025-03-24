@@ -4,9 +4,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isAfter, parseISO } from "date-fns";
 import { apiBase, conId, eurofurenceCacheVersion, syncDebug, cacheDebug } from "@/configuration";
 import { cancelEventReminder, rescheduleEventReminder } from "@/util/eventReminders";
-import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementDetails, CommunicationRecord } from "@/store/eurofurence/types";
+import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementDetails, CommunicationRecord, EventRoomDetails, EventTrackDetails } from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
-import { applyAnnouncementDetails, applyDealerDetails, applyMapDetails } from "@/store/eurofurence/details";
+import { applyAnnouncementDetails, applyDealerDetails, applyMapDetails, applyEventDetails } from "@/store/eurofurence/details";
 import { ThemeName } from "@/context/Theme";
 
 // Define store names as const to enable literal type inference
@@ -128,6 +128,16 @@ const storage = {
         }
     },
 };
+
+interface SettingsState {
+    cid: string;
+    cacheVersion: string;
+    lastSynchronised: string;
+    state: {
+        hiddenEvents: string[];
+    };
+    lastViewTimes: Record<string, string>;
+}
 
 export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [loading, setLoading] = useState(true);
@@ -279,6 +289,41 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                     return {
                         ...item,
                         data: applyDealerDetails(item.data, images, eventDaysCache, favorites)
+                    } as CacheItem<T>;
+                }
+                if (storeName === STORE_NAMES.EVENTS) {
+                    const images = getImagesDict();
+                    const rooms = Object.entries(cacheData)
+                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_ROOMS}-`))
+                        .map(([, value]) => value.data as EventRoomDetails);
+                    const days = Object.entries(cacheData)
+                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_DAYS}-`))
+                        .map(([, value]) => value.data as EventDayDetails);
+                    const tracks = Object.entries(cacheData)
+                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_TRACKS}-`))
+                        .map(([, value]) => value.data as EventTrackDetails);
+                    const favorites = Object.entries(cacheData)
+                        .filter(([key]) => key.startsWith(`${STORE_NAMES.NOTIFICATIONS}-`))
+                        .map(([, value]) => value.data as Notification);
+                    const settings = getCacheSync<SettingsState>("settings", "state")?.data || {
+                        cid: "",
+                        cacheVersion: "",
+                        lastSynchronised: "",
+                        state: { hiddenEvents: [] },
+                        lastViewTimes: {},
+                    };
+                    const hiddenIds = settings.state.hiddenEvents || [];
+                    return {
+                        ...item,
+                        data: applyEventDetails(
+                            item.data,
+                            images,
+                            rooms.reduce((acc, room) => ({ ...acc, [room.Id]: room }), {}),
+                            days.reduce((acc, day) => ({ ...acc, [day.Id]: day }), {}),
+                            tracks.reduce((acc, track) => ({ ...acc, [track.Id]: track }), {}),
+                            favorites.reduce((acc, fav) => ({ ...acc, [fav.recordId]: fav }), {}),
+                            hiddenIds
+                        )
                     } as CacheItem<T>;
                 }
                 return item;

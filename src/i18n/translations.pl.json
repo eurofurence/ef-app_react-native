@@ -44,11 +44,26 @@
     "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
   },
   "Event": {
+    "viewing_event": "Przeglądany punkt programu",
+    "about_title": "O punkcie programu",
+    "add_favorite": "Dodaj do ulubi",
+    "event_was_updated": "Punkt programu został zaktualizowany od ostatniej wizyty",
+    "give_feedback": "Dodaj feedback",
+    "hide": "Ukryj z listy",
+    "label_event_description": "Więcej o tym wydarzeniu",
+    "label_event_panelhosts": "Organizowane przez",
+    "label_event_room": "Sala",
+    "label_event_track": "Ścieżka",
+    "label_event_when": "Kiedy",
     "mask_required": "Maseczki są obowiązkowe podczas tego punktu programu",
+    "remove_favorite": "Usuń z ulubionych",
+    "reveal": "Pokaż w listy",
+    "share": "Udostępnij to wydarzenie",
     "sponsor_event": "Punkt programu dla sponsorów",
     "supersponsor_event": "Punkt programu dla supersponsorów",
     "view_on_map": "Pokaż na mapie",
-    "when": "{{day}}, {{start}} do {{finish}}."
+    "when": "{{day}}, {{start}} do {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} do {{finish}}."
   },
   "Events": {
     "long_running": "Trwa dłużej",

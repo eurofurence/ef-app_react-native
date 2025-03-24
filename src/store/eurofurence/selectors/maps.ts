@@ -3,6 +3,8 @@ import { CacheItem, LinkFragment, MapDetails, MapEntryRecord, RecordId } from ".
 export const filterBrowsableMaps = <T extends Pick<MapDetails, "IsBrowseable">>(maps: T[]) => maps.filter((it) => it.IsBrowseable);
 export const getBrowsableMaps = (maps: MapDetails[]): MapDetails[] => filterBrowsableMaps(maps);
 export const getValidLinksByTarget = (maps: CacheItem<MapDetails[]>, target: RecordId): { map: MapDetails; entry: MapEntryRecord; link: LinkFragment }[] => {
+    if (!maps?.data) return [];
+    
     const results = [];
     for (const map of maps.data) {
         for (const entry of map.Entries) {
