@@ -5,6 +5,7 @@ import { noop, partial } from "lodash";
 import { initReactI18next } from "react-i18next";
 import { format, Locale } from "date-fns";
 import { da, de, enGB, it, nl, pl } from "date-fns/locale";
+import { i18nDebug } from "@/configuration";
 
 // Polyfill for Plural Rules
 import "intl-pluralrules";
@@ -69,7 +70,7 @@ export const i18t = i18next
         },
         cacheUserLanguage: async (lng: string) =>
             AsyncStorage.setItem(I18NEXT_LANGUAGE_KEY, lng)
-                .then(() => logger("Saving language for next time", lng))
+                .then(i18nDebug ? () => logger("Saving language for next time", lng) : undefined)
                 .catch((e) => logger("Failed to save language", lng, e)),
     })
     .init({
