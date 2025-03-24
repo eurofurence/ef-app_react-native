@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useDataCache } from "@/context/DataCacheProvider";
 
-export function useWarningState(warningKey: string) {
+type WarningKey = "deviceWarningsHidden" | "languageWarningsHidden" | "timeZoneWarningsHidden";
+
+export function useWarningState(warningKey: WarningKey) {
     const { getCache, saveCache } = useDataCache();
     const [isHidden, setIsHidden] = useState<boolean | null>(null);
     const cacheRef = useRef({ getCache, saveCache });
@@ -34,8 +36,19 @@ export function useWarningState(warningKey: string) {
         setIsHidden(true);
     }, [warningKey]);
 
+    const showWarning = useCallback(async () => {
+        const cache = await cacheRef.current.getCache("warnings", "states");
+        const warningStates = cache?.data ?? {};
+        cacheRef.current.saveCache("warnings", "states", {
+            ...warningStates,
+            [warningKey]: false
+        });
+        setIsHidden(false);
+    }, [warningKey]);
+
     return {
         isHidden,
-        hideWarning
+        hideWarning,
+        showWarning
     };
 } 

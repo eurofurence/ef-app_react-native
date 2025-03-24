@@ -5,14 +5,19 @@ import { useState, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
 import { chain } from "lodash";
 import Fuse from "fuse.js";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { Header } from "@/components/generic/containers/Header";
+import { useTranslation } from "react-i18next";
 
 export default function Knowledge() {
+    const { t } = useTranslation("KnowledgeGroups");
     const { getAllCacheSync } = useDataCache();
     const [filter, setFilter] = useState("");
 
     // Get knowledge groups and entries from cache
     const knowledgeGroups = getAllCacheSync("knowledgeGroups");
     const knowledgeEntries = getAllCacheSync("knowledgeEntries");
+    const backgroundStyle = useThemeBackground("background");
 
     // Prepare data for search and display
     const groups = useMemo(() => {
@@ -56,7 +61,8 @@ export default function Knowledge() {
     }, [searchResults, groups]);
 
     return (
-        <View style={StyleSheet.absoluteFill}>
+        <View style={[StyleSheet.absoluteFill, backgroundStyle]}>
+            <Header>{t("header")}</Header>
             <KbSectionedList
                 kbGroups={displayData}
                 leader={<Search filter={filter} setFilter={setFilter} />}

@@ -228,6 +228,7 @@
     "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {
+    "header": "Private Messages",
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
     "message_item_subtitle": "{{ status }} - Sent on {{ time }}",

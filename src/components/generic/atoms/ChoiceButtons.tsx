@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 
-import { Button } from "../containers/Button";
-import { Row } from "../containers/Row";
-import { LabelProps } from "./Label";
+import { Button } from "@/components/generic/containers/Button";
+import { Row } from "@/components/generic/containers/Row";
+import { LabelProps } from "@/components/generic/atoms/Label";
 
 export type ChoiceButtonsProps<T = string> = {
     style?: ViewStyle;
@@ -14,6 +14,7 @@ export type ChoiceButtonsProps<T = string> = {
     setChoice: (choice: T) => void;
     getLabel: (choice: T) => string;
 };
+
 export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, choice, setChoice, getLabel }: ChoiceButtonsProps<T>) => {
     return (
         <Row type="center" variant="center" style={style}>

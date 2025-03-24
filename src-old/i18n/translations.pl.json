@@ -108,6 +108,7 @@
     "private_message": "Dostałeś nową prywatną wiadomość"
   },
   "PrivateMessageList": {
+    "header": "Prywatne wiadomości",
     "from": "Od {{ author }}",
     "from_unknown": "Od nieznanego nadawcy",
     "message_item_subtitle": "{{ status }} - Wysłana: {{ time }}",

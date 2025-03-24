@@ -43,6 +43,7 @@
     "header": "Informatie-artikelen"
   },
   "PrivateMessageList": {
+    "header": "Privéberichten",
     "from": "Van {{ author }}",
     "from_unknown": "Van onbekende auteur",
     "message_item_subtitle": "{{ status }} - Verstuurd op {{ time }}",

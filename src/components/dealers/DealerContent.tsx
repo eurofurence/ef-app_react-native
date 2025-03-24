@@ -7,7 +7,7 @@ import { StyleSheet, View } from "react-native";
 
 import { useToast } from "@/context/ToastContext";
 import { useNow } from "@/hooks/time/useNow";
-import { shareDealer } from "@/routes/dealers/Dealers.common";
+import { shareDealer } from "@/components/dealers/Dealers.common";
 import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { useDataCache } from "@/context/DataCacheProvider";

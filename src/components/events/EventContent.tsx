@@ -7,7 +7,7 @@ import { useCalendars } from "expo-localization";
 import { captureException } from "@sentry/react-native";
 import { useEventReminder } from "@/hooks/events/useEventReminder";
 import { useNow } from "@/hooks/time/useNow";
-import { shareEvent } from "@/routes/events/Events.common";
+import { shareEvent } from "@/components/events/Events.common";
 import { EventDetails, MapDetails } from "@/store/eurofurence/types";
 import { Banner } from "../generic/atoms/Banner";
 import { Label } from "../generic/atoms/Label";

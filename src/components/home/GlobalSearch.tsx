@@ -2,8 +2,8 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { useDealerInstances } from "@/routes/dealers/Dealers.common";
-import { useEventInstances } from "@/routes/events/Events.common";
+import { useDealerInstances } from "@/components/dealers/Dealers.common";
+import { useEventInstances } from "@/components/events/Events.common";
 import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "@/store/eurofurence/types";
 import { DealerCard } from "../dealers/DealerCard";
 import { EventCard } from "../events/EventCard";

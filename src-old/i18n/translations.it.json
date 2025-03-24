@@ -101,6 +101,7 @@
     "private_message": "Hai ricevuto un nuovo messaggio privato"
   },
   "PrivateMessageList": {
+    "header": "Messaggi privati",
     "from": "Da {{ author }}",
     "message_item_subtitle": "{{ status }} - Inviato {{ time }}",
     "read": "Letto",

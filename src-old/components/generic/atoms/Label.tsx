@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextProps, ViewStyle } from "react-native";
 
 import { ThemeColor } from "../../../context/Theme";
 import { useThemeColor } from "../../../hooks/themes/useThemeHooks";
+import React from "react";
 
 /**
  * Props to label.
