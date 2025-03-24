@@ -186,7 +186,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                     icon="pencil"
                     onPress={() =>
                         router.navigate({
-                            pathname: "/events/[eventId]",
+                            pathname: "/events/[eventId]/feedback",
                             params: { eventId: event.Id },
                         })
                     }
