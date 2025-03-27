@@ -1,7 +1,7 @@
 import * as Clipboard from "expo-clipboard";
 import * as Linking from "expo-linking";
 import { TFunction } from "i18next";
-import React, { FC, useCallback, useMemo } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -91,7 +91,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     const toast = useToast();
 
     const { getAllCacheSync, saveCache } = useDataCache();
-    const [isFavorite, setIsFavorite] = React.useState(dealer.Favorite);
+    const [isFavorite, setIsFavorite] = useState(dealer.Favorite);
 
     const maps = getAllCacheSync("maps");
     // TODO: Fix this.

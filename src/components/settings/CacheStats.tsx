@@ -1,8 +1,8 @@
-import React from 'react';
-import { View } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { Label } from '@/components/generic/atoms/Label';
-import { useDataCache } from '@/context/DataCacheProvider';
+import React, { useMemo } from "react";
+import { View } from "react-native";
+import { useTranslation } from "react-i18next";
+import { Label } from "@/components/generic/atoms/Label";
+import { useDataCache } from "@/context/DataCacheProvider";
 
 const STORE_NAMES = {
     THEME: "theme",
@@ -27,10 +27,10 @@ const STORE_NAMES = {
 export function CacheStats() {
     const { t } = useTranslation("Settings");
     const { getAllCacheSync } = useDataCache();
-    
-    const stats = React.useMemo(() => {
+
+    const stats = useMemo(() => {
         const results: Record<string, number> = {};
-        Object.values(STORE_NAMES).forEach(store => {
+        Object.values(STORE_NAMES).forEach((store) => {
             const items = getAllCacheSync(store);
             results[store] = items.length;
         });
@@ -52,4 +52,4 @@ export function CacheStats() {
             </View>
         </View>
     );
-} 
+}

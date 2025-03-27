@@ -1,4 +1,4 @@
-import React from 'react';
+import { useCallback, useState } from "react";
 import { apiBase } from "@/configuration";
 import { getAccessToken } from "@/context/AuthContext";
 
@@ -78,16 +78,12 @@ export const authService = {
     },
 } as const;
 
-// Helper type to get the return type of a service method
-type ServiceMethodReturnType<T extends keyof typeof authService> = 
-    Awaited<ReturnType<(typeof authService)[T]>>;
-
 // Custom hooks for each service method
 export function useRegisterDevice(registration: DeviceRegistration) {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<Error | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
 
-    const execute = React.useCallback(async () => {
+    const execute = useCallback(async () => {
         try {
             setIsLoading(true);
             setError(null);
@@ -104,10 +100,10 @@ export function useRegisterDevice(registration: DeviceRegistration) {
 }
 
 export function useCreateSyncRequest() {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<Error | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
 
-    const execute = React.useCallback(async () => {
+    const execute = useCallback(async () => {
         try {
             setIsLoading(true);
             setError(null);
@@ -124,10 +120,10 @@ export function useCreateSyncRequest() {
 }
 
 export function useSendPrivateMessage(message: NewPrivateMessage) {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<Error | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
 
-    const execute = React.useCallback(async () => {
+    const execute = useCallback(async () => {
         try {
             setIsLoading(true);
             setError(null);
@@ -141,4 +137,4 @@ export function useSendPrivateMessage(message: NewPrivateMessage) {
     }, [message]);
 
     return { execute, isLoading, error };
-} 
+}

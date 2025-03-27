@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { devMenu } from "@/configuration";
 import { Floater } from "@/components/generic/containers/Floater";
@@ -13,24 +13,19 @@ import { Header } from "@/components/generic/containers/Header";
 import { useTranslation } from "react-i18next";
 
 export default function SettingsPage() {
-    const [showDevMenu, setShowDevMenu] = React.useState(false);
+    const [showDevMenu, setShowDevMenu] = useState(false);
     const backgroundStyle = useThemeBackground("background");
     const { t } = useTranslation("Settings");
 
     // TODO: Implement a way to toggle dev menu, possibly through multiple taps on version number
-    React.useEffect(() => {
+    useEffect(() => {
         // For development, temporarily enable dev menu
         setShowDevMenu(devMenu);
     }, []);
 
     return (
         <>
-            <ScrollView 
-                style={[StyleSheet.absoluteFill, backgroundStyle]} 
-                stickyHeaderIndices={[0]} 
-                stickyHeaderHiddenOnScroll
-                className="flex-1"
-            >
+            <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll className="flex-1">
                 <Header>{t("header")}</Header>
                 <Floater contentStyle={styles.content}>
                     <UserSettings />
@@ -48,10 +43,10 @@ export default function SettingsPage() {
             </ScrollView>
         </>
     );
-} 
+}
 
 const styles = StyleSheet.create({
     content: {
         marginBottom: 16, // Equivalent to appStyles.trailer
-    }
-}); 
+    },
+});
