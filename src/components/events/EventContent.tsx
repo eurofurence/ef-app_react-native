@@ -1,5 +1,5 @@
 import { useIsFocused } from "@react-navigation/core";
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -81,7 +81,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const room = event.ConferenceRoom;
 
     const { getAllCacheSync, saveCache } = useDataCache();
-    const [mapLink, setMapLink] = React.useState<MapLink[]>([]);
+    const [mapLink, setMapLink] = useState<MapLink[]>([]);
 
     useEffect(() => {
         if (room) {
@@ -115,7 +115,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         return { zone, start, end, day, startLocal, endLocal, dayLocal };
     }, [calendar, event.StartDateTimeUtc, event.EndDateTimeUtc]);
 
-    const toggleEventHidden = React.useCallback(() => {
+    const toggleEventHidden = useCallback(() => {
         if (onToggleHidden) {
             onToggleHidden({ ...event, Hidden: !event.Hidden });
         }

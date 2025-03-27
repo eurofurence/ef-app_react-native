@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useDataCache } from "@/context/DataCacheProvider";
@@ -19,25 +19,27 @@ export default function RevealHiddenPage() {
 
     // Get all events from cache
     const allEvents = getAllCacheSync("events");
-    
+
     // Filter hidden events and create event instances
-    const hiddenEvents = React.useMemo(() => 
-        allEvents
-            .filter(item => (item.data as EventDetails).Hidden)
-            .map(item => eventInstanceForAny(item.data as EventDetails, now, zone))
-    , [allEvents, now, zone]);
+    const hiddenEvents = useMemo(
+        () => allEvents.filter((item) => (item.data as EventDetails).Hidden).map((item) => eventInstanceForAny(item.data as EventDetails, now, zone)),
+        [allEvents, now, zone],
+    );
 
     // Handle unhiding an event
-    const handleUnhide = React.useCallback((eventId: string) => {
-        const event = allEvents.find(e => (e.data as EventDetails).Id === eventId);
-        if (event) {
-            const updatedEvent: EventDetails = {
-                ...(event.data as EventDetails),
-                Hidden: false
-            };
-            saveCache("events", eventId, updatedEvent);
-        }
-    }, [allEvents, saveCache]);
+    const handleUnhide = useCallback(
+        (eventId: string) => {
+            const event = allEvents.find((e) => (e.data as EventDetails).Id === eventId);
+            if (event) {
+                const updatedEvent: EventDetails = {
+                    ...(event.data as EventDetails),
+                    Hidden: false,
+                };
+                saveCache("events", eventId, updatedEvent);
+            }
+        },
+        [allEvents, saveCache],
+    );
 
     return (
         <>
@@ -48,15 +50,10 @@ export default function RevealHiddenPage() {
                     </Label>
 
                     {hiddenEvents.map((item) => (
-                        <EventCard 
-                            key={item.details.Id} 
-                            event={item}
-                            type="time"
-                            onPress={() => handleUnhide(item.details.Id)}
-                        />
+                        <EventCard key={item.details.Id} event={item} type="time" onPress={() => handleUnhide(item.details.Id)} />
                     ))}
                 </Floater>
             </ScrollView>
         </>
     );
-} 
+}
