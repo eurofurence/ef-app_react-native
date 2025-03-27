@@ -114,8 +114,6 @@ const TabsContext = createContext<TabsRef & { isOpen: boolean }>({
 export const useTabs = () => useContext(TabsContext);
 
 const ANIMATION_CONFIG = {
-    duration: 234,
-    easing: Easing.out(Easing.cubic),
     springConfig: {
         damping: 15,
         stiffness: 100,
