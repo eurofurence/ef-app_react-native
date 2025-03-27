@@ -166,6 +166,14 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         [offset, height],
     );
 
+    // Add animated style for pointer events - is fix for Reanimated warning
+    const dynamicPointerEvents = useAnimatedStyle(
+        () => ({
+            pointerEvents: isAnimating.value ? "none" : "auto",
+        }),
+        [isAnimating],
+    );
+
     // Animation handlers
     const animateTo = useCallback(
         (targetValue: number) => {
@@ -252,7 +260,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
                         </View>
                     )}
 
-                    <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating.value ? "none" : "auto"}>
+                    <View style={[styles.tabs, bordersDarken, fillBackground, style, dynamicPointerEvents]}>
                         {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
 
                         <Tab icon={tabIcon} text={tabText} onPress={isOpen ? close : open} indicate={indicateMore} />
