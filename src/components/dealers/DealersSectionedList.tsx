@@ -26,15 +26,12 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
     const theme = useThemeName();
     const { isSynchronizing, synchronizeUi } = useDataCache();
     const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !("details" in item)) : undefined), [dealersGroups, sticky]);
-    const onPress = useCallback(
-        (dealer: DealerDetails) => {
-            router.navigate({
-                pathname: "/dealers/[dealerId]",
-                params: { dealerId: dealer.Id },
-            });
-        },
-        [router],
-    );
+    const onPress = useCallback((dealer: DealerDetails) => {
+        router.navigate({
+            pathname: "/dealers/[dealerId]",
+            params: { dealerId: dealer.Id },
+        });
+    }, []);
     return (
         <FlashList
             refreshing={isSynchronizing}

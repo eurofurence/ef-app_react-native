@@ -28,15 +28,12 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
     const theme = useThemeName();
     const { isSynchronizing, synchronizeUi } = useDataCache();
     const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !("details" in item)) : undefined), [eventsGroups, sticky]);
-    const onPress = useCallback(
-        (event: EventDetails) => {
-            router.navigate({
-                pathname: "/events/[eventId]",
-                params: { eventId: event.Id },
-            });
-        },
-        [router],
-    );
+    const onPress = useCallback((event: EventDetails) => {
+        router.navigate({
+            pathname: "/events/[eventId]",
+            params: { eventId: event.Id },
+        });
+    }, []);
     const onLongPress = useCallback(
         (event: EventDetails) => {
             Vibration.vibrate(50);

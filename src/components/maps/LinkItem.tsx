@@ -2,9 +2,9 @@ import React, { FC, useCallback, useMemo } from "react";
 import { Linking, StyleSheet } from "react-native";
 import { match } from "ts-pattern";
 import { format, setDay } from "date-fns";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { useDataCache } from "@/context/DataCacheProvider";
-import { DealerDetails, LinkFragment, MapDetails, MapEntryDetails } from "@/store/eurofurence/types";
+import { LinkFragment, MapDetails, MapEntryDetails } from "@/store/eurofurence/types";
 import { DealerCard } from "../dealers/DealerCard";
 import { isPresent, joinOffDays } from "../dealers/utils";
 import { FaIcon } from "../generic/atoms/FaIcon";
@@ -24,7 +24,6 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     const day2 = format(setDay(now, 2), "EEEE");
     const day3 = format(setDay(now, 3), "EEEE");
 
-    const router = useRouter();
     const { getCacheSync } = useDataCache();
     const dealerCache = getCacheSync("dealers", link.Target);
     const dealer = dealerCache?.data;
@@ -32,7 +31,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     const present = dealer ? isPresent(dealer, now) : false;
     const offDays = dealer ? joinOffDays(dealer, day1, day2, day3) : "";
 
-    const onPress = useCallback(() => router.push(`/dealer/${link.Target}`), [router, link.Target]);
+    const onPress = useCallback(() => router.push(`/dealer/${link.Target}`), [link.Target]);
 
     if (!dealerCache || !dealer) {
         return null;
@@ -90,12 +89,11 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
 };
 
 const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
-    const router = useRouter();
     const onPress = useCallback(() => {
         if (map && entry) {
             router.push(`/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`);
         }
-    }, [router, map, entry, link]);
+    }, [map, entry, link]);
 
     return !map || !entry ? null : (
         <Button containerStyle={styles.linkButton} onPress={onPress}>
@@ -105,12 +103,11 @@ const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
 };
 
 const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
-    const router = useRouter();
     const onPress = useCallback(() => {
         if (map && entry) {
             router.push(`/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`);
         }
-    }, [router, map, entry, link]);
+    }, [map, entry, link]);
 
     return !map || !entry ? null : (
         <Button containerStyle={styles.linkButton} onPress={onPress}>

@@ -24,15 +24,12 @@ export type EventsListProps = {
 export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty, trailer, cardType = "duration", padEnd = true }) => {
     const theme = useThemeName();
     const { isSynchronizing, synchronizeUi } = useDataCache();
-    const onPress = useCallback(
-        (event: EventDetails) => {
-            router.navigate({
-                pathname: "/events/[eventId]",
-                params: { eventId: event.Id },
-            });
-        },
-        [router],
-    );
+    const onPress = useCallback((event: EventDetails) => {
+        router.navigate({
+            pathname: "/events/[eventId]",
+            params: { eventId: event.Id },
+        });
+    }, []);
     const onLongPress = useCallback(
         (event: EventDetails) => {
             Vibration.vibrate(50);
