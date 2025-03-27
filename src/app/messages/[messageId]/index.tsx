@@ -25,7 +25,7 @@ export default function PmItem() {
 
     // Get message from cache
     const messages = getAllCacheSync("communications");
-    const messageItem = messages.find(item => (item.data as CommunicationRecord).Id === messageId);
+    const messageItem = messages.find((item) => (item.data as CommunicationRecord).Id === messageId);
     const message = messageItem?.data as CommunicationRecord | undefined;
 
     // Mark as read after delay
@@ -36,7 +36,7 @@ export default function PmItem() {
             console.debug("marking as read", message.ReadDateTimeUtc);
             const updatedMessage: CommunicationRecord = {
                 ...message,
-                ReadDateTimeUtc: new Date().toISOString()
+                ReadDateTimeUtc: new Date().toISOString(),
             };
             saveCache("communications", message.Id, updatedMessage);
         }, readOpenTimeRequirement);
@@ -53,14 +53,10 @@ export default function PmItem() {
 
     if (!message) return null;
 
-    const formattedDate = message.ReceivedDateTimeUtc ? format(parseISO(message.ReceivedDateTimeUtc), 'PPpp') : '';
+    const formattedDate = message.ReceivedDateTimeUtc ? format(parseISO(message.ReceivedDateTimeUtc), "PPpp") : "";
 
     return (
-        <ScrollView 
-            style={[StyleSheet.absoluteFill, backgroundStyle]} 
-            stickyHeaderIndices={[0]} 
-            stickyHeaderHiddenOnScroll
-        >
+        <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{message.AuthorName}</Header>
             <Floater contentStyle={appStyles.trailer}>
                 <Label type="h1" mt={30} mb={10}>
@@ -99,4 +95,4 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         alignItems: "center",
     },
-}); 
+});

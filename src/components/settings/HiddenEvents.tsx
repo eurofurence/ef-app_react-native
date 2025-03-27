@@ -1,15 +1,14 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
 import { Section } from "@/components/generic/atoms/Section";
 import { Button } from "@/components/generic/containers/Button";
 import { SettingContainer } from "./SettingContainer";
 import { useDataCache } from "@/context/DataCacheProvider";
+import { router } from "expo-router";
 
 export const HiddenEvents = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "hidden_events" });
-    const router = useRouter();
     const { getCacheSync, saveCache } = useDataCache();
     const settings = getCacheSync("settings", "settings")?.data ?? {
         cid: "",
@@ -17,13 +16,13 @@ export const HiddenEvents = () => {
         lastSynchronised: "",
         state: {},
         lastViewTimes: {},
-        hiddenEvents: []
+        hiddenEvents: [],
     };
 
     const unhideAllEvents = () => {
         const newSettings = {
             ...settings,
-            hiddenEvents: []
+            hiddenEvents: [],
         };
         saveCache("settings", "settings", newSettings);
     };
@@ -46,4 +45,4 @@ const styles = StyleSheet.create({
     button: {
         marginVertical: 5,
     },
-}); 
+});

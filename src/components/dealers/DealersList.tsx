@@ -22,15 +22,12 @@ export type DealersListProps = {
 export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trailer, padEnd = true }) => {
     const theme = useThemeName();
     const { isSynchronizing, synchronizeUi } = useDataCache();
-    const onPress = useCallback(
-        (dealer: DealerDetails) => {
-            router.navigate({
-                pathname: "/dealers/[dealerId]",
-                params: { dealerId: dealer.Id },
-            });
-        },
-        [router],
-    );
+    const onPress = useCallback((dealer: DealerDetails) => {
+        router.navigate({
+            pathname: "/dealers/[dealerId]",
+            params: { dealerId: dealer.Id },
+        });
+    }, []);
     return (
         <FlashList
             refreshing={isSynchronizing}

@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
@@ -17,7 +17,6 @@ import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
 
 export const FeedbackForm = () => {
     const theme = useTheme();
-    const router = useRouter();
     const { id } = useLocalSearchParams<{ id: string }>();
     const { getCacheSync } = useDataCache();
 
@@ -48,38 +47,21 @@ export const FeedbackForm = () => {
                 });
                 router.back();
             } catch (error) {
-                console.error('Failed to submit feedback:', error);
+                console.error("Failed to submit feedback:", error);
             }
         },
-        [event, submitFeedback, router],
+        [event, submitFeedback],
     );
 
     return (
         <FormProvider {...form}>
             <Label variant="narrow">{t("explanation", { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Label>
 
-            <ManagedRating<FeedbackSchema> 
-                name="rating" 
-                label={t("rating_title")} 
-                minRating={1} 
-                enableHalfStar={false} 
-                color={theme.secondary} 
-                style={styles.star} 
-                starSize={52} 
-            />
+            <ManagedRating<FeedbackSchema> name="rating" label={t("rating_title")} minRating={1} enableHalfStar={false} color={theme.secondary} style={styles.star} starSize={52} />
 
-            <ManagedTextInput<FeedbackSchema> 
-                name="message" 
-                label={t("message_title")} 
-                placeholder={t("message_placeholder")} 
-                numberOfLines={8} 
-                multiline 
-            />
+            <ManagedTextInput<FeedbackSchema> name="message" label={t("message_title")} placeholder={t("message_placeholder")} numberOfLines={8} multiline />
 
-            <Button 
-                onPress={form.handleSubmit(submit)} 
-                disabled={isSubmitting || disabled}
-            >
+            <Button onPress={form.handleSubmit(submit)} disabled={isSubmitting || disabled}>
                 {t("submit")}
             </Button>
 
@@ -112,4 +94,4 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: "#a01010",
     },
-}); 
+});
