@@ -1,7 +1,7 @@
 import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from "react-native-reanimated";
+import Animated, { cancelAnimation, Easing, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 import { useThemeBackground, useThemeBorder } from "@/hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
@@ -113,6 +113,16 @@ const TabsContext = createContext<TabsRef & { isOpen: boolean }>({
  */
 export const useTabs = () => useContext(TabsContext);
 
+const ANIMATION_CONFIG = {
+    duration: 234,
+    easing: Easing.out(Easing.cubic),
+    springConfig: {
+        damping: 15,
+        stiffness: 100,
+        mass: 1,
+    },
+};
+
 /**
  * A row of tabs and a "more" button.
  *
@@ -126,37 +136,16 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
     const fillBackground = useThemeBackground("background");
     const bordersDarken = useThemeBorder("darken");
 
-    // State if currently open.
-    const [state, setState] = useState<"closed" | "transitioning" | "open">("closed");
+    // Single source of truth for state
+    const [isOpen, setIsOpen] = useState(false);
 
-    // Height of the content rendered as children. Start is used for pan gesture, offset is used to animate the actual openness.
+    // Animation values
     const height = useSharedValue(300);
-    const start = useSharedValue(0);
     const offset = useSharedValue(0);
+    const startOffset = useSharedValue(0);
+    const isAnimating = useSharedValue(false);
 
-    // Derived state from animated value.
-    useDerivedValue(() => {
-        if (offset.value === 0) runOnJS(setState)("closed");
-        else if (offset.value === 1) runOnJS(setState)("open");
-        else runOnJS(setState)("transitioning");
-    }, [offset]);
-
-    // Derive isOpen state from offset
-    const isOpen = useDerivedValue(() => offset.value > 0, [offset]);
-    
-    // Track isOpen state in React state for context
-    const [isOpenState, setIsOpenState] = useState(false);
-    
-    // Use animated reaction to update React state
-    useAnimatedReaction(
-        () => isOpen.value,
-        (value) => {
-            runOnJS(setIsOpenState)(value);
-        },
-        [isOpen]
-    );
-
-    // Derive opacity from offset. If completely closed, translate out.
+    // Derive opacity from offset
     const dynamicDismiss = useAnimatedStyle(
         () => ({
             opacity: offset.value,
@@ -169,7 +158,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         [offset],
     );
 
-    // Derive transformation from offset.
+    // Derive transformation from offset
     const dynamicContainer = useAnimatedStyle(
         () => ({
             transform: [{ translateY: -offset.value * height.value }],
@@ -177,112 +166,100 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         [offset, height],
     );
 
-    // Opens the more area and runs the handlers.
+    // Animation handlers
+    const animateTo = useCallback(
+        (targetValue: number) => {
+            isAnimating.value = true;
+            offset.value = withSpring(targetValue, ANIMATION_CONFIG.springConfig, (finished) => {
+                if (finished) {
+                    isAnimating.value = false;
+                }
+            });
+        },
+        [offset, isAnimating],
+    );
+
+    // State change handlers
     const open = useCallback(() => {
-        if (state === "open") return false;
-        offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) });
+        if (isOpen) return false;
+        setIsOpen(true);
+        animateTo(1);
         return true;
-    }, [state, offset]);
+    }, [isOpen, animateTo]);
 
-    // Closes the more area and runs the handlers.
     const close = useCallback(() => {
-        if (state === "closed") return false;
-        offset.value = withTiming(0, { duration: 234, easing: Easing.out(Easing.cubic) });
+        if (!isOpen) return false;
+        setIsOpen(false);
+        animateTo(0);
         return true;
-    }, [state, offset]);
+    }, [isOpen, animateTo]);
 
-    // Closes the more area immediately and runs the handlers.
     const closeImmediately = useCallback(() => {
-        if (state === "closed") return false;
+        if (!isOpen) return false;
+        setIsOpen(false);
         offset.value = 0;
+        isAnimating.value = false;
         return true;
-    }, [state, offset]);
+    }, [isOpen, offset, isAnimating]);
 
     // Handle to invoke internal mutations from outside if needed.
     useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [open, close, closeImmediately]);
 
-    // Enable panning the navigator to dismiss. Only available if open.
+    // Gesture handling
     const gesture = Gesture.Pan()
         .onBegin(() => {
-            // Remember old value and cancel current animation.
-            start.value = offset.value;
+            startOffset.value = offset.value;
             cancelAnimation(offset);
+            isAnimating.value = false;
         })
         .onUpdate((e) => {
-            // Update from translation.
-            offset.value = -e.translationY / height.value + start.value;
-            offset.value = Math.max(0, Math.min(offset.value, 1));
+            const newOffset = -e.translationY / height.value + startOffset.value;
+            offset.value = Math.max(0, Math.min(newOffset, 1));
         })
         .onEnd((e) => {
-            // Compute threshold from direction.
-            const threshold = e.translationY > 0 ? 0.9 : 0.1;
-            // Close if smaller than threshold, otherwise open again.
-            const targetIsOpen = offset.value >= threshold;
-            const targetValue = targetIsOpen ? 1 : 0;
+            const velocity = e.velocityY;
+            const shouldOpen = offset.value > 0.5 || (offset.value > 0.2 && velocity < -500);
+            const targetValue = shouldOpen ? 1 : 0;
 
-            offset.value = withTiming(targetValue, { duration: 234, easing: Easing.out(Easing.cubic) });
+            if (shouldOpen !== isOpen) {
+                setIsOpen(shouldOpen);
+            }
+            animateTo(targetValue);
         });
 
-    const pointerEvents = useMemo(() => {
-        if (state === "transitioning") return "none";
-        return undefined;
-    }, [state]);
+    // Tab icon and text based on state
+    const tabIcon = useMemo(() => (isOpen ? "arrow-down-circle" : "menu"), [isOpen]);
+    const tabText = useMemo(() => (isOpen ? textLess : textMore), [isOpen, textLess, textMore]);
 
-    // Tab icon, down-arrow displayed when open or transitioning.
-    const tabIcon = useMemo(() => {
-        if (state === "open" || state === "transitioning") return "arrow-down-circle";
-        return "menu";
-    }, [state]);
-
-    // Tab text, less displayed when open or transitioning.
-    const tabText = useMemo(() => {
-        if (state === "open" || state === "transitioning") return textLess;
-        return textMore;
-    }, [state, textLess, textMore]);
-
-    // Tab press handler. Opposite returned, transitioning undefined.
-    const tabOnPress = useMemo(() => {
-        if (state === "open") return close;
-        if (state === "closed") return open;
-        return undefined;
-    }, [state, close, open]);
-
-    // Connect to back handler.
+    // Connect to back handler
     useEffect(() => {
         if (Platform.OS === "web") return;
-
-        // Add handler and return removal.
         const subscription = BackHandler.addEventListener("hardwareBackPress", () => close() ?? false);
         return () => subscription.remove();
     }, [close]);
 
     return (
-        <TabsContext.Provider value={{ close, open, closeImmediately, isOpen: isOpenState }}>
-            {/* Dismissal area. */}
+        <TabsContext.Provider value={{ close, open, closeImmediately, isOpen }}>
             <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
                 <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
             </Animated.View>
 
             <GestureDetector gesture={gesture}>
                 <Animated.View style={dynamicContainer}>
-                    {/* TODO: Animation */}
-                    {!notice ? null : (
+                    {notice && (
                         <View style={styles.zeroFromTop}>
                             <View style={styles.zeroFromBottom}>{notice}</View>
                         </View>
                     )}
 
-                    <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={pointerEvents}>
-                        {/* Dynamic tabs. */}
+                    <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating.value ? "none" : "auto"}>
                         {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
 
-                        {/* More-tab. */}
-                        <Tab icon={tabIcon} text={tabText} onPress={tabOnPress} indicate={indicateMore} />
+                        <Tab icon={tabIcon} text={tabText} onPress={isOpen ? close : open} indicate={indicateMore} />
 
                         <Continuous style={styles.activity} active={activity} />
                     </View>
 
-                    {/* Children rendered as the expandable content. */}
                     <View
                         style={[styles.content, fillBackground]}
                         onLayout={(e) => {
