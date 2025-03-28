@@ -3,30 +3,28 @@ import { useToast } from "@/context/ToastContext";
 import { captureException } from "@sentry/react-native";
 import { FeedbackSchema } from "@/components/feedback/FeedbackForm.schema";
 import { getAccessToken } from "@/context/AuthContext";
-
-interface SubmitFeedbackParams extends FeedbackSchema {
-    eventId: string;
-}
+import { apiBase } from "@/configuration";
 
 export function useSubmitEventFeedback() {
     const toast = useToast();
 
-    const execute = useCallback(async (params: SubmitFeedbackParams) => {
+    const execute = useCallback(async (params: FeedbackSchema) => {
         try {
             const accessToken = await getAccessToken();
             if (!accessToken) {
                 throw new Error("No access token available");
             }
 
-            const response = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/api/Events/${params.eventId}/Feedback`, {
+            const response = await fetch(`${apiBase}/EventFeedback`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify({
-                    rating: params.rating,
-                    message: params.message,
+                    EventId: params.eventId,
+                    Rating: params.rating,
+                    Message: params.message,
                 }),
             });
 

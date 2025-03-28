@@ -27,6 +27,7 @@ export const FeedbackForm = () => {
         defaultValues: {
             rating: undefined,
             message: undefined,
+            eventId: id,
         },
     });
 
