@@ -7,6 +7,7 @@ export const feedbackSchema = z.object({
         .max(5)
         .transform((n) => Math.floor(n)),
     message: z.string().optional(),
+    eventId: z.string(),
 });
 
 export type FeedbackSchema = z.infer<typeof feedbackSchema>; 
