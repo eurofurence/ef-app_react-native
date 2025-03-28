@@ -134,6 +134,8 @@ module.exports = {
             ],
             "@react-native-firebase/app",
             "expo-secure-store",
+            "expo-router",
+            "expo-sqlite",
         ].filter(Boolean),
         extra: {
             eas: {

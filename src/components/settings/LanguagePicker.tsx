@@ -1,12 +1,13 @@
+import React from "react";
 import { Picker } from "@react-native-picker/picker";
 import { captureException } from "@sentry/react-native";
 import { orderBy } from "lodash";
 import { useTranslation } from "react-i18next";
-
-import { useThemeColor } from "../../hooks/themes/useThemeHooks";
-import { setMomentLocale, Translation } from "../../i18n";
-import { Label } from "../generic/atoms/Label";
+import { useThemeColorValue } from "@/hooks/themes/useThemeHooks";
+import { Translation } from "@/i18n";
+import { Label } from "@/components/generic/atoms/Label";
 import { SettingContainer } from "./SettingContainer";
+import { useDataCache } from "@/context/DataCacheProvider";
 
 /**
  * Element of languages that the picker displays.
@@ -41,33 +42,54 @@ const languages = orderBy(
 
 /**
  * This component controls the language by directly injecting into the i18n
- * instance and changing the language there. The locale of moment is also
- * updated.
- * @constructor
+ * instance and changing the language there.
  */
 export const LanguagePicker = () => {
     const { t, i18n } = useTranslation("Settings");
-    const style = useThemeColor("text");
+    const textColor = useThemeColorValue("text");
+    const { getCacheSync, saveCache } = useDataCache();
+    const settings = getCacheSync("settings", "settings")?.data ?? {
+        cid: "",
+        cacheVersion: "",
+        lastSynchronised: "",
+        state: {},
+        lastViewTimes: {},
+        language: "en"
+    };
+
+    const handleLanguageChange = async (language: string) => {
+        try {
+            await i18n.changeLanguage(language);
+            const newSettings = {
+                ...settings,
+                language
+            };
+            saveCache("settings", "settings", newSettings);
+        } catch (error) {
+            captureException(error);
+        }
+    };
 
     return (
         <SettingContainer>
             <Label variant="bold">{t("changeLanguage")}</Label>
             <Label variant="narrow">{t("currentLanguage")}</Label>
             <Picker<string>
-                selectedValue={i18n.language}
-                style={style}
-                itemStyle={style}
-                dropdownIconColor={style.color}
+                selectedValue={settings.language ?? i18n.language}
+                style={{ color: textColor }}
+                dropdownIconColor={textColor}
                 prompt={t("changeLanguage")}
-                onValueChange={(it: string) => {
-                    i18n.changeLanguage(it).catch(captureException);
-                    setMomentLocale(it);
-                }}
+                onValueChange={handleLanguageChange}
             >
                 {languages.map((it) => (
-                    <Picker.Item label={it.name} value={it.code} key={it.code} />
+                    <Picker.Item 
+                        label={it.name} 
+                        value={it.code} 
+                        key={it.code}
+                        color={textColor}
+                    />
                 ))}
             </Picker>
         </SettingContainer>
     );
-};
+}; 

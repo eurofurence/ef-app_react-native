@@ -1,5 +1,5 @@
 import { ImageSource } from "expo-image";
-import { ImageRecord } from "../../../store/eurofurence/types";
+import { ImageRecord } from "@/store/eurofurence/types";
 
 /**
  * Converts a record to an image source.

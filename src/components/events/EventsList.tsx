@@ -2,26 +2,16 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useCallback } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
-import { useThemeName } from "../../hooks/themes/useThemeHooks";
-import { EventsByDayProps } from "../../routes/events/EventsByDay";
-import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
-import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
-import { EventsSearchProps } from "../../routes/events/EventsSearch";
-import { PersonalScheduleProps } from "../../routes/events/PersonalSchedule";
-import { EventDetails } from "../../store/eurofurence/types";
-import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { useThemeName } from "@/hooks/themes/useThemeHooks";
+import { EventDetails } from "@/store/eurofurence/types";
 import { EventCard, EventDetailsInstance } from "./EventCard";
+import { router } from "expo-router";
+import { useDataCache } from "@/context/DataCacheProvider";
 
 /**
  * The properties to the component.
  */
 export type EventsListProps = {
-    navigation:
-        | EventsSearchProps["navigation"]
-        | EventsByDayProps["navigation"]
-        | EventsByRoomProps["navigation"]
-        | EventsByTrackProps["navigation"]
-        | PersonalScheduleProps["navigation"];
     leader?: ReactElement;
     events: EventDetailsInstance[];
     select?: (event: EventDetails) => void;
@@ -31,17 +21,15 @@ export type EventsListProps = {
     padEnd?: boolean;
 };
 
-export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, select, empty, trailer, cardType = "duration", padEnd = true }) => {
+export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty, trailer, cardType = "duration", padEnd = true }) => {
     const theme = useThemeName();
-    const synchronizer = useSynchronizer();
-    const onPress = useCallback(
-        (event: EventDetails) => {
-            navigation.navigate("Event", {
-                id: event.Id,
-            });
-        },
-        [navigation],
-    );
+    const { isSynchronizing, synchronizeUi } = useDataCache();
+    const onPress = useCallback((event: EventDetails) => {
+        router.navigate({
+            pathname: "/events/[eventId]",
+            params: { eventId: event.Id },
+        });
+    }, []);
     const onLongPress = useCallback(
         (event: EventDetails) => {
             Vibration.vibrate(50);
@@ -51,8 +39,8 @@ export const EventsList: FC<EventsListProps> = ({ navigation, leader, events, se
     );
     return (
         <FlashList
-            refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronizeUi}
+            refreshing={isSynchronizing}
+            onRefresh={synchronizeUi}
             contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             ListHeaderComponent={leader}

@@ -12,7 +12,8 @@
     "showCatchEm": true,
     "website": "https://www.eurofurence.org",
     "catchEmUrl": "https://fursuit.eurofurence.org/catch-em-all",
-    "artistAlleyUrl": "https://app.eurofurence.org/qr/artistalley"
+    "artistAlleyUrl": "https://app.eurofurence.org/qr/artistalley",
+    "cacheVersion": 3
   },
   "auth": {
     "issuer": "https://identity.eurofurence.org",
@@ -29,5 +30,21 @@
   "sentry": {
     "dsn": "",
     "enabled": false
+  },
+  "firebase": {
+    "apiKey": "",
+    "authDomain": "",
+    "databaseURL": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": "",
+    "measurementId": ""
+  },
+  "debug": {
+    "showSync": false,
+    "showCache": false,
+    "devMenu": false,
+    "i18nDebug": false
   }
 }

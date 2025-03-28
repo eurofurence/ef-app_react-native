@@ -1,6 +1,17 @@
 const { getSentryExpoConfig } = require("@sentry/react-native/metro");
+const { withNativeWind } = require('nativewind/metro');
 
-const config = getSentryExpoConfig(__dirname);
-config.resolver.sourceExts.push("cjs");
+// Apply Sentry configuration
+const sentryConfig = getSentryExpoConfig(__dirname);
 
-module.exports = config;
+// Merge the configurations
+const config = {
+  ...sentryConfig,
+  resolver: {
+    ...sentryConfig.resolver,
+    sourceExts: [...new Set([...sentryConfig.resolver.sourceExts, "cjs"])]
+  }
+};
+
+// Export with NativeWind configuration
+module.exports = withNativeWind(config, { input: './global.css' });

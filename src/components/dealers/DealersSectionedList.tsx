@@ -2,28 +2,18 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
-import { useThemeName } from "../../hooks/themes/useThemeHooks";
-import { DealersAdProps } from "../../routes/dealers/DealersAd";
-import { DealersAllProps } from "../../routes/dealers/DealersAll";
-import { DealersAlphaProps } from "../../routes/dealers/DealersAlpha";
-import { DealersRegularProps } from "../../routes/dealers/DealersRegular";
-import { PersonalDealersProps } from "../../routes/dealers/PersonalDealers";
-import { findIndices } from "../../util/findIndices";
-import { useSynchronizer } from "../sync/SynchronizationProvider";
-import { DealerDetails } from "../../store/eurofurence/types";
+import { useThemeName } from "@/hooks/themes/useThemeHooks";
+import { findIndices } from "@/util/findIndices";
+import { DealerDetails } from "@/store/eurofurence/types";
 import { DealerSection, DealerSectionProps } from "./DealerSection";
 import { DealerCard, DealerDetailsInstance } from "./DealerCard";
+import { router } from "expo-router";
+import { useDataCache } from "@/context/DataCacheProvider";
 
 /**
  * The properties to the component.
  */
 export type DealersSectionedListProps = {
-    navigation:
-        | DealersAllProps["navigation"]
-        | PersonalDealersProps["navigation"]
-        | DealersRegularProps["navigation"]
-        | DealersAdProps["navigation"]
-        | DealersAlphaProps["navigation"];
     leader?: ReactElement;
     dealersGroups: (DealerSectionProps | DealerDetailsInstance)[];
     empty?: ReactElement;
@@ -32,20 +22,20 @@ export type DealersSectionedListProps = {
     padEnd?: boolean;
 };
 
-export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation, leader, dealersGroups, empty, trailer, sticky = true, padEnd = true }) => {
+export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, dealersGroups, empty, trailer, sticky = true, padEnd = true }) => {
     const theme = useThemeName();
-    const synchronizer = useSynchronizer();
+    const { isSynchronizing, synchronizeUi } = useDataCache();
     const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !("details" in item)) : undefined), [dealersGroups, sticky]);
-    const onPress = useCallback(
-        (dealer: DealerDetails) => {
-            navigation.navigate("Dealer", { id: dealer.Id });
-        },
-        [navigation],
-    );
+    const onPress = useCallback((dealer: DealerDetails) => {
+        router.navigate({
+            pathname: "/dealers/[dealerId]",
+            params: { dealerId: dealer.Id },
+        });
+    }, []);
     return (
         <FlashList
-            refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronizeUi}
+            refreshing={isSynchronizing}
+            onRefresh={synchronizeUi}
             contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             stickyHeaderIndices={stickyIndices}

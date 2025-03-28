@@ -1,51 +1,49 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { router } from 'expo-router';
+import { Section } from '@/components/generic/atoms/Section';
+import { Button } from '@/components/generic/containers/Button';
+import { ThemePicker } from './ThemePicker';
+import { AnalyticsOptIns } from './AnalyticsOptIns';
+import { LanguagePicker } from './LanguagePicker';
+import { HiddenEvents } from './HiddenEvents';
+import { Warnings } from './Warnings';
+import { SettingContainer } from './SettingContainer';
 
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { Section } from "../generic/atoms/Section";
-import { Button } from "../generic/containers/Button";
-import { AnalyticsOptIns } from "./AnalyticsOptIns";
-import { HiddenEvents } from "./HiddenEvents";
-import { LanguagePicker } from "./LanguagePicker";
-import { SettingContainer } from "./SettingContainer";
-import { ThemePicker } from "./ThemePicker";
-import { Warnings } from "./Warnings";
-
-/**
- * User settings section of the settings screen.
- * @constructor
- */
-export const UserSettings = () => {
+export function UserSettings() {
     const { t } = useTranslation("Settings");
-    const navigation = useAppNavigation("Areas");
-
+    
     return (
         <View>
-            {/* User visible settings, title. */}
+            {/* User visible settings, title */}
             <Section title={t("settingsSection")} icon="cog" />
 
-            {/* Allow choosing theme. */}
+            {/* Allow choosing theme */}
             <ThemePicker />
 
-            {/* Options for analytics and crash reporting. */}
+            {/* Options for analytics and crash reporting */}
             <AnalyticsOptIns />
 
-            {/* Language selection mask. */}
+            {/* Language selection mask */}
             <LanguagePicker />
 
-            {/* About us section. */}
+            {/* About us section */}
             <SettingContainer>
-                <Button icon="cellphone-information" onPress={() => navigation.navigate("About")} outline>
+                <Button 
+                    icon="cellphone-information" 
+                    onPress={() => router.push("/about")}
+                    outline
+                >
                     {t("about")}
                 </Button>
             </SettingContainer>
 
-            {/* Hidden events functionality, undo. */}
+            {/* Hidden events functionality, undo */}
             <HiddenEvents />
 
             {/* Warning settings */}
             <Warnings />
         </View>
     );
-};
+} 

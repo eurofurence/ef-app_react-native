@@ -1,7 +1,7 @@
 /**
  * A URL leading to an image.
  */
-import { IconNames } from "../../components/generic/atoms/Icon";
+import { IconNames } from "@/components/generic/atoms/Icon";
 
 /**
  * Time categorized in part of day.
@@ -12,6 +12,15 @@ export type PartOfDay = "morning" | "afternoon" | "evening" | "night" | "long_ru
  * Attendance day for dealers.
  */
 export type AttendanceDay = "mon" | "tue" | "wed";
+
+/**
+ * A cache item.
+ */
+export type CacheItem<T> = {
+    id: string;
+    data: T;
+    timestamp: number;
+};
 
 /**
  * Named type to use when referencing other records.
@@ -243,4 +252,10 @@ export type ArtistAlleyOwnTableRegistrationRecord = {
     ImageId: string;
     Image: ImageRecord;
     State: string;
+};
+
+export type Auxiliary = {
+    timetravel: {
+        amount: number;
+    };
 };

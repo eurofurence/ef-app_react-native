@@ -3,8 +3,8 @@ import { registerTaskAsync } from "expo-notifications";
 import { defineTask, TaskManagerTaskBody } from "expo-task-manager";
 import { Platform } from "react-native";
 
-import { requestSyncFromBackground } from "../hooks/sync/useBackgroundSyncManager";
-import { captureNotificationException } from "../sentryHelpers";
+import { requestSyncFromBackground } from "@/hooks/sync/useBackgroundSyncManager";
+import { captureNotificationException } from "@/sentryHelpers";
 
 // Import globally at index, this code runs the method on import.
 

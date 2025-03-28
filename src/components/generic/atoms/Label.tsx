@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { StyleSheet, Text, TextProps, ViewStyle } from "react-native";
 
-import { ThemeColor } from "../../../context/Theme";
-import { useThemeColor } from "../../../hooks/themes/useThemeHooks";
+import { ThemeColor } from "@/context/Theme";
+import { useThemeColor } from "@/hooks/themes/useThemeHooks";
 
 /**
  * Props to label.

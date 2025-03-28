@@ -1,7 +1,5 @@
-import { Dictionary } from "@reduxjs/toolkit";
-
-import moment, { MomentInput } from "moment-timezone";
-
+import { getHours, parseISO } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import { IconNames } from "../../components/generic/atoms/Icon";
 import { Notification } from "../background/slice";
 import { conTimeZone } from "../../configuration";
@@ -24,8 +22,11 @@ import {
     RecordId,
 } from "./types";
 
-const internalCategorizeTime = (input: MomentInput) => {
-    const hours = moment(input).hours();
+type Dictionary<T> = Record<string, T>;
+
+const internalCategorizeTime = (dateStr: string) => {
+    const date = toZonedTime(parseISO(dateStr), conTimeZone);
+    const hours = getHours(date);
     if (6 <= hours && hours < 13) return "morning";
     if (13 <= hours && hours < 17) return "afternoon";
     if (17 <= hours && hours < 21) return "evening";
@@ -87,7 +88,7 @@ export const applyEventDetails = (
     hiddenIds: string[],
 ): EventDetails => ({
     ...source,
-    PartOfDay: internalCategorizeTime(moment.utc(source.StartDateTimeUtc).tz(conTimeZone)),
+    PartOfDay: internalCategorizeTime(source.StartDateTimeUtc),
     Poster: !source.PosterImageId ? undefined : images[source.PosterImageId],
     Banner: !source.BannerImageId ? undefined : images[source.BannerImageId],
     Badges: internalTagsToBadges(source.Tags),
@@ -108,6 +109,7 @@ const internalDealerParseTable = (dealer: DealerRecord) => {
 
     return dealer.ShortDescription.split(/\r?\n/, 1)[0].substring("Table".length).trim();
 };
+
 const internalDealerParseDescriptionContent = (dealer: DealerRecord) => {
     if (!dealer.ShortDescription) return dealer.ShortDescription;
     if (!dealer.ShortDescription?.startsWith("Table")) return dealer.ShortDescription;
@@ -141,9 +143,7 @@ const internalMastodonHandleToProfileUrl = (handle: string) => {
     const [username, instance] = parts;
 
     // Construct the URL
-    const profileUrl = `https://${instance}/@${username}`;
-
-    return profileUrl;
+    return `https://${instance}/@${username}`;
 };
 
 export const applyDealerDetails = (source: DealerRecord, images: Dictionary<ImageDetails>, days: EventDayDetails[], favorites: RecordId[]): DealerDetails => ({
@@ -161,8 +161,9 @@ export const applyDealerDetails = (source: DealerRecord, images: Dictionary<Imag
 
 export const applyEventDayDetails = (source: EventDayRecord): EventDayDetails => ({
     ...source,
-    dayOfWeek: moment.tz(source.Date, conTimeZone).day(),
+    dayOfWeek: toZonedTime(parseISO(source.Date), conTimeZone).getDay(),
 });
+
 export const applyAnnouncementDetails = (source: AnnouncementRecord, images: Dictionary<ImageDetails>): AnnouncementDetails => ({
     ...source,
     NormalizedTitle: internalFixedTitle(source.Title, source.Content),

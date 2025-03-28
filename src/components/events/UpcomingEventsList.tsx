@@ -1,26 +1,25 @@
-import { Moment } from "moment/moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useAppSelector } from "../../store";
-import { filterUpcomingEvents } from "../../store/eurofurence/selectors/events";
-import { eventsSelector } from "../../store/eurofurence/selectors/records";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
+import { filterUpcomingEvents } from "@/store/eurofurence/selectors/events";
+import { router } from "expo-router";
+import React from "react";
 import { Section } from "../generic/atoms/Section";
-import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { EventCard, eventInstanceForAny } from "./EventCard";
 
 export type UpcomingEventsListProps = {
-    now: Moment;
+    now: Date;
 };
 export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
-    const navigation = useAppNavigation("Areas");
-
     const { t } = useTranslation("Events");
+    const { getAllCacheSync } = useDataCache();
 
     const zone = useZoneAbbr();
-    const all = useAppSelector(eventsSelector.selectAll);
+    const all = getAllCacheSync("events").map((item) => item.data);
+
     const events = useMemo(
         () =>
             filterUpcomingEvents(all, now)
@@ -43,8 +42,9 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
                         event={event}
                         type="time"
                         onPress={(event) =>
-                            navigation.navigate("Event", {
-                                id: event.Id,
+                            router.navigate({
+                                pathname: "/events/[eventId]",
+                                params: { eventId: event.Id },
                             })
                         }
                     />

@@ -1,19 +1,14 @@
 import { useIsFocused } from "@react-navigation/core";
-import moment from "moment-timezone";
-import React, { FC, useMemo } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
 import { useCalendars } from "expo-localization";
 import { captureException } from "@sentry/react-native";
-import { useEventReminder } from "../../hooks/events/useEventReminder";
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useNow } from "../../hooks/time/useNow";
-import { shareEvent } from "../../routes/events/Events.common";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { toggleEventHidden } from "../../store/auxiliary/slice";
-import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";
-import { EventDetails } from "../../store/eurofurence/types";
+import { useEventReminder } from "@/hooks/events/useEventReminder";
+import { useNow } from "@/hooks/time/useNow";
+import { shareEvent } from "@/components/events/Events.common";
+import { EventDetails, MapDetails, MapEntryDetails, LinkFragment } from "@/store/eurofurence/types";
 import { Banner } from "../generic/atoms/Banner";
 import { Label } from "../generic/atoms/Label";
 import { MarkdownContent } from "../generic/atoms/MarkdownContent";
@@ -23,8 +18,19 @@ import { Badge } from "../generic/containers/Badge";
 import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { Row } from "../generic/containers/Row";
-import { conTimeZone } from "../../configuration";
+import { conTimeZone } from "@/configuration";
 import { platformShareIcon } from "../generic/atoms/Icon";
+import { router } from "expo-router";
+import { differenceInMilliseconds } from "date-fns";
+import { toZonedTime, format } from "date-fns-tz";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { getValidLinksByTarget } from "@/store/eurofurence/selectors/maps";
+
+interface MapLink {
+    map: MapDetails;
+    entry: MapEntryDetails;
+    link: LinkFragment;
+}
 
 /**
  * Props to the content.
@@ -49,6 +55,11 @@ export type EventContentProps = {
      * True if a dedicated share button should be displayed.
      */
     shareButton?: boolean;
+
+    /**
+     * Callback when the event's hidden state is toggled.
+     */
+    onToggleHidden?: (event: EventDetails) => void;
 };
 
 /**
@@ -56,50 +67,59 @@ export type EventContentProps = {
  */
 const placeholder = "L38D%z^%020303D+bv~m%IWF-nIr/1309/667";
 
-export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton }) => {
-    const navigation = useAppNavigation("Areas");
-
+export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton, onToggleHidden }) => {
     const { t } = useTranslation("Event");
     const { isFavorite, toggleReminder } = useEventReminder(event);
-    const dispatch = useAppDispatch();
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
 
-    const progress = now.diff(moment.utc(event.StartDateTimeUtc)) / moment.utc(event.EndDateTimeUtc).diff(moment.utc(event.StartDateTimeUtc));
+    const progress = differenceInMilliseconds(now, new Date(event.StartDateTimeUtc)) / differenceInMilliseconds(new Date(event.EndDateTimeUtc), new Date(event.StartDateTimeUtc));
     const happening = progress >= 0.0 && progress <= 1.0;
     const feedbackDisabled = progress < 0.0;
 
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
 
-    const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
+    const { getAllCacheSync, saveCache } = useDataCache();
+    const [mapLink, setMapLink] = useState<MapLink[]>([]);
+
+    useEffect(() => {
+        if (room) {
+            async function loadMapLinks() {
+                const maps = getAllCacheSync("maps");
+                if (maps.length > 0) {
+                    // TODO: Fix this.
+                    // @ts-expect-error: See later.
+                    const validLinks = getValidLinksByTarget(maps, room.Id);
+                    setMapLink(validLinks);
+                } else {
+                    setMapLink([]);
+                }
+            }
+            loadMapLinks().then();
+        }
+    }, [room, getAllCacheSync]);
 
     const calendar = useCalendars();
     const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
-        // Start parsing.
-        const zone = moment.tz(calendar[0]?.timeZone ?? conTimeZone).zoneAbbr();
-        const eventStart = moment.utc(event.StartDateTimeUtc).tz(conTimeZone);
-        const eventEnd = moment.utc(event.EndDateTimeUtc).tz(conTimeZone);
+        const timeZone = calendar[0]?.timeZone ?? conTimeZone;
+        const zone = new Intl.DateTimeFormat("en-US", { timeZone, timeZoneName: "short" }).format(new Date()).split(" ").pop();
+        const eventStart = toZonedTime(new Date(event.StartDateTimeUtc), conTimeZone);
+        const eventEnd = toZonedTime(new Date(event.EndDateTimeUtc), conTimeZone);
+        const start = format(eventStart, "p");
+        const end = format(eventEnd, "p");
+        const day = format(eventStart, "EEE");
+        const startLocal = format(new Date(event.StartDateTimeUtc), "p");
+        const endLocal = format(new Date(event.EndDateTimeUtc), "p");
+        const dayLocal = format(new Date(event.StartDateTimeUtc), "EEE");
+        return { zone, start, end, day, startLocal, endLocal, dayLocal };
+    }, [calendar, event.StartDateTimeUtc, event.EndDateTimeUtc]);
 
-        // Convert event start and duration to readable. Reorder with caution, as
-        // local moves the timezones.
-        const start = eventStart.format("LT");
-        const end = eventEnd.format("LT");
-        const day = eventStart.format("ddd");
-        const startLocal = eventStart.local().format("LT");
-        const endLocal = eventEnd.local().format("LT");
-        const dayLocal = eventStart.local().format("ddd");
-
-        return {
-            zone,
-            start,
-            end,
-            day,
-            startLocal,
-            endLocal,
-            dayLocal,
-        };
-    }, [calendar, event.EndDateTimeUtc, event.StartDateTimeUtc]);
+    const toggleEventHidden = useCallback(() => {
+        if (onToggleHidden) {
+            onToggleHidden({ ...event, Hidden: !event.Hidden });
+        }
+    }, [event, onToggleHidden]);
 
     return (
         <>
@@ -154,13 +174,23 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                 >
                     {isFavorite ? t("remove_favorite") : t("add_favorite")}
                 </Button>
-                <Button containerStyle={styles.rowRight} icon={event.Hidden ? "eye" : "eye-off"} onPress={() => dispatch(toggleEventHidden(event.Id))} outline>
+                <Button containerStyle={styles.rowRight} icon={event.Hidden ? "eye" : "eye-off"} onPress={toggleEventHidden} outline>
                     {event.Hidden ? t("reveal") : t("hide")}
                 </Button>
             </Row>
 
             {event.IsAcceptingFeedback && (
-                <Button disabled={feedbackDisabled} containerStyle={styles.marginBefore} icon="pencil" onPress={() => navigation.navigate("EventFeedback", { id: event.Id })}>
+                <Button
+                    disabled={feedbackDisabled}
+                    containerStyle={styles.marginBefore}
+                    icon="pencil"
+                    onPress={() =>
+                        router.navigate({
+                            pathname: "/events/[eventId]/feedback",
+                            params: { eventId: event.Id },
+                        })
+                    }
+                >
                     {t("give_feedback")}
                 </Button>
             )}
@@ -203,12 +233,17 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
             {!mapLink
                 ? null
-                : mapLink.map(({ map, entry, link }, i) => (
+                : mapLink.map(({ map, entry, link }: MapLink, i: number) => (
                       <ImageExButton
                           key={i}
                           image={map.Image}
                           target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
-                          onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) })}
+                          onPress={() =>
+                              router.navigate({
+                                  pathname: "/maps/[mapId]/[entryId]/[linkId]",
+                                  params: { mapId: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) },
+                              })
+                          }
                       />
                   ))}
 

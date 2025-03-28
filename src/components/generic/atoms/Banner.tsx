@@ -3,11 +3,11 @@ import { FC } from "react";
 import { StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useAppNavigation } from "../../../hooks/nav/useAppNavigation";
-import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
-import { ImageDetails } from "../../../store/eurofurence/types";
-import { Image, ImageProps } from "./Image";
+import { router } from "expo-router";
 import { sourceFromImage } from "./Image.common";
+import { Image, ImageProps } from "./Image";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { ImageDetails } from "@/store/eurofurence/types";
 
 export type BannerProps = {
     /**
@@ -32,8 +32,6 @@ export type BannerProps = {
 };
 
 export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable }) => {
-    const navigation = useAppNavigation("Areas");
-
     const aspect = !image ? {} : { aspectRatio: image.Width / image.Height };
     const backgroundStyle = useThemeBackground("background");
     // Do not render if nothing given.
@@ -43,7 +41,11 @@ export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable })
             containerStyle={[styles.container, backgroundStyle]}
             disabled={!viewable}
             onPress={() => {
-                if (viewable && image) navigation.navigate("Viewer", { id: image.Id });
+                if (viewable && image)
+                    router.navigate({
+                        pathname: "/viewer/[viewerId]",
+                        params: { viewerId: image.Id },
+                    });
             }}
         >
             <Image style={[styles.image, aspect, style]} contentFit={undefined} source={sourceFromImage(image)} placeholder={placeholder} />

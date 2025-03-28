@@ -7,8 +7,8 @@ import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, FlatList, InteractionManager, Platform, StyleSheet, View, ViewStyle } from "react-native";
 
-import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
-import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence/types";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { ImageDetails, LinkFragment, MapDetails, MapEntryDetails } from "@/store/eurofurence/types";
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { Marker } from "../generic/atoms/Marker";
@@ -107,17 +107,22 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
     useEffect(() => {
         if (!entry) return;
         if (!refZoom.current) return;
-        // Get arguments from current status.
-        const current = refZoom.current._getZoomableViewEventObject();
-        const offsetX = current.offsetX;
-        const offsetY = current.offsetY;
-        const zoom = current.zoomLevel;
 
-        // Get change to current center.
-        const diffX = entry.X - (map.Image.Width / 2 - offsetX);
-        const diffY = entry.Y - (map.Image.Height / 2 - offsetY);
-        refZoom.current.moveBy(diffX * zoom, diffY * zoom).catch(() => undefined);
-    }, [entry, refZoom, map]);
+        // Schedule the move operation to run in the next frame
+        requestAnimationFrame(() => {
+            if (!refZoom.current) return;
+            // Get arguments from current status.
+            const current = refZoom.current._getZoomableViewEventObject();
+            const offsetX = current.offsetX;
+            const offsetY = current.offsetY;
+            const zoom = current.zoomLevel;
+
+            // Get change to current center.
+            const diffX = entry.X - (map.Image.Width / 2 - offsetX);
+            const diffY = entry.Y - (map.Image.Height / 2 - offsetY);
+            void refZoom.current.moveBy(diffX * zoom, diffY * zoom);
+        });
+    }, [entry, map]);
 
     // Compute containers.
     const styleContainer = useMemo<ViewStyle>(() => ({ width: map.Image.Width, height: map.Image.Height }), [map]);

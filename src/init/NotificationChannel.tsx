@@ -1,7 +1,7 @@
 import * as Notifications from "expo-notifications";
 import { setNotificationChannelAsync } from "expo-notifications";
 
-import { captureNotificationException } from "../sentryHelpers";
+import { captureNotificationException } from "@/sentryHelpers";
 
 // Import globally at index, this code runs the method on import.
 

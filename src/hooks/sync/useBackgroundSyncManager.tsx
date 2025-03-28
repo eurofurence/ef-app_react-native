@@ -1,10 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { captureException } from "@sentry/react-native";
 import { useEffect } from "react";
 import { AppState } from "react-native";
 
-import { useSynchronizer } from "../../components/sync/SynchronizationProvider";
-import { captureNotificationException } from "../../sentryHelpers";
+import { captureNotificationException } from "@/sentryHelpers";
 
 const STORAGE_TAG_NAME = "background_sync_requested";
 
@@ -20,9 +18,6 @@ export const requestSyncFromBackground = () => AsyncStorage.setItem(STORAGE_TAG_
  * @constructor
  */
 export const useBackgroundSyncManager = () => {
-    // Use synchronizer for performing data refresh.
-    const { synchronize } = useSynchronizer();
-
     // Connect to app state events, check on active.
     useEffect(() => {
         const changed = AppState.addEventListener("change", (appState) => {
@@ -39,7 +34,6 @@ export const useBackgroundSyncManager = () => {
                 if (data !== "true") {
                     return false;
                 } else {
-                    synchronize().then(captureException);
                     await AsyncStorage.removeItem(STORAGE_TAG_NAME);
                     return true;
                 }
@@ -53,5 +47,5 @@ export const useBackgroundSyncManager = () => {
             // Remove app state subscription.
             changed.remove();
         };
-    }, [synchronize]);
+    }, []);
 };

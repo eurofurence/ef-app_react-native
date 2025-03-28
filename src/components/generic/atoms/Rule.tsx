@@ -1,6 +1,6 @@
 import { StyleSheet, View, ViewStyle } from "react-native";
 
-import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 export type RuleProps = {
     style?: ViewStyle;

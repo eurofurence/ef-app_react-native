@@ -2,8 +2,8 @@ import { FC, useEffect } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
-import { ThemeColor, withAlpha } from "../../../context/Theme";
-import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
+import { ThemeColor, withAlpha } from "@/context/Theme";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 /**
  * Props for the progress indicator.

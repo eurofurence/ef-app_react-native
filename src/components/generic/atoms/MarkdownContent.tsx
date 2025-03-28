@@ -1,9 +1,7 @@
 import { FC, useMemo } from "react";
 import { View, ViewStyle } from "react-native";
 import Markdown, { MarkdownProps } from "react-native-markdown-display";
-
-import { useAppSelector } from "../../../store";
-import { selectMarkdownTheme } from "../../../store/settings/selectors";
+import { useMarkdownTheme } from "@/store/settings/selectors";
 import { LabelProps } from "./Label";
 
 const MarkdownComponent: FC<MarkdownProps & { children?: string }> = Markdown as any;
@@ -73,7 +71,7 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, chil
     }
 
     // Get markdown style.
-    const markdownStyles = useAppSelector(selectMarkdownTheme);
+    const markdownStyles = useMarkdownTheme();
 
     return (
         <View style={styleMargin}>

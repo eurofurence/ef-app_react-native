@@ -1,24 +1,34 @@
-import moment from "moment-timezone";
-import { useTranslation } from "react-i18next";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { Label } from '@/components/generic/atoms/Label';
+import { useDataCache } from '@/context/DataCacheProvider';
+import { CommunicationRecord } from '@/store/eurofurence/types';
 
-import { useAppSelector } from "../../store";
-import { Label } from "../generic/atoms/Label";
-import { Section } from "../generic/atoms/Section";
-
-export const RemoteMessages = () => {
-    const { t } = useTranslation("Settings", { keyPrefix: "remote_messages" });
-    const messages = useAppSelector((state) => state.background.fcmMessages);
-
+export function RemoteMessages() {
+    const { t } = useTranslation("Settings");
+    const { getAllCacheSync } = useDataCache();
+    const messages = getAllCacheSync("communications");
+    
     return (
-        <View>
-            <Section title={t("title")} subtitle={t("subtitle")} icon="message-flash" />
-
-            {messages.length === 0 && <Label mb={15}>{t("no_messages")}</Label>}
-
-            {messages.map((message) => (
-                <Label mb={15} key={message.dateReceivedUtc}>{`${moment.utc(message.dateReceivedUtc).local().format("llll")} - ${JSON.stringify(message.content)}`}</Label>
-            ))}
+        <View className="p-4">
+            <Label type="h3" variant="middle">
+                {t("remoteMessages")}
+            </Label>
+            <View className="mt-2">
+                {messages.map(item => (
+                    <View key={item.data.Id} className="py-1">
+                        <Label type="regular">
+                            {(item.data as CommunicationRecord).Message}
+                        </Label>
+                    </View>
+                ))}
+                {messages.length === 0 && (
+                    <Label type="regular">
+                        {t("noRemoteMessages")}
+                    </Label>
+                )}
+            </View>
         </View>
     );
-};
+} 

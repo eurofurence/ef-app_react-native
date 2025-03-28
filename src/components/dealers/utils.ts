@@ -1,14 +1,23 @@
-import moment from "moment/moment";
-
-import { DealerDetails } from "../../store/eurofurence/types";
+import { isSameDay } from "date-fns";
+import { DealerDetails } from "@/store/eurofurence/types";
 
 /**
- * True if for the given moment the dealer is attending.
+ * True if for the given date the dealer is attending.
  * @param dealer The dealer to check.
- * @param now The moment instance.
+ * @param now The date to check.
  */
-export const isPresent = (dealer: DealerDetails, now: moment.Moment) => {
-    return Boolean(dealer.AttendanceDays.find((day) => now.isSame(day.Date, "day")));
+export const isPresent = (dealer: DealerDetails, now: Date) => {
+    // Use AttendanceDays from transformed data if available
+    if (dealer.AttendanceDays?.length > 0) {
+        return dealer.AttendanceDays.some(day => isSameDay(new Date(day.Date), now));
+    }
+    
+    // Fallback to AttendsOn* properties if AttendanceDays not available
+    const dayOfWeek = now.getDay();
+    if (dayOfWeek === 4) return dealer.AttendsOnThursday;
+    if (dayOfWeek === 5) return dealer.AttendsOnFriday;
+    if (dayOfWeek === 6) return dealer.AttendsOnSaturday;
+    return false;
 };
 
 /**

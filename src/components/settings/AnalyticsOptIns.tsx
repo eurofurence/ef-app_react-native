@@ -1,28 +1,54 @@
+import React from "react";
 import Checkbox from "expo-checkbox";
 import { noop } from "lodash";
 import { useTranslation } from "react-i18next";
-import { Alert } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
-import { useAppDispatch, useAppSelector } from "../../store";
-import { setAnalytics, toggleDevMenu } from "../../store/settings/slice";
-import { Label } from "../generic/atoms/Label";
-import { Col } from "../generic/containers/Col";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { Label } from "@/components/generic/atoms/Label";
+import { Col } from "@/components/generic/containers/Col";
 import { SettingContainer } from "./SettingContainer";
 
 /**
  * Analytics opt-in section with a checkbox to allow analytics.
- * @constructor
  */
 export const AnalyticsOptIns = () => {
     const { t } = useTranslation("Settings");
-    const dispatch = useAppDispatch();
-    const analyticsEnabled = useAppSelector((state) => state.settingsSlice.analytics.enabled);
+    const { getCacheSync, saveCache } = useDataCache();
+    const settings = getCacheSync("settings", "settings")?.data ?? {
+        cid: "",
+        cacheVersion: "",
+        lastSynchronised: "",
+        state: {},
+        lastViewTimes: {},
+        theme: undefined,
+        analytics: { enabled: false },
+        devMenu: false
+    };
+
+    const analyticsEnabled = settings.analytics?.enabled ?? false;
+
+    const setAnalytics = (enabled: boolean) => {
+        const newSettings = {
+            ...settings,
+            analytics: { enabled }
+        };
+        saveCache("settings", "settings", newSettings);
+    };
+
+    const toggleDevMenu = (enabled: boolean) => {
+        const newSettings = {
+            ...settings,
+            devMenu: enabled
+        };
+        saveCache("settings", "settings", newSettings);
+    };
+
     return (
         <SettingContainer>
             <TouchableOpacity
-                style={{ flexDirection: "row", alignItems: "center" }}
-                onPress={() => dispatch(setAnalytics(!analyticsEnabled))}
+                style={styles.container}
+                onPress={() => setAnalytics(!analyticsEnabled)}
                 onLongPress={() =>
                     Alert.alert(t("developer_settings_alert.title"), t("developer_settings_alert.body"), [
                         {
@@ -32,19 +58,19 @@ export const AnalyticsOptIns = () => {
                         },
                         {
                             text: t("developer_settings_alert.disable"),
-                            onPress: () => dispatch(toggleDevMenu(false)),
+                            onPress: () => toggleDevMenu(false),
                             style: "default",
                         },
                         {
                             text: t("developer_settings_alert.enable"),
-                            onPress: () => dispatch(toggleDevMenu(true)),
+                            onPress: () => toggleDevMenu(true),
                             style: "destructive",
                         },
                     ])
                 }
                 delayLongPress={1000}
             >
-                <Col style={{ flex: 1 }}>
+                <Col style={styles.column}>
                     <Label variant="bold">{t("allowAnalytics")}</Label>
                     <Label variant="narrow">{t("allowAnalyticsSubtitle")}</Label>
                 </Col>
@@ -54,3 +80,13 @@ export const AnalyticsOptIns = () => {
         </SettingContainer>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    column: {
+        flex: 1
+    }
+}); 

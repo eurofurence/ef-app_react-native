@@ -1,12 +1,10 @@
-import { Moment } from "moment/moment";
 import React, { FC, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
-import { DealerDetails } from "../../store/eurofurence/types";
-import { assetSource } from "../../util/assets";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { DealerDetails } from "@/store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
@@ -20,14 +18,14 @@ export type DealerDetailsInstance = {
 };
 
 /**
- * Creates the dealer from the time and precomputed values.
- * @param details The details to use.
- * @param now The moment to check against.
+ * Creates the dealer instance from the details and precomputed values.
+ * @param details The dealer details.
+ * @param now The current date.
  * @param day1 The first day label.
  * @param day2 The second day label.
  * @param day3 The third day label.
  */
-export function dealerInstanceForAny(details: DealerDetails, now: Moment, day1: string, day2: string, day3: string) {
+export function dealerInstanceForAny(details: DealerDetails, now: Date, day1: string, day2: string, day3: string): DealerDetailsInstance {
     return {
         details,
         present: isPresent(details, now),
@@ -49,7 +47,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     const present = dealer.present;
     const description = dealer.details.Categories?.join(", ");
     const offDays = dealer.offDays;
-    const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? assetSource("ych");
+    const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require("@/assets/static/ych.png");
 
     // Translation object.
     const { t } = useTranslation("Dealers");
@@ -69,7 +67,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
                     style={[avatarBackground, styles.avatarCircle]}
                     source={avatar}
                     contentFit="contain"
-                    placeholder={assetSource("ych")}
+                    placeholder={require("@/assets/static/ych.png")}
                     transition={60}
                     recyclingKey={dealer.details.Id}
                 />

@@ -1,17 +1,26 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-
-import { useAppSelector } from "../../store";
-import { selectUpdatedFavoriteDealers } from "../../store/eurofurence/selectors/dealers";
-import { selectUpdatedFavoriteEvents } from "../../store/eurofurence/selectors/events";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
+import { useFavoritesState } from "@/hooks/favorites/useFavoritesState";
 
 export const FavoritesChangedWarning = () => {
     const { t: tMenu } = useTranslation("Menu");
     const { t } = useTranslation("Home");
-    const changedEventFavorite = useAppSelector(selectUpdatedFavoriteEvents);
-    const changedDealerFavorite = useAppSelector(selectUpdatedFavoriteDealers);
+    const { favoriteEvents, favoriteDealers, lastViewTimes } = useFavoritesState();
+
+    const { changedEventFavorite, changedDealerFavorite } = useMemo(() => {
+        const changedEvents = favoriteEvents.filter(
+            (event) => lastViewTimes && event.Id in lastViewTimes && new Date(event.LastChangeDateTimeUtc) > new Date(lastViewTimes[event.Id]),
+        );
+
+        const changedDealers = favoriteDealers.filter(
+            (dealer) => lastViewTimes && dealer.Id in lastViewTimes && new Date(dealer.LastChangeDateTimeUtc) > new Date(lastViewTimes[dealer.Id]),
+        );
+
+        return { changedEventFavorite: changedEvents, changedDealerFavorite: changedDealers };
+    }, [favoriteEvents, favoriteDealers, lastViewTimes]);
+
     if (!changedEventFavorite.length && !changedDealerFavorite.length) {
         return null;
     }
@@ -20,13 +29,13 @@ export const FavoritesChangedWarning = () => {
         <>
             <Section title={t("warnings.favorites_changed")} subtitle={t("warnings.favorites_changed_subtitle")} icon="update" />
 
-            {!changedEventFavorite.length ? null : (
+            {changedEventFavorite.length > 0 && (
                 <Label mt={5}>
                     <Label variant="bold">{tMenu("events")}: </Label>
                     {changedEventFavorite.map((event) => event.Title).join(", ")}
                 </Label>
             )}
-            {!changedDealerFavorite.length ? null : (
+            {changedDealerFavorite.length > 0 && (
                 <Label mt={5}>
                     <Label variant="bold">{tMenu("dealers")}: </Label>
                     {changedDealerFavorite.map((dealer) => dealer.DisplayNameOrAttendeeNickname).join(", ")}

@@ -1,45 +1,52 @@
-import { Controller } from "react-hook-form";
-import { StyleProp, ViewStyle } from "react-native";
+import { FC } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { useController, Path } from "react-hook-form";
 import StarRating from "react-native-star-rating-widget";
 
 import { Label } from "../atoms/Label";
-import { Col } from "../containers/Col";
 
-type InnerManagedRatingProps<T extends object> = {
-    name: keyof T;
-    label: string;
-};
-type StarRatingProps = {
+export type ManagedRatingProps<T> = {
+    name: Path<T>;
+    label?: string;
     minRating?: number;
-    color?: string;
-    emptyColor?: string;
-    maxStars?: number;
-    starSize?: number;
     enableHalfStar?: boolean;
-    enableSwiping?: boolean;
+    color?: string;
     style?: StyleProp<ViewStyle>;
-    starStyle?: StyleProp<ViewStyle>;
-    testID?: string;
+    starSize?: number;
 };
-type ManagedRatingProps<T extends object> = InnerManagedRatingProps<T> & StarRatingProps;
 
-export const ManagedRating = <T extends object>({ name, label, ...ratingProps }: ManagedRatingProps<T>) => {
+export const ManagedRating = <T extends Record<string, any>>({ 
+    name, 
+    label, 
+    minRating = 1, 
+    enableHalfStar = false, 
+    color = "#FFD700",
+    style,
+    starSize = 32
+}: ManagedRatingProps<T>) => {
+    const { field: { value, onChange }, fieldState: { error } } = useController<T>({
+        name,
+    });
+
     return (
-        <Controller
-            render={({ field, fieldState }) => (
-                <Col type="stretch">
-                    <Label variant="bold" mt={16}>
-                        {label}
-                    </Label>
-                    <StarRating style={field.disabled ? { pointerEvents: "none" } : undefined} rating={field.value} onChange={field.onChange} {...ratingProps} />
-                    {fieldState.error && (
-                        <Label type="minor" color="warning">
-                            {fieldState.error?.message}
-                        </Label>
-                    )}
-                </Col>
-            )}
-            name={name.toString()}
-        />
+        <View style={[styles.container, style]}>
+            {label && <Label type="caption" mb={8}>{label}</Label>}
+            <StarRating
+                rating={value ?? 0}
+                onChange={onChange}
+                minRating={minRating}
+                enableHalfStar={enableHalfStar}
+                starSize={starSize}
+                color={color}
+            />
+            {error && <Label type="caption" color="important" mt={4}>{error.message}</Label>}
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        width: "100%",
+        alignItems: "center",
+    },
+}); 

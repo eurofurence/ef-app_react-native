@@ -1,13 +1,10 @@
 import React, { FC, useCallback, useMemo } from "react";
 import { Linking, StyleSheet } from "react-native";
 import { match } from "ts-pattern";
-
-import moment from "moment-timezone";
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useNow } from "../../hooks/time/useNow";
-import { useAppSelector } from "../../store";
-import { dealersSelectors } from "../../store/eurofurence/selectors/records";
-import { LinkFragment, MapDetails, MapEntryDetails } from "../../store/eurofurence/types";
+import { format, setDay } from "date-fns";
+import { router } from "expo-router";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { LinkFragment, MapDetails, MapEntryDetails } from "@/store/eurofurence/types";
 import { DealerCard } from "../dealers/DealerCard";
 import { isPresent, joinOffDays } from "../dealers/utils";
 import { FaIcon } from "../generic/atoms/FaIcon";
@@ -21,22 +18,22 @@ type LinkItemProps = {
     link: LinkFragment;
 };
 
-// TODO: Fix?
 const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
-    const now = useNow();
-    const day1 = moment().day(1).format("dddd");
-    const day2 = moment().day(2).format("dddd");
-    const day3 = moment().day(3).format("dddd");
+    const now = new Date();
+    const day1 = format(setDay(now, 1), "EEEE");
+    const day2 = format(setDay(now, 2), "EEEE");
+    const day3 = format(setDay(now, 3), "EEEE");
 
-    const navigation = useAppNavigation("Areas");
-    const dealer = useAppSelector((state) => dealersSelectors.selectById(state, link.Target));
+    const { getCacheSync } = useDataCache();
+    const dealerCache = getCacheSync("dealers", link.Target);
+    const dealer = dealerCache?.data;
 
     const present = dealer ? isPresent(dealer, now) : false;
     const offDays = dealer ? joinOffDays(dealer, day1, day2, day3) : "";
 
-    const onPress = useCallback(() => navigation.navigate("Dealer", { id: link.Target }), [navigation, link]);
+    const onPress = useCallback(() => router.push(`/dealer/${link.Target}`), [link.Target]);
 
-    if (dealer === undefined) {
+    if (!dealerCache || !dealer) {
         return null;
     }
 
@@ -92,10 +89,11 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
 };
 
 const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
-    const navigation = useAppNavigation("Areas");
     const onPress = useCallback(() => {
-        if (map && entry) navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) });
-    }, [navigation, map, entry, link]);
+        if (map && entry) {
+            router.push(`/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`);
+        }
+    }, [map, entry, link]);
 
     return !map || !entry ? null : (
         <Button containerStyle={styles.linkButton} onPress={onPress}>
@@ -105,10 +103,11 @@ const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
 };
 
 const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
-    const navigation = useAppNavigation("Areas");
     const onPress = useCallback(() => {
-        if (map && entry) navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry?.Links.indexOf(link) });
-    }, [navigation, map, entry, link]);
+        if (map && entry) {
+            router.push(`/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`);
+        }
+    }, [map, entry, link]);
 
     return !map || !entry ? null : (
         <Button containerStyle={styles.linkButton} onPress={onPress}>

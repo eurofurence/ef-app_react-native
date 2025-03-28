@@ -65,8 +65,24 @@ export const catchEmUrl = conventionConfig.convention.catchEmUrl;
  */
 export const artistAlleyUrl = conventionConfig.convention.artistAlleyUrl;
 
+/**
+ * The cache version for this convention.
+ */
+export const eurofurenceCacheVersion = conventionConfig.convention.cacheVersion;
+
+/**
+ * Eurofurence Identity Provider Settings
+ */
 export const authIssuer = conventionConfig.auth.issuer;
 export const authRedirect = conventionConfig.auth.redirect;
 export const authClientId = conventionConfig.auth.clientId;
 export const authScopes = conventionConfig.auth.scopes;
 export const authSettingsUrl = conventionConfig.auth.settingsUrl;
+
+/**
+ * Debug settings
+ */
+export const syncDebug = conventionConfig.debug.showSync;
+export const cacheDebug = conventionConfig.debug.showCache;
+export const devMenu = conventionConfig.debug.devMenu;
+export const i18nDebug = conventionConfig.debug.i18nDebug;

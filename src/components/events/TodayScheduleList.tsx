@@ -1,31 +1,30 @@
-import { Moment } from "moment/moment";
 import { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
-
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useAppSelector } from "../../store";
-import { filterHappeningTodayEvents, selectFavoriteEvents } from "../../store/eurofurence/selectors/events";
+import { filterHappeningTodayEvents } from "../../store/eurofurence/selectors/events";
 import { Section } from "../generic/atoms/Section";
 import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
 import { EventCard, eventInstanceForAny } from "./EventCard";
+import React from "react";
+import { router } from "expo-router";
+import { useDataCache } from "../../context/DataCacheProvider";
 
 export type TodayScheduleListProps = {
-    now: Moment;
+    now: Date;
 };
+
 export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
     const { t } = useTranslation("Events");
-
-    const navigation = useAppNavigation("Areas");
-    const favorites = useAppSelector(selectFavoriteEvents);
+    const { getAllCacheSync } = useDataCache();
     const zone = useZoneAbbr();
-    const events = useMemo(
-        () =>
-            filterHappeningTodayEvents(favorites, now)
-                .filter((item) => !item.Hidden)
-                .map((details) => eventInstanceForAny(details, now, zone)),
-        [favorites, now, zone],
-    );
+
+    const events = useMemo(() => {
+        const allEvents = getAllCacheSync("events").map(item => item.data);
+        const favorites = allEvents.filter(event => event.Favorite && !event.Hidden);
+        
+        return filterHappeningTodayEvents(favorites, now)
+            .map((details) => eventInstanceForAny(details, now, zone));
+    }, [getAllCacheSync, now, zone]);
 
     if (events.length === 0) {
         return null;
@@ -41,8 +40,9 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
                         event={event}
                         type="time"
                         onPress={(event) =>
-                            navigation.navigate("Event", {
-                                id: event.Id,
+                            router.navigate({
+                                pathname: "/events/[eventId]",
+                                params: { eventId: event.Id },
                             })
                         }
                     />

@@ -1,56 +1,51 @@
 import React, { FC } from "react";
-
+import { StyleSheet, View } from "react-native";
 import { Label } from "../generic/atoms/Label";
-import { Col } from "../generic/containers/Col";
 import { EventDetailsInstance } from "./EventCard";
 
 export type EventCardTimeProps = {
-    type?: "duration" | "time";
+    type: "duration" | "time";
     event: EventDetailsInstance;
     done: boolean;
     zone: string;
 };
 
 export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done, zone }) => {
-    const textColor = done ? "important" : "white";
-    if (type === "duration") {
-        // Return simple label with duration text.
-        return (
-            <Col type="center">
-                <Label key="startLocal" type="caption" color={textColor}>
-                    {event.startLocal}
+    const { start, day, startLocal, dayLocal, runtime } = event;
+    const showLocal = zone !== "UTC" && start !== startLocal;
+
+    return (
+        <View style={styles.container}>
+            {type === "duration" ? (
+                <Label type="h3" color={done ? "important" : "white"}>
+                    {runtime}
                 </Label>
-                {event.start === event.startLocal ? null : (
-                    <Label key="zoneInfo" type="minor" color={textColor}>
-                        {zone}
-                        {event.day === event.dayLocal ? null : (
-                            <Label key="zoneDayInfo" type="minor" color={textColor}>
-                                , {event.dayLocal}
-                            </Label>
-                        )}
+            ) : (
+                <>
+                    <Label type="h3" color={done ? "important" : "white"}>
+                        {start}
                     </Label>
-                )}
-                <Label color={textColor}>{event.runtime}</Label>
-            </Col>
-        );
-    } else {
-        return (
-            <Col type="center">
-                <Label key="startLocal" type="caption" color={textColor}>
-                    {event.startLocal}
-                </Label>
-                {event.start === event.startLocal ? null : (
-                    <Label key="zoneInfo" type="minor" color={textColor}>
-                        {zone}
-                        {event.day === event.dayLocal ? null : (
-                            <Label key="zoneDayInfo" type="minor" color={textColor}>
-                                , {event.dayLocal}
-                            </Label>
-                        )}
+                    <Label type="cap" color={done ? "important" : "white"}>
+                        {day}
                     </Label>
-                )}
-                <Label color={textColor}>{event.day}</Label>
-            </Col>
-        );
-    }
+                    {!showLocal ? null : (
+                        <>
+                            <Label type="h3" color={done ? "important" : "white"}>
+                                {startLocal}
+                            </Label>
+                            <Label type="cap" color={done ? "important" : "white"}>
+                                {dayLocal}
+                            </Label>
+                        </>
+                    )}
+                </>
+            )}
+        </View>
+    );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+    },
+});

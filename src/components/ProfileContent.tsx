@@ -2,12 +2,10 @@ import { captureException } from "@sentry/react-native";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, StyleSheet, View } from "react-native";
-
-import { authSettingsUrl, conName } from "../configuration";
-import { Claims, useAuthContext } from "../context/AuthContext";
-import { useThemeBackground } from "../hooks/themes/useThemeHooks";
-import { UserRecord } from "../store/eurofurence/types";
-import { assetSource } from "../util/assets";
+import { authSettingsUrl, conName } from "@/configuration";
+import { Claims, useAuthContext } from "@/context/AuthContext";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { UserRecord } from "@/store/eurofurence/types";
 import { Image } from "./generic/atoms/Image";
 import { Label } from "./generic/atoms/Label";
 import { Section } from "./generic/atoms/Section";
@@ -88,9 +86,9 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
             <View style={styles.avatarContainer}>
                 <Image
                     style={[avatarBackground, styles.avatarCircle]}
-                    source={claims.avatar ?? assetSource("ych")}
+                    source={claims.avatar ?? require("@/assets/static/ych.png")}
                     contentFit="contain"
-                    placeholder="ych"
+                    placeholder={require("@/assets/static/ych.png")}
                     transition={60}
                     cachePolicy="memory"
                     priority="high"
@@ -169,4 +167,4 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
     },
-});
+}); 

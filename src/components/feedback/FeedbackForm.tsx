@@ -1,32 +1,33 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback, useEffect } from "react";
+import { router, useLocalSearchParams } from "expo-router";
+import { useCallback } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { useAuthContext } from "../../context/AuthContext";
-import { useAppNavigation, useAppRoute } from "../../hooks/nav/useAppNavigation";
-import { useTheme } from "../../hooks/themes/useThemeHooks";
-import { useAppSelector } from "../../store";
-import { eventsSelector } from "../../store/eurofurence/selectors/records";
-import { useSubmitEventFeedbackMutation } from "../../store/eurofurence/service";
-import { Label } from "../generic/atoms/Label";
-import { Button } from "../generic/containers/Button";
-import { ManagedRating } from "../generic/forms/ManagedRating";
-import { ManagedTextInput } from "../generic/forms/ManagedTextInput";
+import { Label } from "@/components/generic/atoms/Label";
+import { Button } from "@/components/generic/containers/Button";
+import { ManagedRating } from "@/components/generic/forms/ManagedRating";
+import { ManagedTextInput } from "@/components/generic/forms/ManagedTextInput";
+import { useAuthContext } from "@/context/AuthContext";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { useTheme } from "@/hooks/themes/useThemeHooks";
+import { useSubmitEventFeedback } from "@/services/events";
 import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
 
 export const FeedbackForm = () => {
     const theme = useTheme();
-    const navigation = useAppNavigation("EventFeedback");
+    const { id } = useLocalSearchParams<{ id: string }>();
+    const { getCacheSync } = useDataCache();
 
-    const [submitFeedback, feedbackResult] = useSubmitEventFeedbackMutation();
+    const { execute: submitFeedback, isLoading: isSubmitting } = useSubmitEventFeedback();
     const { t } = useTranslation("EventFeedback");
     const form = useForm<FeedbackSchema>({
         resolver: zodResolver(feedbackSchema),
         defaultValues: {
             rating: undefined,
             message: undefined,
+            eventId: id,
         },
     });
 
@@ -36,24 +37,22 @@ export const FeedbackForm = () => {
     const disabled = !loggedIn || !attending;
     const disabledReason = (!loggedIn && t("disabled_not_logged_in")) || (!attending && t("disabled_not_attending"));
 
-    const { params } = useAppRoute("EventFeedback");
-    const event = useAppSelector((state) => eventsSelector.selectById(state, params.id));
+    const event = getCacheSync("events", id)?.data;
 
     const submit = useCallback(
-        (data: FeedbackSchema) => {
-            submitFeedback({
-                ...data,
-                eventId: event!.Id,
-            });
+        async (data: FeedbackSchema) => {
+            try {
+                await submitFeedback({
+                    ...data,
+                    eventId: event!.Id,
+                });
+                router.back();
+            } catch (error) {
+                console.error("Failed to submit feedback:", error);
+            }
         },
         [event, submitFeedback],
     );
-
-    useEffect(() => {
-        if (feedbackResult.isSuccess) {
-            navigation.goBack();
-        }
-    }, [feedbackResult, navigation]);
 
     return (
         <FormProvider {...form}>
@@ -63,7 +62,7 @@ export const FeedbackForm = () => {
 
             <ManagedTextInput<FeedbackSchema> name="message" label={t("message_title")} placeholder={t("message_placeholder")} numberOfLines={8} multiline />
 
-            <Button onPress={form.handleSubmit(submit)} disabled={feedbackResult.isLoading || disabled}>
+            <Button onPress={form.handleSubmit(submit)} disabled={isSubmitting || disabled}>
                 {t("submit")}
             </Button>
 
@@ -73,12 +72,7 @@ export const FeedbackForm = () => {
                 </Label>
             )}
 
-            {feedbackResult.isError && (
-                <Label style={styles.error} mt={16}>
-                    {t("submit_failed")}
-                </Label>
-            )}
-            {feedbackResult.isLoading && <Label mt={16}>{t("submit_in_progress")}</Label>}
+            {isSubmitting && <Label mt={16}>{t("submit_in_progress")}</Label>}
         </FormProvider>
     );
 };

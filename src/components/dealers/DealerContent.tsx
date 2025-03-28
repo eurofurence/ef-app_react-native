@@ -1,19 +1,17 @@
 import * as Clipboard from "expo-clipboard";
 import * as Linking from "expo-linking";
 import { TFunction } from "i18next";
-import moment from "moment-timezone";
-import React, { FC, useCallback, useMemo } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { useToast } from "../../context/ToastContext";
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useNow } from "../../hooks/time/useNow";
-import { shareDealer } from "../../routes/dealers/Dealers.common";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { toggleDealerFavorite } from "../../store/auxiliary/slice";
-import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";
-import { DealerDetails } from "../../store/eurofurence/types";
+import { useToast } from "@/context/ToastContext";
+import { useNow } from "@/hooks/time/useNow";
+import { shareDealer } from "@/components/dealers/Dealers.common";
+import { format } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { DealerDetails, MapDetails } from "@/store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Banner } from "../generic/atoms/Banner";
 import { FaIcon } from "../generic/atoms/FaIcon";
@@ -24,9 +22,11 @@ import { Badge } from "../generic/containers/Badge";
 import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { LinkItem } from "../maps/LinkItem";
-import { conTimeZone } from "../../configuration";
+import { conTimeZone } from "@/configuration";
 import { platformShareIcon } from "../generic/atoms/Icon";
 import { sourceFromImage } from "../generic/atoms/Image.common";
+import { router } from "expo-router";
+import { getValidLinksByTarget } from "@/store/eurofurence/selectors/maps";
 
 const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
     // Nothing to display for no categories.
@@ -86,32 +86,40 @@ export type DealerContentProps = {
 };
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, updated, shareButton }) => {
-    const navigation = useAppNavigation("Areas");
     const { t } = useTranslation("Dealer");
     const now = useNow();
     const toast = useToast();
 
-    const dispatch = useAppDispatch();
-    const mapLink = useAppSelector((state) => selectValidLinksByTarget(state, dealer.Id));
+    const { getAllCacheSync, saveCache } = useDataCache();
+    const [isFavorite, setIsFavorite] = useState(dealer.Favorite);
 
-    const toggleFavorite = useCallback(() => dispatch(toggleDealerFavorite(dealer.Id)), [dispatch, dealer.Id]);
+    const maps = getAllCacheSync("maps");
+    // TODO: Fix this.
+    // @ts-expect-error: See later.
+    const mapLink = getValidLinksByTarget(maps, dealer.Id);
 
     const days = useMemo(
         () =>
-            dealer.AttendanceDays
-                // Convert to long representation.
-                .map((day) => moment.tz(day.Date, conTimeZone).format("dddd"))
-                // Join comma separated.
-                .join(", "),
+            dealer.AttendanceDays.map((day) => {
+                const zonedDate = toZonedTime(new Date(day.Date), conTimeZone);
+                return format(zonedDate, "EEEE");
+            }).join(", "),
         [dealer],
     );
+
+    const toggleFavorite = useCallback(() => {
+        // Toggle the favorite state.
+        const newFavorite = !isFavorite;
+        setIsFavorite(newFavorite);
+        saveCache("dealers", dealer.Id, { ...dealer, Favorite: newFavorite });
+    }, [dealer, isFavorite, saveCache]);
 
     // Check if not-attending warning should be marked.
     const markNotAttending = useMemo(() => {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
-        if (now.day() === 4 && !dealer.AttendsOnThursday) return true;
-        else if (now.day() === 5 && !dealer.AttendsOnFriday) return true;
-        else if (now.day() === 6 && !dealer.AttendsOnSaturday) return true;
+        if (now.getDay() === 4 && !dealer.AttendsOnThursday) return true;
+        else if (now.getDay() === 5 && !dealer.AttendsOnFriday) return true;
+        else if (now.getDay() === 6 && !dealer.AttendsOnSaturday) return true;
         return false;
     }, [now, dealer]);
 
@@ -139,12 +147,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
             <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
-            <Button containerStyle={styles.marginBefore} outline={dealer.Favorite} icon={dealer.Favorite ? "heart-minus" : "heart-plus-outline"} onPress={toggleFavorite}>
-                {dealer.Favorite ? t("remove_favorite") : t("add_favorite")}
+            <Button containerStyle={styles.marginBefore} outline={isFavorite} icon={isFavorite ? "heart-minus" : "heart-plus-outline"} onPress={toggleFavorite}>
+                {isFavorite ? t("remove_favorite") : t("add_favorite")}
             </Button>
 
             {!shareButton ? null : (
-                <Button containerStyle={styles.marginBefore} icon={platformShareIcon} onPress={() => shareDealer(dealer)}>
+                <Button containerStyle={styles.marginBefore} icon="share" onPress={() => shareDealer(dealer)}>
                     {t("share")}
                 </Button>
             )}
@@ -162,7 +170,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 {days}
             </Label>
 
-            {!dealer.IsAfterDark ? null : (
+            {dealer.IsAfterDark && (
                 <>
                     <Label type="caption">{t("after_dark")}</Label>
                     <Label type="h3" mb={20}>
@@ -223,7 +231,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                     key={i}
                     image={map.Image}
                     target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
-                    onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) })}
+                    onPress={() =>
+                        router.navigate({
+                            pathname: "/maps/[mapId]/[entryId]/[linkId]",
+                            params: { mapId: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) },
+                        })
+                    }
                 />
             ))}
 

@@ -1,4 +1,3 @@
-import moment, { Moment } from "moment-timezone";
 import React, { FC, useCallback } from "react";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -11,70 +10,36 @@ import { ImageBackground } from "../generic/atoms/ImageBackground";
 import { Label } from "../generic/atoms/Label";
 import { Progress } from "../generic/atoms/Progress";
 import { Row } from "../generic/containers/Row";
-import { conTimeZone } from "../../configuration";
 import { sourceFromImage } from "../generic/atoms/Image.common";
 import { EventCardTime } from "./EventCardTime";
+import { calculateEventTiming } from "../../util/eventTiming";
 
 const glyphIconSize = 90;
 const badgeIconSize = 20;
 
-const eventTimingInfo = (details: EventDetails, now: Moment | "done") => {
-    // Parse.
-    const eventStart = moment.utc(details.StartDateTimeUtc);
-    const eventEnd = moment.utc(details.EndDateTimeUtc);
-
-    // Generate progress. If no time is given
-    const progress = now !== "done" ? now.diff(eventStart) / eventEnd.diff(eventStart) : 1.1;
-
-    // Convert to con time zone.
-    eventStart.tz(conTimeZone);
-
-    // Convert start and day.
-    const start = eventStart.format("LT");
-    const day = eventStart.format("ddd");
-
-    // Convert to local, start and day.
-    eventStart.local();
-    const startLocal = eventStart.format("LT");
-    const dayLocal = eventStart.format("ddd");
-
-    // Duration conversion.
-    const duration = moment.duration(details.Duration);
-    const runtime = duration.asMinutes() > 59 ? duration.asHours() + "h" : duration.asMinutes() + "m";
-
-    return {
-        progress,
-        start,
-        day,
-        startLocal,
-        dayLocal,
-        runtime,
-    };
-};
-
 export type EventDetailsInstance = {
     details: EventDetails;
     zone: string;
-} & ReturnType<typeof eventTimingInfo>;
+} & ReturnType<typeof calculateEventTiming>;
 
 /**
  * Creates the event instance props for an upcoming or running event.
  * @param details The details to use.
- * @param now The moment to check against.
+ * @param now The current time to check against.
  * @param zone Zone abbreviation.
  */
-export function eventInstanceForAny(details: EventDetails, now: Moment, zone: string): EventDetailsInstance {
-    return { details, zone, ...eventTimingInfo(details, now) };
+export function eventInstanceForAny(details: EventDetails, now: Date, zone: string): EventDetailsInstance {
+    return { details, zone, ...calculateEventTiming(details, now) };
 }
 
 /**
  * Creates the event instance props for an upcoming or running event.
  * @param details The details to use.
- * @param now The moment to check against.
+ * @param now The current time to check against.
  * @param zone Zone abbreviation.
  */
-export function eventInstanceForNotPassed(details: EventDetails, now: Moment, zone: string): EventDetailsInstance {
-    return { details, zone, ...eventTimingInfo(details, now) };
+export function eventInstanceForNotPassed(details: EventDetails, now: Date, zone: string): EventDetailsInstance {
+    return { details, zone, ...calculateEventTiming(details, now) };
 }
 
 /**
@@ -83,7 +48,7 @@ export function eventInstanceForNotPassed(details: EventDetails, now: Moment, zo
  * @param zone Zone abbreviation.
  */
 export function eventInstanceForPassed(details: EventDetails, zone: string): EventDetailsInstance {
-    return { details, zone, ...eventTimingInfo(details, "done") };
+    return { details, zone, ...calculateEventTiming(details, "done") };
 }
 
 export type EventCardProps = {
@@ -265,7 +230,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         alignContent: "flex-start",
         alignItems: "stretch",
-
         height: "100%",
     },
     tagAreaInner: {

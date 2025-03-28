@@ -1,11 +1,9 @@
 import { TFunction } from "i18next";
-import moment from "moment/moment";
 import { FC } from "react";
-
 import { PartOfDay } from "../../store/eurofurence/types";
 import { IconNames } from "../generic/atoms/Icon";
 import { Section, SectionProps } from "../generic/atoms/Section";
-import { conTimeZone } from "../../configuration";
+import { formatWeekdayInConventionTimezone } from "../../util/eventTiming";
 
 export type EventSectionProps = SectionProps;
 
@@ -57,7 +55,7 @@ export function eventSectionForPassed(t: TFunction): EventSectionProps {
  */
 export function eventSectionForDate(t: TFunction, date: string): EventSectionProps {
     return {
-        title: moment.tz(date, conTimeZone).format("dddd"),
+        title: formatWeekdayInConventionTimezone(date),
         icon: "calendar-outline" as IconNames,
     };
 }

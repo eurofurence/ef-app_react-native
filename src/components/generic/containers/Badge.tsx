@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { StyleSheet, TextProps, View, ViewProps } from "react-native";
 
-import { ThemeColor } from "../../../context/Theme";
-import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { ThemeColor } from "@/context/Theme";
+import { useThemeBackground, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label, LabelProps } from "../atoms/Label";
 import { Row } from "./Row";

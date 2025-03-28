@@ -2,11 +2,11 @@ import FontAwesomeIcon from "@expo/vector-icons/FontAwesome5";
 import React, { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { ThemeColor } from "../../../context/Theme";
-import { useThemeBackground, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
 import { Col } from "../containers/Col";
 import { Row } from "../containers/Row";
 import { Label, LabelProps } from "./Label";
+import { ThemeColor } from "@/context/Theme";
+import { useThemeBackground, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 
 const iconSize = 32; // Matches H1 font size.
 

@@ -3,7 +3,7 @@ import { FC, ReactElement, ReactNode } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label, LabelProps } from "../atoms/Label";
 

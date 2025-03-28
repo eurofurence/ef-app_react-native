@@ -2,28 +2,18 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useCallback, useMemo } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
-import { useThemeName } from "../../hooks/themes/useThemeHooks";
-import { EventsByDayProps } from "../../routes/events/EventsByDay";
-import { EventsByRoomProps } from "../../routes/events/EventsByRoom";
-import { EventsByTrackProps } from "../../routes/events/EventsByTrack";
-import { EventsSearchProps } from "../../routes/events/EventsSearch";
-import { PersonalScheduleProps } from "../../routes/events/PersonalSchedule";
-import { EventDetails } from "../../store/eurofurence/types";
-import { findIndices } from "../../util/findIndices";
-import { useSynchronizer } from "../sync/SynchronizationProvider";
+import { useThemeName } from "@/hooks/themes/useThemeHooks";
+import { EventDetails } from "@/store/eurofurence/types";
+import { findIndices } from "@/util/findIndices";
 import { EventSection, EventSectionProps } from "./EventSection";
 import { EventCard, EventDetailsInstance } from "./EventCard";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { router } from "expo-router";
 
 /**
  * The properties to the component.
  */
 export type EventsSectionedListProps = {
-    navigation:
-        | EventsSearchProps["navigation"]
-        | EventsByDayProps["navigation"]
-        | EventsByRoomProps["navigation"]
-        | EventsByTrackProps["navigation"]
-        | PersonalScheduleProps["navigation"];
     leader?: ReactElement;
     eventsGroups: (EventSectionProps | EventDetailsInstance)[];
     select?: (event: EventDetails) => void;
@@ -34,28 +24,16 @@ export type EventsSectionedListProps = {
     padEnd?: boolean;
 };
 
-export const EventsSectionedList: FC<EventsSectionedListProps> = ({
-    navigation,
-    leader,
-    eventsGroups,
-    select,
-    empty,
-    trailer,
-    cardType = "duration",
-    sticky = true,
-    padEnd = true,
-}) => {
+export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, eventsGroups, select, empty, trailer, cardType = "duration", sticky = true, padEnd = true }) => {
     const theme = useThemeName();
-    const synchronizer = useSynchronizer();
+    const { isSynchronizing, synchronizeUi } = useDataCache();
     const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !("details" in item)) : undefined), [eventsGroups, sticky]);
-    const onPress = useCallback(
-        (event: EventDetails) => {
-            navigation.navigate("Event", {
-                id: event.Id,
-            });
-        },
-        [navigation],
-    );
+    const onPress = useCallback((event: EventDetails) => {
+        router.navigate({
+            pathname: "/events/[eventId]",
+            params: { eventId: event.Id },
+        });
+    }, []);
     const onLongPress = useCallback(
         (event: EventDetails) => {
             Vibration.vibrate(50);
@@ -65,8 +43,8 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
     );
     return (
         <FlashList
-            refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronizeUi}
+            refreshing={isSynchronizing}
+            onRefresh={synchronizeUi}
             contentContainerStyle={padEnd ? styles.container : undefined}
             scrollEnabled={true}
             stickyHeaderIndices={stickyIndices}

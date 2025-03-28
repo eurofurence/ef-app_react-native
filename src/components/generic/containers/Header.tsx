@@ -1,13 +1,13 @@
-import { useNavigation } from "@react-navigation/core";
 import React, { FC, PropsWithChildren } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native-gesture-handler";
 
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from "../../../hooks/themes/useThemeHooks";
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 import { Row } from "./Row";
+import { router } from "expo-router";
 
 const iconSize = 26;
 const iconPad = 6;
@@ -49,11 +49,9 @@ export const Header: FC<HeaderProps> = (props) => {
     const colorValue = useThemeColorValue("text");
     const styleBackground = useThemeBackground("background");
     const styleBorder = useThemeBorder("darken");
-
-    const navigation = useNavigation();
     return (
         <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-            <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={() => navigation.goBack()}>
+            <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={() => router.back()}>
                 <Icon name="chevron-left" size={iconSize} color={colorValue} />
             </TouchableOpacity>
 
