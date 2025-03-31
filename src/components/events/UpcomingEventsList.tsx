@@ -1,14 +1,14 @@
-import { FC, useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
+import { router } from "expo-router";
+import { Section } from "../generic/atoms/Section";
+import { EventCard, eventInstanceForAny } from "./EventCard";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
 import { filterUpcomingEvents } from "@/store/eurofurence/selectors/events";
-import { router } from "expo-router";
-import React from "react";
-import { Section } from "../generic/atoms/Section";
-import { EventCard, eventInstanceForAny } from "./EventCard";
+
 
 export type UpcomingEventsListProps = {
     now: Date;

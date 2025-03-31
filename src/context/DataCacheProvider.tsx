@@ -2,6 +2,8 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { Platform, Vibration } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isAfter, parseISO } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
+import { chain } from "lodash";
 import { apiBase, cacheDebug, conId, conTimeZone, eurofurenceCacheVersion, syncDebug } from "@/configuration";
 import { cancelEventReminder, rescheduleEventReminder } from "@/util/eventReminders";
 import {
@@ -41,8 +43,6 @@ import {
     internalTagsToIcon
 } from "@/store/eurofurence/details";
 import { ThemeName } from "@/context/Theme";
-import { toZonedTime } from "date-fns-tz";
-import { chain } from "lodash";
 
 // Define store names as const to enable literal type inference
 export const STORE_NAMES = {
@@ -90,12 +90,12 @@ export interface StoreTypes {
     [STORE_NAMES.FUSE_SEARCH]: any;
     [STORE_NAMES.EVENTS]: EventDetails;
     [STORE_NAMES.EVENT_DAYS]: EventDayDetails;
-    [STORE_NAMES.EVENT_ROOMS]: EventRoomDetails; // Replace with proper type
-    [STORE_NAMES.EVENT_TRACKS]: EventTrackDetails; // Replace with proper type
+    [STORE_NAMES.EVENT_ROOMS]: EventRoomDetails;
+    [STORE_NAMES.EVENT_TRACKS]: EventTrackDetails;
     [STORE_NAMES.KNOWLEDGE_GROUPS]: KnowledgeGroupDetails;
     [STORE_NAMES.KNOWLEDGE_ENTRIES]: KnowledgeEntryDetails;
     [STORE_NAMES.MAPS]: MapDetails;
-    [STORE_NAMES.TIMETRAVEL]: number;
+    [STORE_NAMES.TIMETRAVEL]: number | boolean;
     [STORE_NAMES.WARNINGS]: Record<string, boolean>;
     [STORE_NAMES.COMMUNICATIONS]: CommunicationRecord;
 }
@@ -109,8 +109,8 @@ export interface StoreKeys {
     [STORE_NAMES.FUSE_SEARCH]: any;
     [STORE_NAMES.EVENTS]: RecordId;
     [STORE_NAMES.EVENT_DAYS]: RecordId;
-    [STORE_NAMES.EVENT_ROOMS]: RecordId; // Replace with proper type
-    [STORE_NAMES.EVENT_TRACKS]: RecordId; // Replace with proper type
+    [STORE_NAMES.EVENT_ROOMS]: RecordId;
+    [STORE_NAMES.EVENT_TRACKS]: RecordId;
     [STORE_NAMES.KNOWLEDGE_GROUPS]: RecordId;
     [STORE_NAMES.KNOWLEDGE_ENTRIES]: RecordId;
     [STORE_NAMES.MAPS]: RecordId;

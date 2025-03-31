@@ -1,27 +1,33 @@
-import React, { useMemo } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { format, addWeeks, subWeeks } from 'date-fns';
-import { Label } from '@/components/generic/atoms/Label';
-import { Section } from '@/components/generic/atoms/Section';
-import { Button } from '@/components/generic/containers/Button';
-import { Col } from '@/components/generic/containers/Col';
-import { Row } from '@/components/generic/containers/Row';
-import { useDataCache } from '@/context/DataCacheProvider';
-import { useNow } from '@/hooks/time/useNow';
-import { conName } from '@/configuration';
-import { EventDayDetails } from '@/store/eurofurence/types';
+import React, { useMemo } from "react";
+import { View, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
+import { format, addWeeks, subWeeks } from "date-fns";
+import { Label } from "@/components/generic/atoms/Label";
+import { Section } from "@/components/generic/atoms/Section";
+import { Button } from "@/components/generic/containers/Button";
+import { Col } from "@/components/generic/containers/Col";
+import { Row } from "@/components/generic/containers/Row";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { useNow } from "@/hooks/time/useNow";
+import { conName } from "@/configuration";
+import { EventDayDetails } from "@/store/eurofurence/types";
 
 const ONE_HOUR = 60 * 60 * 1000;
 const ONE_MINUTE = 60 * 1000;
 
 export function TimeTravel() {
     const { t } = useTranslation("TimeTravel");
-    const { getCacheSync, saveCache } = useDataCache();
+    const { getAllCacheSync, getCacheSync, saveCache } = useDataCache();
     const now = useNow();
-    const timeOffset = (getCacheSync("timetravel", "offset")?.data as unknown as number) ?? 0;
-    const enabled = (getCacheSync("timetravel", "enabled")?.data as unknown as boolean) ?? false;
-    const eventDays = (getCacheSync("eventDays", "all")?.data ?? []) as EventDayDetails[];
+
+    const [timeOffset, enabled, eventDays] = useMemo(() => {
+        return [
+            // TODO: Nested key model is not very good right now.
+            Number(getCacheSync("timetravel", "offset")?.data ?? 0),
+            Boolean(getCacheSync("timetravel", "enabled")?.data ?? false),
+            (getAllCacheSync("eventDays") ?? []).map(item => item.data)
+        ];
+    }, [getCacheSync, getAllCacheSync]);
 
     // Calculate week before and after
     const weekBefore = useMemo(() => {
@@ -149,9 +155,9 @@ const styles = StyleSheet.create({
     button: {
         flex: 1,
         margin: 5,
-        flexGrow: 1,
+        flexGrow: 1
     },
     row: {
-        marginTop: 15,
-    },
+        marginTop: 15
+    }
 });

@@ -5,6 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
+import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
 import { Label } from "@/components/generic/atoms/Label";
 import { Button } from "@/components/generic/containers/Button";
 import { ManagedRating } from "@/components/generic/forms/ManagedRating";
@@ -13,7 +14,6 @@ import { useAuthContext } from "@/context/AuthContext";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { useTheme } from "@/hooks/themes/useThemeHooks";
 import { useSubmitEventFeedback } from "@/services/events";
-import { feedbackSchema, FeedbackSchema } from "./FeedbackForm.schema";
 
 export const FeedbackForm = () => {
     const theme = useTheme();

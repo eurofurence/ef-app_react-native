@@ -2,12 +2,12 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
+import { router } from "expo-router";
+import { DealerSection, DealerSectionProps } from "./DealerSection";
+import { DealerCard, DealerDetailsInstance } from "./DealerCard";
 import { useThemeName } from "@/hooks/themes/useThemeHooks";
 import { findIndices } from "@/util/findIndices";
 import { DealerDetails } from "@/store/eurofurence/types";
-import { DealerSection, DealerSectionProps } from "./DealerSection";
-import { DealerCard, DealerDetailsInstance } from "./DealerCard";
-import { router } from "expo-router";
 import { useDataCache } from "@/context/DataCacheProvider";
 
 /**

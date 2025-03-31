@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
+import { router } from "expo-router";
+import { SettingContainer } from "./SettingContainer";
 import { Section } from "@/components/generic/atoms/Section";
 import { Button } from "@/components/generic/containers/Button";
-import { SettingContainer } from "./SettingContainer";
 import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
-import { router } from "expo-router";
 
 export const HiddenEvents = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "hidden_events" });

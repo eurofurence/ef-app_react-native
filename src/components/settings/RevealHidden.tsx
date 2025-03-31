@@ -18,20 +18,17 @@ export const RevealHidden = () => {
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
     const zone = useZoneAbbr();
-    const { getCacheSync, saveCache } = useDataCache();
+    const { getAllCacheSync, getCacheSync, saveCache } = useDataCache();
 
     const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
-
-    const allEventsCache = getCacheSync("events", "events");
-    const allEvents = (allEventsCache?.data ?? []) as EventDetails[];
-
     const hidden = useMemo(
         () =>
-            chain(allEvents)
+            chain(getAllCacheSync("events") ?? [])
+                .map(item => item.data)
                 .filter((item: EventDetails) => Boolean(settings.hiddenEvents?.includes(item.Id)))
                 .map((details) => eventInstanceForAny(details, now, zone))
                 .value(),
-        [allEvents, settings.hiddenEvents, now, zone]
+        [getAllCacheSync, settings.hiddenEvents, now, zone]
     );
 
     const unhideEvent = (eventId: string) => {

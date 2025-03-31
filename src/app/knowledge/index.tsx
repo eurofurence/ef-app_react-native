@@ -1,13 +1,13 @@
-import { KbSectionedList } from "@/components/kb/KbSectionedList";
-import { Search } from "@/components/generic/atoms/Search";
-import { useDataCache } from "@/context/DataCacheProvider";
 import { useState, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
 import { chain } from "lodash";
 import Fuse from "fuse.js";
+import { useTranslation } from "react-i18next";
+import { KbSectionedList } from "@/components/kb/KbSectionedList";
+import { Search } from "@/components/generic/atoms/Search";
+import { useDataCache } from "@/context/DataCacheProvider";
 import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { Header } from "@/components/generic/containers/Header";
-import { useTranslation } from "react-i18next";
 
 export default function Knowledge() {
     const { t } = useTranslation("KnowledgeGroups");

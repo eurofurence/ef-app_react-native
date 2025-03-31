@@ -5,7 +5,6 @@ import { noop, partial } from "lodash";
 import { initReactI18next } from "react-i18next";
 import { format, Locale } from "date-fns";
 import { da, de, enGB, it, nl, pl } from "date-fns/locale";
-import { i18nDebug } from "@/configuration";
 
 // Polyfill for Plural Rules
 import "intl-pluralrules";
@@ -17,6 +16,7 @@ import enTranslations from "./translations.en.json";
 import itTranslations from "./translations.it.json";
 import nlTranslations from "./translations.nl.json";
 import plTranslations from "./translations.pl.json";
+import { i18nDebug } from "@/configuration";
 
 /**
  * List of supported locales.

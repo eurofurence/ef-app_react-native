@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Fuse, { FuseOptionKey, IFuseOptions } from "fuse.js";
 import { flatten } from "lodash";
-import { useDataCache } from "@/context/DataCacheProvider";
 import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails } from "../types";
+import { useDataCache } from "@/context/DataCacheProvider";
 
 // ----- Search Options -----
 const searchOptions: IFuseOptions<any> = {

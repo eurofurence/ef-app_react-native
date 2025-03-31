@@ -5,13 +5,9 @@ import React, { FC, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
-import { useToast } from "@/context/ToastContext";
-import { useNow } from "@/hooks/time/useNow";
-import { shareDealer } from "@/components/dealers/Dealers.common";
 import { format } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
-import { useDataCache } from "@/context/DataCacheProvider";
-import { DealerDetails } from "@/store/eurofurence/types";
+import { router } from "expo-router";
 import { appStyles } from "../AppStyles";
 import { Banner } from "../generic/atoms/Banner";
 import { FaIcon } from "../generic/atoms/FaIcon";
@@ -22,9 +18,13 @@ import { Badge } from "../generic/containers/Badge";
 import { Button } from "../generic/containers/Button";
 import { ImageExButton } from "../generic/containers/ImageButton";
 import { LinkItem } from "../maps/LinkItem";
-import { conTimeZone } from "@/configuration";
 import { sourceFromImage } from "../generic/atoms/Image.common";
-import { router } from "expo-router";
+import { conTimeZone } from "@/configuration";
+import { DealerDetails } from "@/store/eurofurence/types";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { shareDealer } from "@/components/dealers/Dealers.common";
+import { useNow } from "@/hooks/time/useNow";
+import { useToast } from "@/context/ToastContext";
 import { getValidLinksByTarget } from "@/store/eurofurence/selectors/maps";
 
 const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {

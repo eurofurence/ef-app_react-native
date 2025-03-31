@@ -1,11 +1,11 @@
 ﻿import * as React from "react";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
 import { Label } from "@/components/generic/atoms/Label";
 import { useFavoritesState } from "@/hooks/favorites/useFavoritesState";
 import { useDealerLocationGroups } from "@/components/dealers/Dealers.common";
 import { useNow } from "@/hooks/time/useNow";
 import { DealersSectionedList } from "@/components/dealers/DealersSectionedList";
-import { useMemo } from "react";
 
 export default function PersonalScreen() {
   // General state.

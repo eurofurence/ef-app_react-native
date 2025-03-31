@@ -2,10 +2,10 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useCallback } from "react";
 import { StyleSheet } from "react-native";
 
+import { router } from "expo-router";
+import { DealerCard, DealerDetailsInstance } from "./DealerCard";
 import { useThemeName } from "@/hooks/themes/useThemeHooks";
 import { DealerDetails } from "@/store/eurofurence/types";
-import { DealerCard, DealerDetailsInstance } from "./DealerCard";
-import { router } from "expo-router";
 import { useDataCache } from "@/context/DataCacheProvider";
 
 /**

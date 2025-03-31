@@ -1,8 +1,3 @@
-import { DrawerProps, useDrawerScreensData } from "@/components/data/DrawerScreensData";
-import { DataCacheProvider } from "@/context/DataCacheProvider";
-import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager";
-import { useColorScheme } from "@/hooks/themes/useColorScheme";
-import { useTheme, useThemeMemo, useThemeName } from "@/hooks/themes/useThemeHooks";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
@@ -12,6 +7,11 @@ import { StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { DrawerProps, useDrawerScreensData } from "@/components/data/DrawerScreensData";
+import { DataCacheProvider } from "@/context/DataCacheProvider";
+import { useTheme, useThemeMemo, useThemeName } from "@/hooks/themes/useThemeHooks";
+import { useColorScheme } from "@/hooks/themes/useColorScheme";
+import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager";
 // Import i18n configuration
 import "@/i18n";
 // Import global tailwind css

@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
+import { SettingContainer } from "./SettingContainer";
 import { Section } from "@/components/generic/atoms/Section";
 import { Button } from "@/components/generic/containers/Button";
-import { SettingContainer } from "./SettingContainer";
 import { useWarningState } from "@/hooks/warnings/useWarningState";
 
 export const Warnings = () => {

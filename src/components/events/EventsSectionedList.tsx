@@ -2,13 +2,13 @@ import { FlashList } from "@shopify/flash-list";
 import { FC, ReactElement, useCallback, useMemo } from "react";
 import { StyleSheet, Vibration } from "react-native";
 
+import { router } from "expo-router";
+import { EventSection, EventSectionProps } from "./EventSection";
+import { EventCard, EventDetailsInstance } from "./EventCard";
 import { useThemeName } from "@/hooks/themes/useThemeHooks";
 import { EventDetails } from "@/store/eurofurence/types";
 import { findIndices } from "@/util/findIndices";
-import { EventSection, EventSectionProps } from "./EventSection";
-import { EventCard, EventDetailsInstance } from "./EventCard";
 import { useDataCache } from "@/context/DataCacheProvider";
-import { router } from "expo-router";
 
 /**
  * The properties to the component.

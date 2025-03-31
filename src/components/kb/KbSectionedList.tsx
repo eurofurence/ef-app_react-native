@@ -2,12 +2,12 @@ import { FlashList } from "@shopify/flash-list";
 import React, { FC, ReactElement, useMemo } from "react";
 import { StyleSheet } from "react-native";
 
+import { router } from "expo-router";
+import { KbSection } from "./KbSection";
+import { KbEntryCard } from "./KbEntryCard";
 import { useThemeBackground, useThemeName } from "@/hooks/themes/useThemeHooks";
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from "@/store/eurofurence/types";
 import { findIndices } from "@/util/findIndices";
-import { KbSection } from "./KbSection";
-import { KbEntryCard } from "./KbEntryCard";
-import { router } from "expo-router";
 import { useDataCache } from "@/context/DataCacheProvider";
 
 /**

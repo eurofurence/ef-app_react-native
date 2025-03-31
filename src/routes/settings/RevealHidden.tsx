@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { chain } from "lodash";
 import { appStyles } from "@/components/AppStyles";
 import { EventCard, eventInstanceForAny } from "@/components/events/EventCard";
 import { Label } from "@/components/generic/atoms/Label";
@@ -10,7 +11,6 @@ import { Floater } from "@/components/generic/containers/Floater";
 import { useNow } from "@/hooks/time/useNow";
 import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
 import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
-import { chain } from "lodash";
 
 export const RevealHidden = () => {
     const { t } = useTranslation("RevealHidden");

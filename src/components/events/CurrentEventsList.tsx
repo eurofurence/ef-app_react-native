@@ -4,8 +4,8 @@ import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { Section } from "../generic/atoms/Section";
 import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
-import { EventCard } from "./EventCard";
 import { useCurrentEvents } from "../../hooks/events/useCurrentEvents";
+import { EventCard } from "./EventCard";
 
 export type CurrentEventListProps = {
     now: Date;

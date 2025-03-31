@@ -11,8 +11,8 @@ import { Label } from "../generic/atoms/Label";
 import { Progress } from "../generic/atoms/Progress";
 import { Row } from "../generic/containers/Row";
 import { sourceFromImage } from "../generic/atoms/Image.common";
-import { EventCardTime } from "./EventCardTime";
 import { calculateEventTiming } from "../../util/eventTiming";
+import { EventCardTime } from "./EventCardTime";
 
 const glyphIconSize = 90;
 const badgeIconSize = 20;

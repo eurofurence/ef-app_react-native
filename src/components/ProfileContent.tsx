@@ -2,15 +2,15 @@ import { captureException } from "@sentry/react-native";
 import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Linking, StyleSheet, View } from "react-native";
-import { authSettingsUrl, conName } from "@/configuration";
-import { Claims, useAuthContext } from "@/context/AuthContext";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
-import { UserRecord } from "@/store/eurofurence/types";
 import { Image } from "./generic/atoms/Image";
 import { Label } from "./generic/atoms/Label";
 import { Section } from "./generic/atoms/Section";
 import { Badge } from "./generic/containers/Badge";
 import { Button } from "./generic/containers/Button";
+import { UserRecord } from "@/store/eurofurence/types";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { Claims, useAuthContext } from "@/context/AuthContext";
+import { authSettingsUrl, conName } from "@/configuration";
 
 /**
  * User role pill.

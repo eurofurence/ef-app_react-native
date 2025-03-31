@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Linking, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
+import { captureException } from "@sentry/react-native";
 import { catchEmUrl, conWebsite, menuColumns, showCatchEm, showLogin } from "@/configuration";
 import { TabsRef } from "@/components/generic/containers/Tabs";
 import { Tab } from "@/components/generic/containers/Tab";
@@ -13,7 +14,6 @@ import { useDataCache } from "@/context/DataCacheProvider";
 import { Button } from "@/components/generic/containers/Button";
 import { MapRecord } from "@/store/eurofurence/types";
 import { PagerPrimaryLogin } from "@/components/mainmenu/PagerPrimaryLogin";
-import { captureException } from "@sentry/react-native";
 
 export type MainMenuProps = {
     tabs: RefObject<TabsRef>;

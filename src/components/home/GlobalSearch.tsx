@@ -2,16 +2,16 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
 
-import { useDealerInstances } from "@/components/dealers/Dealers.common";
-import { useEventInstances } from "@/components/events/Events.common";
-import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "@/store/eurofurence/types";
+import { router } from "expo-router";
 import { DealerCard } from "../dealers/DealerCard";
 import { EventCard } from "../events/EventCard";
 import { Section } from "../generic/atoms/Section";
 import { KbEntryCard } from "../kb/KbEntryCard";
+import { useDealerInstances } from "@/components/dealers/Dealers.common";
+import { useEventInstances } from "@/components/events/Events.common";
+import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "@/store/eurofurence/types";
 import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
 import { GlobalSearchResult } from "@/store/eurofurence/selectors/search";
-import { router } from "expo-router";
 
 export type GlobalSearchProps = {
     now: Date;

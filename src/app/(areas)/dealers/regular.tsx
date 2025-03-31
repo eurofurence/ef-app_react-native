@@ -1,5 +1,7 @@
 ﻿import * as React from "react";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
+import { chain } from "lodash";
 import { useNow } from "@/hooks/time/useNow";
 import { useDealersSearchIndex } from "@/store/eurofurence/selectors/search";
 import { useFuseIntegration } from "@/hooks/searching/useFuseIntegration";
@@ -9,8 +11,6 @@ import { Badge } from "@/components/generic/containers/Badge";
 import { Label } from "@/components/generic/atoms/Label";
 import { Search } from "@/components/generic/atoms/Search";
 import { useDataCache } from "@/context/DataCacheProvider";
-import { useMemo } from "react";
-import { chain } from "lodash";
 
 export default function RegularScreen() {
   // General state.

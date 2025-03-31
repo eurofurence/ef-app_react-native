@@ -3,13 +3,13 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { CommunicationRecord } from "@/store/eurofurence/types";
 import { Icon } from "../generic/atoms/Icon";
 import { Label } from "../generic/atoms/Label";
 import { Col } from "../generic/containers/Col";
 import { Row } from "../generic/containers/Row";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { appStyles } from "../AppStyles";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { CommunicationRecord } from "@/store/eurofurence/types";
 
 export type PrivateMessageCardProps = {
     containerStyle?: ViewStyle;

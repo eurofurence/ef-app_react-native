@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
-import { DealerDetails } from "@/store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Image } from "../generic/atoms/Image";
 import { Label } from "../generic/atoms/Label";
 import { sourceFromImage } from "../generic/atoms/Image.common";
 import { isPresent, joinOffDays } from "./utils";
+import { DealerDetails } from "@/store/eurofurence/types";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 export type DealerDetailsInstance = {
     details: DealerDetails;

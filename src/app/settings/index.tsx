@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { useTranslation } from "react-i18next";
 import { devMenu } from "@/configuration";
 import { Floater } from "@/components/generic/containers/Floater";
 import { UserSettings } from "@/components/settings/UserSettings";
@@ -10,7 +11,6 @@ import { RemoteMessages } from "@/components/settings/RemoteMessages";
 import { DevButtons } from "@/components/settings/DevButtons";
 import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { Header } from "@/components/generic/containers/Header";
-import { useTranslation } from "react-i18next";
 
 export default function SettingsPage() {
     const [showDevMenu, setShowDevMenu] = useState(false);

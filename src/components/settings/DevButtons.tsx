@@ -1,18 +1,18 @@
 import React, { useCallback, useState } from "react";
 import { View, TextInput, StyleSheet, Vibration } from "react-native";
 import { useTranslation } from "react-i18next";
-import { useDataCache } from "@/context/DataCacheProvider";
-import { Button } from "@/components/generic/containers/Button";
 import { captureException } from "@sentry/react-native";
-import { useToast } from "@/context/ToastContext";
-import { Section } from "@/components/generic/atoms/Section";
 import * as Clipboard from "expo-clipboard";
 import * as Notifications from "expo-notifications";
 import * as SecureStore from "expo-secure-store";
+import { format } from "date-fns";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { Button } from "@/components/generic/containers/Button";
+import { useToast } from "@/context/ToastContext";
+import { Section } from "@/components/generic/atoms/Section";
 import { useThemeColorValue, useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { useAuthContext } from "@/context/AuthContext";
 import { useNow } from "@/hooks/time/useNow";
-import { format } from "date-fns";
 import { useCreateSyncRequest, useSendPrivateMessage } from "@/services/auth";
 import { withAlpha } from "@/context/Theme";
 

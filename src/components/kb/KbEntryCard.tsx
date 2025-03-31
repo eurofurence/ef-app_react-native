@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 
-import { KnowledgeEntryRecord } from "@/store/eurofurence/types";
 import { appStyles } from "../AppStyles";
 import { Label } from "../generic/atoms/Label";
 import { Card } from "../generic/containers/Card";
+import { KnowledgeEntryRecord } from "@/store/eurofurence/types";
 
 export type KbEntryCardProps = {
     containerStyle?: ViewStyle;

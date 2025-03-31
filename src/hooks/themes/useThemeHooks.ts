@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { TextStyle, ViewStyle } from "react-native";
-import { Theme, ThemeColor, themes } from "@/context/Theme";
 import { useTheme as useThemeHook } from "./useTheme";
+import { Theme, ThemeColor, themes } from "@/context/Theme";
 
 export const useThemeName = () => {
     const { theme, systemTheme } = useThemeHook();

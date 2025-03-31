@@ -1,8 +1,8 @@
 import { StyleSheet, View } from "react-native";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { Icon } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
-import React from "react";
+
 import { useThemeColor } from "@/hooks/themes/useThemeHooks";
 
 export type NoDataProps = {

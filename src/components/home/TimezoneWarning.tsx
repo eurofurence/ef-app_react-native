@@ -3,9 +3,9 @@ import React, { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { formatInTimeZone } from "date-fns-tz";
 
-import { conName, conTimeZone } from "@/configuration";
 import { Label } from "../generic/atoms/Label";
 import { Badge } from "../generic/containers/Badge";
+import { conName, conTimeZone } from "@/configuration";
 import { useWarningState } from "@/hooks/warnings/useWarningState";
 
 export type TimezoneWarningProps = {

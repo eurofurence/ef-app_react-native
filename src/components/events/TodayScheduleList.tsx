@@ -1,13 +1,13 @@
-import { FC, useMemo } from "react";
+import React, { FC, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
+import { router } from "expo-router";
 import { filterHappeningTodayEvents } from "../../store/eurofurence/selectors/events";
 import { Section } from "../generic/atoms/Section";
 import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
-import { EventCard, eventInstanceForAny } from "./EventCard";
-import React from "react";
-import { router } from "expo-router";
 import { useDataCache } from "../../context/DataCacheProvider";
+import { EventCard, eventInstanceForAny } from "./EventCard";
+
 
 export type TodayScheduleListProps = {
     now: Date;

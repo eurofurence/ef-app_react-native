@@ -1,8 +1,8 @@
 import { FC, useMemo } from "react";
 import { View, ViewStyle } from "react-native";
 import Markdown, { MarkdownProps } from "react-native-markdown-display";
-import { useMarkdownTheme } from "@/store/settings/selectors";
 import { LabelProps } from "./Label";
+import { useMarkdownTheme } from "@/store/settings/selectors";
 
 const MarkdownComponent: FC<MarkdownProps & { children?: string }> = Markdown as any;
 

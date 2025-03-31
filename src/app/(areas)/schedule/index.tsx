@@ -1,9 +1,9 @@
-﻿import { useDataCache } from "@/context/DataCacheProvider";
-import { useMemo } from "react";
+﻿import { useMemo } from "react";
 import { sortBy } from "lodash";
-import { useNow } from "@/hooks/time/useNow";
 import { isSameDay } from "date-fns";
 import { Redirect } from "expo-router";
+import { useNow } from "@/hooks/time/useNow";
+import { useDataCache } from "@/context/DataCacheProvider";
 import { eventsRoutePrefix } from "@/app/(areas)/schedule/+not-found";
 
 export default function RedirectIndex() {

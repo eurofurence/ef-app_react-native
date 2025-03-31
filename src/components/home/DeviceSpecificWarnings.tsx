@@ -1,10 +1,10 @@
-import { useWarningState } from "@/hooks/warnings/useWarningState";
 import * as Device from "expo-device";
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Platform } from "react-native";
 import { Label } from "../generic/atoms/Label";
 import { Section } from "../generic/atoms/Section";
+import { useWarningState } from "@/hooks/warnings/useWarningState";
 
 // TODO: When showing warnings in Warnings.tsx, then going back to home, the warnings are not shown.
 export const DeviceSpecificWarnings = () => {

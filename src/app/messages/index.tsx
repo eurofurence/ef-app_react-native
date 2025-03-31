@@ -60,7 +60,7 @@ export default function PmList() {
 
     const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, []);
     const emptyComponent = useMemo(() => <NoData text={t("no_data")} />, [t]);
-    const headerComponent = useMemo(() => <Header>{t("header")}</Header>, []);
+    const headerComponent = useMemo(() => <Header>{t("header")}</Header>, [t]);
 
     const renderSection = useCallback(
         ({ section }: { section: Section }) => (

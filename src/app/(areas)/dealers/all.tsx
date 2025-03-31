@@ -1,6 +1,8 @@
 ﻿import * as React from "react";
-import { useDataCache } from "@/context/DataCacheProvider";
 import { useTranslation } from "react-i18next";
+import { useMemo } from "react";
+import { chain } from "lodash";
+import { useDataCache } from "@/context/DataCacheProvider";
 import { DealersSectionedList } from "@/components/dealers/DealersSectionedList";
 import { Badge } from "@/components/generic/containers/Badge";
 import { Label } from "@/components/generic/atoms/Label";
@@ -10,8 +12,6 @@ import { useFuseIntegration } from "@/hooks/searching/useFuseIntegration";
 import { useDealersSearchIndex } from "@/store/eurofurence/selectors/search";
 import { useDealerGroups } from "@/components/dealers/Dealers.common";
 import { useNow } from "@/hooks/time/useNow";
-import { useMemo } from "react";
-import { chain } from "lodash";
 
 export default function AllScreen() {
     // General state.

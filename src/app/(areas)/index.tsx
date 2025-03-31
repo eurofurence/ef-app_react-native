@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { RefreshControl, ScrollView } from "react-native-gesture-handler";
 import { useIsFocused } from "@react-navigation/core";
+import React from "react";
 import { CountdownHeader } from "@/components/home/CountdownHeader";
 import { Search } from "@/components/generic/atoms/Search";
 import { useNow } from "@/hooks/time/useNow";
@@ -18,7 +19,6 @@ import { useGlobalSearchIndex } from "@/store/eurofurence/selectors/search";
 import { UpcomingEventsList } from "@/components/events/UpcomingEventsList";
 import { TodayScheduleList } from "@/components/events/TodayScheduleList";
 import { CurrentEventList } from "@/components/events/CurrentEventsList";
-import React from "react";
 import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 export default function IndexScreen() {

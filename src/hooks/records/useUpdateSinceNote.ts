@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from "react";
+import { isAfter, parseISO } from "date-fns";
 import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 import { RecordMetadata } from "@/store/eurofurence/types";
 import { useNow } from "@/hooks/time/useNow";
-import { isAfter, parseISO } from "date-fns";
 
 /**
  * Gets the last viewed time of this record and if the record has changed

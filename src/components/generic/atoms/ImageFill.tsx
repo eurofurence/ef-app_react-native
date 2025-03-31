@@ -2,9 +2,9 @@ import * as React from "react";
 import { FC, useMemo, useState } from "react";
 import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { ImageDetails } from "@/store/eurofurence/types";
 import { Image, ImageProps } from "./Image";
 import { sourceFromImage } from "./Image.common";
+import { ImageDetails } from "@/store/eurofurence/types";
 
 const initialSize = { width: Dimensions.get("window").width - 40, height: 160 };
 

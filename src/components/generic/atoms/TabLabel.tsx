@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { Label } from "./Label";
 import { ReactNode } from "react";
+import { Label } from "./Label";
 
 export const tabLabelMaxWidth = 110;
 

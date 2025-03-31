@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { chain } from "lodash";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { EventDetails } from "@/store/eurofurence/types";
-import { chain } from "lodash";
 import { filterCurrentEvents } from "@/store/eurofurence/selectors/events";
 import { eventInstanceForAny } from "@/components/events/EventCard";
 

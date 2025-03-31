@@ -1,8 +1,8 @@
 import { getHours, parseISO } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
+import { AttendanceDay, DealerRecord, EventDayDetails } from "./types";
 import { IconNames } from "@/components/generic/atoms/Icon";
 import { conTimeZone } from "@/configuration";
-import { AttendanceDay, DealerRecord, EventDayDetails } from "./types";
 
 export const internalCategorizeTime = (dateStr: string) => {
     const date = toZonedTime(parseISO(dateStr), conTimeZone);

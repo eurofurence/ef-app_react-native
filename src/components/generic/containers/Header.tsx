@@ -2,12 +2,12 @@ import React, { FC, PropsWithChildren } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native-gesture-handler";
 
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
+import { router } from "expo-router";
 import { Continuous } from "../atoms/Continuous";
 import { Icon, IconNames } from "../atoms/Icon";
 import { Label } from "../atoms/Label";
 import { Row } from "./Row";
-import { router } from "expo-router";
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 
 const iconSize = 26;
 const iconPad = 6;

@@ -4,10 +4,10 @@ import { noop } from "lodash";
 import { useTranslation } from "react-i18next";
 import { Alert, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { SettingContainer } from "./SettingContainer";
 import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 import { Label } from "@/components/generic/atoms/Label";
 import { Col } from "@/components/generic/containers/Col";
-import { SettingContainer } from "./SettingContainer";
 
 /**
  * Analytics opt-in section with a checkbox to allow analytics.

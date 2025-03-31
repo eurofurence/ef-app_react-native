@@ -7,18 +7,18 @@ export const useEventReminder = (event: EventRecord) => {
     const { getCacheSync, saveCache, removeCache } = useDataCache();
 
     // Retrieve timeTravel value from cache, default to 0
-    const timeTravel = getCacheSync("timetravel", "timeOffset")?.data ?? 0;
+    const timeTravel = Number(getCacheSync("timetravel", "timeOffset")?.data ?? 0);
     // Retrieve the reminder from cache
     const reminder = getCacheSync("notifications", event.Id);
 
     // Create wrapper functions that match the expected types
-    const saveCacheWrapper = (storeName: string, key: string, data: any) => {
+    const saveCacheWrapper = useCallback((storeName: string, key: string, data: any) => {
         saveCache(storeName as any, key, data);
-    };
+    }, [saveCache]);
 
-    const removeCacheWrapper = (storeName: string, key: string) => {
+    const removeCacheWrapper = useCallback((storeName: string, key: string) => {
         removeCache(storeName as any, key);
-    };
+    }, [removeCache]);
 
     const createReminder = useCallback(() => {
         return scheduleEventReminder(event, timeTravel, saveCacheWrapper);
@@ -40,6 +40,6 @@ export const useEventReminder = (event: EventRecord) => {
         isFavorite: Boolean(reminder),
         createReminder,
         removeReminder,
-        toggleReminder,
+        toggleReminder
     };
 };

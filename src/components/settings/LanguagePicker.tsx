@@ -3,10 +3,10 @@ import { Picker } from "@react-native-picker/picker";
 import { captureException } from "@sentry/react-native";
 import { orderBy } from "lodash";
 import { useTranslation } from "react-i18next";
+import { SettingContainer } from "./SettingContainer";
 import { useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Translation } from "@/i18n";
 import { Label } from "@/components/generic/atoms/Label";
-import { SettingContainer } from "./SettingContainer";
 import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 
 /**

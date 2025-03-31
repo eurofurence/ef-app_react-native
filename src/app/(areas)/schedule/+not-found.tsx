@@ -2,18 +2,18 @@
 import { StyleSheet, useWindowDimensions } from "react-native";
 import { Route, TabBar, TabView } from "react-native-tab-view";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
+import { useIsFocused } from "@react-navigation/core";
+import { chain, sortBy } from "lodash";
+import { useMemo } from "react";
 import { Header } from "@/components/generic/containers/Header";
 import { EventDayDetails } from "@/store/eurofurence/types";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { EventsSectionedList } from "@/components/events/EventsSectionedList";
 import { Label } from "@/components/generic/atoms/Label";
-import { useTranslation } from "react-i18next";
-import { useIsFocused } from "@react-navigation/core";
 import { useNow } from "@/hooks/time/useNow";
 import { useEventDayGroups, useEventOtherGroups } from "@/components/events/Events.common";
 import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
-import { chain, sortBy } from "lodash";
-import { useMemo } from "react";
 import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { TabLabel } from "@/components/generic/atoms/TabLabel";
 

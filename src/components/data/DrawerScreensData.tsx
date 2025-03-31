@@ -1,8 +1,8 @@
 import { router } from "expo-router";
 import * as React from "react";
 import { TouchableOpacity } from "react-native";
-import { Icon } from "../generic/atoms/Icon";
 import { useTranslation } from "react-i18next";
+import { Icon } from "../generic/atoms/Icon";
 
 export interface DrawerProps {
     location: string;

@@ -3,12 +3,12 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import { addMinutes, isAfter, isBefore, parseISO, subMinutes, formatDistanceToNow } from "date-fns";
 import { router } from "expo-router";
+import { chain } from "lodash";
 import { Section } from "../generic/atoms/Section";
 import { Button } from "../generic/containers/Button";
 import { AnnouncementCard } from "./AnnouncementCard";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { AnnouncementDetails } from "@/store/eurofurence/types";
-import { chain } from "lodash";
 
 const recentLimit = 2;
 

@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Button, buttonIconSize } from "../generic/containers/Button";
 import { Icon } from "../generic/atoms/Icon";
-import { useThemeBackground, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Label } from "../generic/atoms/Label";
+import { useThemeBackground, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { useDataCache } from "@/context/DataCacheProvider";
 
 type PrivateMessageLinkerProps = {

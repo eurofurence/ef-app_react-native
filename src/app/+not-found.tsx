@@ -1,7 +1,7 @@
 import { Link, Stack } from "expo-router";
 import { StyleSheet, View } from "react-native";
-import { Label } from "@/components/generic/atoms/Label";
 import React from "react";
+import { Label } from "@/components/generic/atoms/Label";
 import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 
 export default function NotFoundScreen() {

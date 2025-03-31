@@ -3,11 +3,11 @@ import { FC } from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { ThemeColor } from "@/context/Theme";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { IconNames } from "../atoms/Icon";
 import { ImageFill, ImageFillProps } from "../atoms/ImageFill";
 import { Marker } from "../atoms/Marker";
+import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { ThemeColor } from "@/context/Theme";
 
 /**
  * Arguments to the button.
