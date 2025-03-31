@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { useController, Path } from "react-hook-form";
 import StarRating from "react-native-star-rating-widget";
@@ -15,11 +14,10 @@ export type ManagedRatingProps<T> = {
     starSize?: number;
 };
 
-export const ManagedRating = <T extends Record<string, any>>({ 
-    name, 
-    label, 
-    minRating = 1, 
-    enableHalfStar = false, 
+export const ManagedRating = <T extends Record<string, any>>({
+    name,
+    label,
+    enableHalfStar = false,
     color = "#FFD700",
     style,
     starSize = 32
@@ -34,7 +32,6 @@ export const ManagedRating = <T extends Record<string, any>>({
             <StarRating
                 rating={value ?? 0}
                 onChange={onChange}
-                minRating={minRating}
                 enableHalfStar={enableHalfStar}
                 starSize={starSize}
                 color={color}
@@ -49,4 +46,4 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
     },
-}); 
+});

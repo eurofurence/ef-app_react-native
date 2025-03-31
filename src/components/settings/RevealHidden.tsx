@@ -8,10 +8,9 @@ import { appStyles } from "@/components/AppStyles";
 import { EventCard, eventInstanceForAny } from "@/components/events/EventCard";
 import { Label } from "@/components/generic/atoms/Label";
 import { Floater } from "@/components/generic/containers/Floater";
-import { Header } from "@/components/generic/containers/Header";
 import { useNow } from "@/hooks/time/useNow";
 import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 import { EventDetails } from "@/store/eurofurence/types";
 
 export const RevealHidden = () => {
@@ -20,26 +19,19 @@ export const RevealHidden = () => {
     const now = useNow(isFocused ? 5 : "static");
     const zone = useZoneAbbr();
     const { getCacheSync, saveCache } = useDataCache();
-    
-    const settings = getCacheSync("settings", "settings")?.data ?? {
-        cid: "",
-        cacheVersion: "",
-        lastSynchronised: "",
-        state: {},
-        lastViewTimes: {},
-        hiddenEvents: [] as string[]
-    };
+
+    const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
 
     const allEventsCache = getCacheSync("events", "events");
     const allEvents = (allEventsCache?.data ?? []) as EventDetails[];
-    
+
     const hidden = useMemo(
         () =>
             chain(allEvents)
                 .filter((item: EventDetails) => Boolean(settings.hiddenEvents?.includes(item.Id)))
                 .map((details) => eventInstanceForAny(details, now, zone))
                 .value(),
-        [allEvents, settings.hiddenEvents, now, zone],
+        [allEvents, settings.hiddenEvents, now, zone]
     );
 
     const unhideEvent = (eventId: string) => {
@@ -63,4 +55,4 @@ export const RevealHidden = () => {
             </Floater>
         </ScrollView>
     );
-}; 
+};

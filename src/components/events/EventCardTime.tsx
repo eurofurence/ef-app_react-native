@@ -22,7 +22,7 @@ export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done, zone 
                 </Label>
             ) : (
                 <>
-                    <Label type="h3" color={done ? "important" : "white"}>
+                    <Label type="h3" variant="middle" color={done ? "important" : "white"}>
                         {start}
                     </Label>
                     <Label type="cap" color={done ? "important" : "white"}>

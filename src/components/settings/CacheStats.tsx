@@ -2,27 +2,7 @@ import React, { useMemo } from "react";
 import { View } from "react-native";
 import { useTranslation } from "react-i18next";
 import { Label } from "@/components/generic/atoms/Label";
-import { useDataCache } from "@/context/DataCacheProvider";
-
-const STORE_NAMES = {
-    THEME: "theme",
-    ANNOUNCEMENTS: "announcements",
-    NOTIFICATIONS: "notifications",
-    DEALERS: "dealers",
-    IMAGES: "images",
-    SETTINGS: "settings",
-    FUSE_SEARCH: "fuseSearch",
-    EVENTS: "events",
-    EVENT_DAYS: "eventDays",
-    EVENT_ROOMS: "eventRooms",
-    EVENT_TRACKS: "eventTracks",
-    KNOWLEDGE_GROUPS: "knowledgeGroups",
-    KNOWLEDGE_ENTRIES: "knowledgeEntries",
-    MAPS: "maps",
-    TIMETRAVEL: "timetravel",
-    WARNINGS: "warnings",
-    COMMUNICATIONS: "communications",
-} as const;
+import { STORE_NAMES, useDataCache } from "@/context/DataCacheProvider";
 
 export function CacheStats() {
     const { t } = useTranslation("Settings");

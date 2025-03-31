@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 import { DealerDetails, EventDetails } from "@/store/eurofurence/types";
 
 export function useFavoritesState() {
@@ -16,32 +16,31 @@ export function useFavoritesState() {
 
     useEffect(() => {
         let mounted = true;
+
         async function loadData() {
-            const [eventCache, dealerCache, lastViewCache] = await Promise.all([
+            const [eventCache, dealerCache, settings] = await Promise.all([
                 cacheRef.current.getAllCache("events"),
                 cacheRef.current.getAllCache("dealers"),
-                cacheRef.current.getCache("settings", "lastViewTimes")
+                cacheRef.current.getCache("settings", "settings").then(result => result?.data ?? defaultSettings)
             ]);
 
             if (!mounted) return;
 
             const events = eventCache.map((item) => item.data).filter((event: EventDetails) => event.Favorite);
             const dealers = dealerCache.map((item) => item.data).filter((dealer: DealerDetails) => dealer.Favorite);
-            
+
             setFavoriteEvents(events);
             setFavoriteDealers(dealers);
-            const lastViewTimesData = lastViewCache?.data?.lastViewTimes || {};
+            const lastViewTimesData = settings?.lastViewTimes || {};
             setLastViewTimes(lastViewTimesData);
-            cacheRef.current.saveCache("settings", "settings", {
-                cid: lastViewCache?.data?.cid || "",
-                cacheVersion: lastViewCache?.data?.cacheVersion || "",
-                lastSynchronised: lastViewCache?.data?.lastSynchronised || "",
-                state: lastViewCache?.data?.state || {},
-                lastViewTimes: lastViewTimesData
-            });
+
+            cacheRef.current.saveCache("settings", "settings", { ...settings, lastViewTimes: lastViewTimesData });
         }
+
         loadData();
-        return () => { mounted = false; };
+        return () => {
+            mounted = false;
+        };
     }, []); // No dependencies since we're using ref
 
     return useMemo(() => ({
@@ -49,4 +48,4 @@ export function useFavoritesState() {
         favoriteDealers,
         lastViewTimes
     }), [favoriteEvents, favoriteDealers, lastViewTimes]);
-} 
+}

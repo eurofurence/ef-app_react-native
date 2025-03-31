@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { captureException } from "@sentry/react-native";
 import { orderBy } from "lodash";
@@ -7,7 +7,7 @@ import { useThemeColorValue } from "@/hooks/themes/useThemeHooks";
 import { Translation } from "@/i18n";
 import { Label } from "@/components/generic/atoms/Label";
 import { SettingContainer } from "./SettingContainer";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 
 /**
  * Element of languages that the picker displays.
@@ -34,10 +34,10 @@ const languages = orderBy(
         { code: "nl", name: "🇳🇱 Nederlands" },
         { code: "it", name: "🇮🇹 Italiano" },
         { code: "pl", name: "🇵🇱 Polski" },
-        { code: "da", name: "🇩🇰 Dansk" },
+        { code: "da", name: "🇩🇰 Dansk" }
     ] as Language[],
     (value) => value.code,
-    "asc",
+    "asc"
 );
 
 /**
@@ -48,14 +48,7 @@ export const LanguagePicker = () => {
     const { t, i18n } = useTranslation("Settings");
     const textColor = useThemeColorValue("text");
     const { getCacheSync, saveCache } = useDataCache();
-    const settings = getCacheSync("settings", "settings")?.data ?? {
-        cid: "",
-        cacheVersion: "",
-        lastSynchronised: "",
-        state: {},
-        lastViewTimes: {},
-        language: "en"
-    };
+    const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
 
     const handleLanguageChange = async (language: string) => {
         try {
@@ -82,9 +75,9 @@ export const LanguagePicker = () => {
                 onValueChange={handleLanguageChange}
             >
                 {languages.map((it) => (
-                    <Picker.Item 
-                        label={it.name} 
-                        value={it.code} 
+                    <Picker.Item
+                        label={it.name}
+                        value={it.code}
                         key={it.code}
                         color={textColor}
                     />
@@ -92,4 +85,4 @@ export const LanguagePicker = () => {
             </Picker>
         </SettingContainer>
     );
-}; 
+};

@@ -2,15 +2,50 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import { Platform, Vibration } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { isAfter, parseISO } from "date-fns";
-import { apiBase, conId, eurofurenceCacheVersion, syncDebug, cacheDebug } from "@/configuration";
+import { apiBase, cacheDebug, conId, conTimeZone, eurofurenceCacheVersion, syncDebug } from "@/configuration";
 import { cancelEventReminder, rescheduleEventReminder } from "@/util/eventReminders";
-import { CacheItem, EventRecord, DealerDetails, EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails, MapDetails, ImageDetails, EventDayDetails, AnnouncementDetails, CommunicationRecord, EventRoomDetails, EventTrackDetails } from "@/store/eurofurence/types";
+import {
+    AnnouncementDetails,
+    AnnouncementRecord,
+    CacheItem,
+    CommunicationRecord,
+    DealerDetails,
+    DealerRecord,
+    EventDayDetails,
+    EventDayRecord,
+    EventDetails,
+    EventRecord,
+    EventRoomDetails,
+    EventTrackDetails,
+    ImageDetails,
+    KnowledgeEntryDetails,
+    KnowledgeGroupDetails,
+    MapDetails,
+    MapEntryDetails,
+    MapRecord,
+    RecordId
+} from "@/store/eurofurence/types";
 import { Notification } from "@/store/background/slice";
-import { applyAnnouncementDetails, applyDealerDetails, applyMapDetails, applyEventDetails } from "@/store/eurofurence/details";
+import {
+    internalAttendanceDayNames,
+    internalAttendanceDays,
+    internalCategorizeTime,
+    internalDealerParseDescriptionContent,
+    internalDealerParseTable,
+    internalFixedTitle,
+    internalMaskRequired,
+    internalMastodonHandleToProfileUrl,
+    internalSponsorOnly,
+    internalSuperSponsorOnly,
+    internalTagsToBadges,
+    internalTagsToIcon
+} from "@/store/eurofurence/details";
 import { ThemeName } from "@/context/Theme";
+import { toZonedTime } from "date-fns-tz";
+import { chain } from "lodash";
 
 // Define store names as const to enable literal type inference
-const STORE_NAMES = {
+export const STORE_NAMES = {
     ANNOUNCEMENTS: "announcements",
     NOTIFICATIONS: "notifications",
     DEALERS: "dealers",
@@ -26,7 +61,7 @@ const STORE_NAMES = {
     MAPS: "maps",
     TIMETRAVEL: "timetravel",
     WARNINGS: "warnings",
-    COMMUNICATIONS: "communications",
+    COMMUNICATIONS: "communications"
 } as const;
 
 // Create type for store names
@@ -40,9 +75,8 @@ export interface StoreTypes {
     [STORE_NAMES.IMAGES]: ImageDetails;
     [STORE_NAMES.SETTINGS]: {
         cid: string;
-        cacheVersion: string;
+        cacheVersion: number;
         lastSynchronised: string;
-        state: any; // Replace with proper type
         lastViewTimes: Record<string, string>;
         theme?: ThemeName;
         analytics?: {
@@ -51,12 +85,13 @@ export interface StoreTypes {
         devMenu?: boolean;
         language?: string;
         hiddenEvents?: string[];
+        state?: any;
     };
     [STORE_NAMES.FUSE_SEARCH]: any;
     [STORE_NAMES.EVENTS]: EventDetails;
     [STORE_NAMES.EVENT_DAYS]: EventDayDetails;
-    [STORE_NAMES.EVENT_ROOMS]: any; // Replace with proper type
-    [STORE_NAMES.EVENT_TRACKS]: any; // Replace with proper type
+    [STORE_NAMES.EVENT_ROOMS]: EventRoomDetails; // Replace with proper type
+    [STORE_NAMES.EVENT_TRACKS]: EventTrackDetails; // Replace with proper type
     [STORE_NAMES.KNOWLEDGE_GROUPS]: KnowledgeGroupDetails;
     [STORE_NAMES.KNOWLEDGE_ENTRIES]: KnowledgeEntryDetails;
     [STORE_NAMES.MAPS]: MapDetails;
@@ -65,15 +100,31 @@ export interface StoreTypes {
     [STORE_NAMES.COMMUNICATIONS]: CommunicationRecord;
 }
 
-// Helper type to get the correct type for a store
-export type StoreType<T extends StoreNames> = StoreTypes[T];
+export interface StoreKeys {
+    [STORE_NAMES.ANNOUNCEMENTS]: RecordId;
+    [STORE_NAMES.NOTIFICATIONS]: RecordId;
+    [STORE_NAMES.DEALERS]: RecordId;
+    [STORE_NAMES.IMAGES]: RecordId;
+    [STORE_NAMES.SETTINGS]: "settings";
+    [STORE_NAMES.FUSE_SEARCH]: any;
+    [STORE_NAMES.EVENTS]: RecordId;
+    [STORE_NAMES.EVENT_DAYS]: RecordId;
+    [STORE_NAMES.EVENT_ROOMS]: RecordId; // Replace with proper type
+    [STORE_NAMES.EVENT_TRACKS]: RecordId; // Replace with proper type
+    [STORE_NAMES.KNOWLEDGE_GROUPS]: RecordId;
+    [STORE_NAMES.KNOWLEDGE_ENTRIES]: RecordId;
+    [STORE_NAMES.MAPS]: RecordId;
+    [STORE_NAMES.TIMETRAVEL]: "timeOffset" | "offset" | "enabled";
+    [STORE_NAMES.WARNINGS]: "states";
+    [STORE_NAMES.COMMUNICATIONS]: RecordId;
+}
 
 const CACHE_EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours
 const storeNames = Object.values(STORE_NAMES);
 
 type CacheState = Record<string, any>;
 
-type CacheAction = 
+type CacheAction =
     | { type: "SET_CACHE"; key: string; data: any }
     | { type: "REMOVE_CACHE"; key: string }
     | { type: "INIT_CACHE"; data: CacheState };
@@ -95,14 +146,14 @@ const cacheReducer = (state: CacheState, action: CacheAction): CacheState => {
 };
 
 type DataCacheContextType = {
-    getCache: <T extends StoreNames>(storeName: T, key: string) => Promise<CacheItem<StoreType<T>> | null>;
-    saveCache: <T extends StoreNames>(storeName: T, key: string, data: StoreType<T>) => void;
-    removeCache: (storeName: StoreNames, key: string) => void;
-    getCacheSync: <T extends StoreNames>(storeName: T, key: string) => CacheItem<StoreType<T>> | null;
-    getAllCacheSync: <T extends StoreNames>(storeName: T) => CacheItem<StoreType<T>>[];
-    getAllCache: <T extends StoreNames>(storeName: T) => Promise<CacheItem<StoreType<T>>[]>;
-    saveAllCache: <T extends StoreNames>(storeName: T, data: StoreType<T>[]) => void;
-    containsKey: (storeName: StoreNames, key: string) => Promise<boolean>;
+    getCache: <T extends StoreNames>(storeName: T, key: StoreKeys[T]) => Promise<CacheItem<StoreTypes[T]> | null>;
+    saveCache: <T extends StoreNames>(storeName: T, key: StoreKeys[T], data: StoreTypes[T]) => void;
+    removeCache: <T extends StoreNames>(storeName: T, key: StoreKeys[T]) => void;
+    getCacheSync: <T extends StoreNames>(storeName: T, key: StoreKeys[T]) => CacheItem<StoreTypes[T]> | null;
+    getAllCacheSync: <T extends StoreNames>(storeName: T) => CacheItem<StoreTypes[T]>[];
+    getAllCache: <T extends StoreNames>(storeName: T) => Promise<CacheItem<StoreTypes[T]>[]>;
+    saveAllCache: <T extends StoreNames>(storeName: T, data: StoreTypes[T][]) => void;
+    containsKey: <T extends StoreNames>(storeName: T, key: StoreKeys[T]) => Promise<boolean>;
     isSynchronizing: boolean;
     synchronize: () => Promise<void>;
     synchronizeUi: (vibrate?: boolean) => Promise<void>;
@@ -126,17 +177,81 @@ const storage = {
         } else {
             await AsyncStorage.setItem(key, value);
         }
-    },
+    }
 };
 
-interface SettingsState {
-    cid: string;
-    cacheVersion: string;
-    lastSynchronised: string;
-    state: {
-        hiddenEvents: string[];
+// TODO:
+//   Cache entry architecture, poor mans entity adapter?
+//   We would like per key lookup and listing
+//   Dicts and lists should be stable unless changed (use in memos)
+//   Derived data, how to handle that? Rethink the arch of detail apply. If we can resolve no cost on frontend, then we don't need details??
+
+function applyEventDayDetails(source: EventDayRecord): EventDayDetails {
+    return {
+        ...source,
+        DayOfWeek: toZonedTime(parseISO(source.Date), conTimeZone).getDay()
     };
-    lastViewTimes: Record<string, string>;
+}
+
+function applyAnnouncementDetails(cacheData: CacheState, source: AnnouncementRecord): AnnouncementDetails {
+    return {
+        ...source,
+        NormalizedTitle: internalFixedTitle(source.Title, source.Content),
+        Image: source.ImageId ? cacheData[`${STORE_NAMES.IMAGES}-${source.ImageId}`].data : undefined
+    };
+}
+
+function applyEventDetails(cacheData: CacheState, source: EventRecord, favoriteIds: RecordId[], hiddenIds: RecordId[]): EventDetails {
+    return ({
+        ...source,
+        PartOfDay: internalCategorizeTime(source.StartDateTimeUtc),
+        Poster: source.PosterImageId ? cacheData[`${STORE_NAMES.IMAGES}-${source.PosterImageId}`].data : undefined,
+        Banner: source.BannerImageId ? cacheData[`${STORE_NAMES.IMAGES}-${source.BannerImageId}`].data : undefined,
+        Badges: internalTagsToBadges(source.Tags),
+        Glyph: internalTagsToIcon(source.Tags),
+        SuperSponsorOnly: internalSuperSponsorOnly(source.Tags),
+        SponsorOnly: internalSponsorOnly(source.Tags),
+        MaskRequired: internalMaskRequired(source.Tags),
+        ConferenceRoom: source.ConferenceRoomId ? cacheData[`${STORE_NAMES.EVENT_ROOMS}-${source.ConferenceRoomId}`].data : undefined,
+        ConferenceDay: source.ConferenceDayId ? cacheData[`${STORE_NAMES.EVENT_DAYS}-${source.ConferenceDayId}`].data : undefined,
+        ConferenceTrack: source.ConferenceTrackId ? cacheData[`${STORE_NAMES.EVENT_TRACKS}-${source.ConferenceTrackId}`].data : undefined,
+        Favorite: favoriteIds.includes(source.Id),
+        Hidden: hiddenIds.includes(source.Id)
+    });
+}
+
+function applyDealerDetails(cacheData: CacheState, source: DealerRecord, eventDays: EventDayDetails[]): DealerDetails {
+    return {
+        ...source,
+        AttendanceDayNames: internalAttendanceDayNames(source),
+        AttendanceDays: internalAttendanceDays(eventDays, source),
+        Artist: source.ArtistImageId ? cacheData[`${STORE_NAMES.IMAGES}-${source.ArtistImageId}`].data : undefined,
+        ArtistThumbnail: source.ArtistThumbnailImageId ? cacheData[`${STORE_NAMES.IMAGES}-${source.ArtistThumbnailImageId}`].data : undefined,
+        ArtPreview: source.ArtPreviewImageId ? cacheData[`${STORE_NAMES.IMAGES}-${source.ArtPreviewImageId}`].data : undefined,
+        ShortDescriptionTable: internalDealerParseTable(source),
+        ShortDescriptionContent: internalDealerParseDescriptionContent(source),
+        Favorite: false /* TODO */,
+        MastodonUrl: !source.MastodonHandle ? undefined : internalMastodonHandleToProfileUrl(source.MastodonHandle)
+    };
+}
+
+function applyMapDetails(cacheData: CacheState, source: MapRecord): MapDetails {
+    return {
+        ...source,
+        Image: cacheData[`${STORE_NAMES.IMAGES}-${source.ImageId}`].data,
+        Entries: source.Entries as MapEntryDetails[]
+    };
+}
+
+export const defaultSettings: StoreTypes["settings"] = {
+    cid: "",
+    cacheVersion: eurofurenceCacheVersion,
+    lastSynchronised: "",
+    lastViewTimes: {}
+} as const;
+
+function isCacheExpired(timestamp: number) {
+    return Date.now() - timestamp > CACHE_EXPIRATION_TIME;
 }
 
 export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -145,365 +260,220 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const [isSynchronizing, setIsSynchronizing] = useState(false);
     const invocation = useRef<AbortController | null>(null);
 
-    useEffect(() => {
-        const initCache = async () => {
-            try {
-                const cachePromises = storeNames.map((storeName) => storage.getItem(storeName));
-                const cacheResults = await Promise.all(cachePromises);
+    const getAllCache = useCallback(
+        async <T extends StoreNames>(storeName: T): Promise<CacheItem<StoreTypes[T]>[]> => {
+            const cache = await storage.getItem(storeName);
+            if (!cache) return [];
+            const parsedCache = JSON.parse(cache) as Record<string, CacheItem<StoreTypes[T]>>;
 
-                const formattedCacheData = cacheResults.reduce((acc, cache, index) => {
-                    const storeName = storeNames[index];
-                    const parsedCache = cache ? JSON.parse(cache) : {};
-                    Object.keys(parsedCache).forEach((key) => {
-                        acc[`${storeName}-${key}`] = parsedCache[key];
-                    });
-                    return acc;
-                }, {} as CacheState);
+            return chain(parsedCache)
+                .values()
+                .filter(item => item && !isCacheExpired(item.timestamp))
+                .value();
+        },
+        []);
 
-                // Initialize with default cache version if not present
-                await saveCache("settings", "cacheVersion", eurofurenceCacheVersion);
-                
-                dispatch({ type: "INIT_CACHE", data: formattedCacheData });
-                synchronizeUi();
-            } catch (error) {
-                console.error("Error initializing cache:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+    const getCache = useCallback(
+        async <T extends StoreNames>(storeName: T, key: StoreKeys[T]): Promise<CacheItem<StoreTypes[T]> | null> => {
+            const cache = await storage.getItem(storeName);
+            if (!cache) return null;
 
-        initCache().then();
-    }, []);
+            const parsedCache = JSON.parse(cache);
+            const item = parsedCache[key];
 
-    const isCacheExpired = (timestamp: number) => Date.now() - timestamp > CACHE_EXPIRATION_TIME;
-
-    const getAllCache = useCallback(async <T,>(storeName: string): Promise<CacheItem<T>[]> => {
-        const cache = await storage.getItem(storeName);
-        if (!cache) return [];
-        const parsedCache = JSON.parse(cache) as Record<string, CacheItem<T>>;
-        return Object.values(parsedCache).filter(item => item && !isCacheExpired(item.timestamp));
-    }, []);
-
-    const getCache = useCallback(async <T,>(storeName: string, key: string): Promise<CacheItem<T> | null> => {
-        const cache = await storage.getItem(storeName);
-        if (!cache) return null;
-
-        const parsedCache = JSON.parse(cache);
-        const item = parsedCache[key];
-
-        if (item && !isCacheExpired(item.timestamp)) {
-            return item;
-        }
-
-        if (item) {
-            delete parsedCache[key];
-            await storage.setItem(storeName, JSON.stringify(parsedCache));
-            dispatch({ type: "REMOVE_CACHE", key: `${storeName}-${key}` });
-        }
-        return null;
-    }, []);
-
-    const saveAllCache = useCallback(async <T,>(storeName: string, data: T[]) => {
-        if (!Array.isArray(data)) {
-            console.warn(`Invalid data format for ${storeName}: expected array but got ${typeof data}`);
-            return;
-        }
-
-        const cache = data.reduce(
-            (acc, item) => {
-                // @ts-expect-error: We know that item has an "Id" property, fix types later
-                acc[item["Id"]] = { data: item, timestamp: Date.now() };
-                return acc;
-            },
-            {} as Record<string, CacheItem<T>>,
-        );
-
-        await storage.setItem(storeName, JSON.stringify(cache));
-
-        dispatch({ type: "INIT_CACHE", data: cache });
-    }, []);
-
-    const saveCache = useCallback(async <T,>(storeName: string, key: string, data: T) => {
-        if (data === undefined) return; // Do not save undefined values
-
-        const cacheItem = { data, timestamp: Date.now() };
-        const cache = await storage.getItem(storeName);
-        const parsedCache = cache ? JSON.parse(cache) : {};
-
-        parsedCache[key] = cacheItem;
-        await storage.setItem(storeName, JSON.stringify(parsedCache));
-
-        dispatch({ type: "SET_CACHE", key: `${storeName}-${key}`, data: cacheItem });
-    }, []);
-
-    const removeCache = useCallback(async (storeName: string, key: string) => {
-        const cache = await storage.getItem(storeName);
-        if (!cache) return;
-
-        const parsedCache = JSON.parse(cache);
-        delete parsedCache[key];
-        await storage.setItem(storeName, JSON.stringify(parsedCache));
-
-        dispatch({ type: "REMOVE_CACHE", key: `${storeName}-${key}` });
-    }, []);
-
-    // Helper function to get images dictionary
-    const getImagesDict = useCallback(() => {
-        const imageEntries = Object.entries(cacheData)
-            .filter(([key]) => key.startsWith(`${STORE_NAMES.IMAGES}-`))
-            .map(([, value]) => value)
-            .filter(item => item && !isCacheExpired(item.timestamp));
-
-        return imageEntries.reduce(
-            (acc, item) => ({ ...acc, [item.data.Id]: item.data }), 
-            {} as Record<string, ImageDetails>
-        );
-    }, [cacheData]);
-
-    const getCacheSync = useCallback(
-        <T,>(storeName: string, key: string): CacheItem<T> | null => {
-            const cacheKey = `${storeName}-${key}`;
-            const item = cacheData[cacheKey];
             if (item && !isCacheExpired(item.timestamp)) {
-                // Apply transformations based on store type
-                if (storeName === STORE_NAMES.ANNOUNCEMENTS) {
-                    const images = getImagesDict();
-                    return {
-                        ...item,
-                        data: applyAnnouncementDetails(item.data, images)
-                    } as CacheItem<T>;
-                }
-                if (storeName === STORE_NAMES.MAPS) {
-                    const images = getImagesDict();
-                    return {
-                        ...item,
-                        data: applyMapDetails(item.data, images)
-                    } as CacheItem<T>;
-                }
-                if (storeName === STORE_NAMES.DEALERS) {
-                    const images = getImagesDict();
-                    const eventDaysCache = Object.entries(cacheData)
-                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_DAYS}-`))
-                        .map(([, value]) => value.data as EventDayDetails);
-                    const favorites: string[] = []; // TODO: Implement favorites
-                    return {
-                        ...item,
-                        data: applyDealerDetails(item.data, images, eventDaysCache, favorites)
-                    } as CacheItem<T>;
-                }
-                if (storeName === STORE_NAMES.EVENTS) {
-                    const images = getImagesDict();
-                    const rooms = Object.entries(cacheData)
-                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_ROOMS}-`))
-                        .map(([, value]) => value.data as EventRoomDetails);
-                    const days = Object.entries(cacheData)
-                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_DAYS}-`))
-                        .map(([, value]) => value.data as EventDayDetails);
-                    const tracks = Object.entries(cacheData)
-                        .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_TRACKS}-`))
-                        .map(([, value]) => value.data as EventTrackDetails);
-                    const favorites = Object.entries(cacheData)
-                        .filter(([key]) => key.startsWith(`${STORE_NAMES.NOTIFICATIONS}-`))
-                        .map(([, value]) => value.data as Notification);
-                    const settings = getCacheSync<SettingsState>("settings", "state")?.data || {
-                        cid: "",
-                        cacheVersion: "",
-                        lastSynchronised: "",
-                        state: { hiddenEvents: [] },
-                        lastViewTimes: {},
-                    };
-                    const hiddenIds = settings.state.hiddenEvents || [];
-                    return {
-                        ...item,
-                        data: applyEventDetails(
-                            item.data,
-                            images,
-                            rooms.reduce((acc, room) => ({ ...acc, [room.Id]: room }), {}),
-                            days.reduce((acc, day) => ({ ...acc, [day.Id]: day }), {}),
-                            tracks.reduce((acc, track) => ({ ...acc, [track.Id]: track }), {}),
-                            favorites.reduce((acc, fav) => ({ ...acc, [fav.recordId]: fav }), {}),
-                            hiddenIds
-                        )
-                    } as CacheItem<T>;
-                }
                 return item;
+            }
+
+            if (item) {
+                delete parsedCache[key];
+                await storage.setItem(storeName, JSON.stringify(parsedCache));
+                dispatch({ type: "REMOVE_CACHE", key: `${storeName}-${key}` });
             }
             return null;
         },
-        [cacheData, getImagesDict],
-    );
+        []);
+
+    const saveAllCache = useCallback(
+        async <T extends StoreNames>(storeName: T, data: StoreTypes[T][]) => {
+            if (!Array.isArray(data)) {
+                console.warn(`Invalid data format for ${storeName}: expected array but got ${typeof data}`);
+                return;
+            }
+
+            const now = Date.now();
+            const cache = data.reduce(
+                (acc, item) => {
+                    // @ts-expect-error: We know that item has an "Id" property, fix types later
+                    acc[item["Id"]] = { data: item, timestamp: now };
+                    return acc;
+                },
+                {} as Record<string, CacheItem<T>>
+            );
+
+            await storage.setItem(storeName, JSON.stringify(cache));
+
+            dispatch({ type: "INIT_CACHE", data: cache });
+        },
+        []);
+
+    const saveCache = useCallback(
+        async <T extends StoreNames>(storeName: T, key: StoreKeys[T], data: StoreTypes[T]) => {
+            if (data === undefined) return; // Do not save undefined values
+
+            const now = Date.now();
+            const cacheItem = { data, timestamp: now };
+            const cache = await storage.getItem(storeName);
+            const parsedCache = cache ? JSON.parse(cache) : {};
+
+            parsedCache[key] = cacheItem;
+            await storage.setItem(storeName, JSON.stringify(parsedCache));
+
+            dispatch({ type: "SET_CACHE", key: `${storeName}-${key}`, data: cacheItem });
+        },
+        []);
+
+    const updateSettings = useCallback(
+        async (values: Partial<StoreTypes["settings"]>) => {
+            const settings = (await getCache("settings", "settings"))?.data ?? defaultSettings;
+            const newSettings = { ...settings, ...values };
+            await saveCache("settings", "settings", newSettings);
+        },
+        [getCache, saveCache]);
+
+    const removeCache = useCallback(
+        async <T extends StoreNames>(storeName: T, key: StoreKeys[T]) => {
+            const cache = await storage.getItem(storeName);
+            if (!cache) return;
+
+            const parsedCache = JSON.parse(cache);
+            delete parsedCache[key];
+            await storage.setItem(storeName, JSON.stringify(parsedCache));
+
+            dispatch({ type: "REMOVE_CACHE", key: `${storeName}-${key}` });
+        },
+        []);
+
+    const getCacheSync = useCallback(
+        <T extends StoreNames>(storeName: T, key: StoreKeys[T]): CacheItem<StoreTypes[T]> | null => {
+            const cacheKey = `${storeName}-${key}`;
+            const item = cacheData[cacheKey];
+            if (!item || isCacheExpired(item.timestamp))
+                return null;
+
+            // Apply transformations based on store type
+            if (storeName === STORE_NAMES.ANNOUNCEMENTS) {
+                return {
+                    ...item,
+                    data: applyAnnouncementDetails(cacheData, item.data)
+                } as CacheItem<StoreTypes[T]>;
+            }
+
+            if (storeName === STORE_NAMES.MAPS) {
+                return {
+                    ...item,
+                    data: applyMapDetails(cacheData, item.data)
+                } as CacheItem<StoreTypes[T]>;
+            }
+
+            if (storeName === STORE_NAMES.DEALERS) {
+                // const favorites: string[] = []; // TODO: Implement favorites
+                const eventDays = chain(cacheData)
+                    .entries()
+                    .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_DAYS}-`))
+                    .map(([, value]) => applyEventDayDetails(value.data as EventDayRecord))
+                    .sortBy("Date")
+                    .value();
+                return {
+                    ...item,
+                    data: applyDealerDetails(cacheData, item.data, eventDays)
+                } as CacheItem<StoreTypes[T]>;
+            }
+
+            if (storeName === STORE_NAMES.EVENT_DAYS) {
+                return {
+                    ...item,
+                    data: applyEventDayDetails(item.data)
+                };
+            }
+
+            if (storeName === STORE_NAMES.EVENTS) {
+                const favoriteIds = chain(cacheData)
+                    .entries()
+                    .filter(([key]) => key.startsWith(`${STORE_NAMES.NOTIFICATIONS}-`))
+                    .map(([, value]) => (value.data as Notification).recordId)
+                    .value();
+                const hiddenIds: string[] = cacheData["settings-settings"]?.data?.hiddenEvents || [];
+                return {
+                    ...item,
+                    data: applyEventDetails(cacheData, item.data, favoriteIds, hiddenIds)
+                } as CacheItem<StoreTypes[T]>;
+            }
+
+            return item;
+        },
+        [cacheData]);
 
     const getAllCacheSync = useCallback(
-        <T,>(storeName: string): CacheItem<T>[] => {
+        <T extends StoreNames>(storeName: T): CacheItem<StoreTypes[T]>[] => {
             // Filter all cache entries that start with the storeName prefix
-            const storeEntries = Object.entries(cacheData)
+            const storeEntries = chain(cacheData)
+                .entries()
                 .filter(([key]) => key.startsWith(`${storeName}-`))
                 .map(([, value]) => value)
                 .filter(item => item && !isCacheExpired(item.timestamp));
 
             // Apply transformations based on store type
             if (storeName === STORE_NAMES.ANNOUNCEMENTS) {
-                const images = getImagesDict();
                 return storeEntries.map(item => ({
                     ...item,
-                    data: applyAnnouncementDetails(item.data, images)
-                })) as CacheItem<T>[];
+                    data: applyAnnouncementDetails(cacheData, item.data)
+                })).value() as CacheItem<StoreTypes[T]>[];
             }
             if (storeName === STORE_NAMES.MAPS) {
-                const images = getImagesDict();
                 return storeEntries.map(item => ({
                     ...item,
-                    data: applyMapDetails(item.data, images)
-                })) as CacheItem<T>[];
+                    data: applyMapDetails(cacheData, item.data)
+                })).value() as CacheItem<StoreTypes[T]>[];
             }
             if (storeName === STORE_NAMES.DEALERS) {
-                const images = getImagesDict();
-                const eventDaysCache = Object.entries(cacheData)
+                const eventDays = chain(cacheData)
+                    .entries()
                     .filter(([key]) => key.startsWith(`${STORE_NAMES.EVENT_DAYS}-`))
-                    .map(([, value]) => value.data as EventDayDetails);
-                const favorites: string[] = []; // TODO: Implement favorites
+                    .map(([, value]) => applyEventDayDetails(value.data as EventDayRecord))
+                    .sortBy("Date")
+                    .value();
                 return storeEntries.map(item => ({
                     ...item,
-                    data: applyDealerDetails(item.data, images, eventDaysCache, favorites)
-                })) as CacheItem<T>[];
+                    data: applyDealerDetails(cacheData, item.data, eventDays)
+                })).value() as CacheItem<StoreTypes[T]>[];
+            }
+            if (storeName === STORE_NAMES.EVENTS) {
+                const favoriteIds = chain(cacheData)
+                    .entries()
+                    .filter(([key]) => key.startsWith(`${STORE_NAMES.NOTIFICATIONS}-`))
+                    .map(([, value]) => (value.data as Notification).recordId)
+                    .value();
+                const hiddenIds: string[] = cacheData["settings-settings"]?.data?.hiddenEvents || [];
+                return storeEntries.map(item => ({
+                    ...item,
+                    data: applyEventDetails(cacheData, item.data, favoriteIds, hiddenIds)
+                })).value() as CacheItem<StoreTypes[T]>[];
             }
 
-            return storeEntries;
+            return storeEntries.value();
         },
-        [cacheData, getImagesDict],
-    );
+        [cacheData]);
 
-    const containsKey = useCallback(async (storeName: string, key: string): Promise<boolean> => {
-        const cache = await storage.getItem(storeName);
-        if (!cache) return false;
+    const containsKey = useCallback(
+        async <T extends StoreNames>(storeName: T, key: StoreKeys[T]): Promise<boolean> => {
+            const cache = await storage.getItem(storeName);
+            if (!cache) return false;
 
-        const parsedCache = JSON.parse(cache);
-        return key in parsedCache;
-    }, []);
-
-    // Synchronization functions
-    const synchronize = useCallback(async () => {
-        const ownInvocation = new AbortController();
-        invocation.current?.abort();
-        invocation.current = ownInvocation;
-        setIsSynchronizing(true);
-
-        // Retrieve last synchronised time and other auxiliary values from cache
-        const lastSynchronisedCache = await getCache("settings", "lastSynchronised");
-        const lastSynchronised = lastSynchronisedCache ? lastSynchronisedCache.data : null;
-        const cachedCid = await getCache("settings", "cid");
-        const cachedCacheVersion = await getCache("settings", "cacheVersion");
-
-        // Sync fully if state is for a different convention.
-        const path = lastSynchronised && cachedCid?.data === conId && cachedCacheVersion?.data === eurofurenceCacheVersion ? `Sync?since=${lastSynchronised}` : `Sync`;
-
-        try {
-            const response = await fetch(`${apiBase}/${path}`, { signal: ownInvocation.signal });
-            if (!response.ok) {
-                throw new Error("API response not OK");
-            }
-            if (!response.headers.get("Content-type")?.includes("application/json")) {
-                throw new Error("API response is not JSON");
-            }       
-            const data = await response.json();
-            if (syncDebug) {
-                console.log("API Response structure:", Object.keys(data));
-                console.log("Events structure:", data.Events ? Object.keys(data.Events) : "No Events data");
-            }
-
-            const cacheVersion = getCacheSync("settings", "cacheVersion");
-            const currentCacheVersion = cacheVersion?.data || eurofurenceCacheVersion;
-
-            // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
-            if (data.ConventionIdentifier !== conId || currentCacheVersion !== eurofurenceCacheVersion) {
-                console.log(data.ConventionIdentifier, conId)
-                await clear();
-                // Set the new cache version after clearing
-                await saveCache("settings", "cacheVersion", eurofurenceCacheVersion);
-            }
-
-            // Apply sync to each storeName with Promise.all
-            const syncPromises = [];
-            const debugInfo: Record<string, number> = {};
-
-            // Helper function to safely add sync tasks
-            const addSyncTask = (storeName: string, dataObject: any) => {
-                if (dataObject && Array.isArray(dataObject.ChangedEntities)) {
-                    const count = dataObject.ChangedEntities.length;
-                    debugInfo[storeName] = count;
-                    syncPromises.push(saveAllCache(storeName, dataObject.ChangedEntities));
-                } else {
-                    debugInfo[storeName] = 0;
-                }
-            };
-
-            // Add sync tasks for each data type
-            addSyncTask("events", data.Events);
-            addSyncTask("eventDays", data.EventConferenceDays);
-            addSyncTask("eventRooms", data.EventConferenceRooms);
-            addSyncTask("eventTracks", data.EventConferenceTracks);
-            addSyncTask("knowledgeGroups", data.KnowledgeGroups);
-            addSyncTask("knowledgeEntries", data.KnowledgeEntries);
-            addSyncTask("dealers", data.Dealers);
-            addSyncTask("images", data.Images);
-            addSyncTask("announcements", data.Announcements);
-            addSyncTask("maps", data.Maps);
-
-            // Add settings sync tasks and debug info
-            const settingsInfo = {
-                conventionId: data.ConventionIdentifier || 'not set',
-                cacheVersion: eurofurenceCacheVersion,
-                lastSyncTime: data.CurrentDateTimeUtc || 'not set',
-                hasState: !!data.State
-            };
-
-            if (cacheDebug) {
-                console.log('Cache Sync Summary:', {
-                    stores: debugInfo,
-                    settings: settingsInfo
-                });
-            }
-
-            // Add settings sync tasks
-            if (data.ConventionIdentifier) {
-                syncPromises.push(saveCache("settings", "cid", data.ConventionIdentifier));
-            }
-            syncPromises.push(saveCache("settings", "cacheVersion", eurofurenceCacheVersion));
-            if (data.CurrentDateTimeUtc) {
-                syncPromises.push(saveCache("settings", "lastSynchronised", data.CurrentDateTimeUtc));
-            }
-            if (data.State) {
-                syncPromises.push(saveCache("settings", "state", data.State));
-            }
-
-            // Wait for all sync tasks to complete
-            await Promise.all(syncPromises);
-            
-            // Reschedule each event reminder
-            const eventCache = await getAllCache<EventRecord>("events");
-            const notificationsCache = await getAllCache<Notification>("notifications");
-
-            for (const reminder of notificationsCache) {
-                const reminderData = reminder.data;
-                // Find event corresponding to reminder.recordId in eventCache using the correct property
-                const eventEntry = eventCache.find((item: any) => item.data.Id === reminderData.recordId);
-                const event = eventEntry ? eventEntry.data : null;
-                if (event) {
-                    if (isAfter(parseISO(event.LastChangeDateTimeUtc), parseISO(reminderData.dateCreatedUtc))) {
-                        // Reschedule reminder; timeTravel default to 0 for now.
-                        await rescheduleEventReminder(event, 0, saveCache, removeCache).catch((error) => console.warn("Reschedule error:", error));
-                    }
-                } else {
-                    // Cancel reminder if event no longer exists
-                    await cancelEventReminder(reminderData.recordId, removeCache).catch((error) => console.warn("Cancel reminder error:", error));
-                }
-            }
-        } finally {
-            if (invocation.current === ownInvocation) {
-                setIsSynchronizing(false);
-            }
-        }
-    }, [getCache, getAllCache, saveAllCache, saveCache, removeCache]);
+            const parsedCache = JSON.parse(cache);
+            return key in parsedCache;
+        },
+        []);
 
     const clear = useCallback(async () => {
         Vibration.vibrate(400);
@@ -513,6 +483,141 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         }
         dispatch({ type: "INIT_CACHE", data: {} });
     }, []);
+
+    // Synchronization functions
+    const synchronize = useCallback(
+        async () => {
+            const ownInvocation = new AbortController();
+            invocation.current?.abort();
+            invocation.current = ownInvocation;
+            setIsSynchronizing(true);
+
+            // Retrieve last synchronised time and other auxiliary values from cache
+            const settings = (await getCache("settings", "settings"))?.data ?? defaultSettings;
+
+            // Sync fully if state is for a different convention.
+            const path = settings.lastSynchronised && settings.cid === conId && settings.cacheVersion === eurofurenceCacheVersion ? `Sync?since=${(settings.lastSynchronised)}` : `Sync`;
+
+            try {
+                const response = await fetch(`${apiBase}/${path}`, { signal: ownInvocation.signal });
+                if (!response.ok) {
+                    throw new Error("API response not OK");
+                }
+                if (!response.headers.get("Content-type")?.includes("application/json")) {
+                    throw new Error("API response is not JSON");
+                }
+                const data = await response.json();
+                if (syncDebug) {
+                    console.log("API Response structure:", Object.keys(data));
+                    console.log("Events structure:", data.Events ? Object.keys(data.Events) : "No Events data");
+                }
+
+                // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
+                if (data.ConventionIdentifier !== conId || settings.cacheVersion !== eurofurenceCacheVersion) {
+                    console.log(data.ConventionIdentifier, conId);
+                    await clear();
+                    // Set the new cache version after clearing
+                    await updateSettings({ cacheVersion: eurofurenceCacheVersion });
+                }
+
+                // Apply sync to each storeName with Promise.all
+                const syncPromises: Promise<void>[] = [];
+                const debugInfo: Record<string, string> = {};
+
+                // Helper function to safely add sync tasks
+                const addSyncTask = <T extends StoreNames>(storeName: T, dataObject: {
+                    StorageLastChangeDateTimeUtc: string;
+                    StorageDeltaStartChangeDateTimeUtc: string;
+                    RemoveAllBeforeInsert: boolean;
+                    ChangedEntities?: StoreTypes[T][];
+                    DeletedEntities?: string[];
+                }) => {
+                    if (!dataObject) return;
+
+                    syncPromises.push((async () => {
+                        if (dataObject.RemoveAllBeforeInsert) {
+                            // Fresh assignment is requested, delete all items in the given store and set to new state.
+                            await saveAllCache(storeName, dataObject.ChangedEntities ?? []);
+                            debugInfo[storeName] = `reset with ${dataObject.ChangedEntities?.length}`;
+                        } else if (dataObject.DeletedEntities?.length || dataObject.ChangedEntities?.length) {
+                            // Get current entries. Filter deleted and try to add changed.
+                            const items = await getAllCache(storeName);
+                            const next = Iterator.from(items)
+                                .map(item => item.data)
+                                .filter(item => !dataObject.DeletedEntities?.includes(item.Id))
+                                .toArray();
+                            if (dataObject.ChangedEntities?.length)
+                                next.push(...dataObject.ChangedEntities);
+
+                            // Save all.
+                            await saveAllCache(storeName, dataObject.ChangedEntities ?? []);
+                            debugInfo[storeName] = `delete ${dataObject.DeletedEntities?.length ?? 0}, add ${dataObject.ChangedEntities?.length ?? 0}`;
+                        }
+                    })());
+                };
+
+                // Add sync tasks for each data type
+                addSyncTask("events", data.Events);
+                addSyncTask("eventDays", data.EventConferenceDays);
+                addSyncTask("eventRooms", data.EventConferenceRooms);
+                addSyncTask("eventTracks", data.EventConferenceTracks);
+                addSyncTask("knowledgeGroups", data.KnowledgeGroups);
+                addSyncTask("knowledgeEntries", data.KnowledgeEntries);
+                addSyncTask("dealers", data.Dealers);
+                addSyncTask("images", data.Images);
+                addSyncTask("announcements", data.Announcements);
+                addSyncTask("maps", data.Maps);
+
+                // Wait for all sync tasks to complete
+                await Promise.all(syncPromises);
+
+                // Cache debugging is set to true, log the info we received.
+                if (cacheDebug) {
+                    console.log("Cache Sync Summary:", {
+                        stores: debugInfo,
+                        settings: {
+                            conventionId: data.ConventionIdentifier || "not set",
+                            cacheVersion: eurofurenceCacheVersion,
+                            lastSyncTime: data.CurrentDateTimeUtc || "not set",
+                            hasState: !!data.State
+                        }
+                    });
+                }
+
+                // Synced, commit settings. TODO: Move to a "cache state" store entry?
+                await updateSettings({
+                    cid: data.ConventionIdentifier,
+                    cacheVersion: eurofurenceCacheVersion,
+                    lastSynchronised: data.CurrentDateTimeUtc,
+                    state: data.State
+                });
+
+                // Reschedule each event reminder
+                const eventCache = await getAllCache("events");
+                const notificationsCache = await getAllCache("notifications");
+
+                for (const reminder of notificationsCache) {
+                    const reminderData = reminder.data;
+                    // Find event corresponding to reminder.recordId in eventCache using the correct property
+                    const eventEntry = eventCache.find((item: any) => item.data.Id === reminderData.recordId);
+                    const event = eventEntry ? eventEntry.data : null;
+                    if (event) {
+                        if (isAfter(parseISO(event.LastChangeDateTimeUtc), parseISO(reminderData.dateCreatedUtc))) {
+                            // Reschedule reminder; timeTravel default to 0 for now.
+                            await rescheduleEventReminder(event, 0, saveCache, removeCache).catch((error) => console.warn("Reschedule error:", error));
+                        }
+                    } else {
+                        // Cancel reminder if event no longer exists
+                        await cancelEventReminder(reminderData.recordId, removeCache).catch((error) => console.warn("Cancel reminder error:", error));
+                    }
+                }
+            } finally {
+                if (invocation.current === ownInvocation) {
+                    setIsSynchronizing(false);
+                }
+            }
+        },
+        [getCache, updateSettings, getAllCache, clear, removeCache, saveAllCache, saveCache]);
 
     const synchronizeUi = useCallback(
         async (vibrate: boolean = false) => {
@@ -524,8 +629,38 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
                 throw error;
             }
         },
-        [synchronize],
+        [synchronize]
     );
+
+    useEffect(() => {
+        const initCache = async () => {
+            try {
+                const cachePromises = storeNames.map((storeName) => storage.getItem(storeName));
+                const cacheResults = await Promise.all(cachePromises);
+
+                const formattedCacheData = cacheResults.reduce((acc, cache, index) => {
+                    const storeName = storeNames[index];
+                    const parsedCache = cache ? JSON.parse(cache) : {};
+                    for (const key in parsedCache)
+                        acc[`${storeName}-${key}`] = parsedCache[key];
+                    return acc;
+                }, {} as CacheState);
+
+                // Initialize with default cache version if not present
+                await updateSettings({ cacheVersion: eurofurenceCacheVersion });
+
+                dispatch({ type: "INIT_CACHE", data: formattedCacheData });
+                synchronizeUi();
+            } catch (error) {
+                console.error("Error initializing cache:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        initCache().then();
+    }, [synchronizeUi, updateSettings]);
+
 
     const contextValue = useMemo(
         () => ({
@@ -540,9 +675,9 @@ export const DataCacheProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             isSynchronizing,
             synchronize,
             synchronizeUi,
-            clear,
+            clear
         }),
-        [getCache, saveCache, removeCache, getCacheSync, getAllCache, saveAllCache, containsKey, getAllCacheSync, isSynchronizing, synchronize, synchronizeUi, clear],
+        [getCache, saveCache, removeCache, getCacheSync, getAllCache, saveAllCache, containsKey, getAllCacheSync, isSynchronizing, synchronize, synchronizeUi, clear]
     );
 
     return <DataCacheContext.Provider value={contextValue}>{loading ? null : children}</DataCacheContext.Provider>;

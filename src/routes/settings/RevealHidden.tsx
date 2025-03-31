@@ -1,5 +1,4 @@
 import { useIsFocused } from "@react-navigation/core";
-import { chain } from "lodash";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet } from "react-native";
@@ -8,37 +7,27 @@ import { appStyles } from "@/components/AppStyles";
 import { EventCard, eventInstanceForAny } from "@/components/events/EventCard";
 import { Label } from "@/components/generic/atoms/Label";
 import { Floater } from "@/components/generic/containers/Floater";
-import { Header } from "@/components/generic/containers/Header";
 import { useNow } from "@/hooks/time/useNow";
 import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
+import { chain } from "lodash";
 
 export const RevealHidden = () => {
     const { t } = useTranslation("RevealHidden");
     const isFocused = useIsFocused();
     const now = useNow(isFocused ? 5 : "static");
     const zone = useZoneAbbr();
-    const { getCacheSync, saveCache } = useDataCache();
-    
-    const settings = getCacheSync("settings", "settings")?.data ?? {
-        cid: "",
-        cacheVersion: "",
-        lastSynchronised: "",
-        state: {},
-        lastViewTimes: {},
-        hiddenEvents: []
-    };
+    const { getCacheSync, getAllCacheSync, saveCache } = useDataCache();
 
-    const allEvents = getCacheSync("events", "events")?.data ?? [];
-    
-    const hidden = useMemo(
-        () =>
-            chain(allEvents)
-                .filter((item) => settings.hiddenEvents?.includes(item.Id))
-                .map((details) => eventInstanceForAny(details, now, zone))
-                .value(),
-        [allEvents, settings.hiddenEvents, now, zone],
-    );
+    const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
+
+    const projected = useMemo(() =>
+        chain(getAllCacheSync("events") || [])
+            .map(item => item.data)
+            .filter(item => Boolean(settings.hiddenEvents?.includes(item.Id)))
+            .sortBy("StartDateTimeUtc")
+            .value(), [getAllCacheSync, settings.hiddenEvents]);
+    const instances = useMemo(() => projected.map(details => eventInstanceForAny(details, now, zone)), [projected, now, zone]);
 
     const unhideEvent = (eventId: string) => {
         const newSettings = {
@@ -55,10 +44,10 @@ export const RevealHidden = () => {
                     {t("lead")}
                 </Label>
 
-                {hidden.map((item) => (
+                {instances.map((item) => (
                     <EventCard key={item.details.Id} event={item} type="time" onPress={() => unhideEvent(item.details.Id)} />
                 ))}
             </Floater>
         </ScrollView>
     );
-}; 
+};

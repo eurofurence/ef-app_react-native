@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { Banner } from "@/components/generic/atoms/Banner";
 import { MarkdownContent } from "@/components/generic/atoms/MarkdownContent";
@@ -16,10 +16,10 @@ export default function KnowledgeId() {
 
     // Get the knowledge entry from cache
     const entry = getCacheSync("knowledgeEntries", knowledgeId as string)?.data;
-    
+
     // Get all images and filter for the ones we need
     const allImages = getAllCacheSync("images");
-    const images = entry?.ImageIds 
+    const images = entry?.ImageIds
         ? allImages
             .filter(img => entry.ImageIds.includes(img.data.Id))
             .map(img => img.data)

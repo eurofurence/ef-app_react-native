@@ -1,27 +1,23 @@
 import { StyleSheet } from "react-native";
 import { Label } from "./Label";
+import { ReactNode } from "react";
 
 export const tabLabelMaxWidth = 110;
 
 export type TabLabelProps = {
     focused: boolean;
-    children: string;
-    wide: boolean;
+    children?: ReactNode | undefined;
 };
 
-export const TabLabel = ({ focused, children, wide }: TabLabelProps) => {
+export const TabLabel = ({ focused, children }: TabLabelProps) => {
     return (
-        <Label type="bold" style={[focused ? styles.focused : styles.unfocused, wide && styles.wide]} numberOfLines={1} ellipsizeMode="tail">
+        <Label type="bold" style={[focused ? styles.focused : styles.unfocused]} numberOfLines={1} ellipsizeMode="tail">
             {children}
         </Label>
     );
 };
 
 const styles = StyleSheet.create({
-    wide: {
-        maxWidth: tabLabelMaxWidth,
-        paddingHorizontal: 5,
-    },
     unfocused: {
         maxWidth: tabLabelMaxWidth,
         opacity: 0.5,

@@ -1,6 +1,5 @@
-import { useDataCache } from "@/context/DataCacheProvider";
 import { ThemeName } from "@/context/Theme";
-import { useTheme } from "@/hooks/themes/useThemeHooks";
+import { useTheme } from "@/hooks/themes/useTheme";
 import { ChoiceButtons } from "@/components/generic/atoms/ChoiceButtons";
 import { SettingContainer } from "./SettingContainer";
 import { Col } from "@/components/generic/containers/Col";
@@ -14,26 +13,7 @@ const usableThemes: ThemeChoice[] = ["light", "medium", "dark", "system"];
 
 export const ThemePicker = () => {
     const { t } = useTranslation("Settings", { keyPrefix: "theme" });
-    const { getCacheSync, saveCache } = useDataCache();
-    const settings = getCacheSync("settings", "settings")?.data ?? {
-        cid: "",
-        cacheVersion: "",
-        lastSynchronised: "",
-        state: {},
-        lastViewTimes: {},
-        theme: undefined
-    };
-
-    // Get the current theme setting (not the effective theme)
-    const currentThemeSetting = settings.theme;
-
-    const setChoice = (choice: ThemeChoice) => {
-        const newSettings = {
-            ...settings,
-            theme: choice === "system" ? undefined : choice,
-        };
-        saveCache("settings", "settings", newSettings);
-    };
+    const { theme, setTheme } = useTheme();
 
     return (
         <SettingContainer>
@@ -43,8 +23,8 @@ export const ThemePicker = () => {
                 <ChoiceButtons
                     style={styles.selector}
                     choices={usableThemes}
-                    choice={currentThemeSetting === undefined ? "system" : currentThemeSetting}
-                    setChoice={setChoice}
+                    choice={theme === undefined ? "system" : theme}
+                    setChoice={setTheme}
                     getLabel={(choice) => t(choice)}
                 />
             </Col>
@@ -54,6 +34,6 @@ export const ThemePicker = () => {
 
 const styles = StyleSheet.create({
     selector: {
-        marginTop: 16,
-    },
-}); 
+        marginTop: 16
+    }
+});

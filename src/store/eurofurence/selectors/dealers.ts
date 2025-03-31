@@ -1,7 +1,6 @@
 import { flatMap, maxBy, uniq } from "lodash";
-import { parseISO, isAfter } from "date-fns";
 
-import { DealerDetails } from "../types";
+import { CacheItem, DealerDetails } from "../types";
 import { useDataCache } from "@/context/DataCacheProvider";
 
 export const useDealersData = () => {
@@ -27,9 +26,7 @@ export const selectFavoriteDealers = () => {
 /**
  * TF-IDF category mapper. Returns the category for a dealer that is the most "unique" for them among all other dealers.
  */
-export const selectDealerCategoryMapper = () => {
-    const dealers = useDealersData();
-
+export const selectDealerCategoryMapper = (dealers:CacheItem<DealerDetails>[]) => {
     function tf(category: string, categories: string[]) {
         let n = 0;
         for (const item of categories) if (item === category) n++;
@@ -73,13 +70,13 @@ export const selectDealerCategories = () => {
     return result;
 };
 
-export const selectUpdatedFavoriteDealers = () => {
-    const dealers = useDealersData();
-    const { getCacheSync } = useDataCache();
-    const lastViewTimes = (getCacheSync("settings", "lastViewTimes")?.data || {}) as Record<string, string>;
-    
-    return dealers.filter(
-        (dealer) =>
-            lastViewTimes && dealer.data.Id in lastViewTimes && isAfter(parseISO(dealer.data.LastChangeDateTimeUtc), parseISO(lastViewTimes[dealer.data.Id])),
-    );
-};
+// export const selectUpdatedFavoriteDealers = () => {
+//     const dealers = useDealersData();
+//     const { getCacheSync } = useDataCache();
+//     const lastViewTimes = (getCacheSync("settings", "lastViewTimes")?.data || {}) as Record<string, string>;
+//
+//     return dealers.filter(
+//         (dealer) =>
+//             lastViewTimes && dealer.data.Id in lastViewTimes && isAfter(parseISO(dealer.data.LastChangeDateTimeUtc), parseISO(lastViewTimes[dealer.data.Id])),
+//     );
+// };

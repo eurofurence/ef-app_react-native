@@ -17,16 +17,16 @@ function getIconNameFromTabBarIcon(
     activeTintColor?: string,
     inactiveTintColor?: string
 ): IconNames {
-    if (!tabBarIcon) return 'home';
+    if (!tabBarIcon) return "home";
     const element = tabBarIcon({
         focused: isFocused,
-        color: isFocused ? (activeTintColor ?? '#000') : (inactiveTintColor ?? '#999'),
+        color: isFocused ? (activeTintColor ?? "#000") : (inactiveTintColor ?? "#999"),
         size: 24
     });
     if (React.isValidElement(element) && element.props.name) {
         return element.props.name;
     }
-    return 'home';
+    return "home";
 }
 
 function AreasTabBar(props: BottomTabBarProps) {
@@ -44,6 +44,8 @@ function AreasTabBar(props: BottomTabBarProps) {
 
                 return {
                     active: props.state.index === i,
+                    // TODO: Better integration.
+                    style: options.tabBarItemStyle,
                     icon: getIconNameFromTabBarIcon(
                         options.tabBarIcon,
                         isFocused,
@@ -55,7 +57,7 @@ function AreasTabBar(props: BottomTabBarProps) {
                         const event = props.navigation.emit({
                             type: "tabPress",
                             target: route.key,
-                            canPreventDefault: true,
+                            canPreventDefault: true
                         });
 
                         if (!isFocused && !event.defaultPrevented) {
@@ -63,9 +65,9 @@ function AreasTabBar(props: BottomTabBarProps) {
                         }
                         tabs.current?.close();
                     },
-                    indicate: typeof options.tabBarBadge === 'boolean' || typeof options.tabBarBadge === 'number' 
-                        ? options.tabBarBadge 
-                        : undefined,
+                    indicate: typeof options.tabBarBadge === "boolean" || typeof options.tabBarBadge === "number"
+                        ? options.tabBarBadge
+                        : undefined
                 };
             })}
             textMore={t("more")}
@@ -90,23 +92,28 @@ export default function TabsLayout() {
     return (
         <View style={styles.container}>
             <Tabs
-                screenOptions={{
-                    headerShown: false,
-                }}
+                screenOptions={{ headerShown: false }}
                 tabBar={props => <AreasTabBar {...props} />}
             >
                 <Tabs.Screen
                     name="index"
                     options={{
                         title: t("home"),
-                        tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
+                        tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />
                     }}
                 />
                 <Tabs.Screen
-                    name="events"
+                    name="schedule/+not-found"
                     options={{
                         title: t("events"),
                         tabBarIcon: ({ color, size }) => <Icon name="calendar" size={size} color={color} />,
+                        href: "schedule"
+                    }}
+                />
+                <Tabs.Screen
+                    name="schedule/index"
+                    options={{
+                        href: null
                     }}
                 />
                 <Tabs.Screen
@@ -114,6 +121,7 @@ export default function TabsLayout() {
                     options={{
                         title: t("dealers"),
                         tabBarIcon: ({ color, size }) => <Icon name="cart-outline" size={size} color={color} />,
+                        href: "dealers"
                     }}
                 />
             </Tabs>
@@ -124,20 +132,21 @@ export default function TabsLayout() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        overflow: "hidden"
     },
     toasts: {
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 1,
+        zIndex: 1
     },
     activity: {
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
         right: 0,
         height: 2,
-        backgroundColor: '#007AFF', // You might want to use your theme color here
+        backgroundColor: "#007AFF" // You might want to use your theme color here
     }
 });

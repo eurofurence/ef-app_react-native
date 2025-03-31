@@ -16,7 +16,7 @@ export interface DrawerProps {
 
 const goBackCustom = () => {
     return (
-        <TouchableOpacity onPress={() => router.back()}>
+        <TouchableOpacity onPress={router.back}>
             <Icon name="arrow-left" size={24} color="black" />
         </TouchableOpacity>
     );
@@ -24,63 +24,75 @@ const goBackCustom = () => {
 
 export const useDrawerScreensData = (): DrawerProps[] => {
     const { t } = useTranslation("Menu");
-    
+
     return [
         {
             location: "(areas)",
             headerShown: false,
-            title: t("home"),
+            title: t("home")
         },
         {
             location: "knowledge/index",
             title: t("info"),
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
+        },
+        {
+            location: "dealers/[dealerId]/index",
+            title: t("dealers"),
+            headerLeft: goBackCustom(),
+            headerShown: false
+        },
+        {
+            location: "events/[eventId]/index",
+            title: t("events"),
+            headerLeft: goBackCustom(),
+            headerShown: false
         },
         {
             location: "knowledge/[knowledgeId]/index",
             title: t("info"),
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
         },
         {
             location: "profile/index",
             title: t("profile"),
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
         },
         {
             location: "maps/[...slug]",
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
         },
         {
             location: "messages/index",
             title: t("pm"),
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
         },
         {
             location: "messages/[messageId]/index",
             title: t("pm"),
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
         },
         {
             location: "settings/index",
             title: t("settings"),
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
         },
         {
             location: "settings/reveal/index",
             title: t("settings"),
             headerLeft: goBackCustom(),
-            headerShown: false,
+            headerShown: false
         },
         {
             location: "+not-found",
-            headerShown: false,
-        },
+            headerShown: false
+        }
     ];
 };

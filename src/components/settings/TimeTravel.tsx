@@ -9,7 +9,7 @@ import { Col } from '@/components/generic/containers/Col';
 import { Row } from '@/components/generic/containers/Row';
 import { useDataCache } from '@/context/DataCacheProvider';
 import { useNow } from '@/hooks/time/useNow';
-import { conName, conTimeZone } from '@/configuration';
+import { conName } from '@/configuration';
 import { EventDayDetails } from '@/store/eurofurence/types';
 
 const ONE_HOUR = 60 * 60 * 1000;
@@ -22,7 +22,7 @@ export function TimeTravel() {
     const timeOffset = (getCacheSync("timetravel", "offset")?.data as unknown as number) ?? 0;
     const enabled = (getCacheSync("timetravel", "enabled")?.data as unknown as boolean) ?? false;
     const eventDays = (getCacheSync("eventDays", "all")?.data ?? []) as EventDayDetails[];
-    
+
     // Calculate week before and after
     const weekBefore = useMemo(() => {
         if (!eventDays.length) return null;
@@ -61,17 +61,17 @@ export function TimeTravel() {
             <Label mb={5}>{t("originalTime", { time: format(new Date(), "yyyy-MM-dd HH:mm:ss") })}</Label>
             <Label mb={5}>{t("currentTime", { time: format(now, "yyyy-MM-dd HH:mm:ss") })}</Label>
             <Label mb={5}>{t("difference", { diff: `${Math.round(timeOffset / 1000)} seconds` })}</Label>
-            
+
             <Row style={styles.row}>
-                <Button 
-                    containerStyle={styles.button} 
-                    outline={enabled} 
+                <Button
+                    containerStyle={styles.button}
+                    outline={enabled}
                     onPress={() => handleEnableTimeTravel(!enabled)}
                 >
                     {enabled ? t("disable") : t("enable")}
                 </Button>
-                <Button 
-                    containerStyle={styles.button} 
+                <Button
+                    containerStyle={styles.button}
                     onPress={handleResetTravel}
                 >
                     {t("reset")}
@@ -79,30 +79,30 @@ export function TimeTravel() {
             </Row>
 
             <Row style={styles.row}>
-                <Button 
-                    containerStyle={styles.button} 
-                    icon="chevron-left" 
+                <Button
+                    containerStyle={styles.button}
+                    icon="chevron-left"
                     onPress={() => handleTravel(-ONE_HOUR)}
                 >
                     1h
                 </Button>
-                <Button 
-                    containerStyle={styles.button} 
-                    icon="chevron-left" 
+                <Button
+                    containerStyle={styles.button}
+                    icon="chevron-left"
                     onPress={() => handleTravel(-ONE_MINUTE)}
                 >
                     1m
                 </Button>
-                <Button 
-                    containerStyle={styles.button} 
-                    iconRight="chevron-right" 
+                <Button
+                    containerStyle={styles.button}
+                    iconRight="chevron-right"
                     onPress={() => handleTravel(ONE_MINUTE)}
                 >
                     1m
                 </Button>
-                <Button 
-                    containerStyle={styles.button} 
-                    iconRight="chevron-right" 
+                <Button
+                    containerStyle={styles.button}
+                    iconRight="chevron-right"
                     onPress={() => handleTravel(ONE_HOUR)}
                 >
                     1h
@@ -111,15 +111,15 @@ export function TimeTravel() {
 
             <Col style={styles.row} type="stretch">
                 {weekBefore && (
-                    <Button 
-                        containerStyle={styles.button} 
-                        icon="calendar-arrow-left" 
+                    <Button
+                        containerStyle={styles.button}
+                        icon="calendar-arrow-left"
                         onPress={() => handleTravelToDate(weekBefore)}
                     >
                         {t("week_before", { conName })}
                     </Button>
                 )}
-                
+
                 {eventDays.map((day: EventDayDetails) => (
                     <Button
                         key={day.Id}
@@ -130,11 +130,11 @@ export function TimeTravel() {
                         {day.Name}
                     </Button>
                 ))}
-                
+
                 {weekAfter && (
-                    <Button 
-                        containerStyle={styles.button} 
-                        icon="calendar-arrow-right" 
+                    <Button
+                        containerStyle={styles.button}
+                        icon="calendar-arrow-right"
                         onPress={() => handleTravelToDate(weekAfter)}
                     >
                         {t("week_after", { conName })}
@@ -154,4 +154,4 @@ const styles = StyleSheet.create({
     row: {
         marginTop: 15,
     },
-}); 
+});

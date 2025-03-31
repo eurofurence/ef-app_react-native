@@ -32,8 +32,8 @@ export default function IndexScreen() {
     const [filter, setFilter, results] = useFuseIntegration(globalSearchIndex, 15);
 
     return (
-        <ScrollView 
-            style={[StyleSheet.absoluteFill, backgroundStyle]} 
+        <ScrollView
+            style={[StyleSheet.absoluteFill, backgroundStyle]}
             refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}
         >
             <CountdownHeader />

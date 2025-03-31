@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Checkbox from "expo-checkbox";
 import { noop } from "lodash";
 import { useTranslation } from "react-i18next";
 import { Alert, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 import { Label } from "@/components/generic/atoms/Label";
 import { Col } from "@/components/generic/containers/Col";
 import { SettingContainer } from "./SettingContainer";
@@ -15,16 +15,7 @@ import { SettingContainer } from "./SettingContainer";
 export const AnalyticsOptIns = () => {
     const { t } = useTranslation("Settings");
     const { getCacheSync, saveCache } = useDataCache();
-    const settings = getCacheSync("settings", "settings")?.data ?? {
-        cid: "",
-        cacheVersion: "",
-        lastSynchronised: "",
-        state: {},
-        lastViewTimes: {},
-        theme: undefined,
-        analytics: { enabled: false },
-        devMenu: false
-    };
+    const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
 
     const analyticsEnabled = settings.analytics?.enabled ?? false;
 
@@ -54,18 +45,18 @@ export const AnalyticsOptIns = () => {
                         {
                             text: t("developer_settings_alert.cancel"),
                             onPress: noop,
-                            style: "cancel",
+                            style: "cancel"
                         },
                         {
                             text: t("developer_settings_alert.disable"),
                             onPress: () => toggleDevMenu(false),
-                            style: "default",
+                            style: "default"
                         },
                         {
                             text: t("developer_settings_alert.enable"),
                             onPress: () => toggleDevMenu(true),
-                            style: "destructive",
-                        },
+                            style: "destructive"
+                        }
                     ])
                 }
                 delayLongPress={1000}
@@ -89,4 +80,4 @@ const styles = StyleSheet.create({
     column: {
         flex: 1
     }
-}); 
+});

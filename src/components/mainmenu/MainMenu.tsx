@@ -55,10 +55,9 @@ export function MainMenu({ tabs }: MainMenuProps) {
     return (
         <Col type="stretch">
             {showLogin && (
-                <PagerPrimaryLogin 
+                <PagerPrimaryLogin
                     loggedIn={loggedIn}
                     claim={claims}
-                    open={!!tabs.current?.open}
                     onMessages={() => handleNavigation("/messages")}
                     onLogin={handleLogin}
                     onProfile={() => handleNavigation("/profile")}
@@ -66,47 +65,47 @@ export function MainMenu({ tabs }: MainMenuProps) {
             )}
 
             <Grid cols={menuColumns}>
-                <Tab 
-                    icon="information-outline" 
-                    text={t("info")} 
-                    onPress={() => handleNavigation("/knowledge")} 
+                <Tab
+                    icon="information-outline"
+                    text={t("info")}
+                    onPress={() => handleNavigation("/knowledge")}
                 />
                 {showCatchEm && (
-                    <Tab 
-                        icon="paw" 
-                        text={t("catch_em")} 
-                        onPress={handleCatchEmAll} 
+                    <Tab
+                        icon="paw"
+                        text={t("catch_em")}
+                        onPress={handleCatchEmAll}
                     />
                 )}
-                <Tab 
-                    icon="image-frame" 
-                    text={t("artist_alley")} 
-                    onPress={() => handleNavigation("/artist-alley")} 
+                <Tab
+                    icon="image-frame"
+                    text={t("artist_alley")}
+                    onPress={() => handleNavigation("/artist-alley")}
                 />
-                <Tab 
-                    icon="card-account-details-outline" 
-                    text={t("profile")} 
-                    onPress={() => handleNavigation("/profile")} 
+                <Tab
+                    icon="card-account-details-outline"
+                    text={t("profile")}
+                    onPress={() => handleNavigation("/profile")}
                     disabled={!loggedIn}
                 />
-                <Tab 
-                    icon="cog" 
-                    text={t("settings")} 
-                    onPress={() => handleNavigation("/settings")} 
+                <Tab
+                    icon="cog"
+                    text={t("settings")}
+                    onPress={() => handleNavigation("/settings")}
                 />
-                <Tab 
-                    icon="web" 
-                    text={t("website")} 
-                    onPress={() => Linking.openURL(conWebsite)} 
+                <Tab
+                    icon="web"
+                    text={t("website")}
+                    onPress={() => Linking.openURL(conWebsite)}
                 />
             </Grid>
 
             <Col style={styles.mapsContainer}>
                 {maps.map((map) => (
-                    <Button 
-                        key={map.Id} 
-                        containerStyle={styles.mapButton} 
-                        icon="map" 
+                    <Button
+                        key={map.Id}
+                        containerStyle={styles.mapButton}
+                        icon="map"
                         onPress={() => handleNavigation(`/maps/${map.Id}`)}
                     >
                         {map.Description}

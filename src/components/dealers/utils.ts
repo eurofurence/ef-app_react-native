@@ -11,12 +11,12 @@ export const isPresent = (dealer: DealerDetails, now: Date) => {
     if (dealer.AttendanceDays?.length > 0) {
         return dealer.AttendanceDays.some(day => isSameDay(new Date(day.Date), now));
     }
-    
+
     // Fallback to AttendsOn* properties if AttendanceDays not available
     const dayOfWeek = now.getDay();
-    if (dayOfWeek === 4) return dealer.AttendsOnThursday;
-    if (dayOfWeek === 5) return dealer.AttendsOnFriday;
-    if (dayOfWeek === 6) return dealer.AttendsOnSaturday;
+    if (dayOfWeek === 4) return Boolean(dealer.AttendsOnThursday);
+    if (dayOfWeek === 5) return Boolean(dealer.AttendsOnFriday);
+    if (dayOfWeek === 6) return Boolean(dealer.AttendsOnSaturday);
     return false;
 };
 

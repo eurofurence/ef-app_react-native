@@ -139,7 +139,7 @@ export type EventDayRecord = RecordMetadata & {
 };
 
 export type EventDayDetails = EventDayRecord & {
-    dayOfWeek: number;
+    DayOfWeek: number;
 };
 
 export type EventTrackRecord = RecordMetadata & {

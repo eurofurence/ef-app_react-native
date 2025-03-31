@@ -4,14 +4,14 @@ import { captureException } from "@sentry/react-native";
 import { format, isBefore, subMilliseconds, subMinutes } from "date-fns";
 import { conId } from "@/configuration";
 import { EventRecord, RecordId } from "@/store/eurofurence/types";
-import { StoreNames, StoreType } from "@/context/DataCacheProvider";
+import { StoreKeys, StoreNames, StoreTypes } from "@/context/DataCacheProvider";
 
-type SaveCacheFunction = <T extends StoreNames>(storeName: T, key: string, data: StoreType<T>) => void;
+type SaveCacheFunction = <T extends StoreNames>(storeName: T, key: StoreKeys[T], data: StoreTypes[T]) => void;
 type RemoveCacheFunction = (storeName: StoreNames, key: string) => void;
 
 export async function scheduleEventReminder(
-    event: EventRecord, 
-    timeTravel: number, 
+    event: EventRecord,
+    timeTravel: number,
     saveCache: SaveCacheFunction
 ) {
     // Get relevant UTC times.
@@ -48,7 +48,7 @@ export async function scheduleEventReminder(
 }
 
 export async function cancelEventReminder(
-    event: EventRecord | RecordId, 
+    event: EventRecord | RecordId,
     removeCache: RemoveCacheFunction
 ) {
     // Get actual identifier, might be called without an instance.
@@ -56,7 +56,7 @@ export async function cancelEventReminder(
 
     // If platform is on device, cancel actual notification.
     if (Platform.OS === "android" || Platform.OS === "ios") {
-        await Notifications.cancelScheduledNotificationAsync(identifier).catch((error) => 
+        await Notifications.cancelScheduledNotificationAsync(identifier).catch((error) =>
             captureException(error, { level: "warning" })
         );
     }
@@ -73,4 +73,4 @@ export async function rescheduleEventReminder(
 ) {
     await cancelEventReminder(event, removeCache);
     await scheduleEventReminder(event, timeTravel, saveCache);
-} 
+}

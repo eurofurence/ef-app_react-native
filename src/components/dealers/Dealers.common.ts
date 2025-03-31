@@ -11,7 +11,7 @@ import { appBase, conAbbr } from "@/configuration";
 // import { useAppSelector } from "../../store";
 // import { selectDealerCategoryMapper } from "../../store/eurofurence/selectors/dealers";
 import { DealerDetails } from "@/store/eurofurence/types";
-import { selectDealerCategoryMapper } from "@/store/eurofurence/selectors/dealers";
+import { selectDealerCategoryMapper, useDealersData } from "@/store/eurofurence/selectors/dealers";
 
 /**
  * Compares category, checks if the categories are adult labeled.
@@ -56,7 +56,9 @@ export const useDealerInstances = (t: TFunction, now: Date, items: DealerDetails
 export const useDealerGroups = (t: TFunction, now: Date, results: DealerDetails[] | null, all: DealerDetails[]) => {
     // Instead of using a Redux selector for category mapping, we use a default function.
     // TODO: See type of selectDealerCategoryMapper
-    const categoryOf: any = selectDealerCategoryMapper;
+    const dealers = useDealersData();
+
+    const categoryOf = useMemo(() => selectDealerCategoryMapper(dealers), [dealers]);
     return useMemo(() => {
         const source = results ?? all;
         const day1 = format(setDay(new Date(), 1, { weekStartsOn: 0 }), "EEEE");
@@ -169,7 +171,7 @@ export const shareDealer = (dealer: DealerDetails) =>
         {
             title: dealer.DisplayNameOrAttendeeNickname,
             url: `${appBase}/Web/Dealers/${dealer.Id}`,
-            message: `Check out ${dealer.DisplayNameOrAttendeeNickname} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
+            message: `Check out ${dealer.DisplayNameOrAttendeeNickname} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`
         },
-        {},
+        {}
     ).catch(captureException);

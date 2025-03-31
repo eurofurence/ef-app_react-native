@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { SectionList, StyleSheet, ScrollView } from "react-native";
+import { SectionList, StyleSheet } from "react-native";
 import { chain, partition, isEmpty, startCase } from "lodash";
 import { router } from "expo-router";
 
@@ -73,11 +73,11 @@ export default function PmList() {
 
     const renderItem = useCallback(
         ({ item }: { item: CommunicationRecord }) => (
-            <PrivateMessageCard 
-                key={item.Id} 
-                containerStyle={styles.item} 
-                onPress={() => navigateTo(item)} 
-                item={item} 
+            <PrivateMessageCard
+                key={item.Id}
+                containerStyle={styles.item}
+                onPress={() => navigateTo(item)}
+                item={item}
             />
         ),
         [navigateTo]
@@ -103,8 +103,8 @@ export default function PmList() {
 }
 
 const styles = StyleSheet.create({
-    section: { 
-        padding: 20 
+    section: {
+        padding: 20
     },
     action: {
         flex: 3,
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
     container: {
         paddingBottom: 100,
     },
-}); 
+});

@@ -1,12 +1,11 @@
 import { useCallback } from "react";
-import { captureException } from "@sentry/react-native";
 import { EventRecord } from "@/store/eurofurence/types";
 import { useDataCache } from "@/context/DataCacheProvider";
 import { scheduleEventReminder, cancelEventReminder } from "@/util/eventReminders";
 
 export const useEventReminder = (event: EventRecord) => {
     const { getCacheSync, saveCache, removeCache } = useDataCache();
-    
+
     // Retrieve timeTravel value from cache, default to 0
     const timeTravel = getCacheSync("timetravel", "timeOffset")?.data ?? 0;
     // Retrieve the reminder from cache
@@ -43,4 +42,4 @@ export const useEventReminder = (event: EventRecord) => {
         removeReminder,
         toggleReminder,
     };
-}; 
+};

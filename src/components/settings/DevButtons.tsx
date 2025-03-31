@@ -1,24 +1,24 @@
-import React, { useCallback, useState } from 'react';
-import { View, TextInput, StyleSheet, Vibration } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { useDataCache } from '@/context/DataCacheProvider';
-import { Button } from '@/components/generic/containers/Button';
-import { captureException } from '@sentry/react-native';
+import React, { useCallback, useState } from "react";
+import { View, TextInput, StyleSheet, Vibration } from "react-native";
+import { useTranslation } from "react-i18next";
+import { useDataCache } from "@/context/DataCacheProvider";
+import { Button } from "@/components/generic/containers/Button";
+import { captureException } from "@sentry/react-native";
 import { useToast } from "@/context/ToastContext";
-import { Section } from '@/components/generic/atoms/Section';
-import * as Clipboard from 'expo-clipboard';
-import * as Notifications from 'expo-notifications';
-import * as SecureStore from 'expo-secure-store';
-import { useThemeColorValue, useThemeBackground } from '@/hooks/themes/useThemeHooks';
-import { useAuthContext } from '@/context/AuthContext';
-import { useNow } from '@/hooks/time/useNow';
-import { format } from 'date-fns';
-import { useCreateSyncRequest, useSendPrivateMessage } from '@/services/auth';
-import { withAlpha } from '@/context/Theme';
+import { Section } from "@/components/generic/atoms/Section";
+import * as Clipboard from "expo-clipboard";
+import * as Notifications from "expo-notifications";
+import * as SecureStore from "expo-secure-store";
+import { useThemeColorValue, useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { useAuthContext } from "@/context/AuthContext";
+import { useNow } from "@/hooks/time/useNow";
+import { format } from "date-fns";
+import { useCreateSyncRequest, useSendPrivateMessage } from "@/services/auth";
+import { withAlpha } from "@/context/Theme";
 
 export function DevButtons() {
     const { t } = useTranslation("Settings", { keyPrefix: "dev_buttons" });
-    const { synchronizeUi, saveCache } = useDataCache();
+    const { synchronizeUi } = useDataCache();
     const toast = useToast();
     const [token, setToken] = useState("");
     const { claims, refresh } = useAuthContext();
@@ -31,12 +31,12 @@ export function DevButtons() {
     // Auth service hooks
     const { execute: createSync, isLoading: isSyncing } = useCreateSyncRequest();
     const { execute: sendMessage, isLoading: isSending } = useSendPrivateMessage({
-        RecipientUid: claims?.sub?.toString() || '',
-        AuthorName: 'tester',
+        RecipientUid: claims?.sub?.toString() || "",
+        AuthorName: "tester",
         ToastTitle: t("test_message_subject"),
         ToastMessage: t("test_message_content"),
         Subject: t("test_message_subject"),
-        Message: t("test_message_content"),
+        Message: t("test_message_content")
     });
 
     const onSendMessage = useCallback(async () => {
@@ -49,7 +49,7 @@ export function DevButtons() {
             await sendMessage();
             alert(`Sent a message to ${claims.sub}`);
         } catch (error) {
-            console.error('Failed to send message:', error);
+            console.error("Failed to send message:", error);
             alert(t("send_message_error"));
         }
     }, [claims, sendMessage, t]);
@@ -58,9 +58,9 @@ export function DevButtons() {
         <View className="p-4">
             <Section title={t("title")} subtitle={t("subtitle")} />
 
-            <Button 
+            <Button
                 containerStyle={styles.button}
-                onPress={() => toast("warning", "Toast " + format(now, 'HH:mm:ss'), 5000)}
+                onPress={() => toast("warning", "Toast " + format(now, "HH:mm:ss"), 5000)}
                 icon="toaster"
             >
                 {t("test_toast")}
@@ -111,13 +111,13 @@ export function DevButtons() {
             <Button
                 containerStyle={styles.button}
                 onPress={() => {
-                    saveCache("settings", "lastSynchronised", {
-                        cid: "",
-                        cacheVersion: "",
-                        lastSynchronised: now.toISOString(),
-                        state: {},
-                        lastViewTimes: {}
-                    });
+                    // TODO: I don't know how this is supposed to work.
+                    // saveCache("settings", "lastSynchronised", {
+                    //     cid: "",
+                    //     cacheVersion: "",
+                    //     lastSynchronised: now.toISOString(),
+                    //     lastViewTimes: {}
+                    // });
                 }}
                 icon="timer-cog"
             >
@@ -142,7 +142,7 @@ export function DevButtons() {
                         await createSync();
                         alert(t("sync_alert_done"));
                     } catch (error) {
-                        console.error('Sync failed:', error);
+                        console.error("Sync failed:", error);
                         alert(t("sync_alert_error"));
                     }
                 }}
@@ -164,12 +164,12 @@ export function DevButtons() {
 
 const styles = StyleSheet.create({
     button: {
-        marginVertical: 5,
+        marginVertical: 5
     },
     tokenField: {
         marginHorizontal: 5,
         marginVertical: 15,
         borderRadius: 10,
-        padding: 10,
-    },
+        padding: 10
+    }
 });

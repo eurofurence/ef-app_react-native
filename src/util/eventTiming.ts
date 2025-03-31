@@ -1,15 +1,15 @@
-import { differenceInMilliseconds, formatDuration, parseISO } from "date-fns";
+import { differenceInMilliseconds, parseISO } from "date-fns";
 import { format, toZonedTime } from "date-fns-tz";
-import { EventDetails } from "../store/eurofurence/types";
-import { conTimeZone } from "../configuration";
+import { EventDetails } from "@/store/eurofurence/types";
+import { conTimeZone } from "@/configuration";
 
 export function calculateEventTiming(details: EventDetails, now: Date | "done") {
     // Parse dates
     const eventStart = parseISO(details.StartDateTimeUtc);
     const eventEnd = parseISO(details.EndDateTimeUtc);
-    
+
     // Calculate progress
-    const progress = now !== "done" 
+    const progress = now !== "done"
         ? differenceInMilliseconds(now, eventStart) / differenceInMilliseconds(eventEnd, eventStart)
         : 1.1;
 
@@ -27,8 +27,8 @@ export function calculateEventTiming(details: EventDetails, now: Date | "done") 
     const durationMs = differenceInMilliseconds(eventEnd, eventStart);
     const durationHours = durationMs / (1000 * 60 * 60);
     const durationMinutes = durationMs / (1000 * 60);
-    const runtime = durationHours >= 1 
-        ? `${Math.floor(durationHours)}h` 
+    const runtime = durationHours >= 1
+        ? `${Math.floor(durationHours)}h`
         : `${Math.floor(durationMinutes)}m`;
 
     return {
@@ -50,4 +50,4 @@ export function formatWeekdayInConventionTimezone(dateStr: string): string {
     const date = parseISO(dateStr);
     const zonedDate = toZonedTime(date, conTimeZone);
     return format(zonedDate, "EEEE", { timeZone: conTimeZone });
-} 
+}

@@ -27,6 +27,11 @@ export type TabsProps = {
         icon: IconNames;
 
         /**
+         * Tab style property.
+         */
+        style?:StyleProp<ViewStyle>;
+
+        /**
          * The name of the tab.
          */
         text: string;
@@ -143,10 +148,10 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
 
     // Derive isOpen state from offset
     const isOpen = useDerivedValue(() => offset.value > 0, [offset]);
-    
+
     // Track isOpen state in React state for context
     const [isOpenState, setIsOpenState] = useState(false);
-    
+
     // Use animated reaction to update React state
     useAnimatedReaction(
         () => isOpen.value,
@@ -274,7 +279,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
 
                     <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={pointerEvents}>
                         {/* Dynamic tabs. */}
-                        {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
+                        {tabs?.map((tab, i) => <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
 
                         {/* More-tab. */}
                         <Tab icon={tabIcon} text={tabText} onPress={tabOnPress} indicate={indicateMore} />

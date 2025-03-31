@@ -14,13 +14,12 @@ import { Row } from "@/components/generic/containers/Row";
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
     claim: Claims | null;
-    open: boolean;
     onMessages?: () => void;
     onLogin?: () => void;
     onProfile?: () => void;
 };
 
-export function PagerPrimaryLogin({ loggedIn, claim, open, onMessages, onLogin, onProfile }: PagerPrimaryLoginProps) {
+export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProfile }: PagerPrimaryLoginProps) {
     const { t } = useTranslation("Menu");
     const avatarBackground = useThemeBackground("primary");
 

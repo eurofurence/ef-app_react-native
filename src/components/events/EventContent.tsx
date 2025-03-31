@@ -1,5 +1,5 @@
 import { useIsFocused } from "@react-navigation/core";
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
+import React, { FC,  useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 
@@ -80,7 +80,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const track = event.ConferenceTrack;
     const room = event.ConferenceRoom;
 
-    const { getAllCacheSync, saveCache } = useDataCache();
+    const { getAllCacheSync } = useDataCache();
     const [mapLink, setMapLink] = useState<MapLink[]>([]);
 
     useEffect(() => {
@@ -96,6 +96,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                     setMapLink([]);
                 }
             }
+
             loadMapLinks().then();
         }
     }, [room, getAllCacheSync]);
@@ -114,12 +115,6 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         const dayLocal = format(new Date(event.StartDateTimeUtc), "EEE");
         return { zone, start, end, day, startLocal, endLocal, dayLocal };
     }, [calendar, event.StartDateTimeUtc, event.EndDateTimeUtc]);
-
-    const toggleEventHidden = useCallback(() => {
-        if (onToggleHidden) {
-            onToggleHidden({ ...event, Hidden: !event.Hidden });
-        }
-    }, [event, onToggleHidden]);
 
     return (
         <>
@@ -174,7 +169,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                 >
                     {isFavorite ? t("remove_favorite") : t("add_favorite")}
                 </Button>
-                <Button containerStyle={styles.rowRight} icon={event.Hidden ? "eye" : "eye-off"} onPress={toggleEventHidden} outline>
+                <Button containerStyle={styles.rowRight} icon={event.Hidden ? "eye" : "eye-off"} onPress={() => onToggleHidden?.(event)} outline>
                     {event.Hidden ? t("reveal") : t("hide")}
                 </Button>
             </Row>
@@ -187,7 +182,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                     onPress={() =>
                         router.navigate({
                             pathname: "/events/[eventId]/feedback",
-                            params: { eventId: event.Id },
+                            params: { eventId: event.Id }
                         })
                     }
                 >
@@ -206,7 +201,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                 {t("when", {
                     day: day,
                     start: start,
-                    finish: end,
+                    finish: end
                 })}
                 {start === startLocal ? null : (
                     <Label type="bold">
@@ -215,7 +210,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                                 day: dayLocal,
                                 start: startLocal,
                                 finish: endLocal,
-                                zone: zone,
+                                zone: zone
                             })}
                     </Label>
                 )}
@@ -234,18 +229,18 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
             {!mapLink
                 ? null
                 : mapLink.map(({ map, entry, link }: MapLink, i: number) => (
-                      <ImageExButton
-                          key={i}
-                          image={map.Image}
-                          target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
-                          onPress={() =>
-                              router.navigate({
-                                  pathname: "/maps/[mapId]/[entryId]/[linkId]",
-                                  params: { mapId: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) },
-                              })
-                          }
-                      />
-                  ))}
+                    <ImageExButton
+                        key={i}
+                        image={map.Image}
+                        target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
+                        onPress={() =>
+                            router.navigate({
+                                pathname: "/maps/[mapId]/[entryId]/[linkId]",
+                                params: { mapId: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) }
+                            })
+                        }
+                    />
+                ))}
 
             <Section icon="information" title={t("label_event_description")} />
             <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
@@ -256,17 +251,17 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 const styles = StyleSheet.create({
     rowLeft: {
         flex: 1,
-        marginRight: 8,
+        marginRight: 8
     },
     rowRight: {
         flex: 1,
-        marginLeft: 8,
+        marginLeft: 8
     },
     marginBefore: {
-        marginTop: 15,
+        marginTop: 15
     },
     posterLine: {
         marginTop: 20,
-        alignItems: "center",
-    },
+        alignItems: "center"
+    }
 });

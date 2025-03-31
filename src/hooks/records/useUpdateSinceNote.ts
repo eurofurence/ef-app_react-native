@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
 import { RecordMetadata } from "@/store/eurofurence/types";
 import { useNow } from "@/hooks/time/useNow";
 import { isAfter, parseISO } from "date-fns";
@@ -14,17 +14,11 @@ import { isAfter, parseISO } from "date-fns";
 export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 3_000) => {
     const now = useNow();
     const { getCacheSync, saveCache } = useDataCache();
-    const settings = getCacheSync("settings", "state")?.data || {
-        cid: "",
-        cacheVersion: "",
-        lastSynchronised: "",
-        state: {},
-        lastViewTimes: {},
-    };
+    const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
     const lastViewed = item ? settings.lastViewTimes[item.Id] : null;
-    
-    const updated = useMemo(() => 
-        Boolean(item && lastViewed && isAfter(parseISO(item.LastChangeDateTimeUtc), parseISO(lastViewed))), 
+
+    const updated = useMemo(() =>
+            Boolean(item && lastViewed && isAfter(parseISO(item.LastChangeDateTimeUtc), parseISO(lastViewed))),
         [item, lastViewed]
     );
 
@@ -36,10 +30,10 @@ export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, dela
                 ...settings,
                 lastViewTimes: {
                     ...settings.lastViewTimes,
-                    [item.Id]: now.toISOString(),
-                },
+                    [item.Id]: now.toISOString()
+                }
             };
-            saveCache("settings", "state", newSettings);
+            saveCache("settings", "settings", newSettings);
         }, delay);
         return () => {
             clearTimeout(handle);
@@ -47,4 +41,4 @@ export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, dela
     }, [item, delay, now, settings, saveCache]);
 
     return updated;
-}; 
+};

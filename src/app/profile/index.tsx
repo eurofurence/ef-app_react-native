@@ -1,20 +1,17 @@
 import { captureException } from "@sentry/react-native";
 import { router, Stack } from "expo-router";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { StyleSheet, Animated, Easing, TouchableOpacity } from "react-native";
 import { ScrollView, RefreshControl } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { appStyles } from "@/components/AppStyles";
 import { ProfileContent } from "@/components/ProfileContent";
 import { Floater, padFloater } from "@/components/generic/containers/Floater";
-import { Header } from "@/components/generic/containers/Header";
 import { useAuthContext } from "@/context/AuthContext";
 import { useThemeColor, useThemeBackground } from "@/hooks/themes/useThemeHooks";
 import { useDataCache } from "@/context/DataCacheProvider";
 
 export default function Profile() {
-    const { t } = useTranslation("Profile");
     const { refresh, loggedIn, claims, user } = useAuthContext();
     const [isReloading, setIsReloading] = useState(false);
     const spinValue = useMemo(() => new Animated.Value(0), []);
@@ -71,10 +68,10 @@ export default function Profile() {
     ), [doReload, spin, iconColor]);
 
     return (
-        <ScrollView 
-            style={[StyleSheet.absoluteFill, backgroundStyle]} 
+        <ScrollView
+            style={[StyleSheet.absoluteFill, backgroundStyle]}
             refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}
-            stickyHeaderIndices={[0]} 
+            stickyHeaderIndices={[0]}
             stickyHeaderHiddenOnScroll
         >
             <Stack.Screen options={{ headerRight: () => refreshButton }} />
@@ -90,4 +87,4 @@ const styles = StyleSheet.create({
         padding: 8,
         marginRight: 8,
     },
-}); 
+});
