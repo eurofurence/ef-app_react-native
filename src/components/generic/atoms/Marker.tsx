@@ -1,10 +1,10 @@
-import * as React from "react";
-import { FC } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import * as React from 'react'
+import { FC } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
-import { Icon, IconNames } from "./Icon";
-import { ThemeColor } from "@/context/Theme";
-import { useTheme } from "@/hooks/themes/useThemeHooks";
+import { Icon, IconNames } from './Icon'
+import { ThemeColor } from '@/context/Theme'
+import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export type MarkerProps = {
     style?: StyleProp<ViewStyle>;
@@ -13,9 +13,9 @@ export type MarkerProps = {
     markerSize?: number;
 };
 
-export const Marker: FC<MarkerProps> = ({ style, markerColor = "marker", markerType = "map-marker", markerSize = 40 }) => {
-    const theme = useTheme();
-    const color = markerColor in theme ? theme[markerColor] : markerColor;
+export const Marker: FC<MarkerProps> = ({ style, markerColor = 'marker', markerType = 'map-marker', markerSize = 40 }) => {
+    const theme = useTheme()
+    const color = markerColor in theme ? theme[markerColor] : markerColor
 
     return (
         <View style={[styles.container, style]}>
@@ -24,23 +24,23 @@ export const Marker: FC<MarkerProps> = ({ style, markerColor = "marker", markerT
                 <Icon style={styles.marker} name={markerType} color={color} size={markerSize} />
             </View>
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
-        position: "absolute",
+        position: 'absolute',
         width: 0,
         height: 0,
-        alignItems: "center",
+        alignItems: 'center',
     },
     content: {
-        position: "absolute",
+        position: 'absolute',
         bottom: 0,
     },
     marker: {},
     shadow: {
-        position: "absolute",
+        position: 'absolute',
         transform: [{ translateX: 2 }, { translateY: 2 }],
     },
-});
+})

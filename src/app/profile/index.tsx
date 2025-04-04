@@ -1,24 +1,24 @@
-import { captureException } from "@sentry/react-native";
-import { router, Stack } from "expo-router";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { StyleSheet, Animated, Easing, TouchableOpacity } from "react-native";
-import { ScrollView, RefreshControl } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
-import { appStyles } from "@/components/AppStyles";
-import { ProfileContent } from "@/components/ProfileContent";
-import { Floater, padFloater } from "@/components/generic/containers/Floater";
-import { useAuthContext } from "@/context/AuthContext";
-import { useThemeColor, useThemeBackground } from "@/hooks/themes/useThemeHooks";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { captureException } from '@sentry/react-native'
+import { router, Stack } from 'expo-router'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { StyleSheet, Animated, Easing, TouchableOpacity } from 'react-native'
+import { ScrollView, RefreshControl } from 'react-native-gesture-handler'
+import { Ionicons } from '@expo/vector-icons'
+import { appStyles } from '@/components/AppStyles'
+import { ProfileContent } from '@/components/ProfileContent'
+import { Floater, padFloater } from '@/components/generic/containers/Floater'
+import { useAuthContext } from '@/context/AuthContext'
+import { useThemeColor, useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useCache } from '@/context/data/DataCache'
 
 export default function Profile() {
-    const { refresh, loggedIn, claims, user } = useAuthContext();
-    const [isReloading, setIsReloading] = useState(false);
-    const spinValue = useMemo(() => new Animated.Value(0), []);
-    const themeColor = useThemeColor("text");
-    const iconColor = themeColor.color;
-    const { synchronizeUi, isSynchronizing } = useDataCache();
-    const backgroundStyle = useThemeBackground("background");
+    const { refresh, loggedIn, claims, user } = useAuthContext()
+    const [isReloading, setIsReloading] = useState(false)
+    const spinValue = useMemo(() => new Animated.Value(0), [])
+    const themeColor = useThemeColor('text')
+    const iconColor = themeColor.color
+    const { synchronizeUi, isSynchronizing } = useCache()
+    const backgroundStyle = useThemeBackground('background')
 
     // Set up the rotation animation
     useEffect(() => {
@@ -29,35 +29,35 @@ export default function Profile() {
                     duration: 1000,
                     easing: Easing.linear,
                     useNativeDriver: true,
-                })
-            ).start();
+                }),
+            ).start()
         } else {
-            spinValue.setValue(0);
+            spinValue.setValue(0)
         }
-    }, [isReloading, spinValue]);
+    }, [isReloading, spinValue])
 
     const spin = spinValue.interpolate({
         inputRange: [0, 1],
-        outputRange: ['0deg', '360deg']
-    });
+        outputRange: ['0deg', '360deg'],
+    })
 
     const doReload = useCallback(() => {
         if (!isReloading) {
-            setIsReloading(true);
+            setIsReloading(true)
             refresh()
                 .catch(captureException)
                 .finally(() => {
-                    setIsReloading(false);
-                });
+                    setIsReloading(false)
+                })
         }
-    }, [refresh, isReloading]);
+    }, [refresh, isReloading])
 
     // Navigate back if not logged in or unable to retrieve proper user data
     useEffect(() => {
         if (!loggedIn) {
-            router.back();
+            router.back()
         }
-    }, [loggedIn]);
+    }, [loggedIn])
 
     const refreshButton = useMemo(() => (
         <TouchableOpacity onPress={doReload} style={styles.refreshButton} activeOpacity={0.6}>
@@ -65,7 +65,7 @@ export default function Profile() {
                 <Ionicons name="refresh" size={24} color={iconColor} />
             </Animated.View>
         </TouchableOpacity>
-    ), [doReload, spin, iconColor]);
+    ), [doReload, spin, iconColor])
 
     return (
         <ScrollView
@@ -79,7 +79,7 @@ export default function Profile() {
                 {!claims || !user ? null : <ProfileContent claims={claims} user={user} parentPad={padFloater} />}
             </Floater>
         </ScrollView>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -87,4 +87,4 @@ const styles = StyleSheet.create({
         padding: 8,
         marginRight: 8,
     },
-});
+})

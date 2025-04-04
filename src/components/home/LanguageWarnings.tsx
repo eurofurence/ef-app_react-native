@@ -1,8 +1,8 @@
-import React, { FC } from "react";
-import { useTranslation } from "react-i18next";
-import { Label } from "../generic/atoms/Label";
-import { Badge } from "../generic/containers/Badge";
-import { useWarningState } from "@/hooks/warnings/useWarningState";
+import React, { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Label } from '../generic/atoms/Label'
+import { Badge } from '../generic/containers/Badge'
+import { useWarningState } from '@/hooks/data/useWarningState'
 
 export type LanguageWarningsProps = {
     /**
@@ -12,23 +12,23 @@ export type LanguageWarningsProps = {
 };
 
 export const LanguageWarnings: FC<LanguageWarningsProps> = ({ parentPad = 0 }) => {
-    const { t } = useTranslation("Home");
-    const notice = t("content_untranslated");
-    const { isHidden, hideWarning } = useWarningState("languageWarningsHidden");
+    const { t } = useTranslation('Home')
+    const notice = t('content_untranslated')
+    const { isHidden, hideWarning } = useWarningState('languageWarningsHidden')
 
     if (isHidden) {
-        return null;
+        return null
     }
-    if (notice === "") {
-        return null;
+    if (notice === '') {
+        return null
     }
 
     return (
         <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="translate">
             {notice}
             <Label variant="bold" color="secondary" onPress={hideWarning}>
-                {" " + t("warnings.hide")}
+                {' ' + t('warnings.hide')}
             </Label>
         </Badge>
-    );
-};
+    )
+}

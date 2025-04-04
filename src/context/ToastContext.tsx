@@ -1,5 +1,5 @@
-import { randomUUID } from "expo-crypto";
-import { createContext, ReactNode, useCallback, useContext, useState } from "react";
+import { randomUUID } from 'expo-crypto'
+import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
 
 /**
  * A toast message entry.
@@ -13,7 +13,7 @@ export type ToastMessage = {
     /**
      * The type of the toast.
      */
-    type: "notice" | "info" | "warning" | "error";
+    type: 'notice' | 'info' | 'warning' | 'error';
 
     /**
      * The content, can be a React node.
@@ -52,7 +52,7 @@ export type ToastContextType = {
      * @param lifetime The lifetime.
      * @param group A group key, freely pickable if multiple consumers render toasts.
      */
-    toast(type: "notice" | "info" | "warning" | "error", content: ReactNode | string, lifetime?: number, group?: any): void;
+    toast(type: 'notice' | 'info' | 'warning' | 'error', content: ReactNode | string, lifetime?: number, group?: any): void;
 
     /**
      * Dismisses a toast.
@@ -66,9 +66,12 @@ export type ToastContextType = {
  */
 export const ToastContext = createContext<ToastContextType>({
     messages: [],
-    toast() {},
-    dismiss() {},
-});
+    toast() {
+    },
+    dismiss() {
+    },
+})
+ToastContext.displayName = 'ToastContext'
 
 /**
  * Prop types for a toast provider.
@@ -86,53 +89,53 @@ export type ToastContextProviderProps = {
  * @constructor
  */
 export const ToastContextProvider = ({ children }: ToastContextProviderProps) => {
-    const [messages, setMessages] = useState<ToastMessage[]>([]);
-    const toast = useCallback((type: "notice" | "info" | "warning" | "error", content: ReactNode | string, lifetime = 5000, group?: any) => {
-        const queued = Date.now();
-        const message = { id: randomUUID(), type, content, queued, lifetime, group };
+    const [messages, setMessages] = useState<ToastMessage[]>([])
+    const toast = useCallback((type: 'notice' | 'info' | 'warning' | 'error', content: ReactNode | string, lifetime = 5000, group?: any) => {
+        const queued = Date.now()
+        const message = { id: randomUUID(), type, content, queued, lifetime, group }
 
-        setMessages((current) => [...current, message]);
+        setMessages((current) => [...current, message])
         setTimeout(() => {
             setMessages((current) => {
-                const i = current.indexOf(message);
-                return i < 0 ? current : current.slice(0, i).concat(current.slice(i + 1));
-            });
-        }, lifetime);
-    }, []);
+                const i = current.indexOf(message)
+                return i < 0 ? current : current.slice(0, i).concat(current.slice(i + 1))
+            })
+        }, lifetime)
+    }, [])
 
     const dismiss = useCallback((id: string) => {
         setMessages((current) => {
-            const i = current.findIndex((message) => id === message.id);
-            return i < 0 ? current : current.slice(0, i).concat(current.slice(i + 1));
-        });
-    }, []);
+            const i = current.findIndex((message) => id === message.id)
+            return i < 0 ? current : current.slice(0, i).concat(current.slice(i + 1))
+        })
+    }, [])
 
-    return <ToastContext.Provider value={{ messages, toast, dismiss }}>{children}</ToastContext.Provider>;
-};
+    return <ToastContext.Provider value={{ messages, toast, dismiss }}>{children}</ToastContext.Provider>
+}
 
 /**
  * Uses the entire toast context.
  */
-export const useToastContext = () => useContext(ToastContext);
+export const useToastContext = () => useContext(ToastContext)
 
 /**
  * Uses the toast method of the toast context.
  */
-export const useToast = () => useContext(ToastContext).toast;
+export const useToast = () => useContext(ToastContext).toast
 
 /**
  * Uses the toast dismiss method of the toast context.
  */
-export const useToastDismiss = () => useContext(ToastContext).dismiss;
+export const useToastDismiss = () => useContext(ToastContext).dismiss
 
 /**
  * Uses the current messages of the toast context.
  */
 export const useToastMessages = (limit?: number) => {
-    const result = useContext(ToastContext).messages;
+    const result = useContext(ToastContext).messages
 
-    if (limit === undefined) return result;
-    const start = Math.max(result.length - limit, 0);
-    const end = Math.min(start + limit, result.length);
-    return result.slice(start, end);
-};
+    if (limit === undefined) return result
+    const start = Math.max(result.length - limit, 0)
+    const end = Math.min(start + limit, result.length)
+    return result.slice(start, end)
+}

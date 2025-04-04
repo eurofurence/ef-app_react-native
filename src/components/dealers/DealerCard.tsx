@@ -1,15 +1,15 @@
-import React, { FC, useCallback } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, View, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { FC, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View, ViewStyle } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { appStyles } from "../AppStyles";
-import { Image } from "../generic/atoms/Image";
-import { Label } from "../generic/atoms/Label";
-import { sourceFromImage } from "../generic/atoms/Image.common";
-import { isPresent, joinOffDays } from "./utils";
-import { DealerDetails } from "@/store/eurofurence/types";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { appStyles } from '../AppStyles'
+import { Image } from '../generic/atoms/Image'
+import { Label } from '../generic/atoms/Label'
+import { sourceFromImage } from '../generic/atoms/Image.common'
+import { isPresent, joinOffDays } from './utils'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { DealerDetails } from '@/context/data/types'
 
 export type DealerDetailsInstance = {
     details: DealerDetails;
@@ -30,7 +30,7 @@ export function dealerInstanceForAny(details: DealerDetails, now: Date, day1: st
         details,
         present: isPresent(details, now),
         offDays: joinOffDays(details, day1, day2, day3),
-    };
+    }
 }
 
 export type DealerCardProps = {
@@ -43,22 +43,22 @@ export type DealerCardProps = {
 
 export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer, onPress, onLongPress }) => {
     // Details and properties dereference.
-    const name = dealer.details.DisplayNameOrAttendeeNickname;
-    const present = dealer.present;
-    const description = dealer.details.Categories?.join(", ");
-    const offDays = dealer.offDays;
-    const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require("@/assets/static/ych.png");
+    const name = dealer.details.DisplayNameOrAttendeeNickname
+    const present = dealer.present
+    const description = dealer.details.Categories?.join(', ')
+    const offDays = dealer.offDays
+    const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require('@/assets/static/ych.png')
 
     // Translation object.
-    const { t } = useTranslation("Dealers");
+    const { t } = useTranslation('Dealers')
 
     // Dependent and independent styles.
-    const styleBackground = useThemeBackground("background");
-    const stylePre = useThemeBackground(present ? "primary" : "darken");
-    const avatarBackground = useThemeBackground("primary");
+    const styleBackground = useThemeBackground('background')
+    const stylePre = useThemeBackground(present ? 'primary' : 'darken')
+    const avatarBackground = useThemeBackground('primary')
 
-    const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress]);
-    const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress]);
+    const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress])
+    const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
     return (
         <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
@@ -67,7 +67,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
                     style={[avatarBackground, styles.avatarCircle]}
                     source={avatar}
                     contentFit="contain"
-                    placeholder={require("@/assets/static/ych.png")}
+                    placeholder={require('@/assets/static/ych.png')}
                     transition={60}
                     recyclingKey={dealer.details.Id}
                 />
@@ -84,41 +84,41 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
 
                 {!offDays ? null : (
                     <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-                        {t("not_attending_on", { offDays })}
+                        {t('not_attending_on', { offDays })}
                     </Label>
                 )}
             </View>
         </TouchableOpacity>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
         minHeight: 80,
         marginVertical: 15,
         borderRadius: 16,
-        overflow: "hidden",
-        flexDirection: "row",
+        overflow: 'hidden',
+        flexDirection: 'row',
     },
     background: {
-        position: "absolute",
+        position: 'absolute',
         width: undefined,
         height: undefined,
     },
     pre: {
-        overflow: "hidden",
+        overflow: 'hidden',
         width: 80,
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     avatarCircle: {
-        position: "absolute",
+        position: 'absolute',
         width: 70,
         height: 70,
         borderRadius: 35,
     },
     image: {
-        position: "absolute",
+        position: 'absolute',
         width: undefined,
         height: undefined,
         left: -10,
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
         bottom: -10,
     },
     imageOverlay: {
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         top: 0,
         right: 0,
@@ -138,6 +138,6 @@ const styles = StyleSheet.create({
         padding: 12,
     },
     tag: {
-        textAlign: "right",
+        textAlign: 'right',
     },
-});
+})

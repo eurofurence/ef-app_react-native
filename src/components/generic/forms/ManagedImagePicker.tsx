@@ -1,20 +1,20 @@
-import * as ImagePicker from "expo-image-picker";
-import * as React from "react";
-import { useState } from "react";
-import { Controller } from "react-hook-form";
-import { StyleSheet, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import * as ImagePicker from 'expo-image-picker'
+import * as React from 'react'
+import { useState } from 'react'
+import { Controller } from 'react-hook-form'
+import { StyleSheet, View } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { useThemeBackground } from "../../../hooks/themes/useThemeHooks";
-import { Image, ImageProps } from "../atoms/Image";
-import { Label } from "../atoms/Label";
-import { Col } from "../containers/Col";
+import { useThemeBackground } from '../../../hooks/themes/useThemeHooks'
+import { Image, ImageProps } from '../atoms/Image'
+import { Label } from '../atoms/Label'
+import { Col } from '../containers/Col'
 
 type InnerManagedImagePickerProps<T extends object> = {
     /**
      * The style button.
      */
-    style?: ImageProps["style"];
+    style?: ImageProps['style'];
 
     /**
      * Name of the form field.
@@ -46,8 +46,8 @@ type InnerManagedImagePickerProps<T extends object> = {
 type ManagedImagePickerProps<T extends object> = InnerManagedImagePickerProps<T>;
 
 export const ManagedImagePicker = <T extends object>({ style, name, label, errorTranslator, placeholder }: ManagedImagePickerProps<T>) => {
-    const backgroundStyle = useThemeBackground("background");
-    const [aspectRatio, setAspectRatio] = useState<undefined | number>();
+    const backgroundStyle = useThemeBackground('background')
+    const [aspectRatio, setAspectRatio] = useState<undefined | number>()
     return (
         <Controller
             render={({ field, fieldState }) => (
@@ -64,8 +64,8 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
                                 allowsMultipleSelection: false,
                                 quality: 1,
                             }).then((result) => {
-                                if (!result.canceled) field.onChange(result.assets[0].uri);
-                            });
+                                if (!result.canceled) field.onChange(result.assets[0].uri)
+                            })
                         }}
                     >
                         <Image
@@ -90,12 +90,12 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
             )}
             name={name.toString()}
         />
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
+        width: '100%',
         height: undefined,
         marginTop: 6,
         marginBottom: 16,
@@ -104,13 +104,13 @@ const styles = StyleSheet.create({
         opacity: 0.4,
     },
     image: {
-        width: "100%",
+        width: '100%',
         minHeight: 200,
         height: undefined,
     },
     labelContainer: {
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
         opacity: 0.5,
     },
-});
+})

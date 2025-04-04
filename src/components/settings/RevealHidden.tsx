@@ -1,49 +1,42 @@
-import { useIsFocused } from "@react-navigation/core";
-import { chain } from "lodash";
-import React, { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { appStyles } from "@/components/AppStyles";
-import { EventCard, eventInstanceForAny } from "@/components/events/EventCard";
-import { Label } from "@/components/generic/atoms/Label";
-import { Floater } from "@/components/generic/containers/Floater";
-import { useNow } from "@/hooks/time/useNow";
-import { useZoneAbbr } from "@/hooks/time/useZoneAbbr";
-import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
-import { EventDetails } from "@/store/eurofurence/types";
+import { useIsFocused } from '@react-navigation/core'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { appStyles } from '@/components/AppStyles'
+import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
+import { Label } from '@/components/generic/atoms/Label'
+import { Floater } from '@/components/generic/containers/Floater'
+import { useNow } from '@/hooks/time/useNow'
+import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
+import { useCache } from '@/context/data/DataCache'
+import { EventDetails } from '@/context/data/types'
 
 export const RevealHidden = () => {
-    const { t } = useTranslation("RevealHidden");
-    const isFocused = useIsFocused();
-    const now = useNow(isFocused ? 5 : "static");
-    const zone = useZoneAbbr();
-    const { getAllCacheSync, getCacheSync, saveCache } = useDataCache();
+    const { t } = useTranslation('RevealHidden')
+    const isFocused = useIsFocused()
+    const now = useNow(isFocused ? 5 : 'static')
+    const zone = useZoneAbbr()
+    const { getEntityValues, getValue, setValue } = useCache()
 
-    const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
+    const settings = getValue('settings')
+    const all = getEntityValues('events')
     const hidden = useMemo(
-        () =>
-            chain(getAllCacheSync("events") ?? [])
-                .map(item => item.data)
-                .filter((item: EventDetails) => Boolean(settings.hiddenEvents?.includes(item.Id)))
-                .map((details) => eventInstanceForAny(details, now, zone))
-                .value(),
-        [getAllCacheSync, settings.hiddenEvents, now, zone]
-    );
+        () => all
+            .filter((item: EventDetails) => settings?.hiddenEvents?.includes(item.Id))
+            .map((details) => eventInstanceForAny(details, now, zone)), [all, now, settings?.hiddenEvents, zone])
 
-    const unhideEvent = (eventId: string) => {
-        const newSettings = {
-            ...settings,
-            hiddenEvents: settings.hiddenEvents?.filter(id => id !== eventId) ?? []
-        };
-        saveCache("settings", "settings", newSettings);
-    };
+    const unhideEvent = (eventId: string) =>
+        setValue('settings', {
+            ...(settings ?? {}),
+            hiddenEvents: settings?.hiddenEvents?.filter(id => id !== eventId) ?? [],
+        })
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Floater contentStyle={appStyles.trailer}>
                 <Label type="lead" variant="middle" mt={30}>
-                    {t("lead")}
+                    {t('lead')}
                 </Label>
 
                 {hidden.map((item) => (
@@ -51,5 +44,5 @@ export const RevealHidden = () => {
                 ))}
             </Floater>
         </ScrollView>
-    );
-};
+    )
+}

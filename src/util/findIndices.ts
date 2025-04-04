@@ -7,4 +7,4 @@ export const findIndices = <T>(items: T[], predicate: (item: T) => boolean) =>
     items
         .map((item, index) => [item, index] as const)
         .filter(([item]) => predicate(item))
-        .map(([, index]) => index);
+        .map(([, index]) => index)

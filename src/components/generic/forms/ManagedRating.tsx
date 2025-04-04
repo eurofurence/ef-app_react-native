@@ -1,8 +1,8 @@
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { useController, Path } from "react-hook-form";
-import StarRating from "react-native-star-rating-widget";
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { useController, Path } from 'react-hook-form'
+import StarRating from 'react-native-star-rating-widget'
 
-import { Label } from "../atoms/Label";
+import { Label } from '../atoms/Label'
 
 export type ManagedRatingProps<T> = {
     name: Path<T>;
@@ -15,16 +15,16 @@ export type ManagedRatingProps<T> = {
 };
 
 export const ManagedRating = <T extends Record<string, any>>({
-    name,
-    label,
-    enableHalfStar = false,
-    color = "#FFD700",
-    style,
-    starSize = 32
-}: ManagedRatingProps<T>) => {
+                                                                 name,
+                                                                 label,
+                                                                 enableHalfStar = false,
+                                                                 color = '#FFD700',
+                                                                 style,
+                                                                 starSize = 32,
+                                                             }: ManagedRatingProps<T>) => {
     const { field: { value, onChange }, fieldState: { error } } = useController<T>({
         name,
-    });
+    })
 
     return (
         <View style={[styles.container, style]}>
@@ -38,12 +38,12 @@ export const ManagedRating = <T extends Record<string, any>>({
             />
             {error && <Label type="caption" color="important" mt={4}>{error.message}</Label>}
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        alignItems: "center",
+        width: '100%',
+        alignItems: 'center',
     },
-});
+})

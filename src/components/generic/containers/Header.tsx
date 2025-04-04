@@ -1,54 +1,54 @@
-import React, { FC, PropsWithChildren } from "react";
-import { StyleSheet, ViewStyle } from "react-native";
-import { TouchableOpacity, TouchableOpacityProps } from "react-native-gesture-handler";
+import React, { FC, PropsWithChildren } from 'react'
+import { StyleSheet, ViewStyle } from 'react-native'
+import { TouchableOpacity, TouchableOpacityProps } from 'react-native-gesture-handler'
 
-import { router } from "expo-router";
-import { Continuous } from "../atoms/Continuous";
-import { Icon, IconNames } from "../atoms/Icon";
-import { Label } from "../atoms/Label";
-import { Row } from "./Row";
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
+import { router } from 'expo-router'
+import { Continuous } from '../atoms/Continuous'
+import { Icon, IconNames } from '../atoms/Icon'
+import { Label } from '../atoms/Label'
+import { Row } from './Row'
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
-const iconSize = 26;
-const iconPad = 6;
+const iconSize = 26
+const iconPad = 6
 
 export type HeaderProps = PropsWithChildren<
     | {
-          style?: ViewStyle;
-          loading?: boolean;
-      }
+    style?: ViewStyle;
+    loading?: boolean;
+}
     | {
-          style?: ViewStyle;
-          secondaryIcon: IconNames;
-          secondaryPress: () => void;
-          loading?: boolean;
-      }
+    style?: ViewStyle;
+    secondaryIcon: IconNames;
+    secondaryPress: () => void;
+    loading?: boolean;
+}
 >;
 
 /**
  * Hit slop for the back button.
  */
-const backHitSlop: TouchableOpacityProps["hitSlop"] = {
+const backHitSlop: TouchableOpacityProps['hitSlop'] = {
     left: 15,
     top: 15,
     bottom: 15,
     right: 160,
-};
+}
 
 /**
  * Hit slop for the secondary button if present.
  */
-const secondaryHitSlop: TouchableOpacityProps["hitSlop"] = {
+const secondaryHitSlop: TouchableOpacityProps['hitSlop'] = {
     right: 15,
     top: 15,
     bottom: 15,
     left: 50,
-};
+}
 
 export const Header: FC<HeaderProps> = (props) => {
-    const colorValue = useThemeColorValue("text");
-    const styleBackground = useThemeBackground("background");
-    const styleBorder = useThemeBorder("darken");
+    const colorValue = useThemeColorValue('text')
+    const styleBackground = useThemeBackground('background')
+    const styleBorder = useThemeBorder('darken')
     return (
         <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
             <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={() => router.back()}>
@@ -60,7 +60,7 @@ export const Header: FC<HeaderProps> = (props) => {
             </Label>
 
             {/* Optional secondary action. */}
-            {!("secondaryIcon" in props) ? null : (
+            {!('secondaryIcon' in props) ? null : (
                 <TouchableOpacity hitSlop={secondaryHitSlop} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
                     <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
                 </TouchableOpacity>
@@ -69,16 +69,16 @@ export const Header: FC<HeaderProps> = (props) => {
             {
                 // Loading header. Explicitly given as false, not loading.
                 props.loading === false ? (
-                    <Continuous style={styles.loading} active={false} />
-                ) : // Explicitly given as true, loading.
-                props.loading === true ? (
-                    <Continuous style={styles.loading} active={true} />
-                ) : // Not given, therefore no element.
-                null
+                        <Continuous style={styles.loading} active={false} />
+                    ) : // Explicitly given as true, loading.
+                    props.loading === true ? (
+                            <Continuous style={styles.loading} active={true} />
+                        ) : // Not given, therefore no element.
+                        null
             }
         </Row>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -89,26 +89,26 @@ const styles = StyleSheet.create({
     },
     text: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: 'center',
     },
     back: {
         marginLeft: -iconPad,
         width: iconSize + iconPad,
         height: iconSize + iconPad,
-        justifyContent: "center",
+        justifyContent: 'center',
         zIndex: 20,
     },
     secondary: {
         width: iconSize + iconPad,
         height: iconSize + iconPad,
         marginRight: -iconPad,
-        justifyContent: "center",
+        justifyContent: 'center',
         zIndex: 20,
     },
     loading: {
-        position: "absolute",
+        position: 'absolute',
         left: 0,
         bottom: 0,
         right: 0,
     },
-});
+})

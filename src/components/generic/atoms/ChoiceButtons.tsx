@@ -1,26 +1,26 @@
-import React from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import React from 'react'
+import { StyleSheet, ViewStyle } from 'react-native'
 
-import { Button } from "@/components/generic/containers/Button";
-import { Row } from "@/components/generic/containers/Row";
-import { LabelProps } from "@/components/generic/atoms/Label";
+import { Button } from '@/components/generic/containers/Button'
+import { Row } from '@/components/generic/containers/Row'
+import { LabelProps } from '@/components/generic/atoms/Label'
 
 export type ChoiceButtonsProps<T = string> = {
     style?: ViewStyle;
-    labelType?: LabelProps["type"];
-    labelVariant?: LabelProps["variant"];
+    labelType?: LabelProps['type'];
+    labelVariant?: LabelProps['variant'];
     choices: T[];
     choice: T;
     setChoice: (choice: T) => void;
     getLabel: (choice: T) => string;
 };
 
-export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, choice, setChoice, getLabel }: ChoiceButtonsProps<T>) => {
+export const ChoiceButtons = <T, >({ style, labelType, labelVariant, choices, choice, setChoice, getLabel }: ChoiceButtonsProps<T>) => {
     return (
         <Row type="center" variant="center" style={style}>
             {choices.map((item, i) => (
                 <Button
-                    key={typeof item === "string" ? item : i}
+                    key={typeof item === 'string' ? item : i}
                     containerStyle={styles.one}
                     labelType={labelType}
                     labelVariant={labelVariant}
@@ -32,8 +32,8 @@ export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, cho
                 </Button>
             ))}
         </Row>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     one: {
@@ -54,4 +54,4 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 0,
         borderTopLeftRadius: 0,
     },
-});
+})

@@ -1,22 +1,36 @@
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { DrawerProps, useDrawerScreensData } from "@/components/data/DrawerScreensData";
-import { DataCacheProvider } from "@/context/DataCacheProvider";
-import { useTheme, useThemeMemo, useThemeName } from "@/hooks/themes/useThemeHooks";
-import { useColorScheme } from "@/hooks/themes/useColorScheme";
-import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager";
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import React, { useMemo } from 'react'
+import { StyleSheet } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import 'react-native-reanimated'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { DrawerProps, useDrawerScreensData } from '@/components/data/DrawerScreensData'
+import { RawCacheProvider, StoreData } from '@/context/data/RawCache'
+import { useTheme, useThemeMemo, useThemeName } from '@/hooks/themes/useThemeHooks'
 // Import i18n configuration
-import "@/i18n";
+import '@/i18n'
 // Import global tailwind css
-import { AuthContextProvider } from "@/context/AuthContext";
-import "@/css/globals.css";
+import { AuthContextProvider } from '@/context/AuthContext'
+import '@/css/globals.css'
+import { DataCacheProvider } from '@/context/data/DataCache'
+import { syncReminders } from '@/util/syncReminders'
+import { DataStateProvider } from '@/context/data/DataState'
+
+/**
+ * These actions happen after all data is synchronized and can react to new data
+ * and return an updated state.
+ * @param data The incoming state.
+ */
+async function postSync(data: Partial<StoreData>): Promise<Partial<StoreData>> {
+    // Updates notifications scheduled on the device and stores the new
+    // notification metadata.
+    data = await syncReminders(data)
+
+    return data
+}
 
 /**
  * The root layout for the application.
@@ -26,11 +40,15 @@ import "@/css/globals.css";
 export default function RootLayout() {
     return (
         <GestureHandlerRootView>
-            <DataCacheProvider>
-                <MainLayout />
-            </DataCacheProvider>
+            <RawCacheProvider postSync={postSync}>
+                <DataCacheProvider>
+                    <DataStateProvider>
+                        <MainLayout />
+                    </DataStateProvider>
+                </DataCacheProvider>
+            </RawCacheProvider>
         </GestureHandlerRootView>
-    );
+    )
 }
 
 /**
@@ -38,42 +56,56 @@ export default function RootLayout() {
  * @constructor
  */
 export function MainLayout() {
-    const colorScheme = useColorScheme();
     // Get the theme type for status bar configuration.
-    const theme = useTheme();
-    const themeType = useThemeName();
+    const theme = useTheme()
+    const themeType = useThemeName()
 
-    const safeAreaStyle = useThemeMemo((theme) => ({ ...StyleSheet.absoluteFillObject, backgroundColor: theme.background }));
-    const DrawerScreensData = useDrawerScreensData();
+    const safeAreaStyle = useThemeMemo((theme) => ({ ...StyleSheet.absoluteFillObject, backgroundColor: theme.background }))
+    const DrawerScreensData = useDrawerScreensData()
 
-    useBackgroundSyncManager();
+    // Wraps the app theme for react navigation.
+    const themeNavigation = useMemo(() =>
+            ({
+                ...(themeType === 'dark' ? DarkTheme : DefaultTheme),
+                colors: {
+                    primary: theme.secondary,
+                    background: theme.surface,
+                    card: theme.background,
+                    text: theme.text,
+                    border: theme.darken,
+                    notification: theme.notification,
+                },
+            }),
+        [themeType, theme],
+    )
+
     return (
-            <BottomSheetModalProvider>
-                <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-                    <AuthContextProvider>
-                    <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
+        <BottomSheetModalProvider>
+            <ThemeProvider value={themeNavigation}>
+                <AuthContextProvider>
+                    <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
                     <SafeAreaView style={safeAreaStyle}>
-                            <Stack>
-                                {DrawerScreensData.map((screen: DrawerProps) => (
-                                    <Stack.Screen
-                                        key={screen.location}
-                                        name={screen.location}
-                                        options={{
-                                            keyboardHandlingEnabled: true,
-                                            headerTitleAlign: "left",
-                                            headerShown: screen.headerShown,
-                                            headerTitle: screen.title,
-                                            headerLargeTitle: screen.headerLargeTitle,
-                                            headerLeft: () => screen.headerLeft,
-                                            headerRight: () => screen.headerRight,
-                                            gestureEnabled: screen.swipeEnabled || false,
-                                        }}
-                                    />
-                                ))}
-                            </Stack>
-                        </SafeAreaView>
-                    </AuthContextProvider>
-                </ThemeProvider>
-            </BottomSheetModalProvider>
-    );
+                        <Stack>
+                            {DrawerScreensData.map((screen: DrawerProps) => (
+                                <Stack.Screen
+                                    key={screen.location}
+                                    name={screen.location}
+                                    options={{
+                                        keyboardHandlingEnabled: true,
+                                        headerTitleAlign: 'left',
+                                        headerShown: screen.headerShown,
+                                        headerTitle: screen.title,
+                                        headerLargeTitle: screen.headerLargeTitle,
+                                        headerLeft: () => screen.headerLeft,
+                                        headerRight: () => screen.headerRight,
+                                        gestureEnabled: screen.swipeEnabled || false,
+                                    }}
+                                />
+                            ))}
+                        </Stack>
+                    </SafeAreaView>
+                </AuthContextProvider>
+            </ThemeProvider>
+        </BottomSheetModalProvider>
+    )
 }

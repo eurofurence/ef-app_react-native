@@ -1,5 +1,5 @@
-import * as Sentry from "@sentry/react-native";
-import type { CaptureContext, EventHint } from "@sentry/types";
+import * as Sentry from '@sentry/react-native'
+import type { CaptureContext, EventHint } from '@sentry/types'
 
 /**
  * Capture parameter type enforced to CaptureContext.
@@ -10,12 +10,12 @@ export type ContextType = CaptureContext &
     }>;
 
 export const captureNotificationException = (message: string, error: Error, hint?: ContextType) => {
-    console.error(message, error);
+    console.error(message, error)
 
     Sentry.captureException(error, {
         tags: {
-            type: "notifications",
+            type: 'notifications',
         },
         ...hint,
-    });
-};
+    })
+}

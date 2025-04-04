@@ -1,36 +1,40 @@
-﻿import * as React from "react";
-import { useTranslation } from "react-i18next";
-import { useMemo } from "react";
-import { Label } from "@/components/generic/atoms/Label";
-import { useFavoritesState } from "@/hooks/favorites/useFavoritesState";
-import { useDealerLocationGroups } from "@/components/dealers/Dealers.common";
-import { useNow } from "@/hooks/time/useNow";
-import { DealersSectionedList } from "@/components/dealers/DealersSectionedList";
+﻿import * as React from 'react'
+import { useTranslation } from 'react-i18next'
+import { useLocalSearchParams } from 'expo-router'
+import { Label } from '@/components/generic/atoms/Label'
+import { useDealerLocationGroups } from '@/components/dealers/Dealers.common'
+import { useNow } from '@/hooks/time/useNow'
+import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
+import { useDataState } from '@/context/data/DataState'
+import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { Avatar } from '@/components/profile/Avatar'
+import { Row } from '@/components/generic/containers/Row'
 
 export default function PersonalScreen() {
-  // General state.
-  const { t } = useTranslation("Dealers");
-  const now = useNow();
+    const { query } = useLocalSearchParams<{ query?: string }>()
+    const { t } = useTranslation('Dealers')
+    const now = useNow()
 
-  const { favoriteDealers } = useFavoritesState();
-  const projected = useMemo(() =>
-    Array.from(favoriteDealers)
-      .sort((a, b) => a.DisplayNameOrAttendeeNickname.localeCompare(b.DisplayNameOrAttendeeNickname)), [favoriteDealers]);
-  const dealersGroups = useDealerLocationGroups(t, now, null, projected);
-  return (
-    <DealersSectionedList
-      dealersGroups={dealersGroups}
-      leader={
-        // TODO: Add avatar back.
-        <Label type="lead" variant="middle" mt={30}>
-          {t("favorites_title")}
-        </Label>
-      }
-      empty={
-        <Label type="para" mt={20} ml={20} mr={20} variant="middle">
-          {t("favorites_empty")}
-        </Label>
-      }
-    />
-  );
+    const { dealersFavorite, searchDealersFavorite } = useDataState()
+    const search = useFuseResults(searchDealersFavorite, query ?? '')
+    const groups = useDealerLocationGroups(t, now, search ?? dealersFavorite)
+
+    return (
+        <DealersSectionedList
+            dealersGroups={groups}
+            leader={
+                <Row type="center" variant="center" gap={10}>
+                    <Avatar />
+                    <Label type="lead" variant="middle">
+                        {t('favorites_title')}
+                    </Label>
+                </Row>
+            }
+            empty={
+                <Label type="para" mt={20} ml={20} mr={20} variant="middle">
+                    {t('favorites_empty')}
+                </Label>
+            }
+        />
+    )
 }

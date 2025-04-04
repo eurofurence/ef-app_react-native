@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { StyleSheet, View, ViewProps } from "react-native";
+import { FC } from 'react'
+import { StyleSheet, View, ViewProps } from 'react-native'
 
 /**
  * Arguments to the column.
@@ -23,42 +23,42 @@ export type ColProps = ViewProps & {
 
 export const Col: FC<ColProps> = ({ style, type, variant, gap, children, ...rest }) => {
     // Resolve styles.
-    const resType = type ? types[type] : types.regular;
-    const resVariant = variant ? variants[variant] : variants.start;
+    const resType = type ? types[type] : types.regular
+    const resVariant = variant ? variants[variant] : variants.start
     return (
-        <View style={[resType, resVariant, typeof gap === "number" && { gap }, style]} {...rest}>
+        <View style={[resType, resVariant, typeof gap === 'number' && { gap }, style]} {...rest}>
             {children}
         </View>
-    );
-};
+    )
+}
 
 const types = StyleSheet.create({
     regular: {
-        flexDirection: "column",
-        alignItems: "flex-start",
+        flexDirection: 'column',
+        alignItems: 'flex-start',
     },
     start: {
-        flexDirection: "row",
-        alignItems: "flex-start",
+        flexDirection: 'row',
+        alignItems: 'flex-start',
     },
     center: {
-        flexDirection: "column",
-        alignItems: "center",
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     stretch: {
-        flexDirection: "column",
-        alignItems: "stretch",
+        flexDirection: 'column',
+        alignItems: 'stretch',
     },
-});
+})
 
 const variants = StyleSheet.create({
     start: {
-        justifyContent: "flex-start",
+        justifyContent: 'flex-start',
     },
     end: {
-        justifyContent: "flex-end",
+        justifyContent: 'flex-end',
     },
     spaced: {
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
     },
-});
+})

@@ -1,27 +1,24 @@
-import { useCallback, useMemo } from "react";
-import { useColorScheme } from "react-native";
-import { ThemeName } from "@/context/Theme";
-import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
+import { useCallback } from 'react'
+import { useColorScheme } from 'react-native'
+import { ThemeName } from '@/context/Theme'
+import { useCache } from '@/context/data/DataCache'
 
 export function useTheme() {
-    const systemTheme = useColorScheme();
-    const { getCacheSync, saveCache } = useDataCache();
-    const settings = useMemo(() => getCacheSync("settings", "settings")?.data ?? defaultSettings, [getCacheSync]);
+    const systemTheme = useColorScheme()
+    const { getValue, setValue } = useCache()
+    const settings = getValue('settings')
 
-    const theme = settings.theme;
+    const theme = settings?.theme
 
-    const setTheme = useCallback((newTheme: ThemeName | undefined) => {
-        console.log("Setting theme", newTheme);
-        const newSettings = {
+    const setTheme = useCallback((newTheme: ThemeName | undefined) =>
+        setValue('settings', {
             ...settings,
-            theme: newTheme
-        };
-        saveCache("settings", "settings", newSettings);
-    }, [settings, saveCache]);
+            theme: newTheme,
+        }), [settings, setValue])
 
     return {
         theme,
         setTheme,
-        systemTheme
-    };
+        systemTheme,
+    }
 }

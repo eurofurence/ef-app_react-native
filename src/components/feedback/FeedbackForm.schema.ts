@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const feedbackSchema = z.object({
     rating: z
@@ -7,6 +7,6 @@ export const feedbackSchema = z.object({
         .max(5)
         .transform((n) => Math.floor(n)),
     message: z.string().optional(),
-});
+})
 
-export type FeedbackSchema = z.infer<typeof feedbackSchema>; 
+export type FeedbackSchema = z.infer<typeof feedbackSchema>;

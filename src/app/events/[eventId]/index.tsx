@@ -1,42 +1,42 @@
-import React, { useCallback, useMemo } from "react";
-import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { useLocalSearchParams } from "expo-router";
-import { useTranslation } from "react-i18next";
+import React, { useCallback } from 'react'
+import { StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useLocalSearchParams } from 'expo-router'
+import { useTranslation } from 'react-i18next'
 
-import { appStyles } from "@/components/AppStyles";
-import { EventContent } from "@/components/events/EventContent";
-import { Floater, padFloater } from "@/components/generic/containers/Floater";
-import { Header } from "@/components/generic/containers/Header";
-import { useUpdateSinceNote } from "@/hooks/records/useUpdateSinceNote";
-import { useLatchTrue } from "@/hooks/util/useLatchTrue";
-import { defaultSettings, useDataCache } from "@/context/DataCacheProvider";
-import { platformShareIcon } from "@/components/generic/atoms/Icon";
-import { shareEvent } from "@/components/events/Events.common";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
+import { appStyles } from '@/components/AppStyles'
+import { EventContent } from '@/components/events/EventContent'
+import { Floater, padFloater } from '@/components/generic/containers/Floater'
+import { Header } from '@/components/generic/containers/Header'
+import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
+import { useLatchTrue } from '@/hooks/util/useLatchTrue'
+import { platformShareIcon } from '@/components/generic/atoms/Icon'
+import { shareEvent } from '@/components/events/Events.common'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useCache } from '@/context/data/DataCache'
 
 export default function EventItem() {
-    const { t } = useTranslation("Event");
-    const { eventId } = useLocalSearchParams<{ eventId: string }>();
-    const { getCacheSync, saveCache } = useDataCache();
+    const { t } = useTranslation('Event')
+    const { eventId } = useLocalSearchParams<{ eventId: string }>()
+    const { getEntity, getValue, setValue } = useCache()
 
-    const event = useMemo(() => getCacheSync("events", eventId)?.data, [eventId, getCacheSync]);
-    const backgroundStyle = useThemeBackground("background");
+    const event = getEntity('events', eventId)
+    const backgroundStyle = useThemeBackground('background')
 
     const handleToggleHidden = useCallback(() => {
-        const settings = getCacheSync("settings", "settings")?.data ?? defaultSettings;
+        const settings = getValue('settings') ?? {}
         const newSettings = {
             ...settings,
             hiddenEvents: settings.hiddenEvents?.includes(eventId)
                 ? settings.hiddenEvents.filter(item => item !== eventId)
-                : [...(settings.hiddenEvents ?? []), eventId]
-        };
-        saveCache("settings", "settings", newSettings);
-    }, [eventId, getCacheSync, saveCache]);
+                : [...(settings.hiddenEvents ?? []), eventId],
+        }
+        setValue('settings', newSettings)
+    }, [eventId, getValue, setValue])
 
     // Get update note. Latch so it's displayed even if reset in background.
-    const updated = useUpdateSinceNote(event);
-    const showUpdated = useLatchTrue(updated);
+    const updated = useUpdateSinceNote(event)
+    const showUpdated = useLatchTrue(updated)
 
     return (
         <ScrollView
@@ -45,7 +45,7 @@ export default function EventItem() {
             stickyHeaderHiddenOnScroll
         >
             <Header secondaryIcon={platformShareIcon} secondaryPress={() => event && shareEvent(event)}>
-                {event?.Title ?? t("viewing_event")}
+                {event?.Title ?? t('viewing_event')}
             </Header>
             <Floater contentStyle={appStyles.trailer}>
                 {!event ? null : (
@@ -58,5 +58,5 @@ export default function EventItem() {
                 )}
             </Floater>
         </ScrollView>
-    );
+    )
 }

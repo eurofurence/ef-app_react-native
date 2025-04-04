@@ -1,8 +1,8 @@
-﻿import { RecordId } from "../eurofurence/types";
+﻿import { RecordId } from '@/context/data/types'
 
 export type Notification = {
     recordId: RecordId;
-    type: "EventReminder";
+    type: 'EventReminder';
     dateScheduledUtc: string;
     dateCreatedUtc: string;
 };

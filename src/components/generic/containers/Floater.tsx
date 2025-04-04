@@ -1,7 +1,7 @@
-import { FC, PropsWithChildren } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { FC, PropsWithChildren } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
-export const padFloater = 20;
+export const padFloater = 20
 
 /**
  * Props to the Floater.
@@ -28,8 +28,8 @@ export const Floater: FC<FloaterProps> = ({ containerStyle, contentStyle, childr
                 <View style={[styles.content, contentStyle]}>{children}</View>
             </View>
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -38,13 +38,13 @@ const styles = StyleSheet.create({
     },
     arranger: {
         flex: 1,
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "stretch",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'stretch',
     },
     content: {
         flex: 1,
-        alignSelf: "stretch",
+        alignSelf: 'stretch',
         maxWidth: 600,
     },
-});
+})
