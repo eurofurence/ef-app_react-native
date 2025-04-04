@@ -215,3 +215,7 @@ export type Settings = {
     warnings?: Record<string, boolean>;
     favoriteDealers?: string[];
 }
+export type GlobalSearchResult =
+    (DealerDetails & { type: 'dealer' })
+    | (EventDetails & { type: 'event' })
+    | (KnowledgeEntryDetails & { type: 'knowledgeEntry' });

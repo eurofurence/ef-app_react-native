@@ -1,6 +1,5 @@
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import { ReactNativeZoomableView as ZoomableView, ZoomableViewEvent } from '@openspacelabs/react-native-zoomable-view'
-import { ListRenderItemInfo } from '@react-native/virtualized-lists/Lists/VirtualizedList'
 import { chain, clamp } from 'lodash'
 import * as React from 'react'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -146,7 +145,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
     const keyExtractor = useCallback(({ key }: FilterResult) => key, [])
 
     // Render item callback.
-    const renderItem = useCallback(({ item: { map, entry, link } }: ListRenderItemInfo<FilterResult>) => {
+    const renderItem = useCallback(({ item: { map, entry, link } }: any) => {
         return <LinkItem map={map} entry={entry} link={link} />
     }, [])
 

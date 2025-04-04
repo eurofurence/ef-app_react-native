@@ -9,43 +9,42 @@ import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { useNow } from '@/hooks/time/useNow'
 import { conName } from '@/configuration'
-import { useCache } from '@/context/data/DataCache'
 import { EventDayDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 const ONE_HOUR = 60 * 60 * 1000
 const ONE_MINUTE = 60 * 1000
 
 export function TimeTravel() {
     const { t } = useTranslation('TimeTravel')
-    const { getEntityValues, getValue, setValue } = useCache()
+    const { eventDays, getValue, setValue } = useCache()
     const now = useNow()
 
     const settings = getValue('settings')
-    const eventDays = getEntityValues('eventDays')
-    const timeOffset = settings?.timeTravelOffset ?? 0
-    const enabled = settings?.timeTravelEnabled ?? false
+    const timeOffset = settings.timeTravelOffset ?? 0
+    const enabled = settings.timeTravelEnabled ?? false
 
     // Calculate week before and after
     const weekBefore = useMemo(() => {
-        if (!eventDays.length) return null
-        const firstDay = new Date(eventDays[0].Date)
+        if (!eventDays.values.length) return null
+        const firstDay = new Date(eventDays.values[0].Date)
         return subWeeks(firstDay, 1).toISOString()
     }, [eventDays])
 
     const weekAfter = useMemo(() => {
-        if (!eventDays.length) return null
-        const lastDay = new Date(eventDays[eventDays.length - 1].Date)
+        if (!eventDays.values.length) return null
+        const lastDay = new Date(eventDays.values[eventDays.values.length - 1].Date)
         return addWeeks(lastDay, 1).toISOString()
     }, [eventDays])
 
     const handleEnableTimeTravel = (value: boolean) =>
-        setValue('settings', { ...(settings ?? {}), timeTravelEnabled: value })
+        setValue('settings', { ...settings, timeTravelEnabled: value })
 
     const handleResetTravel = () =>
-        setValue('settings', { ...(settings ?? {}), timeTravelOffset: 0 })
+        setValue('settings', { ...settings, timeTravelOffset: 0 })
 
     const handleTravel = (amount: number) =>
-        setValue('settings', { ...(settings ?? {}), timeTravelOffset: (settings?.timeTravelOffset ?? 0) + amount })
+        setValue('settings', { ...settings, timeTravelOffset: (settings.timeTravelOffset ?? 0) + amount })
 
     const handleTravelToDate = (date: string) => {
         const currentDate = new Date()
@@ -53,7 +52,7 @@ export function TimeTravel() {
         targetDate.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds(), currentDate.getMilliseconds())
 
         const offset = targetDate.getTime() - currentDate.getTime()
-        setValue('settings', { ...(settings ?? {}), timeTravelOffset: offset })
+        setValue('settings', { ...settings, timeTravelOffset: offset })
     }
 
     return (
@@ -121,7 +120,7 @@ export function TimeTravel() {
                     </Button>
                 )}
 
-                {eventDays.map((day: EventDayDetails) => (
+                {eventDays.values.map((day: EventDayDetails) => (
                     <Button
                         key={day.Id}
                         containerStyle={styles.button}

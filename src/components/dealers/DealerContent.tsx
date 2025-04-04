@@ -24,8 +24,8 @@ import { shareDealer } from '@/components/dealers/Dealers.common'
 import { useNow } from '@/hooks/time/useNow'
 import { useToast } from '@/context/ToastContext'
 import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
-import { useCache } from '@/context/data/DataCache'
 import { DealerDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
     // Nothing to display for no categories.
@@ -89,11 +89,10 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     const now = useNow()
     const toast = useToast()
 
-    const { getEntityValues, getValue, setValue } = useCache()
+    const { maps, getValue, setValue } = useCache()
     const isFavorite = dealer.Favorite
 
-    const maps = getEntityValues('maps')
-    const mapLink = getValidLinksByTarget(maps, dealer.Id)
+    const mapLink = getValidLinksByTarget(maps.values, dealer.Id)
 
     const days = useMemo(
         () =>
@@ -105,7 +104,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     )
 
     const toggleFavorite = useCallback(() => {
-        const settings = getValue('settings') ?? {}
+        const settings = getValue('settings')
         const newSettings = {
             ...settings,
             favoriteDealers: settings.favoriteDealers?.includes(dealer.Id)

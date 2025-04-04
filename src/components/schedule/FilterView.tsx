@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import * as React from 'react'
 import { useMemo, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
@@ -23,7 +23,7 @@ function selectEvent(event: EventDetails) {
 export function FilterView() {
     const { query } = useLocalSearchParams<{ query?: string }>()
     const { t } = useTranslation('Events')
-    const { events, eventDays, eventTracks, eventRooms, searchEvents } = useDataState()
+    const { events, eventDays, eventTracks, eventRooms, searchEvents } = useCache()
 
     const activeStyle = useThemeBackground('secondary')
     const inactiveStyle = useThemeBackground('inverted')
@@ -36,16 +36,16 @@ export function FilterView() {
     const roomsRef = useRef<ComboModalRef<EventRoomDetails>>(null)
 
 
-    const [filterDays, setFilterDays] = useState<EventDayDetails[]>([])
-    const [filterTracks, setFilterTracks] = useState<EventTrackDetails[]>([])
-    const [filterRooms, setFilterRooms] = useState<EventRoomDetails[]>([])
+    const [filterDays, setFilterDays] = useState<readonly EventDayDetails[]>([])
+    const [filterTracks, setFilterTracks] = useState<readonly EventTrackDetails[]>([])
+    const [filterRooms, setFilterRooms] = useState<readonly EventRoomDetails[]>([])
 
     const search = useFuseResults(searchEvents, query ?? '')
     const filtered = useMemo(() => {
         const daysIds = filterDays.map(item => item.Id)
         const tracksIds = filterTracks.map(item => item.Id)
         const roomsIds = filterRooms.map(item => item.Id)
-        return (search ?? events).filter(item => {
+        return (search ?? events.values).filter(item => {
             if (item.ConferenceDayId && daysIds.length && !daysIds.includes(item.ConferenceDayId)) return false
             if (item.ConferenceTrackId && tracksIds.length && !tracksIds.includes(item.ConferenceTrackId)) return false
             if (item.ConferenceRoomId && roomsIds.length && !roomsIds.includes(item.ConferenceRoomId)) return false
@@ -65,19 +65,19 @@ export function FilterView() {
                  icon="calendar-outline"
                  text={t('filter_by_day')}
                  onPress={() =>
-                     daysRef.current?.pick(eventDays, filterDays)?.then(result => setFilterDays(result ?? []))} />
+                     daysRef.current?.pick(eventDays.values, filterDays)?.then(result => setFilterDays(result ?? []))} />
             <Tab style={[styles.rounded, styles.rowCenter, filterTracks.length ? activeStyle : inactiveStyle]}
                  inverted
                  icon="bus-stop"
                  text={t('filter_by_track')}
                  onPress={() =>
-                     tracksRef.current?.pick(eventTracks, filterTracks)?.then(result => setFilterTracks(result ?? []))} />
+                     tracksRef.current?.pick(eventTracks.values, filterTracks)?.then(result => setFilterTracks(result ?? []))} />
             <Tab style={[styles.rounded, filterRooms.length ? activeStyle : inactiveStyle]}
                  inverted
                  icon="office-building"
                  text={t('filter_by_room')}
                  onPress={() =>
-                     roomsRef.current?.pick(eventRooms, filterRooms)?.then(result => setFilterRooms(result ?? []))} />
+                     roomsRef.current?.pick(eventRooms.values, filterRooms)?.then(result => setFilterRooms(result ?? []))} />
         </Row>
     </View>, [activeStyle, eventDays, eventRooms, eventTracks, filterDays, filterRooms, filterTracks, inactiveStyle, t])
 

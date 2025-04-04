@@ -47,7 +47,7 @@ export const internalAttendanceDayNames = (dealer: DealerRecord) => {
     return result
 }
 
-export const internalAttendanceDays = (days: EventDayDetails[], dealer: DealerRecord) => {
+export const internalAttendanceDays = (days: readonly EventDayDetails[], dealer: DealerRecord) => {
     const result: EventDayDetails[] = []
     for (const day of days) {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.

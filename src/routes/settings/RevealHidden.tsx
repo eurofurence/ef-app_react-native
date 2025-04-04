@@ -9,27 +9,26 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Floater } from '@/components/generic/containers/Floater'
 import { useNow } from '@/hooks/time/useNow'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export const RevealHidden = () => {
     const { t } = useTranslation('RevealHidden')
     const isFocused = useIsFocused()
     const now = useNow(isFocused ? 5 : 'static')
     const zone = useZoneAbbr()
-    const { getEntityValues, getValue, setValue } = useCache()
+    const { events, getValue, setValue } = useCache()
 
     const settings = getValue('settings')
 
-    const all = getEntityValues('events')
     const projected = useMemo(() =>
-            all.filter(item => Boolean(settings?.hiddenEvents?.includes(item.Id))),
-        [all, settings?.hiddenEvents])
+            events.values.filter(item => Boolean(settings.hiddenEvents?.includes(item.Id))),
+        [events, settings.hiddenEvents])
     const instances = useMemo(() => projected.map(details => eventInstanceForAny(details, now, zone)), [projected, now, zone])
 
     const unhideEvent = (eventId: string) => {
         setValue('settings', {
             ...settings,
-            hiddenEvents: settings?.hiddenEvents?.filter(id => id !== eventId) ?? [],
+            hiddenEvents: settings.hiddenEvents?.filter(id => id !== eventId) ?? [],
         })
     }
 

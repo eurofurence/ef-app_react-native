@@ -17,9 +17,8 @@ import { UpcomingEventsList } from '@/components/events/UpcomingEventsList'
 import { TodayScheduleList } from '@/components/events/TodayScheduleList'
 import { CurrentEventList } from '@/components/events/CurrentEventsList'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 
 export default function IndexScreen() {
     const isFocused = useIsFocused()
@@ -30,7 +29,7 @@ export default function IndexScreen() {
     const [filter, setFilter] = useState('')
 
     // Search integration.
-    const globalIndex = useDataState().searchGlobal
+    const globalIndex = useCache().searchGlobal
     const results = useFuseResults(globalIndex, filter, 15)
 
     return (

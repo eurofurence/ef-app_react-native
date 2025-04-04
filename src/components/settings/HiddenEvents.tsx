@@ -5,7 +5,7 @@ import { router } from 'expo-router'
 import { SettingContainer } from './SettingContainer'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export const HiddenEvents = () => {
     const { t } = useTranslation('Settings', { keyPrefix: 'hidden_events' })
@@ -13,7 +13,7 @@ export const HiddenEvents = () => {
 
     const unhideAllEvents = () =>
         setValue('settings', {
-            ...(getValue('settings') ?? {}),
+            ...getValue('settings'),
             hiddenEvents: [],
         })
 

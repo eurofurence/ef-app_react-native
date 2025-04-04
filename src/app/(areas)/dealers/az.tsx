@@ -7,16 +7,16 @@ import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { conName } from '@/configuration'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 
 export default function AllScreen() {
     const { query } = useLocalSearchParams<{ query?: string }>()
     const { t } = useTranslation('Dealers')
     const now = useNow()
 
-    const { dealers, searchDealers } = useDataState()
+    const { dealers, searchDealers } = useCache()
     const search = useFuseResults(searchDealers, query ?? '')
-    const groups = useDealerAlphabeticalGroups(t, now, search ?? dealers)
+    const groups = useDealerAlphabeticalGroups(t, now, search ?? dealers.values)
 
     return (
         <DealersSectionedList

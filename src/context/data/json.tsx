@@ -13,13 +13,3 @@ export function stringifyJsonSafe(value: any) {
 export function parseJsonSafe(text: string) {
     return text === 'undefined' ? undefined : JSON.parse(text)
 }
-
-/**
- * Read-only empty array reference.
- */
-export const emptyArray = Object.freeze([])
-
-/**
- Read-only empty dictionary reference.
- */
-export const emptyDict = Object.freeze({})

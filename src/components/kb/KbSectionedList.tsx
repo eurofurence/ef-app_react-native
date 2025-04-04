@@ -7,8 +7,8 @@ import { KbSection } from './KbSection'
 import { KbEntryCard } from './KbEntryCard'
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
-import { useCache } from '@/context/data/DataCache'
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * The properties to the component.

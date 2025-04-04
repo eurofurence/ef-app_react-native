@@ -9,7 +9,7 @@ import { Icon, IconNames } from '@/components/generic/atoms/Icon'
 import { useToastMessages } from '@/context/ToastContext'
 import { Tabs as CustomTabs, TabsRef } from '@/components/generic/containers/Tabs'
 import { MainMenu } from '@/components/mainmenu/MainMenu'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 function getIconNameFromTabBarIcon(
     tabBarIcon: ((props: { focused: boolean; color: string; size: number }) => React.ReactNode) | undefined,

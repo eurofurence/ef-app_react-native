@@ -6,16 +6,16 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { LinkItem } from '@/components/maps/LinkItem'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Header } from '@/components/generic/containers/Header'
-import { useCache } from '@/context/data/DataCache'
 import { LinkFragment } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 export default function KnowledgeId() {
-    const { knowledgeId } = useLocalSearchParams()
-    const { getEntity } = useCache()
+    const { knowledgeId } = useLocalSearchParams<{ knowledgeId: string }>()
+    const { knowledgeEntries } = useCache()
     const backgroundStyle = useThemeBackground('background')
 
     // Get the knowledge entry from cache
-    const entry = getEntity('knowledgeEntries', knowledgeId as string)
+    const entry = knowledgeEntries.dict[knowledgeId]
 
     return (
         <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>

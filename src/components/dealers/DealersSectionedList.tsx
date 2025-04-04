@@ -7,9 +7,9 @@ import { DealerSection, DealerSectionProps } from './DealerSection'
 import { DealerCard, DealerDetailsInstance } from './DealerCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
-import { useCache } from '@/context/data/DataCache'
 import { DealerDetails } from '@/context/data/types'
 import { SectionProps } from '@/components/generic/atoms/Section'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * The properties to the component.

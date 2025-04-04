@@ -1,17 +1,17 @@
-﻿import { stringifyJsonSafe } from '@/context/data/RawCache.Utils'
-import { StoreData } from '@/context/data/RawCache'
+﻿import { stringifyJsonSafe } from '@/context/data/json'
+import { StoreData } from '@/context/data/Cache'
 
 /**
  * Map of store name to serializer. In most cases, simple JSON.
  */
-export type ItemDehydrators = {
+export type Dehydrators = {
     [T in keyof StoreData]: (item: Partial<StoreData>[T]) => string;
 }
 
 /**
  * Default item dehydrators per store name.
  */
-export const itemDehydrators: ItemDehydrators = {
+export const dehydrators: Dehydrators = {
     announcements(item: Partial<StoreData>['announcements']): string {
         return stringifyJsonSafe(item?.values)
     }, cacheVersion(item: Partial<StoreData>['cacheVersion']): string {

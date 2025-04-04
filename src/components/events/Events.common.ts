@@ -16,7 +16,7 @@ import { EventDetails } from '@/context/data/types'
  * @param zone Zone abbreviation.
  * @param items The items to transform.
  */
-export const useEventInstances = (t: TFunction, now: Date, zone: string, items: EventDetails[]) => {
+export const useEventInstances = (t: TFunction, now: Date, zone: string, items: readonly  EventDetails[]) => {
     // Return direct mapping.
     return useMemo(() => {
         return items.map((item) => eventInstanceForAny(item, now, zone))
@@ -31,7 +31,7 @@ export const useEventInstances = (t: TFunction, now: Date, zone: string, items: 
  * @param zone Zone abbreviation.
  * @param items The events on that day.
  */
-export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: EventDetails[]) => {
+export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: readonly EventDetails[]) => {
     return useMemo(() => {
         let hidden = 0
 
@@ -120,7 +120,7 @@ export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: 
  * @param zone Zone abbreviation.
  * @param items The events.
  */
-export const useEventOtherGroups = (t: TFunction, now: Date, zone: string, items: EventDetails[]) => {
+export const useEventOtherGroups = (t: TFunction, now: Date, zone: string, items: readonly  EventDetails[]) => {
     return useMemo(() => {
         let hidden = 0
 

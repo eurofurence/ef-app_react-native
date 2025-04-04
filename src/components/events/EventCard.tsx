@@ -102,7 +102,12 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
 
             {event.details.Banner ? (
                 <View style={styles.mainPoster}>
-                    <ImageBackground source={sourceFromImage(event.details.Banner)} contentFit="cover" style={StyleSheet.absoluteFill} recyclingKey={event.details.Id}>
+                    <ImageBackground
+                        key={event.details.Id}
+                        recyclingKey={event.details.Id}
+                        source={sourceFromImage(event.details.Banner)}
+                        contentFit="cover"
+                        style={StyleSheet.absoluteFill}>
                         <View style={styles.tagArea2}>
                             <View style={styles.tagAreaInner}>
                                 <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>

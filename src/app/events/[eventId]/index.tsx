@@ -13,18 +13,18 @@ import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { shareEvent } from '@/components/events/Events.common'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export default function EventItem() {
     const { t } = useTranslation('Event')
     const { eventId } = useLocalSearchParams<{ eventId: string }>()
-    const { getEntity, getValue, setValue } = useCache()
+    const { events, getValue, setValue } = useCache()
 
-    const event = getEntity('events', eventId)
+    const event = events.dict[eventId]
     const backgroundStyle = useThemeBackground('background')
 
     const handleToggleHidden = useCallback(() => {
-        const settings = getValue('settings') ?? {}
+        const settings = getValue('settings')
         const newSettings = {
             ...settings,
             hiddenEvents: settings.hiddenEvents?.includes(eventId)

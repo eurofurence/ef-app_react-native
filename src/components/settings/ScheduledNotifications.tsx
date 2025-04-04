@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { Label } from '@/components/generic/atoms/Label'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export function ScheduledNotifications() {
     const { t } = useTranslation('Settings')

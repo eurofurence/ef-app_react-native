@@ -1,9 +1,10 @@
 ﻿import { router, useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import * as React from 'react'
+import { useMemo } from 'react'
 import { useNow } from '@/hooks/time/useNow'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useEventOtherGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
@@ -11,7 +12,6 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Avatar } from '@/components/profile/Avatar'
 import { EventDetails } from '@/context/data/types'
-import { useMemo } from 'react'
 
 function selectEvent(event: EventDetails) {
     return router.setParams({ selected: event.Id })
@@ -23,7 +23,7 @@ export function PersonalView() {
     const now = useNow(5)
     const zone = useZoneAbbr()
 
-    const { eventsFavorite, searchEventsFavorite } = useDataState()
+    const { eventsFavorite, searchEventsFavorite } = useCache()
     const search = useFuseResults(searchEventsFavorite, query ?? '')
     const groups = useEventOtherGroups(t, now, zone, search ?? eventsFavorite)
 

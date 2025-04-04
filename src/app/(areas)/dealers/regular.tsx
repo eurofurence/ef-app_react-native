@@ -7,14 +7,14 @@ import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
 import { Badge } from '@/components/generic/containers/Badge'
 import { Label } from '@/components/generic/atoms/Label'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 
 export default function RegularScreen() {
     const { query } = useLocalSearchParams<{ query?: string }>()
     const { t } = useTranslation('Dealers')
     const now = useNow()
 
-    const { dealersInRegular, searchDealersInRegular } = useDataState()
+    const { dealersInRegular, searchDealersInRegular } = useCache()
     const search = useFuseResults(searchDealersInRegular, query ?? '')
     const groups = useDealerGroups(t, now, search ?? dealersInRegular)
 

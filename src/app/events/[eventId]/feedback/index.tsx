@@ -7,13 +7,13 @@ import { useTranslation } from 'react-i18next'
 import { FeedbackForm } from '@/components/feedback/FeedbackForm'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export default function EventFeedback() {
     const { t } = useTranslation('EventFeedback')
     const { eventId } = useLocalSearchParams<{ eventId: string }>()
-    const getEntity = useCache().getEntity
-    const event = getEntity('events', eventId)
+    const { events } = useCache()
+    const event = events.dict[eventId]
 
     return (
         <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>

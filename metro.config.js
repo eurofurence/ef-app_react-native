@@ -14,4 +14,4 @@ const config = {
 };
 
 // Export with NativeWind configuration
-module.exports = withNativeWind(config, { input: './global.css' });
+module.exports = withNativeWind(config, { input: './src/css/globals.css' });

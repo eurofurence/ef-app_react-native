@@ -3,9 +3,9 @@ import { chain } from 'lodash'
 import { isWithinInterval, parseISO } from 'date-fns'
 import { eventInstanceForAny } from '@/components/events/EventCard'
 import { EventDetails } from '@/context/data/types'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 
-const filterCurrentEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: T[], now: Date): T[] =>
+const filterCurrentEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
     events.filter((it) =>
         isWithinInterval(now, {
             start: parseISO(it.StartDateTimeUtc),
@@ -19,10 +19,10 @@ const filterCurrentEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | '
  * @param zone The time zone.
  */
 export function useCurrentEvents(now: Date, zone: string) {
-    const { events } = useDataState()
+    const { events } = useCache()
 
     return useMemo(() =>
-            chain(filterCurrentEvents(events, now))
+            chain(filterCurrentEvents(events.values, now))
                 .filter(item => !item.Hidden)
                 .map(details => eventInstanceForAny(details, now, zone))
                 .orderBy('progress', 'asc')

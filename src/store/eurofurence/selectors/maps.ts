@@ -1,6 +1,6 @@
 import { LinkFragment, MapDetails, MapEntryRecord, RecordId } from '@/context/data/types'
 
-export const getValidLinksByTarget = (maps: MapDetails[], target?: RecordId): { map: MapDetails; entry: MapEntryRecord; link: LinkFragment }[] => {
+export const getValidLinksByTarget = (maps: readonly MapDetails[], target?: RecordId): { map: MapDetails; entry: MapEntryRecord; link: LinkFragment }[] => {
     if (!maps?.length) return []
     if (!target) return []
 

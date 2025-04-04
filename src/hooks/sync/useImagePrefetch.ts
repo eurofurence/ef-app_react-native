@@ -3,7 +3,7 @@ import { Image } from 'expo-image'
 import { captureException } from '@sentry/react-native'
 import { Observable } from '@/util/Observable'
 import { ResettableTimeout } from '@/util/ResettableTimeout'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * Resettable timeout waiting for load completion.
@@ -22,12 +22,11 @@ export const imagePrefetchComplete = new Observable(false)
 export const onLoadEvent = () => imagePrefetchGate.reset()
 
 export const useImagePrefetch = () => {
-    const { getEntityValues } = useCache() // Use your context to fetch cache
+    const { images } = useCache() // Use your context to fetch cache
 
-    const images = getEntityValues('images')
 
     useEffect(() => {
-        if (images.length === 0) return
+        if (images.values.length === 0) return
 
         // Schedule after cooldown.
         console.log('Scheduling prefetch')
@@ -39,7 +38,7 @@ export const useImagePrefetch = () => {
             console.log('Prefetch triggered')
 
             // Start the prefetch.
-            Image.prefetch(images.map(item => item.Url), 'memory-disk')
+            Image.prefetch(images.values.map(item => item.Url), 'memory-disk')
                 .catch(captureException)
                 .finally(() => {
                     // Mark disconnect.

@@ -12,7 +12,7 @@ import { Col } from '@/components/generic/containers/Col'
 import { useAuthContext, getAccessToken } from '@/context/AuthContext'
 import { Button } from '@/components/generic/containers/Button'
 import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export type MainMenuProps = {
     tabs: RefObject<TabsRef>;
@@ -21,11 +21,10 @@ export type MainMenuProps = {
 export function MainMenu({ tabs }: MainMenuProps) {
     const { t } = useTranslation('Menu')
     const { loggedIn, claims, login } = useAuthContext()
-    const { getEntityValues } = useCache()
+    const { maps } = useCache()
 
     // Get browsable maps from cache
-    const allMaps = getEntityValues('maps')
-    const maps = useMemo(() => allMaps.filter(map => map.IsBrowseable), [allMaps])
+    const browsableMaps = useMemo(() => maps.values.filter(map => map.IsBrowseable), [maps])
 
     const handleNavigation = useCallback((path: string) => {
         router.navigate(path)
@@ -95,7 +94,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
             </Grid>
 
             <Col style={styles.mapsContainer}>
-                {maps.map((map) => (
+                {browsableMaps.map((map) => (
                     <Button
                         key={map.Id}
                         containerStyle={styles.mapButton}

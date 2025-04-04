@@ -12,18 +12,18 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Rule } from '@/components/generic/atoms/Rule'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 // const readOpenTimeRequirement = 1500;
 
 export default function PmItem() {
     const { messageId } = useLocalSearchParams<{ messageId: string }>()
     const { t } = useTranslation('PrivateMessageItem')
-    const getEntity = useCache().getEntity
+    const { communications } = useCache()
     const backgroundStyle = useThemeBackground('background')
 
     // Get message from cache
-    const message = getEntity('communications', messageId)
+    const message = communications.dict[messageId]
 
     // todo: post transformation, read time should be synced from server.
     // // Mark as read after delay

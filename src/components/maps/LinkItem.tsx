@@ -9,8 +9,8 @@ import { FaIcon } from '../generic/atoms/FaIcon'
 import { Icon } from '../generic/atoms/Icon'
 import { Image } from '../generic/atoms/Image'
 import { Button, ButtonProps } from '../generic/containers/Button'
-import { useCache } from '@/context/data/DataCache'
 import { LinkFragment, MapDetails, MapEntryDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 type LinkItemProps = {
     map?: MapDetails;
@@ -24,16 +24,14 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     const day2 = format(setDay(now, 2), 'EEEE')
     const day3 = format(setDay(now, 3), 'EEEE')
 
-    const getEntity = useCache().getEntity
-    const dealerCache = getEntity('dealers', link.Target)
-    const dealer = dealerCache
-
+    const { dealers } = useCache()
+    const dealer = dealers.dict[link.Target]
     const present = dealer ? isPresent(dealer, now) : false
     const offDays = dealer ? joinOffDays(dealer, day1, day2, day3) : ''
 
     const onPress = useCallback(() => router.push(`/dealer/${link.Target}`), [link.Target])
 
-    if (!dealerCache || !dealer) {
+    if (!dealer || !dealer) {
         return null
     }
 

@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
 import { MapContent, MapContentProps } from '@/components/maps/MapContent'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export default function Map() {
     const params = useLocalSearchParams<{ slug: string[] }>()
@@ -16,10 +16,10 @@ export default function Map() {
     const linkId = params.slug?.[2]
     const backgroundStyle = useThemeBackground('background')
 
-    const getEntity = useCache().getEntity
+    const { maps } = useCache()
 
     // Resolve map
-    const mapCache = getEntity('maps', mapId)
+    const mapCache = maps.dict[mapId]
 
     // Resolve entry if requested
     const entry = useMemo(() => {

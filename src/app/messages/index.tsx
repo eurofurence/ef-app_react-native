@@ -9,8 +9,8 @@ import { Header } from '@/components/generic/containers/Header'
 import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { NoData } from '@/components/generic/containers/NoData'
-import { useCache } from '@/context/data/DataCache'
 import { CommunicationRecord } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 type Section = {
     title: string;
@@ -19,8 +19,7 @@ type Section = {
 
 export default function PmList() {
     const { t } = useTranslation('PrivateMessageList')
-    const { getEntityValues, isSynchronizing, synchronizeUi } = useCache()
-    const messages = getEntityValues('communications')
+    const { communications, isSynchronizing, synchronizeUi } = useCache()
     const navigateTo = useCallback(
         (item: CommunicationRecord) =>
             router.push({
@@ -31,7 +30,7 @@ export default function PmList() {
     )
 
     const sectionedData = useMemo(() => {
-        const [unread, read] = partition(messages, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
+        const [unread, read] = partition(communications.values, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
 
         const readSections = chain(read)
             .orderBy(['AuthorName', 'SentDateTimeUtc'], ['asc', 'desc'])
@@ -52,7 +51,7 @@ export default function PmList() {
             ]
 
         return [...unreadSections, ...readSections] as Section[]
-    }, [messages, t])
+    }, [communications, t])
 
     const sectionStyle = useThemeBackground('background')
 

@@ -9,7 +9,7 @@ import { ProfileContent } from '@/components/ProfileContent'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { useAuthContext } from '@/context/AuthContext'
 import { useThemeColor, useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export default function Profile() {
     const { refresh, loggedIn, claims, user } = useAuthContext()

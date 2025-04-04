@@ -46,6 +46,10 @@ function useRelativeSearchParams<TParams extends UnknownOutputParams = UnknownOu
 
 export const dealersRoutePrefix = '/dealers/'
 
+function setFilter(value: string) {
+    router.setParams({ query: value })
+}
+
 export default function DealersLayout() {
     const { query } = useRelativeSearchParams<{ query?: string }>(dealersRoutePrefix)
 
@@ -60,9 +64,10 @@ export default function DealersLayout() {
         style={StyleSheet.absoluteFill}
         screenOptions={{ sceneStyle: backgroundSurface }}
         tabBar={props =>
-            <View key="tabbar">
+            <View>
                 <TabBar
                     {...props}
+                    key="tabbar"
                     navigationState={{ routes: props.state.routes, index: props.state.index }}
                     renderLabel={({ focused, route }) => {
                         const options = props.descriptors[route.key].options as TabViewOptions
@@ -72,12 +77,15 @@ export default function DealersLayout() {
                     indicatorStyle={backgroundSecondary}
                     onTabPress={(props) => {
                         // Replace tab press handling with immediate router navigation.
-                        router.replace((dealersRoutePrefix + props.route.name) as string)
+                        router.replace({
+                            pathname: (dealersRoutePrefix + props.route.name) as string,
+                            params: {},
+                        })
                         props.preventDefault()
                     }}
                     tabStyle={{ width: layout.width / props.state.routes.length }}
                 />
-                <Search style={styles.search} filter={query || ''} setFilter={value => router.setParams({ query: value })} />
+                <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
             </View>}>
         <MaterialTopTabs.Screen name="personal" options={{ title: 'Faves', icon: 'calendar-heart' }} />
         <MaterialTopTabs.Screen name="all" options={{ title: 'All' }} />

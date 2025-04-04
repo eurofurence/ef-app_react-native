@@ -5,8 +5,8 @@ import { StyleSheet, Vibration } from 'react-native'
 import { router } from 'expo-router'
 import { EventCard, EventDetailsInstance } from './EventCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
 import { EventDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * The properties to the component.

@@ -14,7 +14,7 @@ import { useAuthContext } from '@/context/AuthContext'
 import { useNow } from '@/hooks/time/useNow'
 import { useCreateSyncRequest, useSendPrivateMessage } from '@/services/auth'
 import { withAlpha } from '@/context/Theme'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export function DevButtons() {
     const { t } = useTranslation('Settings', { keyPrefix: 'dev_buttons' })

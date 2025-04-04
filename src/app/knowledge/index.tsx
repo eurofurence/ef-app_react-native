@@ -7,27 +7,25 @@ import { KbSectionedList } from '@/components/kb/KbSectionedList'
 import { Search } from '@/components/generic/atoms/Search'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Header } from '@/components/generic/containers/Header'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export default function Knowledge() {
     const { t } = useTranslation('KnowledgeGroups')
-    const { getEntityValues } = useCache()
+    const { knowledgeGroups, knowledgeEntries } = useCache()
     const [filter, setFilter] = useState('')
 
     // Get knowledge groups and entries from cache
-    const knowledgeGroups = getEntityValues('knowledgeGroups')
-    const knowledgeEntries = getEntityValues('knowledgeEntries')
     const backgroundStyle = useThemeBackground('background')
 
     // Prepare data for search and display
     const groups = useMemo(() => {
         // Group entries by their group ID
-        const groupedEntries = chain(knowledgeEntries)
+        const groupedEntries = chain(knowledgeEntries.values)
             .groupBy('KnowledgeGroupId')
             .value()
 
         // Combine groups with their entries
-        return knowledgeGroups.map(group => ({
+        return knowledgeGroups.values.map(group => ({
             group,
             entries: groupedEntries[group.Id] || [],
         }))

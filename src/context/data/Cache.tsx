@@ -1,35 +1,51 @@
-import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react'
 import { Vibration } from 'react-native'
+import { formatISO } from 'date-fns'
 import { apiBase, cacheDebug, conId, eurofurenceCacheVersion, syncDebug } from '@/configuration'
 import { Notification } from '@/store/background/slice'
-import * as Storage from '@/context/data/RawCache.Storage'
-import { defaultSorters } from '@/context/data/RawCache.Sorters'
-import { emptyArray, emptyDict, stringifyJsonSafe } from '@/context/data/RawCache.Utils'
-import { itemDehydrators } from '@/context/data/RawCache.Dehydrators'
-import { itemHydrators } from '@/context/data/RawCache.Hydrators'
+import * as Storage from '@/context/data/storageBackend'
+import { entitySorters } from '@/context/data/entitySorters'
+import { dehydrators } from '@/context/data/dehydrators'
+import { hydrators } from '@/context/data/hydrators'
 import {
     AnnouncementRecord,
-    CommunicationRecord, DealerRecord, EventDayRecord, EventRecord, EventRoomRecord, EventTrackRecord,
+    CommunicationRecord,
+    DealerRecord,
+    EventDayRecord,
+    EventRecord,
+    EventRoomRecord,
+    EventTrackRecord,
     ImageRecord,
     KnowledgeEntryRecord,
-    KnowledgeGroupRecord, MapRecord,
+    KnowledgeGroupRecord,
+    MapRecord,
     Settings,
 } from '@/context/data/types'
+import { CacheExtensions, useCacheExtensions } from '@/context/data/useCacheExtensions'
 
 /**
  * Entity store, contains a list of keys, list of sorted values, and associative
  * object from ID to value.
  */
-export type EntityStore<T> = {
-    keys: string[];
-    values: T[];
-    dict: Record<string, T>;
-}
+export type EntityStore<T> = Readonly<{
+    keys: Readonly<string[]>;
+    values: Readonly<T[]>;
+    dict: Readonly<Record<string, T>>;
+}>
+
+/**
+ * Empty store.
+ */
+const emptyEntityStore = Object.freeze({
+    keys: Object.freeze([]),
+    values: Object.freeze([]),
+    dict: Object.freeze({}),
+})
 
 /**
  * Internal values stored in the cache. Used for operation of the sync mechanism.
  */
-export type StoreInternals = {
+export type StoreInternals = Readonly<{
     /**
      * Convention ID for the data in the store.
      */
@@ -45,13 +61,13 @@ export type StoreInternals = {
      * Last synchronized time.
      */
     lastSynchronised: string;
-}
+}>
 
 /**
  * Direct value stores in the cache. These values are persisted and loaded
  * as-is.
  */
-export type StoreValues = {
+export type StoreValues = Readonly<{
     /**
      * User settings.
      */
@@ -60,13 +76,13 @@ export type StoreValues = {
     /**
      * Currently registered notifications (i.e., event reminders).
      */
-    notifications: Notification[];
-}
+    notifications: readonly Notification[];
+}>
 
 /**
  * Resolved raw entity data.
  */
-export type StoreEntities = {
+export type StoreEntities = Readonly<{
     announcements: EntityStore<AnnouncementRecord>;
     dealers: EntityStore<DealerRecord>;
     images: EntityStore<ImageRecord>;
@@ -78,7 +94,7 @@ export type StoreEntities = {
     knowledgeEntries: EntityStore<KnowledgeEntryRecord>;
     maps: EntityStore<MapRecord>;
     communications: EntityStore<CommunicationRecord>;
-}
+}>
 
 /**
  * Data stored in the cache.
@@ -138,7 +154,7 @@ type StoreActionEntitiesChange<T extends keyof StoreEntities> = {
  */
 type StoreActionReset = {
     type: 'STORE_ACTION_RESET'
-    data: Partial<StoreData>,
+    data: StoreData,
     cause?: string;
 }
 
@@ -151,12 +167,31 @@ type StoreAction = StoreActionInternalsSet
     | StoreActionEntitiesChange<keyof StoreEntities>
     | StoreActionReset;
 
+
+const initialState: StoreData = {
+    cid: 'none',
+    cacheVersion: eurofurenceCacheVersion,
+    lastSynchronised: formatISO(0),
+    settings: {},
+    notifications: [],
+    announcements: emptyEntityStore,
+    dealers: emptyEntityStore,
+    images: emptyEntityStore,
+    events: emptyEntityStore,
+    eventDays: emptyEntityStore,
+    eventRooms: emptyEntityStore,
+    eventTracks: emptyEntityStore,
+    knowledgeGroups: emptyEntityStore,
+    knowledgeEntries: emptyEntityStore,
+    maps: emptyEntityStore,
+    communications: emptyEntityStore,
+}
 /**
  * Reducer for store state and cache related actions.
  * @param state Current state.
  * @param action Action to apply.
  */
-const storeReducer = (state: Partial<StoreData>, action: StoreAction): Partial<StoreData> => {
+const storeReducer = (state: StoreData, action: StoreAction): StoreData => {
     if (cacheDebug) {
         console.log(action.type, state, action)
     }
@@ -179,7 +214,7 @@ const storeReducer = (state: Partial<StoreData>, action: StoreAction): Partial<S
 
             if (!currentOrDefault || action.removeAll) {
                 // No state yet or existing state will be removed. Create new from items.
-                const sorter = defaultSorters[action.key]
+                const sorter = entitySorters[action.key]
                 const values = []
                 if (action.add) {
                     values.push(...action.add)
@@ -207,11 +242,12 @@ const storeReducer = (state: Partial<StoreData>, action: StoreAction): Partial<S
                         deleteKeys.add(item.Id)
 
                 // Remove the "removed" values and those that will be added again as changed entities.
-                const sorter = defaultSorters[action.key]
+                const sorter = entitySorters[action.key]
                 const values = currentOrDefault.values.filter(item => !deleteKeys.has(item.Id))
-                if (action.add)
+                if (action.add) {
                     values.push(...action.add)
-                values.sort(sorter as any)
+                    values.sort(sorter as any)
+                }
 
                 // Derive secondaries.
                 const keys = values.map(item => item.Id)
@@ -238,15 +274,11 @@ const storeReducer = (state: Partial<StoreData>, action: StoreAction): Partial<S
  * @param store The store name.
  * @param debounce Delay before serializing. If data is updated within the given interval, only the last value is saved.
  */
-function usePersistor<T extends keyof StoreData>(data: Partial<StoreData>, store: T, debounce = 100) {
+function usePersistor<T extends keyof StoreData>(data: StoreData, store: T, debounce = 100) {
     const location = data[store]
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            const value = location
-            if (value)
-                Storage.set(store, itemDehydrators[store](value))
-            else
-                Storage.set(store, stringifyJsonSafe(undefined))
+            Storage.set(store, dehydrators[store](location))
         }, debounce)
         return () => {
             clearTimeout(timeoutId)
@@ -256,20 +288,20 @@ function usePersistor<T extends keyof StoreData>(data: Partial<StoreData>, store
 
 
 /**
- * Raw cache data context.
+ * Cache context.
  */
-export interface RawCacheContextType {
+export type CacheContextType = {
     /**
-     * The full cache data. Should not be manipulated directly, but can be used
-     * for educated reads.
+     * Raw store data, including un-extended entity records.
      */
-    cacheData: Partial<StoreData>;
+    data: StoreData;
 
     /**
      * Gets a "value type" store value.
      * @param store The name of the store.
      */
-    getValue<T extends keyof StoreValues>(store: T): StoreValues[T] | undefined;
+    // todo: Implicit change semantics is not really optimal. do we need to have the data in there like we have extensions?
+    getValue<T extends keyof StoreValues>(store: T): StoreValues[T];
 
     /**
      * Sets a "value type" store value.
@@ -283,31 +315,6 @@ export interface RawCacheContextType {
      * @param store The name of the store.
      */
     removeValue<T extends keyof StoreValues>(store: T): void;
-
-    /**
-     * Gets all keys for a given entity by its store name.
-     * @param store The name of the store.
-     */
-    getEntityKeys<T extends keyof StoreEntities>(store: T): StoreEntities[T]['keys'];
-
-    /**
-     * Gets all values for a given entity by its store name.
-     * @param store The name of the store.
-     */
-    getEntityValues<T extends keyof StoreEntities>(store: T): StoreEntities[T]['values'];
-
-    /**
-     * Gets the associative object for a given entity by its store name.
-     * @param store The name of the store.
-     */
-    getEntityDict<T extends keyof StoreEntities>(store: T): StoreEntities[T]['dict'];
-
-    /**
-     * Gets an entity by its store name and key.
-     * @param store The name of the store.
-     * @param key The ID of the entity.
-     */
-    getEntity<T extends keyof StoreEntities>(store: T, key: string): StoreEntities[T]['dict'][string] | undefined;
 
     /**
      * If true, data is synchronizing right now.
@@ -329,16 +336,16 @@ export interface RawCacheContextType {
      * Resets the data.
      */
     clear(): void;
-}
+} & CacheExtensions;
 
 /**
  * Context object.
  */
-const RawCacheContext = createContext<RawCacheContextType | undefined>(undefined)
-RawCacheContext.displayName = 'RawCacheContext'
+const CacheContext = createContext<CacheContextType | undefined>(undefined)
+CacheContext.displayName = 'CacheContext'
 
-export type RawCacheProps = {
-    postSync?: (data: Partial<StoreData>) => Promise<Partial<StoreData>>;
+export type CacheProps = {
+    postSync?: (data: StoreData) => Promise<StoreData>;
     children?: ReactNode | undefined;
 }
 
@@ -350,16 +357,16 @@ export type RawCacheProps = {
  * if the state is not available yet.
  * @constructor
  */
-export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
+export const CacheProvider = ({ postSync, children }: CacheProps) => {
     // Internal state. Initialized is tracked to stop rendering if data is not
     // hydrated yet. Cache data is the full cache state.
     const [initialized, setInitialized] = useState(false)
-    const [cacheData, dispatch] = useReducer(storeReducer, {})
+    const [data, dispatch] = useReducer(storeReducer, initialState)
 
     // Data cache ref is used to provide soft access to values for callbacks
     // that should not update their value along with the cache data.
-    const cacheDataRef = useRef(cacheData)
-    cacheDataRef.current = cacheData
+    const dataRef = useRef(data)
+    dataRef.current = data
 
     // Initial hydration effect.
     useEffect(() => {
@@ -367,11 +374,12 @@ export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
         Storage.multiGet(StoreKeys).then(stored => {
             if (!go) return
             // Hydrate all and dispatch ready state.
-            const data: Record<string, any> = {}
-            for (const [key, value] of stored) {
-                if (value === null) continue
-                data[key] = itemHydrators[key as keyof StoreData](value)
-            }
+            const data: StoreData = { ...initialState }
+            for (const [key, value] of stored)
+                if (value !== null)
+                    (data as Record<string, any>)[key] = hydrators[key as keyof StoreData](value)
+
+            // Dispatch init.
             dispatch({
                 type: 'STORE_ACTION_RESET', data: data, cause: 'init',
             })
@@ -380,25 +388,25 @@ export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
 
             // Safety fallback clean store.
             Storage.multiSet([
-                ['cid', stringifyJsonSafe(undefined)],
-                ['cacheVersion', stringifyJsonSafe(undefined)],
-                ['lastSynchronised', stringifyJsonSafe(undefined)],
-                ['settings', stringifyJsonSafe(undefined)],
-                ['notifications', stringifyJsonSafe(undefined)],
-                ['announcements', stringifyJsonSafe(undefined)],
-                ['dealers', stringifyJsonSafe(undefined)],
-                ['images', stringifyJsonSafe(undefined)],
-                ['events', stringifyJsonSafe(undefined)],
-                ['eventDays', stringifyJsonSafe(undefined)],
-                ['eventRooms', stringifyJsonSafe(undefined)],
-                ['eventTracks', stringifyJsonSafe(undefined)],
-                ['knowledgeGroups', stringifyJsonSafe(undefined)],
-                ['knowledgeEntries', stringifyJsonSafe(undefined)],
-                ['maps', stringifyJsonSafe(undefined)],
-                ['communications', stringifyJsonSafe(undefined)],
+                ['cid', dehydrators['cid'](initialState['cid'])],
+                ['cacheVersion', dehydrators['cacheVersion'](initialState['cacheVersion'])],
+                ['lastSynchronised', dehydrators['lastSynchronised'](initialState['lastSynchronised'])],
+                ['settings', dehydrators['settings'](initialState['settings'])],
+                ['notifications', dehydrators['notifications'](initialState['notifications'])],
+                ['announcements', dehydrators['announcements'](initialState['announcements'])],
+                ['dealers', dehydrators['dealers'](initialState['dealers'])],
+                ['images', dehydrators['images'](initialState['images'])],
+                ['events', dehydrators['events'](initialState['events'])],
+                ['eventDays', dehydrators['eventDays'](initialState['eventDays'])],
+                ['eventRooms', dehydrators['eventRooms'](initialState['eventRooms'])],
+                ['eventTracks', dehydrators['eventTracks'](initialState['eventTracks'])],
+                ['knowledgeGroups', dehydrators['knowledgeGroups'](initialState['knowledgeGroups'])],
+                ['knowledgeEntries', dehydrators['knowledgeEntries'](initialState['knowledgeEntries'])],
+                ['maps', dehydrators['maps'](initialState['maps'])],
+                ['communications', dehydrators['communications'](initialState['communications'])],
             ]).catch()
             dispatch({
-                type: 'STORE_ACTION_RESET', data: {}, cause: 'init error',
+                type: 'STORE_ACTION_RESET', data: initialState, cause: 'init error',
             })
         }).finally(() => {
             setInitialized(true)
@@ -410,51 +418,38 @@ export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
     }, [])
 
     // All dehydrators for the state.
-    usePersistor(cacheData, 'cid')
-    usePersistor(cacheData, 'cacheVersion')
-    usePersistor(cacheData, 'lastSynchronised')
-    usePersistor(cacheData, 'settings')
-    usePersistor(cacheData, 'notifications')
-    usePersistor(cacheData, 'announcements')
-    usePersistor(cacheData, 'dealers')
-    usePersistor(cacheData, 'images')
-    usePersistor(cacheData, 'events')
-    usePersistor(cacheData, 'eventDays')
-    usePersistor(cacheData, 'eventRooms')
-    usePersistor(cacheData, 'eventTracks')
-    usePersistor(cacheData, 'knowledgeGroups')
-    usePersistor(cacheData, 'knowledgeEntries')
-    usePersistor(cacheData, 'maps')
-    usePersistor(cacheData, 'communications')
+    usePersistor(data, 'cid')
+    usePersistor(data, 'cacheVersion')
+    usePersistor(data, 'lastSynchronised')
+    usePersistor(data, 'settings')
+    usePersistor(data, 'notifications')
+    usePersistor(data, 'announcements')
+    usePersistor(data, 'dealers')
+    usePersistor(data, 'images')
+    usePersistor(data, 'events')
+    usePersistor(data, 'eventDays')
+    usePersistor(data, 'eventRooms')
+    usePersistor(data, 'eventTracks')
+    usePersistor(data, 'knowledgeGroups')
+    usePersistor(data, 'knowledgeEntries')
+    usePersistor(data, 'maps')
+    usePersistor(data, 'communications')
 
     // Direct cache access methods.
-    const getValue = useCallback(<T extends keyof StoreValues>(store: T): StoreValues[T] | undefined => {
-        return cacheData[store]
-    }, [cacheData])
+    const getValue = useCallback(<T extends keyof StoreValues>(store: T): StoreValues[T] => {
+        return data[store]
+    }, [data])
     const setValue = useCallback(<T extends keyof StoreValues>(store: T, to: StoreValues[T]): void => {
         dispatch({ type: 'STORE_ACTION_VALUE_SET', key: store, value: to })
     }, [])
     const removeValue = useCallback(<T extends keyof StoreValues>(store: T): void => {
         dispatch({ type: 'STORE_ACTION_VALUE_DELETE', key: store })
     }, [])
-    const getEntityKeys = useCallback(<T extends keyof StoreEntities>(store: T): StoreEntities[T]['keys'] => {
-        return (cacheData[store]?.keys ?? emptyArray) as StoreEntities[T]['keys']
-    }, [cacheData])
-    const getEntityValues = useCallback(<T extends keyof StoreEntities>(store: T): StoreEntities[T]['values'] => {
-        return (cacheData[store]?.values ?? emptyArray) as StoreEntities[T]['values']
-    }, [cacheData])
-    const getEntityDict = useCallback(<T extends keyof StoreEntities>(store: T): StoreEntities[T]['dict'] => {
-        return cacheData[store]?.dict ?? emptyDict as StoreEntities[T]['dict']
-    }, [cacheData])
-    const getEntity = useCallback(<T extends keyof StoreEntities>(store: T, key: string): StoreEntities[T]['dict'][string] | undefined => {
-        return cacheData[store]?.dict?.[key] as any
-    }, [cacheData])
-
 
     // Clear dispatcher.
     const clear = useCallback(async () => {
         Vibration.vibrate(400)
-        dispatch({ type: 'STORE_ACTION_RESET', data: {}, cause: 'cleared explicitly' })
+        dispatch({ type: 'STORE_ACTION_RESET', data: initialState, cause: 'cleared explicitly' })
     }, [])
 
     // Secondary state. Synchronizing is set from the callback according to
@@ -471,7 +466,7 @@ export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
             invocation.current = ownInvocation
             setIsSynchronizing(true)
 
-            const { lastSynchronised, cid, cacheVersion } = cacheDataRef.current
+            const { lastSynchronised, cid, cacheVersion } = dataRef.current
 
             // Sync fully if state is for a different convention.
             const path = lastSynchronised && cid === conId && cacheVersion === eurofurenceCacheVersion ? `Sync?since=${(lastSynchronised)}` : `Sync`
@@ -493,7 +488,7 @@ export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
 
                 // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
                 if (data.ConventionIdentifier !== conId || cacheVersion !== eurofurenceCacheVersion) {
-                    dispatch({ type: 'STORE_ACTION_RESET', data: {}, cause: 'CID or format change' })
+                    dispatch({ type: 'STORE_ACTION_RESET', data: initialState, cause: 'CID or format change' })
                     dispatch({
                         type: 'STORE_ACTION_INTERNALS_SET', value: {
                             cid: conId,
@@ -540,7 +535,7 @@ export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
                 if (postSync)
                     dispatch({
                         type: 'STORE_ACTION_RESET',
-                        data: await postSync(cacheDataRef.current),
+                        data: await postSync(dataRef.current),
                         cause: 'post sync action',
                     })
             } finally {
@@ -571,35 +566,32 @@ export const RawCacheProvider = ({ postSync, children }: RawCacheProps) => {
             synchronize().catch(console.error)
     }, [initialized, synchronize])
 
-    // Provided context value.
-    const contextValue = useMemo((): RawCacheContextType => ({
-            cacheData,
-            getValue,
-            setValue,
-            removeValue,
-            getEntityKeys,
-            getEntityValues,
-            getEntityDict,
-            getEntity,
-            clear,
-            isSynchronizing,
-            synchronize,
-            synchronizeUi,
-        }),
-        [cacheData, clear, getEntity, getEntityDict, getEntityKeys, getEntityValues, getValue, isSynchronizing, removeValue, setValue, synchronize, synchronizeUi],
-    )
+    // Use extensions.
+    const extensions = useCacheExtensions(data)
 
-    return <RawCacheContext.Provider value={contextValue}>
+    // TODO: All the data usually changes together, I've removed the memo as that's
+    //   just dependency tracking overhead.
+    return <CacheContext.Provider value={{
+        data,
+        getValue,
+        setValue,
+        removeValue,
+        clear,
+        isSynchronizing,
+        synchronize,
+        synchronizeUi,
+        ...extensions,
+    }}>
         {initialized ? children : null}
-    </RawCacheContext.Provider>
+    </CacheContext.Provider>
 }
 
 /**
  * Uses the raw cache data. Consider using `useCache` instead.
  */
-export const useRawCache = () => {
-    const context = useContext(RawCacheContext)
+export const useCache = () => {
+    const context = useContext(CacheContext)
     if (!context)
-        throw new Error('useRawCache must be used within a RawCacheProvider')
+        throw new Error('useCache must be used within a CacheProvider')
     return context
 }

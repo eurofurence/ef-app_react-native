@@ -1,4 +1,4 @@
-﻿import { StoreEntities, StoreEntityType } from '@/context/data/RawCache'
+﻿import { StoreEntities, StoreEntityType } from '@/context/data/Cache'
 
 /**
  * Map of store name to comparer.
@@ -10,7 +10,7 @@ export type EntitySorters = {
 /**
  * Default item comparers. Applied only on entities.
  */
-export const defaultSorters: EntitySorters = {
+export const entitySorters: EntitySorters = {
     announcements(a, b): number {
         return -a.ValidFromDateTimeUtc.localeCompare(b.ValidFromDateTimeUtc)
     }, communications(a, b): number {

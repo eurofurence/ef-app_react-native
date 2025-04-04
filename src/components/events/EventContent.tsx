@@ -23,8 +23,8 @@ import { shareEvent } from '@/components/events/Events.common'
 import { useNow } from '@/hooks/time/useNow'
 import { useEventReminder } from '@/hooks/data/useEventReminder'
 import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
-import { useCache } from '@/context/data/DataCache'
 import { EventDetails, LinkFragment, MapDetails, MapEntryDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 interface MapLink {
     map: MapDetails;
@@ -80,9 +80,8 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const track = event.ConferenceTrack
     const room = event.ConferenceRoom
 
-    const { getEntityValues } = useCache()
-    const maps = getEntityValues('maps')
-    const mapLink = useMemo(() => getValidLinksByTarget(maps, room?.Id), [maps, room])
+    const { maps } = useCache()
+    const mapLink = useMemo(() => getValidLinksByTarget(maps.values, room?.Id), [maps, room])
 
     const calendar = useCalendars()
     const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {

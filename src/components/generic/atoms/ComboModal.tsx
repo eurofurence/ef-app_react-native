@@ -21,7 +21,7 @@ export type ComboModalProps<T> = {
 }
 
 export type ComboModalRef<T> = {
-    pick(options: T[], selected?: T[]): Promise<T[] | null>;
+    pick(options: readonly T[], selected?: readonly T[]): Promise<readonly T[] | null>;
 }
 
 export const ComboModal = forwardRef(<T, >({ title, clear, getKey, getLabel, cancelText, confirmText, children }: ComboModalProps<T>, ref: ForwardedRef<ComboModalRef<T>>) => {
@@ -92,7 +92,7 @@ export const ComboModal = forwardRef(<T, >({ title, clear, getKey, getLabel, can
 
                 <View style={{ marginTop: 20, marginBottom: 20 }}>
                     {clear !== false && <Button key="clear"
-                                                outline={true}
+                                                outline={selected.length === 0}
                                                 onPress={() => clearSelected()}
                                                 iconRight="checkbox-multiple-blank-outline">
                         Clear

@@ -2,11 +2,11 @@ import { useMemo } from 'react'
 import { TextStyle, ViewStyle } from 'react-native'
 import { mapValues } from 'lodash'
 import { ThemeColor, ThemeName, themes } from '@/context/Theme'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export const useAppliedTheme = (): ThemeName => {
     const { getValue } = useCache()
-    return getValue('settings')?.theme ?? 'light'
+    return getValue('settings').theme ?? 'light'
 }
 
 export const useTheme = () => {

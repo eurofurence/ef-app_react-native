@@ -1,20 +1,19 @@
 import { useIsFocused } from '@react-navigation/core'
 import { TFunction } from 'i18next'
-import { chain } from 'lodash'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from 'react-native'
 
 import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
-import { parseISO, isSameDay, formatDistance } from 'date-fns' // Import date-fns utilities
+import { formatDistance, isSameDay, parseISO } from 'date-fns' // Import date-fns utilities
 import { Image } from '../generic/atoms/Image'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label, labelTypeStyles } from '../generic/atoms/Label'
 import { Col } from '../generic/containers/Col'
 import { useNow } from '@/hooks/time/useNow'
 import { conId, conName, conTimeZone } from '@/configuration'
-import { useCache } from '@/context/data/DataCache'
 import { EventDayRecord } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 export type CountdownHeaderProps = {
     style?: StyleProp<ViewStyle>;
@@ -36,18 +35,12 @@ const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
  * Calculates the countdown title based on current time and event days.
  */
 const useCountdownTitle = (t: TFunction, now: Date) => {
-    const { getEntityValues } = useCache()
-    const days = getEntityValues('eventDays')
-
-    const sortedDays = chain(days)
-        .orderBy((it: EventDayRecord) => it.Date, 'asc')
-        .value()
-
-    const firstDay = sortedDays[0]
-    const lastDay = sortedDays[sortedDays.length - 1]
+    const { eventDays } = useCache()
+    const firstDay = (eventDays.values)[0]
+    const lastDay = (eventDays.values)[eventDays.values.length - 1]
 
     // Try finding current day.
-    const currentDay = days.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone))
+    const currentDay = eventDays.values.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone))
     if (currentDay) return currentDay.Name
 
     // Check if before first day.

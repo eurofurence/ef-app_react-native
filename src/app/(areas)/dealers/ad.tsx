@@ -7,14 +7,14 @@ import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
 import { Badge } from '@/components/generic/containers/Badge'
 import { Label } from '@/components/generic/atoms/Label'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 
 export default function AfterDarkScreen() {
     const { query } = useLocalSearchParams<{ query?: string }>()
     const { t } = useTranslation('Dealers')
     const now = useNow()
 
-    const { dealersInAfterDark, searchDealersInAfterDark } = useDataState()
+    const { dealersInAfterDark, searchDealersInAfterDark } = useCache()
     const search = useFuseResults(searchDealersInAfterDark, query ?? '')
     const groups = useDealerGroups(t, now, search ?? dealersInAfterDark)
 

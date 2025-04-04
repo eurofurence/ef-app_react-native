@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { SettingContainer } from './SettingContainer'
 import { Label } from '@/components/generic/atoms/Label'
 import { Col } from '@/components/generic/containers/Col'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * Analytics opt-in section with a checkbox to allow analytics.
@@ -17,17 +17,17 @@ export const AnalyticsOptIns = () => {
     const { getValue, setValue } = useCache()
     const settings = getValue('settings')
 
-    const analyticsEnabled = settings?.analyticsEnabled ?? false
+    const analyticsEnabled = settings.analyticsEnabled ?? false
 
     const setAnalytics = (enabled: boolean) =>
         setValue('settings', {
-            ...(settings ?? {}),
+            ...settings,
             analyticsEnabled: enabled,
         })
 
     const setDevMenu = (enabled: boolean) =>
         setValue('settings', {
-            ...(settings ?? {}),
+            ...settings,
             devMenu: enabled,
         })
 

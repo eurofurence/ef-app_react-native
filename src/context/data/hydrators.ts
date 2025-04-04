@@ -1,11 +1,11 @@
-﻿import { parseJsonSafe } from '@/context/data/RawCache.Utils'
-import { EntityStore, StoreData } from '@/context/data/RawCache'
+﻿import { parseJsonSafe } from '@/context/data/json'
+import { EntityStore, StoreData } from '@/context/data/Cache'
 import { RecordMetadata } from '@/context/data/types'
 
 /**
  * Map of store name to deserializer. In most cases, simple JSON parse.
  */
-export type ItemHydrators = {
+export type Hydrators = {
     [T in keyof StoreData]: (text: string) => Partial<StoreData>[T];
 }
 
@@ -27,7 +27,7 @@ function hydrateRecords<T extends RecordMetadata>(text: string): EntityStore<T> 
 /**
  * Default item hydrators per store name.
  */
-export const itemHydrators: ItemHydrators = {
+export const hydrators: Hydrators = {
     announcements(text: string): Partial<StoreData>['announcements'] {
         return hydrateRecords(text)
     }, cacheVersion(text: string): Partial<StoreData>['cacheVersion'] {

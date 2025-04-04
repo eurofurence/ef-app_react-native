@@ -8,16 +8,16 @@ import { conName } from '@/configuration'
 import { useDealerGroups } from '@/components/dealers/Dealers.common'
 import { useNow } from '@/hooks/time/useNow'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
-import { useDataState } from '@/context/data/DataState'
+import { useCache } from '@/context/data/Cache'
 
 export default function AllScreen() {
     const { query } = useLocalSearchParams<{ query?: string }>()
     const { t } = useTranslation('Dealers')
     const now = useNow()
 
-    const { dealers, searchDealers } = useDataState()
+    const { dealers, searchDealers } = useCache()
     const search = useFuseResults(searchDealers, query ?? '')
-    const groups = useDealerGroups(t, now, search ?? dealers)
+    const groups = useDealerGroups(t, now, search ?? dealers.values)
 
 
     return (

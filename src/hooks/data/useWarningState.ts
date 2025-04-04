@@ -1,4 +1,4 @@
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * Possible warning keys.
@@ -12,19 +12,19 @@ export type WarningKey = 'deviceWarningsHidden' | 'languageWarningsHidden' | 'ti
 export function useWarningState(warningKey: WarningKey) {
     const { getValue, setValue } = useCache()
     const settings = getValue('settings')
-    const isHidden = settings?.warnings?.[warningKey] === true
+    const isHidden = settings.warnings?.[warningKey] === true
 
     const hideWarning = () => setValue('settings', {
-        ...(settings ?? {}),
+        ...settings,
         warnings: {
-            ...(settings?.warnings ?? {}),
+            ...(settings.warnings ?? {}),
             [warningKey]: true,
         },
     })
     const showWarning = () => setValue('settings', {
-        ...(settings ?? {}),
+        ...settings,
         warnings: {
-            ...(settings?.warnings ?? {}),
+            ...(settings.warnings ?? {}),
             [warningKey]: false,
         },
     })

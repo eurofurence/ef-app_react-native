@@ -8,23 +8,21 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { DrawerProps, useDrawerScreensData } from '@/components/data/DrawerScreensData'
-import { RawCacheProvider, StoreData } from '@/context/data/RawCache'
+import { CacheProvider, StoreData } from '@/context/data/Cache'
 import { useTheme, useThemeMemo, useThemeName } from '@/hooks/themes/useThemeHooks'
 // Import i18n configuration
 import '@/i18n'
 // Import global tailwind css
 import { AuthContextProvider } from '@/context/AuthContext'
 import '@/css/globals.css'
-import { DataCacheProvider } from '@/context/data/DataCache'
 import { syncReminders } from '@/util/syncReminders'
-import { DataStateProvider } from '@/context/data/DataState'
 
 /**
  * These actions happen after all data is synchronized and can react to new data
  * and return an updated state.
  * @param data The incoming state.
  */
-async function postSync(data: Partial<StoreData>): Promise<Partial<StoreData>> {
+async function postSync(data: StoreData): Promise<StoreData> {
     // Updates notifications scheduled on the device and stores the new
     // notification metadata.
     data = await syncReminders(data)
@@ -40,13 +38,9 @@ async function postSync(data: Partial<StoreData>): Promise<Partial<StoreData>> {
 export default function RootLayout() {
     return (
         <GestureHandlerRootView>
-            <RawCacheProvider postSync={postSync}>
-                <DataCacheProvider>
-                    <DataStateProvider>
-                        <MainLayout />
-                    </DataStateProvider>
-                </DataCacheProvider>
-            </RawCacheProvider>
+            <CacheProvider postSync={postSync}>
+                <MainLayout />
+            </CacheProvider>
         </GestureHandlerRootView>
     )
 }

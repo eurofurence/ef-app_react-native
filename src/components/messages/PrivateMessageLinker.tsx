@@ -5,7 +5,7 @@ import { Button, buttonIconSize } from '../generic/containers/Button'
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 type PrivateMessageLinkerProps = {
     containerStyle?: StyleProp<ViewStyle>;
@@ -21,12 +21,11 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
     const prevOpen = useRef(open)
     const { t } = useTranslation('Menu')
     const styleBackground = useThemeBackground('notification')
-    const { getEntityValues, synchronizeUi } = useCache()
+    const { communications, synchronizeUi } = useCache()
 
     // Get all communications and filter unread ones
-    const communications = getEntityValues('communications')
     const unread = useMemo(() =>
-            communications.filter(item => !item.ReadDateTimeUtc),
+            communications.values.filter(item => !item.ReadDateTimeUtc),
         [communications],
     )
 

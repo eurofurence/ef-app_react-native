@@ -13,12 +13,12 @@ import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { useAuthContext } from '@/context/AuthContext'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { useSubmitEventFeedback } from '@/services/events'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export const FeedbackForm = () => {
     const theme = useTheme()
     const { id } = useLocalSearchParams<{ id: string }>()
-    const getEntity = useCache().getEntity
+    const { events } = useCache()
 
     const { execute: submitFeedback, isLoading: isSubmitting } = useSubmitEventFeedback()
     const { t } = useTranslation('EventFeedback')
@@ -36,7 +36,7 @@ export const FeedbackForm = () => {
     const disabled = !loggedIn || !attending
     const disabledReason = (!loggedIn && t('disabled_not_logged_in')) || (!attending && t('disabled_not_attending'))
 
-    const event = getEntity('events', id)
+    const event = events.dict[id]
 
     const submit = useCallback(
         async (data: FeedbackSchema) => {

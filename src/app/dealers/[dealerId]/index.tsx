@@ -13,13 +13,13 @@ import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { shareDealer } from '@/components/dealers/Dealers.common'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export default function DealerItem() {
     const { t } = useTranslation('Dealer')
     const { dealerId } = useLocalSearchParams<{ dealerId: string }>()
-    const getEntity = useCache().getEntity
-    const dealer = getEntity('dealers', dealerId)
+    const { dealers } = useCache()
+    const dealer = dealers.dict[dealerId]
     const backgroundStyle = useThemeBackground('background')
 
     // Get update note. Latch so it's displayed even if reset in background.

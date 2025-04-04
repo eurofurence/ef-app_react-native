@@ -6,10 +6,10 @@ import { isBefore, isSameDay } from 'date-fns'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { Section } from '@/components/generic/atoms/Section'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { useCache } from '@/context/data/DataCache'
 import { EventDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
-const filterHappeningTodayEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: T[], now: Date): T[] =>
+const filterHappeningTodayEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
     events.filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc))).filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)))
 
 export type TodayScheduleListProps = {
@@ -18,18 +18,17 @@ export type TodayScheduleListProps = {
 
 export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
     const { t } = useTranslation('Events')
-    const { getEntityValues } = useCache()
+    const { eventsFavorite } = useCache()
     const zone = useZoneAbbr()
 
-    const events = useMemo(() => {
-        const allEvents = getEntityValues('events')
-        const favorites = allEvents.filter(item => item.Favorite && !item.Hidden)
+    const today = useMemo(() => {
+        const favorites = eventsFavorite.filter(item => !item.Hidden)
 
         return filterHappeningTodayEvents(favorites, now)
             .map((details) => eventInstanceForAny(details, now, zone))
-    }, [getEntityValues, now, zone])
+    }, [eventsFavorite, now, zone])
 
-    if (events.length === 0) {
+    if (today.length === 0) {
         return null
     }
 
@@ -37,7 +36,7 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
         <>
             <Section title={t('today_schedule_title')} subtitle={t('today_schedule_subtitle')} icon="book-marker" />
             <View style={styles.condense}>
-                {events.map((event) => (
+                {today.map((event) => (
                     <EventCard
                         key={event.details.Id}
                         event={event}

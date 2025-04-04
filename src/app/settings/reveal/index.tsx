@@ -7,28 +7,26 @@ import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
 import { useNow } from '@/hooks/time/useNow'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 export default function RevealHiddenPage() {
     const { t } = useTranslation('RevealHidden')
-    const { getEntityValues, getValue, setValue } = useCache()
+    const { events, getValue, setValue } = useCache()
     const now = useNow(5000) // Update every 5 seconds when focused
     const zone = useZoneAbbr()
     const backgroundStyle = useThemeBackground('background')
 
     // Get all events from cache
-    const allEvents = getEntityValues('events')
-
     // Filter hidden events and create event instances
     const hiddenEvents = useMemo(
-        () => allEvents.filter((item) => item.Hidden).map((item) => eventInstanceForAny(item, now, zone)),
-        [allEvents, now, zone],
+        () => events.values.filter((item) => item.Hidden).map((item) => eventInstanceForAny(item, now, zone)),
+        [events, now, zone],
     )
 
     // Handle unhiding an event
     const handleUnhide = useCallback(
         (eventId: string) => {
-            const settings = getValue('settings') ?? {}
+            const settings = getValue('settings')
             const newSettings = {
                 ...settings,
                 hiddenEvents: settings.hiddenEvents?.filter(item => item != eventId),

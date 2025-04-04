@@ -7,10 +7,10 @@ import { isWithinInterval, subMinutes } from 'date-fns'
 import { Section } from '../generic/atoms/Section'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { useCache } from '@/context/data/DataCache'
 import { EventDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
-const filterUpcomingEvents = (events: EventDetails[], now: Date) =>
+const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
     events.filter((it) => {
         const startDate = new Date(it.StartDateTimeUtc)
         const startMinus30 = subMinutes(startDate, 30)
@@ -22,20 +22,19 @@ export type UpcomingEventsListProps = {
 };
 export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
     const { t } = useTranslation('Events')
-    const { getEntityValues } = useCache()
+    const { events } = useCache()
 
     const zone = useZoneAbbr()
-    const all = getEntityValues('events')
 
-    const events = useMemo(
+    const upcoming = useMemo(
         () =>
-            filterUpcomingEvents(all, now)
+            filterUpcomingEvents(events.values, now)
                 .filter((item) => !item.Hidden)
                 .map((details) => eventInstanceForAny(details, now, zone)),
-        [all, now, zone],
+        [events, now, zone],
     )
 
-    if (events.length === 0) {
+    if (upcoming.length === 0) {
         return null
     }
 
@@ -43,7 +42,7 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
         <>
             <Section title={t('upcoming_title')} subtitle={t('upcoming_subtitle')} icon="clock" />
             <View style={styles.condense}>
-                {events.map((event) => (
+                {upcoming.map((event) => (
                     <EventCard
                         key={event.details.Id}
                         event={event}

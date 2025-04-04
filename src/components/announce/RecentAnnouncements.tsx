@@ -6,23 +6,22 @@ import { router } from 'expo-router'
 import { Section } from '../generic/atoms/Section'
 import { Button } from '../generic/containers/Button'
 import { AnnouncementCard } from './AnnouncementCard'
-import { useCache } from '@/context/data/DataCache'
 import { AnnouncementDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 const recentLimit = 2
 
 export const RecentAnnouncements = ({ now }: { now: Date }) => {
     const { t } = useTranslation('Home')
-    const { getEntityValues } = useCache()
+    const { announcements } = useCache()
 
-    const all = getEntityValues('announcements')
-    const announcements = useMemo(() =>
-        all.filter(item => {
+    const recent = useMemo(() =>
+        announcements.values.filter(item => {
             const validFrom = parseISO(item.ValidFromDateTimeUtc)
             const validUntil = parseISO(item.ValidUntilDateTimeUtc)
 
             return isAfter(now, subMinutes(validFrom, 5)) && isBefore(now, addMinutes(validUntil, 5))
-        }), [all, now])
+        }), [announcements, now])
 
     /**
      * Creates the announcement instance props for an upcoming or running announcement.
@@ -34,7 +33,7 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
         return { details, time }
     }
 
-    const recentAnnouncements = useMemo(() => announcements.slice(0, recentLimit).map(announcementInstanceForAny), [announcements])
+    const recentAnnouncements = useMemo(() => recent.slice(0, recentLimit).map(announcementInstanceForAny), [recent])
 
     if (recentAnnouncements.length === 0) {
         return null
@@ -42,7 +41,7 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
 
     return (
         <>
-            <Section title={t('recent_announcements')} subtitle={t('announcementsTitle', { count: announcements.length })} icon="newspaper" />
+            <Section title={t('recent_announcements')} subtitle={t('announcementsTitle', { count: recent.length })} icon="newspaper" />
             <View style={styles.condense}>
                 {recentAnnouncements.map((item) => (
                     <AnnouncementCard

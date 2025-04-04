@@ -1,27 +1,25 @@
 import { useMemo } from 'react'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * Uses the state of user favorite events and dealers. Also returns the last
  * viewed times as a record of ID to formatted time.
  */
 export function useFavoritesState() {
-    const { getEntityValues, getValue } = useCache()
+    const { events, dealers, getValue } = useCache()
 
-    const events = getEntityValues('events')
-    const dealers = getEntityValues('dealers')
     const notifications = getValue('notifications')
     const settings = getValue('settings')
 
     const favoriteEvents = useMemo(() =>
-            events.filter(item => notifications?.find(notification => notification.recordId == item.Id)),
+            events.values.filter(item => notifications?.find(notification => notification.recordId == item.Id)),
         [events, notifications])
 
     const favoriteDealers = useMemo(() =>
-            dealers.filter(item => settings?.favoriteDealers?.includes(item.Id)),
+            dealers.values.filter(item => settings.favoriteDealers?.includes(item.Id)),
         [dealers, settings])
 
-    const lastViewTimes = settings?.lastViewTimes
+    const lastViewTimes = settings.lastViewTimes
 
     return {
         favoriteEvents,

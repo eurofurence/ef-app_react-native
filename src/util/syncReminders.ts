@@ -1,5 +1,5 @@
 ﻿import { isAfter, parseISO } from 'date-fns'
-import { StoreData } from '@/context/data/RawCache'
+import { StoreData } from '@/context/data/Cache'
 import { cancelEventReminder, rescheduleEventReminder } from '@/util/eventReminders'
 import { Notification } from '@/store/background/slice'
 
@@ -10,12 +10,7 @@ import { Notification } from '@/store/background/slice'
  * the sync data.
  * @param data The data to apply on.
  */
-export async function syncReminders(data: Partial<StoreData>): Promise<Partial<StoreData>> {
-    const notifications = data.notifications
-    const events = data.events?.dict
-    if (!notifications) return data
-    if (!events) return data
-
+export async function syncReminders(data: StoreData): Promise<StoreData> {
     const save = (notification: Notification) => {
         data = { ...data, notifications: [...(data.notifications ?? []), notification] }
     }
@@ -23,10 +18,10 @@ export async function syncReminders(data: Partial<StoreData>): Promise<Partial<S
         data = { ...data, notifications: data.notifications?.filter(item => item.recordId !== id) }
     }
 
-    for (const reminder of notifications) {
+    for (const reminder of data.notifications) {
         const reminderData = reminder
         // Find event corresponding to reminder.recordId.
-        const event = events[reminderData.recordId]
+        const event = (data.events.dict)[reminderData.recordId]
         if (event) {
             if (isAfter(parseISO(event.LastChangeDateTimeUtc), parseISO(reminderData.dateCreatedUtc))) {
                 // Reschedule reminder; timeTravel default to 0 for now.

@@ -7,7 +7,7 @@ import { SettingContainer } from './SettingContainer'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { Translation } from '@/i18n'
 import { Label } from '@/components/generic/atoms/Label'
-import { useCache } from '@/context/data/DataCache'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * Element of languages that the picker displays.
@@ -54,7 +54,7 @@ export const LanguagePicker = () => {
         try {
             await i18n.changeLanguage(language)
             setValue('settings', {
-                ...(settings ?? {}),
+                ...settings,
                 language,
             })
         } catch (error) {
@@ -67,7 +67,7 @@ export const LanguagePicker = () => {
             <Label variant="bold">{t('changeLanguage')}</Label>
             <Label variant="narrow">{t('currentLanguage')}</Label>
             <Picker<string>
-                selectedValue={settings?.language ?? i18n.language}
+                selectedValue={settings.language ?? i18n.language}
                 style={{ color: textColor }}
                 dropdownIconColor={textColor}
                 prompt={t('changeLanguage')}
