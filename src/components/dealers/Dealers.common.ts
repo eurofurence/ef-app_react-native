@@ -89,7 +89,7 @@ export const useDealerInstances = (t: TFunction, now: Date, items: readonly  Dea
 export const useDealerGroups = (t: TFunction, now: Date, items: readonly  DealerDetails[]) => {
     const { dealers } = useCache()
 
-    const categoryOf = useMemo(() => createCategoryMapper(dealers.values), [dealers])
+    const categoryOf = useMemo(() => createCategoryMapper(dealers), [dealers])
     return useMemo(() => {
         const day1 = format(setDay(new Date(), 1, { weekStartsOn: 0 }), 'EEEE')
         const day2 = format(setDay(new Date(), 2, { weekStartsOn: 0 }), 'EEEE')

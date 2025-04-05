@@ -4,21 +4,19 @@ import { Banner } from '@/components/generic/atoms/Banner'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { Floater } from '@/components/generic/containers/Floater'
 import { LinkItem } from '@/components/maps/LinkItem'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Header } from '@/components/generic/containers/Header'
 import { LinkFragment } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
 
-export default function KnowledgeId() {
-    const { knowledgeId } = useLocalSearchParams<{ knowledgeId: string }>()
+export default function KnowledgeItem() {
+    const { id } = useLocalSearchParams<{ id: string }>()
     const { knowledgeEntries } = useCache()
-    const backgroundStyle = useThemeBackground('background')
 
     // Get the knowledge entry from cache
-    const entry = knowledgeEntries.dict[knowledgeId]
+    const entry = knowledgeEntries.dict[id]
 
     return (
-        <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
             <Header>{entry?.Title}</Header>
             <Floater>
                 {entry?.Images?.map((image, i) => (

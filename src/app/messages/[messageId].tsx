@@ -16,7 +16,7 @@ import { useCache } from '@/context/data/Cache'
 
 // const readOpenTimeRequirement = 1500;
 
-export default function PmItem() {
+export default function MessageItem() {
     const { messageId } = useLocalSearchParams<{ messageId: string }>()
     const { t } = useTranslation('PrivateMessageItem')
     const { communications } = useCache()

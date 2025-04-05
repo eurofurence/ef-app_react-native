@@ -9,12 +9,10 @@ import { TimeTravel } from '@/components/settings/TimeTravel'
 import { ScheduledNotifications } from '@/components/settings/ScheduledNotifications'
 import { RemoteMessages } from '@/components/settings/RemoteMessages'
 import { DevButtons } from '@/components/settings/DevButtons'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Header } from '@/components/generic/containers/Header'
 
 export default function SettingsPage() {
     const [showDevMenu, setShowDevMenu] = useState(false)
-    const backgroundStyle = useThemeBackground('background')
     const { t } = useTranslation('Settings')
 
     // TODO: Implement a way to toggle dev menu, possibly through multiple taps on version number
@@ -25,7 +23,7 @@ export default function SettingsPage() {
 
     return (
         <>
-            <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll className="flex-1">
+            <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll className="flex-1">
                 <Header>{t('header')}</Header>
                 <Floater contentStyle={styles.content}>
                     <UserSettings />

@@ -8,8 +8,8 @@ import { stringifyJsonSafe } from '@/context/data/json'
 function statFor(data: StoreData[keyof StoreData]): string {
     if (typeof data === 'object'
         && data !== null
-        && Array.isArray((data as any).keys))
-        return ((data as any).keys).length + ' items'
+        && Array.isArray((data as any)))
+        return ((data as any)).length + ' items'
     else return stringifyJsonSafe(data)
 }
 

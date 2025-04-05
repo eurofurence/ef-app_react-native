@@ -32,7 +32,7 @@ export function UserSettings() {
             <SettingContainer>
                 <Button
                     icon="cellphone-information"
-                    onPress={() => router.push('/about')}
+                    onPress={() => router.navigate('/about')}
                     outline
                 >
                     {t('about')}

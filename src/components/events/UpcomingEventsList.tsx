@@ -28,7 +28,7 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
 
     const upcoming = useMemo(
         () =>
-            filterUpcomingEvents(events.values, now)
+            filterUpcomingEvents(events, now)
                 .filter((item) => !item.Hidden)
                 .map((details) => eventInstanceForAny(details, now, zone)),
         [events, now, zone],
@@ -49,8 +49,8 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
                         type="time"
                         onPress={(event) =>
                             router.navigate({
-                                pathname: '/events/[eventId]',
-                                params: { eventId: event.Id },
+                                pathname: '/events/[id]',
+                                params: { id: event.Id },
                             })
                         }
                     />

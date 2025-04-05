@@ -219,3 +219,26 @@ export type GlobalSearchResult =
     (DealerDetails & { type: 'dealer' })
     | (EventDetails & { type: 'event' })
     | (KnowledgeEntryDetails & { type: 'knowledgeEntry' });
+
+
+export type ImageLocation =
+    | {
+    type: "Event";
+    location: "eventPoster" | "eventBanner";
+    title: string;
+}
+    | {
+    type: "Dealer";
+    location: "artist" | "artistThumbnail" | "artPreview";
+    title: string;
+}
+    | {
+    type: "Announcement";
+    location: "announcement";
+    title: string;
+}
+    | {
+    type: "KnowledgeEntry";
+    location: "knowledgeEntryBanner";
+    title: string;
+};

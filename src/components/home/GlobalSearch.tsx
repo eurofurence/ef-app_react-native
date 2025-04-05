@@ -43,8 +43,8 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
                             dealer={item}
                             onPress={(dealer) =>
                                 router.navigate({
-                                    pathname: '/dealers/[dealerId]',
-                                    params: { dealerId: dealer.Id },
+                                    pathname: '/dealers/[id]',
+                                    params: { id: dealer.Id },
                                 })
                             }
                         />
@@ -62,7 +62,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
                             type="time"
                             onPress={(event) =>
                                 router.navigate({
-                                    pathname: '/events/[eventId]',
+                                    pathname: '/events/[id]',
                                     params: { eventId: event.Id },
                                 })
                             }
@@ -80,8 +80,8 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
                             key={item.Id}
                             onPress={(entry) =>
                                 router.navigate({
-                                    pathname: '/knowledge/[knowledgeId]',
-                                    params: { knowledgeId: entry.Id },
+                                    pathname: '/knowledge/[id]',
+                                    params: { id: entry.Id },
                                 })
                             }
                         />

@@ -13,14 +13,14 @@ export function RemoteMessages() {
                 {t('remoteMessages')}
             </Label>
             <View className="mt-2">
-                {communications.values.map(item => (
+                {communications.map(item => (
                     <View key={item.Id} className="py-1">
                         <Label type="regular">
                             {item.Message}
                         </Label>
                     </View>
                 ))}
-                {communications.values.length === 0 && (
+                {communications.length === 0 && (
                     <Label type="regular">
                         {t('noRemoteMessages')}
                     </Label>

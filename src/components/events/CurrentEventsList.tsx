@@ -31,8 +31,8 @@ export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
                         type="duration"
                         onPress={(event) =>
                             router.navigate({
-                                pathname: '/events/[eventId]',
-                                params: { eventId: event.Id },
+                                pathname: '/events/[id]',
+                                params: { id: event.Id },
                             })
                         }
                     />

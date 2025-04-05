@@ -55,7 +55,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
     // Dependent and independent styles.
     const styleBackground = useThemeBackground('background')
     const stylePre = useThemeBackground(present ? 'primary' : 'darken')
-    const avatarBackground = useThemeBackground('primary')
+    const avatarBackground = useThemeBackground('text')
 
     const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress])
     const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])

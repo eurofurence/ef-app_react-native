@@ -21,7 +21,7 @@ export const RevealHidden = () => {
 
     const settings = getValue('settings')
     const hidden = useMemo(
-        () => events.values
+        () => events
             .filter((item: EventDetails) => settings.hiddenEvents?.includes(item.Id))
             .map((details) => eventInstanceForAny(details, now, zone)), [events, now, settings.hiddenEvents, zone])
 

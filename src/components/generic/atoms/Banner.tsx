@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { FC } from 'react'
 import { StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
@@ -22,6 +21,11 @@ export type BannerProps = {
     image?: ImageDetails;
 
     /**
+     * The viewer title.
+     */
+    title?: string;
+
+    /**
      * Placeholder to use.
      */
     placeholder?: ImageProps['placeholder'];
@@ -32,7 +36,7 @@ export type BannerProps = {
     viewable?: boolean;
 };
 
-export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable }) => {
+export const Banner = ({ style, image, title, placeholder, viewable }: BannerProps) => {
     const aspect = !image ? {} : { aspectRatio: image.Width / image.Height }
     const backgroundStyle = useThemeBackground('background')
     // Do not render if nothing given.
@@ -44,8 +48,8 @@ export const Banner: FC<BannerProps> = ({ style, image, placeholder, viewable })
             onPress={() => {
                 if (viewable && image)
                     router.navigate({
-                        pathname: '/viewer/[viewerId]',
-                        params: { viewerId: image.Id },
+                        pathname: '/images/[id]',
+                        params: { id: image.Id, title },
                     })
             }}
         >

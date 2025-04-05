@@ -25,7 +25,7 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
 
     // Get all communications and filter unread ones
     const unread = useMemo(() =>
-            communications.values.filter(item => !item.ReadDateTimeUtc),
+            communications.filter(item => !item.ReadDateTimeUtc),
         [communications],
     )
 

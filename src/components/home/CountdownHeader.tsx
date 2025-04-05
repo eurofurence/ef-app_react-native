@@ -36,11 +36,11 @@ const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
  */
 const useCountdownTitle = (t: TFunction, now: Date) => {
     const { eventDays } = useCache()
-    const firstDay = (eventDays.values)[0]
-    const lastDay = (eventDays.values)[eventDays.values.length - 1]
+    const firstDay = (eventDays)[0]
+    const lastDay = (eventDays)[eventDays.length - 1]
 
     // Try finding current day.
-    const currentDay = eventDays.values.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone))
+    const currentDay = eventDays.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone))
     if (currentDay) return currentDay.Name
 
     // Check if before first day.

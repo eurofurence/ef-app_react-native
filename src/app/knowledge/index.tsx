@@ -5,7 +5,6 @@ import Fuse from 'fuse.js'
 import { useTranslation } from 'react-i18next'
 import { KbSectionedList } from '@/components/kb/KbSectionedList'
 import { Search } from '@/components/generic/atoms/Search'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Header } from '@/components/generic/containers/Header'
 import { useCache } from '@/context/data/Cache'
 
@@ -14,18 +13,15 @@ export default function Knowledge() {
     const { knowledgeGroups, knowledgeEntries } = useCache()
     const [filter, setFilter] = useState('')
 
-    // Get knowledge groups and entries from cache
-    const backgroundStyle = useThemeBackground('background')
-
     // Prepare data for search and display
     const groups = useMemo(() => {
         // Group entries by their group ID
-        const groupedEntries = chain(knowledgeEntries.values)
+        const groupedEntries = chain(knowledgeEntries)
             .groupBy('KnowledgeGroupId')
             .value()
 
         // Combine groups with their entries
-        return knowledgeGroups.values.map(group => ({
+        return knowledgeGroups.map(group => ({
             group,
             entries: groupedEntries[group.Id] || [],
         }))
@@ -56,7 +52,7 @@ export default function Knowledge() {
     }, [searchResults, groups])
 
     return (
-        <View style={[StyleSheet.absoluteFill, backgroundStyle]}>
+        <View style={StyleSheet.absoluteFill}>
             <Header>{t('header')}</Header>
             <KbSectionedList
                 kbGroups={displayData}

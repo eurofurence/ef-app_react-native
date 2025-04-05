@@ -7,7 +7,7 @@ import { MapContent, MapContentProps } from '@/components/maps/MapContent'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 
-export default function Map() {
+export default function MapItem() {
     const params = useLocalSearchParams<{ slug: string[] }>()
 
     // Extract parameters from the slug array

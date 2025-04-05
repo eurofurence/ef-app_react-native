@@ -9,9 +9,9 @@ export default function RedirectIndex() {
     const { eventDays } = useCache()
 
     // Not actionable yet. Return null.
-    if (!eventDays.values.length) return null
+    if (!eventDays.length) return null
 
     // Find matching date or use first.
-    const target = eventDays.values.find(item => isSameDay(now, item.Date)) ?? eventDays.values[0]
+    const target = eventDays.find(item => isSameDay(now, item.Date)) ?? eventDays[0]
     return <Redirect href={scheduleRoutePrefix + target.Id} />
 }

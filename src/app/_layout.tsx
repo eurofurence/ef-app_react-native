@@ -7,28 +7,15 @@ import { StyleSheet } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { DrawerProps, useDrawerScreensData } from '@/components/data/DrawerScreensData'
-import { CacheProvider, StoreData } from '@/context/data/Cache'
+import {  useStackScreensData } from '@/hooks/data/useStackScreensData'
+import { CacheProvider } from '@/context/data/Cache'
 import { useTheme, useThemeMemo, useThemeName } from '@/hooks/themes/useThemeHooks'
 // Import i18n configuration
 import '@/i18n'
 // Import global tailwind css
 import { AuthContextProvider } from '@/context/AuthContext'
 import '@/css/globals.css'
-import { syncReminders } from '@/util/syncReminders'
-
-/**
- * These actions happen after all data is synchronized and can react to new data
- * and return an updated state.
- * @param data The incoming state.
- */
-async function postSync(data: StoreData): Promise<StoreData> {
-    // Updates notifications scheduled on the device and stores the new
-    // notification metadata.
-    data = await syncReminders(data)
-
-    return data
-}
+import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
 
 /**
  * The root layout for the application.
@@ -38,7 +25,7 @@ async function postSync(data: StoreData): Promise<StoreData> {
 export default function RootLayout() {
     return (
         <GestureHandlerRootView>
-            <CacheProvider postSync={postSync}>
+            <CacheProvider>
                 <MainLayout />
             </CacheProvider>
         </GestureHandlerRootView>
@@ -55,7 +42,7 @@ export function MainLayout() {
     const themeType = useThemeName()
 
     const safeAreaStyle = useThemeMemo((theme) => ({ ...StyleSheet.absoluteFillObject, backgroundColor: theme.background }))
-    const DrawerScreensData = useDrawerScreensData()
+    const screensData = useStackScreensData()
 
     // Wraps the app theme for react navigation.
     const themeNavigation = useMemo(() =>
@@ -73,6 +60,8 @@ export function MainLayout() {
         [themeType, theme],
     )
 
+    useEventReminderRescheduling()
+
     return (
         <BottomSheetModalProvider>
             <ThemeProvider value={themeNavigation}>
@@ -80,7 +69,7 @@ export function MainLayout() {
                     <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
                     <SafeAreaView style={safeAreaStyle}>
                         <Stack>
-                            {DrawerScreensData.map((screen: DrawerProps) => (
+                            {screensData.map(screen => (
                                 <Stack.Screen
                                     key={screen.location}
                                     name={screen.location}

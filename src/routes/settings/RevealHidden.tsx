@@ -21,7 +21,7 @@ export const RevealHidden = () => {
     const settings = getValue('settings')
 
     const projected = useMemo(() =>
-            events.values.filter(item => Boolean(settings.hiddenEvents?.includes(item.Id))),
+            events.filter(item => Boolean(settings.hiddenEvents?.includes(item.Id))),
         [events, settings.hiddenEvents])
     const instances = useMemo(() => projected.map(details => eventInstanceForAny(details, now, zone)), [projected, now, zone])
 

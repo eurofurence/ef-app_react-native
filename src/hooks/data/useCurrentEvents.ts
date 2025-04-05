@@ -22,7 +22,7 @@ export function useCurrentEvents(now: Date, zone: string) {
     const { events } = useCache()
 
     return useMemo(() =>
-            chain(filterCurrentEvents(events.values, now))
+            chain(filterCurrentEvents(events, now))
                 .filter(item => !item.Hidden)
                 .map(details => eventInstanceForAny(details, now, zone))
                 .orderBy('progress', 'asc')

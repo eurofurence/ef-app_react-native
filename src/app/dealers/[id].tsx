@@ -12,15 +12,13 @@ import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
 import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { shareDealer } from '@/components/dealers/Dealers.common'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 
 export default function DealerItem() {
     const { t } = useTranslation('Dealer')
-    const { dealerId } = useLocalSearchParams<{ dealerId: string }>()
+    const { id } = useLocalSearchParams<{ id: string }>()
     const { dealers } = useCache()
-    const dealer = dealers.dict[dealerId]
-    const backgroundStyle = useThemeBackground('background')
+    const dealer = dealers.dict[id]
 
     // Get update note. Latch so it's displayed even if reset in background.
     const updated = useUpdateSinceNote(dealer)
@@ -28,7 +26,7 @@ export default function DealerItem() {
 
     return (
         <ScrollView
-            style={[StyleSheet.absoluteFill, backgroundStyle]}
+            style={StyleSheet.absoluteFill}
             stickyHeaderIndices={[0]}
             stickyHeaderHiddenOnScroll
         >

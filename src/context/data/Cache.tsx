@@ -22,25 +22,7 @@ import {
     Settings,
 } from '@/context/data/types'
 import { CacheExtensions, useCacheExtensions } from '@/context/data/useCacheExtensions'
-
-/**
- * Entity store, contains a list of keys, list of sorted values, and associative
- * object from ID to value.
- */
-export type EntityStore<T> = Readonly<{
-    keys: Readonly<string[]>;
-    values: Readonly<T[]>;
-    dict: Readonly<Record<string, T>>;
-}>
-
-/**
- * Empty store.
- */
-const emptyEntityStore = Object.freeze({
-    keys: Object.freeze([]),
-    values: Object.freeze([]),
-    dict: Object.freeze({}),
-})
+import { emptyEntityStore, EntityStore } from '@/context/data/EntityStore'
 
 /**
  * Internal values stored in the cache. Used for operation of the sync mechanism.
@@ -111,7 +93,7 @@ export const StoreKeys = ['cid', 'cacheVersion', 'lastSynchronised', 'settings',
 /**
  * Helper to resolve the type of the entity by store name.
  */
-export type StoreEntityType<T extends keyof StoreEntities> = StoreEntities[T]['values'][number]
+export type StoreEntityType<T extends keyof StoreEntities> = StoreEntities[T][number]
 
 /**
  * Update internals.
@@ -222,12 +204,11 @@ const storeReducer = (state: StoreData, action: StoreAction): StoreData => {
                 }
 
                 // Derive secondaries.
-                const keys = values.map(item => item.Id)
                 const dict: Record<string, (typeof values)[number]> = {}
                 for (const item of values)
                     dict[item.Id] = item
 
-                return { ...state, [action.key]: { keys, values, dict } }
+                return { ...state, [action.key]: Object.assign(values, { dict }) }
             } else {
                 // State exists and is not completely removed. Update with new data and remove filtered records.
 
@@ -243,19 +224,18 @@ const storeReducer = (state: StoreData, action: StoreAction): StoreData => {
 
                 // Remove the "removed" values and those that will be added again as changed entities.
                 const sorter = entitySorters[action.key]
-                const values = currentOrDefault.values.filter(item => !deleteKeys.has(item.Id))
+                const values = currentOrDefault.filter(item => !deleteKeys.has(item.Id))
                 if (action.add) {
                     values.push(...action.add)
                     values.sort(sorter as any)
                 }
 
                 // Derive secondaries.
-                const keys = values.map(item => item.Id)
                 const dict: Record<string, (typeof values)[number]> = {}
                 for (const item of values)
                     dict[item.Id] = item
 
-                return { ...state, [action.key]: { keys, values, dict } }
+                return { ...state, [action.key]: Object.assign(values, { dict }) }
             }
         }
         case 'STORE_ACTION_RESET': {
@@ -345,19 +325,16 @@ const CacheContext = createContext<CacheContextType | undefined>(undefined)
 CacheContext.displayName = 'CacheContext'
 
 export type CacheProps = {
-    postSync?: (data: StoreData) => Promise<StoreData>;
     children?: ReactNode | undefined;
 }
 
 /**
  * Provides raw cache integration.
- * @param postSync Callback to invoke after sync. Can perform state reaction that needs
- * to happen before synchronization is marked completed.
  * @param children The children this context is provided to. May not be rendered
  * if the state is not available yet.
  * @constructor
  */
-export const CacheProvider = ({ postSync, children }: CacheProps) => {
+export const CacheProvider = ({ children }: CacheProps) => {
     // Internal state. Initialized is tracked to stop rendering if data is not
     // hydrated yet. Cache data is the full cache state.
     const [initialized, setInitialized] = useState(false)
@@ -531,20 +508,13 @@ export const CacheProvider = ({ postSync, children }: CacheProps) => {
                         lastSynchronised: data.CurrentDateTimeUtc,
                     },
                 })
-
-                if (postSync)
-                    dispatch({
-                        type: 'STORE_ACTION_RESET',
-                        data: await postSync(dataRef.current),
-                        cause: 'post sync action',
-                    })
             } finally {
                 if (invocation.current === ownInvocation) {
                     setIsSynchronizing(false)
                 }
             }
         },
-        [postSync])
+        [])
 
     // UI synchronize wrapper.
     const synchronizeUi = useCallback(

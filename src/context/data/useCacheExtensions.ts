@@ -3,7 +3,7 @@ import { toZonedTime } from 'date-fns-tz'
 import { parseISO } from 'date-fns'
 import Fuse, { FuseOptionKey, IFuseOptions } from 'fuse.js'
 import { flatten } from 'lodash'
-import { EntityStore, StoreData } from '@/context/data/Cache'
+import { StoreData } from '@/context/data/Cache'
 import { conTimeZone } from '@/configuration'
 import {
     internalAttendanceDayNames,
@@ -30,13 +30,14 @@ import {
     EventRoomDetails,
     EventTrackDetails,
     GlobalSearchResult,
-    ImageDetails,
+    ImageDetails, ImageLocation,
     KnowledgeEntryDetails,
     KnowledgeEntryRecord,
     KnowledgeGroupDetails,
     MapDetails,
     MapRecord,
 } from '@/context/data/types'
+import { EntityStore, filterEntityStore, mapEntityStore } from '@/context/data/EntityStore'
 
 
 const searchOptions: IFuseOptions<any> = {
@@ -99,51 +100,140 @@ const useFuseMemo = <T, >(data: readonly T[], options: IFuseOptions<any>, proper
  * Resolved detailed entity data.
  */
 export type CacheExtensions = {
+    /**
+     * Announcement records with related entity resolution.
+     */
     announcements: EntityStore<AnnouncementDetails>;
+
+    /**
+     * Dealer records with related entity resolution.
+     */
     dealers: EntityStore<DealerDetails>;
+
+    /**
+     * Image records with related entity resolution.
+     */
     images: EntityStore<ImageDetails>;
+
+    /**
+     * Event records with related entity resolution.
+     */
     events: EntityStore<EventDetails>;
+
+    /**
+     * EventDay records with related entity resolution.
+     */
     eventDays: EntityStore<EventDayDetails>;
+
+    /**
+     * EventRoom records with related entity resolution.
+     */
     eventRooms: EntityStore<EventRoomDetails>;
+
+    /**
+     * EventTrack records with related entity resolution.
+     */
     eventTracks: EntityStore<EventTrackDetails>;
+
+    /**
+     * KnowledgeGroup records with related entity resolution.
+     */
     knowledgeGroups: EntityStore<KnowledgeGroupDetails>;
+
+    /**
+     * KnowledgeEntry records with related entity resolution.
+     */
     knowledgeEntries: EntityStore<KnowledgeEntryDetails>;
+
+    /**
+     * Map records with related entity resolution.
+     */
     maps: EntityStore<MapDetails>;
+
+    /**
+     * Communication records with related entity resolution.
+     */
     communications: EntityStore<CommunicationDetails>;
 
-    eventsFavorite: EventDetails[];
-    eventsByDay: Record<string, EventDetails[]>
+    /**
+     * Events that are the user's favorite.
+     */
+    eventsFavorite: EntityStore<EventDetails>;
 
-    dealersFavorite: DealerDetails[];
-    dealersInAfterDark: DealerDetails[];
-    dealersInRegular: DealerDetails[];
+    /**
+     * Events by the day record ID.
+     */
+    eventsByDay: Record<string, EntityStore<EventDetails>>
 
+    /**
+     * Dealers that are the user's favorite.
+     */
+    dealersFavorite: EntityStore<DealerDetails>;
+
+    /**
+     * Dealers in the after-dark section.
+     */
+    dealersInAfterDark: EntityStore<DealerDetails>;
+
+    /**
+     * Dealers in the regular section.
+     */
+    dealersInRegular: EntityStore<DealerDetails>;
+
+    /**
+     * Fuse instance of events.
+     */
     searchEvents: Fuse<EventDetails>;
+
+    /**
+     * Fuse instance of favorite events.
+     */
     searchEventsFavorite: Fuse<EventDetails>;
+
+    /**
+     * Fuse instance by day.
+     */
     searchEventsByDay: Record<string, Fuse<EventDetails>>
 
+    /**
+     * Fuse instance of dealers.
+     */
     searchDealers: Fuse<DealerDetails>;
+
+    /**
+     * Fuse instance of favorite dealers.
+     */
     searchDealersFavorite: Fuse<DealerDetails>;
+
+    /**
+     * Fuse instance of dealers in the after-dark section.
+     */
     searchDealersInAfterDark: Fuse<DealerDetails>;
+
+    /**
+     * Fuse instance of dealers in the regular section.
+     */
     searchDealersInRegular: Fuse<DealerDetails>;
 
+    /**
+     * Fuse instance of the knowledge entries.
+     */
     searchKnowledgeEntries: Fuse<KnowledgeEntryDetails>;
+
+    /**
+     * Fuse instance of announcements.
+     */
     searchAnnouncements: Fuse<AnnouncementDetails>;
 
+    /**
+     * Fuse instance of mixed events, dealers, and knowledge entries.
+     */
     searchGlobal: Fuse<GlobalSearchResult>;
-}
 
-/**
- * Maps the data of an entity store.
- * @param store The store to map.
- * @param callbackFn The transformation.
- */
-function mapEntityStore<T, TResult>(store: EntityStore<T>, callbackFn: (input: T) => TResult): EntityStore<TResult> {
-    return {
-        keys: store.keys,
-        values: store.values.map(callbackFn),
-        dict: Object.fromEntries(Object.entries(store.dict).map(([key, value]) => [key, callbackFn(value)])),
-    }
+    /**
+     * Image record IDs to their use locations.
+     */
+    imageLocations: Record<string, ImageLocation>;
 }
 
 /**
@@ -165,7 +255,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
             NormalizedTitle: internalFixedTitle(item.Title, item.Content),
             Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
         }))
-    }, [images?.dict, data.announcements])
+    }, [images, data.announcements])
 
     const eventDays = useMemo((): EntityStore<EventDayDetails> => {
         return mapEntityStore(data.eventDays, item => ({
@@ -178,7 +268,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         return mapEntityStore(data.dealers, item => ({
             ...item,
             AttendanceDayNames: internalAttendanceDayNames(item),
-            AttendanceDays: internalAttendanceDays(eventDays.values, item),
+            AttendanceDays: internalAttendanceDays(eventDays, item),
             Artist: item.ArtistImageId ? images?.dict?.[item.ArtistImageId] : undefined,
             ArtistThumbnail: item.ArtistThumbnailImageId ? images?.dict?.[item.ArtistThumbnailImageId] : undefined,
             ArtPreview: item.ArtPreviewImageId ? images?.dict?.[item.ArtPreviewImageId] : undefined,
@@ -187,7 +277,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
             Favorite: Boolean(data.settings.favoriteDealers?.includes(item.Id)),
             MastodonUrl: !item.MastodonHandle ? undefined : internalMastodonHandleToProfileUrl(item.MastodonHandle),
         }))
-    }, [eventDays, images?.dict, data.dealers, data.settings.favoriteDealers])
+    }, [eventDays, images, data.dealers, data.settings.favoriteDealers])
 
     const events = useMemo((): EntityStore<EventDetails> => {
         const favoriteIds = data.notifications?.map(item => item.recordId)
@@ -207,61 +297,106 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
             Favorite: Boolean(favoriteIds?.includes(item.Id)),
             Hidden: Boolean(data.settings.hiddenEvents?.includes(item.Id)),
         }))
-    }, [eventDays?.dict, eventRooms?.dict, eventTracks?.dict, images?.dict, data.events, data.notifications, data.settings.hiddenEvents])
+    }, [eventDays, eventRooms, eventTracks, images, data.events, data.notifications, data.settings.hiddenEvents])
 
     const maps = useMemo((): EntityStore<MapDetails> => {
         return mapEntityStore(data.maps, (item: MapRecord): MapDetails => ({
             ...item,
             Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
         }))
-    }, [images?.dict, data.maps])
+    }, [images, data.maps])
 
     const knowledgeEntries = useMemo((): EntityStore<KnowledgeEntryDetails> => {
         return mapEntityStore(data.knowledgeEntries, (item: KnowledgeEntryRecord): KnowledgeEntryDetails => ({
             ...item,
             Images: item.ImageIds.map(item => images?.dict?.[item]).filter(Boolean) as ImageDetails[],
         }))
-    }, [images?.dict, data.knowledgeEntries])
+    }, [images, data.knowledgeEntries])
 
 
     // Prefiltered values.
-    const eventsByDay = useMemo(() =>
-        Object.fromEntries(eventDays.values.map(day => [day.Id, events.values.filter(item => item.ConferenceDayId === day.Id)])), [eventDays, events])
-    const eventsFavorite = useMemo(() => events.values.filter(item => item.Favorite), [events])
-    const dealersFavorite = useMemo(() => dealers.values.filter(item => item.Favorite), [dealers])
-    const dealersInAfterDark = useMemo(() => dealers.values.filter(item => item.IsAfterDark), [dealers])
-    const dealersInRegular = useMemo(() => dealers.values.filter(item => !item.IsAfterDark), [dealers])
+    const eventsByDay = useMemo(() => {
+        return Object.fromEntries(eventDays.map(day => [day.Id, filterEntityStore(events, item => item.ConferenceDayId === day.Id)]))
+    }, [eventDays, events])
+    const eventsFavorite = useMemo(() => {
+        return filterEntityStore(events, item => item.Favorite)
+    }, [events])
+    const dealersFavorite = useMemo(() => {
+        return filterEntityStore(dealers, item => item.Favorite)
+    }, [dealers])
+    const dealersInAfterDark = useMemo(() => {
+        return filterEntityStore(dealers, item => item.IsAfterDark)
+    }, [dealers])
+    const dealersInRegular = useMemo(() => {
+        return filterEntityStore(dealers, item => !item.IsAfterDark)
+    }, [dealers])
 
     // Global entity wrapper.
     const global = useMemo((): GlobalSearchResult[] => {
-        const result: GlobalSearchResult[] = new Array<GlobalSearchResult>(events.values.length + dealers.values.length + knowledgeEntries.values.length)
-        for (const item of events.values)
+        const result: GlobalSearchResult[] = new Array<GlobalSearchResult>(events.length + dealers.length + knowledgeEntries.length)
+        for (const item of events)
             result.push({ ...item, type: 'event' as const })
-        for (const item of dealers.values)
+        for (const item of dealers)
             result.push({ ...item, type: 'dealer' as const })
-        for (const item of knowledgeEntries.values)
+        for (const item of knowledgeEntries)
             result.push({ ...item, type: 'knowledgeEntry' as const })
         return result
     }, [events, dealers, knowledgeEntries])
 
-
-    const searchEvents = useFuseMemo(events.values, searchOptions, eventsSearchProperties)
+    // Search instances.
+    const searchEvents = useFuseMemo(events, searchOptions, eventsSearchProperties)
     const searchEventsFavorite = useFuseMemo(eventsFavorite, searchOptions, eventsSearchProperties)
     const searchEventsByDay = useMemo(() =>
         Object.fromEntries(Object.entries(eventsByDay).map(([key, value]) =>
             [key, new Fuse(value, searchOptions, Fuse.createIndex(eventsSearchProperties, value))],
         )), [eventsByDay])
 
-    const searchDealers = useFuseMemo(dealers.values, searchOptions, dealersSearchProperties)
+    const searchDealers = useFuseMemo(dealers, searchOptions, dealersSearchProperties)
     const searchDealersFavorite = useFuseMemo(dealersFavorite, searchOptions, dealersSearchProperties)
     const searchDealersInAfterDark = useFuseMemo(dealersInAfterDark, searchOptions, dealersSearchProperties)
     const searchDealersInRegular = useFuseMemo(dealersInRegular, searchOptions, dealersSearchProperties)
 
-    const searchKnowledgeEntries = useFuseMemo(knowledgeEntries.values, searchOptions, knowledgeEntriesSearchProperties)
+    const searchKnowledgeEntries = useFuseMemo(knowledgeEntries, searchOptions, knowledgeEntriesSearchProperties)
 
-    const searchAnnouncements = useFuseMemo(announcements.values, searchOptions, announcementsSearchProperties)
+    const searchAnnouncements = useFuseMemo(announcements, searchOptions, announcementsSearchProperties)
 
     const searchGlobal = useFuseMemo(global, searchOptionsGlobal, globalSearchProperties)
+
+    // Image backreferences. Derived from the base data.
+    // As we don't need the extended data here, we can use the "more stable"
+    // raw cache data.
+    const imageLocations = useMemo(() => {
+        const result: Record<string, ImageLocation> = {}
+        for (const event of data.events) {
+            if (event.PosterImageId) result[event.PosterImageId] = { type: 'Event', location: 'eventPoster', title: event.Title }
+            if (event.BannerImageId) result[event.BannerImageId] = { type: 'Event', location: 'eventBanner', title: event.Title }
+        }
+        for (const dealer of data.dealers) {
+            if (dealer.ArtistImageId) result[dealer.ArtistImageId] = { type: 'Dealer', location: 'artist', title: dealer.DisplayNameOrAttendeeNickname }
+            if (dealer.ArtistThumbnailImageId)
+                result[dealer.ArtistThumbnailImageId] = {
+                    type: 'Dealer',
+                    location: 'artistThumbnail',
+                    title: dealer.DisplayNameOrAttendeeNickname,
+                }
+            if (dealer.ArtPreviewImageId)
+                result[dealer.ArtPreviewImageId] = {
+                    type: 'Dealer',
+                    location: 'artPreview',
+                    title: dealer.DisplayNameOrAttendeeNickname,
+                }
+        }
+        for (const announcement of data.announcements) {
+            if (announcement.ImageId) result[announcement.ImageId] = { type: 'Announcement', location: 'announcement', title: announcement.Title }
+        }
+        for (const knowledgeEntry of data.knowledgeEntries) {
+            for (const imageId of knowledgeEntry.ImageIds) {
+                result[imageId] = { type: 'KnowledgeEntry', location: 'knowledgeEntryBanner', title: knowledgeEntry.Title }
+            }
+        }
+
+        return result
+    }, [data.events, data.dealers, data.announcements, data.knowledgeEntries])
 
 
     // Partial for the new entities to access them by their store name from the callbacks.
@@ -292,5 +427,6 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         searchKnowledgeEntries,
         searchAnnouncements,
         searchGlobal,
+        imageLocations,
     }
 }

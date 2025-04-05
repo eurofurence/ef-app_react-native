@@ -40,8 +40,8 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
 
     const onPress = useCallback((event: EventDetails) => {
         router.navigate({
-            pathname: '/events/[eventId]',
-            params: { eventId: event.Id },
+            pathname: '/events/[id]',
+            params: { id: event.Id },
         })
     }, [])
 

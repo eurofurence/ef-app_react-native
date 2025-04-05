@@ -28,8 +28,8 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
 
     const onPress = useCallback((event: EventDetails) => {
         router.navigate({
-            pathname: '/events/[eventId]',
-            params: { eventId: event.Id },
+            pathname: '/events/[id]',
+            params: { id: event.Id },
         })
     }, [])
 

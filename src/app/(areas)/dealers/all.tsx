@@ -17,7 +17,7 @@ export default function AllScreen() {
 
     const { dealers, searchDealers } = useCache()
     const search = useFuseResults(searchDealers, query ?? '')
-    const groups = useDealerGroups(t, now, search ?? dealers.values)
+    const groups = useDealerGroups(t, now, search ?? dealers)
 
 
     return (

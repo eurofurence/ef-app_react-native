@@ -26,14 +26,14 @@ export function TimeTravel() {
 
     // Calculate week before and after
     const weekBefore = useMemo(() => {
-        if (!eventDays.values.length) return null
-        const firstDay = new Date(eventDays.values[0].Date)
+        if (!eventDays.length) return null
+        const firstDay = new Date(eventDays[0].Date)
         return subWeeks(firstDay, 1).toISOString()
     }, [eventDays])
 
     const weekAfter = useMemo(() => {
-        if (!eventDays.values.length) return null
-        const lastDay = new Date(eventDays.values[eventDays.values.length - 1].Date)
+        if (!eventDays.length) return null
+        const lastDay = new Date(eventDays[eventDays.length - 1].Date)
         return addWeeks(lastDay, 1).toISOString()
     }, [eventDays])
 
@@ -120,7 +120,7 @@ export function TimeTravel() {
                     </Button>
                 )}
 
-                {eventDays.values.map((day: EventDayDetails) => (
+                {eventDays.map((day: EventDayDetails) => (
                     <Button
                         key={day.Id}
                         containerStyle={styles.button}

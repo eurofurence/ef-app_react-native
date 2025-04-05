@@ -20,7 +20,7 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useCache } from '@/context/data/Cache'
 
-export default function IndexScreen() {
+export default function Index() {
     const isFocused = useIsFocused()
     const now = useNow(isFocused ? 5 : 'static')
     const { synchronizeUi, isSynchronizing } = useCache()

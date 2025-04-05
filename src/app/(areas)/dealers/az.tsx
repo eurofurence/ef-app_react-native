@@ -16,7 +16,7 @@ export default function AllScreen() {
 
     const { dealers, searchDealers } = useCache()
     const search = useFuseResults(searchDealers, query ?? '')
-    const groups = useDealerAlphabeticalGroups(t, now, search ?? dealers.values)
+    const groups = useDealerAlphabeticalGroups(t, now, search ?? dealers)
 
     return (
         <DealersSectionedList

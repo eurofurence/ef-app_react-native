@@ -43,8 +43,8 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
                         type="time"
                         onPress={(event) =>
                             router.navigate({
-                                pathname: '/events/[eventId]',
-                                params: { eventId: event.Id },
+                                pathname: '/events/[id]',
+                                params: { id: event.Id },
                             })
                         }
                     />

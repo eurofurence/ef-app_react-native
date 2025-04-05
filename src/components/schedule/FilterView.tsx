@@ -45,7 +45,7 @@ export function FilterView() {
         const daysIds = filterDays.map(item => item.Id)
         const tracksIds = filterTracks.map(item => item.Id)
         const roomsIds = filterRooms.map(item => item.Id)
-        return (search ?? events.values).filter(item => {
+        return (search ?? events).filter(item => {
             if (item.ConferenceDayId && daysIds.length && !daysIds.includes(item.ConferenceDayId)) return false
             if (item.ConferenceTrackId && tracksIds.length && !tracksIds.includes(item.ConferenceTrackId)) return false
             if (item.ConferenceRoomId && roomsIds.length && !roomsIds.includes(item.ConferenceRoomId)) return false
@@ -65,19 +65,19 @@ export function FilterView() {
                  icon="calendar-outline"
                  text={t('filter_by_day')}
                  onPress={() =>
-                     daysRef.current?.pick(eventDays.values, filterDays)?.then(result => setFilterDays(result ?? []))} />
+                     daysRef.current?.pick(eventDays, filterDays)?.then(result => setFilterDays(result ?? []))} />
             <Tab style={[styles.rounded, styles.rowCenter, filterTracks.length ? activeStyle : inactiveStyle]}
                  inverted
                  icon="bus-stop"
                  text={t('filter_by_track')}
                  onPress={() =>
-                     tracksRef.current?.pick(eventTracks.values, filterTracks)?.then(result => setFilterTracks(result ?? []))} />
+                     tracksRef.current?.pick(eventTracks, filterTracks)?.then(result => setFilterTracks(result ?? []))} />
             <Tab style={[styles.rounded, filterRooms.length ? activeStyle : inactiveStyle]}
                  inverted
                  icon="office-building"
                  text={t('filter_by_room')}
                  onPress={() =>
-                     roomsRef.current?.pick(eventRooms.values, filterRooms)?.then(result => setFilterRooms(result ?? []))} />
+                     roomsRef.current?.pick(eventRooms, filterRooms)?.then(result => setFilterRooms(result ?? []))} />
         </Row>
     </View>, [activeStyle, eventDays, eventRooms, eventTracks, filterDays, filterRooms, filterTracks, inactiveStyle, t])
 

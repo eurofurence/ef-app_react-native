@@ -17,7 +17,7 @@ type Section = {
     data: CommunicationRecord[];
 };
 
-export default function PmList() {
+export default function Messages() {
     const { t } = useTranslation('PrivateMessageList')
     const { communications, isSynchronizing, synchronizeUi } = useCache()
     const navigateTo = useCallback(
@@ -30,7 +30,7 @@ export default function PmList() {
     )
 
     const sectionedData = useMemo(() => {
-        const [unread, read] = partition(communications.values, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
+        const [unread, read] = partition(communications, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
 
         const readSections = chain(read)
             .orderBy(['AuthorName', 'SentDateTimeUtc'], ['asc', 'desc'])

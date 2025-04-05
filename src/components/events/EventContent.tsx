@@ -17,7 +17,7 @@ import { Badge } from '../generic/containers/Badge'
 import { Button } from '../generic/containers/Button'
 import { ImageExButton } from '../generic/containers/ImageButton'
 import { Row } from '../generic/containers/Row'
-import { platformShareIcon } from '../generic/atoms/Icon'
+import { Icon, platformShareIcon } from '../generic/atoms/Icon'
 import { conTimeZone } from '@/configuration'
 import { shareEvent } from '@/components/events/Events.common'
 import { useNow } from '@/hooks/time/useNow'
@@ -25,6 +25,9 @@ import { useEventReminder } from '@/hooks/data/useEventReminder'
 import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
 import { EventDetails, LinkFragment, MapDetails, MapEntryDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
+import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 
 interface MapLink {
     map: MapDetails;
@@ -73,6 +76,8 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const isFocused = useIsFocused()
     const now = useNow(isFocused ? 5 : 'static')
 
+    const colorGlyph = useThemeColorValue('darken')
+
     const progress = differenceInMilliseconds(now, new Date(event.StartDateTimeUtc)) / differenceInMilliseconds(new Date(event.EndDateTimeUtc), new Date(event.StartDateTimeUtc))
     const happening = progress >= 0.0 && progress <= 1.0
     const feedbackDisabled = progress < 0.0
@@ -80,8 +85,8 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const track = event.ConferenceTrack
     const room = event.ConferenceRoom
 
-    const { maps } = useCache()
-    const mapLink = useMemo(() => getValidLinksByTarget(maps.values, room?.Id), [maps, room])
+    const { events, maps } = useCache()
+    const mapLink = useMemo(() => getValidLinksByTarget(maps, room?.Id), [maps, room])
 
     const calendar = useCalendars()
     const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
@@ -98,8 +103,25 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         return { zone, start, end, day, startLocal, endLocal, dayLocal }
     }, [calendar, event.StartDateTimeUtc, event.EndDateTimeUtc])
 
+    const zoneAbbr = useZoneAbbr()
+    const eventsBySameHosts = useMemo(() => {
+            return events.filter(item =>
+                item.Id !== event.Id &&
+                !item.Hidden &&
+                item.PartOfDay !== 'long_running' &&
+                item.PanelHosts === event.PanelHosts,
+            ).map(item => eventInstanceForAny(item, now, zoneAbbr))
+        },
+        [events, event, now, zoneAbbr])
+
     return (
         <>
+            {isFavorite || event.Glyph ?
+                <View style={styles.glyphContainer}>
+                    <Icon style={styles.glyph} color={colorGlyph} name={isFavorite ? 'heart' : event.Glyph} size={200} />
+                </View> : null
+            }
+
             {!updated ? null : (
                 <Badge unpad={parentPad} badgeColor="warning" textColor="white">
                     {t('event_was_updated')}
@@ -124,62 +146,18 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                 </View>
             )}
 
-            <Section icon={isFavorite ? 'heart' : event.Glyph} title={event.Title ?? ''} subtitle={event.SubTitle} />
-            {!happening ? null : <Progress value={progress} />}
-            <MarkdownContent defaultType="para" mb={20}>
-                {event.Abstract}
-            </MarkdownContent>
+            {event.Title ? <Label type="h1" mt={20}>{event.Title}</Label> : null}
+            {event.SubTitle ? <Label type="compact">{event.SubTitle}</Label> : null}
+            {track?.Name ?
+                <Row style={styles.marginAround} gap={5}>
+                    <Label type="caption">{t('label_event_track')}</Label>
+                    <Label type="caption" color="important">{event.ConferenceTrack?.Name}</Label>
+                </Row>
+                : null}
 
-            {!event.MaskRequired ? null : (
-                <Badge unpad={parentPad} icon="face-mask" textColor="secondary" textType="regular" textVariant="regular">
-                    {t('mask_required')}
-                </Badge>
-            )}
+            {!happening ? null : <Progress style={styles.marginBefore} value={progress} />}
 
-            {!shareButton ? null : (
-                <Button icon={platformShareIcon} onPress={() => shareEvent(event)}>
-                    {t('share')}
-                </Button>
-            )}
-
-            <Row style={styles.marginBefore}>
-                <Button
-                    containerStyle={styles.rowLeft}
-                    outline={isFavorite}
-                    icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'}
-                    onPress={() => toggleReminder().catch(captureException)}
-                >
-                    {isFavorite ? t('remove_favorite') : t('add_favorite')}
-                </Button>
-                <Button containerStyle={styles.rowRight} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
-                    {event.Hidden ? t('reveal') : t('hide')}
-                </Button>
-            </Row>
-
-            {event.IsAcceptingFeedback && (
-                <Button
-                    disabled={feedbackDisabled}
-                    containerStyle={styles.marginBefore}
-                    icon="pencil"
-                    onPress={() =>
-                        router.navigate({
-                            pathname: '/events/[eventId]/feedback',
-                            params: { eventId: event.Id },
-                        })
-                    }
-                >
-                    {t('give_feedback')}
-                </Button>
-            )}
-
-            <Section icon="directions-fork" title={t('about_title')} />
-            <Label type="caption">{t('label_event_panelhosts')}</Label>
-            <Label type="h3" mb={20}>
-                {event.PanelHosts}
-            </Label>
-
-            <Label type="caption">{t('label_event_when')}</Label>
-            <Label type="h3" mb={20}>
+            <Label style={styles.marginAround} type="h3">
                 {t('when', {
                     day: day,
                     start: start,
@@ -198,15 +176,63 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                 )}
             </Label>
 
-            <Label type="caption">{t('label_event_track')}</Label>
-            <Label type="h3" mb={20}>
-                {track?.Name || ' '}
-            </Label>
+            <MarkdownContent style={styles.marginAround} defaultType="para">
+                {event.Abstract}
+            </MarkdownContent>
 
-            <Label type="caption">{t('label_event_room')}</Label>
-            <Label type="h3" mb={20}>
-                {room?.Name || ' '}
-            </Label>
+            {event.PanelHosts ?
+                <Row style={styles.marginAround} gap={5}>
+                    <Label type="caption">{t('label_event_panelhosts')}</Label>
+                    <Label type="caption" color="important">{event.PanelHosts}</Label>
+                </Row> : null}
+
+
+            {!event.MaskRequired ? null : (
+                <Badge unpad={parentPad} icon="face-mask" textColor="secondary" textType="regular" textVariant="regular">
+                    {t('mask_required')}
+                </Badge>
+            )}
+
+            {!shareButton ? null : (
+                <Button icon={platformShareIcon} onPress={() => shareEvent(event)}>
+                    {t('share')}
+                </Button>
+            )}
+
+            <Row style={styles.marginAround} gap={16}>
+                <Button
+                    containerStyle={styles.flex}
+                    outline={isFavorite}
+                    icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'}
+                    onPress={() => toggleReminder().catch(captureException)}
+                >
+                    {isFavorite ? t('remove_favorite') : t('add_favorite')}
+                </Button>
+                <Button containerStyle={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
+                    {event.Hidden ? t('reveal') : t('hide')}
+                </Button>
+            </Row>
+
+            {event.IsAcceptingFeedback && (
+                <Button
+                    disabled={feedbackDisabled}
+                    containerStyle={styles.marginAround}
+                    icon="pencil"
+                    onPress={() =>
+                        router.navigate({
+                            pathname: '/events/[id]/feedback',
+                            params: { id: event.Id },
+                        })
+                    }
+                >
+                    {t('give_feedback')}
+                </Button>
+            )}
+
+            {room?.Name ? <Row style={styles.marginAround} gap={5}>
+                <Label type="h3" variant="receded">{t('label_event_room')}</Label>
+                <Label type="h3" color="important">{room.Name}</Label>
+            </Row> : null}
 
             {!mapLink
                 ? null
@@ -226,24 +252,51 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
             <Section icon="information" title={t('label_event_description')} />
             <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
+
+            {/* TODO: yes no? */}
+            {eventsBySameHosts.length ? <>
+                {/* todo: translatable */}
+                <Section icon="information" title={`Also by ${event.PanelHosts}`} />
+                {eventsBySameHosts.map(item =>
+                    <EventCard
+                        key={item.details.Id}
+                        event={item}
+                        type="time"
+                        onPress={(event) =>
+                            router.navigate({
+                                pathname: '/events/[id]',
+                                params: { id: event.Id },
+                            })
+                        }
+                    />)}
+            </> : null
+            }
         </>
     )
 }
 
 const styles = StyleSheet.create({
-    rowLeft: {
+    flex: {
         flex: 1,
-        marginRight: 8,
-    },
-    rowRight: {
-        flex: 1,
-        marginLeft: 8,
     },
     marginBefore: {
-        marginTop: 15,
+        marginTop: 10,
+    },
+    marginAround: {
+        marginTop: 10,
+        marginBottom: 10,
     },
     posterLine: {
         marginTop: 20,
         alignItems: 'center',
+    },
+    glyphContainer: {
+        position: 'absolute',
+        top: -20,
+        right: -50,
+    },
+    glyph: {
+        opacity: 0.20,
+        transform: [{ rotate: '15deg' }],
     },
 })

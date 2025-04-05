@@ -29,8 +29,8 @@ export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trai
 
     const onPress = useCallback((dealer: DealerDetails) => {
         router.navigate({
-            pathname: '/dealers/[dealerId]',
-            params: { dealerId: dealer.Id },
+            pathname: '/dealers/[id]',
+            params: { id: dealer.Id },
         })
     }, [])
 

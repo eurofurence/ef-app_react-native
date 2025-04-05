@@ -45,8 +45,8 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
                     entry={item}
                     onPress={(entry) =>
                         router.navigate({
-                            pathname: '/knowledge/[knowledgeId]',
-                            params: { knowledgeId: entry.Id },
+                            pathname: '/knowledge/[id]',
+                            params: { id: entry.Id },
                         })
                     }
                 />

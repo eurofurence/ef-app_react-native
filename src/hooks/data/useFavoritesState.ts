@@ -12,11 +12,11 @@ export function useFavoritesState() {
     const settings = getValue('settings')
 
     const favoriteEvents = useMemo(() =>
-            events.values.filter(item => notifications?.find(notification => notification.recordId == item.Id)),
+            events.filter(item => notifications?.find(notification => notification.recordId == item.Id)),
         [events, notifications])
 
     const favoriteDealers = useMemo(() =>
-            dealers.values.filter(item => settings.favoriteDealers?.includes(item.Id)),
+            dealers.filter(item => settings.favoriteDealers?.includes(item.Id)),
         [dealers, settings])
 
     const lastViewTimes = settings.lastViewTimes

@@ -200,4 +200,7 @@ export const labelVariantStyles = StyleSheet.create({
         textShadowRadius: 2,
         textShadowOffset: { width: 0.5, height: 1 },
     },
+    receded: {
+        opacity: 0.666,
+    },
 })

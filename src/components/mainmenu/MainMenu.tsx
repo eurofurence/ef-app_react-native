@@ -24,7 +24,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
     const { maps } = useCache()
 
     // Get browsable maps from cache
-    const browsableMaps = useMemo(() => maps.values.filter(map => map.IsBrowseable), [maps])
+    const browsableMaps = useMemo(() => maps.filter(map => map.IsBrowseable), [maps])
 
     const handleNavigation = useCallback((path: string) => {
         router.navigate(path)

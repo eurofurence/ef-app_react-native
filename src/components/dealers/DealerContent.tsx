@@ -1,6 +1,5 @@
 import * as Clipboard from 'expo-clipboard'
 import * as Linking from 'expo-linking'
-import { TFunction } from 'i18next'
 import React, { FC, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -26,27 +25,28 @@ import { useToast } from '@/context/ToastContext'
 import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
 import { DealerDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { Row } from '@/components/generic/containers/Row'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
-const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
+const DealerCategories = ({ dealer }: { dealer: DealerDetails }) => {
     // Nothing to display for no categories.
     if (!dealer.Categories?.length) return null
 
     return (
         <>
-            <Label type="caption">{t('categories')}</Label>
             <View style={dealerCategoriesStyles.container}>
                 {dealer.Categories.map((category: string) => {
                     const keywords = dealer.Keywords?.[category]
                     if (keywords?.length)
                         return (
-                            <Label key={category} mt={5}>
-                                <Label variant="bold">{category}: </Label>
-                                {keywords.join(', ')}
-                            </Label>
+                            <View style={dealerCategoriesStyles.category} key={category}>
+                                <Label type="caption" variant="bold">{category}</Label>
+                                {keywords.map(keyword => <Label key={keyword}>{keyword}</Label>)}
+                            </View>
                         )
                     else
                         return (
-                            <Label key={category} variant="bold">
+                            <Label key={category} type="caption" variant="bold">
                                 {category}
                             </Label>
                         )
@@ -58,7 +58,12 @@ const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }
 
 const dealerCategoriesStyles = StyleSheet.create({
     container: {
-        marginBottom: 20,
+        gap: 10,
+        marginTop: 30,
+        marginBottom: 30,
+    },
+    category: {
+        gap: 5,
     },
 })
 
@@ -89,10 +94,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     const now = useNow()
     const toast = useToast()
 
+    const avatarBackground = useThemeBackground('text')
+
     const { maps, getValue, setValue } = useCache()
     const isFavorite = dealer.Favorite
 
-    const mapLink = getValidLinksByTarget(maps.values, dealer.Id)
+    const mapLink = getValidLinksByTarget(maps, dealer.Id)
 
     const days = useMemo(
         () =>
@@ -138,93 +145,37 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             )}
 
             {!dealer.Artist ? null : (
-                <View style={[appStyles.shadow, styles.avatarCircle]}>
+                <View style={[appStyles.shadow, avatarBackground, styles.avatarCircle]}>
                     <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.Artist)} />
                 </View>
             )}
 
-            <Section icon="brush" title={dealer.DisplayNameOrAttendeeNickname} />
+            {dealer.DisplayNameOrAttendeeNickname ? <Label type="h1" variant="middle" mb={10}>{dealer.DisplayNameOrAttendeeNickname}</Label> : null}
 
-            <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
-            <Button containerStyle={styles.marginBefore} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
+            <Label style={styles.marginAround} type="para">{dealer.ShortDescriptionContent}</Label>
+
+            <Row style={styles.marginAround} gap={5}>
+                <Label type="caption">{t('attends')}</Label>
+                <Label type="caption" color="important">{days}</Label>
+            </Row>
+
+
+            <Button containerStyle={styles.marginAround} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
                 {isFavorite ? t('remove_favorite') : t('add_favorite')}
             </Button>
 
             {!shareButton ? null : (
-                <Button containerStyle={styles.marginBefore} icon="share" onPress={() => shareDealer(dealer)}>
+                <Button containerStyle={styles.marginAround} icon="share" onPress={() => shareDealer(dealer)}>
                     {t('share')}
                 </Button>
             )}
 
-            <Section icon="directions-fork" title={t('about')} />
-            <Label type="caption">{t('table')}</Label>
-            {!dealer.ShortDescriptionTable ? null : (
-                <Label type="h3" mb={20}>
-                    {dealer.ShortDescriptionTable}
-                </Label>
-            )}
-
-            <Label type="caption">{t('attends')}</Label>
-            <Label type="h3" mb={20}>
-                {days}
-            </Label>
-
-            {dealer.IsAfterDark && (
-                <>
-                    <Label type="caption">{t('after_dark')}</Label>
-                    <Label type="h3" mb={20}>
-                        {t('in_after_dark')}
-                    </Label>
-                </>
-            )}
-
-            <DealerCategories t={t} dealer={dealer} />
-
-            {dealer.Links &&
-                dealer.Links.map((it) => (
-                    <View style={styles.button} key={it.Name}>
-                        <LinkItem link={it} />
-                    </View>
-                ))}
-
-            {dealer.TelegramHandle && (
-                <Button
-                    containerStyle={styles.button}
-                    onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
-                    icon={(props) => <FaIcon name="telegram-plane" {...props} />}
-                >
-                    Telegram: {dealer.TelegramHandle}
-                </Button>
-            )}
-            {dealer.TwitterHandle && (
-                <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
-                    Twitter: {dealer.TwitterHandle}
-                </Button>
-            )}
-            {dealer.DiscordHandle && (
-                <Button
-                    containerStyle={styles.button}
-                    onPress={async () => {
-                        if (!dealer.DiscordHandle) return null
-                        await Clipboard.setStringAsync(dealer.DiscordHandle)
-                        toast('info', t('discord_handle_copied', { discordHandle: dealer.DiscordHandle }), 5000)
-                    }}
-                    icon="discord"
-                >
-                    Discord: {dealer.DiscordHandle}
-                </Button>
-            )}
-            {dealer.MastodonHandle && (
-                <Button containerStyle={styles.button} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
-                    Mastodon: {dealer.MastodonHandle}
-                </Button>
-            )}
-            {dealer.BlueskyHandle && (
-                <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
-                    Bluesky: {dealer.BlueskyHandle}
-                </Button>
-            )}
+            {dealer.ShortDescriptionTable ? <Row style={styles.marginAround} gap={5}>
+                <Label type="h3" variant="receded">{t('table')}</Label>
+                {dealer.ShortDescriptionTable ? <Label type="h3" color="important">{dealer.ShortDescriptionTable}</Label> : null}
+                {dealer.IsAfterDark ? <Label type="h3" variant="receded">({t('in_after_dark')})</Label> : null}
+            </Row> : null}
 
             {mapLink.map(({ map, entry, link }, i) => (
                 <ImageExButton
@@ -239,6 +190,53 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                     }
                 />
             ))}
+
+            <DealerCategories dealer={dealer} />
+
+            {dealer.Links &&
+                dealer.Links.map((it) => (
+                    <View style={styles.marginAround} key={it.Name}>
+                        <LinkItem link={it} />
+                    </View>
+                ))}
+
+            {dealer.TelegramHandle && (
+                <Button
+                    containerStyle={styles.marginAround}
+                    onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
+                    icon={(props) => <FaIcon name="telegram-plane" {...props} />}
+                >
+                    Telegram: {dealer.TelegramHandle}
+                </Button>
+            )}
+            {dealer.TwitterHandle && (
+                <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
+                    Twitter: {dealer.TwitterHandle}
+                </Button>
+            )}
+            {dealer.DiscordHandle && (
+                <Button
+                    containerStyle={styles.marginAround}
+                    onPress={async () => {
+                        if (!dealer.DiscordHandle) return null
+                        await Clipboard.setStringAsync(dealer.DiscordHandle)
+                        toast('info', t('discord_handle_copied', { discordHandle: dealer.DiscordHandle }), 5000)
+                    }}
+                    icon="discord"
+                >
+                    Discord: {dealer.DiscordHandle}
+                </Button>
+            )}
+            {dealer.MastodonHandle && (
+                <Button containerStyle={styles.marginAround} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
+                    Mastodon: {dealer.MastodonHandle}
+                </Button>
+            )}
+            {dealer.BlueskyHandle && (
+                <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
+                    Bluesky: {dealer.BlueskyHandle}
+                </Button>
+            )}
 
             {!dealer.AboutTheArtText && !dealer.ArtPreview ? null : (
                 <>
@@ -296,9 +294,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     marginBefore: {
-        marginTop: 15,
+        marginTop: 10,
     },
-    button: {
-        marginBottom: 20,
+    marginAround: {
+        marginTop: 10,
+        marginBottom: 10,
     },
 })

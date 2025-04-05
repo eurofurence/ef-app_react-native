@@ -2,9 +2,10 @@ import { router } from 'expo-router'
 import * as React from 'react'
 import { TouchableOpacity } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { Icon } from '../generic/atoms/Icon'
+import { useMemo } from 'react'
+import { Icon } from '@/components/generic/atoms/Icon'
 
-export interface DrawerProps {
+export interface StackScreenProps {
     location: string;
     title?: string;
     swipeEnabled?: boolean;
@@ -22,10 +23,14 @@ const goBackCustom = () => {
     )
 }
 
-export const useDrawerScreensData = (): DrawerProps[] => {
+
+/**
+ * Hok returning the stack screen data, including translations.
+ */
+export function useStackScreensData(): StackScreenProps[] {
     const { t } = useTranslation('Menu')
 
-    return [
+    return useMemo(() => [
         {
             location: '(areas)',
             headerShown: false,
@@ -38,25 +43,43 @@ export const useDrawerScreensData = (): DrawerProps[] => {
             headerShown: false,
         },
         {
-            location: 'dealers/[dealerId]/index',
+            location: 'dealers/[id]',
             title: t('dealers'),
             headerLeft: goBackCustom(),
             headerShown: false,
         },
         {
-            location: 'events/[eventId]/index',
+            location: 'events/[id]/index',
             title: t('events'),
             headerLeft: goBackCustom(),
             headerShown: false,
         },
         {
-            location: 'knowledge/[knowledgeId]/index',
+            location: 'events/[id]/feedback',
+            title: t('events'),
+            headerLeft: goBackCustom(),
+            headerShown: false,
+        },
+        {
+            location: 'images/[id]',
+            title: t('image'),
+            headerLeft: goBackCustom(),
+            headerShown: false,
+        },
+        {
+            location: 'images/web',
+            title: t('image'),
+            headerLeft: goBackCustom(),
+            headerShown: false,
+        },
+        {
+            location: 'knowledge/[id]',
             title: t('info'),
             headerLeft: goBackCustom(),
             headerShown: false,
         },
         {
-            location: 'profile/index',
+            location: 'profile',
             title: t('profile'),
             headerLeft: goBackCustom(),
             headerShown: false,
@@ -73,7 +96,7 @@ export const useDrawerScreensData = (): DrawerProps[] => {
             headerShown: false,
         },
         {
-            location: 'messages/[messageId]/index',
+            location: 'messages/[messageId]',
             title: t('pm'),
             headerLeft: goBackCustom(),
             headerShown: false,
@@ -85,8 +108,14 @@ export const useDrawerScreensData = (): DrawerProps[] => {
             headerShown: false,
         },
         {
-            location: 'settings/reveal/index',
+            location: 'settings/reveal',
             title: t('settings'),
+            headerLeft: goBackCustom(),
+            headerShown: false,
+        },
+        {
+            location: 'about',
+            title: t('about'),
             headerLeft: goBackCustom(),
             headerShown: false,
         },
@@ -94,5 +123,5 @@ export const useDrawerScreensData = (): DrawerProps[] => {
             location: '+not-found',
             headerShown: false,
         },
-    ]
+    ], [t])
 }

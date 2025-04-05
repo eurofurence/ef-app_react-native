@@ -41,7 +41,7 @@ export default function EventsScreen() {
         (): TabViewRoute[] => [
             { key: 'filter', title: 'Filter', icon: 'filter-variant' },
             { key: 'personal', title: 'Personal', icon: 'calendar-heart' },
-            ...eventDays.values.map(item => ({ key: item.Id, title: dayTabTitle(item) })),
+            ...eventDays.map(item => ({ key: item.Id, title: dayTabTitle(item) })),
         ],
         [eventDays])
 
@@ -50,7 +50,7 @@ export default function EventsScreen() {
     const renderScene = useCallback(({ route }: { route: Route }) => {
         if (route.key === 'filter') return <FilterView />
         if (route.key === 'personal') return <PersonalView />
-        const item = eventDays.values.find(item => item.Id == route.key)
+        const item = eventDays.find(item => item.Id == route.key)
         if (!item) return null
         return <DayView day={item} />
     }, [eventDays])
@@ -65,11 +65,11 @@ export default function EventsScreen() {
 
     // Not focused or nothing to render. Skip this invocation.
     if (!focused) return null
-    if (!eventDays.values.length) return null
+    if (!eventDays.length) return null
 
     // Key wasn't found. Redirect to a proper route.
     if (key == null) {
-        return <Redirect href={scheduleRoutePrefix + eventDays.values[0].Id} />
+        return <Redirect href={scheduleRoutePrefix + eventDays[0].Id} />
     }
 
     return (

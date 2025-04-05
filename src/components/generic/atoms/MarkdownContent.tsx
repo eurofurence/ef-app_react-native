@@ -24,30 +24,12 @@ const links = /(]\(|\[)?https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA
 export type MarkdownContentProps = {
     defaultType?: LabelProps['type'];
 
-    /**
-     * Margin left.
-     */
-    ml?: number;
-
-    /**
-     * Margin top.
-     */
-    mt?: number;
-
-    /**
-     * Margin right.
-     */
-    mr?: number;
-
-    /**
-     * Margin bottom.
-     */
-    mb?: number;
+    style?: ViewStyle;
 
     children?: string;
 };
 
-export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, children }) => {
+export const MarkdownContent: FC<MarkdownContentProps> = ({ style, children }) => {
     const fixed = useMemo(
         () =>
             children
@@ -60,21 +42,11 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({ ml, mt, mr, mb, chil
         [children],
     )
 
-    // Compute outer container margins.
-    let styleMargin: ViewStyle | null = null
-    if (typeof ml === 'number' || typeof mt === 'number' || typeof mr === 'number' || typeof mb === 'number') {
-        styleMargin = {}
-        if (typeof ml === 'number') styleMargin.marginLeft = ml
-        if (typeof mt === 'number') styleMargin.paddingTop = mt
-        if (typeof mr === 'number') styleMargin.marginRight = mr
-        if (typeof mb === 'number') styleMargin.paddingBottom = mb
-    }
-
     // Get markdown style.
     const markdownStyles = useMarkdownTheme()
 
     return (
-        <View style={styleMargin}>
+        <View style={style}>
             <MarkdownComponent style={markdownStyles as any}>{fixed}</MarkdownComponent>
         </View>
     )

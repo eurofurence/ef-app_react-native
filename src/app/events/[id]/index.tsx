@@ -12,27 +12,25 @@ import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
 import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { shareEvent } from '@/components/events/Events.common'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 
 export default function EventItem() {
     const { t } = useTranslation('Event')
-    const { eventId } = useLocalSearchParams<{ eventId: string }>()
+    const { id } = useLocalSearchParams<{ id: string }>()
     const { events, getValue, setValue } = useCache()
 
-    const event = events.dict[eventId]
-    const backgroundStyle = useThemeBackground('background')
+    const event = events.dict[id]
 
     const handleToggleHidden = useCallback(() => {
         const settings = getValue('settings')
         const newSettings = {
             ...settings,
-            hiddenEvents: settings.hiddenEvents?.includes(eventId)
-                ? settings.hiddenEvents.filter(item => item !== eventId)
-                : [...(settings.hiddenEvents ?? []), eventId],
+            hiddenEvents: settings.hiddenEvents?.includes(id)
+                ? settings.hiddenEvents.filter(item => item !== id)
+                : [...(settings.hiddenEvents ?? []), id],
         }
         setValue('settings', newSettings)
-    }, [eventId, getValue, setValue])
+    }, [id, getValue, setValue])
 
     // Get update note. Latch so it's displayed even if reset in background.
     const updated = useUpdateSinceNote(event)
@@ -40,7 +38,7 @@ export default function EventItem() {
 
     return (
         <ScrollView
-            style={[StyleSheet.absoluteFill, backgroundStyle]}
+            style={StyleSheet.absoluteFill}
             stickyHeaderIndices={[0]}
             stickyHeaderHiddenOnScroll
         >

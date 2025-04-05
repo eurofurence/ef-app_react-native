@@ -19,7 +19,7 @@ export default function RevealHiddenPage() {
     // Get all events from cache
     // Filter hidden events and create event instances
     const hiddenEvents = useMemo(
-        () => events.values.filter((item) => item.Hidden).map((item) => eventInstanceForAny(item, now, zone)),
+        () => events.filter((item) => item.Hidden).map((item) => eventInstanceForAny(item, now, zone)),
         [events, now, zone],
     )
 

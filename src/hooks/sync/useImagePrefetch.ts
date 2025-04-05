@@ -26,7 +26,7 @@ export const useImagePrefetch = () => {
 
 
     useEffect(() => {
-        if (images.values.length === 0) return
+        if (images.length === 0) return
 
         // Schedule after cooldown.
         console.log('Scheduling prefetch')
@@ -38,7 +38,7 @@ export const useImagePrefetch = () => {
             console.log('Prefetch triggered')
 
             // Start the prefetch.
-            Image.prefetch(images.values.map(item => item.Url), 'memory-disk')
+            Image.prefetch(images.map(item => item.Url), 'memory-disk')
                 .catch(captureException)
                 .finally(() => {
                     // Mark disconnect.

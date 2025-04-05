@@ -16,7 +16,7 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
     const { announcements } = useCache()
 
     const recent = useMemo(() =>
-        announcements.values.filter(item => {
+        announcements.filter(item => {
             const validFrom = parseISO(item.ValidFromDateTimeUtc)
             const validUntil = parseISO(item.ValidUntilDateTimeUtc)
 
