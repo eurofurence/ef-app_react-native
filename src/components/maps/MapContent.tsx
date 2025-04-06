@@ -116,7 +116,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
         // Get change to current center.
         const diffX = entry.X - (map.Image.Width / 2 - offsetX);
         const diffY = entry.Y - (map.Image.Height / 2 - offsetY);
-        refZoom.current.moveBy(diffX * zoom, diffY * zoom).catch(() => undefined);
+        refZoom.current.moveBy(diffX * zoom, diffY * zoom);
     }, [entry, refZoom, map]);
 
     // Compute containers.
