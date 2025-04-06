@@ -1,9 +1,9 @@
-import { useCallback } from "react";
-import { useToast } from "@/context/ToastContext";
-import { captureException } from "@sentry/react-native";
-import { FeedbackSchema } from "@/components/feedback/FeedbackForm.schema";
-import { getAccessToken } from "@/context/AuthContext";
-import { apiBase } from "@/configuration";
+import { useCallback } from 'react'
+import { useToast } from '@/context/ToastContext'
+import { captureException } from '@sentry/react-native'
+import { FeedbackSchema } from '@/components/feedback/FeedbackForm.schema'
+import { getAccessToken } from '@/context/AuthContext'
+import { apiBase } from '@/configuration'
 
 export function useSubmitEventFeedback() {
     const toast = useToast()
@@ -16,7 +16,7 @@ export function useSubmitEventFeedback() {
             }
 
             const response = await fetch(`${apiBase}/EventFeedback`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${accessToken}`,
