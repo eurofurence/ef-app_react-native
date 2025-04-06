@@ -12,7 +12,7 @@ module.exports = {
         slug: "ef-app-react-native",
         description: "Your one stop shop to the convention!",
         owner: "eurofurence",
-        version: "5.0.1",
+        version: "5.0.2",
         orientation: "default",
         userInterfaceStyle: "automatic",
         scheme: "eurofurence",
