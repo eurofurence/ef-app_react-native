@@ -94,7 +94,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
                 <EventCardTime type={type} event={event} done={done} zone={event.zone} />
 
                 {!happening ? null : (
-                    <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'}>
+                    <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'} variant="receded">
                         LIVE
                     </Label>
                 )}

@@ -26,8 +26,6 @@ import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
 import { EventDetails, LinkFragment, MapDetails, MapEntryDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 
 interface MapLink {
     map: MapDetails;
@@ -85,7 +83,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     const track = event.ConferenceTrack
     const room = event.ConferenceRoom
 
-    const { events, maps } = useCache()
+    const { maps } = useCache()
     const mapLink = useMemo(() => getValidLinksByTarget(maps, room?.Id), [maps, room])
 
     const calendar = useCalendars()
@@ -103,24 +101,8 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         return { zone, start, end, day, startLocal, endLocal, dayLocal }
     }, [calendar, event.StartDateTimeUtc, event.EndDateTimeUtc])
 
-    const zoneAbbr = useZoneAbbr()
-    const eventsBySameHosts = useMemo(() => {
-            return events.filter(item =>
-                item.Id !== event.Id &&
-                !item.Hidden &&
-                item.PartOfDay !== 'long_running' &&
-                item.PanelHosts === event.PanelHosts,
-            ).map(item => eventInstanceForAny(item, now, zoneAbbr))
-        },
-        [events, event, now, zoneAbbr])
-
     return (
         <>
-            {isFavorite || event.Glyph ?
-                <View style={styles.glyphContainer}>
-                    <Icon style={styles.glyph} color={colorGlyph} name={isFavorite ? 'heart' : event.Glyph} size={200} />
-                </View> : null
-            }
 
             {!updated ? null : (
                 <Badge unpad={parentPad} badgeColor="warning" textColor="white">
@@ -145,6 +127,13 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
                     <Banner image={event.Poster} placeholder={placeholder} viewable />
                 </View>
             )}
+            {isFavorite || event.Glyph ?
+                <View style={styles.glyphArranger}>
+                    <View style={styles.glyphContainer}>
+                        <Icon style={styles.glyph} color={colorGlyph} name={isFavorite ? 'heart' : event.Glyph} size={200} />
+                    </View>
+                </View> : null
+            }
 
             {event.Title ? <Label type="h1" mt={20}>{event.Title}</Label> : null}
             {event.SubTitle ? <Label type="compact">{event.SubTitle}</Label> : null}
@@ -252,25 +241,6 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
             <Section icon="information" title={t('label_event_description')} />
             <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
-
-            {/* TODO: yes no? */}
-            {eventsBySameHosts.length ? <>
-                {/* todo: translatable */}
-                <Section icon="information" title={`Also by ${event.PanelHosts}`} />
-                {eventsBySameHosts.map(item =>
-                    <EventCard
-                        key={item.details.Id}
-                        event={item}
-                        type="time"
-                        onPress={(event) =>
-                            router.navigate({
-                                pathname: '/events/[id]',
-                                params: { id: event.Id },
-                            })
-                        }
-                    />)}
-            </> : null
-            }
         </>
     )
 }
@@ -289,6 +259,10 @@ const styles = StyleSheet.create({
     posterLine: {
         marginTop: 20,
         alignItems: 'center',
+    },
+    glyphArranger: {
+        width: '100%',
+        height: 0,
     },
     glyphContainer: {
         position: 'absolute',

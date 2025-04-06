@@ -1,10 +1,15 @@
 import { getHours, parseISO } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
+import { flatMap, maxBy, uniq } from 'lodash'
 import { AttendanceDay, DealerRecord, EventDayDetails } from './types'
 import { IconNames } from '@/components/generic/atoms/Icon'
 import { conTimeZone } from '@/configuration'
 
-export const internalCategorizeTime = (dateStr: string) => {
+export function internalHosts(panelHosts: string | undefined) {
+    return panelHosts?.split(',').map(item => item.trim()).filter(Boolean) ?? []
+}
+
+export function internalCategorizeTime(dateStr: string) {
     const date = toZonedTime(parseISO(dateStr), conTimeZone)
     const hours = getHours(date)
     if (6 <= hours && hours < 13) return 'morning'
@@ -13,7 +18,7 @@ export const internalCategorizeTime = (dateStr: string) => {
     return 'night'
 }
 
-export const internalTagsToIcon = (tags: string[] | null | undefined): IconNames | undefined => {
+export function internalTagsToIcon(tags: string[] | null | undefined): IconNames | undefined {
     if (!tags) return
     if (tags.includes('supersponsors_only')) return 'star-circle'
     if (tags.includes('sponsors_only')) return 'star'
@@ -25,7 +30,7 @@ export const internalTagsToIcon = (tags: string[] | null | undefined): IconNames
     if (tags.includes('photoshoot')) return 'camera'
 }
 
-export const internalTagsToBadges = (tags: string[] | null | undefined): IconNames[] | undefined => {
+export function internalTagsToBadges(tags: string[] | null | undefined): IconNames[] | undefined {
     if (!tags) return []
 
     const badges: IconNames[] = []
@@ -33,13 +38,16 @@ export const internalTagsToBadges = (tags: string[] | null | undefined): IconNam
     return badges
 }
 
-export const internalSuperSponsorOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('supersponsors_only'))
+export const internalSuperSponsorOnly = (tags: string[] | null | undefined) =>
+    Boolean(tags?.includes('supersponsors_only'))
 
-export const internalSponsorOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('sponsors_only'))
+export const internalSponsorOnly = (tags: string[] | null | undefined) =>
+    Boolean(tags?.includes('sponsors_only'))
 
-export const internalMaskRequired = (tags: string[] | null | undefined) => Boolean(tags?.includes('mask_required'))
+export const internalMaskRequired = (tags: string[] | null | undefined) =>
+    Boolean(tags?.includes('mask_required'))
 
-export const internalAttendanceDayNames = (dealer: DealerRecord) => {
+export function internalAttendanceDayNames(dealer: DealerRecord) {
     const result: AttendanceDay[] = []
     if (dealer.AttendsOnThursday) result.push('mon')
     if (dealer.AttendsOnFriday) result.push('tue')
@@ -47,7 +55,7 @@ export const internalAttendanceDayNames = (dealer: DealerRecord) => {
     return result
 }
 
-export const internalAttendanceDays = (days: readonly EventDayDetails[], dealer: DealerRecord) => {
+export function internalAttendanceDays(days: readonly EventDayDetails[], dealer: DealerRecord) {
     const result: EventDayDetails[] = []
     for (const day of days) {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
@@ -58,21 +66,21 @@ export const internalAttendanceDays = (days: readonly EventDayDetails[], dealer:
     return result
 }
 
-export const internalDealerParseTable = (dealer: DealerRecord) => {
+export function internalDealerParseTable(dealer: DealerRecord) {
     if (!dealer.ShortDescription) return undefined
     if (!dealer.ShortDescription?.startsWith('Table')) return undefined
 
     return dealer.ShortDescription.split(/\r?\n/, 1)[0].substring('Table'.length).trim()
 }
 
-export const internalDealerParseDescriptionContent = (dealer: DealerRecord) => {
+export function internalDealerParseDescriptionContent(dealer: DealerRecord) {
     if (!dealer.ShortDescription) return dealer.ShortDescription
     if (!dealer.ShortDescription?.startsWith('Table')) return dealer.ShortDescription
 
     return dealer.ShortDescription.split(/\r?\n/).slice(1).join('\n').trimStart()
 }
 
-export const internalFixedTitle = (title: string, content: string) => {
+export function internalFixedTitle(title: string, content: string) {
     // Not ellipsized, skip.
     if (!title.endsWith('[...]')) return title
 
@@ -87,7 +95,7 @@ export const internalFixedTitle = (title: string, content: string) => {
     return init.substring(0, index + 1)
 }
 
-export const internalMastodonHandleToProfileUrl = (handle: string) => {
+export function internalMastodonHandleToProfileUrl(handle: string) {
     // Remove the leading '@' and split the handle into username and instance
     const parts = handle.replace(/^@/, '').split('@')
 
@@ -99,4 +107,40 @@ export const internalMastodonHandleToProfileUrl = (handle: string) => {
 
     // Construct the URL
     return `https://${instance}/@${username}`
+}
+
+
+/**
+ * TF-IDF category mapper. Returns the category for a dealer that is the most
+ * "unique" for them among all other dealers.
+ */
+export function internalCreateCategoryMapper(dealers: readonly DealerRecord[]) {
+    function tf(category: string, categories: string[]) {
+        let n = 0
+        for (const item of categories) if (item === category) n++
+
+        return n / (categories.length + 1)
+    }
+
+    function idf(category: string) {
+        let n = 0
+        for (const item of dealers) {
+            if (item.Categories)
+                for (let j = 0; j < item.Categories?.length; j++) {
+                    if (item.Categories[j] === category) {
+                        n++
+                        break
+                    }
+                }
+        }
+        return Math.log(dealers.length / (n + 1)) + 1
+    }
+
+    const allCategories = uniq(flatMap(dealers, (dealer) => dealer.Categories ?? []))
+    const allIdf = Object.fromEntries(allCategories.map((category) => [category, idf(category)]))
+
+    return (categories: string[] | undefined) =>
+        categories
+            ? maxBy(categories, (category) => tf(category, categories) * allIdf[category]!) ?? null
+            : null
 }

@@ -64,6 +64,7 @@ export type EventRecord = RecordMetadata & {
     Tags?: string[];
 };
 export type EventDetails = EventRecord & {
+    Hosts: string[];
     PartOfDay: PartOfDay;
     Poster?: ImageDetails;
     Banner?: ImageDetails;
@@ -104,6 +105,7 @@ export type DealerRecord = RecordMetadata & {
     Keywords?: { [category: string]: string[] };
 };
 export type DealerDetails = DealerRecord & {
+    CategoryPrimary: string | null;
     AttendanceDays: EventDayDetails[];
     AttendanceDayNames: AttendanceDay[];
     Artist?: ImageDetails;
@@ -223,22 +225,22 @@ export type GlobalSearchResult =
 
 export type ImageLocation =
     | {
-    type: "Event";
-    location: "eventPoster" | "eventBanner";
+    type: 'Event';
+    location: 'eventPoster' | 'eventBanner';
     title: string;
 }
     | {
-    type: "Dealer";
-    location: "artist" | "artistThumbnail" | "artPreview";
+    type: 'Dealer';
+    location: 'artist' | 'artistThumbnail' | 'artPreview';
     title: string;
 }
     | {
-    type: "Announcement";
-    location: "announcement";
+    type: 'Announcement';
+    location: 'announcement';
     title: string;
 }
     | {
-    type: "KnowledgeEntry";
-    location: "knowledgeEntryBanner";
+    type: 'KnowledgeEntry';
+    location: 'knowledgeEntryBanner';
     title: string;
 };

@@ -6,6 +6,13 @@
       "title": "App Details"
     },
     "developed_by": "Developed by",
+    "developer_settings_alert": {
+      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
+      "cancel": "Cancel",
+      "disable": "Disable",
+      "enable": "Enable",
+      "title": "Dev Settings Menu"
+    },
     "extra_thanks": "Extra Thanks",
     "header": "About"
   },
@@ -161,6 +168,7 @@
     "favorites_subtitle": "You will receive a reminder about these events",
     "favorites_title": "Favorite Events",
     "filter_by_day": "Filter days",
+    "filter_by_host": "Filter hosts",
     "filter_by_room": "Filter rooms",
     "filter_by_track": "Filter tracks",
     "finished": "Finished",
@@ -305,13 +313,6 @@
     "developer_settings": {
       "subtitle": "You shouldn't touch these unless you know what you're doing.",
       "title": "Developer Settings"
-    },
-    "developer_settings_alert": {
-      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
-      "cancel": "Cancel",
-      "disable": "Disable",
-      "enable": "Enable",
-      "title": "Dev Settings Menu"
     },
     "device_warnings": {
       "hide_device_warnings": "Hide device warnings",

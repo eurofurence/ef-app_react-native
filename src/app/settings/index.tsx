@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { devMenu } from '@/configuration'
 import { Floater } from '@/components/generic/containers/Floater'
 import { UserSettings } from '@/components/settings/UserSettings'
 import { CacheStats } from '@/components/settings/CacheStats'
@@ -10,16 +9,13 @@ import { ScheduledNotifications } from '@/components/settings/ScheduledNotificat
 import { RemoteMessages } from '@/components/settings/RemoteMessages'
 import { DevButtons } from '@/components/settings/DevButtons'
 import { Header } from '@/components/generic/containers/Header'
+import { useCache } from '@/context/data/Cache'
 
 export default function SettingsPage() {
-    const [showDevMenu, setShowDevMenu] = useState(false)
+    const {getValue} = useCache();
     const { t } = useTranslation('Settings')
 
-    // TODO: Implement a way to toggle dev menu, possibly through multiple taps on version number
-    useEffect(() => {
-        // For development, temporarily enable dev menu
-        setShowDevMenu(devMenu)
-    }, [])
+    const showDevMenu = Boolean(getValue('settings').devMenu);
 
     return (
         <>

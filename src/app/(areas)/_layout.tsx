@@ -108,7 +108,7 @@ export default function TabsLayout() {
                     options={{
                         title: t('events'),
                         tabBarIcon: ({ color, size }) => <Icon name="calendar" size={size} color={color} />,
-                        href: 'schedule',
+                        href: 'schedule'
                     }}
                 />
                 <Tabs.Screen

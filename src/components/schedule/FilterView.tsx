@@ -23,7 +23,7 @@ function selectEvent(event: EventDetails) {
 export function FilterView() {
     const { query } = useLocalSearchParams<{ query?: string }>()
     const { t } = useTranslation('Events')
-    const { events, eventDays, eventTracks, eventRooms, searchEvents } = useCache()
+    const { events, eventDays, eventTracks, eventRooms, eventHosts, searchEvents } = useCache()
 
     const activeStyle = useThemeBackground('secondary')
     const inactiveStyle = useThemeBackground('inverted')
@@ -34,39 +34,43 @@ export function FilterView() {
     const daysRef = useRef<ComboModalRef<EventDayDetails>>(null)
     const tracksRef = useRef<ComboModalRef<EventTrackDetails>>(null)
     const roomsRef = useRef<ComboModalRef<EventRoomDetails>>(null)
+    const hostsRef = useRef<ComboModalRef<string>>(null)
 
 
     const [filterDays, setFilterDays] = useState<readonly EventDayDetails[]>([])
     const [filterTracks, setFilterTracks] = useState<readonly EventTrackDetails[]>([])
     const [filterRooms, setFilterRooms] = useState<readonly EventRoomDetails[]>([])
+    const [filterHosts, setFilterHosts] = useState<readonly string[]>([])
 
     const search = useFuseResults(searchEvents, query ?? '')
     const filtered = useMemo(() => {
         const daysIds = filterDays.map(item => item.Id)
         const tracksIds = filterTracks.map(item => item.Id)
         const roomsIds = filterRooms.map(item => item.Id)
+        const hostNames = filterHosts
         return (search ?? events).filter(item => {
             if (item.ConferenceDayId && daysIds.length && !daysIds.includes(item.ConferenceDayId)) return false
             if (item.ConferenceTrackId && tracksIds.length && !tracksIds.includes(item.ConferenceTrackId)) return false
             if (item.ConferenceRoomId && roomsIds.length && !roomsIds.includes(item.ConferenceRoomId)) return false
+            if (item.Hosts && hostNames.length && !hostNames.some(name => item.Hosts.includes(name))) return false
             return true
         })
-    }, [search, events, filterDays, filterTracks, filterRooms])
+    }, [filterDays, filterTracks, filterRooms, filterHosts, search, events])
 
     const groups = useEventOtherGroups(t, now, zone, filtered)
 
-    const leader = useMemo(() => <View>
+    const leader = <View>
         <Label type="lead" variant="middle">
             Find events
         </Label>
-        <Row type="stretch" variant="spaced">
+        <Row style={styles.filters} type="stretch" variant="spaced" gap={10}>
             <Tab style={[styles.rounded, filterDays.length ? activeStyle : inactiveStyle]}
                  inverted
                  icon="calendar-outline"
                  text={t('filter_by_day')}
                  onPress={() =>
                      daysRef.current?.pick(eventDays, filterDays)?.then(result => setFilterDays(result ?? []))} />
-            <Tab style={[styles.rounded, styles.rowCenter, filterTracks.length ? activeStyle : inactiveStyle]}
+            <Tab style={[styles.rounded, filterTracks.length ? activeStyle : inactiveStyle]}
                  inverted
                  icon="bus-stop"
                  text={t('filter_by_track')}
@@ -78,8 +82,14 @@ export function FilterView() {
                  text={t('filter_by_room')}
                  onPress={() =>
                      roomsRef.current?.pick(eventRooms, filterRooms)?.then(result => setFilterRooms(result ?? []))} />
+            <Tab style={[styles.rounded, filterHosts.length ? activeStyle : inactiveStyle]}
+                 inverted
+                 icon="human-male-board"
+                 text={t('filter_by_host')}
+                 onPress={() =>
+                     hostsRef.current?.pick(eventHosts, filterHosts)?.then(result => setFilterHosts(result ?? []))} />
         </Row>
-    </View>, [activeStyle, eventDays, eventRooms, eventTracks, filterDays, filterRooms, filterTracks, inactiveStyle, t])
+    </View>
 
     return (
         <>
@@ -113,6 +123,16 @@ export function FilterView() {
                 </Label>
             </ComboModal>
 
+            <ComboModal<string>
+                ref={hostsRef}
+                title="Pick one or more hosts"
+                getKey={item => item}
+                getLabel={item => item}>
+                <Label type="para">
+                    Select the hosts to filter on.
+                </Label>
+            </ComboModal>
+
             <EventsSectionedList
                 eventsGroups={groups}
                 select={selectEvent}
@@ -125,11 +145,10 @@ export function FilterView() {
 }
 
 const styles = StyleSheet.create({
-    rounded: {
-        margin: 10,
-        borderRadius: 10,
+    filters: {
+        margin: 20,
     },
-    rowCenter: {
-        marginHorizontal: 8,
+    rounded: {
+        borderRadius: 10,
     },
 })

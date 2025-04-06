@@ -2,16 +2,16 @@
 import { toZonedTime } from 'date-fns-tz'
 import { parseISO } from 'date-fns'
 import Fuse, { FuseOptionKey, IFuseOptions } from 'fuse.js'
-import { flatten } from 'lodash'
+import { chain, flatten } from 'lodash'
 import { StoreData } from '@/context/data/Cache'
 import { conTimeZone } from '@/configuration'
 import {
     internalAttendanceDayNames,
     internalAttendanceDays,
-    internalCategorizeTime,
+    internalCategorizeTime, internalCreateCategoryMapper,
     internalDealerParseDescriptionContent,
     internalDealerParseTable,
-    internalFixedTitle,
+    internalFixedTitle, internalHosts,
     internalMaskRequired,
     internalMastodonHandleToProfileUrl,
     internalSponsorOnly,
@@ -92,9 +92,28 @@ const globalSearchProperties: FuseOptionKey<GlobalSearchResult>[] = [
     ...knowledgeEntriesSearchProperties as any,
 ]
 
-const useFuseMemo = <T, >(data: readonly T[], options: IFuseOptions<any>, properties: FuseOptionKey<T>[]) =>
-    useMemo(() => new Fuse(data, options, Fuse.createIndex(properties, data)), [data, options, properties])
+/**
+ * Returns a memoized Fuse instance for the given data.
+ * @param data The data to index.
+ * @param options The search options.
+ * @param properties The indexing properties.
+ */
+function useFuseMemo<T, >(data: readonly T[], options: IFuseOptions<any>, properties: FuseOptionKey<T>[]) {
+    return useMemo(() => new Fuse(data, options, Fuse.createIndex(properties, data)), [data, options, properties])
+}
 
+/**
+ * Returns a memoized map of keys to Fuse instances for the given record.
+ * @param data The record to index.
+ * @param options The search options.
+ * @param properties The indexing properties.
+ */
+function useFuseRecordMemo<T, >(data: Readonly<Record<string, readonly T[]>>, options: IFuseOptions<any>, properties: FuseOptionKey<T>[]) {
+    return useMemo(() =>
+        Object.fromEntries(Object.entries(data).map(([key, value]) =>
+            [key, new Fuse(value, options, Fuse.createIndex(properties, value))],
+        )), [data])
+}
 
 /**
  * Resolved detailed entity data.
@@ -163,7 +182,7 @@ export type CacheExtensions = {
     /**
      * Events by the day record ID.
      */
-    eventsByDay: Record<string, EntityStore<EventDetails>>
+    eventsByDay: Readonly<Record<string, EntityStore<EventDetails>>>
 
     /**
      * Dealers that are the user's favorite.
@@ -193,7 +212,7 @@ export type CacheExtensions = {
     /**
      * Fuse instance by day.
      */
-    searchEventsByDay: Record<string, Fuse<EventDetails>>
+    searchEventsByDay: Readonly<Record<string, Fuse<EventDetails>>>
 
     /**
      * Fuse instance of dealers.
@@ -233,22 +252,29 @@ export type CacheExtensions = {
     /**
      * Image record IDs to their use locations.
      */
-    imageLocations: Record<string, ImageLocation>;
+    imageLocations: Readonly<Record<string, ImageLocation>>;
+
+    eventHosts: readonly string[];
+
+    eventsByHost: Readonly<Record<string, EntityStore<EventDetails>>>
 }
 
 /**
- * Internally used by the cache to provided the actual values derived from the storage state.
+ * Internally used by the cache to provide the actual values derived from the
+ * storage state.
  * @param data The state to derive from.
  */
 export const useCacheExtensions = (data: StoreData): CacheExtensions => {
-    // Untransformed entity stores.
+    // Untransformed entity stores, this is for entities that have no actual
+    // details yet, i.e, the detail type is just an alias to the records.
     const images = data.images
     const eventRooms = data.eventRooms
     const eventTracks = data.eventTracks
     const knowledgeGroups = data.knowledgeGroups
     const communications = data.communications
 
-    // Enhanced entity stores.
+    // Enhanced entity stores. These are extended records with the detail
+    // information applied.
     const announcements = useMemo((): EntityStore<AnnouncementDetails> => {
         return mapEntityStore(data.announcements, item => ({
             ...item,
@@ -265,8 +291,11 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
     }, [data.eventDays])
 
     const dealers = useMemo((): EntityStore<DealerDetails> => {
+        const categoryMapper = internalCreateCategoryMapper(data.dealers)
+
         return mapEntityStore(data.dealers, item => ({
             ...item,
+            CategoryPrimary: categoryMapper(item.Categories),
             AttendanceDayNames: internalAttendanceDayNames(item),
             AttendanceDays: internalAttendanceDays(eventDays, item),
             Artist: item.ArtistImageId ? images?.dict?.[item.ArtistImageId] : undefined,
@@ -283,6 +312,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         const favoriteIds = data.notifications?.map(item => item.recordId)
         return mapEntityStore(data.events, (item: EventRecord): EventDetails => ({
             ...item,
+            Hosts: internalHosts(item.PanelHosts),
             PartOfDay: internalCategorizeTime(item.StartDateTimeUtc),
             Poster: item.PosterImageId ? images?.dict?.[item.PosterImageId] : undefined,
             Banner: item.BannerImageId ? images?.dict?.[item.BannerImageId] : undefined,
@@ -314,7 +344,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
     }, [images, data.knowledgeEntries])
 
 
-    // Prefiltered values.
+    // Prefiltered values. These are entity stores for common filter cases.
     const eventsByDay = useMemo(() => {
         return Object.fromEntries(eventDays.map(day => [day.Id, filterEntityStore(events, item => item.ConferenceDayId === day.Id)]))
     }, [eventDays, events])
@@ -331,7 +361,8 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         return filterEntityStore(dealers, item => !item.IsAfterDark)
     }, [dealers])
 
-    // Global entity wrapper.
+    // Global entity wrapper, used in searching across multiple entity stores.
+    // The results are tagged with their source type.
     const global = useMemo((): GlobalSearchResult[] => {
         const result: GlobalSearchResult[] = new Array<GlobalSearchResult>(events.length + dealers.length + knowledgeEntries.length)
         for (const item of events)
@@ -343,23 +374,17 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         return result
     }, [events, dealers, knowledgeEntries])
 
-    // Search instances.
+    // Search instances, i.e., all memoized Fuse instances for searching
+    // entities by the defined properties.
     const searchEvents = useFuseMemo(events, searchOptions, eventsSearchProperties)
     const searchEventsFavorite = useFuseMemo(eventsFavorite, searchOptions, eventsSearchProperties)
-    const searchEventsByDay = useMemo(() =>
-        Object.fromEntries(Object.entries(eventsByDay).map(([key, value]) =>
-            [key, new Fuse(value, searchOptions, Fuse.createIndex(eventsSearchProperties, value))],
-        )), [eventsByDay])
-
+    const searchEventsByDay = useFuseRecordMemo(eventsByDay, searchOptions, eventsSearchProperties)
     const searchDealers = useFuseMemo(dealers, searchOptions, dealersSearchProperties)
     const searchDealersFavorite = useFuseMemo(dealersFavorite, searchOptions, dealersSearchProperties)
     const searchDealersInAfterDark = useFuseMemo(dealersInAfterDark, searchOptions, dealersSearchProperties)
     const searchDealersInRegular = useFuseMemo(dealersInRegular, searchOptions, dealersSearchProperties)
-
     const searchKnowledgeEntries = useFuseMemo(knowledgeEntries, searchOptions, knowledgeEntriesSearchProperties)
-
     const searchAnnouncements = useFuseMemo(announcements, searchOptions, announcementsSearchProperties)
-
     const searchGlobal = useFuseMemo(global, searchOptionsGlobal, globalSearchProperties)
 
     // Image backreferences. Derived from the base data.
@@ -398,6 +423,12 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         return result
     }, [data.events, data.dealers, data.announcements, data.knowledgeEntries])
 
+    // All hosts and map of host to participating events.
+    const eventHosts = useMemo(() => chain(events).flatMap(item => item.Hosts).uniq().sort().value(), [events])
+
+    const eventsByHost = useMemo(() => {
+        return Object.fromEntries(eventHosts.map(host => [host, filterEntityStore(events, item => item.Hosts.includes(host))]))
+    }, [events, eventHosts])
 
     // Partial for the new entities to access them by their store name from the callbacks.
     return {
@@ -428,5 +459,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         searchAnnouncements,
         searchGlobal,
         imageLocations,
+        eventHosts,
+        eventsByHost,
     }
 }

@@ -3,48 +3,10 @@ import { TFunction } from 'i18next'
 import { useMemo } from 'react'
 import { Share } from 'react-native'
 import { format, setDay } from 'date-fns'
-
-import { flatMap, maxBy, uniq } from 'lodash'
 import { DealerDetailsInstance, dealerInstanceForAny } from '@/components/dealers/DealerCard'
 import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation, DealerSectionProps } from '@/components/dealers/DealerSection'
 import { appBase, conAbbr } from '@/configuration'
 import { DealerDetails } from '@/context/data/types'
-import { useCache } from '@/context/data/Cache'
-
-
-/**
- * TF-IDF category mapper. Returns the category for a dealer that is the most "unique" for them among all other dealers.
- */
-export const createCategoryMapper = (dealers: readonly DealerDetails[]) => {
-    function tf(category: string, categories: string[]) {
-        let n = 0
-        for (const item of categories) if (item === category) n++
-
-        return n / (categories.length + 1)
-    }
-
-    function idf(category: string) {
-        let n = 0
-        for (const item of dealers) {
-            if (item.Categories)
-                for (let j = 0; j < item.Categories?.length; j++) {
-                    if (item.Categories[j] === category) {
-                        n++
-                        break
-                    }
-                }
-        }
-        return Math.log(dealers.length / (n + 1)) + 1
-    }
-
-    const allCategories = uniq(flatMap(dealers, (dealer) => dealer.Categories ?? []))
-    const allIdf = Object.fromEntries(allCategories.map((category) => [category, idf(category)]))
-
-    return (dealer: DealerDetails) => {
-        const categories = dealer.Categories
-        return categories ? maxBy(categories, (category) => tf(category, categories) * allIdf[category]!) : null
-    }
-}
 
 
 /**
@@ -87,9 +49,6 @@ export const useDealerInstances = (t: TFunction, now: Date, items: readonly  Dea
  * @param items General results.
  */
 export const useDealerGroups = (t: TFunction, now: Date, items: readonly  DealerDetails[]) => {
-    const { dealers } = useCache()
-
-    const categoryOf = useMemo(() => createCategoryMapper(dealers), [dealers])
     return useMemo(() => {
         const day1 = format(setDay(new Date(), 1, { weekStartsOn: 0 }), 'EEEE')
         const day2 = format(setDay(new Date(), 2, { weekStartsOn: 0 }), 'EEEE')
@@ -101,7 +60,7 @@ export const useDealerGroups = (t: TFunction, now: Date, items: readonly  Dealer
 
         // If results are provided (search mode), simply map items.
         for (const item of items) {
-            const category = categoryOf(item) || 'No category';
+            const category = item.CategoryPrimary || 'No category';
             (categoryMap[category] ??= []).push(dealerInstanceForAny(item, now, day1, day2, day3))
         }
 

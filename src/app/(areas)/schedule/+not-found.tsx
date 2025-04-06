@@ -3,6 +3,7 @@ import { StyleSheet, useWindowDimensions, View } from 'react-native'
 import { Route, TabBar, TabView } from 'react-native-tab-view'
 import * as React from 'react'
 import { useCallback, useMemo } from 'react'
+import { isSameDay } from 'date-fns'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { TabLabel } from '@/components/generic/atoms/TabLabel'
 import { EventDayDetails } from '@/context/data/types'
@@ -12,6 +13,7 @@ import { useCache } from '@/context/data/Cache'
 import { PersonalView } from '@/components/schedule/PersonalView'
 import { FilterView } from '@/components/schedule/FilterView'
 import { DayView } from '@/components/schedule/DayView'
+import { useNow } from '@/hooks/time/useNow'
 
 function dayTabTitle(day: EventDayDetails) {
     const date = new Date(day.Date)
@@ -33,8 +35,8 @@ export default function EventsScreen() {
     const pathname = usePathname()
     const { query } = useLocalSearchParams<{ query?: string }>()
 
-    const focused = pathname === '/schedule' || pathname.startsWith(scheduleRoutePrefix)
     const key = pathname.startsWith(scheduleRoutePrefix) ? pathname.substring(scheduleRoutePrefix.length) : null
+    const now = useNow('static')
     const { eventDays } = useCache()
 
     const routes = useMemo(
@@ -63,13 +65,14 @@ export default function EventsScreen() {
     const backgroundBackground = useThemeBackground('background')
     const backgroundSecondary = useThemeBackground('secondary')
 
-    // Not focused or nothing to render. Skip this invocation.
-    if (!focused) return null
-    if (!eventDays.length) return null
+    if (!eventDays.length) {
+        return null
+    }
 
     // Key wasn't found. Redirect to a proper route.
     if (key == null) {
-        return <Redirect href={scheduleRoutePrefix + eventDays[0].Id} />
+        const target = eventDays.find(item => isSameDay(now, item.Date)) ?? eventDays[0]
+        return <Redirect href={scheduleRoutePrefix + target.Id} />
     }
 
     return (

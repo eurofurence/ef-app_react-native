@@ -1,5 +1,6 @@
 import { differenceInMilliseconds, parseISO } from 'date-fns'
 import { format, toZonedTime } from 'date-fns-tz'
+import { de } from 'date-fns/locale/de'
 import { conTimeZone } from '@/configuration'
 import { EventDetails } from '@/context/data/types'
 
@@ -15,13 +16,13 @@ export function calculateEventTiming(details: EventDetails, now: Date | 'done') 
 
     // Convert to con timezone
     const eventStartCon = toZonedTime(eventStart, conTimeZone)
-    const start = format(eventStartCon, 'p', { timeZone: conTimeZone }) // Local time format
+    const start = format(eventStartCon, 'p', { timeZone: conTimeZone, locale: de }) // Local time format
     const day = format(eventStartCon, 'EEE', { timeZone: conTimeZone }) // Day abbreviation
 
     // Convert to local timezone
     const eventStartLocal = new Date(eventStart)
-    const startLocal = format(eventStartLocal, 'p')
-    const dayLocal = format(eventStartLocal, 'EEE')
+    const startLocal = format(eventStartLocal, 'p', { locale: de })
+    const dayLocal = format(eventStartLocal, 'EEE', {})
 
     // Calculate duration
     const durationMs = differenceInMilliseconds(eventEnd, eventStart)

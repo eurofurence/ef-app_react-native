@@ -30,17 +30,18 @@ with the `.web` variant to provide unified access without platform issues.
 settings or entity wrappers.
 
 `useCacheExtensions.ts` Hook that provides, from the store data, the actually
-provided values to be used in the Cache context.
+provided values to be used in the Cache context. This should not be used
+outside the cache provider.
 
 ## Working with the cache
 
-Select a field that you want to use. All entity data stores are readonly. To
-use all items, use the `values` property. To resolve an entity by ID, use
-the `dict` property.
+Select a field that you want to use. All entity data stores are readonly. The
+entities are arrays with an extra `dict` property that contains a ID to entity
+mapping.
 
 ```tsx
 const { maps } = useCache()
-const allMaps = maps.values
+const filteredMaps = maps.filter(predicate)
 const selectedMap = maps.dict[selectionId]
 ```
 

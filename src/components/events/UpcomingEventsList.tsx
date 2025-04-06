@@ -46,7 +46,7 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
                     <EventCard
                         key={event.details.Id}
                         event={event}
-                        type="time"
+                        type="duration"
                         onPress={(event) =>
                             router.navigate({
                                 pathname: '/events/[id]',
