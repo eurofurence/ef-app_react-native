@@ -63,38 +63,6 @@ jobs:
             - name: 📦 Install dependencies
               run: pnpm install
 
-            - name: 🔢 Increment build number
-              run: |
-                if [ "${{ github.event.inputs.platform }}" == "android" ]; then
-                  # Get current version code from app.config.js
-                  CURRENT_VERSION=$(grep -oP 'versionCode: \K\d+' app.config.js || echo "1")
-                  NEW_VERSION=$((CURRENT_VERSION + 1))
-                  # Update version code in app.config.js
-                  if grep -q "versionCode:" app.config.js; then
-                    sed -i "s/versionCode: $CURRENT_VERSION/versionCode: $NEW_VERSION/" app.config.js
-                  else
-                    # Add versionCode to android config if it doesn't exist
-                    sed -i '/android: {/a \            versionCode: '"$NEW_VERSION"',' app.config.js
-                  fi
-                else
-                  # Get current build number from app.config.js
-                  CURRENT_BUILD=$(grep -oP 'buildNumber: \K\d+' app.config.js || echo "1")
-                  NEW_BUILD=$((CURRENT_BUILD + 1))
-                  # Update build number in app.config.js
-                  if grep -q "buildNumber:" app.config.js; then
-                    sed -i "s/buildNumber: $CURRENT_BUILD/buildNumber: $NEW_BUILD/" app.config.js
-                  else
-                    # Add buildNumber to ios config if it doesn't exist
-                    sed -i '/ios: {/a \            buildNumber: '"$NEW_BUILD"',' app.config.js
-                  fi
-                fi
-                # Commit the change
-                git config --global user.name 'github-actions[bot]'
-                git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-                git add app.config.js
-                git commit -m "ci: increment ${{ github.event.inputs.platform }} build number"
-                git push
-
             - name: 👷 Build app
               run: |
                   eas build --local \
