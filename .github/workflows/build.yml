@@ -75,11 +75,26 @@ jobs:
               if: ${{ github.event.inputs.should_submit }}
               run: eas submit -p ${{ github.event.inputs.platform }} --profile ${{ github.event.inputs.profile }} --path app-build
 
+            - name: 🔄 Convert AAB to APK
+              if: ${{ github.event.inputs.platform == 'android' && github.event.inputs.profile == 'production' }}
+              run: |
+                # Download bundletool
+                curl -L https://github.com/google/bundletool/releases/download/1.15.6/bundletool-all-1.15.6.jar -o bundletool.jar
+                
+                # Convert AAB to APK
+                java -jar bundletool.jar build-apks --bundle=app-build/*.aab --output=app-build/app.apks --mode=universal
+                unzip app-build/app.apks -d app-build/
+                mv app-build/universal.apk app-build/app-universal.apk
+                
+                # Clean up temporary files
+                rm app-build/app.apks
+                rm bundletool.jar
+
             - name: 📦 Create GitHub Release
               if: ${{ github.event.inputs.platform == 'android' && github.event.inputs.profile == 'production' }}
               uses: softprops/action-gh-release@v1
               with:
-                files: app-build/*.apk
+                files: app-build/app-universal.apk
                 generate_release_notes: true
                 draft: false
                 prerelease: false
