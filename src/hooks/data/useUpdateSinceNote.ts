@@ -12,31 +12,31 @@ import { useCache } from '@/context/data/Cache'
  * @param delay The delay before setting as viewed.
  */
 export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 3_000) => {
-    const now = useNow()
-    const { getValue, setValue } = useCache()
-    const settings = getValue('settings')
-    const lastViewed = item ? settings.lastViewTimes?.[item.Id] ?? null : null
+  const now = useNow()
+  const { getValue, setValue } = useCache()
+  const settings = getValue('settings')
+  const lastViewed = item ? (settings.lastViewTimes?.[item.Id] ?? null) : null
 
-    const updated = useMemo(() =>
-            Boolean(item && lastViewed && isAfter(parseISO(item.LastChangeDateTimeUtc), parseISO(lastViewed))),
-        [item, lastViewed],
+  const updated = useMemo(() => Boolean(item && lastViewed && isAfter(parseISO(item.LastChangeDateTimeUtc), parseISO(lastViewed))), [item, lastViewed])
+
+  useEffect(() => {
+    if (!item) return
+
+    const timeoutId = setTimeout(
+      () =>
+        setValue('settings', {
+          ...settings,
+          lastViewTimes: {
+            ...(settings.lastViewTimes ?? {}),
+            [item.Id]: now.toISOString(),
+          },
+        }),
+      delay
     )
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [item, delay, now, settings, setValue])
 
-    useEffect(() => {
-        if (!item) return
-
-        const timeoutId = setTimeout(() =>
-            setValue('settings', {
-                ...settings,
-                lastViewTimes: {
-                    ...(settings.lastViewTimes ?? {}),
-                    [item.Id]: now.toISOString(),
-                },
-            }), delay)
-        return () => {
-            clearTimeout(timeoutId)
-        }
-    }, [item, delay, now, settings, setValue])
-
-    return updated
+  return updated
 }

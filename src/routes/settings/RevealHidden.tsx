@@ -12,37 +12,35 @@ import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useCache } from '@/context/data/Cache'
 
 export const RevealHidden = () => {
-    const { t } = useTranslation('RevealHidden')
-    const isFocused = useIsFocused()
-    const now = useNow(isFocused ? 5 : 'static')
-    const zone = useZoneAbbr()
-    const { events, getValue, setValue } = useCache()
+  const { t } = useTranslation('RevealHidden')
+  const isFocused = useIsFocused()
+  const now = useNow(isFocused ? 5 : 'static')
+  const zone = useZoneAbbr()
+  const { events, getValue, setValue } = useCache()
 
-    const settings = getValue('settings')
+  const settings = getValue('settings')
 
-    const projected = useMemo(() =>
-            events.filter(item => Boolean(settings.hiddenEvents?.includes(item.Id))),
-        [events, settings.hiddenEvents])
-    const instances = useMemo(() => projected.map(details => eventInstanceForAny(details, now, zone)), [projected, now, zone])
+  const projected = useMemo(() => events.filter((item) => Boolean(settings.hiddenEvents?.includes(item.Id))), [events, settings.hiddenEvents])
+  const instances = useMemo(() => projected.map((details) => eventInstanceForAny(details, now, zone)), [projected, now, zone])
 
-    const unhideEvent = (eventId: string) => {
-        setValue('settings', {
-            ...settings,
-            hiddenEvents: settings.hiddenEvents?.filter(id => id !== eventId) ?? [],
-        })
-    }
+  const unhideEvent = (eventId: string) => {
+    setValue('settings', {
+      ...settings,
+      hiddenEvents: settings.hiddenEvents?.filter((id) => id !== eventId) ?? [],
+    })
+  }
 
-    return (
-        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Floater contentStyle={appStyles.trailer}>
-                <Label type="lead" variant="middle" mt={30}>
-                    {t('lead')}
-                </Label>
+  return (
+    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+      <Floater contentStyle={appStyles.trailer}>
+        <Label type="lead" variant="middle" mt={30}>
+          {t('lead')}
+        </Label>
 
-                {instances.map((item) => (
-                    <EventCard key={item.details.Id} event={item} type="time" onPress={() => unhideEvent(item.details.Id)} />
-                ))}
-            </Floater>
-        </ScrollView>
-    )
+        {instances.map((item) => (
+          <EventCard key={item.details.Id} event={item} type="time" onPress={() => unhideEvent(item.details.Id)} />
+        ))}
+      </Floater>
+    </ScrollView>
+  )
 }

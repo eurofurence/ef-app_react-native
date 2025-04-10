@@ -1,4 +1,4 @@
-﻿import { router, useLocalSearchParams } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import * as React from 'react'
@@ -13,31 +13,29 @@ import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 
 function selectEvent(event: EventDetails) {
-    return router.setParams({ selected: event.Id })
+  return router.setParams({ selected: event.Id })
 }
 
 export function DayView({ day }: { day: EventDayDetails }) {
-    const { query } = useLocalSearchParams<{ query?: string }>()
-    const { t } = useTranslation('Events')
-    const now = useNow(5)
-    const zone = useZoneAbbr()
+  const { query } = useLocalSearchParams<{ query?: string }>()
+  const { t } = useTranslation('Events')
+  const now = useNow(5)
+  const zone = useZoneAbbr()
 
-    const { eventsByDay, searchEventsByDay } = useCache()
-    const search = useFuseResults(searchEventsByDay[day.Id], query ?? '')
-    const groups = useEventDayGroups(t, now, zone, search ?? eventsByDay[day.Id])
+  const { eventsByDay, searchEventsByDay } = useCache()
+  const search = useFuseResults(searchEventsByDay[day.Id], query ?? '')
+  const groups = useEventDayGroups(t, now, zone, search ?? eventsByDay[day.Id])
 
-    const leader = useMemo(() => <View>
+  const leader = useMemo(
+    () => (
+      <View>
         <Label type="lead" variant="middle">
-            {day?.Name ?? ''}
+          {day?.Name ?? ''}
         </Label>
-    </View>, [day])
+      </View>
+    ),
+    [day]
+  )
 
-    return (
-        <EventsSectionedList
-            eventsGroups={groups}
-            select={selectEvent}
-            leader={leader}
-        />
-
-    )
+  return <EventsSectionedList eventsGroups={groups} select={selectEvent} leader={leader} />
 }

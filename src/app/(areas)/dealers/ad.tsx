@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { useLocalSearchParams } from 'expo-router'
 import { useNow } from '@/hooks/time/useNow'
@@ -10,27 +10,27 @@ import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useCache } from '@/context/data/Cache'
 
 export default function AfterDarkScreen() {
-    const { query } = useLocalSearchParams<{ query?: string }>()
-    const { t } = useTranslation('Dealers')
-    const now = useNow()
+  const { query } = useLocalSearchParams<{ query?: string }>()
+  const { t } = useTranslation('Dealers')
+  const now = useNow()
 
-    const { dealersInAfterDark, searchDealersInAfterDark } = useCache()
-    const search = useFuseResults(searchDealersInAfterDark, query ?? '')
-    const groups = useDealerGroups(t, now, search ?? dealersInAfterDark)
+  const { dealersInAfterDark, searchDealersInAfterDark } = useCache()
+  const search = useFuseResults(searchDealersInAfterDark, query ?? '')
+  const groups = useDealerGroups(now, search ?? dealersInAfterDark)
 
-    return (
-        <DealersSectionedList
-            dealersGroups={groups}
-            leader={
-                <>
-                    <Badge unpad={0} badgeColor="lighten" textColor="text" textType="regular">
-                        {t('section_notice')}
-                    </Badge>
-                    <Label type="lead" variant="middle" mt={30}>
-                        {t('dealers_in_ad')}
-                    </Label>
-                </>
-            }
-        />
-    )
+  return (
+    <DealersSectionedList
+      dealersGroups={groups}
+      leader={
+        <>
+          <Badge unpad={0} badgeColor="lighten" textColor="text" textType="regular">
+            {t('section_notice')}
+          </Badge>
+          <Label type="lead" variant="middle" mt={30}>
+            {t('dealers_in_ad')}
+          </Label>
+        </>
+      }
+    />
+  )
 }

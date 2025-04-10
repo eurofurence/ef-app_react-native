@@ -9,9 +9,9 @@ import { EventContent } from './EventContent'
 import { EventDetails } from '@/context/data/types'
 
 type EventActionsSheetProps = {
-    event: EventDetails | null | undefined;
-    onClose?: () => void;
-};
+  event: EventDetails | null | undefined
+  onClose?: () => void
+}
 
 /**
  * Returns a normal scroll view on web for compatibility.
@@ -19,44 +19,44 @@ type EventActionsSheetProps = {
 const EventActionsSheetScrollView = Platform.OS === 'web' ? ScrollView : BottomSheetScrollView
 
 export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }) => {
-    const sheetRef = useRef<BottomSheet>(null)
-    const styleBackground = useThemeBackground('background')
-    const styleHandle = useThemeBackground('inverted')
+  const sheetRef = useRef<BottomSheet>(null)
+  const styleBackground = useThemeBackground('background')
+  const styleHandle = useThemeBackground('inverted')
 
-    const close = useMemo(() => (onClose ? debounce(onClose, 100) : undefined), [onClose])
+  const close = useMemo(() => (onClose ? debounce(onClose, 100) : undefined), [onClose])
 
-    useEffect(() => {
-        if (event) {
-            sheetRef.current?.snapToIndex(0)
-        } else {
-            sheetRef.current?.close()
-        }
-    }, [sheetRef, event])
+  useEffect(() => {
+    if (event) {
+      sheetRef.current?.snapToIndex(0)
+    } else {
+      sheetRef.current?.close()
+    }
+  }, [sheetRef, event])
 
-    return (
-        <BottomSheet
-            backgroundStyle={styleBackground}
-            handleStyle={styles.handle}
-            handleIndicatorStyle={styleHandle}
-            ref={sheetRef}
-            snapPoints={['25%', '50%', '75%']}
-            index={-1}
-            enablePanDownToClose
-            onClose={close}
-        >
-            {/* TODO: Update note? */}
-            <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} shareButton />}</EventActionsSheetScrollView>
-        </BottomSheet>
-    )
+  return (
+    <BottomSheet
+      backgroundStyle={styleBackground}
+      handleStyle={styles.handle}
+      handleIndicatorStyle={styleHandle}
+      ref={sheetRef}
+      snapPoints={['25%', '50%', '75%']}
+      index={-1}
+      enablePanDownToClose
+      onClose={close}
+    >
+      {/* TODO: Update note? */}
+      <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} shareButton />}</EventActionsSheetScrollView>
+    </BottomSheet>
+  )
 }
 
 const styles = StyleSheet.create({
-    handle: {
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-    },
-    content: {
-        paddingHorizontal: 30,
-        paddingBottom: 100,
-    },
+  handle: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  content: {
+    paddingHorizontal: 30,
+    paddingBottom: 100,
+  },
 })

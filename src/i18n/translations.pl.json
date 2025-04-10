@@ -51,7 +51,6 @@
     "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
   },
   "Event": {
-    "viewing_event": "Przeglądany punkt programu",
     "about_title": "O punkcie programu",
     "add_favorite": "Dodaj do ulubi",
     "event_was_updated": "Punkt programu został zaktualizowany od ostatniej wizyty",
@@ -69,11 +68,11 @@
     "sponsor_event": "Punkt programu dla sponsorów",
     "supersponsor_event": "Punkt programu dla supersponsorów",
     "view_on_map": "Pokaż na mapie",
+    "viewing_event": "Przeglądany punkt programu",
     "when": "{{day}}, {{start}} do {{finish}}.",
     "when_local": "{{zone}}: {{day}}, {{start}} do {{finish}}."
   },
   "Events": {
-    "long_running": "Trwa dłużej",
     "afternoon": "Po południu",
     "current_subtitle": "Te punkty programu odbywają się w tej chwili",
     "current_title": "Bieżące punkty programu",
@@ -86,6 +85,7 @@
     "filter_by_room": "Przeglądaj wg. sal",
     "filter_by_track": "Przeglądaj wg. ścieżek",
     "finished": "Zakończony",
+    "long_running": "Trwa dłużej",
     "morning": "Rano",
     "night": "W nocy",
     "upcoming_favorites_title": "Ulubione punkty programu",
@@ -121,8 +121,8 @@
     "messages": "Masz {{count}} nowych wiadomości",
     "more": "Menu",
     "not_logged_in": "Nie jesteś zalogowany",
-    "pm": "Prywatne wiadomości",
     "open_messages": "Otwórz prywatne wiadomości",
+    "pm": "Prywatne wiadomości",
     "services": "Usługi",
     "settings": "Ustawienia"
   },
@@ -131,9 +131,9 @@
     "private_message": "Dostałeś nową prywatną wiadomość"
   },
   "PrivateMessageList": {
-    "header": "Prywatne wiadomości",
     "from": "Od {{ author }}",
     "from_unknown": "Od nieznanego nadawcy",
+    "header": "Prywatne wiadomości",
     "message_item_subtitle": "{{ status }} - Wysłana: {{ time }}",
     "read": "Wyświetl wiadomość",
     "section_title_from": "Od {{authorName}}",

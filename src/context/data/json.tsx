@@ -1,5 +1,5 @@
-﻿function defaultReplacer(key: string, value: any) {
-    return key !== 'dict' ? value : undefined
+function defaultReplacer(key: string, value: any) {
+  return key !== 'dict' ? value : undefined
 }
 
 /**
@@ -7,7 +7,7 @@
  * @param value The value to serialize.
  */
 export function stringifyEntityStore(value: any) {
-    return value === undefined ? 'undefined' : JSON.stringify(value, defaultReplacer)
+  return value === undefined ? 'undefined' : JSON.stringify(value, defaultReplacer)
 }
 
 /**
@@ -15,7 +15,7 @@ export function stringifyEntityStore(value: any) {
  * @param value The value to serialize.
  */
 export function stringifyJsonSafe(value: any) {
-    return value === undefined ? 'undefined' : JSON.stringify(value)
+  return value === undefined ? 'undefined' : JSON.stringify(value)
 }
 
 /**
@@ -23,5 +23,5 @@ export function stringifyJsonSafe(value: any) {
  * @param text The value to parse.
  */
 export function parseJsonSafe(text: string) {
-    return text === 'undefined' ? undefined : JSON.parse(text)
+  return text === 'undefined' ? undefined : JSON.parse(text)
 }

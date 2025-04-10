@@ -9,38 +9,38 @@ import { LinkFragment } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
 
 export default function KnowledgeItem() {
-    const { id } = useLocalSearchParams<{ id: string }>()
-    const { knowledgeEntries } = useCache()
+  const { id } = useLocalSearchParams<{ id: string }>()
+  const { knowledgeEntries } = useCache()
 
-    // Get the knowledge entry from cache
-    const entry = knowledgeEntries.dict[id]
+  // Get the knowledge entry from cache
+  const entry = knowledgeEntries.dict[id]
 
-    return (
-        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
-            <Header>{entry?.Title}</Header>
-            <Floater>
-                {entry?.Images?.map((image, i) => (
-                    <View key={i} style={styles.posterLine}>
-                        <Banner image={image} viewable />
-                    </View>
-                )) ?? null}
-                <MarkdownContent>{entry?.Text ?? ''}</MarkdownContent>
-                {entry?.Links?.map((link: LinkFragment) => (
-                    <View style={styles.linkContainer} key={link.Target}>
-                        <LinkItem link={link} />
-                    </View>
-                ))}
-            </Floater>
-        </ScrollView>
-    )
+  return (
+    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+      <Header>{entry?.Title}</Header>
+      <Floater>
+        {entry?.Images?.map((image, i) => (
+          <View key={i} style={styles.posterLine}>
+            <Banner image={image} viewable />
+          </View>
+        )) ?? null}
+        <MarkdownContent>{entry?.Text ?? ''}</MarkdownContent>
+        {entry?.Links?.map((link: LinkFragment) => (
+          <View style={styles.linkContainer} key={link.Target}>
+            <LinkItem link={link} />
+          </View>
+        ))}
+      </Floater>
+    </ScrollView>
+  )
 }
 
 const styles = StyleSheet.create({
-    posterLine: {
-        marginVertical: 10,
-        alignItems: 'center',
-    },
-    linkContainer: {
-        marginBottom: 10,
-    },
+  posterLine: {
+    marginVertical: 10,
+    alignItems: 'center',
+  },
+  linkContainer: {
+    marginBottom: 10,
+  },
 })

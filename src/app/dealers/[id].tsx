@@ -15,27 +15,21 @@ import { shareDealer } from '@/components/dealers/Dealers.common'
 import { useCache } from '@/context/data/Cache'
 
 export default function DealerItem() {
-    const { t } = useTranslation('Dealer')
-    const { id } = useLocalSearchParams<{ id: string }>()
-    const { dealers } = useCache()
-    const dealer = dealers.dict[id]
+  const { t } = useTranslation('Dealer')
+  const { id } = useLocalSearchParams<{ id: string }>()
+  const { dealers } = useCache()
+  const dealer = dealers.dict[id]
 
-    // Get update note. Latch so it's displayed even if reset in background.
-    const updated = useUpdateSinceNote(dealer)
-    const showUpdated = useLatchTrue(updated)
+  // Get update note. Latch so it's displayed even if reset in background.
+  const updated = useUpdateSinceNote(dealer)
+  const showUpdated = useLatchTrue(updated)
 
-    return (
-        <ScrollView
-            style={StyleSheet.absoluteFill}
-            stickyHeaderIndices={[0]}
-            stickyHeaderHiddenOnScroll
-        >
-            <Header secondaryIcon={platformShareIcon} secondaryPress={() => dealer && shareDealer(dealer)}>
-                {dealer?.DisplayNameOrAttendeeNickname ?? t('viewing_dealer')}
-            </Header>
-            <Floater contentStyle={appStyles.trailer}>
-                {!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />}
-            </Floater>
-        </ScrollView>
-    )
+  return (
+    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+      <Header secondaryIcon={platformShareIcon} secondaryPress={() => dealer && shareDealer(dealer)}>
+        {dealer?.DisplayNameOrAttendeeNickname ?? t('viewing_dealer')}
+      </Header>
+      <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />}</Floater>
+    </ScrollView>
+  )
 }

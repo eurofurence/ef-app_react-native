@@ -6,12 +6,12 @@ import { EventDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
 
 const filterCurrentEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
-    events.filter((it) =>
-        isWithinInterval(now, {
-            start: parseISO(it.StartDateTimeUtc),
-            end: parseISO(it.EndDateTimeUtc),
-        }),
-    )
+  events.filter((it) =>
+    isWithinInterval(now, {
+      start: parseISO(it.StartDateTimeUtc),
+      end: parseISO(it.EndDateTimeUtc),
+    })
+  )
 
 /**
  * Uses the "event instances" for the currently active events.
@@ -19,13 +19,15 @@ const filterCurrentEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | '
  * @param zone The time zone.
  */
 export function useCurrentEvents(now: Date, zone: string) {
-    const { events } = useCache()
+  const { events } = useCache()
 
-    return useMemo(() =>
-            chain(filterCurrentEvents(events, now))
-                .filter(item => !item.Hidden)
-                .map(details => eventInstanceForAny(details, now, zone))
-                .orderBy('progress', 'asc')
-                .value(),
-        [events, now, zone])
+  return useMemo(
+    () =>
+      chain(filterCurrentEvents(events, now))
+        .filter((item) => !item.Hidden)
+        .map((details) => eventInstanceForAny(details, now, zone))
+        .orderBy('progress', 'asc')
+        .value(),
+    [events, now, zone]
+  )
 }

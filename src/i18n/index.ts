@@ -26,18 +26,18 @@ export const supportedTranslations = ['en', 'nl', 'pl', 'it', 'da', 'de'] as con
 /**
  * The translations we provide.
  */
-export type Translation = (typeof supportedTranslations)[number];
+export type Translation = (typeof supportedTranslations)[number]
 
 /**
  * Map language codes to date-fns locales.
  */
 const dateFnsLocales: Record<string, Locale> = {
-    en: enGB,
-    nl: nl,
-    pl: pl,
-    it: it,
-    da: da,
-    de: de,
+  en: enGB,
+  nl: nl,
+  pl: pl,
+  it: it,
+  da: da,
+  de: de,
 }
 
 /**
@@ -53,57 +53,57 @@ const I18NEXT_LANGUAGE_KEY = 'i18next'
  * Initialized promise to the i18next translate function.
  */
 export const i18t = i18next
-    .use(initReactI18next)
-    .use({
-        type: 'languageDetector',
-        async: true,
-        init: noop,
-        detect: async (callback: (language: string) => void) => {
-            // Get fallback and selected from localization and storage.
-            const fallback = firstSupportedLocale()
-            const persisted = await AsyncStorage.getItem(I18NEXT_LANGUAGE_KEY)
+  .use(initReactI18next)
+  .use({
+    type: 'languageDetector',
+    async: true,
+    init: noop,
+    detect: async (callback: (language: string) => void) => {
+      // Get fallback and selected from localization and storage.
+      const fallback = firstSupportedLocale()
+      const persisted = await AsyncStorage.getItem(I18NEXT_LANGUAGE_KEY)
 
-            // Log what was detected and stored.
-            logger(`Detecting languages, saved: ${persisted}, fallback ${fallback}`)
+      // Log what was detected and stored.
+      logger(`Detecting languages, saved: ${persisted}, fallback ${fallback}`)
 
-            return callback(persisted ?? fallback)
-        },
-        cacheUserLanguage: async (lng: string) =>
-            AsyncStorage.setItem(I18NEXT_LANGUAGE_KEY, lng)
-                .then(i18nDebug ? () => logger('Saving language for next time', lng) : undefined)
-                .catch((e) => logger('Failed to save language', lng, e)),
-    })
-    .init({
-        fallbackLng: 'en',
-        initImmediate: true,
-        defaultNS: 'Home',
-        resources: {
-            en: enTranslations,
-            nl: nlTranslations,
-            de: deTranslations,
-            it: itTranslations,
-            pl: plTranslations,
-            da: daTranslations,
-        },
-        interpolation: { escapeValue: false },
-        react: {
-            useSuspense: false,
-        },
-        parseMissingKeyHandler: (key, defaultValue) => {
-            if (defaultValue === undefined) {
-                console.warn('react-i18next', 'Key not found.', key)
-                return key
-            } else {
-                return defaultValue
-            }
-        },
-    })
+      return callback(persisted ?? fallback)
+    },
+    cacheUserLanguage: async (lng: string) =>
+      AsyncStorage.setItem(I18NEXT_LANGUAGE_KEY, lng)
+        .then(i18nDebug ? () => logger('Saving language for next time', lng) : undefined)
+        .catch((e) => logger('Failed to save language', lng, e)),
+  })
+  .init({
+    fallbackLng: 'en',
+    initImmediate: true,
+    defaultNS: 'Home',
+    resources: {
+      en: enTranslations,
+      nl: nlTranslations,
+      de: deTranslations,
+      it: itTranslations,
+      pl: plTranslations,
+      da: daTranslations,
+    },
+    interpolation: { escapeValue: false },
+    react: {
+      useSuspense: false,
+    },
+    parseMissingKeyHandler: (key, defaultValue) => {
+      if (defaultValue === undefined) {
+        console.warn('react-i18next', 'Key not found.', key)
+        return key
+      } else {
+        return defaultValue
+      }
+    },
+  })
 
 /**
  * Helper function to format dates using date-fns with locale support.
  */
 export const formatDate = (date: Date | string, formatStr: string, language: Translation) => {
-    return format(new Date(date), formatStr, { locale: dateFnsLocales[language] })
+  return format(new Date(date), formatStr, { locale: dateFnsLocales[language] })
 }
 
 /**

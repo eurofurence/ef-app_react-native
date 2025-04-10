@@ -16,8 +16,8 @@ import { EventDayRecord } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
 
 export type CountdownHeaderProps = {
-    style?: StyleProp<ViewStyle>;
-};
+  style?: StyleProp<ViewStyle>
+}
 
 const bannerBreakpoint = 600
 
@@ -25,91 +25,91 @@ const bannerBreakpoint = 600
  * Checks if a given Date is the same day as another, considering the provided timezone.
  */
 const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
-    const localDate1 = fromZonedTime(date1, timezone) // Convert date1 to UTC based on the timezone
-    const localDate2 = fromZonedTime(parseISO(date2), timezone) // Convert date2 (event date) to UTC based on the timezone
+  const localDate1 = fromZonedTime(date1, timezone) // Convert date1 to UTC based on the timezone
+  const localDate2 = fromZonedTime(parseISO(date2), timezone) // Convert date2 (event date) to UTC based on the timezone
 
-    return isSameDay(localDate1, localDate2) // Compare the two dates
+  return isSameDay(localDate1, localDate2) // Compare the two dates
 }
 
 /**
  * Calculates the countdown title based on current time and event days.
  */
 const useCountdownTitle = (t: TFunction, now: Date) => {
-    const { eventDays } = useCache()
-    const firstDay = (eventDays)[0]
-    const lastDay = (eventDays)[eventDays.length - 1]
+  const { eventDays } = useCache()
+  const firstDay = eventDays[0]
+  const lastDay = eventDays[eventDays.length - 1]
 
-    // Try finding current day.
-    const currentDay = eventDays.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone))
-    if (currentDay) return currentDay.Name
+  // Try finding current day.
+  const currentDay = eventDays.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone))
+  if (currentDay) return currentDay.Name
 
-    // Check if before first day.
-    if (firstDay) {
-        const firstDate = new Date(firstDay.Date)
-        if (now < firstDate) {
-            const diff = formatDistance(firstDate, now)
-            return t('before_event', { conName, diff })
-        }
+  // Check if before first day.
+  if (firstDay) {
+    const firstDate = new Date(firstDay.Date)
+    if (now < firstDate) {
+      const diff = formatDistance(firstDate, now)
+      return t('before_event', { conName, diff })
     }
+  }
 
-    // Check if after last day.
-    if (lastDay) {
-        const lastDate = new Date(lastDay.Date)
-        if (now > lastDate) {
-            return t('after_event')
-        }
+  // Check if after last day.
+  if (lastDay) {
+    const lastDate = new Date(lastDay.Date)
+    if (now > lastDate) {
+      return t('after_event')
     }
+  }
 
-    return conName // Fallback if no event days exist.
+  return conName // Fallback if no event days exist.
 }
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
-    const { t } = useTranslation('Countdown')
-    const isFocused = useIsFocused()
-    const now = useNow(isFocused ? 60 : 'static') // Convert to Date
+  const { t } = useTranslation('Countdown')
+  const isFocused = useIsFocused()
+  const now = useNow(isFocused ? 60 : 'static') // Convert to Date
 
-    const { width } = useWindowDimensions()
-    const subtitle = useCountdownTitle(t, now)
+  const { width } = useWindowDimensions()
+  const subtitle = useCountdownTitle(t, now)
 
-    return (
-        <View style={[styles.container, style]}>
-            <ImageBackground
-                key="banner"
-                style={StyleSheet.absoluteFill}
-                source={width < bannerBreakpoint ? require('@/assets/static/banner_narrow.png') : require('@/assets/static/banner_wide.png')}
-                contentFit="cover"
-                priority="high"
-            />
-            <View style={[StyleSheet.absoluteFill, styles.cover]} />
-            <Image style={styles.logo} source={require('@/assets/static/banner_logo.png')} priority="high" />
-            <Col variant="end" style={styles.textContainer}>
-                <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
-                    {conId}
-                </Label>
-                <Label ml={2} mb={labelTypeStyles.compact.fontSize - labelTypeStyles.compact.lineHeight} type="compact" variant="shadow" color="white" ellipsizeMode="tail">
-                    {subtitle}
-                </Label>
-            </Col>
-        </View>
-    )
+  return (
+    <View style={[styles.container, style]}>
+      <ImageBackground
+        key="banner"
+        style={StyleSheet.absoluteFill}
+        source={width < bannerBreakpoint ? require('@/assets/static/banner_narrow.png') : require('@/assets/static/banner_wide.png')}
+        contentFit="cover"
+        priority="high"
+      />
+      <View style={[StyleSheet.absoluteFill, styles.cover]} />
+      <Image style={styles.logo} source={require('@/assets/static/banner_logo.png')} priority="high" />
+      <Col variant="end" style={styles.textContainer}>
+        <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
+          {conId}
+        </Label>
+        <Label ml={2} mb={labelTypeStyles.compact.fontSize - labelTypeStyles.compact.lineHeight} type="compact" variant="shadow" color="white" ellipsizeMode="tail">
+          {subtitle}
+        </Label>
+      </Col>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    cover: {
-        backgroundColor: '#00000060',
-    },
-    container: {
-        height: 240,
-        padding: 10,
-        flexDirection: 'row',
-        alignItems: 'flex-end',
-        gap: 10,
-    },
-    textContainer: {
-        flex: 1,
-    },
-    logo: {
-        height: 130,
-        aspectRatio: 682 / 1139,
-    },
+  cover: {
+    backgroundColor: '#00000060',
+  },
+  container: {
+    height: 240,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    gap: 10,
+  },
+  textContainer: {
+    flex: 1,
+  },
+  logo: {
+    height: 130,
+    aspectRatio: 682 / 1139,
+  },
 })

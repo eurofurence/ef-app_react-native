@@ -6,7 +6,7 @@ import { useState } from 'react'
  * @param object
  */
 export const useStable = <T>(object: T): T => {
-    const [value, setValue] = useState(object)
-    if (!isEqual(value, object)) setValue(object)
-    return value
+  const [value, setValue] = useState(object)
+  if (!isEqual(value, object)) setValue(object)
+  return value
 }

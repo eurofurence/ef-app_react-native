@@ -9,24 +9,22 @@ import { useEffect, useMemo, useState } from 'react'
  * @param limit The item limit.
  */
 export const useFuseResults = <T extends object>(fuse: Fuse<T>, filter: string, limit = 100): T[] | null => {
-    const [filterDebounce, setFilterDebounce] = useState(filter)
+  const [filterDebounce, setFilterDebounce] = useState(filter)
 
-    useEffect(() => {
-        // Always reset immediately.
-        if (!filter) {
-            setFilterDebounce('')
-            return
-        }
+  useEffect(() => {
+    // Always reset immediately.
+    if (!filter) {
+      setFilterDebounce('')
+      return
+    }
 
-        // Debounce entry.
-        const timeoutId = setTimeout(() => setFilterDebounce(filter), 60)
-        return () => clearTimeout(timeoutId)
-    }, [filter])
+    // Debounce entry.
+    const timeoutId = setTimeout(() => setFilterDebounce(filter), 60)
+    return () => clearTimeout(timeoutId)
+  }, [filter])
 
-    return useMemo(() => {
-        if (!filterDebounce.length)
-            return null
-        else
-            return fuse.search(filterDebounce, { limit }).map((result) => result.item)
-    }, [fuse, filterDebounce, limit])
+  return useMemo(() => {
+    if (!filterDebounce.length) return null
+    else return fuse.search(filterDebounce, { limit }).map((result) => result.item)
+  }, [fuse, filterDebounce, limit])
 }

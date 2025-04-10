@@ -12,142 +12,139 @@ import { MainMenu } from '@/components/mainmenu/MainMenu'
 import { useCache } from '@/context/data/Cache'
 
 function getIconNameFromTabBarIcon(
-    tabBarIcon: ((props: { focused: boolean; color: string; size: number }) => React.ReactNode) | undefined,
-    isFocused: boolean,
-    activeTintColor?: string,
-    inactiveTintColor?: string,
+  tabBarIcon: ((props: { focused: boolean; color: string; size: number }) => React.ReactNode) | undefined,
+  isFocused: boolean,
+  activeTintColor?: string,
+  inactiveTintColor?: string
 ): IconNames {
-    if (!tabBarIcon) return 'home'
-    const element = tabBarIcon({
-        focused: isFocused,
-        color: isFocused ? (activeTintColor ?? '#000') : (inactiveTintColor ?? '#999'),
-        size: 24,
-    })
-    if (React.isValidElement(element) && element.props.name) {
-        return element.props.name
-    }
-    return 'home'
+  if (!tabBarIcon) return 'home'
+  const element = tabBarIcon({
+    focused: isFocused,
+    color: isFocused ? (activeTintColor ?? '#000') : (inactiveTintColor ?? '#999'),
+    size: 24,
+  })
+  if (React.isValidElement(element) && element.props.name) {
+    return element.props.name
+  }
+  return 'home'
 }
 
 function AreasTabBar(props: BottomTabBarProps) {
-    const tabs = useRef<TabsRef>(null)
-    const { t } = useTranslation('Menu')
-    const toastMessages = useToastMessages(5)
-    const { isSynchronizing } = useCache()
+  const tabs = useRef<TabsRef>(null)
+  const { t } = useTranslation('Menu')
+  const toastMessages = useToastMessages(5)
+  const { isSynchronizing } = useCache()
 
-    const tabEntries = useMemo(() => props.state.routes.map((route, i) => {
+  const tabEntries = useMemo(
+    () =>
+      props.state.routes.map((route, i) => {
         const { options } = props.descriptors[route.key]
         const isFocused = props.state.index === i
 
         return {
-            active: props.state.index === i,
-            // TODO: Better integration.
-            style: options.tabBarItemStyle,
-            icon: getIconNameFromTabBarIcon(
-                options.tabBarIcon,
-                isFocused,
-                options.tabBarActiveTintColor,
-                options.tabBarInactiveTintColor,
-            ),
-            text: options.title ?? route.name,
-            onPress: () => {
-                const event = props.navigation.emit({
-                    type: 'tabPress',
-                    target: route.key,
-                    canPreventDefault: true,
-                })
+          active: props.state.index === i,
+          // TODO: Better integration.
+          style: options.tabBarItemStyle,
+          icon: getIconNameFromTabBarIcon(options.tabBarIcon, isFocused, options.tabBarActiveTintColor, options.tabBarInactiveTintColor),
+          text: options.title ?? route.name,
+          onPress: () => {
+            const event = props.navigation.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            })
 
-                if (!isFocused && !event.defaultPrevented) {
-                    props.navigation.navigate(route.name)
-                }
-                tabs.current?.close()
-            },
-            indicate: typeof options.tabBarBadge === 'boolean' || typeof options.tabBarBadge === 'number'
-                ? options.tabBarBadge
-                : undefined,
+            if (!isFocused && !event.defaultPrevented) {
+              props.navigation.navigate(route.name)
+            }
+            tabs.current?.close()
+          },
+          indicate: typeof options.tabBarBadge === 'boolean' || typeof options.tabBarBadge === 'number' ? options.tabBarBadge : undefined,
         }
-    }), [props.descriptors, props.navigation, props.state.index, props.state.routes])
+      }),
+    [props.descriptors, props.navigation, props.state.index, props.state.routes]
+  )
 
-    return (
-        <CustomTabs
-            ref={tabs}
-            tabs={tabEntries}
-            textMore={t('more')}
-            textLess={t('less')}
-            activity={isSynchronizing}
-            notice={!toastMessages.length ? null : (
-                <View style={styles.toasts}>
-                    {[...toastMessages].reverse().map((toast) => (
-                        <Toast key={toast.id} {...toast} loose={false} />
-                    ))}
-                </View>
-            )}>
-            <MainMenu tabs={tabs} />
-        </CustomTabs>
-    )
+  return (
+    <CustomTabs
+      ref={tabs}
+      tabs={tabEntries}
+      textMore={t('more')}
+      textLess={t('less')}
+      activity={isSynchronizing}
+      notice={
+        !toastMessages.length ? null : (
+          <View style={styles.toasts}>
+            {[...toastMessages].reverse().map((toast) => (
+              <Toast key={toast.id} {...toast} loose={false} />
+            ))}
+          </View>
+        )
+      }
+    >
+      <MainMenu tabs={tabs} />
+    </CustomTabs>
+  )
 }
 
 export default function TabsLayout() {
-    const { t } = useTranslation('Menu')
+  const { t } = useTranslation('Menu')
 
-    return (
-        <View style={styles.container}>
-            <Tabs
-                screenOptions={{ headerShown: false }}
-                tabBar={props => <AreasTabBar {...props} />}
-            >
-                <Tabs.Screen
-                    name="index"
-                    options={{
-                        title: t('home'),
-                        tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
-                    }}
-                />
-                <Tabs.Screen
-                    name="schedule/+not-found"
-                    options={{
-                        title: t('events'),
-                        tabBarIcon: ({ color, size }) => <Icon name="calendar" size={size} color={color} />,
-                        href: 'schedule'
-                    }}
-                />
-                <Tabs.Screen
-                    name="schedule/index"
-                    options={{
-                        href: null,
-                    }}
-                />
-                <Tabs.Screen
-                    name="dealers"
-                    options={{
-                        title: t('dealers'),
-                        tabBarIcon: ({ color, size }) => <Icon name="cart-outline" size={size} color={color} />,
-                        href: 'dealers',
-                    }}
-                />
-            </Tabs>
-        </View>
-    )
+  return (
+    <View style={styles.container}>
+      <Tabs screenOptions={{ headerShown: false }} tabBar={(props) => <AreasTabBar {...props} />}>
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: t('home'),
+            tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
+          }}
+        />
+        <Tabs.Screen
+          name="schedule/+not-found"
+          options={{
+            title: t('events'),
+            tabBarIcon: ({ color, size }) => <Icon name="calendar" size={size} color={color} />,
+            href: 'schedule',
+          }}
+        />
+        <Tabs.Screen
+          name="schedule/index"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="dealers"
+          options={{
+            title: t('dealers'),
+            tabBarIcon: ({ color, size }) => <Icon name="cart-outline" size={size} color={color} />,
+            href: 'dealers',
+          }}
+        />
+      </Tabs>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        overflow: 'hidden',
-    },
-    toasts: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1,
-    },
-    activity: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: 2,
-        backgroundColor: '#007AFF', // You might want to use your theme color here
-    },
+  container: {
+    flex: 1,
+    overflow: 'hidden',
+  },
+  toasts: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+  },
+  activity: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 2,
+    backgroundColor: '#007AFF', // You might want to use your theme color here
+  },
 })

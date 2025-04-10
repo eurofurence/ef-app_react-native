@@ -10,61 +10,61 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { ImageDetails } from '@/context/data/types'
 
 export type BannerProps = {
-    /**
-     * The style button.
-     */
-    style?: ImageProps['style'];
+  /**
+   * The style button.
+   */
+  style?: ImageProps['style']
 
-    /**
-     * The source image object.
-     */
-    image?: ImageDetails;
+  /**
+   * The source image object.
+   */
+  image?: ImageDetails
 
-    /**
-     * The viewer title.
-     */
-    title?: string;
+  /**
+   * The viewer title.
+   */
+  title?: string
 
-    /**
-     * Placeholder to use.
-     */
-    placeholder?: ImageProps['placeholder'];
+  /**
+   * Placeholder to use.
+   */
+  placeholder?: ImageProps['placeholder']
 
-    /**
-     * If true, this image can be opened and viewed.
-     */
-    viewable?: boolean;
-};
+  /**
+   * If true, this image can be opened and viewed.
+   */
+  viewable?: boolean
+}
 
 export const Banner = ({ style, image, title, placeholder, viewable }: BannerProps) => {
-    const aspect = !image ? {} : { aspectRatio: image.Width / image.Height }
-    const backgroundStyle = useThemeBackground('background')
-    // Do not render if nothing given.
-    if (!image) return null
-    return (
-        <TouchableOpacity
-            containerStyle={[styles.container, backgroundStyle]}
-            disabled={!viewable}
-            onPress={() => {
-                if (viewable && image)
-                    router.navigate({
-                        pathname: '/images/[id]',
-                        params: { id: image.Id, title },
-                    })
-            }}
-        >
-            <Image style={[styles.image, aspect, style]} contentFit={undefined} source={sourceFromImage(image)} placeholder={placeholder} />
-        </TouchableOpacity>
-    )
+  const aspect = !image ? {} : { aspectRatio: image.Width / image.Height }
+  const backgroundStyle = useThemeBackground('background')
+  // Do not render if nothing given.
+  if (!image) return null
+  return (
+    <TouchableOpacity
+      containerStyle={[styles.container, backgroundStyle]}
+      disabled={!viewable}
+      onPress={() => {
+        if (viewable && image)
+          router.navigate({
+            pathname: '/images/[id]',
+            params: { id: image.Id, title },
+          })
+      }}
+    >
+      <Image style={[styles.image, aspect, style]} contentFit={undefined} source={sourceFromImage(image)} placeholder={placeholder} />
+    </TouchableOpacity>
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: undefined,
-    },
-    image: {
-        width: '100%',
-        height: undefined,
-    },
+  container: {
+    width: '100%',
+    height: undefined,
+  },
+  image: {
+    width: '100%',
+    height: undefined,
+  },
 })

@@ -10,17 +10,17 @@ import { Header } from '@/components/generic/containers/Header'
 import { useCache } from '@/context/data/Cache'
 
 export default function EventFeedback() {
-    const { t } = useTranslation('EventFeedback')
-    const { eventId } = useLocalSearchParams<{ eventId: string }>()
-    const { events } = useCache()
-    const event = events.dict[eventId]
+  const { t } = useTranslation('EventFeedback')
+  const { eventId } = useLocalSearchParams<{ eventId: string }>()
+  const { events } = useCache()
+  const event = events.dict[eventId]
 
-    return (
-        <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>
-            <Header>{t('header', { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Header>
-            <Floater>
-                <FeedbackForm />
-            </Floater>
-        </ScrollView>
-    )
+  return (
+    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>
+      <Header>{t('header', { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Header>
+      <Floater>
+        <FeedbackForm />
+      </Floater>
+    </ScrollView>
+  )
 }

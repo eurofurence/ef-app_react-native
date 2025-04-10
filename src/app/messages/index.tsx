@@ -13,103 +13,96 @@ import { CommunicationRecord } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
 
 type Section = {
-    title: string;
-    data: CommunicationRecord[];
-};
+  title: string
+  data: CommunicationRecord[]
+}
 
 export default function Messages() {
-    const { t } = useTranslation('PrivateMessageList')
-    const { communications, isSynchronizing, synchronizeUi } = useCache()
-    const navigateTo = useCallback(
-        (item: CommunicationRecord) =>
-            router.push({
-                pathname: '/messages/[messageId]',
-                params: { messageId: item.Id },
-            }),
-        [],
-    )
+  const { t } = useTranslation('PrivateMessageList')
+  const { communications, isSynchronizing, synchronizeUi } = useCache()
+  const navigateTo = useCallback(
+    (item: CommunicationRecord) =>
+      router.push({
+        pathname: '/messages/[messageId]',
+        params: { messageId: item.Id },
+      }),
+    []
+  )
 
-    const sectionedData = useMemo(() => {
-        const [unread, read] = partition(communications, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
+  const sectionedData = useMemo(() => {
+    const [unread, read] = partition(communications, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
 
-        const readSections = chain(read)
-            .orderBy(['AuthorName', 'SentDateTimeUtc'], ['asc', 'desc'])
-            .groupBy((it: CommunicationRecord) => (it.AuthorName ? t('from', { author: it.AuthorName?.trim() }) : t('from_unknown')))
-            .map((messages, author) => ({
-                title: author,
-                data: messages,
-            }))
-            .value()
+    const readSections = chain(read)
+      .orderBy(['AuthorName', 'SentDateTimeUtc'], ['asc', 'desc'])
+      .groupBy((it: CommunicationRecord) => (it.AuthorName ? t('from', { author: it.AuthorName?.trim() }) : t('from_unknown')))
+      .map((messages, author) => ({
+        title: author,
+        data: messages,
+      }))
+      .value()
 
-        const unreadSections = isEmpty(unread)
-            ? []
-            : [
-                {
-                    title: t('unread'),
-                    data: unread,
-                },
-            ]
+    const unreadSections = isEmpty(unread)
+      ? []
+      : [
+          {
+            title: t('unread'),
+            data: unread,
+          },
+        ]
 
-        return [...unreadSections, ...readSections] as Section[]
-    }, [communications, t])
+    return [...unreadSections, ...readSections] as Section[]
+  }, [communications, t])
 
-    const sectionStyle = useThemeBackground('background')
+  const sectionStyle = useThemeBackground('background')
 
-    const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, [])
-    const emptyComponent = useMemo(() => <NoData text={t('no_data')} />, [t])
-    const headerComponent = useMemo(() => <Header>{t('header')}</Header>, [t])
+  const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, [])
+  const emptyComponent = useMemo(() => <NoData text={t('no_data')} />, [t])
+  const headerComponent = useMemo(() => <Header>{t('header')}</Header>, [t])
 
-    const renderSection = useCallback(
-        ({ section }: { section: Section }) => (
-            <Label type="h2" style={[styles.section, sectionStyle]}>
-                {startCase(section.title)}
-            </Label>
-        ),
-        [sectionStyle],
-    )
+  const renderSection = useCallback(
+    ({ section }: { section: Section }) => (
+      <Label type="h2" style={[styles.section, sectionStyle]}>
+        {startCase(section.title)}
+      </Label>
+    ),
+    [sectionStyle]
+  )
 
-    const renderItem = useCallback(
-        ({ item }: { item: CommunicationRecord }) => (
-            <PrivateMessageCard
-                key={item.Id}
-                containerStyle={styles.item}
-                onPress={() => navigateTo(item)}
-                item={item}
-            />
-        ),
-        [navigateTo],
-    )
+  const renderItem = useCallback(
+    ({ item }: { item: CommunicationRecord }) => <PrivateMessageCard key={item.Id} containerStyle={styles.item} onPress={() => navigateTo(item)} item={item} />,
+    [navigateTo]
+  )
 
-    const backgroundStyle = useThemeBackground('background')
+  const backgroundStyle = useThemeBackground('background')
 
-    return (
-        <SectionList<CommunicationRecord, Section>
-            style={[StyleSheet.absoluteFill, backgroundStyle]}
-            sections={sectionedData}
-            contentContainerStyle={styles.container}
-            keyExtractor={keyExtractor}
-            stickySectionHeadersEnabled
-            onRefresh={synchronizeUi}
-            refreshing={isSynchronizing}
-            ListEmptyComponent={emptyComponent}
-            ListHeaderComponent={headerComponent}
-            renderSectionHeader={renderSection}
-            renderItem={renderItem}
-        />
-    )
+  return (
+    <SectionList<CommunicationRecord, Section>
+      style={[StyleSheet.absoluteFill, backgroundStyle]}
+      sections={sectionedData}
+      contentContainerStyle={styles.container}
+      keyExtractor={keyExtractor}
+      stickySectionHeadersEnabled
+      onRefresh={synchronizeUi}
+      refreshing={isSynchronizing}
+      ListEmptyComponent={emptyComponent}
+      ListHeaderComponent={headerComponent}
+      renderSectionHeader={renderSection}
+      renderItem={renderItem}
+    />
+  )
 }
 
 const styles = StyleSheet.create({
-    section: {
-        padding: 20,
-    },
-    action: {
-        flex: 3,
-    },
-    item: {
-        paddingHorizontal: 20,
-    },
-    container: {
-        paddingBottom: 100,
-    },
+  section: {
+    padding: 20,
+  },
+  action: {
+    flex: 3,
+  },
+  item: {
+    paddingHorizontal: 20,
+  },
+  container: {
+    paddingBottom: 100,
+  },
 })

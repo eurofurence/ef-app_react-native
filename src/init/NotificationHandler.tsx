@@ -6,23 +6,23 @@ import { captureNotificationException } from '@/sentryHelpers'
 
 // Set general notification handling strategy.
 setNotificationHandler({
-    handleNotification: async ({ request: { content } }) => {
-        // Mark handling notification.
-        console.log('Handling notification', content)
+  handleNotification: async ({ request: { content } }) => {
+    // Mark handling notification.
+    console.log('Handling notification', content)
 
-        // Show if it's a notification trigger.
-        return {
-            shouldShowAlert: typeof content?.title === 'string' || typeof content?.body === 'string',
-            shouldPlaySound: false,
-            shouldSetBadge: false,
-        }
-    },
-    handleSuccess: (id) => {
-        // Log success.
-        console.log(`Handled notification successfully, assigned ID: ${id}`)
-    },
-    handleError: (id, error) => {
-        // Log error.
-        captureNotificationException(`Handling notification failed, assigned ID: ${id}`, error)
-    },
+    // Show if it's a notification trigger.
+    return {
+      shouldShowAlert: typeof content?.title === 'string' || typeof content?.body === 'string',
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }
+  },
+  handleSuccess: (id) => {
+    // Log success.
+    console.log(`Handled notification successfully, assigned ID: ${id}`)
+  },
+  handleError: (id, error) => {
+    // Log error.
+    captureNotificationException(`Handling notification failed, assigned ID: ${id}`, error)
+  },
 })

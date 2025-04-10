@@ -121,7 +121,6 @@
     "notImplemented": "Content is not implemented yet."
   },
   "Event": {
-    "viewing_event": "Viewing event",
     "about_title": "About",
     "add_favorite": "Favorite",
     "event_was_updated": "Event was updated since your last visit",
@@ -139,6 +138,7 @@
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
+    "viewing_event": "Viewing event",
     "when": "{{day}}, {{start}} until {{finish}}.",
     "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
   },
@@ -156,7 +156,6 @@
     "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}."
   },
   "Events": {
-    "long_running": "Runs longer",
     "afternoon": "In the afternoon",
     "current_subtitle": "These events are currently happening",
     "current_title": "Current Events",
@@ -172,6 +171,7 @@
     "filter_by_room": "Filter rooms",
     "filter_by_track": "Filter tracks",
     "finished": "Finished",
+    "long_running": "Runs longer",
     "morning": "In the morning",
     "night": "At night",
     "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
@@ -242,9 +242,9 @@
     "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {
-    "header": "Private Messages",
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
+    "header": "Private Messages",
     "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
     "no_data": "There's nothing here yet",
     "read": "Read",

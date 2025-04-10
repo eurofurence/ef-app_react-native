@@ -7,11 +7,11 @@ import { ImageRecord } from '@/context/data/types'
  * @param image The image record to convert.
  */
 export const sourceFromImage = (image: ImageRecord | null | undefined): ImageSource | null => {
-    if (!image) return null
-    return {
-        uri: image.Url,
-        cacheKey: image.ContentHashSha1,
-        width: image.Width,
-        height: image.Height,
-    }
+  if (!image) return null
+  return {
+    uri: image.Url,
+    cacheKey: image.ContentHashSha1,
+    width: image.Width,
+    height: image.Height,
+  }
 }

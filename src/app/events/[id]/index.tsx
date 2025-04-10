@@ -15,46 +15,33 @@ import { shareEvent } from '@/components/events/Events.common'
 import { useCache } from '@/context/data/Cache'
 
 export default function EventItem() {
-    const { t } = useTranslation('Event')
-    const { id } = useLocalSearchParams<{ id: string }>()
-    const { events, getValue, setValue } = useCache()
+  const { t } = useTranslation('Event')
+  const { id } = useLocalSearchParams<{ id: string }>()
+  const { events, getValue, setValue } = useCache()
 
-    const event = events.dict[id]
+  const event = events.dict[id]
 
-    const handleToggleHidden = useCallback(() => {
-        const settings = getValue('settings')
-        const newSettings = {
-            ...settings,
-            hiddenEvents: settings.hiddenEvents?.includes(id)
-                ? settings.hiddenEvents.filter(item => item !== id)
-                : [...(settings.hiddenEvents ?? []), id],
-        }
-        setValue('settings', newSettings)
-    }, [id, getValue, setValue])
+  const handleToggleHidden = useCallback(() => {
+    const settings = getValue('settings')
+    const newSettings = {
+      ...settings,
+      hiddenEvents: settings.hiddenEvents?.includes(id) ? settings.hiddenEvents.filter((item) => item !== id) : [...(settings.hiddenEvents ?? []), id],
+    }
+    setValue('settings', newSettings)
+  }, [id, getValue, setValue])
 
-    // Get update note. Latch so it's displayed even if reset in background.
-    const updated = useUpdateSinceNote(event)
-    const showUpdated = useLatchTrue(updated)
+  // Get update note. Latch so it's displayed even if reset in background.
+  const updated = useUpdateSinceNote(event)
+  const showUpdated = useLatchTrue(updated)
 
-    return (
-        <ScrollView
-            style={StyleSheet.absoluteFill}
-            stickyHeaderIndices={[0]}
-            stickyHeaderHiddenOnScroll
-        >
-            <Header secondaryIcon={platformShareIcon} secondaryPress={() => event && shareEvent(event)}>
-                {event?.Title ?? t('viewing_event')}
-            </Header>
-            <Floater contentStyle={appStyles.trailer}>
-                {!event ? null : (
-                    <EventContent
-                        event={event}
-                        parentPad={padFloater}
-                        updated={showUpdated}
-                        onToggleHidden={handleToggleHidden}
-                    />
-                )}
-            </Floater>
-        </ScrollView>
-    )
+  return (
+    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+      <Header secondaryIcon={platformShareIcon} secondaryPress={() => event && shareEvent(event)}>
+        {event?.Title ?? t('viewing_event')}
+      </Header>
+      <Floater contentStyle={appStyles.trailer}>
+        {!event ? null : <EventContent event={event} parentPad={padFloater} updated={showUpdated} onToggleHidden={handleToggleHidden} />}
+      </Floater>
+    </ScrollView>
+  )
 }

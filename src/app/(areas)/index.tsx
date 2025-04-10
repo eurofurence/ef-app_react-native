@@ -21,39 +21,37 @@ import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useCache } from '@/context/data/Cache'
 
 export default function Index() {
-    const isFocused = useIsFocused()
-    const now = useNow(isFocused ? 5 : 'static')
-    const { synchronizeUi, isSynchronizing } = useCache()
-    const backgroundSurface = useThemeBackground('surface')
+  const isFocused = useIsFocused()
+  const now = useNow(isFocused ? 5 : 'static')
+  const { synchronizeUi, isSynchronizing } = useCache()
+  const backgroundSurface = useThemeBackground('surface')
 
-    const [filter, setFilter] = useState('')
+  const [filter, setFilter] = useState('')
 
-    // Search integration.
-    const globalIndex = useCache().searchGlobal
-    const results = useFuseResults(globalIndex, filter, 15)
+  // Search integration.
+  const globalIndex = useCache().searchGlobal
+  const results = useFuseResults(globalIndex, filter, 15)
 
-    return (
-        <ScrollView
-            style={[StyleSheet.absoluteFill, backgroundSurface]}
-            refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}>
-            <CountdownHeader />
-            <Search filter={filter} setFilter={setFilter} />
-            <Floater contentStyle={appStyles.trailer}>
-                <LanguageWarnings parentPad={padFloater} />
-                <TimezoneWarning parentPad={padFloater} />
-                <DeviceSpecificWarnings />
-                <FavoritesChangedWarning />
-                {results ? (
-                    <GlobalSearch now={now} results={results} />
-                ) : (
-                    <>
-                        <RecentAnnouncements now={now} />
-                        <UpcomingEventsList now={now} />
-                        <TodayScheduleList now={now} />
-                        <CurrentEventList now={now} />
-                    </>
-                )}
-            </Floater>
-        </ScrollView>
-    )
+  return (
+    <ScrollView style={[StyleSheet.absoluteFill, backgroundSurface]} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}>
+      <CountdownHeader />
+      <Search filter={filter} setFilter={setFilter} />
+      <Floater contentStyle={appStyles.trailer}>
+        <LanguageWarnings parentPad={padFloater} />
+        <TimezoneWarning parentPad={padFloater} />
+        <DeviceSpecificWarnings />
+        <FavoritesChangedWarning />
+        {results ? (
+          <GlobalSearch now={now} results={results} />
+        ) : (
+          <>
+            <RecentAnnouncements now={now} />
+            <UpcomingEventsList now={now} />
+            <TodayScheduleList now={now} />
+            <CurrentEventList now={now} />
+          </>
+        )}
+      </Floater>
+    </ScrollView>
+  )
 }

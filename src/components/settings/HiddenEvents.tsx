@@ -8,31 +8,31 @@ import { Button } from '@/components/generic/containers/Button'
 import { useCache } from '@/context/data/Cache'
 
 export const HiddenEvents = () => {
-    const { t } = useTranslation('Settings', { keyPrefix: 'hidden_events' })
-    const { getValue, setValue } = useCache()
+  const { t } = useTranslation('Settings', { keyPrefix: 'hidden_events' })
+  const { getValue, setValue } = useCache()
 
-    const unhideAllEvents = () =>
-        setValue('settings', {
-            ...getValue('settings'),
-            hiddenEvents: [],
-        })
+  const unhideAllEvents = () =>
+    setValue('settings', {
+      ...getValue('settings'),
+      hiddenEvents: [],
+    })
 
-    return (
-        <SettingContainer>
-            <Section title={t('title')} subtitle={t('subtitle')} icon="monitor-eye" />
+  return (
+    <SettingContainer>
+      <Section title={t('title')} subtitle={t('subtitle')} icon="monitor-eye" />
 
-            <Button containerStyle={styles.button} icon="folder-eye" onPress={unhideAllEvents}>
-                {t('unhide_all')}
-            </Button>
-            <Button containerStyle={styles.button} icon="eye" onPress={() => router.push('/settings/reveal-hidden')}>
-                {t('unhide_specific')}
-            </Button>
-        </SettingContainer>
-    )
+      <Button containerStyle={styles.button} icon="folder-eye" onPress={unhideAllEvents}>
+        {t('unhide_all')}
+      </Button>
+      <Button containerStyle={styles.button} icon="eye" onPress={() => router.push('/settings/reveal-hidden')}>
+        {t('unhide_specific')}
+      </Button>
+    </SettingContainer>
+  )
 }
 
 const styles = StyleSheet.create({
-    button: {
-        marginVertical: 5,
-    },
+  button: {
+    marginVertical: 5,
+  },
 })

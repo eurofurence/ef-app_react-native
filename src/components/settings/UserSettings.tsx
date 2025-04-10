@@ -12,38 +12,34 @@ import { Button } from '@/components/generic/containers/Button'
 import { Section } from '@/components/generic/atoms/Section'
 
 export function UserSettings() {
-    const { t } = useTranslation('Settings')
+  const { t } = useTranslation('Settings')
 
-    return (
-        <View>
-            {/* User visible settings, title */}
-            <Section title={t('settingsSection')} icon="cog" />
+  return (
+    <View>
+      {/* User visible settings, title */}
+      <Section title={t('settingsSection')} icon="cog" />
 
-            {/* Allow choosing theme */}
-            <ThemePicker />
+      {/* Allow choosing theme */}
+      <ThemePicker />
 
-            {/* Options for analytics and crash reporting */}
-            <AnalyticsOptIns />
+      {/* Options for analytics and crash reporting */}
+      <AnalyticsOptIns />
 
-            {/* Language selection mask */}
-            <LanguagePicker />
+      {/* Language selection mask */}
+      <LanguagePicker />
 
-            {/* About us section */}
-            <SettingContainer>
-                <Button
-                    icon="cellphone-information"
-                    onPress={() => router.navigate('/about')}
-                    outline
-                >
-                    {t('about')}
-                </Button>
-            </SettingContainer>
+      {/* About us section */}
+      <SettingContainer>
+        <Button icon="cellphone-information" onPress={() => router.navigate('/about')} outline>
+          {t('about')}
+        </Button>
+      </SettingContainer>
 
-            {/* Hidden events functionality, undo */}
-            <HiddenEvents />
+      {/* Hidden events functionality, undo */}
+      <HiddenEvents />
 
-            {/* Warning settings */}
-            <Warnings />
-        </View>
-    )
+      {/* Warning settings */}
+      <Warnings />
+    </View>
+  )
 }

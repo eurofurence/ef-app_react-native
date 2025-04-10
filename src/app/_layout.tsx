@@ -7,9 +7,9 @@ import { StyleSheet } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-reanimated'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import {  useStackScreensData } from '@/hooks/data/useStackScreensData'
+import { useStackScreensData } from '@/hooks/data/useStackScreensData'
 import { CacheProvider } from '@/context/data/Cache'
-import { useTheme, useThemeMemo, useThemeName } from '@/hooks/themes/useThemeHooks'
+import { useTheme, useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 // Import i18n configuration
 import '@/i18n'
 // Import global tailwind css
@@ -23,13 +23,13 @@ import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderResch
  * @constructor
  */
 export default function RootLayout() {
-    return (
-        <GestureHandlerRootView>
-            <CacheProvider>
-                <MainLayout />
-            </CacheProvider>
-        </GestureHandlerRootView>
-    )
+  return (
+    <GestureHandlerRootView>
+      <CacheProvider>
+        <MainLayout />
+      </CacheProvider>
+    </GestureHandlerRootView>
+  )
 }
 
 /**
@@ -37,58 +37,58 @@ export default function RootLayout() {
  * @constructor
  */
 export function MainLayout() {
-    // Get the theme type for status bar configuration.
-    const theme = useTheme()
-    const themeType = useThemeName()
+  // Get the theme type for status bar configuration.
+  const theme = useTheme()
+  const themeType = useThemeName()
 
-    const safeAreaStyle = useThemeMemo((theme) => ({ ...StyleSheet.absoluteFillObject, backgroundColor: theme.background }))
-    const screensData = useStackScreensData()
+  const safeAreaStyle = useThemeBackground('surface')
+  const screensData = useStackScreensData()
 
-    // Wraps the app theme for react navigation.
-    const themeNavigation = useMemo(() =>
-            ({
-                ...(themeType === 'dark' ? DarkTheme : DefaultTheme),
-                colors: {
-                    primary: theme.secondary,
-                    background: theme.surface,
-                    card: theme.background,
-                    text: theme.text,
-                    border: theme.darken,
-                    notification: theme.notification,
-                },
-            }),
-        [themeType, theme],
-    )
+  // Wraps the app theme for react navigation.
+  const themeNavigation = useMemo(
+    () => ({
+      ...(themeType === 'dark' ? DarkTheme : DefaultTheme),
+      colors: {
+        primary: theme.secondary,
+        background: theme.surface,
+        card: theme.background,
+        text: theme.text,
+        border: theme.darken,
+        notification: theme.notification,
+      },
+    }),
+    [themeType, theme]
+  )
 
-    useEventReminderRescheduling()
+  useEventReminderRescheduling()
 
-    return (
-        <BottomSheetModalProvider>
-            <ThemeProvider value={themeNavigation}>
-                <AuthContextProvider>
-                    <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
-                    <SafeAreaView style={safeAreaStyle}>
-                        <Stack>
-                            {screensData.map(screen => (
-                                <Stack.Screen
-                                    key={screen.location}
-                                    name={screen.location}
-                                    options={{
-                                        keyboardHandlingEnabled: true,
-                                        headerTitleAlign: 'left',
-                                        headerShown: screen.headerShown,
-                                        headerTitle: screen.title,
-                                        headerLargeTitle: screen.headerLargeTitle,
-                                        headerLeft: () => screen.headerLeft,
-                                        headerRight: () => screen.headerRight,
-                                        gestureEnabled: screen.swipeEnabled || false,
-                                    }}
-                                />
-                            ))}
-                        </Stack>
-                    </SafeAreaView>
-                </AuthContextProvider>
-            </ThemeProvider>
-        </BottomSheetModalProvider>
-    )
+  return (
+    <BottomSheetModalProvider>
+      <ThemeProvider value={themeNavigation}>
+        <AuthContextProvider>
+          <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
+          <SafeAreaView style={[StyleSheet.absoluteFill, safeAreaStyle]}>
+            <Stack>
+              {screensData.map((screen) => (
+                <Stack.Screen
+                  key={screen.location}
+                  name={screen.location}
+                  options={{
+                    keyboardHandlingEnabled: true,
+                    headerTitleAlign: 'left',
+                    headerShown: screen.headerShown,
+                    headerTitle: screen.title,
+                    headerLargeTitle: screen.headerLargeTitle,
+                    headerLeft: () => screen.headerLeft,
+                    headerRight: () => screen.headerRight,
+                    gestureEnabled: screen.swipeEnabled || false,
+                  }}
+                />
+              ))}
+            </Stack>
+          </SafeAreaView>
+        </AuthContextProvider>
+      </ThemeProvider>
+    </BottomSheetModalProvider>
+  )
 }

@@ -1,11 +1,11 @@
-﻿import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 /**
  * Gets many keys from the storage.
  * @param keys The keys to get from the storage.
  */
 export async function multiGet(keys: readonly string[]): Promise<readonly [string, string | null][]> {
-    return await AsyncStorage.multiGet(keys)
+  return await AsyncStorage.multiGet(keys)
 }
 
 /**
@@ -13,7 +13,7 @@ export async function multiGet(keys: readonly string[]): Promise<readonly [strin
  * @param keyValuePairs The key-value pairs to write.
  */
 export async function multiSet(keyValuePairs: [string, string][]) {
-    await AsyncStorage.multiSet(keyValuePairs)
+  await AsyncStorage.multiSet(keyValuePairs)
 }
 
 /**
@@ -21,7 +21,7 @@ export async function multiSet(keyValuePairs: [string, string][]) {
  * @param key The key to get from the storage.
  */
 export async function get(key: string) {
-    return await AsyncStorage.getItem(key)
+  return await AsyncStorage.getItem(key)
 }
 
 /**
@@ -30,5 +30,5 @@ export async function get(key: string) {
  * @param value The value to write.
  */
 export async function set(key: string, value: string) {
-    await AsyncStorage.setItem(key, value)
+  await AsyncStorage.setItem(key, value)
 }
