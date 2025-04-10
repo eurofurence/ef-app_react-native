@@ -1,5 +1,6 @@
 import { reactNativeTracingIntegration } from '@sentry/react-native'
 import { init as sentryInit } from '@sentry/react-native/dist/js/sdk'
+// eslint-disable-next-line import/no-unresolved
 import conventionConfig from '../../convention.config.json'
 
 sentryInit({
