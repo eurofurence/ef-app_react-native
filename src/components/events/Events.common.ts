@@ -1,12 +1,13 @@
-import { captureException } from "@sentry/react-native";
-import { TFunction } from "i18next";
-import { parseISO, differenceInHours, isBefore } from "date-fns";
-import { useMemo } from "react";
-import { Share } from "react-native";
-import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from "@/components/events/EventCard";
-import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from "@/components/events/EventSection";
-import { appBase, conAbbr } from "@/configuration";
-import { EventDetails } from "@/store/eurofurence/types";
+import { captureException } from '@sentry/react-native'
+import { TFunction } from 'i18next'
+import { parseISO, differenceInHours, isBefore } from 'date-fns'
+import { useMemo } from 'react'
+import { Share } from 'react-native'
+import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from '@/components/events/EventCard'
+import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from '@/components/events/EventSection'
+import { appBase, conAbbr } from '@/configuration'
+
+import { EventDetails } from '@/context/data/types'
 
 /**
  Returns a list of event instances according to conversion rules.
@@ -15,61 +16,12 @@ import { EventDetails } from "@/store/eurofurence/types";
  * @param zone Zone abbreviation.
  * @param items The items to transform.
  */
-export const useEventInstances = (t: TFunction, now: Date, zone: string, items: EventDetails[]) => {
+export const useEventInstances = (t: TFunction, now: Date, zone: string, items: readonly  EventDetails[]) => {
     // Return direct mapping.
     return useMemo(() => {
-        return items.map((item) => eventInstanceForAny(item, now, zone));
-    }, [t, now, items]);
-};
-
-/**
- * Generates search result grouping with event detail instances prepared for
- * display standalone dates.
- * @param t The translation function.
- * @param now The current moment.
- * @param zone Zone abbreviation.
- * @param results Results for search if given.
- */
-export const useEventSearchGroups = (t: TFunction, now: Date, zone: string, results: EventDetails[] | null) => {
-    return useMemo(() => {
-        if (!results) return [];
-
-        let hidden = 0;
-
-        // Search results are only split into upcoming and passed. This is
-        // done in two passes.
-        let sectionedPassed = false;
-
-        const result: (EventSectionProps | EventDetailsInstance)[] = [];
-
-        // Count hidden and append all by start time.
-        for (const item of results) {
-            if (item.Hidden) {
-                hidden++;
-            } else if (isBefore(now, parseISO(item.EndDateTimeUtc))) {
-                result.push(eventInstanceForAny(item, now, zone));
-            }
-        }
-
-        // Add hidden header.
-        if (hidden > 0) {
-            result.splice(0, 0, eventSectionForHidden(t, hidden));
-        }
-
-        // Second pass not hidden and passed.
-        for (const item of results) {
-            if (!item.Hidden && !isBefore(now, parseISO(item.EndDateTimeUtc))) {
-                if (!sectionedPassed) {
-                    result.push(eventSectionForPassed(t));
-                    sectionedPassed = true;
-                }
-                result.push(eventInstanceForPassed(item, zone));
-            }
-        }
-
-        return result;
-    }, [t, now, zone, results]);
-};
+        return items.map((item) => eventInstanceForAny(item, now, zone))
+    }, [t, now, items])
+}
 
 /**
  * Generates event grouping with event detail instances prepared for
@@ -77,88 +29,88 @@ export const useEventSearchGroups = (t: TFunction, now: Date, zone: string, resu
  * @param t The translation function.
  * @param now The current moment.
  * @param zone Zone abbreviation.
- * @param all The events on that day.
+ * @param items The events on that day.
  */
-export const useEventDayGroups = (t: TFunction, now: Date, zone: string, all: EventDetails[]) => {
+export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: readonly EventDetails[]) => {
     return useMemo(() => {
-        let hidden = 0;
+        let hidden = 0
 
         // Sections are consecutive as event start time (which informs the
         // part of day) is the sort key. Section changes are therefore
         // consecutive as well. Passed events are collected in the second pass.
-        let sectionedMorning = false;
-        let sectionedAfternoon = false;
-        let sectionedEvening = false;
-        let sectionedNight = false;
-        let sectionedPassed = false;
-        let sectionedLongRunning = false;
+        let sectionedMorning = false
+        let sectionedAfternoon = false
+        let sectionedEvening = false
+        let sectionedNight = false
+        let sectionedPassed = false
+        let sectionedLongRunning = false
 
-        const result: (EventSectionProps | EventDetailsInstance)[] = [];
+        const result: (EventSectionProps | EventDetailsInstance)[] = []
 
         // Count hidden and append all by start time.
-        for (const item of all) {
+        for (const item of items) {
             if (item.Hidden) {
-                hidden++;
+                hidden++
             } else if (isBefore(now, parseISO(item.EndDateTimeUtc))) {
                 // First pass not passed.
                 if (differenceInHours(parseISO(item.EndDateTimeUtc), parseISO(item.StartDateTimeUtc)) > 4) {
                     if (!sectionedLongRunning) {
-                        result.push(eventSectionForPartOfDay(t, "long_running"));
-                        sectionedLongRunning = true;
+                        result.push(eventSectionForPartOfDay(t, 'long_running'))
+                        sectionedLongRunning = true
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now, zone));
-                } else if (item.PartOfDay === "morning") {
+                    result.push(eventInstanceForNotPassed(item, now, zone))
+                } else if (item.PartOfDay === 'morning') {
                     if (!sectionedMorning) {
-                        result.push(eventSectionForPartOfDay(t, "morning"));
-                        sectionedMorning = true;
+                        result.push(eventSectionForPartOfDay(t, 'morning'))
+                        sectionedMorning = true
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now, zone));
-                } else if (item.PartOfDay === "afternoon") {
+                    result.push(eventInstanceForNotPassed(item, now, zone))
+                } else if (item.PartOfDay === 'afternoon') {
                     if (!sectionedAfternoon) {
-                        result.push(eventSectionForPartOfDay(t, "afternoon"));
-                        sectionedAfternoon = true;
+                        result.push(eventSectionForPartOfDay(t, 'afternoon'))
+                        sectionedAfternoon = true
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now, zone));
-                } else if (item.PartOfDay === "evening") {
+                    result.push(eventInstanceForNotPassed(item, now, zone))
+                } else if (item.PartOfDay === 'evening') {
                     if (!sectionedEvening) {
-                        result.push(eventSectionForPartOfDay(t, "evening"));
-                        sectionedEvening = true;
+                        result.push(eventSectionForPartOfDay(t, 'evening'))
+                        sectionedEvening = true
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now, zone));
-                } else if (item.PartOfDay === "night") {
+                    result.push(eventInstanceForNotPassed(item, now, zone))
+                } else if (item.PartOfDay === 'night') {
                     if (!sectionedNight) {
-                        result.push(eventSectionForPartOfDay(t, "night"));
-                        sectionedNight = true;
+                        result.push(eventSectionForPartOfDay(t, 'night'))
+                        sectionedNight = true
                     }
 
-                    result.push(eventInstanceForNotPassed(item, now, zone));
+                    result.push(eventInstanceForNotPassed(item, now, zone))
                 }
             }
         }
 
         // Add hidden header.
         if (hidden > 0) {
-            result.splice(0, 0, eventSectionForHidden(t, hidden));
+            result.splice(0, 0, eventSectionForHidden(t, hidden))
         }
 
         // Second pass not hidden and passed.
-        for (const item of all) {
+        for (const item of items) {
             if (!item.Hidden && !isBefore(now, parseISO(item.EndDateTimeUtc))) {
                 if (!sectionedPassed) {
-                    result.push(eventSectionForPassed(t));
-                    sectionedPassed = true;
+                    result.push(eventSectionForPassed(t))
+                    sectionedPassed = true
                 }
-                result.push(eventInstanceForPassed(item, zone));
+                result.push(eventInstanceForPassed(item, zone))
             }
         }
 
-        return result;
-    }, [t, now, zone, all]);
-};
+        return result
+    }, [t, now, zone, items])
+}
 
 /**
  Generates event grouping with event detail instances prepared for
@@ -166,54 +118,54 @@ export const useEventDayGroups = (t: TFunction, now: Date, zone: string, all: Ev
  * @param t The translation function.
  * @param now The current moment.
  * @param zone Zone abbreviation.
- * @param all The events on that day.
+ * @param items The events.
  */
-export const useEventOtherGroups = (t: TFunction, now: Date, zone: string, all: EventDetails[]) => {
+export const useEventOtherGroups = (t: TFunction, now: Date, zone: string, items: readonly  EventDetails[]) => {
     return useMemo(() => {
-        let hidden = 0;
+        let hidden = 0
 
         // Days sections changes are consecutive, as the default sorting
         // for events is by time. Passed events are collected in the second
         // pass.
-        const sectionedDays: Record<string, boolean> = {};
-        let sectionedPassed = false;
-        const result: (EventSectionProps | EventDetailsInstance)[] = [];
+        const sectionedDays: Record<string, boolean> = {}
+        let sectionedPassed = false
+        const result: (EventSectionProps | EventDetailsInstance)[] = []
 
         // Count hidden and append all by start time.
-        for (const item of all) {
+        for (const item of items) {
             if (item.Hidden) {
-                hidden++;
+                hidden++
             } else if (!item.ConferenceDay) {
                 // Nothing, not applicable.
             } else if (isBefore(now, parseISO(item.EndDateTimeUtc))) {
                 if (!(item.ConferenceDay.Date in sectionedDays)) {
-                    result.push(eventSectionForDate(t, item.ConferenceDay.Date));
-                    sectionedDays[item.ConferenceDay.Date] = true;
+                    result.push(eventSectionForDate(t, item.ConferenceDay.Date))
+                    sectionedDays[item.ConferenceDay.Date] = true
                 }
 
-                result.push(eventInstanceForNotPassed(item, now, zone));
+                result.push(eventInstanceForNotPassed(item, now, zone))
             }
         }
 
         // Add hidden header.
         if (hidden > 0) {
-            result.splice(0, 0, eventSectionForHidden(t, hidden));
+            result.splice(0, 0, eventSectionForHidden(t, hidden))
         }
 
         // Second pass not hidden and passed.
-        for (const item of all) {
+        for (const item of items) {
             if (!item.Hidden && !isBefore(now, parseISO(item.EndDateTimeUtc))) {
                 if (!sectionedPassed) {
-                    result.push(eventSectionForPassed(t));
-                    sectionedPassed = true;
+                    result.push(eventSectionForPassed(t))
+                    sectionedPassed = true
                 }
-                result.push(eventInstanceForPassed(item, zone));
+                result.push(eventInstanceForPassed(item, zone))
             }
         }
 
-        return result;
-    }, [t, now, zone, all]);
-};
+        return result
+    }, [t, now, zone, items])
+}
 
 export const shareEvent = (event: EventDetails) =>
     Share.share(
@@ -223,4 +175,4 @@ export const shareEvent = (event: EventDetails) =>
             message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
         },
         {},
-    ).catch(captureException);
+    ).catch(captureException)

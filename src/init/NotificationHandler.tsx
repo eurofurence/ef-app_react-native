@@ -1,6 +1,6 @@
-import { setNotificationHandler } from "expo-notifications";
+import { setNotificationHandler } from 'expo-notifications'
 
-import { captureNotificationException } from "@/sentryHelpers";
+import { captureNotificationException } from '@/sentryHelpers'
 
 // Import globally at index, this code runs the method on import.
 
@@ -8,21 +8,21 @@ import { captureNotificationException } from "@/sentryHelpers";
 setNotificationHandler({
     handleNotification: async ({ request: { content } }) => {
         // Mark handling notification.
-        console.log("Handling notification", content);
+        console.log('Handling notification', content)
 
         // Show if it's a notification trigger.
         return {
-            shouldShowAlert: typeof content?.title === "string" || typeof content?.body === "string",
+            shouldShowAlert: typeof content?.title === 'string' || typeof content?.body === 'string',
             shouldPlaySound: false,
             shouldSetBadge: false,
-        };
+        }
     },
     handleSuccess: (id) => {
         // Log success.
-        console.log(`Handled notification successfully, assigned ID: ${id}`);
+        console.log(`Handled notification successfully, assigned ID: ${id}`)
     },
     handleError: (id, error) => {
         // Log error.
-        captureNotificationException(`Handling notification failed, assigned ID: ${id}`, error);
+        captureNotificationException(`Handling notification failed, assigned ID: ${id}`, error)
     },
-});
+})

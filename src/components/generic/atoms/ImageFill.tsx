@@ -1,12 +1,13 @@
-import * as React from "react";
-import { FC, useMemo, useState } from "react";
-import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import * as React from 'react'
+import { FC, useMemo, useState } from 'react'
+import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
-import { ImageDetails } from "@/store/eurofurence/types";
-import { Image, ImageProps } from "./Image";
-import { sourceFromImage } from "./Image.common";
+import { Image, ImageProps } from './Image'
+import { sourceFromImage } from './Image.common'
 
-const initialSize = { width: Dimensions.get("window").width - 40, height: 160 };
+import { ImageDetails } from '@/context/data/types'
+
+const initialSize = { width: Dimensions.get('window').width - 40, height: 160 }
 
 export type ImageFillTarget = {
     x: number;
@@ -32,36 +33,36 @@ export type ImageFillProps = {
 };
 
 export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
-    const [size, setSize] = useState<{ width: number; height: number }>(initialSize);
+    const [size, setSize] = useState<{ width: number; height: number }>(initialSize)
 
     const arrangerStyle = useMemo<ViewStyle | null>(() => {
-        if (!target) return null;
+        if (!target) return null
 
-        const scale = Math.max(size.width, size.height) / target.size;
+        const scale = Math.max(size.width, size.height) / target.size
         return {
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             top: 0,
             right: 0,
             bottom: 0,
             transform: [{ scale }],
-        };
-    }, [target, size.width, size.height]);
+        }
+    }, [target, size.width, size.height])
 
-    const imageStyle = useMemo<ImageProps["style"] | null>(() => {
-        if (!image) return null;
-        if (!target) return null;
+    const imageStyle = useMemo<ImageProps['style'] | null>(() => {
+        if (!image) return null
+        if (!target) return null
 
         // Section, scale and translate around center.
         return {
-            position: "absolute",
+            position: 'absolute',
             left: 0,
             top: 0,
             width: image.Width,
             height: image.Height,
             transform: [{ translateX: size.width / 2 - target.x }, { translateY: size.height / 2 - target.y }],
-        };
-    }, [size.width, size.height, target, image]);
+        }
+    }, [size.width, size.height, target, image])
 
     return (
         <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>
@@ -70,5 +71,5 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
                 <Image style={imageStyle} contentFit="fill" contentPosition="top left" source={sourceFromImage(image)} priority="normal" />
             </View>
         </View>
-    );
-};
+    )
+}

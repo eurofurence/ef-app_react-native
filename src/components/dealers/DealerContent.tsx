@@ -1,67 +1,71 @@
-import * as Clipboard from "expo-clipboard";
-import * as Linking from "expo-linking";
-import { TFunction } from "i18next";
-import React, { FC, useCallback, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import * as Clipboard from 'expo-clipboard'
+import * as Linking from 'expo-linking'
+import React, { FC, useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
 
-import { useToast } from "@/context/ToastContext";
-import { useNow } from "@/hooks/time/useNow";
-import { shareDealer } from "@/components/dealers/Dealers.common";
-import { format } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
-import { useDataCache } from "@/context/DataCacheProvider";
-import { DealerDetails, MapDetails } from "@/store/eurofurence/types";
-import { appStyles } from "../AppStyles";
-import { Banner } from "../generic/atoms/Banner";
-import { FaIcon } from "../generic/atoms/FaIcon";
-import { Image } from "../generic/atoms/Image";
-import { Label } from "../generic/atoms/Label";
-import { Section } from "../generic/atoms/Section";
-import { Badge } from "../generic/containers/Badge";
-import { Button } from "../generic/containers/Button";
-import { ImageExButton } from "../generic/containers/ImageButton";
-import { LinkItem } from "../maps/LinkItem";
-import { conTimeZone } from "@/configuration";
-import { platformShareIcon } from "../generic/atoms/Icon";
-import { sourceFromImage } from "../generic/atoms/Image.common";
-import { router } from "expo-router";
-import { getValidLinksByTarget } from "@/store/eurofurence/selectors/maps";
+import { format } from 'date-fns'
+import { toZonedTime } from 'date-fns-tz'
+import { router } from 'expo-router'
+import { appStyles } from '../AppStyles'
+import { Banner } from '../generic/atoms/Banner'
+import { FaIcon } from '../generic/atoms/FaIcon'
+import { Image } from '../generic/atoms/Image'
+import { Label } from '../generic/atoms/Label'
+import { Section } from '../generic/atoms/Section'
+import { Badge } from '../generic/containers/Badge'
+import { Button } from '../generic/containers/Button'
+import { ImageExButton } from '../generic/containers/ImageButton'
+import { LinkItem } from '../maps/LinkItem'
+import { sourceFromImage } from '../generic/atoms/Image.common'
+import { conTimeZone } from '@/configuration'
+import { shareDealer } from '@/components/dealers/Dealers.common'
+import { useNow } from '@/hooks/time/useNow'
+import { useToast } from '@/context/ToastContext'
+import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
+import { DealerDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
+import { Row } from '@/components/generic/containers/Row'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
-const DealerCategories = ({ t, dealer }: { t: TFunction; dealer: DealerDetails }) => {
+const DealerCategories = ({ dealer }: { dealer: DealerDetails }) => {
     // Nothing to display for no categories.
-    if (!dealer.Categories?.length) return null;
+    if (!dealer.Categories?.length) return null
 
     return (
         <>
-            <Label type="caption">{t("categories")}</Label>
             <View style={dealerCategoriesStyles.container}>
                 {dealer.Categories.map((category: string) => {
-                    const keywords = dealer.Keywords?.[category];
+                    const keywords = dealer.Keywords?.[category]
                     if (keywords?.length)
                         return (
-                            <Label key={category} mt={5}>
-                                <Label variant="bold">{category}: </Label>
-                                {keywords.join(", ")}
-                            </Label>
-                        );
+                            <View style={dealerCategoriesStyles.category} key={category}>
+                                <Label type="caption" variant="bold">{category}</Label>
+                                {keywords.map(keyword => <Label key={keyword}>{keyword}</Label>)}
+                            </View>
+                        )
                     else
                         return (
-                            <Label key={category} variant="bold">
+                            <Label key={category} type="caption" variant="bold">
                                 {category}
                             </Label>
-                        );
+                        )
                 })}
             </View>
         </>
-    );
-};
+    )
+}
 
 const dealerCategoriesStyles = StyleSheet.create({
     container: {
-        marginBottom: 20,
+        gap: 10,
+        marginTop: 30,
+        marginBottom: 30,
     },
-});
+    category: {
+        gap: 5,
+    },
+})
 
 /**
  * Props to the content.
@@ -86,145 +90,92 @@ export type DealerContentProps = {
 };
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, updated, shareButton }) => {
-    const { t } = useTranslation("Dealer");
-    const now = useNow();
-    const toast = useToast();
+    const { t } = useTranslation('Dealer')
+    const now = useNow()
+    const toast = useToast()
 
-    const { getAllCacheSync, saveCache } = useDataCache();
-    const [isFavorite, setIsFavorite] = useState(dealer.Favorite);
+    const avatarBackground = useThemeBackground('text')
 
-    const maps = getAllCacheSync("maps");
-    // TODO: Fix this.
-    // @ts-expect-error: See later.
-    const mapLink = getValidLinksByTarget(maps, dealer.Id);
+    const { maps, getValue, setValue } = useCache()
+    const isFavorite = dealer.Favorite
+
+    const mapLink = getValidLinksByTarget(maps, dealer.Id)
 
     const days = useMemo(
         () =>
             dealer.AttendanceDays.map((day) => {
-                const zonedDate = toZonedTime(new Date(day.Date), conTimeZone);
-                return format(zonedDate, "EEEE");
-            }).join(", "),
+                const zonedDate = toZonedTime(new Date(day.Date), conTimeZone)
+                return format(zonedDate, 'EEEE')
+            }).join(', '),
         [dealer],
-    );
+    )
 
     const toggleFavorite = useCallback(() => {
-        // Toggle the favorite state.
-        const newFavorite = !isFavorite;
-        setIsFavorite(newFavorite);
-        saveCache("dealers", dealer.Id, { ...dealer, Favorite: newFavorite });
-    }, [dealer, isFavorite, saveCache]);
+        const settings = getValue('settings')
+        const newSettings = {
+            ...settings,
+            favoriteDealers: settings.favoriteDealers?.includes(dealer.Id)
+                ? settings.favoriteDealers?.filter(item => item != dealer.Id) :
+                [...(settings.favoriteDealers ?? []), dealer.Id],
+        }
+        setValue('settings', newSettings)
+    }, [dealer.Id, getValue, setValue])
 
     // Check if not-attending warning should be marked.
     const markNotAttending = useMemo(() => {
         // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
-        if (now.getDay() === 4 && !dealer.AttendsOnThursday) return true;
-        else if (now.getDay() === 5 && !dealer.AttendsOnFriday) return true;
-        else if (now.getDay() === 6 && !dealer.AttendsOnSaturday) return true;
-        return false;
-    }, [now, dealer]);
+        if (now.getDay() === 4 && !dealer.AttendsOnThursday) return true
+        else if (now.getDay() === 5 && !dealer.AttendsOnFriday) return true
+        else if (now.getDay() === 6 && !dealer.AttendsOnSaturday) return true
+        return false
+    }, [now, dealer])
 
     return (
         <>
             {!updated ? null : (
                 <Badge unpad={parentPad} badgeColor="warning" textColor="white">
-                    {t("dealer_was_updated")}
+                    {t('dealer_was_updated')}
                 </Badge>
             )}
 
             {!markNotAttending ? null : (
                 <Badge unpad={parentPad} badgeColor="warning" textColor="invText">
-                    {t("not_attending")}
+                    {t('not_attending')}
                 </Badge>
             )}
 
             {!dealer.Artist ? null : (
-                <View style={[appStyles.shadow, styles.avatarCircle]}>
+                <View style={[appStyles.shadow, avatarBackground, styles.avatarCircle]}>
                     <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.Artist)} />
                 </View>
             )}
 
-            <Section icon="brush" title={dealer.DisplayNameOrAttendeeNickname} />
+            {dealer.DisplayNameOrAttendeeNickname ? <Label type="h1" variant="middle" mb={10}>{dealer.DisplayNameOrAttendeeNickname}</Label> : null}
 
-            <Label type="para">{dealer.ShortDescriptionContent}</Label>
 
-            <Button containerStyle={styles.marginBefore} outline={isFavorite} icon={isFavorite ? "heart-minus" : "heart-plus-outline"} onPress={toggleFavorite}>
-                {isFavorite ? t("remove_favorite") : t("add_favorite")}
+            <Label style={styles.marginAround} type="para">{dealer.ShortDescriptionContent}</Label>
+
+            <Row style={styles.marginAround} gap={5}>
+                <Label type="caption">{t('attends')}</Label>
+                <Label type="caption" color="important">{days}</Label>
+            </Row>
+
+
+            <Button containerStyle={styles.marginAround} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
+                {isFavorite ? t('remove_favorite') : t('add_favorite')}
             </Button>
 
             {!shareButton ? null : (
-                <Button containerStyle={styles.marginBefore} icon="share" onPress={() => shareDealer(dealer)}>
-                    {t("share")}
+                <Button containerStyle={styles.marginAround} icon="share" onPress={() => shareDealer(dealer)}>
+                    {t('share')}
                 </Button>
             )}
 
-            <Section icon="directions-fork" title={t("about")} />
-            <Label type="caption">{t("table")}</Label>
-            {!dealer.ShortDescriptionTable ? null : (
-                <Label type="h3" mb={20}>
-                    {dealer.ShortDescriptionTable}
-                </Label>
-            )}
-
-            <Label type="caption">{t("attends")}</Label>
-            <Label type="h3" mb={20}>
-                {days}
-            </Label>
-
-            {dealer.IsAfterDark && (
-                <>
-                    <Label type="caption">{t("after_dark")}</Label>
-                    <Label type="h3" mb={20}>
-                        {t("in_after_dark")}
-                    </Label>
-                </>
-            )}
-
-            <DealerCategories t={t} dealer={dealer} />
-
-            {dealer.Links &&
-                dealer.Links.map((it) => (
-                    <View style={styles.button} key={it.Name}>
-                        <LinkItem link={it} />
-                    </View>
-                ))}
-
-            {dealer.TelegramHandle && (
-                <Button
-                    containerStyle={styles.button}
-                    onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
-                    icon={(props) => <FaIcon name="telegram-plane" {...props} />}
-                >
-                    Telegram: {dealer.TelegramHandle}
-                </Button>
-            )}
-            {dealer.TwitterHandle && (
-                <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
-                    Twitter: {dealer.TwitterHandle}
-                </Button>
-            )}
-            {dealer.DiscordHandle && (
-                <Button
-                    containerStyle={styles.button}
-                    onPress={async () => {
-                        if (!dealer.DiscordHandle) return null;
-                        await Clipboard.setStringAsync(dealer.DiscordHandle);
-                        toast("info", t("discord_handle_copied", { discordHandle: dealer.DiscordHandle }), 5000);
-                    }}
-                    icon="discord"
-                >
-                    Discord: {dealer.DiscordHandle}
-                </Button>
-            )}
-            {dealer.MastodonHandle && (
-                <Button containerStyle={styles.button} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
-                    Mastodon: {dealer.MastodonHandle}
-                </Button>
-            )}
-            {dealer.BlueskyHandle && (
-                <Button containerStyle={styles.button} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
-                    Bluesky: {dealer.BlueskyHandle}
-                </Button>
-            )}
+            {dealer.ShortDescriptionTable ? <Row style={styles.marginAround} gap={5}>
+                <Label type="h3" variant="receded">{t('table')}</Label>
+                {dealer.ShortDescriptionTable ? <Label type="h3" color="important">{dealer.ShortDescriptionTable}</Label> : null}
+                {dealer.IsAfterDark ? <Label type="h3" variant="receded">({t('in_after_dark')})</Label> : null}
+            </Row> : null}
 
             {mapLink.map(({ map, entry, link }, i) => (
                 <ImageExButton
@@ -233,16 +184,63 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                     target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
                     onPress={() =>
                         router.navigate({
-                            pathname: "/maps/[mapId]/[entryId]/[linkId]",
+                            pathname: '/maps/[mapId]/[entryId]/[linkId]',
                             params: { mapId: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) },
                         })
                     }
                 />
             ))}
 
+            <DealerCategories dealer={dealer} />
+
+            {dealer.Links &&
+                dealer.Links.map((it) => (
+                    <View style={styles.marginAround} key={it.Name}>
+                        <LinkItem link={it} />
+                    </View>
+                ))}
+
+            {dealer.TelegramHandle && (
+                <Button
+                    containerStyle={styles.marginAround}
+                    onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
+                    icon={(props) => <FaIcon name="telegram-plane" {...props} />}
+                >
+                    Telegram: {dealer.TelegramHandle}
+                </Button>
+            )}
+            {dealer.TwitterHandle && (
+                <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
+                    Twitter: {dealer.TwitterHandle}
+                </Button>
+            )}
+            {dealer.DiscordHandle && (
+                <Button
+                    containerStyle={styles.marginAround}
+                    onPress={async () => {
+                        if (!dealer.DiscordHandle) return null
+                        await Clipboard.setStringAsync(dealer.DiscordHandle)
+                        toast('info', t('discord_handle_copied', { discordHandle: dealer.DiscordHandle }), 5000)
+                    }}
+                    icon="discord"
+                >
+                    Discord: {dealer.DiscordHandle}
+                </Button>
+            )}
+            {dealer.MastodonHandle && (
+                <Button containerStyle={styles.marginAround} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
+                    Mastodon: {dealer.MastodonHandle}
+                </Button>
+            )}
+            {dealer.BlueskyHandle && (
+                <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
+                    Bluesky: {dealer.BlueskyHandle}
+                </Button>
+            )}
+
             {!dealer.AboutTheArtText && !dealer.ArtPreview ? null : (
                 <>
-                    <Section icon="film" title={t("about_the_art")} />
+                    <Section icon="film" title={t('about_the_art')} />
 
                     {!dealer.ArtPreview ? null : (
                         <View style={styles.posterLine}>
@@ -260,7 +258,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
             {!dealer.AboutTheArtistText && !dealer.ArtistImageId ? null : (
                 <>
-                    <Section icon="account-circle-outline" title={t("about_the_artist", { name: dealer.DisplayNameOrAttendeeNickname })} />
+                    <Section icon="account-circle-outline" title={t('about_the_artist', { name: dealer.DisplayNameOrAttendeeNickname })} />
 
                     {!dealer.Artist ? null : (
                         <View style={styles.posterLine}>
@@ -272,33 +270,34 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 </>
             )}
         </>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     avatarCircle: {
         width: 120,
         height: 120,
         borderRadius: 60,
-        overflow: "hidden",
-        alignSelf: "center",
+        overflow: 'hidden',
+        alignSelf: 'center',
         margin: 20,
     },
     avatarImage: {
-        width: "100%",
-        height: "100%",
+        width: '100%',
+        height: '100%',
     },
     aboutLine: {
         marginBottom: 20,
     },
     posterLine: {
         marginBottom: 20,
-        alignItems: "center",
+        alignItems: 'center',
     },
     marginBefore: {
-        marginTop: 15,
+        marginTop: 10,
     },
-    button: {
-        marginBottom: 20,
+    marginAround: {
+        marginTop: 10,
+        marginBottom: 10,
     },
-});
+})

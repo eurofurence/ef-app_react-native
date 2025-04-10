@@ -1,28 +1,27 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { useTranslation } from "react-i18next";
+import React from 'react'
+import { StyleSheet } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useTranslation } from 'react-i18next'
 
-import { Claims } from "@/context/AuthContext";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
-import { Image } from "@/components/generic/atoms/Image";
-import { Label } from "@/components/generic/atoms/Label";
-import { Button } from "@/components/generic/containers/Button";
-import { Col } from "@/components/generic/containers/Col";
-import { Row } from "@/components/generic/containers/Row";
+import { Claims } from '@/context/AuthContext'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { Image } from '@/components/generic/atoms/Image'
+import { Label } from '@/components/generic/atoms/Label'
+import { Button } from '@/components/generic/containers/Button'
+import { Col } from '@/components/generic/containers/Col'
+import { Row } from '@/components/generic/containers/Row'
 
 type PagerPrimaryLoginProps = {
     loggedIn: boolean;
     claim: Claims | null;
-    open: boolean;
     onMessages?: () => void;
     onLogin?: () => void;
     onProfile?: () => void;
 };
 
-export function PagerPrimaryLogin({ loggedIn, claim, open, onMessages, onLogin, onProfile }: PagerPrimaryLoginProps) {
-    const { t } = useTranslation("Menu");
-    const avatarBackground = useThemeBackground("primary");
+export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProfile }: PagerPrimaryLoginProps) {
+    const { t } = useTranslation('Menu')
+    const avatarBackground = useThemeBackground('primary')
 
     return (
         <Row style={styles.padding} type="start" variant="center">
@@ -30,7 +29,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, open, onMessages, onLogin, 
                 <Col type="center">
                     <Image
                         style={[avatarBackground, styles.avatarCircle]}
-                        source={claim?.avatar ?? require("@/assets/static/ych.png")}
+                        source={claim?.avatar ?? require('@/assets/static/ych.png')}
                         contentFit="contain"
                         cachePolicy="memory-disk"
                         priority="high"
@@ -50,7 +49,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, open, onMessages, onLogin, 
                     icon="message"
                     onPress={onMessages}
                 >
-                    {t("open_messages")}
+                    {t('open_messages')}
                 </Button>
             ) : (
                 <Button
@@ -59,11 +58,11 @@ export function PagerPrimaryLogin({ loggedIn, claim, open, onMessages, onLogin, 
                     iconRight="login"
                     onPress={onLogin}
                 >
-                    {t("logged_in_now")}
+                    {t('logged_in_now')}
                 </Button>
             )}
         </Row>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -77,7 +76,7 @@ const styles = StyleSheet.create({
     },
     name: {
         maxWidth: 60,
-        textAlign: "center",
+        textAlign: 'center',
     },
     button: {
         marginLeft: 16,
@@ -87,4 +86,4 @@ const styles = StyleSheet.create({
         height: 36,
         borderRadius: 18,
     },
-});
+})

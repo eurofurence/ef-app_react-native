@@ -1,12 +1,12 @@
-import { FlashList } from "@shopify/flash-list";
-import { FC, ReactElement, useCallback } from "react";
-import { StyleSheet, Vibration } from "react-native";
+import { FlashList } from '@shopify/flash-list'
+import { FC, ReactElement, useCallback } from 'react'
+import { StyleSheet, Vibration } from 'react-native'
 
-import { useThemeName } from "@/hooks/themes/useThemeHooks";
-import { EventDetails } from "@/store/eurofurence/types";
-import { EventCard, EventDetailsInstance } from "./EventCard";
-import { router } from "expo-router";
-import { useDataCache } from "@/context/DataCacheProvider";
+import { router } from 'expo-router'
+import { EventCard, EventDetailsInstance } from './EventCard'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { EventDetails } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * The properties to the component.
@@ -17,26 +17,39 @@ export type EventsListProps = {
     select?: (event: EventDetails) => void;
     empty?: ReactElement;
     trailer?: ReactElement;
-    cardType?: "duration" | "time";
+    cardType?: 'duration' | 'time';
     padEnd?: boolean;
 };
+const keyExtractor = (item: EventDetailsInstance) => item.details.Id
 
-export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty, trailer, cardType = "duration", padEnd = true }) => {
-    const theme = useThemeName();
-    const { isSynchronizing, synchronizeUi } = useDataCache();
+export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty, trailer, cardType = 'duration', padEnd = true }) => {
+    const theme = useThemeName()
+    const { isSynchronizing, synchronizeUi } = useCache()
+
     const onPress = useCallback((event: EventDetails) => {
         router.navigate({
-            pathname: "/events/[eventId]",
-            params: { eventId: event.Id },
-        });
-    }, []);
+            pathname: '/events/[id]',
+            params: { id: event.Id },
+        })
+    }, [])
+
     const onLongPress = useCallback(
         (event: EventDetails) => {
-            Vibration.vibrate(50);
-            select?.(event);
+            Vibration.vibrate(50)
+            select?.(event)
         },
         [select],
-    );
+    )
+
+    const renderItem = useCallback(({ item }: { item: EventDetailsInstance }) => {
+        return <EventCard
+            containerStyle={styles.item}
+            event={item}
+            type={cardType}
+            onPress={onPress}
+            onLongPress={onLongPress} />
+    }, [cardType, onLongPress, onPress])
+
     return (
         <FlashList
             refreshing={isSynchronizing}
@@ -47,15 +60,13 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
             ListFooterComponent={trailer}
             ListEmptyComponent={empty}
             data={events}
-            keyExtractor={(item) => item.details.Id}
-            renderItem={({ item }) => {
-                return <EventCard containerStyle={styles.item} key={item.details.Id} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />;
-            }}
+            keyExtractor={keyExtractor}
+            renderItem={renderItem}
             estimatedItemSize={110}
             extraData={theme}
         />
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     item: {
@@ -64,4 +75,4 @@ const styles = StyleSheet.create({
     container: {
         paddingBottom: 100,
     },
-});
+})

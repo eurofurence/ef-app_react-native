@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { StyleSheet, View, ViewProps } from "react-native";
+import { FC } from 'react'
+import { StyleSheet, View, ViewProps } from 'react-native'
 
 /**
  * Arguments to the row.
@@ -23,48 +23,48 @@ export type RowProps = ViewProps & {
 
 export const Row: FC<RowProps> = ({ style, type, variant, gap, children, ...rest }) => {
     // Resolve styles.
-    const resType = type ? types[type] : types.regular;
-    const resVariant = variant ? variants[variant] : variants.start;
+    const resType = type ? types[type] : types.regular
+    const resVariant = variant ? variants[variant] : variants.start
     return (
-        <View style={[resType, resVariant, typeof gap === "number" && { gap }, style]} {...rest}>
+        <View style={[resType, resVariant, typeof gap === 'number' && { gap }, style]} {...rest}>
             {children}
         </View>
-    );
-};
+    )
+}
 
 const types = StyleSheet.create({
     regular: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     start: {
-        flexDirection: "row",
-        alignItems: "flex-start",
+        flexDirection: 'row',
+        alignItems: 'flex-start',
     },
     center: {
-        flexDirection: "row",
-        alignItems: "center",
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     stretch: {
-        flexDirection: "row",
-        alignItems: "stretch",
+        flexDirection: 'row',
+        alignItems: 'stretch',
     },
-});
+})
 
 const variants = StyleSheet.create({
     wrap: {
-        flexWrap: "wrap",
+        flexWrap: 'wrap',
     },
     start: {
-        justifyContent: "flex-start",
+        justifyContent: 'flex-start',
     },
     end: {
-        justifyContent: "flex-end",
+        justifyContent: 'flex-end',
     },
     spaced: {
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
     },
     center: {
-        justifyContent: "center",
+        justifyContent: 'center',
     },
-});
+})

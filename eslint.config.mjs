@@ -15,6 +15,7 @@ export default tseslint.config(
         // Override for some typescript we actually kinda like
         rules: {
             "@typescript-eslint/no-explicit-any": "off",
+            "@typescript-eslint/no-require-imports": "off",
         },
     },
     {
@@ -40,7 +41,6 @@ export default tseslint.config(
         extends: [tseslint.configs.disableTypeChecked],
         rules: {
             "no-undef": "off",
-            "@typescript-eslint/no-require-imports": "off",
         },
     },
     {
@@ -94,9 +94,11 @@ export default tseslint.config(
     {
         // Add support for parsing date-fns and related modules
         files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-        parserOptions: {
-            ecmaVersion: 2020, // Ensure ECMAScript 2020 for module imports
-            sourceType: "module", // Enable ES module syntax
+        languageOptions:{
+            parserOptions: {
+                ecmaVersion: 2020, // Ensure ECMAScript 2020 for module imports
+                sourceType: "module", // Enable ES module syntax
+            },
         },
         rules: {
             // Additional rule overrides for date-fns handling

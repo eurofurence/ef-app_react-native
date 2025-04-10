@@ -1,66 +1,63 @@
-import { useCallback, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { SectionList, StyleSheet, ScrollView } from "react-native";
-import { chain, partition, isEmpty, startCase } from "lodash";
-import { router } from "expo-router";
+import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { SectionList, StyleSheet } from 'react-native'
+import { chain, isEmpty, partition, startCase } from 'lodash'
+import { router } from 'expo-router'
 
-import { Label } from "@/components/generic/atoms/Label";
-import { Header } from "@/components/generic/containers/Header";
-import { PrivateMessageCard } from "@/components/messages/PrivateMessageCard";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
-import { useDataCache } from "@/context/DataCacheProvider";
-import { CommunicationRecord } from "@/store/eurofurence/types";
-import { NoData } from "@/components/generic/containers/NoData";
+import { Label } from '@/components/generic/atoms/Label'
+import { Header } from '@/components/generic/containers/Header'
+import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { NoData } from '@/components/generic/containers/NoData'
+import { CommunicationRecord } from '@/context/data/types'
+import { useCache } from '@/context/data/Cache'
 
 type Section = {
     title: string;
     data: CommunicationRecord[];
 };
 
-export default function PmList() {
-    const { t } = useTranslation("PrivateMessageList");
-    const { getAllCacheSync, isSynchronizing, synchronizeUi } = useDataCache();
-    const messages = getAllCacheSync("communications");
-    const data = messages.map(item => item.data as CommunicationRecord);
-
+export default function Messages() {
+    const { t } = useTranslation('PrivateMessageList')
+    const { communications, isSynchronizing, synchronizeUi } = useCache()
     const navigateTo = useCallback(
         (item: CommunicationRecord) =>
             router.push({
-                pathname: "/messages/[messageId]",
-                params: { messageId: item.Id }
+                pathname: '/messages/[messageId]',
+                params: { messageId: item.Id },
             }),
-        []
-    );
+        [],
+    )
 
     const sectionedData = useMemo(() => {
-        const [unread, read] = partition(data, (it: CommunicationRecord) => it.ReadDateTimeUtc === null);
+        const [unread, read] = partition(communications, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
 
         const readSections = chain(read)
-            .orderBy(["AuthorName", "SentDateTimeUtc"], ["asc", "desc"])
-            .groupBy((it: CommunicationRecord) => (it.AuthorName ? t("from", { author: it.AuthorName?.trim() }) : t("from_unknown")))
+            .orderBy(['AuthorName', 'SentDateTimeUtc'], ['asc', 'desc'])
+            .groupBy((it: CommunicationRecord) => (it.AuthorName ? t('from', { author: it.AuthorName?.trim() }) : t('from_unknown')))
             .map((messages, author) => ({
                 title: author,
                 data: messages,
             }))
-            .value();
+            .value()
 
         const unreadSections = isEmpty(unread)
             ? []
             : [
-                  {
-                      title: t("unread"),
-                      data: unread,
-                  },
-              ];
+                {
+                    title: t('unread'),
+                    data: unread,
+                },
+            ]
 
-        return [...unreadSections, ...readSections] as Section[];
-    }, [data, t]);
+        return [...unreadSections, ...readSections] as Section[]
+    }, [communications, t])
 
-    const sectionStyle = useThemeBackground("background");
+    const sectionStyle = useThemeBackground('background')
 
-    const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, []);
-    const emptyComponent = useMemo(() => <NoData text={t("no_data")} />, [t]);
-    const headerComponent = useMemo(() => <Header>{t("header")}</Header>, []);
+    const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, [])
+    const emptyComponent = useMemo(() => <NoData text={t('no_data')} />, [t])
+    const headerComponent = useMemo(() => <Header>{t('header')}</Header>, [t])
 
     const renderSection = useCallback(
         ({ section }: { section: Section }) => (
@@ -68,22 +65,22 @@ export default function PmList() {
                 {startCase(section.title)}
             </Label>
         ),
-        [sectionStyle]
-    );
+        [sectionStyle],
+    )
 
     const renderItem = useCallback(
         ({ item }: { item: CommunicationRecord }) => (
-            <PrivateMessageCard 
-                key={item.Id} 
-                containerStyle={styles.item} 
-                onPress={() => navigateTo(item)} 
-                item={item} 
+            <PrivateMessageCard
+                key={item.Id}
+                containerStyle={styles.item}
+                onPress={() => navigateTo(item)}
+                item={item}
             />
         ),
-        [navigateTo]
-    );
+        [navigateTo],
+    )
 
-    const backgroundStyle = useThemeBackground("background");
+    const backgroundStyle = useThemeBackground('background')
 
     return (
         <SectionList<CommunicationRecord, Section>
@@ -99,12 +96,12 @@ export default function PmList() {
             renderSectionHeader={renderSection}
             renderItem={renderItem}
         />
-    );
+    )
 }
 
 const styles = StyleSheet.create({
-    section: { 
-        padding: 20 
+    section: {
+        padding: 20,
     },
     action: {
         flex: 3,
@@ -115,4 +112,4 @@ const styles = StyleSheet.create({
     container: {
         paddingBottom: 100,
     },
-}); 
+})

@@ -1,37 +1,37 @@
-import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { debounce } from "lodash";
-import { FC, useEffect, useMemo, useRef } from "react";
-import { Platform, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
+import { debounce } from 'lodash'
+import { FC, useEffect, useMemo, useRef } from 'react'
+import { Platform, StyleSheet } from 'react-native'
+import { ScrollView } from 'react-native-gesture-handler'
 
-import { useThemeBackground } from "../../hooks/themes/useThemeHooks";
-import { EventDetails } from "../../store/eurofurence/types";
-import { EventContent } from "./EventContent";
+import { useThemeBackground } from '../../hooks/themes/useThemeHooks'
+import { EventContent } from './EventContent'
+import { EventDetails } from '@/context/data/types'
 
 type EventActionsSheetProps = {
-    event: EventDetails | null;
+    event: EventDetails | null | undefined;
     onClose?: () => void;
 };
 
 /**
  * Returns a normal scroll view on web for compatibility.
  */
-const EventActionsSheetScrollView = Platform.OS === "web" ? ScrollView : BottomSheetScrollView;
+const EventActionsSheetScrollView = Platform.OS === 'web' ? ScrollView : BottomSheetScrollView
 
 export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }) => {
-    const sheetRef = useRef<BottomSheet>(null);
-    const styleBackground = useThemeBackground("background");
-    const styleHandle = useThemeBackground("inverted");
+    const sheetRef = useRef<BottomSheet>(null)
+    const styleBackground = useThemeBackground('background')
+    const styleHandle = useThemeBackground('inverted')
 
-    const close = useMemo(() => (onClose ? debounce(onClose, 100) : undefined), [onClose]);
+    const close = useMemo(() => (onClose ? debounce(onClose, 100) : undefined), [onClose])
 
     useEffect(() => {
         if (event) {
-            sheetRef.current?.snapToIndex(0);
+            sheetRef.current?.snapToIndex(0)
         } else {
-            sheetRef.current?.close();
+            sheetRef.current?.close()
         }
-    }, [sheetRef, event]);
+    }, [sheetRef, event])
 
     return (
         <BottomSheet
@@ -39,7 +39,7 @@ export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }
             handleStyle={styles.handle}
             handleIndicatorStyle={styleHandle}
             ref={sheetRef}
-            snapPoints={["25%", "50%", "75%"]}
+            snapPoints={['25%', '50%', '75%']}
             index={-1}
             enablePanDownToClose
             onClose={close}
@@ -47,8 +47,8 @@ export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }
             {/* TODO: Update note? */}
             <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} shareButton />}</EventActionsSheetScrollView>
         </BottomSheet>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     handle: {
@@ -59,4 +59,4 @@ const styles = StyleSheet.create({
         paddingHorizontal: 30,
         paddingBottom: 100,
     },
-});
+})

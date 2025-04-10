@@ -6,6 +6,13 @@
       "title": "Szczegóły aplikacji"
     },
     "developed_by": "Stworzone przez",
+    "developer_settings_alert": {
+      "body": "Czy chcesz włączyć ustawienia deweloperskie? Zrób to tylko jeśli wiesz co robisz i jeśli jesteś w stanie posprzątać po sobie ten cały bałagan.",
+      "cancel": "Anuluj",
+      "disable": "Wyłącz",
+      "enable": "Włącz",
+      "title": "Menu ustawień deweloperskich"
+    },
     "extra_thanks": "Szczególne podziękowania",
     "header": "O aplikacji"
   },
@@ -166,13 +173,6 @@
     "developer_settings": {
       "subtitle": "Nie powinieneś tego ruszać o ile wiesz co robisz.",
       "title": "Ustawienia deweloperskie"
-    },
-    "developer_settings_alert": {
-      "body": "Czy chcesz włączyć ustawienia deweloperskie? Zrób to tylko jeśli wiesz co robisz i jeśli jesteś w stanie posprzątać po sobie ten cały bałagan.",
-      "cancel": "Anuluj",
-      "disable": "Wyłącz",
-      "enable": "Włącz",
-      "title": "Menu ustawień deweloperskich"
     },
     "header": "Ustawienia",
     "notifications": {

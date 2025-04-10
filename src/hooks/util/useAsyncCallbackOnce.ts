@@ -1,4 +1,4 @@
-import { DependencyList, useCallback, useRef } from "react";
+import { DependencyList, useCallback, useRef } from 'react'
 
 /**
  * Wraps a callback that is asynchronous. If an invocation is active, the result
@@ -8,14 +8,14 @@ import { DependencyList, useCallback, useRef } from "react";
  * @param deps The dependencies of the callback function.
  */
 export const useAsyncCallbackOnce = <T>(callback: () => Promise<T>, deps: DependencyList): (() => Promise<T>) => {
-    const active = useRef<Promise<T> | null>();
+    const active = useRef<Promise<T> | null>()
     return useCallback(() => {
-        if (active.current) return active.current;
+        if (active.current) return active.current
 
-        active.current = callback();
+        active.current = callback()
         active.current.finally(() => {
-            active.current = null;
-        });
-        return active.current;
-    }, [deps]);
-};
+            active.current = null
+        })
+        return active.current
+    }, [deps])
+}

@@ -1,54 +1,54 @@
-import { useMemo } from "react";
-import { TextStyle, ViewStyle } from "react-native";
-import { mapValues } from "lodash";
-import { useDataCache } from "@/context/DataCacheProvider";
-import { ThemeColor, ThemeName, themes } from "@/context/Theme";
+import { useMemo } from 'react'
+import { TextStyle, ViewStyle } from 'react-native'
+import { mapValues } from 'lodash'
+import { ThemeColor, ThemeName, themes } from '@/context/Theme'
+import { useCache } from '@/context/data/Cache'
 
 export const useAppliedTheme = (): ThemeName => {
-    const { getCacheSync } = useDataCache();
-    return getCacheSync("settings", "settings")?.data?.theme ?? "light";
-};
+    const { getValue } = useCache()
+    return getValue('settings').theme ?? 'light'
+}
 
 export const useTheme = () => {
-    const themeName = useAppliedTheme();
-    return useMemo(() => themes[themeName], [themeName]);
-};
+    const themeName = useAppliedTheme()
+    return useMemo(() => themes[themeName], [themeName])
+}
 
 export const useColorStyle = () => {
-    const themeName = useAppliedTheme();
+    const themeName = useAppliedTheme()
     return useMemo(() => {
-        const style: Record<string, TextStyle> = {};
-        style.transparent = { color: "transparent" };
+        const style: Record<string, TextStyle> = {}
+        style.transparent = { color: 'transparent' }
         for (const [key, color] of Object.entries(themes[themeName])) {
-            style[key] = { color };
+            style[key] = { color }
         }
-        return style as Record<ThemeColor | "transparent", Pick<TextStyle, "color">>;
-    }, [themeName]);
-};
+        return style as Record<ThemeColor | 'transparent', Pick<TextStyle, 'color'>>
+    }, [themeName])
+}
 
 export const useBorderStyle = () => {
-    const themeName = useAppliedTheme();
+    const themeName = useAppliedTheme()
     return useMemo(() => {
-        const style: Record<string, ViewStyle> = {};
-        style.transparent = { backgroundColor: "transparent" };
+        const style: Record<string, ViewStyle> = {}
+        style.transparent = { backgroundColor: 'transparent' }
         for (const [key, color] of Object.entries(themes[themeName])) {
-            style[key] = { borderColor: color };
+            style[key] = { borderColor: color }
         }
-        return style as Record<ThemeColor | "transparent", Pick<ViewStyle, "borderColor">>;
-    }, [themeName]);
-};
+        return style as Record<ThemeColor | 'transparent', Pick<ViewStyle, 'borderColor'>>
+    }, [themeName])
+}
 
 export const useBackgroundStyle = () => {
-    const themeName = useAppliedTheme();
+    const themeName = useAppliedTheme()
     return useMemo(() => {
-        const style: Record<string, ViewStyle> = {};
-        style.transparent = { backgroundColor: "transparent" };
+        const style: Record<string, ViewStyle> = {}
+        style.transparent = { backgroundColor: 'transparent' }
         for (const [key, color] of Object.entries(themes[themeName])) {
-            style[key] = { backgroundColor: color };
+            style[key] = { backgroundColor: color }
         }
-        return style as Record<ThemeColor | "transparent", Pick<ViewStyle, "backgroundColor">>;
-    }, [themeName]);
-};
+        return style as Record<ThemeColor | 'transparent', Pick<ViewStyle, 'backgroundColor'>>
+    }, [themeName])
+}
 
 /**
  * Assigns line heights by factor for styles that have font size but no line height.
@@ -57,12 +57,12 @@ export const useBackgroundStyle = () => {
  */
 const deriveLineHeights = <T extends { fontSize?: number; lineHeight?: number }>(styles: Record<string, T>, factor = 1.25) =>
     mapValues(styles, (style) => {
-        if (style.fontSize === undefined || style.lineHeight !== undefined) return style;
-        return { ...style, lineHeight: Math.ceil(style.fontSize * factor) };
-    });
+        if (style.fontSize === undefined || style.lineHeight !== undefined) return style
+        return { ...style, lineHeight: Math.ceil(style.fontSize * factor) }
+    })
 
 export const useMarkdownTheme = () => {
-    const theme = useTheme();
+    const theme = useTheme()
     return useMemo(
         () =>
             deriveLineHeights({
@@ -73,7 +73,7 @@ export const useMarkdownTheme = () => {
                     paddingLeft: 10,
                 },
                 heading1: {
-                    fontWeight: "300",
+                    fontWeight: '300',
                     fontSize: 30,
                     color: theme.important,
                     paddingTop: 20,
@@ -93,21 +93,21 @@ export const useMarkdownTheme = () => {
                 },
                 heading4: {
                     fontSize: 17,
-                    fontWeight: "bold",
+                    fontWeight: 'bold',
                     color: theme.important,
                     paddingTop: 16,
                     paddingBottom: 8,
                 },
                 heading5: {
                     fontSize: 15,
-                    fontWeight: "bold",
+                    fontWeight: 'bold',
                     color: theme.important,
                     paddingTop: 12,
                     paddingBottom: 6,
                 },
                 heading6: {
                     fontSize: 15,
-                    fontWeight: "bold",
+                    fontWeight: 'bold',
                     color: theme.important,
                     paddingTop: 12,
                     paddingBottom: 6,
@@ -119,26 +119,26 @@ export const useMarkdownTheme = () => {
                 },
                 code: {
                     backgroundColor: theme.notification,
-                    color: "orange",
+                    color: 'orange',
                 },
                 body: {
                     color: theme.text,
                     lineHeight: 24,
                 },
                 strong: {
-                    fontWeight: "bold",
+                    fontWeight: 'bold',
                     color: theme.text,
                 },
                 em: {
-                    fontStyle: "italic",
+                    fontStyle: 'italic',
                     color: theme.text,
                 },
                 del: {
-                    textDecorationLine: "line-through",
+                    textDecorationLine: 'line-through',
                     color: theme.text,
                 },
                 u: {
-                    textDecorationLine: "underline",
+                    textDecorationLine: 'underline',
                     color: theme.text,
                 },
                 bullet_list_icon: {
@@ -148,7 +148,7 @@ export const useMarkdownTheme = () => {
                     color: theme.important,
                 },
                 link: {
-                    textDecorationLine: "underline",
+                    textDecorationLine: 'underline',
                     color: theme.important,
                 },
                 list: {
@@ -163,5 +163,5 @@ export const useMarkdownTheme = () => {
                 },
             }),
         [theme],
-    );
-};
+    )
+}

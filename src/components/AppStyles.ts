@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export const appStyles = StyleSheet.create({
     /**
      * Verified shadow to be used across iOS and Android devices.
      */
     shadow: {
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
@@ -16,7 +16,7 @@ export const appStyles = StyleSheet.create({
      * Absolute positioning only, use in conjuction with insets.
      */
     abs: {
-        position: "absolute",
+        position: 'absolute',
     },
 
     /**
@@ -25,4 +25,4 @@ export const appStyles = StyleSheet.create({
     trailer: {
         paddingBottom: 100,
     },
-});
+})

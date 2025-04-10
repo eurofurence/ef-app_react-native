@@ -1,15 +1,15 @@
-import * as React from "react";
-import { FC, ReactElement, ReactNode } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import * as React from 'react'
+import { FC, ReactElement, ReactNode } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
-import { Icon, IconNames } from "../atoms/Icon";
-import { Label, LabelProps } from "../atoms/Label";
+import { Icon, IconNames } from '../atoms/Icon'
+import { Label, LabelProps } from '../atoms/Label'
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
-export const buttonIconSize = 20;
-const pad = 8;
-const border = 2;
+export const buttonIconSize = 20
+const pad = 8
+const border = 2
 
 /**
  * Arguments to the button.
@@ -17,8 +17,8 @@ const border = 2;
 export type ButtonProps = {
     containerStyle?: StyleProp<ViewStyle>;
     style?: StyleProp<ViewStyle>;
-    labelType?: LabelProps["type"];
-    labelVariant?: LabelProps["variant"];
+    labelType?: LabelProps['type'];
+    labelVariant?: LabelProps['variant'];
 
     /**
      * True if outline button instead of filled button.
@@ -58,23 +58,23 @@ export type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labelVariant, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
     // Computed styles.
-    const baseStyle = outline ? styles.containerOutline : styles.containerFill;
-    const disabledStyle = disabled ? styles.disabled : null;
-    const borderStyle = useThemeBorder("inverted");
-    const fillStyle = useThemeBackground(outline ? "transparent" : "inverted");
-    const color = useThemeColorValue(outline ? "important" : "invImportant");
+    const baseStyle = outline ? styles.containerOutline : styles.containerFill
+    const disabledStyle = disabled ? styles.disabled : null
+    const borderStyle = useThemeBorder('inverted')
+    const fillStyle = useThemeBackground(outline ? 'transparent' : 'inverted')
+    const color = useThemeColorValue(outline ? 'important' : 'invImportant')
 
-    let iconComponent;
-    if (!icon) iconComponent = <View style={styles.placeholder} />;
-    else if (typeof icon === "string") iconComponent = <Icon name={icon} size={buttonIconSize} color={color} />;
-    else if (icon instanceof Function) iconComponent = icon({ size: buttonIconSize, color });
-    else iconComponent = icon;
+    let iconComponent
+    if (!icon) iconComponent = <View style={styles.placeholder} />
+    else if (typeof icon === 'string') iconComponent = <Icon name={icon} size={buttonIconSize} color={color} />
+    else if (icon instanceof Function) iconComponent = icon({ size: buttonIconSize, color })
+    else iconComponent = icon
 
-    let iconRightComponent;
-    if (!iconRight) iconRightComponent = <View style={styles.placeholder} />;
-    else if (typeof iconRight === "string") iconRightComponent = <Icon name={iconRight} size={buttonIconSize} color={color} />;
-    else if (iconRight instanceof Function) iconRightComponent = iconRight({ size: buttonIconSize, color });
-    else iconRightComponent = iconRight;
+    let iconRightComponent
+    if (!iconRight) iconRightComponent = <View style={styles.placeholder} />
+    else if (typeof iconRight === 'string') iconRightComponent = <Icon name={iconRight} size={buttonIconSize} color={color} />
+    else if (iconRight instanceof Function) iconRightComponent = iconRight({ size: buttonIconSize, color })
+    else iconRightComponent = iconRight
 
     return (
         <TouchableOpacity
@@ -86,49 +86,50 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labe
         >
             {iconComponent}
 
-            <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? "important" : "invImportant"}>
+            <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
                 {children}
             </Label>
 
             {iconRightComponent}
         </TouchableOpacity>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
         borderRadius: 16,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     containerFill: {
         padding: pad,
-        backgroundColor: "black",
+        backgroundColor: 'black',
     },
     containerOutline: {
         padding: pad - border,
-        borderColor: "black",
+        borderColor: 'black',
         borderWidth: border,
     },
     disabled: {
         opacity: 0.5,
     },
     content: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
     placeholder: {
         width: buttonIconSize,
         height: buttonIconSize,
     },
     text: {
-        textAlign: "center",
-        textAlignVertical: "center",
+        textAlign: 'center',
+        textAlignVertical: 'center',
+        height: 22,
     },
     outlineText: {
-        textAlign: "center",
-        textAlignVertical: "center",
+        textAlign: 'center',
+        textAlignVertical: 'center',
     },
-});
+})

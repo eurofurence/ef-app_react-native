@@ -6,6 +6,13 @@
       "title": "App Details"
     },
     "developed_by": "Entwickelt von",
+    "developer_settings_alert": {
+      "body": "Willst du die Entwickler-Einstellungen anschalten? Tue das nur, wenn du weißt was das Bedeutet und du für die Konsequenzen Verantwortung trägst. ",
+      "cancel": "Abbrechen",
+      "disable": "Ausschalten",
+      "enable": "Anschalten",
+      "title": "Entwickler-Menü"
+    },
     "extra_thanks": "Besonderen Dank",
     "header": "Über uns"
   },
@@ -152,6 +159,7 @@
     "favorites_subtitle": "Du wirst an diese Events erinnert werden",
     "favorites_title": "Favorisierte Events",
     "filter_by_day": "Tage ansehen",
+    "filter_by_host": "Vortragende ansehen",
     "filter_by_room": "Räume ansehen",
     "filter_by_track": "Kategorien ansehen",
     "finished": "Zu Ende",
@@ -270,13 +278,6 @@
     "developer_settings": {
       "subtitle": "Du solltest diese besser nicht anfassen wenn Du nicht weisst was Du tust.",
       "title": "Entwickler-Einstellungen"
-    },
-    "developer_settings_alert": {
-      "body": "Willst du die Entwickler-Einstellungen anschalten? Tue das nur, wenn du weißt was das Bedeutet und du für die Konsequenzen Verantwortung trägst. ",
-      "cancel": "Abbrechen",
-      "disable": "Ausschalten",
-      "enable": "Anschalten",
-      "title": "Entwickler-Menü"
     },
     "device_warnings": {
       "hide_device_warnings": "Kompatibilitätsprobleme verbergen",

@@ -1,12 +1,12 @@
-import { useCalendars } from "expo-localization";
-import React, { FC } from "react";
-import { useTranslation } from "react-i18next";
-import { formatInTimeZone } from "date-fns-tz";
+import { useCalendars } from 'expo-localization'
+import React, { FC } from 'react'
+import { useTranslation } from 'react-i18next'
+import { formatInTimeZone } from 'date-fns-tz'
 
-import { conName, conTimeZone } from "@/configuration";
-import { Label } from "../generic/atoms/Label";
-import { Badge } from "../generic/containers/Badge";
-import { useWarningState } from "@/hooks/warnings/useWarningState";
+import { Label } from '../generic/atoms/Label'
+import { Badge } from '../generic/containers/Badge'
+import { conName, conTimeZone } from '@/configuration'
+import { useWarningState } from '@/hooks/data/useWarningState'
 
 export type TimezoneWarningProps = {
     /**
@@ -17,35 +17,35 @@ export type TimezoneWarningProps = {
 
 const getUtcOffset = (date: Date, timeZone: string): number => {
     // Format the date in the specified time zone using the pattern "xxx" (e.g., +02:00 or -05:00)
-    const offsetStr = formatInTimeZone(date, timeZone, "xxx");
-    const sign = offsetStr.startsWith("-") ? -1 : 1;
-    const [hours, minutes] = offsetStr.substring(1).split(":").map(Number);
-    return sign * (hours * 60 + minutes);
-};
+    const offsetStr = formatInTimeZone(date, timeZone, 'xxx')
+    const sign = offsetStr.startsWith('-') ? -1 : 1
+    const [hours, minutes] = offsetStr.substring(1).split(':').map(Number)
+    return sign * (hours * 60 + minutes)
+}
 
 export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => {
-    const { t } = useTranslation("Home");
-    const { timeZone } = useCalendars()[0];
-    const { isHidden, hideWarning } = useWarningState("timeZoneWarningsHidden");
+    const { t } = useTranslation('Home')
+    const { timeZone } = useCalendars()[0]
+    const { isHidden, hideWarning } = useWarningState('timeZoneWarningsHidden')
 
     if (isHidden) {
-        return null;
+        return null
     }
 
-    const now = new Date();
-    const conTimeZoneOffset = getUtcOffset(now, conTimeZone);
-    const deviceTimeZoneOffset = getUtcOffset(now, timeZone ?? conTimeZone);
+    const now = new Date()
+    const conTimeZoneOffset = getUtcOffset(now, conTimeZone)
+    const deviceTimeZoneOffset = getUtcOffset(now, timeZone ?? conTimeZone)
 
     if (conTimeZoneOffset === deviceTimeZoneOffset) {
-        return null;
+        return null
     }
 
     return (
         <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="clock">
-            {t("different_timezone", { convention: conName, conTimeZone, deviceTimeZone: timeZone })}
+            {t('different_timezone', { convention: conName, conTimeZone, deviceTimeZone: timeZone })}
             <Label variant="bold" color="secondary" onPress={hideWarning}>
-                {" " + t("warnings.hide")}
+                {' ' + t('warnings.hide')}
             </Label>
         </Badge>
-    );
-};
+    )
+}

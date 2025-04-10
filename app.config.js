@@ -21,10 +21,6 @@ module.exports = {
             resizeMode: "contain",
             backgroundColor: "#231F20",
         },
-        updates: {
-            fallbackToCacheTimeout: 0,
-            url: "https://u.expo.dev/a60a3199-98db-4eec-8c66-cda6c424377d",
-        },
         ios: {
             bundleIdentifier: "org.eurofurence",
             icon: "./assets/platform/appicon-ios.png",

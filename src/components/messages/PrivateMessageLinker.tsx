@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useRef, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { Button, buttonIconSize } from "../generic/containers/Button";
-import { Icon } from "../generic/atoms/Icon";
-import { useThemeBackground, useThemeColorValue } from "@/hooks/themes/useThemeHooks";
-import { Label } from "../generic/atoms/Label";
-import { useDataCache } from "@/context/DataCacheProvider";
+import React, { FC, useEffect, useRef, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { Button, buttonIconSize } from '../generic/containers/Button'
+import { Icon } from '../generic/atoms/Icon'
+import { Label } from '../generic/atoms/Label'
+import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useCache } from '@/context/data/Cache'
 
 type PrivateMessageLinkerProps = {
     containerStyle?: StyleProp<ViewStyle>;
@@ -18,27 +18,26 @@ type PrivateMessageLinkerProps = {
  * Creates a link to the private messages screen
  */
 export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerStyle, style, onOpenMessages, open }) => {
-    const prevOpen = useRef(open);
-    const { t } = useTranslation("Menu");
-    const styleBackground = useThemeBackground("notification");
-    const { getAllCacheSync, synchronizeUi } = useDataCache();
+    const prevOpen = useRef(open)
+    const { t } = useTranslation('Menu')
+    const styleBackground = useThemeBackground('notification')
+    const { communications, synchronizeUi } = useCache()
 
     // Get all communications and filter unread ones
-    const communications = getAllCacheSync("communications");
-    const unread = useMemo(() => 
-        communications.filter(item => !item.data.ReadDateTimeUtc),
-        [communications]
-    );
+    const unread = useMemo(() =>
+            communications.filter(item => !item.ReadDateTimeUtc),
+        [communications],
+    )
 
-    const iconColor = useThemeColorValue(!unread.length ? "important" : "invImportant");
+    const iconColor = useThemeColorValue(!unread.length ? 'important' : 'invImportant')
 
     useEffect(() => {
         if (open === true && prevOpen.current !== open) {
-            console.debug("Fetching new private messages");
-            synchronizeUi();
+            console.debug('Fetching new private messages')
+            synchronizeUi()
         }
-        prevOpen.current = open;
-    }, [open, synchronizeUi]);
+        prevOpen.current = open
+    }, [open, synchronizeUi])
 
     return (
         <Button
@@ -47,10 +46,10 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
             outline={!unread.length}
             iconRight={
                 <View>
-                    <Icon 
-                        name={unread.length ? "email-multiple-outline" : "email-open-multiple-outline"} 
-                        size={buttonIconSize} 
-                        color={iconColor} 
+                    <Icon
+                        name={unread.length ? 'email-multiple-outline' : 'email-open-multiple-outline'}
+                        size={buttonIconSize}
+                        color={iconColor}
                     />
                     {!unread.length ? null : (
                         <View style={styles.indicatorArea}>
@@ -65,32 +64,32 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
             }
             onPress={onOpenMessages}
         >
-            {t("open_messages")}
+            {t('open_messages')}
         </Button>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     indicatorArea: {
-        position: "absolute",
+        position: 'absolute',
         width: 24,
         height: 24,
     },
     indicatorLocator: {
-        position: "absolute",
+        position: 'absolute',
         top: 0,
         right: 0,
-        alignItems: "center",
-        justifyContent: "center",
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     indicatorContent: {
         fontSize: 8,
-        position: "absolute",
-        textAlignVertical: "center",
-        textAlign: "center",
+        position: 'absolute',
+        textAlignVertical: 'center',
+        textAlign: 'center',
         minWidth: 20,
         minHeight: 20,
         padding: 4,
         borderRadius: 99999,
     },
-}); 
+})

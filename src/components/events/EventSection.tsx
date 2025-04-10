@@ -1,9 +1,9 @@
-import { TFunction } from "i18next";
-import { FC } from "react";
-import { PartOfDay } from "../../store/eurofurence/types";
-import { IconNames } from "../generic/atoms/Icon";
-import { Section, SectionProps } from "../generic/atoms/Section";
-import { formatWeekdayInConventionTimezone } from "../../util/eventTiming";
+import { TFunction } from 'i18next'
+import { FC } from 'react'
+import { IconNames } from '../generic/atoms/Icon'
+import { Section, SectionProps } from '../generic/atoms/Section'
+import { formatWeekdayInConventionTimezone } from '../../util/eventTiming'
+import { PartOfDay } from '@/context/data/types'
 
 export type EventSectionProps = SectionProps;
 
@@ -15,13 +15,13 @@ export type EventSectionProps = SectionProps;
 export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay): EventSectionProps {
     return {
         title: t(partOfDay as PartOfDay),
-        icon: ((partOfDay === "morning" && "weather-sunset-up") ||
-            (partOfDay === "afternoon" && "weather-sunny") ||
-            (partOfDay === "evening" && "weather-sunset-down") ||
-            (partOfDay === "night" && "weather-night") ||
-            (partOfDay === "long_running" && "calendar-range") ||
-            "weather-sunny") as IconNames,
-    };
+        icon: ((partOfDay === 'morning' && 'weather-sunset-up') ||
+            (partOfDay === 'afternoon' && 'weather-sunny') ||
+            (partOfDay === 'evening' && 'weather-sunset-down') ||
+            (partOfDay === 'night' && 'weather-night') ||
+            (partOfDay === 'long_running' && 'calendar-range') ||
+            'weather-sunny') as IconNames,
+    }
 }
 
 /**
@@ -31,10 +31,10 @@ export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay): Ev
  */
 export function eventSectionForHidden(t: TFunction, count: number): EventSectionProps {
     return {
-        title: t("events_hidden"),
-        icon: "eye-off" as IconNames,
-        subtitle: t("events_hidden_subtitle", { count }),
-    };
+        title: t('events_hidden'),
+        icon: 'eye-off' as IconNames,
+        subtitle: t('events_hidden_subtitle', { count }),
+    }
 }
 
 /**
@@ -43,9 +43,9 @@ export function eventSectionForHidden(t: TFunction, count: number): EventSection
  */
 export function eventSectionForPassed(t: TFunction): EventSectionProps {
     return {
-        title: t("events_done"),
-        icon: "calendar-clock-outline" as IconNames,
-    };
+        title: t('events_done'),
+        icon: 'calendar-clock-outline' as IconNames,
+    }
 }
 
 /**
@@ -56,10 +56,10 @@ export function eventSectionForPassed(t: TFunction): EventSectionProps {
 export function eventSectionForDate(t: TFunction, date: string): EventSectionProps {
     return {
         title: formatWeekdayInConventionTimezone(date),
-        icon: "calendar-outline" as IconNames,
-    };
+        icon: 'calendar-outline' as IconNames,
+    }
 }
 
 export const EventSection: FC<EventSectionProps> = ({ style, title, subtitle, icon }) => {
-    return <Section style={style} title={title} subtitle={subtitle} backgroundColor="surface" icon={icon} />;
-};
+    return <Section style={style} title={title} subtitle={subtitle} backgroundColor="surface" icon={icon} />
+}

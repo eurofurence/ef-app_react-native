@@ -1,9 +1,9 @@
-import "react-i18next";
-import en from "./translations.en.json";
+import 'react-i18next'
+import en from './translations.en.json'
 
-declare module "react-i18next" {
+declare module 'react-i18next' {
     interface CustomTypeOptions {
-        defaultNS: "Home";
+        defaultNS: 'Home';
         resources: typeof en;
     }
 }

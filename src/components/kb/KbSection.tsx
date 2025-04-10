@@ -1,6 +1,6 @@
-import { FC } from "react";
+import { FC } from 'react'
 
-import { FaSection, FaSectionProps } from "../generic/atoms/FaSection";
+import { FaSection, FaSectionProps } from '../generic/atoms/FaSection'
 
 export type KbSectionProps = FaSectionProps;
 
@@ -16,5 +16,5 @@ export type KbSectionProps = FaSectionProps;
 // }
 
 export const KbSection: FC<KbSectionProps> = ({ style, title, subtitle, icon }) => {
-    return <FaSection style={style} title={title} subtitle={subtitle} icon={icon} />;
-};
+    return <FaSection style={style} title={title} subtitle={subtitle} icon={icon} />
+}

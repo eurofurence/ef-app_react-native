@@ -1,33 +1,22 @@
-import { StyleSheet } from "react-native";
-import { Label } from "./Label";
-
-export const tabLabelMaxWidth = 110;
+import { Label } from './Label'
+import { Icon, IconNames } from '@/components/generic/atoms/Icon'
+import { useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
 export type TabLabelProps = {
     focused: boolean;
-    children: string;
-    wide: boolean;
+    icon?: IconNames;
+    title?: string;
 };
 
-export const TabLabel = ({ focused, children, wide }: TabLabelProps) => {
-    return (
-        <Label type="bold" style={[focused ? styles.focused : styles.unfocused, wide && styles.wide]} numberOfLines={1} ellipsizeMode="tail">
-            {children}
+export const TabLabel = ({ focused, icon, title }: TabLabelProps) => {
+    const iconColor = useThemeColorValue(focused ? 'secondary' : 'text')
+    const textColor = useThemeColor(focused ? 'secondary' : 'text')
+
+    if (icon) {
+        return <Icon name={icon} color={iconColor} size={20} />
+    } else {
+        return <Label type="bold" style={textColor} numberOfLines={1} ellipsizeMode="tail">
+            {title}
         </Label>
-    );
-};
-
-const styles = StyleSheet.create({
-    wide: {
-        maxWidth: tabLabelMaxWidth,
-        paddingHorizontal: 5,
-    },
-    unfocused: {
-        maxWidth: tabLabelMaxWidth,
-        opacity: 0.5,
-    },
-    focused: {
-        maxWidth: tabLabelMaxWidth,
-        opacity: 1,
-    },
-});
+    }
+}

@@ -1,9 +1,9 @@
-import { chunk } from "lodash";
-import { FC, PropsWithChildren, useMemo } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { chunk } from 'lodash'
+import { FC, PropsWithChildren, useMemo } from 'react'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
-import { Col } from "./Col";
-import { Row } from "./Row";
+import { Col } from './Col'
+import { Row } from './Row'
 
 /**
  * Arguments to the grid.
@@ -22,10 +22,10 @@ export type GridProps = PropsWithChildren<{
 export const Grid: FC<GridProps> = ({ style, cols = 2, children }) => {
     // Get an array of children, padded for necessary chunks.
     const childrenArray = useMemo(() => {
-        const result = Array.isArray(children) ? [...children].filter(Boolean) : [children].filter(Boolean);
-        while (result.length % cols !== 0) result.push(null);
-        return result;
-    }, [children, cols]);
+        const result = Array.isArray(children) ? [...children].filter(Boolean) : [children].filter(Boolean)
+        while (result.length % cols !== 0) result.push(null)
+        return result
+    }, [children, cols])
 
     return (
         <Col style={style} type="stretch">
@@ -39,11 +39,11 @@ export const Grid: FC<GridProps> = ({ style, cols = 2, children }) => {
                 </Row>
             ))}
         </Col>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     distributed: {
         flex: 1,
     },
-});
+})

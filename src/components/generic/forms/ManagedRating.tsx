@@ -1,9 +1,8 @@
-import { FC } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { useController, Path } from "react-hook-form";
-import StarRating from "react-native-star-rating-widget";
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { useController, Path } from 'react-hook-form'
+import StarRating from 'react-native-star-rating-widget'
 
-import { Label } from "../atoms/Label";
+import { Label } from '../atoms/Label'
 
 export type ManagedRatingProps<T> = {
     name: Path<T>;
@@ -15,18 +14,17 @@ export type ManagedRatingProps<T> = {
     starSize?: number;
 };
 
-export const ManagedRating = <T extends Record<string, any>>({ 
-    name, 
-    label, 
-    minRating = 1, 
-    enableHalfStar = false, 
-    color = "#FFD700",
-    style,
-    starSize = 32
-}: ManagedRatingProps<T>) => {
+export const ManagedRating = <T extends Record<string, any>>({
+                                                                 name,
+                                                                 label,
+                                                                 enableHalfStar = false,
+                                                                 color = '#FFD700',
+                                                                 style,
+                                                                 starSize = 32,
+                                                             }: ManagedRatingProps<T>) => {
     const { field: { value, onChange }, fieldState: { error } } = useController<T>({
         name,
-    });
+    })
 
     return (
         <View style={[styles.container, style]}>
@@ -34,19 +32,18 @@ export const ManagedRating = <T extends Record<string, any>>({
             <StarRating
                 rating={value ?? 0}
                 onChange={onChange}
-                minRating={minRating}
                 enableHalfStar={enableHalfStar}
                 starSize={starSize}
                 color={color}
             />
             {error && <Label type="caption" color="important" mt={4}>{error.message}</Label>}
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
-        width: "100%",
-        alignItems: "center",
+        width: '100%',
+        alignItems: 'center',
     },
-}); 
+})

@@ -1,5 +1,5 @@
-import { initializeApp } from "firebase/app";
-import conventionConfig from "../../convention.config.json";
+import { initializeApp } from 'firebase/app'
+import conventionConfig from '../../convention.config.json'
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -11,10 +11,10 @@ const firebaseConfig = {
     messagingSenderId: conventionConfig.firebase.messagingSenderId,
     appId: conventionConfig.firebase.appId,
     measurementId: conventionConfig.firebase.measurementId,
-};
+}
 
 /**
  * Firebase web app config. Only used on web, as react-native-firebase does not
  * integrate with web deployment.
  */
-export const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig)
