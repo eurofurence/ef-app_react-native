@@ -10,6 +10,8 @@ import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { useAuthContext } from '@/context/AuthContext'
 import { useThemeColor, useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
+import { Header } from '@/components/generic/containers/Header'
+import { useTranslation } from 'react-i18next'
 
 export default function Profile() {
   const { refresh, loggedIn, claims, user } = useAuthContext()
@@ -19,6 +21,7 @@ export default function Profile() {
   const iconColor = themeColor.color
   const { synchronizeUi, isSynchronizing } = useCache()
   const backgroundStyle = useThemeBackground('background')
+  const { t } = useTranslation('Profile')
 
   // Set up the rotation animation
   useEffect(() => {
@@ -77,7 +80,9 @@ export default function Profile() {
       stickyHeaderIndices={[0]}
       stickyHeaderHiddenOnScroll
     >
-      <Stack.Screen options={{ headerRight: () => refreshButton }} />
+      <Header secondaryIcon="refresh" secondaryPress={isReloading ? () => undefined : doReload} loading={isReloading}>
+        {t('header')}
+      </Header>
       <Floater contentStyle={appStyles.trailer}>{!claims || !user ? null : <ProfileContent claims={claims} user={user} parentPad={padFloater} />}</Floater>
     </ScrollView>
   )
