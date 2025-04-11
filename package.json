@@ -27,7 +27,7 @@
     "bundle:android:development": "eas build --platform android --profile development",
     "bundle:android:preview": "eas build --platform android --profile preview",
     "bundle:android:production": "eas build --platform android --profile production",
-    "bundle:web": "expo export:web",
+    "bundle:web": "expo export -p web",
     "submit:android": "eas submit --platform android",
     "submit:web": "gh-pages -d web-build",
     "local:android": "pnpm local:android:preview",
