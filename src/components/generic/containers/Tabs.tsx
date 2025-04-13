@@ -1,123 +1,131 @@
-import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react'
-import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { Gesture, GestureDetector, TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import Animated, { cancelAnimation, Easing, runOnJS, useAnimatedReaction, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated'
+import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from "react";
+import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
+import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import Animated, { cancelAnimation, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
-import { Continuous } from '../atoms/Continuous'
-import { IconNames } from '../atoms/Icon'
-import { Tab } from './Tab'
-import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import { Continuous } from "../atoms/Continuous";
+import { IconNames } from "../atoms/Icon";
+import { Tab } from "./Tab";
+import { useThemeBackground, useThemeBorder } from "@/hooks/themes/useThemeHooks";
 
 /**
  * Arguments to the tabs.
  */
 export type TabsProps = {
-  /**
-   * Style used on the container of the tabs.
-   */
-  style?: StyleProp<ViewStyle>
-
-  /**
-   * If given, tabs that are laid out before the more/less button.
-   */
-  tabs: {
     /**
-     * The icon to display.
+     * Style used on the container of the tabs.
      */
-    icon: IconNames
+    style?: StyleProp<ViewStyle>;
 
     /**
-     * Tab style property.
+     * If given, tabs that are laid out before the more/less button.
      */
-    style?: StyleProp<ViewStyle>
+    tabs: {
+        /**
+         * The icon to display.
+         */
+        icon: IconNames;
+
+        /**
+         * Tab style property.
+         */
+        style?: StyleProp<ViewStyle>;
+
+        /**
+         * The name of the tab.
+         */
+        text: string;
+
+        /**
+         * True if to be rendered as active.
+         */
+        active?: boolean;
+
+        /**
+         * If true or node, indicator will be presented over this tab.
+         */
+        indicate?: boolean | ReactNode;
+
+        /**
+         * If given, invoked when the tab is pressed.
+         */
+        onPress?: () => void;
+    }[];
 
     /**
-     * The name of the tab.
+     * Text to display for opening the menu.
      */
-    text: string
+    textMore?: string;
 
     /**
-     * True if to be rendered as active.
+     * Text to display for closing the menu.
      */
-    active?: boolean
+    textLess?: string;
 
     /**
-     * If true or node, indicator will be presented over this tab.
+     * If true or node, indicator will be presented over the more button.
      */
-    indicate?: boolean | ReactNode
+    indicateMore?: true | ReactNode;
 
     /**
-     * If given, invoked when the tab is pressed.
+     * True if activity should be indicated.
      */
-    onPress?: () => void
-  }[]
+    activity?: boolean;
 
-  /**
-   * Text to display for opening the menu.
-   */
-  textMore?: string
+    /**
+     * If given, a notice element on top of the tabs.
+     */
+    notice?: string | ReactNode;
 
-  /**
-   * Text to display for closing the menu.
-   */
-  textLess?: string
-
-  /**
-   * If true or node, indicator will be presented over the more button.
-   */
-  indicateMore?: true | ReactNode
-
-  /**
-   * True if activity should be indicated.
-   */
-  activity?: boolean
-
-  /**
-   * If given, a notice element on top of the tabs.
-   */
-  notice?: string | ReactNode
-
-  /**
-   * The content to render in the more-area.
-   */
-  children?: ReactNode
-}
+    /**
+     * The content to render in the more-area.
+     */
+    children?: ReactNode;
+};
 
 /**
  * Operations provided by the navigator.
  */
 export type TabsRef = {
-  /**
-   * Closes the more-area with animations.
-   */
-  close(): boolean
+    /**
+     * Closes the more-area with animations.
+     */
+    close(): boolean;
 
-  /**
-   * Opens the more-area with animations.
-   */
-  open(): boolean
+    /**
+     * Opens the more-area with animations.
+     */
+    open(): boolean;
 
-  /**
-   * Closes the more-area immediately.
-   */
-  closeImmediately(): boolean
-}
+    /**
+     * Closes the more-area immediately.
+     */
+    closeImmediately(): boolean;
+};
 
 /**
  * Allow components in tabs to get access to the Tab properties.
  */
 const TabsContext = createContext<TabsRef & { isOpen: boolean }>({
-  close: () => false,
-  open: () => false,
-  closeImmediately: () => false,
-  isOpen: false,
-})
-TabsContext.displayName = 'TabsContext'
+    close: () => false,
+    open: () => false,
+    closeImmediately: () => false,
+    isOpen: false,
+});
+TabsContext.displayName = "TabsContext";
 
 /**
  * Expose the Tabs Context as a hook
  */
-export const useTabs = () => useContext(TabsContext)
+export const useTabs = () => useContext(TabsContext);
+
+const ANIMATION_CONFIG = {
+    springConfig: {
+        damping: 15,
+        stiffness: 100,
+        mass: 1,
+    },
+};
 
 /**
  * A row of tabs and a "more" button.
@@ -126,227 +134,204 @@ export const useTabs = () => useContext(TabsContext)
  * or dragging, translates it into view and overlays the containing view with
  * a semi-opaque layer.
  */
-export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'More', textLess = 'Less', indicateMore, activity, notice, children }, ref) => {
-  // Computed styles.
-  const styleDismiss = useThemeBackground('darken')
-  const fillBackground = useThemeBackground('background')
-  const bordersDarken = useThemeBorder('darken')
+export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "More", textLess = "Less", indicateMore, activity, notice, children }, ref) => {
+    // Computed styles.
+    const styleDismiss = useThemeBackground("darken");
+    const fillBackground = useThemeBackground("background");
+    const bordersDarken = useThemeBorder("darken");
 
-  // State if currently open.
-  const [state, setState] = useState<'closed' | 'transitioning' | 'open'>('closed')
+    // Single source of truth for state
+    const [isOpen, setIsOpen] = useState(false);
 
-  // Height of the content rendered as children. Start is used for pan gesture, offset is used to animate the actual openness.
-  const height = useSharedValue(300)
-  const start = useSharedValue(0)
-  const offset = useSharedValue(0)
+    // Animation values
+    const height = useSharedValue(300);
+    const offset = useSharedValue(0);
+    const startOffset = useSharedValue(0);
+    const isAnimating = useSharedValue(false);
 
-  // Derived state from animated value.
-  useDerivedValue(() => {
-    if (offset.value === 0) runOnJS(setState)('closed')
-    else if (offset.value === 1) runOnJS(setState)('open')
-    else runOnJS(setState)('transitioning')
-  }, [offset])
+    // Derive opacity from offset
+    const dynamicDismiss = useAnimatedStyle(
+        () => ({
+            opacity: offset.value,
+            transform: [
+                {
+                    translateY: offset.value === 0 ? 99999 : 0,
+                },
+            ],
+        }),
+        [offset],
+    );
 
-  // Derive isOpen state from offset
-  const isOpen = useDerivedValue(() => offset.value > 0, [offset])
+    // Derive transformation from offset
+    const dynamicContainer = useAnimatedStyle(
+        () => ({
+            transform: [{ translateY: -offset.value * height.value }],
+        }),
+        [offset, height],
+    );
 
-  // Track isOpen state in React state for context
-  const [isOpenState, setIsOpenState] = useState(false)
+    // Add animated style for pointer events - is fix for Reanimated warning
+    const dynamicPointerEvents = useAnimatedStyle(
+        () => ({
+            pointerEvents: isAnimating.value ? "none" : "auto",
+        }),
+        [isAnimating],
+    );
 
-  // Use animated reaction to update React state
-  useAnimatedReaction(
-    () => isOpen.value,
-    (value) => {
-      runOnJS(setIsOpenState)(value)
-    },
-    [isOpen]
-  )
-
-  // Derive opacity from offset. If completely closed, translate out.
-  const dynamicDismiss = useAnimatedStyle(
-    () => ({
-      opacity: offset.value,
-      transform: [
-        {
-          translateY: offset.value === 0 ? 99999 : 0,
+    // Animation handlers
+    const animateTo = useCallback(
+        (targetValue: number) => {
+            isAnimating.value = true;
+            offset.value = withSpring(targetValue, ANIMATION_CONFIG.springConfig, (finished) => {
+                if (finished) {
+                    isAnimating.value = false;
+                }
+            });
         },
-      ],
-    }),
-    [offset]
-  )
+        [offset, isAnimating],
+    );
 
-  // Derive transformation from offset.
-  const dynamicContainer = useAnimatedStyle(
-    () => ({
-      transform: [{ translateY: -offset.value * height.value }],
-    }),
-    [offset, height]
-  )
+    // State change handlers
+    const open = useCallback(() => {
+        if (isOpen) return false;
+        setIsOpen(true);
+        animateTo(1);
+        return true;
+    }, [isOpen, animateTo]);
 
-  // Opens the more area and runs the handlers.
-  const open = useCallback(() => {
-    if (state === 'open') return false
-    offset.value = withTiming(1, { duration: 234, easing: Easing.out(Easing.cubic) })
-    return true
-  }, [state, offset])
+    const close = useCallback(() => {
+        if (!isOpen) return false;
+        setIsOpen(false);
+        animateTo(0);
+        return true;
+    }, [isOpen, animateTo]);
 
-  // Closes the more area and runs the handlers.
-  const close = useCallback(() => {
-    if (state === 'closed') return false
-    offset.value = withTiming(0, { duration: 234, easing: Easing.out(Easing.cubic) })
-    return true
-  }, [state, offset])
+    const closeImmediately = useCallback(() => {
+        if (!isOpen) return false;
+        setIsOpen(false);
+        offset.value = 0;
+        isAnimating.value = false;
+        return true;
+    }, [isOpen, offset, isAnimating]);
 
-  // Closes the more area immediately and runs the handlers.
-  const closeImmediately = useCallback(() => {
-    if (state === 'closed') return false
-    offset.value = 0
-    return true
-  }, [state, offset])
+    // Handle to invoke internal mutations from outside if needed.
+    useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [open, close, closeImmediately]);
 
-  // Handle to invoke internal mutations from outside if needed.
-  useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [open, close, closeImmediately])
+    // Gesture handling
+    const gesture = Gesture.Pan()
+        .onBegin(() => {
+            startOffset.value = offset.value;
+            cancelAnimation(offset);
+            isAnimating.value = false;
+        })
+        .onUpdate((e) => {
+            const newOffset = -e.translationY / height.value + startOffset.value;
+            offset.value = Math.max(0, Math.min(newOffset, 1));
+        })
+        .onEnd((e) => {
+            const velocity = e.velocityY;
+            const shouldOpen = offset.value > 0.5 || (offset.value > 0.2 && velocity < -500);
+            const targetValue = shouldOpen ? 1 : 0;
 
-  // Enable panning the navigator to dismiss. Only available if open.
-  const gesture = Gesture.Pan()
-    .onBegin(() => {
-      // Remember old value and cancel current animation.
-      start.value = offset.value
-      cancelAnimation(offset)
-    })
-    .onUpdate((e) => {
-      // Update from translation.
-      offset.value = -e.translationY / height.value + start.value
-      offset.value = Math.max(0, Math.min(offset.value, 1))
-    })
-    .onEnd((e) => {
-      // Compute threshold from direction.
-      const threshold = e.translationY > 0 ? 0.9 : 0.1
-      // Close if smaller than threshold, otherwise open again.
-      const targetIsOpen = offset.value >= threshold
-      const targetValue = targetIsOpen ? 1 : 0
+            if (shouldOpen !== isOpen) {
+                setIsOpen(shouldOpen);
+            }
+            animateTo(targetValue);
+        });
 
-      offset.value = withTiming(targetValue, { duration: 234, easing: Easing.out(Easing.cubic) })
-    })
+    // Tab icon and text based on state
+    const tabIcon = useMemo(() => (isOpen ? "arrow-down-circle" : "menu"), [isOpen]);
+    const tabText = useMemo(() => (isOpen ? textLess : textMore), [isOpen, textLess, textMore]);
 
-  const pointerEvents = useMemo(() => {
-    if (state === 'transitioning') return 'none'
-    return undefined
-  }, [state])
+    // Connect to back handler
+    useEffect(() => {
+        if (Platform.OS === "web") return;
+        const subscription = BackHandler.addEventListener("hardwareBackPress", () => close() ?? false);
+        return () => subscription.remove();
+    }, [close]);
 
-  // Tab icon, down-arrow displayed when open or transitioning.
-  const tabIcon = useMemo(() => {
-    if (state === 'open' || state === 'transitioning') return 'arrow-down-circle'
-    return 'menu'
-  }, [state])
+    return (
+        <TabsContext.Provider value={{ close, open, closeImmediately, isOpen }}>
+            <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
+                <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
+            </Animated.View>
 
-  // Tab text, less displayed when open or transitioning.
-  const tabText = useMemo(() => {
-    if (state === 'open' || state === 'transitioning') return textLess
-    return textMore
-  }, [state, textLess, textMore])
+            <GestureDetector gesture={gesture}>
+                <Animated.View style={dynamicContainer}>
+                    {notice && (
+                        <View style={styles.zeroFromTop}>
+                            <View style={styles.zeroFromBottom}>{notice}</View>
+                        </View>
+                    )}
 
-  // Tab press handler. Opposite returned, transitioning undefined.
-  const tabOnPress = useMemo(() => {
-    if (state === 'open') return close
-    if (state === 'closed') return open
-    return undefined
-  }, [state, close, open])
+                    <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating.value ? "none" : "auto"}>
+                        {tabs?.map((tab, i) => <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />)}
 
-  // Connect to back handler.
-  useEffect(() => {
-    if (Platform.OS === 'web') return
+                        <Tab icon={tabIcon} text={tabText} onPress={isOpen ? close : open} indicate={indicateMore} />
 
-    // Add handler and return removal.
-    const subscription = BackHandler.addEventListener('hardwareBackPress', () => close() ?? false)
-    return () => subscription.remove()
-  }, [close])
+                        <Continuous style={styles.activity} active={activity} />
+                    </View>
 
-  return (
-    <TabsContext.Provider value={{ close, open, closeImmediately, isOpen: isOpenState }}>
-      {/* Dismissal area. */}
-      <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
-        <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
-      </Animated.View>
+                    <View
+                        style={[styles.content, fillBackground]}
+                        onLayout={(e) => {
+                            height.value = e.nativeEvent.layout.height || height.value;
+                        }}
+                    >
+                        {children}
+                    </View>
+                </Animated.View>
+            </GestureDetector>
+        </TabsContext.Provider>
+    );
+});
 
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={dynamicContainer}>
-          {/* TODO: Animation */}
-          {!notice ? null : (
-            <View style={styles.zeroFromTop}>
-              <View style={styles.zeroFromBottom}>{notice}</View>
-            </View>
-          )}
+Tabs.displayName = "Tabs";
 
-          <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={pointerEvents}>
-            {/* Dynamic tabs. */}
-            {tabs?.map((tab, i) => <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
-
-            {/* More-tab. */}
-            <Tab icon={tabIcon} text={tabText} onPress={tabOnPress} indicate={indicateMore} />
-
-            <Continuous style={styles.activity} active={activity} />
-          </View>
-
-          {/* Children rendered as the expandable content. */}
-          <View
-            style={[styles.content, fillBackground]}
-            onLayout={(e) => {
-              height.value = e.nativeEvent.layout.height || height.value
-            }}
-          >
-            {children}
-          </View>
-        </Animated.View>
-      </GestureDetector>
-    </TabsContext.Provider>
-  )
-})
-Tabs.displayName = 'Tabs'
 const styles = StyleSheet.create({
-  root: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'flex-end',
-    overflow: 'hidden',
-  },
-  dismiss: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
-  },
-  zeroFromTop: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-  },
-  zeroFromBottom: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    right: 0,
-  },
-  tabs: {
-    flexDirection: 'row',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  activity: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-  },
-  content: {
-    position: 'absolute',
-    left: 0,
-    top: '100%',
-    right: 0,
-  },
-})
+    root: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        justifyContent: "flex-end",
+        overflow: "hidden",
+    },
+    dismiss: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+    },
+    zeroFromTop: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+    },
+    zeroFromBottom: {
+        position: "absolute",
+        left: 0,
+        bottom: 0,
+        right: 0,
+    },
+    tabs: {
+        flexDirection: "row",
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+    },
+    activity: {
+        position: "absolute",
+        left: 0,
+        top: 0,
+        right: 0,
+    },
+    content: {
+        position: "absolute",
+        left: 0,
+        top: "100%",
+        right: 0,
+    },
+});
