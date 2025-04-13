@@ -12,7 +12,8 @@ import { Row } from '../generic/containers/Row'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { calculateEventTiming } from '../../util/eventTiming'
 import { EventCardTime } from './EventCardTime'
-import { EventDetails } from '@/context/data/types'
+
+import { EventDetails } from '@/context/data/types.details'
 
 const glyphIconSize = 90
 const badgeIconSize = 20

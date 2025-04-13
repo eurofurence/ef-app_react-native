@@ -6,8 +6,8 @@ import { router } from 'expo-router'
 import { Section } from '../generic/atoms/Section'
 import { Button } from '../generic/containers/Button'
 import { AnnouncementCard } from './AnnouncementCard'
-import { AnnouncementDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { AnnouncementDetails } from '@/context/data/types.details'
 
 const recentLimit = 2
 

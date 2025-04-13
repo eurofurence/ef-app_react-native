@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { parseISO, format } from 'date-fns'
@@ -19,11 +19,14 @@ import { useCache } from '@/context/data/Cache'
 export default function MessageItem() {
   const { messageId } = useLocalSearchParams<{ messageId: string }>()
   const { t } = useTranslation('PrivateMessageItem')
-  const { communications } = useCache()
+  const { getValue } = useCache()
   const backgroundStyle = useThemeBackground('background')
 
-  // Get message from cache
-  const message = communications.dict[messageId]
+  // Get message from cache, find instance.
+  const communications = getValue('communications')
+  const message = useMemo(() => {
+    return communications.find((item) => item.Id === messageId)
+  }, [communications, messageId])
 
   // todo: post transformation, read time should be synced from server.
   // // Mark as read after delay

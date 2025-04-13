@@ -1,16 +1,3 @@
-import { IconNames } from '@/components/generic/atoms/Icon'
-import { ThemeName } from '@/context/Theme'
-
-/**
- * Time categorized in part of day.
- */
-export type PartOfDay = 'morning' | 'afternoon' | 'evening' | 'night' | 'long_running'
-
-/**
- * Attendance day for dealers.
- */
-export type AttendanceDay = 'mon' | 'tue' | 'wed'
-
 /**
  * Named type to use when referencing other records.
  */
@@ -35,10 +22,6 @@ export type AnnouncementRecord = RecordMetadata & {
   Content: string
   ImageId?: RecordId
 }
-export type AnnouncementDetails = AnnouncementRecord & {
-  NormalizedTitle: string
-  Image?: ImageDetails
-}
 export type EventRecord = RecordMetadata & {
   Title: string
 
@@ -62,22 +45,6 @@ export type EventRecord = RecordMetadata & {
   BannerImageId?: string
   PosterImageId?: string
   Tags?: string[]
-}
-export type EventDetails = EventRecord & {
-  Hosts: string[]
-  PartOfDay: PartOfDay
-  Poster?: ImageDetails
-  Banner?: ImageDetails
-  Badges?: IconNames[]
-  Glyph?: IconNames
-  SuperSponsorOnly: boolean
-  SponsorOnly: boolean
-  MaskRequired: boolean
-  ConferenceRoom?: EventRoomDetails
-  ConferenceDay?: EventDayDetails
-  ConferenceTrack?: EventTrackDetails
-  Favorite: boolean
-  Hidden: boolean
 }
 export type DealerRecord = RecordMetadata & {
   ArtistImageId?: RecordId
@@ -104,34 +71,17 @@ export type DealerRecord = RecordMetadata & {
   Categories?: string[]
   Keywords?: { [category: string]: string[] }
 }
-export type DealerDetails = DealerRecord & {
-  CategoryPrimary: string | null
-  AttendanceDays: EventDayDetails[]
-  AttendanceDayNames: AttendanceDay[]
-  Artist?: ImageDetails
-  ArtistThumbnail?: ImageDetails
-  ArtPreview?: ImageDetails
-  ShortDescriptionContent?: string
-  ShortDescriptionTable?: string
-  Favorite: boolean
-  MastodonUrl?: string
-}
 export type EventDayRecord = RecordMetadata & {
   Name: string
   Date: string
 }
-export type EventDayDetails = EventDayRecord & {
-  DayOfWeek: number
-}
 export type EventTrackRecord = RecordMetadata & {
   Name: string
 }
-export type EventTrackDetails = EventTrackRecord
 export type EventRoomRecord = RecordMetadata & {
   Name: string
   ShortName?: string
 }
-export type EventRoomDetails = EventRoomRecord
 export type MapRecord = RecordMetadata & {
   // TODO: Verify nullability.
   Description: string
@@ -140,10 +90,6 @@ export type MapRecord = RecordMetadata & {
   Entries: MapEntryRecord[]
   Order: number
 }
-export type MapDetails = MapRecord & {
-  Image?: ImageDetails
-  Entries: MapEntryDetails[]
-}
 export type MapEntryRecord = RecordMetadata & {
   // TODO: Verify nullability.
   X: number
@@ -151,7 +97,6 @@ export type MapEntryRecord = RecordMetadata & {
   TapRadius: number
   Links: LinkFragment[]
 }
-export type MapEntryDetails = MapEntryRecord
 export type LinkFragment = {
   // TODO: Verify nullability.
   FragmentType: 'WebExternal' | 'MapExternal' | 'MapEntry' | 'DealerDetail' | 'EventConferenceRoom'
@@ -165,7 +110,6 @@ export type KnowledgeGroupRecord = RecordMetadata & {
   showInHamburgerMenu: boolean
   FontAwesomeIconName?: string
 }
-export type KnowledgeGroupDetails = KnowledgeGroupRecord
 export type KnowledgeEntryRecord = RecordMetadata & {
   Title: string
   Text: string
@@ -173,9 +117,6 @@ export type KnowledgeEntryRecord = RecordMetadata & {
   KnowledgeGroupId: RecordId
   Links: LinkFragment[]
   ImageIds: RecordId[]
-}
-export type KnowledgeEntryDetails = KnowledgeEntryRecord & {
-  Images: ImageDetails[]
 }
 export type ImageRecord = RecordMetadata & {
   InternalReference: string
@@ -186,7 +127,6 @@ export type ImageRecord = RecordMetadata & {
   ContentHashSha1: string
   Url: string
 }
-export type ImageDetails = ImageRecord
 export type CommunicationRecord = RecordMetadata & {
   RecipientUid: string
   SenderUid?: string
@@ -197,7 +137,6 @@ export type CommunicationRecord = RecordMetadata & {
   Subject?: string
   Message?: string
 }
-export type CommunicationDetails = CommunicationRecord
 export type UserRecord = {
   Roles: string[]
   Registrations: {
@@ -205,38 +144,3 @@ export type UserRecord = {
     Status: string
   }[]
 }
-export type Settings = {
-  theme?: ThemeName
-  analyticsEnabled?: boolean
-  language?: string
-  hiddenEvents?: string[]
-  lastViewTimes?: Record<string, string>
-  devMenu?: boolean
-  timeTravelOffset?: number
-  timeTravelEnabled?: boolean
-  warnings?: Record<string, boolean>
-  favoriteDealers?: string[]
-}
-export type GlobalSearchResult = (DealerDetails & { type: 'dealer' }) | (EventDetails & { type: 'event' }) | (KnowledgeEntryDetails & { type: 'knowledgeEntry' })
-
-export type ImageLocation =
-  | {
-      type: 'Event'
-      location: 'eventPoster' | 'eventBanner'
-      title: string
-    }
-  | {
-      type: 'Dealer'
-      location: 'artist' | 'artistThumbnail' | 'artPreview'
-      title: string
-    }
-  | {
-      type: 'Announcement'
-      location: 'announcement'
-      title: string
-    }
-  | {
-      type: 'KnowledgeEntry'
-      location: 'knowledgeEntryBanner'
-      title: string
-    }

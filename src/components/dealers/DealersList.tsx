@@ -5,8 +5,8 @@ import { StyleSheet } from 'react-native'
 import { router } from 'expo-router'
 import { DealerCard, DealerDetailsInstance } from './DealerCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { DealerDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { DealerDetails } from '@/context/data/types.details'
 
 /**
  * The properties to the component.

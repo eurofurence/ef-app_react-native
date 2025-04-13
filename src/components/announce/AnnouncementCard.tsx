@@ -7,7 +7,8 @@ import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { colorForArea } from './utils'
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
-import { AnnouncementDetails } from '@/context/data/types'
+
+import { AnnouncementDetails } from '@/context/data/types.details'
 
 export type AnnouncementDetailsInstance = {
   details: AnnouncementDetails

@@ -5,7 +5,7 @@ import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from 'react-native
 import { Image, ImageProps } from './Image'
 import { sourceFromImage } from './Image.common'
 
-import { ImageDetails } from '@/context/data/types'
+import { ImageDetails } from '@/context/data/types.details'
 
 const initialSize = { width: Dimensions.get('window').width - 40, height: 160 }
 

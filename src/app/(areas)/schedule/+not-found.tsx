@@ -6,7 +6,6 @@ import { useCallback, useMemo } from 'react'
 import { isSameDay } from 'date-fns'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { TabLabel } from '@/components/generic/atoms/TabLabel'
-import { EventDayDetails } from '@/context/data/types'
 import { Search } from '@/components/generic/atoms/Search'
 import { IconNames } from '@/components/generic/atoms/Icon'
 import { useCache } from '@/context/data/Cache'
@@ -14,6 +13,7 @@ import { PersonalView } from '@/components/schedule/PersonalView'
 import { FilterView } from '@/components/schedule/FilterView'
 import { DayView } from '@/components/schedule/DayView'
 import { useNow } from '@/hooks/time/useNow'
+import { EventDayDetails } from '@/context/data/types.details'
 
 function dayTabTitle(day: EventDayDetails) {
   const date = new Date(day.Date)

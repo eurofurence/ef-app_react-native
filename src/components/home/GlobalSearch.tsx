@@ -10,7 +10,8 @@ import { KbEntryCard } from '../kb/KbEntryCard'
 import { useDealerInstances } from '@/components/dealers/Dealers.common'
 import { useEventInstances } from '@/components/events/Events.common'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { DealerDetails, EventDetails, GlobalSearchResult, KnowledgeEntryDetails } from '@/context/data/types'
+import { GlobalSearchResult } from '@/context/data/types.own'
+import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
 
 export type GlobalSearchProps = {
   now: Date

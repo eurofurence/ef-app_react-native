@@ -6,8 +6,8 @@ import { isBefore, isSameDay } from 'date-fns'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { Section } from '@/components/generic/atoms/Section'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { EventDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { EventDetails } from '@/context/data/types.details'
 
 const filterHappeningTodayEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
   events.filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc))).filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)))

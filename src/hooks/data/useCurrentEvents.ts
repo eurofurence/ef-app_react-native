@@ -2,8 +2,8 @@ import { useMemo } from 'react'
 import { chain } from 'lodash'
 import { isWithinInterval, parseISO } from 'date-fns'
 import { eventInstanceForAny } from '@/components/events/EventCard'
-import { EventDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { EventDetails } from '@/context/data/types.details'
 
 const filterCurrentEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
   events.filter((it) =>

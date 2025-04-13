@@ -1,121 +1,53 @@
 import { useMemo } from 'react'
 import { toZonedTime } from 'date-fns-tz'
 import { parseISO } from 'date-fns'
-import Fuse, { FuseOptionKey, IFuseOptions } from 'fuse.js'
-import { chain, flatten } from 'lodash'
-import { StoreData } from '@/context/data/Cache'
+import Fuse from 'fuse.js'
+import { chain } from 'lodash'
 import { conTimeZone } from '@/configuration'
 import {
-  internalAttendanceDayNames,
-  internalAttendanceDays,
-  internalCategorizeTime,
-  internalCreateCategoryMapper,
-  internalDealerParseDescriptionContent,
-  internalDealerParseTable,
-  internalFixedTitle,
-  internalHosts,
-  internalMaskRequired,
-  internalMastodonHandleToProfileUrl,
-  internalSponsorOnly,
-  internalSuperSponsorOnly,
-  internalTagsToBadges,
-  internalTagsToIcon,
-} from '@/context/data/internal'
+  createCategoryMapper,
+  deriveAnnouncementTitle,
+  deriveAttendanceDays,
+  deriveAttendanceNames,
+  deriveBadgesFromTags,
+  deriveCategorizedTime,
+  deriveDealerDescription,
+  deriveDealerTable,
+  deriveHosts,
+  deriveIconFromTags,
+  deriveIsMaskRequired,
+  deriveIsSponsorsOnly,
+  deriveIsSuperSponsorsOnly,
+  deriveProfileUrlFromMastodonHandle,
+} from '@/context/data/useCacheExtensions.derived'
 
+import { EventRecord, KnowledgeEntryRecord, MapRecord } from '@/context/data/types.api'
+import { EntityStore, filterEntityStore, mapEntityStore } from '@/context/data/CacheTools'
+import { StoreData } from '@/context/data/CacheStore'
+import {
+  announcementsSearchProperties,
+  dealersSearchProperties,
+  eventsSearchProperties,
+  globalSearchProperties,
+  knowledgeEntriesSearchProperties,
+  searchOptions,
+  searchOptionsGlobal,
+  useFuseMemo,
+  useFuseRecordMemo,
+} from '@/context/data/useCacheExtensions.searching'
+import { GlobalSearchResult, ImageLocation } from '@/context/data/types.own'
 import {
   AnnouncementDetails,
-  CommunicationDetails,
   DealerDetails,
   EventDayDetails,
   EventDetails,
-  EventRecord,
   EventRoomDetails,
   EventTrackDetails,
-  GlobalSearchResult,
   ImageDetails,
-  ImageLocation,
   KnowledgeEntryDetails,
-  KnowledgeEntryRecord,
   KnowledgeGroupDetails,
   MapDetails,
-  MapRecord,
-} from '@/context/data/types'
-import { EntityStore, filterEntityStore, mapEntityStore } from '@/context/data/EntityStore'
-
-const searchOptions: IFuseOptions<any> = {
-  shouldSort: true,
-  threshold: 0.25,
-  ignoreLocation: true,
-}
-
-const searchOptionsGlobal: IFuseOptions<any> = {
-  ...searchOptions,
-  threshold: 0.1,
-}
-
-const dealersSearchProperties: FuseOptionKey<DealerDetails>[] = [
-  { name: 'DisplayNameOrAttendeeNickname', weight: 2 },
-  { name: 'Categories', weight: 1 },
-  {
-    name: 'Keywords',
-    getFn: (details) => (details.Keywords ? flatten(Object.values(details.Keywords)) : []),
-    weight: 1,
-  },
-  { name: 'ShortDescription', weight: 1 },
-  { name: 'AboutTheArtistText', weight: 1 },
-  { name: 'AboutTheArtText', weight: 1 },
-]
-
-const eventsSearchProperties: FuseOptionKey<EventDetails>[] = [
-  { name: 'Title', weight: 2 },
-  { name: 'SubTitle', weight: 1 },
-  { name: 'Abstract', weight: 0.5 },
-  { name: 'ConferenceRoom.Name', weight: 0.333 },
-  { name: 'ConferenceTrack.Name', weight: 0.333 },
-  { name: 'Abstract', weight: 0.5 },
-  { name: 'PanelHosts', weight: 0.1 },
-]
-
-const knowledgeEntriesSearchProperties: FuseOptionKey<KnowledgeEntryDetails>[] = [
-  { name: 'Title', weight: 1.5 },
-  { name: 'Text', weight: 1 },
-]
-
-const announcementsSearchProperties: FuseOptionKey<AnnouncementDetails>[] = [
-  { name: 'NormalizedTitle', weight: 1.5 },
-  { name: 'Content', weight: 1 },
-  { name: 'Author', weight: 0.5 },
-  { name: 'Area', weight: 0.5 },
-]
-
-const globalSearchProperties: FuseOptionKey<GlobalSearchResult>[] = [
-  ...(dealersSearchProperties as any),
-  ...(eventsSearchProperties as any),
-  ...(knowledgeEntriesSearchProperties as any),
-]
-
-/**
- * Returns a memoized Fuse instance for the given data.
- * @param data The data to index.
- * @param options The search options.
- * @param properties The indexing properties.
- */
-function useFuseMemo<T>(data: readonly T[], options: IFuseOptions<any>, properties: FuseOptionKey<T>[]) {
-  return useMemo(() => new Fuse(data, options, Fuse.createIndex(properties, data)), [data, options, properties])
-}
-
-/**
- * Returns a memoized map of keys to Fuse instances for the given record.
- * @param data The record to index.
- * @param options The search options.
- * @param properties The indexing properties.
- */
-function useFuseRecordMemo<T>(data: Readonly<Record<string, readonly T[]>>, options: IFuseOptions<any>, properties: FuseOptionKey<T>[]) {
-  return useMemo(
-    () => Object.fromEntries(Object.entries(data).map(([key, value]) => [key, new Fuse(value, options, Fuse.createIndex(properties, value))])),
-    [data, options, properties]
-  )
-}
+} from '@/context/data/types.details'
 
 /**
  * Resolved detailed entity data.
@@ -170,11 +102,6 @@ export type CacheExtensions = {
    * Map records with related entity resolution.
    */
   maps: EntityStore<MapDetails>
-
-  /**
-   * Communication records with related entity resolution.
-   */
-  communications: EntityStore<CommunicationDetails>
 
   /**
    * Events that are the user's favorite.
@@ -273,14 +200,13 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   const eventRooms = data.eventRooms
   const eventTracks = data.eventTracks
   const knowledgeGroups = data.knowledgeGroups
-  const communications = data.communications
 
   // Enhanced entity stores. These are extended records with the detail
   // information applied.
   const announcements = useMemo((): EntityStore<AnnouncementDetails> => {
     return mapEntityStore(data.announcements, (item) => ({
       ...item,
-      NormalizedTitle: internalFixedTitle(item.Title, item.Content),
+      NormalizedTitle: deriveAnnouncementTitle(item.Title, item.Content),
       Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
     }))
   }, [images, data.announcements])
@@ -293,20 +219,20 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   }, [data.eventDays])
 
   const dealers = useMemo((): EntityStore<DealerDetails> => {
-    const categoryMapper = internalCreateCategoryMapper(data.dealers)
+    const categoryMapper = createCategoryMapper(data.dealers)
 
     return mapEntityStore(data.dealers, (item) => ({
       ...item,
       CategoryPrimary: categoryMapper(item.Categories),
-      AttendanceDayNames: internalAttendanceDayNames(item),
-      AttendanceDays: internalAttendanceDays(eventDays, item),
+      AttendanceDayNames: deriveAttendanceNames(item),
+      AttendanceDays: deriveAttendanceDays(eventDays, item),
       Artist: item.ArtistImageId ? images?.dict?.[item.ArtistImageId] : undefined,
       ArtistThumbnail: item.ArtistThumbnailImageId ? images?.dict?.[item.ArtistThumbnailImageId] : undefined,
       ArtPreview: item.ArtPreviewImageId ? images?.dict?.[item.ArtPreviewImageId] : undefined,
-      ShortDescriptionTable: internalDealerParseTable(item),
-      ShortDescriptionContent: internalDealerParseDescriptionContent(item),
+      ShortDescriptionTable: deriveDealerTable(item),
+      ShortDescriptionContent: deriveDealerDescription(item),
       Favorite: Boolean(data.settings.favoriteDealers?.includes(item.Id)),
-      MastodonUrl: !item.MastodonHandle ? undefined : internalMastodonHandleToProfileUrl(item.MastodonHandle),
+      MastodonUrl: !item.MastodonHandle ? undefined : deriveProfileUrlFromMastodonHandle(item.MastodonHandle),
     }))
   }, [eventDays, images, data.dealers, data.settings.favoriteDealers])
 
@@ -316,15 +242,15 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       data.events,
       (item: EventRecord): EventDetails => ({
         ...item,
-        Hosts: internalHosts(item.PanelHosts),
-        PartOfDay: internalCategorizeTime(item.StartDateTimeUtc),
+        Hosts: deriveHosts(item.PanelHosts),
+        PartOfDay: deriveCategorizedTime(item.StartDateTimeUtc),
         Poster: item.PosterImageId ? images?.dict?.[item.PosterImageId] : undefined,
         Banner: item.BannerImageId ? images?.dict?.[item.BannerImageId] : undefined,
-        Badges: internalTagsToBadges(item.Tags),
-        Glyph: internalTagsToIcon(item.Tags),
-        SuperSponsorOnly: internalSuperSponsorOnly(item.Tags),
-        SponsorOnly: internalSponsorOnly(item.Tags),
-        MaskRequired: internalMaskRequired(item.Tags),
+        Badges: deriveBadgesFromTags(item.Tags),
+        Glyph: deriveIconFromTags(item.Tags),
+        SuperSponsorOnly: deriveIsSuperSponsorsOnly(item.Tags),
+        SponsorOnly: deriveIsSponsorsOnly(item.Tags),
+        MaskRequired: deriveIsMaskRequired(item.Tags),
         ConferenceRoom: item.ConferenceRoomId ? eventRooms?.dict?.[item.ConferenceRoomId] : undefined,
         ConferenceDay: item.ConferenceDayId ? eventDays?.dict?.[item.ConferenceDayId] : undefined,
         ConferenceTrack: item.ConferenceTrackId ? eventTracks?.dict?.[item.ConferenceTrackId] : undefined,
@@ -453,7 +379,6 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
     knowledgeGroups,
     knowledgeEntries,
     maps,
-    communications,
     announcements,
     eventDays,
     dealers,

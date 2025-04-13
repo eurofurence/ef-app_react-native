@@ -12,7 +12,7 @@ import { Label, labelTypeStyles } from '../generic/atoms/Label'
 import { Col } from '../generic/containers/Col'
 import { useNow } from '@/hooks/time/useNow'
 import { conId, conName, conTimeZone } from '@/configuration'
-import { EventDayRecord } from '@/context/data/types'
+import { EventDayRecord } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 
 export type CountdownHeaderProps = {

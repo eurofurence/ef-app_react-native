@@ -7,7 +7,7 @@ import { sourceFromImage } from './Image.common'
 import { Image, ImageProps } from './Image'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
-import { ImageDetails } from '@/context/data/types'
+import { ImageDetails } from '@/context/data/types.details'
 
 export type BannerProps = {
   /**

@@ -23,9 +23,10 @@ import { shareEvent } from '@/components/events/Events.common'
 import { useNow } from '@/hooks/time/useNow'
 import { useEventReminder } from '@/hooks/data/useEventReminder'
 import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
-import { EventDetails, LinkFragment, MapDetails, MapEntryDetails } from '@/context/data/types'
+import { LinkFragment } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { EventDetails, MapDetails, MapEntryDetails } from '@/context/data/types.details'
 
 interface MapLink {
   map: MapDetails
@@ -66,7 +67,7 @@ export type EventContentProps = {
 /**
  * Placeholder blur hash.
  */
-const placeholder = 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+const placeholder = { blurhash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667' }
 
 export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton, onToggleHidden }) => {
   const { t } = useTranslation('Event')

@@ -1,15 +1,3 @@
-function defaultReplacer(key: string, value: any) {
-  return key !== 'dict' ? value : undefined
-}
-
-/**
- * JSON stringify with special case handling for "undefined".
- * @param value The value to serialize.
- */
-export function stringifyEntityStore(value: any) {
-  return value === undefined ? 'undefined' : JSON.stringify(value, defaultReplacer)
-}
-
 /**
  * JSON stringify with special case handling for "undefined".
  * @param value The value to serialize.

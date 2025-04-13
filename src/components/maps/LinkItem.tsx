@@ -9,8 +9,9 @@ import { FaIcon } from '../generic/atoms/FaIcon'
 import { Icon } from '../generic/atoms/Icon'
 import { Image } from '../generic/atoms/Image'
 import { Button, ButtonProps } from '../generic/containers/Button'
-import { LinkFragment, MapDetails, MapEntryDetails } from '@/context/data/types'
+import { LinkFragment } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
+import { MapDetails, MapEntryDetails } from '@/context/data/types.details'
 
 type LinkItemProps = {
   map?: MapDetails

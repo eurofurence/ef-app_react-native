@@ -1,6 +1,6 @@
 import { ImageSource } from 'expo-image'
 
-import { ImageRecord } from '@/context/data/types'
+import { ImageRecord } from '@/context/data/types.api'
 
 /**
  * Converts a record to an image source.

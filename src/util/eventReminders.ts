@@ -4,7 +4,7 @@ import { captureException } from '@sentry/react-native'
 import { format, isBefore, subMilliseconds, subMinutes } from 'date-fns'
 import { conId } from '@/configuration'
 import { Notification } from '@/store/background/slice'
-import { EventRecord, RecordId } from '@/context/data/types'
+import { EventRecord, RecordId } from '@/context/data/types.api'
 
 export async function scheduleEventReminder(event: EventRecord, timeTravel: number, save: (notification: Notification) => void) {
   // Get relevant UTC times.

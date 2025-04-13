@@ -2,7 +2,8 @@ import { differenceInMilliseconds, parseISO } from 'date-fns'
 import { format, toZonedTime } from 'date-fns-tz'
 import { de } from 'date-fns/locale/de'
 import { conTimeZone } from '@/configuration'
-import { EventDetails } from '@/context/data/types'
+
+import { EventDetails } from '@/context/data/types.details'
 
 export function calculateEventTiming(details: EventDetails, now: Date | 'done') {
   // Parse dates

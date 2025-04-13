@@ -3,7 +3,8 @@ import { FC } from 'react'
 import { IconNames } from '../generic/atoms/Icon'
 import { Section, SectionProps } from '../generic/atoms/Section'
 import { formatWeekdayInConventionTimezone } from '../../util/eventTiming'
-import { PartOfDay } from '@/context/data/types'
+
+import { PartOfDay } from '@/context/data/types.details'
 
 export type EventSectionProps = SectionProps
 

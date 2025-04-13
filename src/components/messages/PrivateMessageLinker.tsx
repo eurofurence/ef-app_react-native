@@ -21,7 +21,8 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
   const prevOpen = useRef(open)
   const { t } = useTranslation('Menu')
   const styleBackground = useThemeBackground('notification')
-  const { communications, synchronizeUi } = useCache()
+  const { getValue, synchronizeUi } = useCache()
+  const communications = getValue('communications')
 
   // Get all communications and filter unread ones
   const unread = useMemo(() => communications.filter((item) => !item.ReadDateTimeUtc), [communications])

@@ -1,4 +1,4 @@
-import { RecordId } from '@/context/data/types'
+import { RecordId } from '@/context/data/types.api'
 
 export type Notification = {
   recordId: RecordId

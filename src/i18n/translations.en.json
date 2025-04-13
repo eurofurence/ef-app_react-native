@@ -214,11 +214,13 @@
     "results": "In the viewed area"
   },
   "Menu": {
+    "about": "About",
     "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
     "home": "Home",
+    "image": "Image",
     "info": "Info articles",
     "less": "Less",
     "logged_in_now": "Log-in now",

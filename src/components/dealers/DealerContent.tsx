@@ -23,10 +23,10 @@ import { shareDealer } from '@/components/dealers/Dealers.common'
 import { useNow } from '@/hooks/time/useNow'
 import { useToast } from '@/context/ToastContext'
 import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
-import { DealerDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
 import { Row } from '@/components/generic/containers/Row'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { DealerDetails } from '@/context/data/types.details'
 
 const DealerCategories = ({ dealer }: { dealer: DealerDetails }) => {
   // Nothing to display for no categories.
