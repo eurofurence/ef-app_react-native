@@ -33,7 +33,7 @@ export function actionInternalsSet(cid: string, cacheVersion: number, lastSynchr
       cacheVersion,
       lastSynchronised,
     },
-  } as const
+  }
 }
 
 /**
@@ -55,7 +55,7 @@ export function actionValuesSet<T extends keyof SchemaValues>(key: T, value: Sto
     type: 'STORE_ACTION_VALUE_SET',
     key,
     value,
-  } as const
+  }
 }
 
 /**
@@ -74,7 +74,7 @@ export function actionValuesDelete<T extends keyof SchemaValues>(key: T): StoreA
   return {
     type: 'STORE_ACTION_VALUE_DELETE',
     key,
-  } as const
+  }
 }
 
 /**
@@ -102,7 +102,7 @@ export function actionEntitiesChange<T extends keyof SchemaEntities>(key: T, rem
     removeAll,
     remove,
     add,
-  } as const
+  }
 }
 
 /**
@@ -124,7 +124,7 @@ export function actionReset(data: StoreData, cause?: string): StoreActionReset {
     type: 'STORE_ACTION_RESET',
     data,
     cause,
-  } as const
+  }
 }
 
 /**
