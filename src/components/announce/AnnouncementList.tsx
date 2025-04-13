@@ -5,7 +5,8 @@ import { StyleSheet } from 'react-native'
 import { router } from 'expo-router'
 import { AnnouncementCard, AnnouncementDetailsInstance } from './AnnouncementCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { AnnouncementDetails } from '@/context/data/types'
+
+import { AnnouncementDetails } from '@/context/data/types.details'
 
 export type AnnouncementListProps = {
   leader?: ReactElement

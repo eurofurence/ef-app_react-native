@@ -6,7 +6,7 @@ import * as SecureStore from './SecureStorage'
 import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
 import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
 import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
-import { UserRecord } from '@/context/data/types'
+import { UserRecord } from '@/context/data/types.api'
 
 /**
  * Discovery entries.

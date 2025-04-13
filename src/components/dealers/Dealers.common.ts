@@ -6,7 +6,8 @@ import { format, setDay } from 'date-fns'
 import { DealerDetailsInstance, dealerInstanceForAny } from '@/components/dealers/DealerCard'
 import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation, DealerSectionProps } from '@/components/dealers/DealerSection'
 import { appBase, conAbbr } from '@/configuration'
-import { DealerDetails } from '@/context/data/types'
+
+import { DealerDetails } from '@/context/data/types.details'
 
 /**
  * Compares category, checks if the categories are adult labeled.

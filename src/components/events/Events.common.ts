@@ -7,7 +7,7 @@ import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, e
 import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from '@/components/events/EventSection'
 import { appBase, conAbbr } from '@/configuration'
 
-import { EventDetails } from '@/context/data/types'
+import { EventDetails } from '@/context/data/types.details'
 
 /**
  Returns a list of event instances according to conversion rules.

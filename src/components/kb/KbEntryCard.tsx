@@ -5,7 +5,7 @@ import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { Card } from '../generic/containers/Card'
 
-import { KnowledgeEntryRecord } from '@/context/data/types'
+import { KnowledgeEntryRecord } from '@/context/data/types.api'
 
 export type KbEntryCardProps = {
   containerStyle?: ViewStyle

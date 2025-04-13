@@ -7,9 +7,9 @@ import { EventSection, EventSectionProps } from './EventSection'
 import { EventCard, EventDetailsInstance } from './EventCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
-import { EventDetails } from '@/context/data/types'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
+import { EventDetails } from '@/context/data/types.details'
 
 /**
  * The properties to the component.

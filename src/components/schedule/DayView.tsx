@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import * as React from 'react'
 import { useMemo } from 'react'
-import { EventDayDetails, EventDetails } from '@/context/data/types'
 import { useNow } from '@/hooks/time/useNow'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useCache } from '@/context/data/Cache'
@@ -11,6 +10,7 @@ import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useEventDayGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
+import { EventDayDetails, EventDetails } from '@/context/data/types.details'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })

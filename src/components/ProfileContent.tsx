@@ -10,7 +10,7 @@ import { Button } from './generic/containers/Button'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Claims, useAuthContext } from '@/context/AuthContext'
 import { authSettingsUrl, conName } from '@/configuration'
-import { UserRecord } from '@/context/data/types'
+import { UserRecord } from '@/context/data/types.api'
 
 /**
  * User role pill.

@@ -11,7 +11,8 @@ import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Avatar } from '@/components/profile/Avatar'
-import { EventDetails } from '@/context/data/types'
+
+import { EventDetails } from '@/context/data/types.details'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })

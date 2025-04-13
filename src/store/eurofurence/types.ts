@@ -1,7 +1,7 @@
 /**
  * A URL leading to an image.
  */
-import { ImageRecord } from '@/context/data/types'
+import { ImageRecord } from '@/context/data/types.api'
 
 export type ArtistAlleyOwnTableRegistrationRecord = {
   LastChangeDateTimeUtc: string

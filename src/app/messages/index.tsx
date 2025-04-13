@@ -9,7 +9,7 @@ import { Header } from '@/components/generic/containers/Header'
 import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { NoData } from '@/components/generic/containers/NoData'
-import { CommunicationRecord } from '@/context/data/types'
+import { CommunicationRecord } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 
 type Section = {
@@ -19,7 +19,8 @@ type Section = {
 
 export default function Messages() {
   const { t } = useTranslation('PrivateMessageList')
-  const { communications, isSynchronizing, synchronizeUi } = useCache()
+  const { getValue, isSynchronizing, synchronizeUi } = useCache()
+  const communications = getValue('communications')
   const navigateTo = useCallback(
     (item: CommunicationRecord) =>
       router.push({

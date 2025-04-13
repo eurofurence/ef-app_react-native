@@ -5,7 +5,7 @@ import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { Floater } from '@/components/generic/containers/Floater'
 import { LinkItem } from '@/components/maps/LinkItem'
 import { Header } from '@/components/generic/containers/Header'
-import { LinkFragment } from '@/context/data/types'
+import { LinkFragment } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 
 export default function KnowledgeItem() {

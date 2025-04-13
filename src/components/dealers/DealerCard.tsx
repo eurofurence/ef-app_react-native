@@ -9,7 +9,8 @@ import { Label } from '../generic/atoms/Label'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { isPresent, joinOffDays } from './utils'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { DealerDetails } from '@/context/data/types'
+
+import { DealerDetails } from '@/context/data/types.details'
 
 export type DealerDetailsInstance = {
   details: DealerDetails

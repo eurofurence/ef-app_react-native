@@ -9,8 +9,8 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Floater } from '@/components/generic/containers/Floater'
 import { useNow } from '@/hooks/time/useNow'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { EventDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { EventDetails } from '@/context/data/types.details'
 
 export const RevealHidden = () => {
   const { t } = useTranslation('RevealHidden')

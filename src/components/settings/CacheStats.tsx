@@ -1,8 +1,9 @@
 import { View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { Label } from '@/components/generic/atoms/Label'
-import { StoreData, useCache } from '@/context/data/Cache'
-import { stringifyJsonSafe } from '@/context/data/json'
+import { useCache } from '@/context/data/Cache'
+import { stringifyJsonSafe } from '@/util/json'
+import { StoreData } from '@/context/data/CacheStore'
 
 function statFor(data: StoreData[keyof StoreData]): string {
   if (typeof data === 'object' && data !== null && Array.isArray(data as any)) return (data as any).length + ' items'

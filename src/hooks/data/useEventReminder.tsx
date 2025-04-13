@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { scheduleEventReminder, cancelEventReminder } from '@/util/eventReminders'
 import { Notification } from '@/store/background/slice'
-import { EventRecord } from '@/context/data/types'
+import { EventRecord } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 
 /**

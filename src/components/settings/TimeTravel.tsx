@@ -9,8 +9,8 @@ import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { useNow } from '@/hooks/time/useNow'
 import { conName } from '@/configuration'
-import { EventDayDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { EventDayDetails } from '@/context/data/types.details'
 
 const ONE_HOUR = 60 * 60 * 1000
 const ONE_MINUTE = 60 * 1000

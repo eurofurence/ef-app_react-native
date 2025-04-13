@@ -1,11 +1,12 @@
 import { getHours, parseISO } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
 import { flatMap, maxBy, uniq } from 'lodash'
-import { AttendanceDay, DealerRecord, EventDayDetails } from './types'
+import { DealerRecord } from './types.api'
 import { IconNames } from '@/components/generic/atoms/Icon'
 import { conTimeZone } from '@/configuration'
+import { AttendanceDay, EventDayDetails } from '@/context/data/types.details'
 
-export function internalHosts(panelHosts: string | undefined) {
+export function deriveHosts(panelHosts: string | undefined) {
   return (
     panelHosts
       ?.split(',')
@@ -14,7 +15,7 @@ export function internalHosts(panelHosts: string | undefined) {
   )
 }
 
-export function internalCategorizeTime(dateStr: string) {
+export function deriveCategorizedTime(dateStr: string) {
   const date = toZonedTime(parseISO(dateStr), conTimeZone)
   const hours = getHours(date)
   if (6 <= hours && hours < 13) return 'morning'
@@ -23,7 +24,7 @@ export function internalCategorizeTime(dateStr: string) {
   return 'night'
 }
 
-export function internalTagsToIcon(tags: string[] | null | undefined): IconNames | undefined {
+export function deriveIconFromTags(tags: string[] | null | undefined): IconNames | undefined {
   if (!tags) return
   if (tags.includes('supersponsors_only')) return 'star-circle'
   if (tags.includes('sponsors_only')) return 'star'
@@ -35,7 +36,7 @@ export function internalTagsToIcon(tags: string[] | null | undefined): IconNames
   if (tags.includes('photoshoot')) return 'camera'
 }
 
-export function internalTagsToBadges(tags: string[] | null | undefined): IconNames[] | undefined {
+export function deriveBadgesFromTags(tags: string[] | null | undefined): IconNames[] | undefined {
   if (!tags) return []
 
   const badges: IconNames[] = []
@@ -43,13 +44,13 @@ export function internalTagsToBadges(tags: string[] | null | undefined): IconNam
   return badges
 }
 
-export const internalSuperSponsorOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('supersponsors_only'))
+export const deriveIsSuperSponsorsOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('supersponsors_only'))
 
-export const internalSponsorOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('sponsors_only'))
+export const deriveIsSponsorsOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('sponsors_only'))
 
-export const internalMaskRequired = (tags: string[] | null | undefined) => Boolean(tags?.includes('mask_required'))
+export const deriveIsMaskRequired = (tags: string[] | null | undefined) => Boolean(tags?.includes('mask_required'))
 
-export function internalAttendanceDayNames(dealer: DealerRecord) {
+export function deriveAttendanceNames(dealer: DealerRecord) {
   const result: AttendanceDay[] = []
   if (dealer.AttendsOnThursday) result.push('mon')
   if (dealer.AttendsOnFriday) result.push('tue')
@@ -57,7 +58,7 @@ export function internalAttendanceDayNames(dealer: DealerRecord) {
   return result
 }
 
-export function internalAttendanceDays(days: readonly EventDayDetails[], dealer: DealerRecord) {
+export function deriveAttendanceDays(days: readonly EventDayDetails[], dealer: DealerRecord) {
   const result: EventDayDetails[] = []
   for (const day of days) {
     // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
@@ -68,21 +69,21 @@ export function internalAttendanceDays(days: readonly EventDayDetails[], dealer:
   return result
 }
 
-export function internalDealerParseTable(dealer: DealerRecord) {
+export function deriveDealerTable(dealer: DealerRecord) {
   if (!dealer.ShortDescription) return undefined
   if (!dealer.ShortDescription?.startsWith('Table')) return undefined
 
   return dealer.ShortDescription.split(/\r?\n/, 1)[0].substring('Table'.length).trim()
 }
 
-export function internalDealerParseDescriptionContent(dealer: DealerRecord) {
+export function deriveDealerDescription(dealer: DealerRecord) {
   if (!dealer.ShortDescription) return dealer.ShortDescription
   if (!dealer.ShortDescription?.startsWith('Table')) return dealer.ShortDescription
 
   return dealer.ShortDescription.split(/\r?\n/).slice(1).join('\n').trimStart()
 }
 
-export function internalFixedTitle(title: string, content: string) {
+export function deriveAnnouncementTitle(title: string, content: string) {
   // Not ellipsized, skip.
   if (!title.endsWith('[...]')) return title
 
@@ -97,7 +98,7 @@ export function internalFixedTitle(title: string, content: string) {
   return init.substring(0, index + 1)
 }
 
-export function internalMastodonHandleToProfileUrl(handle: string) {
+export function deriveProfileUrlFromMastodonHandle(handle: string) {
   // Remove the leading '@' and split the handle into username and instance
   const parts = handle.replace(/^@/, '').split('@')
 
@@ -115,7 +116,7 @@ export function internalMastodonHandleToProfileUrl(handle: string) {
  * TF-IDF category mapper. Returns the category for a dealer that is the most
  * "unique" for them among all other dealers.
  */
-export function internalCreateCategoryMapper(dealers: readonly DealerRecord[]) {
+export function createCategoryMapper(dealers: readonly DealerRecord[]) {
   function tf(category: string, categories: string[]) {
     let n = 0
     for (const item of categories) if (item === category) n++

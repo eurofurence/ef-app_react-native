@@ -10,7 +10,7 @@ import { Row } from '../generic/containers/Row'
 import { appStyles } from '../AppStyles'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
-import { CommunicationRecord } from '@/context/data/types'
+import { CommunicationRecord } from '@/context/data/types.api'
 
 export type PrivateMessageCardProps = {
   containerStyle?: ViewStyle

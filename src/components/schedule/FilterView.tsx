@@ -8,13 +8,13 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { ComboModal, ComboModalRef } from '@/components/generic/atoms/ComboModal'
-import { EventDayDetails, EventDetails, EventRoomDetails, EventTrackDetails } from '@/context/data/types'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useEventOtherGroups } from '@/components/events/Events.common'
 import { Label } from '@/components/generic/atoms/Label'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Row } from '@/components/generic/containers/Row'
 import { Tab } from '@/components/generic/containers/Tab'
+import { EventDayDetails, EventDetails, EventRoomDetails, EventTrackDetails } from '@/context/data/types.details'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })

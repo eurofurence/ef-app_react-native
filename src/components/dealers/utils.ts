@@ -1,6 +1,6 @@
 import { isSameDay } from 'date-fns'
 
-import { DealerDetails } from '@/context/data/types'
+import { DealerDetails } from '@/context/data/types.details'
 
 /**
  * True if for the given date the dealer is attending.

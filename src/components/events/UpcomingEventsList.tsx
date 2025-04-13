@@ -7,8 +7,8 @@ import { isWithinInterval, subMinutes } from 'date-fns'
 import { Section } from '../generic/atoms/Section'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { EventDetails } from '@/context/data/types'
 import { useCache } from '@/context/data/Cache'
+import { EventDetails } from '@/context/data/types.details'
 
 const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
   events.filter((it) => {

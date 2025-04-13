@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { isAfter, parseISO } from 'date-fns'
 import { useNow } from '@/hooks/time/useNow'
-import { RecordMetadata } from '@/context/data/types'
+import { RecordMetadata } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 
 /**
