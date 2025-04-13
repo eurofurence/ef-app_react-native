@@ -41,6 +41,7 @@ export function useStackScreensData(): StackScreenProps[] {
         title: t('info'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'dealers/[id]',
@@ -77,12 +78,14 @@ export function useStackScreensData(): StackScreenProps[] {
         title: t('info'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'profile',
         title: t('profile'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'maps/[...slug]',
@@ -94,30 +97,35 @@ export function useStackScreensData(): StackScreenProps[] {
         title: t('pm'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'messages/[messageId]',
         title: t('pm'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'settings/index',
         title: t('settings'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'settings/reveal',
         title: t('settings'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'about',
         title: t('about'),
         headerLeft: goBackCustom(),
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: '+not-found',
