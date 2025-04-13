@@ -1,44 +1,42 @@
-import { differenceInMilliseconds, formatDuration, parseISO } from "date-fns";
-import { format, toZonedTime } from "date-fns-tz";
-import { EventDetails } from "../store/eurofurence/types";
-import { conTimeZone } from "../configuration";
+import { differenceInMilliseconds, parseISO } from 'date-fns'
+import { format, toZonedTime } from 'date-fns-tz'
+import { de } from 'date-fns/locale/de'
+import { conTimeZone } from '@/configuration'
 
-export function calculateEventTiming(details: EventDetails, now: Date | "done") {
-    // Parse dates
-    const eventStart = parseISO(details.StartDateTimeUtc);
-    const eventEnd = parseISO(details.EndDateTimeUtc);
-    
-    // Calculate progress
-    const progress = now !== "done" 
-        ? differenceInMilliseconds(now, eventStart) / differenceInMilliseconds(eventEnd, eventStart)
-        : 1.1;
+import { EventDetails } from '@/context/data/types.details'
 
-    // Convert to con timezone
-    const eventStartCon = toZonedTime(eventStart, conTimeZone);
-    const start = format(eventStartCon, "p", { timeZone: conTimeZone }); // Local time format
-    const day = format(eventStartCon, "EEE", { timeZone: conTimeZone }); // Day abbreviation
+export function calculateEventTiming(details: EventDetails, now: Date | 'done') {
+  // Parse dates
+  const eventStart = parseISO(details.StartDateTimeUtc)
+  const eventEnd = parseISO(details.EndDateTimeUtc)
 
-    // Convert to local timezone
-    const eventStartLocal = new Date(eventStart);
-    const startLocal = format(eventStartLocal, "p");
-    const dayLocal = format(eventStartLocal, "EEE");
+  // Calculate progress
+  const progress = now !== 'done' ? differenceInMilliseconds(now, eventStart) / differenceInMilliseconds(eventEnd, eventStart) : 1.1
 
-    // Calculate duration
-    const durationMs = differenceInMilliseconds(eventEnd, eventStart);
-    const durationHours = durationMs / (1000 * 60 * 60);
-    const durationMinutes = durationMs / (1000 * 60);
-    const runtime = durationHours >= 1 
-        ? `${Math.floor(durationHours)}h` 
-        : `${Math.floor(durationMinutes)}m`;
+  // Convert to con timezone
+  const eventStartCon = toZonedTime(eventStart, conTimeZone)
+  const start = format(eventStartCon, 'p', { timeZone: conTimeZone, locale: de }) // Local time format
+  const day = format(eventStartCon, 'EEE', { timeZone: conTimeZone }) // Day abbreviation
 
-    return {
-        progress,
-        start,
-        day,
-        startLocal,
-        dayLocal,
-        runtime,
-    };
+  // Convert to local timezone
+  const eventStartLocal = new Date(eventStart)
+  const startLocal = format(eventStartLocal, 'p', { locale: de })
+  const dayLocal = format(eventStartLocal, 'EEE', {})
+
+  // Calculate duration
+  const durationMs = differenceInMilliseconds(eventEnd, eventStart)
+  const durationHours = durationMs / (1000 * 60 * 60)
+  const durationMinutes = durationMs / (1000 * 60)
+  const runtime = durationHours >= 1 ? `${Math.floor(durationHours)}h` : `${Math.floor(durationMinutes)}m`
+
+  return {
+    progress,
+    start,
+    day,
+    startLocal,
+    dayLocal,
+    runtime,
+  }
 }
 
 /**
@@ -47,7 +45,7 @@ export function calculateEventTiming(details: EventDetails, now: Date | "done") 
  * @returns The formatted weekday name
  */
 export function formatWeekdayInConventionTimezone(dateStr: string): string {
-    const date = parseISO(dateStr);
-    const zonedDate = toZonedTime(date, conTimeZone);
-    return format(zonedDate, "EEEE", { timeZone: conTimeZone });
-} 
+  const date = parseISO(dateStr)
+  const zonedDate = toZonedTime(date, conTimeZone)
+  return format(zonedDate, 'EEEE', { timeZone: conTimeZone })
+}

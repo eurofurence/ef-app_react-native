@@ -6,6 +6,13 @@
       "title": "App Details"
     },
     "developed_by": "Developed by",
+    "developer_settings_alert": {
+      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
+      "cancel": "Cancel",
+      "disable": "Disable",
+      "enable": "Enable",
+      "title": "Dev Settings Menu"
+    },
     "extra_thanks": "Extra Thanks",
     "header": "About"
   },
@@ -83,13 +90,17 @@
     "attends_sat": "Saturday",
     "attends_thu": "Thursday",
     "categories": "Categories",
+    "copy_token": "Copy token",
     "dealer_was_updated": "Dealer was updated since your last visit",
     "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
     "in_after_dark": "Located in the after dark section",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
     "remove_favorite": "Unfavorite",
+    "set_token": "Set token",
     "table": "Table",
+    "test_toast": "Test toast notification",
+    "token_placeholder": "The JWT or Oryx token to set",
     "view_on_map": "View on map",
     "viewing_dealer": "Viewing dealer"
   },
@@ -110,7 +121,6 @@
     "notImplemented": "Content is not implemented yet."
   },
   "Event": {
-    "viewing_event": "Viewing event",
     "about_title": "About",
     "add_favorite": "Favorite",
     "event_was_updated": "Event was updated since your last visit",
@@ -128,6 +138,7 @@
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
+    "viewing_event": "Viewing event",
     "when": "{{day}}, {{start}} until {{finish}}.",
     "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
   },
@@ -145,7 +156,6 @@
     "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}."
   },
   "Events": {
-    "long_running": "Runs longer",
     "afternoon": "In the afternoon",
     "current_subtitle": "These events are currently happening",
     "current_title": "Current Events",
@@ -156,10 +166,12 @@
     "events_hidden_subtitle": "{{count}} events, reveal them again in Settings",
     "favorites_subtitle": "You will receive a reminder about these events",
     "favorites_title": "Favorite Events",
-    "filter_by_day": "Browse days",
-    "filter_by_room": "Browse rooms",
-    "filter_by_track": "Browse tracks",
+    "filter_by_day": "Filter days",
+    "filter_by_host": "Filter hosts",
+    "filter_by_room": "Filter rooms",
+    "filter_by_track": "Filter tracks",
     "finished": "Finished",
+    "long_running": "Runs longer",
     "morning": "In the morning",
     "night": "At night",
     "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
@@ -202,11 +214,13 @@
     "results": "In the viewed area"
   },
   "Menu": {
+    "about": "About",
     "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
     "home": "Home",
+    "image": "Image",
     "info": "Info articles",
     "less": "Less",
     "logged_in_now": "Log-in now",
@@ -230,9 +244,9 @@
     "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {
-    "header": "Private Messages",
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
+    "header": "Private Messages",
     "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
     "no_data": "There's nothing here yet",
     "read": "Read",
@@ -301,13 +315,6 @@
     "developer_settings": {
       "subtitle": "You shouldn't touch these unless you know what you're doing.",
       "title": "Developer Settings"
-    },
-    "developer_settings_alert": {
-      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
-      "cancel": "Cancel",
-      "disable": "Disable",
-      "enable": "Enable",
-      "title": "Dev Settings Menu"
     },
     "device_warnings": {
       "hide_device_warnings": "Hide device warnings",

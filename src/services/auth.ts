@@ -1,144 +1,140 @@
-import React from 'react';
-import { apiBase } from "@/configuration";
-import { getAccessToken } from "@/context/AuthContext";
+import { useCallback, useState } from 'react'
+import { apiBase } from '@/configuration'
+import { getAccessToken } from '@/context/AuthContext'
 
 type NewPrivateMessage = {
-    RecipientUid: string;
-    AuthorName: string;
-    ToastTitle: string;
-    ToastMessage: string;
-    Subject: string;
-    Message: string;
-};
+  RecipientUid: string
+  AuthorName: string
+  ToastTitle: string
+  ToastMessage: string
+  Subject: string
+  Message: string
+}
 
 type DeviceRegistration = {
-    DeviceId: string;
-    DeviceType: string;
-};
+  DeviceId: string
+  DeviceType: string
+}
 
 async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
-    const token = await getAccessToken();
-    const headers = new Headers(options.headers);
-    if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-    }
+  const token = await getAccessToken()
+  const headers = new Headers(options.headers)
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`)
+  }
 
-    const response = await fetch(`${apiBase}${endpoint}`, {
-        ...options,
-        headers,
-    });
+  const response = await fetch(`${apiBase}${endpoint}`, {
+    ...options,
+    headers,
+  })
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`)
+  }
 
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-        return response.json();
-    }
+  const contentType = response.headers.get('content-type')
+  if (contentType && contentType.includes('application/json')) {
+    return response.json()
+  }
 
-    return response.text();
+  return response.text()
 }
 
 export const authService = {
-    /**
-     * Register a device for push notifications
-     */
-    async registerDevice(registration: DeviceRegistration): Promise<void> {
-        await fetchWithAuth("/PushNotifications/FcmDeviceRegistration", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(registration),
-        });
-    },
+  /**
+   * Register a device for push notifications
+   */
+  async registerDevice(registration: DeviceRegistration): Promise<void> {
+    await fetchWithAuth('/PushNotifications/FcmDeviceRegistration', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(registration),
+    })
+  },
 
-    /**
-     * Create a sync request
-     */
-    async createSyncRequest(): Promise<void> {
-        await fetchWithAuth("/PushNotifications/SyncRequest", {
-            method: "POST",
-        });
-    },
+  /**
+   * Create a sync request
+   */
+  async createSyncRequest(): Promise<void> {
+    await fetchWithAuth('/PushNotifications/SyncRequest', {
+      method: 'POST',
+    })
+  },
 
-    /**
-     * Send a private message
-     */
-    async sendPrivateMessage(message: NewPrivateMessage): Promise<string> {
-        const response = await fetchWithAuth("/Communication/PrivateMessages", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(message),
-        });
-        return response as string;
-    },
-} as const;
-
-// Helper type to get the return type of a service method
-type ServiceMethodReturnType<T extends keyof typeof authService> = 
-    Awaited<ReturnType<(typeof authService)[T]>>;
+  /**
+   * Send a private message
+   */
+  async sendPrivateMessage(message: NewPrivateMessage): Promise<string> {
+    const response = await fetchWithAuth('/Communication/PrivateMessages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    })
+    return response as string
+  },
+} as const
 
 // Custom hooks for each service method
 export function useRegisterDevice(registration: DeviceRegistration) {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
 
-    const execute = React.useCallback(async () => {
-        try {
-            setIsLoading(true);
-            setError(null);
-            await authService.registerDevice(registration);
-        } catch (err) {
-            setError(err instanceof Error ? err : new Error(String(err)));
-            throw err;
-        } finally {
-            setIsLoading(false);
-        }
-    }, [registration]);
+  const execute = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      await authService.registerDevice(registration)
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error(String(err)))
+      throw err
+    } finally {
+      setIsLoading(false)
+    }
+  }, [registration])
 
-    return { execute, isLoading, error };
+  return { execute, isLoading, error }
 }
 
 export function useCreateSyncRequest() {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
 
-    const execute = React.useCallback(async () => {
-        try {
-            setIsLoading(true);
-            setError(null);
-            await authService.createSyncRequest();
-        } catch (err) {
-            setError(err instanceof Error ? err : new Error(String(err)));
-            throw err;
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
+  const execute = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      await authService.createSyncRequest()
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error(String(err)))
+      throw err
+    } finally {
+      setIsLoading(false)
+    }
+  }, [])
 
-    return { execute, isLoading, error };
+  return { execute, isLoading, error }
 }
 
 export function useSendPrivateMessage(message: NewPrivateMessage) {
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState<Error | null>(null);
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
 
-    const execute = React.useCallback(async () => {
-        try {
-            setIsLoading(true);
-            setError(null);
-            return await authService.sendPrivateMessage(message);
-        } catch (err) {
-            setError(err instanceof Error ? err : new Error(String(err)));
-            throw err;
-        } finally {
-            setIsLoading(false);
-        }
-    }, [message]);
+  const execute = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      return await authService.sendPrivateMessage(message)
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error(String(err)))
+      throw err
+    } finally {
+      setIsLoading(false)
+    }
+  }, [message])
 
-    return { execute, isLoading, error };
-} 
+  return { execute, isLoading, error }
+}

@@ -1,72 +1,58 @@
-import { KbSectionedList } from "@/components/kb/KbSectionedList";
-import { Search } from "@/components/generic/atoms/Search";
-import { useDataCache } from "@/context/DataCacheProvider";
-import { useState, useMemo } from "react";
-import { View, StyleSheet } from "react-native";
-import { chain } from "lodash";
-import Fuse from "fuse.js";
-import { useThemeBackground } from "@/hooks/themes/useThemeHooks";
-import { Header } from "@/components/generic/containers/Header";
-import { useTranslation } from "react-i18next";
+import { useMemo, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import { chain } from 'lodash'
+import Fuse from 'fuse.js'
+import { useTranslation } from 'react-i18next'
+import { KbSectionedList } from '@/components/kb/KbSectionedList'
+import { Search } from '@/components/generic/atoms/Search'
+import { Header } from '@/components/generic/containers/Header'
+import { useCache } from '@/context/data/Cache'
 
 export default function Knowledge() {
-    const { t } = useTranslation("KnowledgeGroups");
-    const { getAllCacheSync } = useDataCache();
-    const [filter, setFilter] = useState("");
+  const { t } = useTranslation('KnowledgeGroups')
+  const { knowledgeGroups, knowledgeEntries } = useCache()
+  const [filter, setFilter] = useState('')
 
-    // Get knowledge groups and entries from cache
-    const knowledgeGroups = getAllCacheSync("knowledgeGroups");
-    const knowledgeEntries = getAllCacheSync("knowledgeEntries");
-    const backgroundStyle = useThemeBackground("background");
+  // Prepare data for search and display
+  const groups = useMemo(() => {
+    // Group entries by their group ID
+    const groupedEntries = chain(knowledgeEntries).groupBy('KnowledgeGroupId').value()
 
-    // Prepare data for search and display
-    const groups = useMemo(() => {
-        const groupsData = knowledgeGroups.map(item => item.data);
-        const entriesData = knowledgeEntries.map(item => item.data);
+    // Combine groups with their entries
+    return knowledgeGroups.map((group) => ({
+      group,
+      entries: groupedEntries[group.Id] || [],
+    }))
+  }, [knowledgeGroups, knowledgeEntries])
 
-        // Group entries by their group ID
-        const groupedEntries = chain(entriesData)
-            .groupBy('KnowledgeGroupId')
-            .value();
+  // Setup search functionality
+  const searchResults = useMemo(() => {
+    if (!filter) return null
 
-        // Combine groups with their entries
-        return groupsData.map(group => ({
-            group,
-            entries: groupedEntries[group.Id] || []
-        }));
-    }, [knowledgeGroups, knowledgeEntries]);
+    const allItems = chain(groups)
+      .flatMap(({ group, entries }) => [group, ...entries])
+      .value()
 
-    // Setup search functionality
-    const searchResults = useMemo(() => {
-        if (!filter) return null;
+    const fuse = new Fuse(allItems, {
+      keys: ['Name', 'Description', 'Text'],
+      threshold: 0.3,
+    })
 
-        const allItems = chain(groups)
-            .flatMap(({ group, entries }) => [group, ...entries])
-            .value();
+    return fuse.search(filter).map((result) => result.item)
+  }, [groups, filter])
 
-        const fuse = new Fuse(allItems, {
-            keys: ['Name', 'Description', 'Text'],
-            threshold: 0.3
-        });
+  // Prepare final data for display
+  const displayData = useMemo(() => {
+    if (searchResults) return searchResults
+    return chain(groups)
+      .flatMap(({ group, entries }) => [group, ...entries])
+      .value()
+  }, [searchResults, groups])
 
-        return fuse.search(filter).map(result => result.item);
-    }, [groups, filter]);
-
-    // Prepare final data for display
-    const displayData = useMemo(() => {
-        if (searchResults) return searchResults;
-        return chain(groups)
-            .flatMap(({ group, entries }) => [group, ...entries])
-            .value();
-    }, [searchResults, groups]);
-
-    return (
-        <View style={[StyleSheet.absoluteFill, backgroundStyle]}>
-            <Header>{t("header")}</Header>
-            <KbSectionedList
-                kbGroups={displayData}
-                leader={<Search filter={filter} setFilter={setFilter} />}
-            />
-        </View>
-    );
+  return (
+    <View style={StyleSheet.absoluteFill}>
+      <Header>{t('header')}</Header>
+      <KbSectionedList kbGroups={displayData} leader={<Search filter={filter} setFilter={setFilter} />} />
+    </View>
+  )
 }

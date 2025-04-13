@@ -1,107 +1,108 @@
-import { exchangeCodeAsync, refreshAsync, TokenResponse, useAuthRequest } from "expo-auth-session";
-import * as WebBrowser from "expo-web-browser";
-import { createContext, FC, PropsWithChildren, useContext, useMemo, useState } from "react";
+import { exchangeCodeAsync, refreshAsync, TokenResponse, useAuthRequest } from 'expo-auth-session'
+import * as WebBrowser from 'expo-web-browser'
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from 'react'
 
-import * as SecureStore from "./SecureStorage";
-import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from "@/configuration";
-import { useAsyncInterval } from "@/hooks/util/useAsyncInterval";
-import { UserRecord } from "@/store/eurofurence/types";
-import { useAsyncCallbackOnce } from "@/hooks/util/useAsyncCallbackOnce";
+import * as SecureStore from './SecureStorage'
+import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
+import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
+import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
+import { UserRecord } from '@/context/data/types.api'
 
 /**
  * Discovery entries.
  */
 const discovery = {
-    authorizationEndpoint: `${authIssuer}/oauth2/auth`,
-    tokenEndpoint: `${authIssuer}/oauth2/token`,
-    userInfoEndpoint: `${authIssuer}/api/v1/userinfo`,
-    revocationEndpoint: `${authIssuer}/oauth2/revoke`,
-};
+  authorizationEndpoint: `${authIssuer}/oauth2/auth`,
+  tokenEndpoint: `${authIssuer}/oauth2/token`,
+  userInfoEndpoint: `${authIssuer}/api/v1/userinfo`,
+  revocationEndpoint: `${authIssuer}/oauth2/revoke`,
+}
 
 /**
  * Token refresh interval.
  */
-const refreshInterval = 600_000;
+const refreshInterval = 600_000
 
 /**
  * When to start requesting a new token.
  */
-const refreshMarginSeconds = 600;
+const refreshMarginSeconds = 600
 
 /**
  * User claims record.
  */
-export type Claims = Record<string, string | string[]>;
+export type Claims = Record<string, string | string[]>
 
 /**
  * Type of the auth context.
  */
 export type AuthContextType = {
-    /**
-     * Performs a remote login and maintains the state. May throw.
-     */
-    login(): Promise<void>;
+  /**
+   * Performs a remote login and maintains the state. May throw.
+   */
+  login(): Promise<void>
 
-    /**
-     * Performs a remote logout and maintains the state. May throw.
-     */
-    logout(): Promise<void>;
+  /**
+   * Performs a remote logout and maintains the state. May throw.
+   */
+  logout(): Promise<void>
 
-    /**
-     * Updates the claims and user data. User data is for now coupled with
-     * the token, but user info might change.
-     */
-    update(): Promise<void>;
+  /**
+   * Updates the claims and user data. User data is for now coupled with
+   * the token, but user info might change.
+   */
+  update(): Promise<void>
 
-    /**
-     * Updates the token if a refresh token is present. Reloads user claims and info from the IDP and backend.
-     */
-    refresh(): Promise<void>;
+  /**
+   * Updates the token if a refresh token is present. Reloads user claims and info from the IDP and backend.
+   */
+  refresh(): Promise<void>
 
-    /**
-     * True if logged in.
-     */
-    loggedIn: boolean;
+  /**
+   * True if logged in.
+   */
+  loggedIn: boolean
 
-    /**
-     * The user claims if logged in and successfully retrieved.
-     */
-    claims: Claims | null;
+  /**
+   * The user claims if logged in and successfully retrieved.
+   */
+  claims: Claims | null
 
-    /**
-     * The user self-service info if logged in and successfully retrieved.
-     */
-    user: UserRecord | null;
-};
+  /**
+   * The user self-service info if logged in and successfully retrieved.
+   */
+  user: UserRecord | null
+}
 
 /**
  * Auth context.
  */
 export const AuthContext = createContext<AuthContextType>({
-    login: () => Promise.resolve(),
-    logout: () => Promise.resolve(),
-    update: () => Promise.resolve(),
-    refresh: () => Promise.resolve(),
-    loggedIn: false,
-    claims: null,
-    user: null,
-});
+  login: () => Promise.resolve(),
+  logout: () => Promise.resolve(),
+  update: () => Promise.resolve(),
+  refresh: () => Promise.resolve(),
+  loggedIn: false,
+  claims: null,
+  user: null,
+})
+AuthContext.displayName = 'AuthContext'
 
 /**
  * Gets the currently assigned auth token.
  */
-export const getAccessToken = () => SecureStore.getItemAsync("accessToken");
+export const getAccessToken = () => SecureStore.getItemAsync('accessToken')
 
 /**
  * Thrown by fetch methods.
  */
 class EndpointError extends Error {
-    public readonly statusCode: number;
+  public readonly statusCode: number
 
-    constructor(statusCode: number, message?: string) {
-        super(message);
-        this.statusCode = statusCode;
-    }
+  constructor(statusCode: number, message?: string) {
+    super(message)
+    this.statusCode = statusCode
+  }
 }
 
 /**
@@ -109,85 +110,85 @@ class EndpointError extends Error {
  * @param type
  */
 const isJsonMimeType = (type: string | null) => {
-    return type?.includes("application/json");
-};
+  return type?.includes('application/json')
+}
 
 /**
  * Fetches the user info from the user info endpoint.
  * @param accessToken The current access token.
  */
 const fetchUserInfo = async (accessToken: string) => {
-    const response = await fetch(discovery.userInfoEndpoint, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-        redirect: "manual",
-    });
+  const response = await fetch(discovery.userInfoEndpoint, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    redirect: 'manual',
+  })
 
-    // Must be OK.
-    if (!response.ok) {
-        throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`);
-    }
-    // Must be JSON.
-    const contentType = response.headers.get("Content-type");
-    if (!isJsonMimeType(contentType)) {
-        throw new EndpointError(response.status, `Invalid response content type: ${contentType}`);
-    }
-    // Parse JSON for result.
-    return await response.json();
-};
+  // Must be OK.
+  if (!response.ok) {
+    throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`)
+  }
+  // Must be JSON.
+  const contentType = response.headers.get('Content-type')
+  if (!isJsonMimeType(contentType)) {
+    throw new EndpointError(response.status, `Invalid response content type: ${contentType}`)
+  }
+  // Parse JSON for result.
+  return await response.json()
+}
 
 /**
  * Posts token revocation.
  * @param token The token.
  * @param type The type of the token.
  */
-const fetchRevokeToken = async (token: string, type: "access_token" | "refresh_token") => {
-    const response = await fetch(discovery.tokenEndpoint, {
-        method: "POST",
-        headers: {
-            "Content-type": "application/x-www-form-urlencoded",
-        },
-        redirect: "manual",
-        body: new URLSearchParams({
-            token,
-            client_id: authClientId,
-            token_type_hint: type,
-        }),
-    });
-    // Must be OK.
-    if (!response.ok) {
-        throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`);
-    }
-};
+const fetchRevokeToken = async (token: string, type: 'access_token' | 'refresh_token') => {
+  const response = await fetch(discovery.tokenEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'manual',
+    body: new URLSearchParams({
+      token,
+      client_id: authClientId,
+      token_type_hint: type,
+    }),
+  })
+  // Must be OK.
+  if (!response.ok) {
+    throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`)
+  }
+}
 
 /**
  * Fetches the user data from the API server.
  * @param accessToken The current access token.
  */
 const fetchUserSelf = async (accessToken: string) => {
-    const response = await fetch(`${apiBase}/Users/:self`, {
-        headers: {
-            Authorization: `Bearer ${accessToken}`,
-        },
-        redirect: "manual",
-    });
+  const response = await fetch(`${apiBase}/Users/:self`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    redirect: 'manual',
+  })
 
-    // Must be OK.
-    if (!response.ok) {
-        throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`);
-    }
-    // Must be JSON.
-    const contentType = response.headers.get("Content-type");
-    if (!isJsonMimeType(contentType)) {
-        throw new EndpointError(response.status, `Invalid response content type: ${contentType}`);
-    }
-    // Parse JSON for result.
-    return await response.json();
-};
+  // Must be OK.
+  if (!response.ok) {
+    throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`)
+  }
+  // Must be JSON.
+  const contentType = response.headers.get('Content-type')
+  if (!isJsonMimeType(contentType)) {
+    throw new EndpointError(response.status, `Invalid response content type: ${contentType}`)
+  }
+  // Parse JSON for result.
+  return await response.json()
+}
 
 // Link browser closing.
-WebBrowser.maybeCompleteAuthSession();
+WebBrowser.maybeCompleteAuthSession()
 
 /**
  * Provides and maintains auth state.
@@ -195,173 +196,181 @@ WebBrowser.maybeCompleteAuthSession();
  * @constructor
  */
 export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-    // Current user.
-    const [claims, setClaims] = useState<Claims | null>(null);
-    const [user, setUser] = useState<UserRecord | null>(null);
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  // Current user.
+  const [claims, setClaims] = useState<Claims | null>(null)
+  const [user, setUser] = useState<UserRecord | null>(null)
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
 
-    // Auth request and login prompt.
-    const [request, , promptAsync] = useAuthRequest(
-        {
+  // Auth request and login prompt.
+  const [request, , promptAsync] = useAuthRequest(
+    {
+      clientId: authClientId,
+      scopes: authScopes,
+      redirectUri: authRedirect,
+    },
+    discovery
+  )
+
+  // For an existing access token, fetches and applies user claims and settings.
+  const update = useAsyncCallbackOnce(
+    useCallback(async () => {
+      try {
+        const accessToken = await SecureStore.getItemAsync('accessToken')
+        if (accessToken) {
+          const claimsPromise = fetchUserInfo(accessToken)
+          const userPromise = fetchUserSelf(accessToken)
+          const claims = await claimsPromise
+          const user = await userPromise
+          setClaims(claims)
+          setUser(user)
+          setLoggedIn(true)
+        } else {
+          setClaims(null)
+          setUser(null)
+          setLoggedIn(false)
+        }
+      } catch (error) {
+        // Delete access and refresh if actual authorization error, then rethrow.
+        if (error instanceof EndpointError && (error.statusCode === 401 || error.statusCode === 403)) {
+          await SecureStore.deleteItemAsync('accessToken')
+          await SecureStore.deleteItemAsync('accessTokenData')
+          await SecureStore.deleteItemAsync('refreshToken')
+          setLoggedIn(false)
+          setClaims(null)
+          setUser(null)
+        }
+        throw error
+      }
+    }, [])
+  )
+
+  // Login method.
+  const login = useAsyncCallbackOnce(
+    useCallback(async () => {
+      // Code exchange part.
+      try {
+        // We set show in "recents" so the web browser doesn't close when
+        // you use an MFA method that requires switching apps on android.
+        const codeResponse = await promptAsync({ showInRecents: true })
+
+        if (!(request && codeResponse?.type === 'success')) return
+
+        const response = await exchangeCodeAsync(
+          {
             clientId: authClientId,
-            scopes: authScopes,
+            code: codeResponse.params.code,
+            extraParams: request.codeVerifier ? { code_verifier: request.codeVerifier } : undefined,
             redirectUri: authRedirect,
-        },
-        discovery,
-    );
+          },
+          discovery
+        )
 
-    // For an existing access token, fetches and applies user claims and settings.
-    const update = useAsyncCallbackOnce(async () => {
-        try {
-            const accessToken = await SecureStore.getItemAsync("accessToken");
-            if (accessToken) {
-                const claimsPromise = fetchUserInfo(accessToken);
-                const userPromise = fetchUserSelf(accessToken);
-                const claims = await claimsPromise;
-                const user = await userPromise;
-                setClaims(claims);
-                setUser(user);
-                setLoggedIn(true);
-            } else {
-                setClaims(null);
-                setUser(null);
-                setLoggedIn(false);
-            }
-        } catch (error) {
-            // Delete access and refresh if actual authorization error, then rethrow.
-            if (error instanceof EndpointError && (error.statusCode === 401 || error.statusCode === 403)) {
-                await SecureStore.deleteItemAsync("accessToken");
-                await SecureStore.deleteItemAsync("accessTokenData");
-                await SecureStore.deleteItemAsync("refreshToken");
-                setLoggedIn(false);
-                setClaims(null);
-                setUser(null);
-            }
-            throw error;
+        await SecureStore.setItemToAsync('accessToken', response.accessToken)
+        await SecureStore.setItemToAsync('accessTokenData', JSON.stringify(response.getRequestConfig()))
+        await SecureStore.setItemToAsync('refreshToken', response.refreshToken)
+        setLoggedIn(true)
+      } catch (error) {
+        // Delete access and refresh, then rethrow.
+        await SecureStore.deleteItemAsync('accessToken')
+        await SecureStore.deleteItemAsync('accessTokenData')
+        await SecureStore.deleteItemAsync('refreshToken')
+        setLoggedIn(false)
+        setClaims(null)
+        throw error
+      }
+
+      // User update part, if invalid tokens are detected here, data is properly reset.
+      await update()
+    }, [promptAsync, request, update])
+  )
+
+  // Logout method.
+  const logout = useAsyncCallbackOnce(
+    useCallback(async () => {
+      try {
+        // Get tokens and delete from store.
+        const accessToken = await SecureStore.getItemAsync('accessToken')
+        const refreshToken = await SecureStore.getItemAsync('refreshToken')
+        await SecureStore.deleteItemAsync('accessToken')
+        await SecureStore.deleteItemAsync('accessTokenData')
+        await SecureStore.deleteItemAsync('refreshToken')
+
+        // Revoke all present tokens.
+        let accessTokenTask
+        let refreshTokenTask
+        if (accessToken) accessTokenTask = fetchRevokeToken(accessToken, 'access_token')
+        if (refreshToken) refreshTokenTask = fetchRevokeToken(refreshToken, 'refresh_token')
+        await Promise.all([accessTokenTask, refreshTokenTask])
+      } finally {
+        setLoggedIn(false)
+        setClaims(null)
+        setUser(null)
+      }
+    }, [])
+  )
+
+  // Reload method.
+  const refresh = useAsyncCallbackOnce(
+    useCallback(async () => {
+      // Refresh token part.
+      try {
+        const refreshToken = await SecureStore.getItemAsync('refreshToken')
+        if (refreshToken) {
+          // Check if we have token data stored. If it's present, check
+          // if it reports itself as needing to be refreshed.
+          const refreshTokenData = await SecureStore.getItemAsync('accessTokenData')
+          const refreshTokenConfig = refreshTokenData ? new TokenResponse(JSON.parse(refreshTokenData)) : null
+
+          if (!refreshTokenConfig || !TokenResponse.isTokenFresh(refreshTokenConfig, refreshMarginSeconds)) {
+            // Refresh it.
+            const response = await refreshAsync(
+              {
+                clientId: authClientId,
+                scopes: authScopes,
+                refreshToken,
+              },
+              discovery
+            )
+
+            await SecureStore.setItemToAsync('accessToken', response.accessToken)
+            await SecureStore.setItemToAsync('accessTokenData', JSON.stringify(response.getRequestConfig()))
+            await SecureStore.setItemToAsync('refreshToken', response.refreshToken ?? refreshToken)
+            setLoggedIn(true)
+          }
         }
-    }, []);
+      } catch (error) {
+        // Delete access and refresh, then rethrow.
+        await SecureStore.deleteItemAsync('accessToken')
+        await SecureStore.deleteItemAsync('accessTokenData')
+        await SecureStore.deleteItemAsync('refreshToken')
+        setLoggedIn(false)
+        setClaims(null)
+        setUser(null)
+        throw error
+      }
 
-    // Login method.
-    const login = useAsyncCallbackOnce(async () => {
-        // Code exchange part.
-        try {
-            // We set show in "recents" so the web browser doesn't close when
-            // you use an MFA method that requires switching apps on android.
-            const codeResponse = await promptAsync({ showInRecents: true });
+      // User update part, if invalid tokens are detected here, data is properly reset.
+      await update()
+    }, [update])
+  )
 
-            if (!(request && codeResponse?.type === "success")) return;
+  // Refresh connection.
+  useAsyncInterval(refresh, refreshInterval)
 
-            const response = await exchangeCodeAsync(
-                {
-                    clientId: authClientId,
-                    code: codeResponse.params.code,
-                    extraParams: request.codeVerifier ? { code_verifier: request.codeVerifier } : undefined,
-                    redirectUri: authRedirect,
-                },
-                discovery,
-            );
+  // Provide stabilized value.
+  const value = useMemo(() => {
+    return {
+      login,
+      logout,
+      update,
+      refresh,
+      loggedIn,
+      claims,
+      user,
+    }
+  }, [claims, loggedIn, login, logout, refresh, update, user])
 
-            await SecureStore.setItemToAsync("accessToken", response.accessToken);
-            await SecureStore.setItemToAsync("accessTokenData", JSON.stringify(response.getRequestConfig()));
-            await SecureStore.setItemToAsync("refreshToken", response.refreshToken);
-            setLoggedIn(true);
-        } catch (error) {
-            // Delete access and refresh, then rethrow.
-            await SecureStore.deleteItemAsync("accessToken");
-            await SecureStore.deleteItemAsync("accessTokenData");
-            await SecureStore.deleteItemAsync("refreshToken");
-            setLoggedIn(false);
-            setClaims(null);
-            throw error;
-        }
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
 
-        // User update part, if invalid tokens are detected here, data is properly reset.
-        await update();
-    }, [promptAsync, request, update]);
-
-    // Logout method.
-    const logout = useAsyncCallbackOnce(async () => {
-        try {
-            // Get tokens and delete from store.
-            const accessToken = await SecureStore.getItemAsync("accessToken");
-            const refreshToken = await SecureStore.getItemAsync("refreshToken");
-            await SecureStore.deleteItemAsync("accessToken");
-            await SecureStore.deleteItemAsync("accessTokenData");
-            await SecureStore.deleteItemAsync("refreshToken");
-
-            // Revoke all present tokens.
-            let accessTokenTask;
-            let refreshTokenTask;
-            if (accessToken) accessTokenTask = fetchRevokeToken(accessToken, "access_token");
-            if (refreshToken) refreshTokenTask = fetchRevokeToken(refreshToken, "refresh_token");
-            await Promise.all([accessTokenTask, refreshTokenTask]);
-        } finally {
-            setLoggedIn(false);
-            setClaims(null);
-            setUser(null);
-        }
-    }, []);
-
-    // Reload method.
-    const refresh = useAsyncCallbackOnce(async () => {
-        // Refresh token part.
-        try {
-            const refreshToken = await SecureStore.getItemAsync("refreshToken");
-            if (refreshToken) {
-                // Check if we have token data stored. If it's present, check
-                // if it reports itself as needing to be refreshed.
-                const refreshTokenData = await SecureStore.getItemAsync("accessTokenData");
-                const refreshTokenConfig = refreshTokenData ? new TokenResponse(JSON.parse(refreshTokenData)) : null;
-
-                if (!refreshTokenConfig || !TokenResponse.isTokenFresh(refreshTokenConfig, refreshMarginSeconds)) {
-                    // Refresh it.
-                    const response = await refreshAsync(
-                        {
-                            clientId: authClientId,
-                            scopes: authScopes,
-                            refreshToken,
-                        },
-                        discovery,
-                    );
-
-                    await SecureStore.setItemToAsync("accessToken", response.accessToken);
-                    await SecureStore.setItemToAsync("accessTokenData", JSON.stringify(response.getRequestConfig()));
-                    await SecureStore.setItemToAsync("refreshToken", response.refreshToken ?? refreshToken);
-                    setLoggedIn(true);
-                }
-            }
-        } catch (error) {
-            // Delete access and refresh, then rethrow.
-            await SecureStore.deleteItemAsync("accessToken");
-            await SecureStore.deleteItemAsync("accessTokenData");
-            await SecureStore.deleteItemAsync("refreshToken");
-            setLoggedIn(false);
-            setClaims(null);
-            setUser(null);
-            throw error;
-        }
-
-        // User update part, if invalid tokens are detected here, data is properly reset.
-        await update();
-    }, [update]);
-
-    // Refresh connection.
-    useAsyncInterval(refresh, [], refreshInterval);
-
-    // Provide stabilized value.
-    const value = useMemo(() => {
-        return {
-            login,
-            logout,
-            update,
-            refresh,
-            loggedIn,
-            claims,
-            user,
-        };
-    }, [claims, loggedIn, login, logout, refresh, update, user]);
-
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
-
-export const useAuthContext = () => useContext(AuthContext);
+export const useAuthContext = () => useContext(AuthContext)

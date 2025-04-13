@@ -1,21 +1,16 @@
-import { useDataCache } from "@/context/DataCacheProvider";
+import { useCache } from '@/context/data/Cache'
 
 /**
  * The key for the time offset.
  */
 export const useTimeOffset = () => {
-    const { getCacheSync, saveCache } = useDataCache();
+  const { getValue, setValue } = useCache()
 
-    // Retrieve the cached time offset
-    const getTimeOffset = () => {
-        const cacheItem = getCacheSync("timetravel", "timeOffset");
-        return cacheItem ? cacheItem.data : 0; // Default to 0 if not found
-    };
+  // Retrieve the cached time offset
+  const getTimeOffset = () => getValue('settings').timeTravelOffset ?? 0
 
-    // Function to update the time offset in cache
-    const setTimeOffset = (offset: number) => {
-        saveCache("timetravel", "timeOffset", offset);
-    };
+  // Function to update the time offset in cache
+  const setTimeOffset = (offset: number) => setValue('settings', { ...getValue('settings'), timeTravelOffset: offset })
 
-    return { getTimeOffset, setTimeOffset };
-};
+  return { getTimeOffset, setTimeOffset }
+}

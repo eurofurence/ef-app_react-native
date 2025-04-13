@@ -1,59 +1,60 @@
-import { FC, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
-import { filterHappeningTodayEvents } from "../../store/eurofurence/selectors/events";
-import { Section } from "../generic/atoms/Section";
-import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
-import { EventCard, eventInstanceForAny } from "./EventCard";
-import React from "react";
-import { router } from "expo-router";
-import { useDataCache } from "../../context/DataCacheProvider";
+import React, { FC, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+import { router } from 'expo-router'
+import { isBefore, isSameDay } from 'date-fns'
+import { EventCard, eventInstanceForAny } from './EventCard'
+import { Section } from '@/components/generic/atoms/Section'
+import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
+import { useCache } from '@/context/data/Cache'
+import { EventDetails } from '@/context/data/types.details'
+
+const filterHappeningTodayEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
+  events.filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc))).filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)))
 
 export type TodayScheduleListProps = {
-    now: Date;
-};
+  now: Date
+}
 
 export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
-    const { t } = useTranslation("Events");
-    const { getAllCacheSync } = useDataCache();
-    const zone = useZoneAbbr();
+  const { t } = useTranslation('Events')
+  const { eventsFavorite } = useCache()
+  const zone = useZoneAbbr()
 
-    const events = useMemo(() => {
-        const allEvents = getAllCacheSync("events").map(item => item.data);
-        const favorites = allEvents.filter(event => event.Favorite && !event.Hidden);
-        
-        return filterHappeningTodayEvents(favorites, now)
-            .map((details) => eventInstanceForAny(details, now, zone));
-    }, [getAllCacheSync, now, zone]);
+  const today = useMemo(() => {
+    const favorites = eventsFavorite.filter((item) => !item.Hidden)
 
-    if (events.length === 0) {
-        return null;
-    }
+    return filterHappeningTodayEvents(favorites, now).map((details) => eventInstanceForAny(details, now, zone))
+  }, [eventsFavorite, now, zone])
 
-    return (
-        <>
-            <Section title={t("today_schedule_title")} subtitle={t("today_schedule_subtitle")} icon="book-marker" />
-            <View style={styles.condense}>
-                {events.map((event) => (
-                    <EventCard
-                        key={event.details.Id}
-                        event={event}
-                        type="time"
-                        onPress={(event) =>
-                            router.navigate({
-                                pathname: "/events/[eventId]",
-                                params: { eventId: event.Id },
-                            })
-                        }
-                    />
-                ))}
-            </View>
-        </>
-    );
-};
+  if (today.length === 0) {
+    return null
+  }
+
+  return (
+    <>
+      <Section title={t('today_schedule_title')} subtitle={t('today_schedule_subtitle')} icon="book-marker" />
+      <View style={styles.condense}>
+        {today.map((event) => (
+          <EventCard
+            key={event.details.Id}
+            event={event}
+            type="time"
+            onPress={(event) =>
+              router.navigate({
+                pathname: '/events/[id]',
+                params: { id: event.Id },
+              })
+            }
+          />
+        ))}
+      </View>
+    </>
+  )
+}
 
 const styles = StyleSheet.create({
-    condense: {
-        marginVertical: -15,
-    },
-});
+  condense: {
+    marginVertical: -15,
+  },
+})

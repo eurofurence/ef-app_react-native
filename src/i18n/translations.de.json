@@ -6,6 +6,13 @@
       "title": "App Details"
     },
     "developed_by": "Entwickelt von",
+    "developer_settings_alert": {
+      "body": "Willst du die Entwickler-Einstellungen anschalten? Tue das nur, wenn du weißt was das Bedeutet und du für die Konsequenzen Verantwortung trägst. ",
+      "cancel": "Abbrechen",
+      "disable": "Ausschalten",
+      "enable": "Anschalten",
+      "title": "Entwickler-Menü"
+    },
     "extra_thanks": "Besonderen Dank",
     "header": "Über uns"
   },
@@ -105,7 +112,6 @@
     "notImplemented": "Inhalt noch nicht implementiert."
   },
   "Event": {
-    "viewing_event": "Event ansehen",
     "about_title": "Details",
     "add_favorite": "Favorit hinzufügen",
     "event_was_updated": "Es gab Änderungen am Event, seitdem Du es das letzte Mal aufgerufen hast",
@@ -123,6 +129,7 @@
     "sponsor_event": "Sponsor-Event",
     "supersponsor_event": "Supersponsor-Event",
     "view_on_map": "Auf der Karte ansehen",
+    "viewing_event": "Event ansehen",
     "when": "{{ day }}, {{ start }} bis {{ finish }}.",
     "when_local": "{{ zone }}: {{ day }}, {{ start }} bis {{ finish }}."
   },
@@ -140,7 +147,6 @@
     "thank_you": "Vielen Dank für dein Feedback zu {{ eventTitle }}."
   },
   "Events": {
-    "long_running": "Läuft länger",
     "afternoon": "Nachmittags",
     "current_subtitle": "Diese Events finden gerade jetzt statt",
     "current_title": "Aktuelle Events",
@@ -152,9 +158,11 @@
     "favorites_subtitle": "Du wirst an diese Events erinnert werden",
     "favorites_title": "Favorisierte Events",
     "filter_by_day": "Tage ansehen",
+    "filter_by_host": "Vortragende ansehen",
     "filter_by_room": "Räume ansehen",
     "filter_by_track": "Kategorien ansehen",
     "finished": "Zu Ende",
+    "long_running": "Läuft länger",
     "morning": "Morgens",
     "night": "In der Nacht",
     "schedule_empty": "Du hast noch keine Events in Deinen Favoriten. Füge Events zu Deinen Favoriten hinzu, um Deine Agenda zu erstellen.",
@@ -225,9 +233,9 @@
     "read_at": "Gelesen um {{time}}"
   },
   "PrivateMessageList": {
-    "header": "Private Nachrichten",
     "from": "Von {{ author }}",
     "from_unknown": "Author unbekannt",
+    "header": "Private Nachrichten",
     "message_item_subtitle": "{{ status }} - Gesendet {{ time }}",
     "read": "Gelesen",
     "section_title_from": "Von {{authorName}}",
@@ -270,13 +278,6 @@
     "developer_settings": {
       "subtitle": "Du solltest diese besser nicht anfassen wenn Du nicht weisst was Du tust.",
       "title": "Entwickler-Einstellungen"
-    },
-    "developer_settings_alert": {
-      "body": "Willst du die Entwickler-Einstellungen anschalten? Tue das nur, wenn du weißt was das Bedeutet und du für die Konsequenzen Verantwortung trägst. ",
-      "cancel": "Abbrechen",
-      "disable": "Ausschalten",
-      "enable": "Anschalten",
-      "title": "Entwickler-Menü"
     },
     "device_warnings": {
       "hide_device_warnings": "Kompatibilitätsprobleme verbergen",

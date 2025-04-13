@@ -1,22 +1,21 @@
-import { DrawerProps, useDrawerScreensData } from "@/components/data/DrawerScreensData";
-import { DataCacheProvider } from "@/context/DataCacheProvider";
-import { useBackgroundSyncManager } from "@/hooks/sync/useBackgroundSyncManager";
-import { useColorScheme } from "@/hooks/themes/useColorScheme";
-import { useTheme, useThemeMemo, useThemeName } from "@/hooks/themes/useThemeHooks";
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
-import { DarkTheme, DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { StyleSheet } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import "react-native-reanimated";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
+import React, { useMemo } from 'react'
+import { StyleSheet } from 'react-native'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import 'react-native-reanimated'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useStackScreensData } from '@/hooks/data/useStackScreensData'
+import { CacheProvider } from '@/context/data/Cache'
+import { useTheme, useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 // Import i18n configuration
-import "@/i18n";
+import '@/i18n'
 // Import global tailwind css
-import { AuthContextProvider } from "@/context/AuthContext";
-import "@/css/globals.css";
+import { AuthContextProvider } from '@/context/AuthContext'
+import '@/css/globals.css'
+import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
 
 /**
  * The root layout for the application.
@@ -24,13 +23,13 @@ import "@/css/globals.css";
  * @constructor
  */
 export default function RootLayout() {
-    return (
-        <GestureHandlerRootView>
-            <DataCacheProvider>
-                <MainLayout />
-            </DataCacheProvider>
-        </GestureHandlerRootView>
-    );
+  return (
+    <GestureHandlerRootView>
+      <CacheProvider>
+        <MainLayout />
+      </CacheProvider>
+    </GestureHandlerRootView>
+  )
 }
 
 /**
@@ -38,42 +37,58 @@ export default function RootLayout() {
  * @constructor
  */
 export function MainLayout() {
-    const colorScheme = useColorScheme();
-    // Get the theme type for status bar configuration.
-    const theme = useTheme();
-    const themeType = useThemeName();
+  // Get the theme type for status bar configuration.
+  const theme = useTheme()
+  const themeType = useThemeName()
 
-    const safeAreaStyle = useThemeMemo((theme) => ({ ...StyleSheet.absoluteFillObject, backgroundColor: theme.background }));
-    const DrawerScreensData = useDrawerScreensData();
+  const safeAreaStyle = useThemeBackground('surface')
+  const screensData = useStackScreensData()
 
-    useBackgroundSyncManager();
-    return (
-            <BottomSheetModalProvider>
-                <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-                    <AuthContextProvider>
-                    <StatusBar backgroundColor={theme.background} style={themeType === "light" ? "dark" : "light"} />
-                    <SafeAreaView style={safeAreaStyle}>
-                            <Stack>
-                                {DrawerScreensData.map((screen: DrawerProps) => (
-                                    <Stack.Screen
-                                        key={screen.location}
-                                        name={screen.location}
-                                        options={{
-                                            keyboardHandlingEnabled: true,
-                                            headerTitleAlign: "left",
-                                            headerShown: screen.headerShown,
-                                            headerTitle: screen.title,
-                                            headerLargeTitle: screen.headerLargeTitle,
-                                            headerLeft: () => screen.headerLeft,
-                                            headerRight: () => screen.headerRight,
-                                            gestureEnabled: screen.swipeEnabled || false,
-                                        }}
-                                    />
-                                ))}
-                            </Stack>
-                        </SafeAreaView>
-                    </AuthContextProvider>
-                </ThemeProvider>
-            </BottomSheetModalProvider>
-    );
+  // Wraps the app theme for react navigation.
+  const themeNavigation = useMemo(
+    () => ({
+      ...(themeType === 'dark' ? DarkTheme : DefaultTheme),
+      colors: {
+        primary: theme.secondary,
+        background: theme.surface,
+        card: theme.background,
+        text: theme.text,
+        border: theme.darken,
+        notification: theme.notification,
+      },
+    }),
+    [themeType, theme]
+  )
+
+  useEventReminderRescheduling()
+
+  return (
+    <BottomSheetModalProvider>
+      <ThemeProvider value={themeNavigation}>
+        <AuthContextProvider>
+          <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
+          <SafeAreaView style={[StyleSheet.absoluteFill, safeAreaStyle]}>
+            <Stack>
+              {screensData.map((screen) => (
+                <Stack.Screen
+                  key={screen.location}
+                  name={screen.location}
+                  options={{
+                    keyboardHandlingEnabled: true,
+                    headerTitleAlign: 'left',
+                    headerShown: screen.headerShown,
+                    headerTitle: screen.title,
+                    headerLargeTitle: screen.headerLargeTitle,
+                    headerLeft: () => screen.headerLeft,
+                    headerRight: () => screen.headerRight,
+                    gestureEnabled: screen.swipeEnabled || false,
+                  }}
+                />
+              ))}
+            </Stack>
+          </SafeAreaView>
+        </AuthContextProvider>
+      </ThemeProvider>
+    </BottomSheetModalProvider>
+  )
 }

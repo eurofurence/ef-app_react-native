@@ -3,10 +3,10 @@ import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from "r
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import Animated, { cancelAnimation, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
-import { useThemeBackground, useThemeBorder } from "@/hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
 import { IconNames } from "../atoms/Icon";
 import { Tab } from "./Tab";
+import { useThemeBackground, useThemeBorder } from "@/hooks/themes/useThemeHooks";
 
 /**
  * Arguments to the tabs.
@@ -25,6 +25,11 @@ export type TabsProps = {
          * The icon to display.
          */
         icon: IconNames;
+
+        /**
+         * Tab style property.
+         */
+        style?: StyleProp<ViewStyle>;
 
         /**
          * The name of the tab.
@@ -107,6 +112,7 @@ const TabsContext = createContext<TabsRef & { isOpen: boolean }>({
     closeImmediately: () => false,
     isOpen: false,
 });
+TabsContext.displayName = "TabsContext";
 
 /**
  * Expose the Tabs Context as a hook
@@ -258,8 +264,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
                         </View>
                     )}
 
-                    <View style={[styles.tabs, bordersDarken, fillBackground, style, dynamicPointerEvents]}>
-                        {tabs?.map((tab, i) => <Tab key={i} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />) ?? null}
+                    <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating.value ? "none" : "auto"}>
+                        {tabs?.map((tab, i) => <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />)}
 
                         <Tab icon={tabIcon} text={tabText} onPress={isOpen ? close : open} indicate={indicateMore} />
 
@@ -279,6 +285,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = "M
         </TabsContext.Provider>
     );
 });
+
+Tabs.displayName = "Tabs";
 
 const styles = StyleSheet.create({
     root: {

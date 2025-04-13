@@ -40,7 +40,6 @@
     "not_attending_on": "Non disponibile il {{offDays}}"
   },
   "Event": {
-    "viewing_event": "Visualizzando l'evento",
     "about_title": "Informazioni",
     "add_favorite": "Favorito",
     "event_was_updated": "L'evento è stato aggiornato dalla tua ultima visita",
@@ -58,11 +57,11 @@
     "sponsor_event": "Evento per sponsor",
     "supersponsor_event": "Evento per supersponsor",
     "view_on_map": "Vedi sulla mappa",
+    "viewing_event": "Visualizzando l'evento",
     "when": "{{day}}, {{start}} fino alle {{finish}}.",
     "when_local": "{{zone}}: {{day}}, {{start}} fino alle {{finish}}."
   },
   "Events": {
-    "long_running": "Funziona più a lungo",
     "afternoon": "Al pomeriggio",
     "current_subtitle": "Questi eventi si stanno svolgendo ora",
     "current_title": "Eventi in corso",
@@ -75,6 +74,7 @@
     "filter_by_room": "Organizza per stanze",
     "filter_by_track": "Organizza per tracciati",
     "finished": "Conclusi",
+    "long_running": "Funziona più a lungo",
     "morning": "Al mattino",
     "night": "Alla notte",
     "upcoming_favorites_title": "La tua agenda",
@@ -117,8 +117,8 @@
     "private_message": "Hai ricevuto un nuovo messaggio privato"
   },
   "PrivateMessageList": {
-    "header": "Messaggi privati",
     "from": "Da {{ author }}",
+    "header": "Messaggi privati",
     "message_item_subtitle": "{{ status }} - Inviato {{ time }}",
     "read": "Letto",
     "section_title_from": "Da {{authorName}}",
