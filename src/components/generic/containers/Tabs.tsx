@@ -1,7 +1,7 @@
 import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import Animated, { cancelAnimation, Easing, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, { cancelAnimation, useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 import { useThemeBackground, useThemeBorder } from "@/hooks/themes/useThemeHooks";
 import { Continuous } from "../atoms/Continuous";
