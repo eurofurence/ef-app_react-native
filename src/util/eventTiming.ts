@@ -6,25 +6,17 @@ import { conTimeZone } from '@/configuration'
 import { EventDetails } from '@/context/data/types.details'
 
 export function calculateEventTiming(details: EventDetails, now: Date | 'done') {
-  // Parse dates
-  const eventStart = parseISO(details.StartDateTimeUtc)
-  const eventEnd = parseISO(details.EndDateTimeUtc)
-
   // Calculate progress
-  const progress = now !== 'done' ? differenceInMilliseconds(now, eventStart) / differenceInMilliseconds(eventEnd, eventStart) : 1.1
+  const durationMs = differenceInMilliseconds(details.End, details.Start)
+  const progress = now !== 'done' ? differenceInMilliseconds(now, details.Start) / durationMs : 1.1
 
   // Convert to con timezone
-  const eventStartCon = toZonedTime(eventStart, conTimeZone)
-  const start = format(eventStartCon, 'p', { timeZone: conTimeZone, locale: de }) // Local time format
-  const day = format(eventStartCon, 'EEE', { timeZone: conTimeZone }) // Day abbreviation
-
-  // Convert to local timezone
-  const eventStartLocal = new Date(eventStart)
-  const startLocal = format(eventStartLocal, 'p', { locale: de })
-  const dayLocal = format(eventStartLocal, 'EEE', {})
+  const start = format(details.Start, 'p', { timeZone: conTimeZone, locale: de }) // Local time format
+  const day = format(details.Start, 'EEE', { timeZone: conTimeZone }) // Day abbreviation
+  const startLocal = format(details.StartLocal, 'p', { locale: de })
+  const dayLocal = format(details.StartLocal, 'EEE', {})
 
   // Calculate duration
-  const durationMs = differenceInMilliseconds(eventEnd, eventStart)
   const durationHours = durationMs / (1000 * 60 * 60)
   const durationMinutes = durationMs / (1000 * 60)
   const runtime = durationHours >= 1 ? `${Math.floor(durationHours)}h` : `${Math.floor(durationMinutes)}m`

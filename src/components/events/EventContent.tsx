@@ -91,16 +91,14 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
   const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
     const timeZone = calendar[0]?.timeZone ?? conTimeZone
     const zone = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' }).format(new Date()).split(' ').pop()
-    const eventStart = toZonedTime(new Date(event.StartDateTimeUtc), conTimeZone)
-    const eventEnd = toZonedTime(new Date(event.EndDateTimeUtc), conTimeZone)
-    const start = format(eventStart, 'p')
-    const end = format(eventEnd, 'p')
-    const day = format(eventStart, 'EEE')
-    const startLocal = format(new Date(event.StartDateTimeUtc), 'p')
-    const endLocal = format(new Date(event.EndDateTimeUtc), 'p')
-    const dayLocal = format(new Date(event.StartDateTimeUtc), 'EEE')
+    const start = format(event.Start, 'p')
+    const end = format(event.End, 'p')
+    const day = format(event.Start, 'EEE')
+    const startLocal = format(event.StartLocal, 'p')
+    const endLocal = format(event.EndLocal, 'p')
+    const dayLocal = format(event.StartLocal, 'EEE')
     return { zone, start, end, day, startLocal, endLocal, dayLocal }
-  }, [calendar, event.StartDateTimeUtc, event.EndDateTimeUtc])
+  }, [calendar, event.End, event.EndLocal, event.Start, event.StartLocal])
 
   return (
     <>

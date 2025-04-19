@@ -208,6 +208,10 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       ...item,
       NormalizedTitle: deriveAnnouncementTitle(item.Title, item.Content),
       Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
+      ValidFrom: toZonedTime(parseISO(item.ValidFromDateTimeUtc), conTimeZone),
+      ValidFromLocal: parseISO(item.ValidFromDateTimeUtc),
+      ValidUntil: toZonedTime(parseISO(item.ValidUntilDateTimeUtc), conTimeZone),
+      ValidUntilLocal: parseISO(item.ValidUntilDateTimeUtc),
     }))
   }, [images, data.announcements])
 
@@ -254,6 +258,10 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         ConferenceRoom: item.ConferenceRoomId ? eventRooms?.dict?.[item.ConferenceRoomId] : undefined,
         ConferenceDay: item.ConferenceDayId ? eventDays?.dict?.[item.ConferenceDayId] : undefined,
         ConferenceTrack: item.ConferenceTrackId ? eventTracks?.dict?.[item.ConferenceTrackId] : undefined,
+        Start: toZonedTime(parseISO(item.StartDateTimeUtc), conTimeZone),
+        StartLocal: parseISO(item.StartDateTimeUtc),
+        End: toZonedTime(parseISO(item.EndDateTimeUtc), conTimeZone),
+        EndLocal: parseISO(item.EndDateTimeUtc),
         Favorite: Boolean(favoriteIds?.includes(item.Id)),
         Hidden: Boolean(data.settings.hiddenEvents?.includes(item.Id)),
       })

@@ -15,24 +15,14 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
   const { t } = useTranslation('Home')
   const { announcements } = useCache()
 
-  const recent = useMemo(
-    () =>
-      announcements.filter((item) => {
-        const validFrom = parseISO(item.ValidFromDateTimeUtc)
-        const validUntil = parseISO(item.ValidUntilDateTimeUtc)
-
-        return isAfter(now, subMinutes(validFrom, 5)) && isBefore(now, addMinutes(validUntil, 5))
-      }),
-    [announcements, now]
-  )
+  const recent = useMemo(() => announcements.filter((item) => isAfter(now, subMinutes(item.ValidFrom, 5)) && isBefore(now, addMinutes(item.ValidUntil, 5))), [announcements, now])
 
   /**
    * Creates the announcement instance props for an upcoming or running announcement.
    * @param details The details to use.
    */
   const announcementInstanceForAny = (details: AnnouncementDetails): AnnouncementDetailsInstance => {
-    const validFromDate = parseISO(details.ValidFromDateTimeUtc)
-    const time = formatDistanceToNow(validFromDate, { addSuffix: true })
+    const time = formatDistanceToNow(details.ValidFrom, { addSuffix: true })
     return { details, time }
   }
 

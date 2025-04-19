@@ -48,9 +48,9 @@ export const useEventDayGroups = (t: TFunction, now: Date, items: readonly Event
     for (const item of items) {
       if (item.Hidden) {
         hidden++
-      } else if (isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      } else if (isBefore(now, item.End)) {
         // First pass not passed.
-        if (differenceInHours(parseISO(item.EndDateTimeUtc), parseISO(item.StartDateTimeUtc)) > 4) {
+        if (differenceInHours(item.End, item.Start) > 4) {
           if (!sectionedLongRunning) {
             result.push(eventSectionForPartOfDay(t, 'long_running'))
             sectionedLongRunning = true
@@ -96,7 +96,7 @@ export const useEventDayGroups = (t: TFunction, now: Date, items: readonly Event
 
     // Second pass not hidden and passed.
     for (const item of items) {
-      if (!item.Hidden && !isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      if (!item.Hidden && !isBefore(now, item.End)) {
         if (!sectionedPassed) {
           result.push(eventSectionForPassed(t))
           sectionedPassed = true
@@ -133,7 +133,7 @@ export const useEventOtherGroups = (t: TFunction, now: Date, items: readonly Eve
         hidden++
       } else if (!item.ConferenceDay) {
         // Nothing, not applicable.
-      } else if (isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      } else if (isBefore(now, item.EndTime)) {
         if (!(item.ConferenceDay.Date in sectionedDays)) {
           result.push(eventSectionForDate(t, item.ConferenceDay.Date))
           sectionedDays[item.ConferenceDay.Date] = true
@@ -150,7 +150,7 @@ export const useEventOtherGroups = (t: TFunction, now: Date, items: readonly Eve
 
     // Second pass not hidden and passed.
     for (const item of items) {
-      if (!item.Hidden && !isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      if (!item.Hidden && !isBefore(now, item.EndTime)) {
         if (!sectionedPassed) {
           result.push(eventSectionForPassed(t))
           sectionedPassed = true
