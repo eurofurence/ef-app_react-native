@@ -1,5 +1,5 @@
 import { randomUUID } from 'expo-crypto'
-import { createContext, ReactNode, useCallback, useContext, useState } from 'react'
+import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react'
 
 /**
  * A toast message entry.
@@ -108,7 +108,8 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
     })
   }, [])
 
-  return <ToastContext.Provider value={{ messages, toast, dismiss }}>{children}</ToastContext.Provider>
+  const value = useMemo(() => ({ messages, toast, dismiss }), [messages, toast, dismiss])
+  return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>
 }
 
 /**

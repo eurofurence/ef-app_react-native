@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react'
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
 import { Vibration } from 'react-native'
 import { apiBase, conId, eurofurenceCacheVersion } from '@/configuration'
 import * as Storage from '@/util/asyncStorage'
@@ -56,12 +56,6 @@ export type CacheContextType = {
    * Synchronize now.
    */
   synchronize(): Promise<void>
-
-  /**
-   * Synchronize now with UI integration.
-   * @param vibrate True if device should vibrate.
-   */
-  synchronizeUi(vibrate?: boolean): Promise<void>
 
   /**
    * Resets the data.
@@ -212,20 +206,6 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     }
   }, [])
 
-  // UI synchronize wrapper.
-  const synchronizeUi = useCallback(
-    async (vibrate: boolean = false) => {
-      if (vibrate) Vibration.vibrate(400)
-      try {
-        return await synchronize()
-      } catch (error) {
-        console.warn('Synchronization error:', error)
-        throw error
-      }
-    },
-    [synchronize]
-  )
-
   // Run synchronize initially.
   useEffect(() => {
     if (initialized) synchronize().catch(console.error)
@@ -234,25 +214,20 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
   // Use extensions.
   const extensions = useCacheExtensions(data)
 
-  // TODO: All the data usually changes together, I've removed the memo as that's
-  //   just dependency tracking overhead.
-  return (
-    <CacheContext.Provider
-      value={{
-        data,
-        getValue,
-        setValue,
-        removeValue,
-        clear,
-        isSynchronizing,
-        synchronize,
-        synchronizeUi,
-        ...extensions,
-      }}
-    >
-      {initialized ? children : null}
-    </CacheContext.Provider>
+  const value = useMemo(
+    () => ({
+      data,
+      getValue,
+      setValue,
+      removeValue,
+      clear,
+      isSynchronizing,
+      synchronize,
+      ...extensions,
+    }),
+    [data, getValue, setValue, removeValue, clear, isSynchronizing, synchronize, extensions]
   )
+  return <CacheContext.Provider value={value}>{initialized ? children : null}</CacheContext.Provider>
 }
 
 /**

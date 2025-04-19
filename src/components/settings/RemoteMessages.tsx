@@ -2,14 +2,14 @@ import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { Label } from '@/components/generic/atoms/Label'
-import { useCache } from '@/context/data/Cache'
+import { useAuthData } from '@/context/auth/AuthData'
 
 export function RemoteMessages() {
   const { t } = useTranslation('Settings')
-  const { getValue } = useCache()
-  const communications = getValue('communications')
+  const { communications } = useAuthData()
   const ordered = useMemo(() => {
-    return [...communications].sort((a, b) => -a.CreatedDateTimeUtc.localeCompare(b.CreatedDateTimeUtc))
+    if (!communications) return []
+    else return [...communications].sort((a, b) => -a.CreatedDateTimeUtc.localeCompare(b.CreatedDateTimeUtc))
   }, [communications])
 
   return (

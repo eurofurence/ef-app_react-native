@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 
@@ -9,7 +9,6 @@ import { Section } from '../generic/atoms/Section'
 import { KbEntryCard } from '../kb/KbEntryCard'
 import { useDealerInstances } from '@/components/dealers/Dealers.common'
 import { useEventInstances } from '@/components/events/Events.common'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { GlobalSearchResult } from '@/context/data/types.own'
 import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
 
@@ -21,13 +20,15 @@ export type GlobalSearchProps = {
 export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
   const { t: tMenu } = useTranslation('Menu')
 
-  // Zone abbreviation for events.
-  const zone = useZoneAbbr()
+  // Filter for type tags.
+  const dealerFiltered = useMemo(() => results?.filter((r) => r.type === 'dealer') as DealerDetails[], [results])
+  const eventsFiltered = useMemo(() => results?.filter((r) => r.type === 'event') as EventDetails[], [results])
+  const kbGroupsFiltered = useMemo(() => results?.filter((r) => r.type === 'knowledgeEntry') as KnowledgeEntryDetails[], [results])
 
   // Use all dealers and group generically.
-  const dealers = useDealerInstances(now, results?.filter((r) => r.type === 'dealer') as DealerDetails[])
-  const events = useEventInstances(now, zone, results?.filter((r) => r.type === 'event') as EventDetails[])
-  const kbGroups = results?.filter((r) => r.type === 'knowledgeEntry') as KnowledgeEntryDetails[]
+  const dealers = useDealerInstances(now, dealerFiltered)
+  const events = useEventInstances(now, eventsFiltered)
+  const kbGroups = kbGroupsFiltered
 
   if (!results) return null
   return (

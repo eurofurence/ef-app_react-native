@@ -10,7 +10,8 @@ import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { NoData } from '@/components/generic/containers/NoData'
 import { CommunicationRecord } from '@/context/data/types.api'
-import { useCache } from '@/context/data/Cache'
+import { useAuthData } from '@/context/auth/AuthData'
+import { captureException } from '@sentry/react-native'
 
 type Section = {
   title: string
@@ -19,8 +20,8 @@ type Section = {
 
 export default function Messages() {
   const { t } = useTranslation('PrivateMessageList')
-  const { getValue, isSynchronizing, synchronizeUi } = useCache()
-  const communications = getValue('communications')
+  const { communications, refresh, isRefreshing } = useAuthData()
+
   const navigateTo = useCallback(
     (item: CommunicationRecord) =>
       router.push({
@@ -83,8 +84,8 @@ export default function Messages() {
       contentContainerStyle={styles.container}
       keyExtractor={keyExtractor}
       stickySectionHeadersEnabled
-      onRefresh={synchronizeUi}
-      refreshing={isSynchronizing}
+      onRefresh={() => refresh().catch(captureException)}
+      refreshing={isRefreshing}
       ListEmptyComponent={emptyComponent}
       ListHeaderComponent={headerComponent}
       renderSectionHeader={renderSection}

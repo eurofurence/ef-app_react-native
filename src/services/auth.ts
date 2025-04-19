@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { apiBase } from '@/configuration'
-import { getAccessToken } from '@/context/AuthContext'
+import { getAccessToken } from '@/context/auth/Auth'
 
 type NewPrivateMessage = {
   RecipientUid: string

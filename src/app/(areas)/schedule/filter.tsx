@@ -1,26 +1,25 @@
+import { StyleSheet, View } from 'react-native'
+import { EventDayDetails, EventDetails, EventRoomDetails, EventTrackDetails } from '@/context/data/types.details'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
-import * as React from 'react'
-import { useMemo, useRef, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
 import { useCache } from '@/context/data/Cache'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
+import * as React from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { ComboModal, ComboModalRef } from '@/components/generic/atoms/ComboModal'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useEventOtherGroups } from '@/components/events/Events.common'
 import { Label } from '@/components/generic/atoms/Label'
-import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Row } from '@/components/generic/containers/Row'
 import { Tab } from '@/components/generic/containers/Tab'
-import { EventDayDetails, EventDetails, EventRoomDetails, EventTrackDetails } from '@/context/data/types.details'
+import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })
 }
 
-export function FilterView() {
+export default function Filter() {
   const { query } = useLocalSearchParams<{ query?: string }>()
   const { t } = useTranslation('Events')
   const { events, eventDays, eventTracks, eventRooms, eventHosts, searchEvents } = useCache()
@@ -29,7 +28,6 @@ export function FilterView() {
   const inactiveStyle = useThemeBackground('inverted')
 
   const now = useNow(5)
-  const zone = useZoneAbbr()
 
   const daysRef = useRef<ComboModalRef<EventDayDetails>>(null)
   const tracksRef = useRef<ComboModalRef<EventTrackDetails>>(null)
@@ -56,7 +54,7 @@ export function FilterView() {
     })
   }, [filterDays, filterTracks, filterRooms, filterHosts, search, events])
 
-  const groups = useEventOtherGroups(t, now, zone, filtered)
+  const groups = useEventOtherGroups(t, now, filtered)
 
   const leader = (
     <View>

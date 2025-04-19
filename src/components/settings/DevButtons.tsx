@@ -10,15 +10,16 @@ import { Button } from '@/components/generic/containers/Button'
 import { useToast } from '@/context/ToastContext'
 import { Section } from '@/components/generic/atoms/Section'
 import { useThemeColorValue, useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useAuthContext } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/auth/Auth'
 import { useNow } from '@/hooks/time/useNow'
 import { useCreateSyncRequest, useSendPrivateMessage } from '@/services/auth'
 import { withAlpha } from '@/context/Theme'
 import { useCache } from '@/context/data/Cache'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export function DevButtons() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_buttons' })
-  const { synchronizeUi } = useCache()
+  const { synchronize } = useCache()
   const toast = useToast()
   const [token, setToken] = useState('')
   const { claims, refresh } = useAuthContext()
@@ -120,7 +121,7 @@ export function DevButtons() {
         {t('overwrite_update_time')}
       </Button>
 
-      <Button containerStyle={styles.button} onPress={() => synchronizeUi()} icon="refresh">
+      <Button containerStyle={styles.button} onPress={() => vibrateAfter(synchronize())} icon="refresh">
         {t('sync_standard')}
       </Button>
 

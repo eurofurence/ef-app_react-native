@@ -1,12 +1,13 @@
 import { exchangeCodeAsync, refreshAsync, TokenResponse, useAuthRequest } from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useMemo, useState } from 'react'
+import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
-import * as SecureStore from './SecureStorage'
+import * as SecureStore from '@/util/secureStorage'
 import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
 import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
 import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
 import { UserRecord } from '@/context/data/types.api'
+import { captureException } from '@sentry/react-native'
 
 /**
  * Discovery entries.
@@ -54,38 +55,53 @@ export type AuthContextType = {
   update(): Promise<void>
 
   /**
+   * True if currently refreshing.
+   */
+  isRefreshing: boolean
+
+  /**
    * Updates the token if a refresh token is present. Reloads user claims and info from the IDP and backend.
    */
   refresh(): Promise<void>
+} & (
+  | {
+      /**
+       * True if logged in.
+       */
+      loggedIn: false
 
-  /**
-   * True if logged in.
-   */
-  loggedIn: boolean
+      /**
+       * The user claims if logged in and successfully retrieved.
+       */
+      claims: null
 
-  /**
-   * The user claims if logged in and successfully retrieved.
-   */
-  claims: Claims | null
+      /**
+       * The user self-service info if logged in and successfully retrieved.
+       */
+      user: null
+    }
+  | {
+      /**
+       * True if logged in.
+       */
+      loggedIn: true
 
-  /**
-   * The user self-service info if logged in and successfully retrieved.
-   */
-  user: UserRecord | null
-}
+      /**
+       * The user claims if logged in and successfully retrieved.
+       */
+      claims: Claims
+
+      /**
+       * The user self-service info if logged in and successfully retrieved.
+       */
+      user: UserRecord
+    }
+)
 
 /**
  * Auth context.
  */
-export const AuthContext = createContext<AuthContextType>({
-  login: () => Promise.resolve(),
-  logout: () => Promise.resolve(),
-  update: () => Promise.resolve(),
-  refresh: () => Promise.resolve(),
-  loggedIn: false,
-  claims: null,
-  user: null,
-})
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 AuthContext.displayName = 'AuthContext'
 
 /**
@@ -200,6 +216,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [claims, setClaims] = useState<Claims | null>(null)
   const [user, setUser] = useState<UserRecord | null>(null)
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  const [isRefreshing, setRefreshing] = useState<boolean>(false)
 
   // Auth request and login prompt.
   const [request, , promptAsync] = useAuthRequest(
@@ -210,6 +227,15 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     },
     discovery
   )
+
+  // Warm up browser for auth prompts.
+  useEffect(() => {
+    WebBrowser.warmUpAsync().catch(captureException)
+
+    return () => {
+      WebBrowser.coolDownAsync().catch(captureException)
+    }
+  }, [])
 
   // For an existing access token, fetches and applies user claims and settings.
   const update = useAsyncCallbackOnce(
@@ -314,6 +340,7 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     useCallback(async () => {
       // Refresh token part.
       try {
+        setRefreshing(true)
         const refreshToken = await SecureStore.getItemAsync('refreshToken')
         if (refreshToken) {
           // Check if we have token data stored. If it's present, check
@@ -347,6 +374,8 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
         setClaims(null)
         setUser(null)
         throw error
+      } finally {
+        setRefreshing(false)
       }
 
       // User update part, if invalid tokens are detected here, data is properly reset.
@@ -355,22 +384,39 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
   )
 
   // Refresh connection.
-  useAsyncInterval(refresh, refreshInterval)
-
-  // Provide stabilized value.
-  const value = useMemo(() => {
-    return {
-      login,
-      logout,
-      update,
-      refresh,
-      loggedIn,
-      claims,
-      user,
-    }
-  }, [claims, loggedIn, login, logout, refresh, update, user])
-
+  useAsyncInterval(
+    useCallback(
+      async (_) => {
+        // Try refresh and capture any exception that happens in the background.
+        try {
+          await refresh()
+        } catch (error) {
+          captureException(error)
+        }
+      },
+      [refresh]
+    ),
+    refreshInterval
+  )
+  const value = useMemo(
+    () =>
+      ({
+        login,
+        logout,
+        update,
+        isRefreshing,
+        refresh,
+        loggedIn,
+        claims,
+        user,
+      }) as AuthContextType,
+    [login, logout, update, isRefreshing, refresh, loggedIn, claims, user]
+  )
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
-export const useAuthContext = () => useContext(AuthContext)
+export const useAuthContext = () => {
+  const context = useContext(AuthContext)
+  if (!context) throw new Error('useAuthContext must be used within a AuthContextProvider')
+  return context
+}

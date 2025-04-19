@@ -4,18 +4,14 @@ import { TouchableOpacity } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
 import { Icon } from '@/components/generic/atoms/Icon'
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 
-export interface StackScreenProps {
+export type StackScreenProps = NativeStackNavigationOptions & {
   location: string
-  title?: string
   swipeEnabled?: boolean
-  headerShown?: boolean
-  headerLargeTitle?: boolean
-  headerLeft?: React.ReactNode
-  headerRight?: React.ReactNode
 }
 
-const goBackCustom = () => {
+const CustomBack = () => {
   return (
     <TouchableOpacity onPress={router.back}>
       <Icon name="arrow-left" size={24} color="black" />
@@ -39,91 +35,91 @@ export function useStackScreensData(): StackScreenProps[] {
       {
         location: 'knowledge/index',
         title: t('info'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
         location: 'dealers/[id]',
         title: t('dealers'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
       },
       {
         location: 'events/[id]/index',
         title: t('events'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
       },
       {
         location: 'events/[id]/feedback',
         title: t('events'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
       },
       {
         location: 'images/[id]',
         title: t('image'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
       },
       {
         location: 'images/web',
         title: t('image'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
       },
       {
         location: 'knowledge/[id]',
         title: t('info'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
         location: 'profile',
         title: t('profile'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
         location: 'maps/[...slug]',
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
       },
       {
         location: 'messages/index',
         title: t('pm'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
         location: 'messages/[messageId]',
         title: t('pm'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
         location: 'settings/index',
         title: t('settings'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
         location: 'settings/reveal',
         title: t('settings'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
         location: 'about',
         title: t('about'),
-        headerLeft: goBackCustom(),
+        headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },

@@ -19,11 +19,12 @@ import { CurrentEventList } from '@/components/events/CurrentEventsList'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useCache } from '@/context/data/Cache'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Index() {
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 5 : 'static')
-  const { synchronizeUi, isSynchronizing } = useCache()
+  const { synchronize, isSynchronizing } = useCache()
   const backgroundSurface = useThemeBackground('surface')
 
   const [filter, setFilter] = useState('')
@@ -33,7 +34,7 @@ export default function Index() {
   const results = useFuseResults(globalIndex, filter, 15)
 
   return (
-    <ScrollView style={[StyleSheet.absoluteFill, backgroundSurface]} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}>
+    <ScrollView style={[StyleSheet.absoluteFill, backgroundSurface]} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={() => vibrateAfter(synchronize())} />}>
       <CountdownHeader />
       <Search filter={filter} setFilter={setFilter} />
       <Floater contentStyle={appStyles.trailer}>

@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 import { router } from 'expo-router'
 import { AnnouncementCard, AnnouncementDetailsInstance } from './AnnouncementCard'
@@ -50,6 +50,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       estimatedItemSize={110}
+      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
     />
   )

@@ -159,7 +159,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
           finish: end,
         })}
         {start === startLocal ? null : (
-          <Label type="bold">
+          <Label type="h3" variant="receded">
             {' ' +
               t('when_local', {
                 day: dayLocal,

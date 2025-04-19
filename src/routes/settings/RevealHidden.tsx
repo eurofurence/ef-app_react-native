@@ -8,20 +8,18 @@ import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
 import { Label } from '@/components/generic/atoms/Label'
 import { Floater } from '@/components/generic/containers/Floater'
 import { useNow } from '@/hooks/time/useNow'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useCache } from '@/context/data/Cache'
 
 export const RevealHidden = () => {
   const { t } = useTranslation('RevealHidden')
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 5 : 'static')
-  const zone = useZoneAbbr()
   const { events, getValue, setValue } = useCache()
 
   const settings = getValue('settings')
 
   const projected = useMemo(() => events.filter((item) => Boolean(settings.hiddenEvents?.includes(item.Id))), [events, settings.hiddenEvents])
-  const instances = useMemo(() => projected.map((details) => eventInstanceForAny(details, now, zone)), [projected, now, zone])
+  const instances = useMemo(() => projected.map((details) => eventInstanceForAny(details, now)), [projected, now])
 
   const unhideEvent = (eventId: string) => {
     setValue('settings', {

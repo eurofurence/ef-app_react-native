@@ -12,20 +12,19 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Rule } from '@/components/generic/atoms/Rule'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/Cache'
+import { useAuthData } from '@/context/auth/AuthData'
 
 // const readOpenTimeRequirement = 1500;
 
 export default function MessageItem() {
   const { messageId } = useLocalSearchParams<{ messageId: string }>()
   const { t } = useTranslation('PrivateMessageItem')
-  const { getValue } = useCache()
+  const { communications } = useAuthData()
   const backgroundStyle = useThemeBackground('background')
 
   // Get message from cache, find instance.
-  const communications = getValue('communications')
   const message = useMemo(() => {
-    return communications.find((item) => item.Id === messageId)
+    return communications?.find((item) => item.Id === messageId)
   }, [communications, messageId])
 
   // todo: post transformation, read time should be synced from server.

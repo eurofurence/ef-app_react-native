@@ -1,32 +1,29 @@
+import { EventDetails } from '@/context/data/types.details'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
-import * as React from 'react'
-import { useMemo } from 'react'
 import { useNow } from '@/hooks/time/useNow'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useCache } from '@/context/data/Cache'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useEventOtherGroups } from '@/components/events/Events.common'
-import { EventsSectionedList } from '@/components/events/EventsSectionedList'
-import { Label } from '@/components/generic/atoms/Label'
+import * as React from 'react'
+import { useMemo } from 'react'
 import { Row } from '@/components/generic/containers/Row'
 import { Avatar } from '@/components/profile/Avatar'
-
-import { EventDetails } from '@/context/data/types.details'
+import { Label } from '@/components/generic/atoms/Label'
+import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })
 }
 
-export function PersonalView() {
+export default function Personal() {
   const { query } = useLocalSearchParams<{ query?: string }>()
   const { t } = useTranslation('Events')
   const now = useNow(5)
-  const zone = useZoneAbbr()
 
   const { eventsFavorite, searchEventsFavorite } = useCache()
   const search = useFuseResults(searchEventsFavorite, query ?? '')
-  const groups = useEventOtherGroups(t, now, zone, search ?? eventsFavorite)
+  const groups = useEventOtherGroups(t, now, search ?? eventsFavorite)
 
   const leader = useMemo(
     () => (

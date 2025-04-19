@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useToast } from '@/context/ToastContext'
 import { captureException } from '@sentry/react-native'
 import { FeedbackSchema } from '@/components/feedback/FeedbackForm.schema'
-import { getAccessToken } from '@/context/AuthContext'
+import { getAccessToken } from '@/context/auth/Auth'
 import { apiBase } from '@/configuration'
 
 export function useSubmitEventFeedback() {

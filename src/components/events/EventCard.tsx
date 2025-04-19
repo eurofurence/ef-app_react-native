@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { useThemeBackground, useThemeColorValue } from '../../hooks/themes/useThemeHooks'
+import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '../AppStyles'
 import { Icon } from '../generic/atoms/Icon'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
@@ -10,7 +10,7 @@ import { Label } from '../generic/atoms/Label'
 import { Progress } from '../generic/atoms/Progress'
 import { Row } from '../generic/containers/Row'
 import { sourceFromImage } from '../generic/atoms/Image.common'
-import { calculateEventTiming } from '../../util/eventTiming'
+import { calculateEventTiming } from '@/util/eventTiming'
 import { EventCardTime } from './EventCardTime'
 
 import { EventDetails } from '@/context/data/types.details'
@@ -20,36 +20,32 @@ const badgeIconSize = 20
 
 export type EventDetailsInstance = {
   details: EventDetails
-  zone: string
 } & ReturnType<typeof calculateEventTiming>
 
 /**
  * Creates the event instance props for an upcoming or running event.
  * @param details The details to use.
  * @param now The current time to check against.
- * @param zone Zone abbreviation.
  */
-export function eventInstanceForAny(details: EventDetails, now: Date, zone: string): EventDetailsInstance {
-  return { details, zone, ...calculateEventTiming(details, now) }
+export function eventInstanceForAny(details: EventDetails, now: Date): EventDetailsInstance {
+  return { details, ...calculateEventTiming(details, now) }
 }
 
 /**
  * Creates the event instance props for an upcoming or running event.
  * @param details The details to use.
  * @param now The current time to check against.
- * @param zone Zone abbreviation.
  */
-export function eventInstanceForNotPassed(details: EventDetails, now: Date, zone: string): EventDetailsInstance {
-  return { details, zone, ...calculateEventTiming(details, now) }
+export function eventInstanceForNotPassed(details: EventDetails, now: Date): EventDetailsInstance {
+  return { details, ...calculateEventTiming(details, now) }
 }
 
 /**
  * Creates the event instance props for a passed event.
  * @param details The details to use.
- * @param zone Zone abbreviation.
  */
-export function eventInstanceForPassed(details: EventDetails, zone: string): EventDetailsInstance {
-  return { details, zone, ...calculateEventTiming(details, 'done') }
+export function eventInstanceForPassed(details: EventDetails): EventDetailsInstance {
+  return { details, ...calculateEventTiming(details, 'done') }
 }
 
 export type EventCardProps = {
@@ -92,7 +88,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
             <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
           </View>
         )}
-        <EventCardTime type={type} event={event} done={done} zone={event.zone} />
+        <EventCardTime type={type} event={event} done={done} />
 
         {!happening ? null : (
           <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'} variant="receded">

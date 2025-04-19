@@ -101,17 +101,11 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
-          name="schedule/+not-found"
+          name="schedule"
           options={{
             title: t('events'),
             tabBarIcon: ({ color, size }) => <Icon name="calendar" size={size} color={color} />,
             href: 'schedule',
-          }}
-        />
-        <Tabs.Screen
-          name="schedule/index"
-          options={{
-            href: null,
           }}
         />
         <Tabs.Screen

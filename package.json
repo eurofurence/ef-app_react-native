@@ -17,6 +17,7 @@
   "license": "MIT",
   "scripts": {
     "start": "expo start",
+    "start:dev": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "lint": "eslint .",

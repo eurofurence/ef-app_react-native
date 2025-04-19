@@ -1,5 +1,5 @@
 import { captureException } from '@sentry/react-native'
-import { router, Stack } from 'expo-router'
+import { router } from 'expo-router'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { StyleSheet, Animated, Easing, TouchableOpacity } from 'react-native'
 import { ScrollView, RefreshControl } from 'react-native-gesture-handler'
@@ -7,11 +7,12 @@ import { Ionicons } from '@expo/vector-icons'
 import { appStyles } from '@/components/AppStyles'
 import { ProfileContent } from '@/components/ProfileContent'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
-import { useAuthContext } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/auth/Auth'
 import { useThemeColor, useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Profile() {
   const { refresh, loggedIn, claims, user } = useAuthContext()
@@ -19,7 +20,7 @@ export default function Profile() {
   const spinValue = useMemo(() => new Animated.Value(0), [])
   const themeColor = useThemeColor('text')
   const iconColor = themeColor.color
-  const { synchronizeUi, isSynchronizing } = useCache()
+  const { synchronize, isSynchronizing } = useCache()
   const backgroundStyle = useThemeBackground('background')
   const { t } = useTranslation('Profile')
 
@@ -76,7 +77,7 @@ export default function Profile() {
   return (
     <ScrollView
       style={[StyleSheet.absoluteFill, backgroundStyle]}
-      refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}
+      refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={() => vibrateAfter(synchronize())} />}
       stickyHeaderIndices={[0]}
       stickyHeaderHiddenOnScroll
     >

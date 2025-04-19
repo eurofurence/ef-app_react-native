@@ -1,4 +1,4 @@
-import { useAuthContext } from '@/context/AuthContext'
+import { useAuthContext } from '@/context/auth/Auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image } from '@/components/generic/atoms/Image'
 

@@ -16,18 +16,17 @@ const filterCurrentEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | '
 /**
  * Uses the "event instances" for the currently active events.
  * @param now The current time.
- * @param zone The time zone.
  */
-export function useCurrentEvents(now: Date, zone: string) {
+export function useCurrentEvents(now: Date) {
   const { events } = useCache()
 
   return useMemo(
     () =>
       chain(filterCurrentEvents(events, now))
         .filter((item) => !item.Hidden)
-        .map((details) => eventInstanceForAny(details, now, zone))
+        .map((details) => eventInstanceForAny(details, now))
         .orderBy('progress', 'asc')
         .value(),
-    [events, now, zone]
+    [events, now]
   )
 }

@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { router } from 'expo-router'
 import { Section } from '../generic/atoms/Section'
-import { useZoneAbbr } from '../../hooks/time/useZoneAbbr'
-import { useCurrentEvents } from '../../hooks/data/useCurrentEvents'
+import { useCurrentEvents } from '@/hooks/data/useCurrentEvents'
 import { EventCard } from './EventCard'
 
 export type CurrentEventListProps = {
@@ -13,8 +12,7 @@ export type CurrentEventListProps = {
 
 export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const zone = useZoneAbbr()
-  const events = useCurrentEvents(now, zone)
+  const events = useCurrentEvents(now)
 
   if (events.length === 0) {
     return null

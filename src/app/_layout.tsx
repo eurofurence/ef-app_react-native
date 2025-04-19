@@ -13,9 +13,11 @@ import { useTheme, useThemeBackground, useThemeName } from '@/hooks/themes/useTh
 // Import i18n configuration
 import '@/i18n'
 // Import global tailwind css
-import { AuthContextProvider } from '@/context/AuthContext'
+import { AuthContextProvider } from '@/context/auth/Auth'
 import '@/css/globals.css'
 import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
+import { AuthDataProvider } from '@/context/auth/AuthData'
+import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 
 /**
  * The root layout for the application.
@@ -60,33 +62,37 @@ export function MainLayout() {
     [themeType, theme]
   )
 
+  useZoneAbbr()
   useEventReminderRescheduling()
 
   return (
     <BottomSheetModalProvider>
       <ThemeProvider value={themeNavigation}>
         <AuthContextProvider>
-          <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
-          <SafeAreaView style={[StyleSheet.absoluteFill, safeAreaStyle]}>
-            <Stack>
-              {screensData.map((screen) => (
-                <Stack.Screen
-                  key={screen.location}
-                  name={screen.location}
-                  options={{
-                    keyboardHandlingEnabled: true,
-                    headerTitleAlign: 'left',
-                    headerShown: screen.headerShown,
-                    headerTitle: screen.title,
-                    headerLargeTitle: screen.headerLargeTitle,
-                    headerLeft: () => screen.headerLeft,
-                    headerRight: () => screen.headerRight,
-                    gestureEnabled: screen.swipeEnabled || false,
-                  }}
-                />
-              ))}
-            </Stack>
-          </SafeAreaView>
+          <AuthDataProvider>
+            <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
+            <SafeAreaView style={[StyleSheet.absoluteFill, safeAreaStyle]}>
+              <Stack>
+                {screensData.map((screen) => (
+                  <Stack.Screen
+                    key={screen.location}
+                    name={screen.location}
+                    options={{
+                      freezeOnBlur: screen.freezeOnBlur,
+                      keyboardHandlingEnabled: true,
+                      headerTitleAlign: 'left',
+                      headerShown: screen.headerShown,
+                      headerTitle: screen.title,
+                      headerLargeTitle: screen.headerLargeTitle,
+                      headerLeft: screen.headerLeft,
+                      headerRight: screen.headerRight,
+                      gestureEnabled: screen.swipeEnabled || false,
+                    }}
+                  />
+                ))}
+              </Stack>
+            </SafeAreaView>
+          </AuthDataProvider>
         </AuthContextProvider>
       </ThemeProvider>
     </BottomSheetModalProvider>

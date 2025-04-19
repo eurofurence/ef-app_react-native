@@ -5,7 +5,8 @@ import { Button, buttonIconSize } from '../generic/containers/Button'
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/Cache'
+import { useAuthData } from '@/context/auth/AuthData'
+import { captureException } from '@sentry/react-native'
 
 type PrivateMessageLinkerProps = {
   containerStyle?: StyleProp<ViewStyle>
@@ -21,21 +22,20 @@ export const PrivateMessageLinker: FC<PrivateMessageLinkerProps> = ({ containerS
   const prevOpen = useRef(open)
   const { t } = useTranslation('Menu')
   const styleBackground = useThemeBackground('notification')
-  const { getValue, synchronizeUi } = useCache()
-  const communications = getValue('communications')
+  const { communications, refresh } = useAuthData()
 
   // Get all communications and filter unread ones
-  const unread = useMemo(() => communications.filter((item) => !item.ReadDateTimeUtc), [communications])
+  const unread = useMemo(() => communications?.filter((item) => !item.ReadDateTimeUtc) ?? [], [communications])
 
   const iconColor = useThemeColorValue(!unread.length ? 'important' : 'invImportant')
 
   useEffect(() => {
     if (open === true && prevOpen.current !== open) {
       console.debug('Fetching new private messages')
-      synchronizeUi()
+      refresh().catch(captureException)
     }
     prevOpen.current = open
-  }, [open, synchronizeUi])
+  }, [open, refresh])
 
   return (
     <Button
