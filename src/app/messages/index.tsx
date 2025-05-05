@@ -10,26 +10,42 @@ import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { NoData } from '@/components/generic/containers/NoData'
 import { CommunicationRecord } from '@/context/data/types.api'
-import { useAuthData } from '@/context/auth/AuthData'
 import { captureException } from '@sentry/react-native'
+import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
+import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 
 type Section = {
   title: string
   data: CommunicationRecord[]
 }
 
+function keyExtractor({ Id }: CommunicationRecord, index: number) {
+  return Id + index
+}
+
+function renderItem({ item }: { item: CommunicationRecord }) {
+  return (
+    <PrivateMessageCard
+      key={item.Id}
+      containerStyle={styles.item}
+      onPress={() =>
+        router.push({
+          pathname: '/messages/[id]',
+          params: { id: item.Id },
+        })
+      }
+      item={item}
+    />
+  )
+}
+
 export default function Messages() {
   const { t } = useTranslation('PrivateMessageList')
-  const { communications, refresh, isRefreshing } = useAuthData()
+  const { data: communications, refetch, isPending } = useCommunicationsQuery()
+  const { data: user } = useUserSelfQuery()
 
-  const navigateTo = useCallback(
-    (item: CommunicationRecord) =>
-      router.push({
-        pathname: '/messages/[messageId]',
-        params: { messageId: item.Id },
-      }),
-    []
-  )
+  const isAdmin = user?.Roles?.includes('Admin') ?? false
+  const isPrivateMessageSender = user?.Roles?.includes('PrivateMessageSender') ?? false
 
   const sectionedData = useMemo(() => {
     const [unread, read] = partition(communications, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
@@ -57,9 +73,16 @@ export default function Messages() {
 
   const sectionStyle = useThemeBackground('background')
 
-  const keyExtractor = useCallback(({ Id }: CommunicationRecord, index: number) => Id + index, [])
   const emptyComponent = useMemo(() => <NoData text={t('no_data')} />, [t])
-  const headerComponent = useMemo(() => <Header>{t('header')}</Header>, [t])
+  const headerComponent = useMemo(() => {
+    if (isAdmin || isPrivateMessageSender)
+      return (
+        <Header secondaryIcon="message-plus" secondaryPress={() => router.push('messages/compose')}>
+          {t('header')}
+        </Header>
+      )
+    else return <Header>{t('header')}</Header>
+  }, [isAdmin, isPrivateMessageSender, t])
 
   const renderSection = useCallback(
     ({ section }: { section: Section }) => (
@@ -70,22 +93,15 @@ export default function Messages() {
     [sectionStyle]
   )
 
-  const renderItem = useCallback(
-    ({ item }: { item: CommunicationRecord }) => <PrivateMessageCard key={item.Id} containerStyle={styles.item} onPress={() => navigateTo(item)} item={item} />,
-    [navigateTo]
-  )
-
-  const backgroundStyle = useThemeBackground('background')
-
   return (
     <SectionList<CommunicationRecord, Section>
-      style={[StyleSheet.absoluteFill, backgroundStyle]}
+      style={StyleSheet.absoluteFill}
       sections={sectionedData}
       contentContainerStyle={styles.container}
       keyExtractor={keyExtractor}
       stickySectionHeadersEnabled
-      onRefresh={() => refresh().catch(captureException)}
-      refreshing={isRefreshing}
+      onRefresh={() => refetch().catch(captureException)}
+      refreshing={isPending}
       ListEmptyComponent={emptyComponent}
       ListHeaderComponent={headerComponent}
       renderSectionHeader={renderSection}
@@ -97,9 +113,6 @@ export default function Messages() {
 const styles = StyleSheet.create({
   section: {
     padding: 20,
-  },
-  action: {
-    flex: 3,
   },
   item: {
     paddingHorizontal: 20,

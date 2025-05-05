@@ -1,13 +1,13 @@
-import { exchangeCodeAsync, refreshAsync, TokenResponse, useAuthRequest } from 'expo-auth-session'
+import { exchangeCodeAsync, refreshAsync, TokenResponse, TokenResponseConfig, useAuthRequest } from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
-import { createContext, FC, PropsWithChildren, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import * as SecureStore from '@/util/secureStorage'
-import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
+import { authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
 import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
 import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
-import { UserRecord } from '@/context/data/types.api'
 import { captureException } from '@sentry/react-native'
+import axios, { AxiosError } from 'axios'
 
 /**
  * Discovery entries.
@@ -20,9 +20,14 @@ const discovery = {
 }
 
 /**
- * Token refresh interval.
+ * Interval between full refreshes.
  */
-const refreshInterval = 600_000
+const refreshTokensAndClaimsInterval = 4800_000
+
+/**
+ * Interval between user claim refreshes.
+ */
+const refreshClaimsInterval = 600_000
 
 /**
  * When to start requesting a new token.
@@ -35,68 +40,66 @@ const refreshMarginSeconds = 600
 export type Claims = Record<string, string | string[]>
 
 /**
- * Type of the auth context.
+ * Checks if the status code indicates unauthorized or not allowed.
+ * @param status The status to check.
+ */
+function isUnauthorized(status: number | undefined) {
+  return status === 401 || status === 403
+}
+
+/**
+ * Auth context type.
  */
 export type AuthContextType = {
   /**
-   * Performs a remote login and maintains the state. May throw.
+   * The last token response.
    */
-  login(): Promise<void>
+  tokenResponse: TokenResponse | null
 
   /**
-   * Performs a remote logout and maintains the state. May throw.
+   * Shorthand for getting the `tokenResponse` access token.
+   */
+  accessToken: string | null
+
+  /**
+   * Shorthand for checking if `accessToken` is not null.
+   */
+  loggedIn: boolean
+
+  /**
+   * Current claims. May be `null` even if access token is present.
+   */
+  claims: Claims | null
+
+  /**
+   * Performs a login. Ignores logged in state.
+   */
+  login(responseConfig?: TokenResponseConfig): Promise<void>
+
+  /**
+   * Refreshes the claims. Returns true if refreshed (not necessarily changed).
+   */
+  refreshClaims(): Promise<boolean>
+
+  /**
+   * Refreshes the token and the claims. Returns true if refreshed (not
+   * necessarily changed).
+   */
+  refreshTokensAndClaims(force?: boolean): Promise<boolean>
+
+  /**
+   * Revokes the tokens and performs a logout.
    */
   logout(): Promise<void>
+}
 
-  /**
-   * Updates the claims and user data. User data is for now coupled with
-   * the token, but user info might change.
-   */
-  update(): Promise<void>
-
-  /**
-   * True if currently refreshing.
-   */
-  isRefreshing: boolean
-
-  /**
-   * Updates the token if a refresh token is present. Reloads user claims and info from the IDP and backend.
-   */
-  refresh(): Promise<void>
-} & (
-  | {
-      /**
-       * True if logged in.
-       */
-      loggedIn: false
-
-      /**
-       * The user claims if logged in and successfully retrieved.
-       */
-      claims: null
-
-      /**
-       * The user self-service info if logged in and successfully retrieved.
-       */
-      user: null
-    }
-  | {
-      /**
-       * True if logged in.
-       */
-      loggedIn: true
-
-      /**
-       * The user claims if logged in and successfully retrieved.
-       */
-      claims: Claims
-
-      /**
-       * The user self-service info if logged in and successfully retrieved.
-       */
-      user: UserRecord
-    }
-)
+/**
+ * Gets the last stored token response.
+ */
+export async function getLastTokenResponse() {
+  const tokenData = await SecureStore.getItemAsync('tokenData')
+  return tokenData ? new TokenResponse(JSON.parse(tokenData)) : null
+}
 
 /**
  * Auth context.
@@ -104,119 +107,18 @@ export type AuthContextType = {
 export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 AuthContext.displayName = 'AuthContext'
 
-/**
- * Gets the currently assigned auth token.
- */
-export const getAccessToken = () => SecureStore.getItemAsync('accessToken')
-
-/**
- * Thrown by fetch methods.
- */
-class EndpointError extends Error {
-  public readonly statusCode: number
-
-  constructor(statusCode: number, message?: string) {
-    super(message)
-    this.statusCode = statusCode
-  }
-}
-
-/**
- * True if the type is a JSON mime type or JSON mime type with extra K-V pairs.
- * @param type
- */
-const isJsonMimeType = (type: string | null) => {
-  return type?.includes('application/json')
-}
-
-/**
- * Fetches the user info from the user info endpoint.
- * @param accessToken The current access token.
- */
-const fetchUserInfo = async (accessToken: string) => {
-  const response = await fetch(discovery.userInfoEndpoint, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    redirect: 'manual',
-  })
-
-  // Must be OK.
-  if (!response.ok) {
-    throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`)
-  }
-  // Must be JSON.
-  const contentType = response.headers.get('Content-type')
-  if (!isJsonMimeType(contentType)) {
-    throw new EndpointError(response.status, `Invalid response content type: ${contentType}`)
-  }
-  // Parse JSON for result.
-  return await response.json()
-}
-
-/**
- * Posts token revocation.
- * @param token The token.
- * @param type The type of the token.
- */
-const fetchRevokeToken = async (token: string, type: 'access_token' | 'refresh_token') => {
-  const response = await fetch(discovery.tokenEndpoint, {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'manual',
-    body: new URLSearchParams({
-      token,
-      client_id: authClientId,
-      token_type_hint: type,
-    }),
-  })
-  // Must be OK.
-  if (!response.ok) {
-    throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`)
-  }
-}
-
-/**
- * Fetches the user data from the API server.
- * @param accessToken The current access token.
- */
-const fetchUserSelf = async (accessToken: string) => {
-  const response = await fetch(`${apiBase}/Users/:self`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-    redirect: 'manual',
-  })
-
-  // Must be OK.
-  if (!response.ok) {
-    throw new EndpointError(response.status, `Invalid response status: ${response.status} ${response.statusText}`)
-  }
-  // Must be JSON.
-  const contentType = response.headers.get('Content-type')
-  if (!isJsonMimeType(contentType)) {
-    throw new EndpointError(response.status, `Invalid response content type: ${contentType}`)
-  }
-  // Parse JSON for result.
-  return await response.json()
-}
-
 // Link browser closing.
 WebBrowser.maybeCompleteAuthSession()
 
 /**
- * Provides and maintains auth state.
- * @param children
+ * Provides auth state.
+ * @param children The children to provide to.
  * @constructor
  */
-export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
-  // Current user.
-  const [claims, setClaims] = useState<Claims | null>(null)
-  const [user, setUser] = useState<UserRecord | null>(null)
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
-  const [isRefreshing, setRefreshing] = useState<boolean>(false)
+export const AuthProvider = ({ children }: { children?: ReactNode | undefined }) => {
+  const [tokenResponse, setTokenResponse] = useState<TokenResponse | null>(undefined as any)
+  const [claims, setClaims] = useState<Claims | null>(undefined as any)
+  const initialized = tokenResponse !== undefined && claims !== undefined
 
   // Auth request and login prompt.
   const [request, , promptAsync] = useAuthRequest(
@@ -228,195 +130,252 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
     discovery
   )
 
-  // Warm up browser for auth prompts.
+  const login = useAsyncCallbackOnce(
+    useCallback(
+      async (responseConfig?: TokenResponseConfig) => {
+        try {
+          // Might have given token data, otherwise prompt for it.
+          let response: TokenResponse
+          if (responseConfig) {
+            // Initialize with given data.
+            response = new TokenResponse(responseConfig)
+          } else {
+            // We set show in "recents" so the web browser doesn't close when
+            // you use an MFA method that requires switching apps on android.
+            const codeResponse = await promptAsync({ showInRecents: true })
+
+            // No request available, or the response is not successful.
+            if (!request || codeResponse?.type !== 'success') return
+
+            // Exchange response code.
+            response = await exchangeCodeAsync(
+              {
+                clientId: authClientId,
+                code: codeResponse.params.code,
+                extraParams: request.codeVerifier ? { code_verifier: request.codeVerifier } : undefined,
+                redirectUri: authRedirect,
+              },
+              discovery
+            )
+          }
+
+          // Save token data and set in state.
+          await SecureStore.setItemAsync('tokenData', JSON.stringify(response.getRequestConfig()))
+          setTokenResponse(response)
+
+          // Get claims, save and set in state.
+          const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${response.accessToken}` } })
+          const claims = claimsResponse.data
+          await SecureStore.setItemAsync('claims', JSON.stringify(claims))
+          setClaims(claims)
+        } catch (error) {
+          // If an auth error occurred, reset the state.
+          if (error instanceof AxiosError && isUnauthorized(error.status)) {
+            await SecureStore.deleteItemAsync('tokenData')
+            await SecureStore.deleteItemAsync('claims')
+            setTokenResponse(null)
+            setClaims(null)
+          }
+          throw error
+        }
+      },
+      [promptAsync, request]
+    )
+  )
+
+  const refreshClaims = useAsyncCallbackOnce(
+    useCallback(async () => {
+      try {
+        // Get the current token state.
+        const tokenData = await SecureStore.getItemAsync('tokenData')
+        const response = tokenData ? new TokenResponse(JSON.parse(tokenData)) : null
+
+        // If no access token is available, this method returns false as the
+        // requested operation is not actionable.
+        if (!response?.accessToken) {
+          return false
+        }
+
+        // Get claims, save and set in state.
+        const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${response.accessToken}` } })
+        const claims = claimsResponse.data
+        await SecureStore.setItemAsync('claims', JSON.stringify(claims))
+        setClaims(claims)
+        return true
+      } catch (error) {
+        // If an auth error occurred, reset the state.
+        if (error instanceof AxiosError && isUnauthorized(error.status)) {
+          await SecureStore.deleteItemAsync('tokenData')
+          await SecureStore.deleteItemAsync('claims')
+          setTokenResponse(null)
+          setClaims(null)
+        }
+        throw error
+      }
+    }, [])
+  )
+
+  const refreshTokensAndClaims = useAsyncCallbackOnce(
+    useCallback(async (force?: boolean) => {
+      try {
+        // Get the current token state.
+        const tokenData = await SecureStore.getItemAsync('tokenData')
+        const response = tokenData ? new TokenResponse(JSON.parse(tokenData)) : null
+
+        // If no refresh token is available, this method returns false as the
+        // requested operation is not actionable.
+        if (!response?.refreshToken) {
+          return false
+        }
+
+        // Token is still fresh, not actionable.
+        if (!force && TokenResponse.isTokenFresh(response, refreshMarginSeconds)) {
+          return false
+        }
+
+        // Refresh.
+        const refreshResponse = await refreshAsync(
+          {
+            clientId: authClientId,
+            scopes: authScopes,
+            refreshToken: response.refreshToken,
+          },
+          discovery
+        )
+
+        // Save new token data and set in state.
+        await SecureStore.setItemAsync('tokenData', JSON.stringify(refreshResponse.getRequestConfig()))
+        setTokenResponse(refreshResponse)
+
+        // Get claims, set in state.
+        const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${refreshResponse.accessToken}` } })
+        const claims = claimsResponse.data
+        await SecureStore.setItemAsync('claims', JSON.stringify(claims))
+        setClaims(claims)
+        return true
+      } catch (error) {
+        // If an auth error occurred, reset the state.
+        if (error instanceof AxiosError && isUnauthorized(error.status)) {
+          await SecureStore.deleteItemAsync('tokenData')
+          await SecureStore.deleteItemAsync('claims')
+          setTokenResponse(null)
+          setClaims(null)
+        }
+        throw error
+      }
+    }, [])
+  )
+
+  const logout = useAsyncCallbackOnce(
+    useCallback(async () => {
+      // Get the current token state.
+      const tokenData = await SecureStore.getItemAsync('tokenData')
+      const response = tokenData ? new TokenResponse(JSON.parse(tokenData)) : null
+
+      // Revoke any tokens that were found.
+      if (response?.accessToken)
+        await axios
+          .post(
+            discovery.revocationEndpoint,
+            new URLSearchParams({
+              token: response.accessToken,
+              client_id: authClientId,
+              token_type_hint: 'access_token',
+            })
+          )
+          .catch(captureException)
+
+      if (response?.refreshToken)
+        await axios
+          .post(
+            discovery.revocationEndpoint,
+            new URLSearchParams({
+              token: response.refreshToken,
+              client_id: authClientId,
+              token_type_hint: 'refresh_token',
+            })
+          )
+          .catch(captureException)
+
+      // Always delete state and clear variables.
+      await SecureStore.deleteItemAsync('tokenData')
+      setTokenResponse(null)
+      setClaims(null)
+    }, [])
+  )
+
+  // Mount and unmount effect.
   useEffect(() => {
+    // Warmup the browser to handle login requests.
     WebBrowser.warmUpAsync().catch(captureException)
 
+    // Fire off getting the saved state.
+    ;(async () => {
+      const tokenData = await SecureStore.getItemAsync('tokenData')
+      const response = tokenData ? new TokenResponse(JSON.parse(tokenData)) : null
+
+      const claimsData = await SecureStore.getItemAsync('claims')
+      const claims = claimsData ? JSON.parse(claimsData) : null
+
+      setTokenResponse(response)
+      setClaims(claims)
+    })().catch(captureException)
+
+    // On unmount, release browser.
     return () => {
       WebBrowser.coolDownAsync().catch(captureException)
     }
   }, [])
 
-  // For an existing access token, fetches and applies user claims and settings.
-  const update = useAsyncCallbackOnce(
-    useCallback(async () => {
-      try {
-        const accessToken = await SecureStore.getItemAsync('accessToken')
-        if (accessToken) {
-          const claimsPromise = fetchUserInfo(accessToken)
-          const userPromise = fetchUserSelf(accessToken)
-          const claims = await claimsPromise
-          const user = await userPromise
-          setClaims(claims)
-          setUser(user)
-          setLoggedIn(true)
-        } else {
-          setClaims(null)
-          setUser(null)
-          setLoggedIn(false)
-        }
-      } catch (error) {
-        // Delete access and refresh if actual authorization error, then rethrow.
-        if (error instanceof EndpointError && (error.statusCode === 401 || error.statusCode === 403)) {
-          await SecureStore.deleteItemAsync('accessToken')
-          await SecureStore.deleteItemAsync('accessTokenData')
-          await SecureStore.deleteItemAsync('refreshToken')
-          setLoggedIn(false)
-          setClaims(null)
-          setUser(null)
-        }
-        throw error
-      }
-    }, [])
-  )
-
-  // Login method.
-  const login = useAsyncCallbackOnce(
-    useCallback(async () => {
-      // Code exchange part.
-      try {
-        // We set show in "recents" so the web browser doesn't close when
-        // you use an MFA method that requires switching apps on android.
-        const codeResponse = await promptAsync({ showInRecents: true })
-
-        if (!(request && codeResponse?.type === 'success')) return
-
-        const response = await exchangeCodeAsync(
-          {
-            clientId: authClientId,
-            code: codeResponse.params.code,
-            extraParams: request.codeVerifier ? { code_verifier: request.codeVerifier } : undefined,
-            redirectUri: authRedirect,
-          },
-          discovery
-        )
-
-        await SecureStore.setItemToAsync('accessToken', response.accessToken)
-        await SecureStore.setItemToAsync('accessTokenData', JSON.stringify(response.getRequestConfig()))
-        await SecureStore.setItemToAsync('refreshToken', response.refreshToken)
-        setLoggedIn(true)
-      } catch (error) {
-        // Delete access and refresh, then rethrow.
-        await SecureStore.deleteItemAsync('accessToken')
-        await SecureStore.deleteItemAsync('accessTokenData')
-        await SecureStore.deleteItemAsync('refreshToken')
-        setLoggedIn(false)
-        setClaims(null)
-        throw error
-      }
-
-      // User update part, if invalid tokens are detected here, data is properly reset.
-      await update()
-    }, [promptAsync, request, update])
-  )
-
-  // Logout method.
-  const logout = useAsyncCallbackOnce(
-    useCallback(async () => {
-      try {
-        // Get tokens and delete from store.
-        const accessToken = await SecureStore.getItemAsync('accessToken')
-        const refreshToken = await SecureStore.getItemAsync('refreshToken')
-        await SecureStore.deleteItemAsync('accessToken')
-        await SecureStore.deleteItemAsync('accessTokenData')
-        await SecureStore.deleteItemAsync('refreshToken')
-
-        // Revoke all present tokens.
-        let accessTokenTask
-        let refreshTokenTask
-        if (accessToken) accessTokenTask = fetchRevokeToken(accessToken, 'access_token')
-        if (refreshToken) refreshTokenTask = fetchRevokeToken(refreshToken, 'refresh_token')
-        await Promise.all([accessTokenTask, refreshTokenTask])
-      } finally {
-        setLoggedIn(false)
-        setClaims(null)
-        setUser(null)
-      }
-    }, [])
-  )
-
-  // Reload method.
-  const refresh = useAsyncCallbackOnce(
-    useCallback(async () => {
-      // Refresh token part.
-      try {
-        setRefreshing(true)
-        const refreshToken = await SecureStore.getItemAsync('refreshToken')
-        if (refreshToken) {
-          // Check if we have token data stored. If it's present, check
-          // if it reports itself as needing to be refreshed.
-          const refreshTokenData = await SecureStore.getItemAsync('accessTokenData')
-          const refreshTokenConfig = refreshTokenData ? new TokenResponse(JSON.parse(refreshTokenData)) : null
-
-          if (!refreshTokenConfig || !TokenResponse.isTokenFresh(refreshTokenConfig, refreshMarginSeconds)) {
-            // Refresh it.
-            const response = await refreshAsync(
-              {
-                clientId: authClientId,
-                scopes: authScopes,
-                refreshToken,
-              },
-              discovery
-            )
-
-            await SecureStore.setItemToAsync('accessToken', response.accessToken)
-            await SecureStore.setItemToAsync('accessTokenData', JSON.stringify(response.getRequestConfig()))
-            await SecureStore.setItemToAsync('refreshToken', response.refreshToken ?? refreshToken)
-            setLoggedIn(true)
-          }
-        }
-      } catch (error) {
-        // Delete access and refresh, then rethrow.
-        await SecureStore.deleteItemAsync('accessToken')
-        await SecureStore.deleteItemAsync('accessTokenData')
-        await SecureStore.deleteItemAsync('refreshToken')
-        setLoggedIn(false)
-        setClaims(null)
-        setUser(null)
-        throw error
-      } finally {
-        setRefreshing(false)
-      }
-
-      // User update part, if invalid tokens are detected here, data is properly reset.
-      await update()
-    }, [update])
-  )
-
-  // Refresh connection.
+  // Recurrence to refresh claim data.
   useAsyncInterval(
     useCallback(
       async (_) => {
-        // Try refresh and capture any exception that happens in the background.
-        try {
-          await refresh()
-        } catch (error) {
-          captureException(error)
-        }
+        if (!initialized) return
+        await refreshClaims().catch(captureException)
       },
-      [refresh]
+      [initialized, refreshClaims]
     ),
-    refreshInterval
+    refreshClaimsInterval
   )
-  const value = useMemo(
-    () =>
-      ({
-        login,
-        logout,
-        update,
-        isRefreshing,
-        refresh,
-        loggedIn,
-        claims,
-        user,
-      }) as AuthContextType,
-    [login, logout, update, isRefreshing, refresh, loggedIn, claims, user]
+
+  // Recurrence to refresh token and claim data.
+  useAsyncInterval(
+    useCallback(
+      async (_) => {
+        if (!initialized) return
+        await refreshTokensAndClaims().catch(captureException)
+      },
+      [initialized, refreshTokensAndClaims]
+    ),
+    refreshTokensAndClaimsInterval
   )
+
+  // Get value to provide to the children.
+  const value = useMemo<AuthContextType>(() => {
+    const accessToken = tokenResponse ? tokenResponse.accessToken : null
+    const loggedIn = accessToken !== null
+    return {
+      tokenResponse,
+      accessToken,
+      loggedIn,
+      claims,
+      login,
+      refreshClaims,
+      refreshTokensAndClaims,
+      logout,
+    }
+  }, [claims, login, logout, refreshClaims, refreshTokensAndClaims, tokenResponse])
+
+  if (!initialized) return null
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 
+/**
+ * Uses the auth context.
+ */
 export const useAuthContext = () => {
   const context = useContext(AuthContext)
-  if (!context) throw new Error('useAuthContext must be used within a AuthContextProvider')
+  if (!context) throw new Error('useAuthContext must be used within a AuthProvider')
   return context
 }

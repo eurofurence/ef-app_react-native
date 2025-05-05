@@ -21,7 +21,7 @@ import { sourceFromImage } from '../generic/atoms/Image.common'
 import { conTimeZone } from '@/configuration'
 import { shareDealer } from '@/components/dealers/Dealers.common'
 import { useNow } from '@/hooks/time/useNow'
-import { useToast } from '@/context/ToastContext'
+import { useToastContext } from '@/context/ui/ToastContext'
 import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
 import { useCache } from '@/context/data/Cache'
 import { Row } from '@/components/generic/containers/Row'
@@ -95,8 +95,8 @@ export type DealerContentProps = {
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, updated, shareButton }) => {
   const { t } = useTranslation('Dealer')
+  const { toast } = useToastContext()
   const now = useNow()
-  const toast = useToast()
 
   const avatarBackground = useThemeBackground('text')
 

@@ -96,7 +96,14 @@ export function useStackScreensData(): StackScreenProps[] {
         swipeEnabled: true,
       },
       {
-        location: 'messages/[messageId]',
+        location: 'messages/compose',
+        title: t('pm'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
+        location: 'messages/[id]',
         title: t('pm'),
         headerLeft: CustomBack,
         headerShown: false,

@@ -9,7 +9,7 @@ import { TabsRef } from '@/components/generic/containers/Tabs'
 import { Tab } from '@/components/generic/containers/Tab'
 import { Grid } from '@/components/generic/containers/Grid'
 import { Col } from '@/components/generic/containers/Col'
-import { useAuthContext, getAccessToken } from '@/context/auth/Auth'
+import { useAuthContext } from '@/context/auth/Auth'
 import { Button } from '@/components/generic/containers/Button'
 import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
 import { useCache } from '@/context/data/Cache'
@@ -39,14 +39,13 @@ export function MainMenu({ tabs }: MainMenuProps) {
   }, [login])
 
   const handleCatchEmAll = useCallback(async () => {
-    const token = await getAccessToken()
-    if (!token) {
+    if (!loggedIn) {
       alert(t('not_logged_in'))
       return
     }
     await Linking.openURL(catchEmUrl).catch(console.error)
     tabs.current?.close()
-  }, [t, tabs])
+  }, [t, loggedIn, tabs])
 
   return (
     <Col type="stretch">
@@ -62,7 +61,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
 
       <Grid cols={menuColumns}>
         <Tab icon="information-outline" text={t('info')} onPress={() => handleNavigation('/knowledge')} />
-        {showCatchEm && <Tab icon="paw" text={t('catch_em')} onPress={handleCatchEmAll} />}
+        {showCatchEm && <Tab icon="paw" text={t('catch_em')} onPress={handleCatchEmAll} disabled={!loggedIn} />}
         <Tab icon="image-frame" text={t('artist_alley')} onPress={() => handleNavigation('/artist-alley')} />
         <Tab icon="card-account-details-outline" text={t('profile')} onPress={() => handleNavigation('/profile')} disabled={!loggedIn} />
         <Tab icon="cog" text={t('settings')} onPress={() => handleNavigation('/settings')} />

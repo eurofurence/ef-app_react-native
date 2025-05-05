@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/react-native'
 import { TFunction } from 'i18next'
-import { parseISO, differenceInHours, isBefore } from 'date-fns'
+import { differenceInHours, isBefore } from 'date-fns'
 import { useMemo } from 'react'
 import { Share } from 'react-native'
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from '@/components/events/EventCard'
@@ -133,7 +133,7 @@ export const useEventOtherGroups = (t: TFunction, now: Date, items: readonly Eve
         hidden++
       } else if (!item.ConferenceDay) {
         // Nothing, not applicable.
-      } else if (isBefore(now, item.EndTime)) {
+      } else if (isBefore(now, item.End)) {
         if (!(item.ConferenceDay.Date in sectionedDays)) {
           result.push(eventSectionForDate(t, item.ConferenceDay.Date))
           sectionedDays[item.ConferenceDay.Date] = true
@@ -150,7 +150,7 @@ export const useEventOtherGroups = (t: TFunction, now: Date, items: readonly Eve
 
     // Second pass not hidden and passed.
     for (const item of items) {
-      if (!item.Hidden && !isBefore(now, item.EndTime)) {
+      if (!item.Hidden && !isBefore(now, item.End)) {
         if (!sectionedPassed) {
           result.push(eventSectionForPassed(t))
           sectionedPassed = true

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { parseISO, format } from 'date-fns'
@@ -12,39 +12,31 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Rule } from '@/components/generic/atoms/Rule'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useAuthData } from '@/context/auth/AuthData'
+import { useCommunicationsMarkReadMutation } from '@/hooks/api/communications/useCommunicationsMarkReadMutation'
 
-// const readOpenTimeRequirement = 1500;
+import { useCommunicationsItemQuery } from '@/hooks/api/communications/useCommunicationsQuery'
+
+const readOpenTimeRequirement = 1500
 
 export default function MessageItem() {
-  const { messageId } = useLocalSearchParams<{ messageId: string }>()
+  const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('PrivateMessageItem')
-  const { communications } = useAuthData()
+  const { data: message } = useCommunicationsItemQuery(id)
+  const { mutate } = useCommunicationsMarkReadMutation()
   const backgroundStyle = useThemeBackground('background')
 
-  // Get message from cache, find instance.
-  const message = useMemo(() => {
-    return communications?.find((item) => item.Id === messageId)
-  }, [communications, messageId])
+  // Mark as read after delay
+  useEffect(() => {
+    if (!message || message.ReadDateTimeUtc !== null) return
 
-  // todo: post transformation, read time should be synced from server.
-  // // Mark as read after delay
-  // useEffect(() => {
-  //     if (!message || message.ReadDateTimeUtc !== null) return;
-  //
-  //     const handle = setTimeout(() => {
-  //         console.debug("marking as read", message.ReadDateTimeUtc);
-  //         const updatedMessage: CommunicationRecord = {
-  //             ...message,
-  //             ReadDateTimeUtc: new Date().toISOString(),
-  //         };
-  //         saveCache("communications", message.Id, updatedMessage);
-  //     }, readOpenTimeRequirement);
-  //
-  //     return () => clearTimeout(handle);
-  // }, [message, saveCache]);
+    const handle = setTimeout(() => {
+      mutate(message.Id)
+    }, readOpenTimeRequirement)
 
-  // Navigate back if message not found
+    return () => clearTimeout(handle)
+  }, [message, mutate])
+
+  // Navigate back if the message not found
   useEffect(() => {
     if (!message) {
       router.back()

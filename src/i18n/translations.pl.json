@@ -159,17 +159,6 @@
     },
     "changeLanguage": "Zmień język",
     "currentLanguage": "Twój aktualnie używany język to polski! 🥟",
-    "dev_buttons": {
-      "no_auth_alert": "Nie jesteś zalogowany - zatrzymywanie...",
-      "send_private_message": "Odbierz prywatną wiadomość {{ status }}",
-      "subtitle": "Zmuś API żeby coś zrobiło.",
-      "sync": "Wymuszona synchronizacja {{ status }}",
-      "sync_alert_done": "Wszystkie urządzenia zsynchronizowane",
-      "sync_alert_error": "Przytrzymaj aby aktywować tę funkcję",
-      "test_message_content": "Właśnie wygrałeś mega nagrodę!",
-      "test_message_subject": "Właśnie wygrałeś mega nagrodę!",
-      "title": "Guziczki deweloperów"
-    },
     "developer_settings": {
       "subtitle": "Nie powinieneś tego ruszać o ile wiesz co robisz.",
       "title": "Ustawienia deweloperskie"

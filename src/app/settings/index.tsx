@@ -3,13 +3,11 @@ import { ScrollView, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { Floater } from '@/components/generic/containers/Floater'
 import { UserSettings } from '@/components/settings/UserSettings'
-import { CacheStats } from '@/components/settings/CacheStats'
 import { TimeTravel } from '@/components/settings/TimeTravel'
-import { ScheduledNotifications } from '@/components/settings/ScheduledNotifications'
-import { RemoteMessages } from '@/components/settings/RemoteMessages'
 import { DevButtons } from '@/components/settings/DevButtons'
 import { Header } from '@/components/generic/containers/Header'
 import { useCache } from '@/context/data/Cache'
+import { DevValues } from '@/components/settings/DevValues'
 
 export default function SettingsPage() {
   const { getValue } = useCache()
@@ -26,11 +24,9 @@ export default function SettingsPage() {
 
           {showDevMenu && (
             <>
-              <CacheStats />
               <TimeTravel />
-              <ScheduledNotifications />
-              <RemoteMessages />
               <DevButtons />
+              <DevValues />
             </>
           )}
         </Floater>

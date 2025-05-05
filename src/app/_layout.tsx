@@ -1,6 +1,6 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { Stack } from 'expo-router'
+import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useMemo } from 'react'
 import { StyleSheet } from 'react-native'
@@ -10,14 +10,25 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useStackScreensData } from '@/hooks/data/useStackScreensData'
 import { CacheProvider } from '@/context/data/Cache'
 import { useTheme, useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
+import { AuthProvider } from '@/context/auth/Auth'
+import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
+import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
+import { QueryProvider } from '@/context/query/Query'
+import { ToastProvider } from '@/context/ui/ToastContext'
+import { useTokenManager } from '@/hooks/tokens/useTokenManager'
+
 // Import i18n configuration
 import '@/i18n'
-// Import global tailwind css
-import { AuthContextProvider } from '@/context/auth/Auth'
+
+// Import initializer scripts
+import '@/init/firebaseApp'
+import '@/init/sentryInit'
+import '@/init/setNotificationChannels'
+import '@/init/setNotificationHandler'
+import '@/init/splash'
+
+// Import global tailwind CSS.
 import '@/css/globals.css'
-import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
-import { AuthDataProvider } from '@/context/auth/AuthData'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 
 /**
  * The root layout for the application.
@@ -27,9 +38,15 @@ import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 export default function RootLayout() {
   return (
     <GestureHandlerRootView>
-      <CacheProvider>
-        <MainLayout />
-      </CacheProvider>
+      <QueryProvider>
+        <CacheProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <MainLayout />
+            </ToastProvider>
+          </AuthProvider>
+        </CacheProvider>
+      </QueryProvider>
     </GestureHandlerRootView>
   )
 }
@@ -64,36 +81,33 @@ export function MainLayout() {
 
   useZoneAbbr()
   useEventReminderRescheduling()
+  useTokenManager()
 
   return (
     <BottomSheetModalProvider>
       <ThemeProvider value={themeNavigation}>
-        <AuthContextProvider>
-          <AuthDataProvider>
-            <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
-            <SafeAreaView style={[StyleSheet.absoluteFill, safeAreaStyle]}>
-              <Stack>
-                {screensData.map((screen) => (
-                  <Stack.Screen
-                    key={screen.location}
-                    name={screen.location}
-                    options={{
-                      freezeOnBlur: screen.freezeOnBlur,
-                      keyboardHandlingEnabled: true,
-                      headerTitleAlign: 'left',
-                      headerShown: screen.headerShown,
-                      headerTitle: screen.title,
-                      headerLargeTitle: screen.headerLargeTitle,
-                      headerLeft: screen.headerLeft,
-                      headerRight: screen.headerRight,
-                      gestureEnabled: screen.swipeEnabled || false,
-                    }}
-                  />
-                ))}
-              </Stack>
-            </SafeAreaView>
-          </AuthDataProvider>
-        </AuthContextProvider>
+        <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
+        <SafeAreaView style={[StyleSheet.absoluteFill, safeAreaStyle]} onLayout={() => SplashScreen.hide()}>
+          <Stack>
+            {screensData.map((screen) => (
+              <Stack.Screen
+                key={screen.location}
+                name={screen.location}
+                options={{
+                  freezeOnBlur: screen.freezeOnBlur,
+                  keyboardHandlingEnabled: true,
+                  headerTitleAlign: 'left',
+                  headerShown: screen.headerShown,
+                  headerTitle: screen.title,
+                  headerLargeTitle: screen.headerLargeTitle,
+                  headerLeft: screen.headerLeft,
+                  headerRight: screen.headerRight,
+                  gestureEnabled: screen.swipeEnabled || false,
+                }}
+              />
+            ))}
+          </Stack>
+        </SafeAreaView>
       </ThemeProvider>
     </BottomSheetModalProvider>
   )

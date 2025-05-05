@@ -16,7 +16,7 @@ export type ToastMessage = {
   type: 'notice' | 'info' | 'warning' | 'error'
 
   /**
-   * The content, can be a React node.
+   * The content. Can be a React node.
    */
   content: ReactNode | string
 
@@ -48,7 +48,7 @@ export type ToastContextType = {
   /**
    * Offers a toast for presentation.
    * @param type The type of the toast.
-   * @param content The content, can be a React node.
+   * @param content The content. Can be a React node.
    * @param lifetime The lifetime.
    * @param group A group key, freely pickable if multiple consumers render toasts.
    */
@@ -64,11 +64,7 @@ export type ToastContextType = {
 /**
  * Toast context object.
  */
-export const ToastContext = createContext<ToastContextType>({
-  messages: [],
-  toast() {},
-  dismiss() {},
-})
+export const ToastContext = createContext<ToastContextType | undefined>(undefined)
 ToastContext.displayName = 'ToastContext'
 
 /**
@@ -86,7 +82,7 @@ export type ToastContextProviderProps = {
  * @param children The children to provide for.
  * @constructor
  */
-export const ToastContextProvider = ({ children }: ToastContextProviderProps) => {
+export const ToastProvider = ({ children }: ToastContextProviderProps) => {
   const [messages, setMessages] = useState<ToastMessage[]>([])
   const toast = useCallback((type: 'notice' | 'info' | 'warning' | 'error', content: ReactNode | string, lifetime = 5000, group?: any) => {
     const queued = Date.now()
@@ -113,28 +109,23 @@ export const ToastContextProvider = ({ children }: ToastContextProviderProps) =>
 }
 
 /**
- * Uses the entire toast context.
+ * Uses the toast context.
  */
-export const useToastContext = () => useContext(ToastContext)
-
-/**
- * Uses the toast method of the toast context.
- */
-export const useToast = () => useContext(ToastContext).toast
-
-/**
- * Uses the toast dismiss method of the toast context.
- */
-export const useToastDismiss = () => useContext(ToastContext).dismiss
+export const useToastContext = () => {
+  const context = useContext(ToastContext)
+  if (!context) throw new Error('useToastContext must be used within a ToastProvider')
+  return context
+}
 
 /**
  * Uses the current messages of the toast context.
  */
 export const useToastMessages = (limit?: number) => {
-  const result = useContext(ToastContext).messages
-
-  if (limit === undefined) return result
-  const start = Math.max(result.length - limit, 0)
-  const end = Math.min(start + limit, result.length)
-  return result.slice(start, end)
+  const { messages } = useToastContext()
+  return useMemo(() => {
+    if (limit === undefined) return messages
+    const start = Math.max(messages.length - limit, 0)
+    const end = Math.min(start + limit, messages.length)
+    return messages.slice(start, end)
+  }, [messages, limit])
 }

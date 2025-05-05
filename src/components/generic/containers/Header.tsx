@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react'
-import { StyleSheet, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native-gesture-handler'
 
 import { router } from 'expo-router'
@@ -8,6 +8,8 @@ import { Icon, IconNames } from '../atoms/Icon'
 import { Label } from '../atoms/Label'
 import { Row } from './Row'
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useToastMessages } from '@/context/ui/ToastContext'
+import { Toast } from '@/components/Toast'
 
 const iconSize = 26
 const iconPad = 6
@@ -49,6 +51,7 @@ export const Header: FC<HeaderProps> = (props) => {
   const colorValue = useThemeColorValue('text')
   const styleBackground = useThemeBackground('background')
   const styleBorder = useThemeBorder('darken')
+  const toastMessages = useToastMessages(5)
   return (
     <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
       <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={() => router.back()}>
@@ -76,6 +79,16 @@ export const Header: FC<HeaderProps> = (props) => {
         ) : // Not given, therefore no element.
         null
       }
+
+      {!toastMessages.length ? null : (
+        <View style={styles.toasts}>
+          <View style={styles.toastsInner}>
+            {[...toastMessages].reverse().map((toast) => (
+              <Toast key={toast.id} {...toast} loose={false} />
+            ))}
+          </View>
+        </View>
+      )}
     </Row>
   )
 }
@@ -110,5 +123,17 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+  },
+  toasts: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  toastsInner: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
   },
 })

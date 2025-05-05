@@ -1,12 +1,12 @@
 import React from 'react'
-import { StyleSheet, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, ViewStyle } from 'react-native'
 
 import { Button } from '@/components/generic/containers/Button'
 import { Row } from '@/components/generic/containers/Row'
 import { LabelProps } from '@/components/generic/atoms/Label'
 
 export type ChoiceButtonsProps<T = string> = {
-  style?: ViewStyle
+  style?: StyleProp<ViewStyle>
   labelType?: LabelProps['type']
   labelVariant?: LabelProps['variant']
   choices: T[]

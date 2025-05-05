@@ -17,6 +17,7 @@ import {
   storeReducer,
   usePersistor,
 } from '@/context/data/CacheStore'
+import axios from 'axios'
 
 /**
  * Cache context.
@@ -176,14 +177,7 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     const path = lastSynchronised && cid === conId && cacheVersion === eurofurenceCacheVersion ? `Sync?since=${lastSynchronised}` : `Sync`
 
     try {
-      const response = await fetch(`${apiBase}/${path}`, { signal: ownInvocation.signal })
-      if (!response.ok) {
-        throw new Error('API response not OK')
-      }
-      if (!response.headers.get('Content-type')?.includes('application/json')) {
-        throw new Error('API response is not JSON')
-      }
-      const data = await response.json()
+      const data = await axios.get(`${apiBase}/${path}`, { signal: ownInvocation.signal }).then((res) => res.data)
 
       // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
       if (data.ConventionIdentifier !== conId || cacheVersion !== eurofurenceCacheVersion) {

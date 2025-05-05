@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { DimensionValue, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import { ThemeColor, withAlpha } from '@/context/Theme'

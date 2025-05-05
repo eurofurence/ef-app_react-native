@@ -21,10 +21,10 @@ export function vibrateAfter<T>(result: Promise<T>, pattern?: VibrationPattern):
 export function vibrateAfter<T>(result: Promise<T> | T, pattern?: VibrationPattern): Promise<T> | T {
   if (isPromise(result)) {
     // Wrap promise by attaching a "finally" block.
-    return (result as Promise<T>).finally(() => Vibration.vibrate(pattern ?? 400))
+    return (result as Promise<T>).finally(() => Vibration.vibrate(pattern ?? 100))
   } else {
     // The Result was "already awaited".
-    Vibration.vibrate(pattern ?? 400)
+    Vibration.vibrate(pattern ?? 100)
     return result
   }
 }
