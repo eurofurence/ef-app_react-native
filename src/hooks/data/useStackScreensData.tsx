@@ -40,6 +40,9 @@ export function useStackScreensData(): StackScreenProps[] {
         swipeEnabled: true,
       },
       {
+        location: 'auth/login',
+      },
+      {
         location: 'dealers/[id]',
         title: t('dealers'),
         headerLeft: CustomBack,

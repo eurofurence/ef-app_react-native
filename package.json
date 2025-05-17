@@ -124,7 +124,6 @@
     "@types/lodash": "^4.17.16",
     "@types/react": "~18.3.19",
     "@types/react-dom": "~18.3.5",
-    "@types/redux-logger": "^3.0.13",
     "eslint": "^8.57.0",
     "eslint-config-expo": "~8.0.1",
     "eslint-config-prettier": "^10.1.1",

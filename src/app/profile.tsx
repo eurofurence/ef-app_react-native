@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/react-native'
-import { router } from 'expo-router'
-import React, { useCallback, useEffect, useState } from 'react'
+import { Redirect } from 'expo-router'
+import React, { useCallback, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import { ScrollView, RefreshControl } from 'react-native-gesture-handler'
 import { appStyles } from '@/components/AppStyles'
@@ -15,7 +15,7 @@ import { vibrateAfter } from '@/util/vibrateAfter'
 import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 
 export default function Profile() {
-  const { loggedIn, refreshTokensAndClaims, claims } = useAuthContext()
+  const { loggedIn, refreshToken, claims } = useAuthContext()
   const { data: user, refetch } = useUserSelfQuery()
   const [isReloading, setIsReloading] = useState(false)
   const { synchronize, isSynchronizing } = useCache()
@@ -28,7 +28,7 @@ export default function Profile() {
     setIsReloading(true)
     ;(async () => {
       try {
-        await refreshTokensAndClaims()
+        await refreshToken(true)
         await refetch()
       } catch (error) {
         captureException(error)
@@ -36,14 +36,10 @@ export default function Profile() {
         setIsReloading(false)
       }
     })()
-  }, [refreshTokensAndClaims, refetch, isReloading])
+  }, [refreshToken, refetch, isReloading])
 
   // Navigate back if not logged in or unable to retrieve proper user data
-  useEffect(() => {
-    if (!loggedIn) {
-      router.back()
-    }
-  }, [loggedIn])
+  if (!loggedIn) return <Redirect href="/" />
 
   return (
     <ScrollView

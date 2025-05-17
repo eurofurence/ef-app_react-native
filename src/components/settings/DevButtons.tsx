@@ -19,7 +19,7 @@ export function DevButtons() {
   const { synchronize } = useCache()
   const { toast } = useToastContext()
   const [tokenData, setTokenData] = useState('')
-  const { login, accessToken, refreshTokensAndClaims } = useAuthContext()
+  const { load, accessToken, refreshToken } = useAuthContext()
 
   const styleLighten = useThemeBackground('inverted')
   const styleText = useThemeColor('invText')
@@ -29,7 +29,7 @@ export function DevButtons() {
     try {
       const token = await getDevicePushToken()
       await Clipboard.setStringAsync(token)
-      console.log(token)
+      console.log(token ?? '')
       toast('info', 'Device push token copied to clipboard', 5000)
     } catch (error) {
       toast('warning', 'Failed to copy device push token', 5000)
@@ -38,24 +38,24 @@ export function DevButtons() {
   }, [toast])
 
   // Refreshes the current login state.
-  const refreshLoginTokensAndClaims = useCallback(async () => {
+  const refreshLoginToken = useCallback(async () => {
     try {
-      await refreshTokensAndClaims(true)
+      await refreshToken(true)
       toast('info', 'Login token data refreshed', 5000)
     } catch (error) {
       toast('warning', 'Failed to refresh login token data', 5000)
       captureException(error)
     }
-  }, [refreshTokensAndClaims, toast])
+  }, [refreshToken, toast])
 
   // Logs in with the token data from the text input.
   const loginWithTokenData = useCallback(async () => {
     try {
-      await login(JSON.parse(tokenData))
+      await load(JSON.parse(tokenData))
     } catch (error) {
       captureException(error)
     }
-  }, [login, tokenData])
+  }, [load, tokenData])
 
   // Copies the token data into the clipboard.
   const copyTokenData = useCallback(async () => {
@@ -86,7 +86,7 @@ export function DevButtons() {
         {t('set_token_data')}
       </Button>
 
-      <Button disabled={!accessToken} onPress={refreshLoginTokensAndClaims} icon="refresh-circle">
+      <Button disabled={!accessToken} onPress={refreshLoginToken} icon="refresh-circle">
         {t('refresh_login_tokens_and_claims')}
       </Button>
 
