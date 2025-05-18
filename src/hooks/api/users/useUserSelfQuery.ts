@@ -1,5 +1,5 @@
 import { UserRecord } from '@/context/data/types.api'
-import { QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
+import { keepPreviousData, QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useAuthContext } from '@/context/auth/Auth'
 import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
@@ -31,5 +31,6 @@ export function useUserSelfQuery(): UseQueryResult<UserRecord | null> {
   return useQuery({
     queryKey: [claims?.sub, 'self'],
     queryFn: queryFn,
+    placeholderData: (data) => keepPreviousData(data),
   })
 }

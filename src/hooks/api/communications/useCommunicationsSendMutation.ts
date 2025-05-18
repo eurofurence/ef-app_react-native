@@ -32,6 +32,7 @@ export async function postCommunicationsSend(accessToken: string | null, data: C
       signal: signal,
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
     })
     .then((res) => res.data)

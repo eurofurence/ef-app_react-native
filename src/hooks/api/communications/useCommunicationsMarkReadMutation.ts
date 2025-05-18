@@ -14,10 +14,11 @@ import { parseISO } from 'date-fns'
 export async function postCommunicationsMarkRead(accessToken: string | null, id: string, signal?: GenericAbortSignal) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
-    .post(`${apiBase}/Communication/PrivateMessages/${id}/Read`, undefined, {
+    .post(`${apiBase}/Communication/PrivateMessages/${id}/Read`, true, {
       signal: signal,
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
     })
     .then((res) => parseISO(res.data))

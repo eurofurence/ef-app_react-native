@@ -312,7 +312,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     return () => {
       WebBrowser.coolDownAsync().catch(captureException)
     }
-  }, [load, refreshClaims])
+  }, [load])
 
   // On token change, refresh claims.
   useEffect(() => {

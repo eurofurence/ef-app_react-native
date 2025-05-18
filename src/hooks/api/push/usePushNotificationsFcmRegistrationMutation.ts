@@ -26,6 +26,7 @@ export async function postPushNotificationsFcmRegistration(accessToken: string |
       signal: signal,
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
     })
     .then((res) => res.status === 204)

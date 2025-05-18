@@ -62,7 +62,8 @@ export function MainMenu({ tabs }: MainMenuProps) {
       <Grid cols={menuColumns}>
         <Tab icon="information-outline" text={t('info')} onPress={() => handleNavigation('/knowledge')} />
         {showCatchEm && <Tab icon="paw" text={t('catch_em')} onPress={handleCatchEmAll} disabled={!loggedIn} />}
-        <Tab icon="image-frame" text={t('artist_alley')} onPress={() => handleNavigation('/artist-alley')} />
+        {/*TODO go to index*/}
+        <Tab icon="image-frame" text={t('artist_alley')} onPress={() => handleNavigation('/artist-alley/reg')} />
         <Tab icon="card-account-details-outline" text={t('profile')} onPress={() => handleNavigation('/profile')} disabled={!loggedIn} />
         <Tab icon="cog" text={t('settings')} onPress={() => handleNavigation('/settings')} />
         <Tab icon="web" text={t('website')} onPress={() => Linking.openURL(conWebsite)} />

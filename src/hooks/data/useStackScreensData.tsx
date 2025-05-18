@@ -40,6 +40,20 @@ export function useStackScreensData(): StackScreenProps[] {
         swipeEnabled: true,
       },
       {
+        location: 'artist-alley/index',
+        title: t('artist_alley'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
+        location: 'artist-alley/reg',
+        title: t('artist_alley'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
         location: 'auth/login',
       },
       {

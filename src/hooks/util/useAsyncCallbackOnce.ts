@@ -12,10 +12,9 @@ export function useAsyncCallbackOnce<T extends (...args: any[]) => Promise<any>>
     (...args: Parameters<T>) => {
       if (active.current) return active.current
 
-      active.current = fn(...args) as ReturnType<T>
-      active.current.finally(() => {
+      active.current = fn(...args).finally(() => {
         active.current = null
-      })
+      }) as ReturnType<T>
       return active.current
     },
     [fn]

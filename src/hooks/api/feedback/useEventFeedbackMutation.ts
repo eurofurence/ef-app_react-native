@@ -26,6 +26,7 @@ export async function postEventFeedback(accessToken: string | null, data: EventF
       signal: signal,
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
       },
     })
     .then((res) => res.status === 204)

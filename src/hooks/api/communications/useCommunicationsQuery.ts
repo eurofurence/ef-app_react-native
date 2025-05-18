@@ -1,5 +1,5 @@
 import { CommunicationRecord } from '@/context/data/types.api'
-import { QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
+import { keepPreviousData, QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useAuthContext } from '@/context/auth/Auth'
 import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
@@ -31,6 +31,7 @@ export function useCommunicationsQuery(): UseQueryResult<CommunicationRecord[] |
   return useQuery({
     queryKey: [claims?.sub, 'communications'],
     queryFn: queryFn,
+    placeholderData: (data) => keepPreviousData(data),
   })
 }
 
@@ -54,5 +55,6 @@ export function useCommunicationsItemQuery(id: string | any): UseQueryResult<Com
     queryKey: [claims?.sub, 'communications'],
     queryFn: queryFn,
     select: findEntry,
+    placeholderData: (data) => keepPreviousData(data),
   })
 }

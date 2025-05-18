@@ -30,6 +30,12 @@ function setFilter(value: string) {
   router.setParams({ query: value })
 }
 
+function getInitialRoute(eventDays: readonly EventDayDetails[], now: Date) {
+  if (!eventDays?.length) return undefined
+  const today = eventDays.findIndex((item) => isSameDay(now, item.Date))
+  return today >= 0 ? `day-${today + 1}` : 'day-1'
+}
+
 function dayTabTitle(day: EventDayDetails | undefined) {
   if (!day) return undefined
   const date = new Date(day.Date)
@@ -49,8 +55,7 @@ export default function ScheduleLayout() {
 
   const { eventDays } = useCache()
 
-  const today = eventDays.findIndex((item) => isSameDay(now, item.Date))
-  const initialRouteName = today >= 0 ? `day-${today + 1}` : 'day-1'
+  const initialRouteName = getInitialRoute(eventDays, now)
 
   return (
     <MaterialTopTabs
