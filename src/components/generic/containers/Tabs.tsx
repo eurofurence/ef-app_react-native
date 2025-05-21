@@ -1,7 +1,7 @@
-import { createContext, forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useMemo, useState } from 'react'
+import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useState } from 'react'
 import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { Gesture, GestureDetector, TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import Animated, { cancelAnimation, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
+import Animated, { cancelAnimation, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
 import { Continuous } from '../atoms/Continuous'
 import { IconNames } from '../atoms/Icon'
@@ -104,28 +104,28 @@ export type TabsRef = {
 }
 
 /**
- * Allow components in tabs to get access to the Tab properties.
+ * At what percentage is the drawer considered open.
  */
-const TabsContext = createContext<TabsRef & { isOpen: boolean }>({
-  close: () => false,
-  open: () => false,
-  closeImmediately: () => false,
-  isOpen: false,
-})
-TabsContext.displayName = 'TabsContext'
+const openThreshold = 0.35
 
 /**
- * Expose the Tabs Context as a hook
+ * How much must the drawer be dragged to flip open.
  */
-export const useTabs = () => useContext(TabsContext)
+const openDragThreshold = 40
 
-const ANIMATION_CONFIG = {
-  springConfig: {
-    damping: 15,
-    stiffness: 100,
-    mass: 1,
-  },
-}
+/**
+ * How much must the drawer be dragged to flip closed.
+ */
+const closeDragThreshold = 80
+
+/**
+ * Animation configuration.
+ */
+const springConfig = {
+  damping: 15,
+  stiffness: 100,
+  mass: 1,
+} as const
 
 /**
  * A row of tabs and a "more" button.
@@ -140,16 +140,33 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
   const fillBackground = useThemeBackground('background')
   const bordersDarken = useThemeBorder('darken')
 
-  // Single source of truth for state
-  const [isOpen, setIsOpen] = useState(false)
-
   // Animation values
-  const height = useSharedValue(300)
-  const offset = useSharedValue(0)
-  const startOffset = useSharedValue(0)
-  const isAnimating = useSharedValue(false)
+  const height = useSharedValue<number>(300)
+  const offset = useSharedValue<number>(0)
+  const startOffset = useSharedValue<number>(0)
+  const animating = useSharedValue<boolean>(false)
 
-  // Derive opacity from offset
+  // Animation derived values.
+  const [isOpen, setIsOpen] = useState(false)
+  const [isAnimating, setIsAnimating] = useState(false)
+  useAnimatedReaction(
+    () => offset.value > openThreshold,
+    (currentValue, previousValue) => {
+      if (previousValue !== currentValue) {
+        runOnJS(setIsOpen)(currentValue)
+      }
+    }
+  )
+  useAnimatedReaction(
+    () => animating.value,
+    (currentValue, previousValue) => {
+      if (previousValue !== currentValue) {
+        runOnJS(setIsAnimating)(currentValue)
+      }
+    }
+  )
+
+  // Derive opa,city from offset
   const dynamicDismiss = useAnimatedStyle(
     () => ({
       opacity: offset.value,
@@ -170,49 +187,30 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
     [offset, height]
   )
 
-  // Add animated style for pointer events - is fix for Reanimated warning
-  const dynamicPointerEvents = useAnimatedStyle(
-    () => ({
-      pointerEvents: isAnimating.value ? 'none' : 'auto',
-    }),
-    [isAnimating]
-  )
-
-  // Animation handlers
-  const animateTo = useCallback(
-    (targetValue: number) => {
-      isAnimating.value = true
-      offset.value = withSpring(targetValue, ANIMATION_CONFIG.springConfig, (finished) => {
-        if (finished) {
-          isAnimating.value = false
-        }
-      })
-    },
-    [offset, isAnimating]
-  )
-
   // State change handlers
   const open = useCallback(() => {
     if (isOpen) return false
-    setIsOpen(true)
-    animateTo(1)
+    animating.set(true)
+    offset.value = withSpring(1, springConfig, () => {
+      animating.set(false)
+    })
     return true
-  }, [isOpen, animateTo])
+  }, [animating, isOpen, offset])
 
   const close = useCallback(() => {
     if (!isOpen) return false
-    setIsOpen(false)
-    animateTo(0)
+    animating.set(true)
+    offset.value = withSpring(0, springConfig, () => {
+      animating.set(false)
+    })
     return true
-  }, [isOpen, animateTo])
+  }, [animating, isOpen, offset])
 
   const closeImmediately = useCallback(() => {
     if (!isOpen) return false
-    setIsOpen(false)
     offset.value = 0
-    isAnimating.value = false
     return true
-  }, [isOpen, offset, isAnimating])
+  }, [isOpen, offset])
 
   // Handle to invoke internal mutations from outside if needed.
   useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [open, close, closeImmediately])
@@ -222,26 +220,28 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
     .onBegin(() => {
       startOffset.value = offset.value
       cancelAnimation(offset)
-      isAnimating.value = false
     })
     .onUpdate((e) => {
       const newOffset = -e.translationY / height.value + startOffset.value
       offset.value = Math.max(0, Math.min(newOffset, 1))
     })
     .onEnd((e) => {
-      const velocity = e.velocityY
-      const shouldOpen = offset.value > 0.5 || (offset.value > 0.2 && velocity < -500)
-      const targetValue = shouldOpen ? 1 : 0
+      // Get state and gesture properties (i.e., if criteria are matched.
+      const isOpen = offset.get() > openThreshold
+      const drawnClosed = e.translationY > closeDragThreshold
+      const drawnOpen = e.translationY < -openDragThreshold
 
-      if (shouldOpen !== isOpen) {
-        setIsOpen(shouldOpen)
-      }
-      animateTo(targetValue)
+      // Target. If open and drawn closed, close. If closed and drawn open, open. Otherwise fall back to original state.
+      let target: 0 | 1
+      if (isOpen && drawnClosed) target = 0
+      else if (!isOpen && drawnOpen) target = 1
+      else target = isOpen ? 1 : 0
+
+      animating.set(true)
+      offset.value = withSpring(target, springConfig, () => {
+        animating.set(false)
+      })
     })
-
-  // Tab icon and text based on state
-  const tabIcon = useMemo(() => (isOpen ? 'arrow-down-circle' : 'menu'), [isOpen])
-  const tabText = useMemo(() => (isOpen ? textLess : textMore), [isOpen, textLess, textMore])
 
   // Connect to back handler
   useEffect(() => {
@@ -251,7 +251,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
   }, [close])
 
   return (
-    <TabsContext.Provider value={{ close, open, closeImmediately, isOpen }}>
+    <>
       <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
         <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
       </Animated.View>
@@ -264,25 +264,20 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
             </View>
           )}
 
-          <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating.value ? 'none' : 'auto'}>
+          <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating ? 'none' : 'auto'}>
             {tabs?.map((tab, i) => <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />)}
 
-            <Tab icon={tabIcon} text={tabText} onPress={isOpen ? close : open} indicate={indicateMore} />
+            <Tab icon={isOpen ? 'arrow-down-circle' : 'menu'} text={isOpen ? textLess : textMore} onPress={isOpen ? close : open} indicate={indicateMore} />
 
             <Continuous style={styles.activity} active={activity} />
           </View>
 
-          <View
-            style={[styles.content, fillBackground]}
-            onLayout={(e) => {
-              height.value = e.nativeEvent.layout.height || height.value
-            }}
-          >
+          <View style={[styles.content, fillBackground]} onLayout={(e) => height.set((current) => e.nativeEvent.layout.height ?? current)}>
             {children}
           </View>
         </Animated.View>
       </GestureDetector>
-    </TabsContext.Provider>
+    </>
   )
 })
 

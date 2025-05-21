@@ -4,13 +4,12 @@ import i18next from 'i18next'
 import { noop, partial } from 'lodash'
 import { initReactI18next } from 'react-i18next'
 import { format, Locale } from 'date-fns'
-import { da, de, enGB, it, nl, pl } from 'date-fns/locale'
+import { de, enGB, it, nl, pl } from 'date-fns/locale'
 
 // Polyfill for Plural Rules
 import 'intl-pluralrules'
 
 // Translation files
-import daTranslations from './translations.da.json'
 import deTranslations from './translations.de.json'
 import enTranslations from './translations.en.json'
 import itTranslations from './translations.it.json'
@@ -21,7 +20,7 @@ import { i18nDebug } from '@/configuration'
 /**
  * List of supported locales.
  */
-export const supportedTranslations = ['en', 'nl', 'pl', 'it', 'da', 'de'] as const
+export const supportedTranslations = ['en', 'nl', 'pl', 'it', 'de'] as const
 
 /**
  * The translations we provide.
@@ -36,7 +35,6 @@ const dateFnsLocales: Record<string, Locale> = {
   nl: nl,
   pl: pl,
   it: it,
-  da: da,
   de: de,
 }
 
@@ -83,7 +81,6 @@ export const i18t = i18next
       de: deTranslations,
       it: itTranslations,
       pl: plTranslations,
-      da: daTranslations,
     },
     interpolation: { escapeValue: false },
     react: {

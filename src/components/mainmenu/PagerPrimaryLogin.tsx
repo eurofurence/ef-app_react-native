@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { useTranslation } from 'react-i18next'
 
-import { Claims } from '@/context/AuthContext'
+import { Claims } from '@/context/auth/Auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'

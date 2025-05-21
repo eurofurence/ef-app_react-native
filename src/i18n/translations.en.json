@@ -300,17 +300,28 @@
     "changeLanguage": "Change language",
     "currentLanguage": "Your current language is English!",
     "dev_buttons": {
+      "copy_device_push_token": "Copy device push token",
+      "copy_token_data": "Copy token data",
       "no_auth_alert": "You are not logged in. Stopping.",
       "overwrite_update_time": "Overwrite update time",
+      "refresh_login_tokens_and_claims": "Refresh token data",
       "send_private_message": "Receive Private Message {{ status }}",
-      "subtitle": "Make the API do something.",
-      "sync": "Force Resync {{ status }}",
-      "sync_alert_done": "Told all devices to synchronize",
-      "sync_alert_error": "Long hold to activate this function",
-      "sync_standard": "Sync",
-      "test_message_content": "You have won a grand prize!",
-      "test_message_subject": "You have won a grand prize!",
-      "title": "Dev Buttons"
+      "set_token_data": "Set token data",
+      "subtitle": "Make the app do something.",
+      "sync": "Sync local data",
+      "title": "Dev buttons",
+      "token_data_placeholder": "Enter token data"
+    },
+    "dev_values": {
+      "cache_values": "Cache values",
+      "claims": "User-info claims",
+      "device_push_token": "Device push token",
+      "noScheduledNotifications": "No notifications currently scheduled.",
+      "notifications": "Scheduled notifications",
+      "subtitle": "Operational data in the app.",
+      "title": "Dev values",
+      "token_data": "Full token response data",
+      "user": "Self service user data"
     },
     "developer_settings": {
       "subtitle": "You shouldn't touch these unless you know what you're doing.",

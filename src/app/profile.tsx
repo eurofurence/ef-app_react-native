@@ -1,82 +1,50 @@
 import { captureException } from '@sentry/react-native'
-import { router, Stack } from 'expo-router'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { StyleSheet, Animated, Easing, TouchableOpacity } from 'react-native'
+import { Redirect } from 'expo-router'
+import React, { useCallback, useState } from 'react'
+import { StyleSheet } from 'react-native'
 import { ScrollView, RefreshControl } from 'react-native-gesture-handler'
-import { Ionicons } from '@expo/vector-icons'
 import { appStyles } from '@/components/AppStyles'
 import { ProfileContent } from '@/components/ProfileContent'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
-import { useAuthContext } from '@/context/AuthContext'
-import { useThemeColor, useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useAuthContext } from '@/context/auth/Auth'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
+import { vibrateAfter } from '@/util/vibrateAfter'
+import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 
 export default function Profile() {
-  const { refresh, loggedIn, claims, user } = useAuthContext()
+  const { loggedIn, refreshToken, claims } = useAuthContext()
+  const { data: user, refetch } = useUserSelfQuery()
   const [isReloading, setIsReloading] = useState(false)
-  const spinValue = useMemo(() => new Animated.Value(0), [])
-  const themeColor = useThemeColor('text')
-  const iconColor = themeColor.color
-  const { synchronizeUi, isSynchronizing } = useCache()
+  const { synchronize, isSynchronizing } = useCache()
   const backgroundStyle = useThemeBackground('background')
   const { t } = useTranslation('Profile')
 
-  // Set up the rotation animation
-  useEffect(() => {
-    if (isReloading) {
-      Animated.loop(
-        Animated.timing(spinValue, {
-          toValue: 1,
-          duration: 1000,
-          easing: Easing.linear,
-          useNativeDriver: true,
-        })
-      ).start()
-    } else {
-      spinValue.setValue(0)
-    }
-  }, [isReloading, spinValue])
-
-  const spin = spinValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  })
-
   const doReload = useCallback(() => {
-    if (!isReloading) {
-      setIsReloading(true)
-      refresh()
-        .catch(captureException)
-        .finally(() => {
-          setIsReloading(false)
-        })
-    }
-  }, [refresh, isReloading])
+    if (isReloading) return
+
+    setIsReloading(true)
+    ;(async () => {
+      try {
+        await refreshToken(true)
+        await refetch()
+      } catch (error) {
+        captureException(error)
+      } finally {
+        setIsReloading(false)
+      }
+    })()
+  }, [refreshToken, refetch, isReloading])
 
   // Navigate back if not logged in or unable to retrieve proper user data
-  useEffect(() => {
-    if (!loggedIn) {
-      router.back()
-    }
-  }, [loggedIn])
-
-  const refreshButton = useMemo(
-    () => (
-      <TouchableOpacity onPress={doReload} style={styles.refreshButton} activeOpacity={0.6}>
-        <Animated.View style={{ transform: [{ rotate: spin }] }}>
-          <Ionicons name="refresh" size={24} color={iconColor} />
-        </Animated.View>
-      </TouchableOpacity>
-    ),
-    [doReload, spin, iconColor]
-  )
+  if (!loggedIn) return <Redirect href="/" />
 
   return (
     <ScrollView
       style={[StyleSheet.absoluteFill, backgroundStyle]}
-      refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={synchronizeUi} />}
+      refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={() => vibrateAfter(synchronize())} />}
       stickyHeaderIndices={[0]}
       stickyHeaderHiddenOnScroll
     >
@@ -87,10 +55,3 @@ export default function Profile() {
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  refreshButton: {
-    padding: 8,
-    marginRight: 8,
-  },
-})

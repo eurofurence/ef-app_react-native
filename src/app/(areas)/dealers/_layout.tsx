@@ -1,7 +1,7 @@
 import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import type { MaterialTopTabNavigationOptions, MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs'
-import { router, UnknownOutputParams, useGlobalSearchParams, usePathname, withLayoutContext } from 'expo-router'
+import { router, useLocalSearchParams, withLayoutContext } from 'expo-router'
 import { TabBar } from 'react-native-tab-view'
 import * as React from 'react'
 import { StyleSheet, useWindowDimensions, View } from 'react-native'
@@ -22,25 +22,12 @@ type TabViewOptions = MaterialTopTabNavigationOptions & { icon?: IconNames }
  */
 const MaterialTopTabs = withLayoutContext<TabViewOptions, typeof Navigator, TabNavigationState<ParamListBase>, MaterialTopTabNavigationEventMap>(Navigator)
 
-/**
- * Utility to match `useLocalSearchParams` for child routes.
- * @param path
- */
-function useRelativeSearchParams<TParams extends UnknownOutputParams = UnknownOutputParams>(path: string): TParams {
-  const pathname = usePathname()
-  const params = useGlobalSearchParams<TParams>()
-  if (pathname.startsWith(path)) return params as TParams
-  else return {} as TParams
-}
-
-export const dealersRoutePrefix = '/dealers/'
-
 function setFilter(value: string) {
   router.setParams({ query: value })
 }
 
 export default function DealersLayout() {
-  const { query } = useRelativeSearchParams<{ query?: string }>(dealersRoutePrefix)
+  const { query } = useLocalSearchParams<{ query?: string }>()
 
   const layout = useWindowDimensions()
 
@@ -53,31 +40,25 @@ export default function DealersLayout() {
       initialRouteName="all"
       style={StyleSheet.absoluteFill}
       screenOptions={{ sceneStyle: backgroundSurface }}
-      tabBar={(props) => (
-        <View>
-          <TabBar
-            {...props}
-            key="tabbar"
-            navigationState={{ routes: props.state.routes, index: props.state.index }}
-            renderLabel={({ focused, route }) => {
-              const options = props.descriptors[route.key].options as TabViewOptions
-              return <TabLabel focused={focused} icon={options.icon} title={options.title} />
-            }}
-            style={backgroundBackground}
-            indicatorStyle={backgroundSecondary}
-            onTabPress={(props) => {
-              // Replace tab press handling with immediate router navigation.
-              router.replace({
-                pathname: (dealersRoutePrefix + props.route.name) as string,
-                params: {},
-              })
-              props.preventDefault()
-            }}
-            tabStyle={{ width: layout.width / props.state.routes.length }}
-          />
-          <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
-        </View>
-      )}
+      tabBar={(props) => {
+        const { key, ...propsWithoutKey } = props as typeof props & { key: any }
+        return (
+          <View>
+            <TabBar
+              {...propsWithoutKey}
+              navigationState={{ routes: props.state.routes, index: props.state.index }}
+              renderLabel={({ focused, route }) => {
+                const options = props.descriptors[route.key].options as TabViewOptions
+                return <TabLabel focused={focused} icon={options.icon} title={options.title} />
+              }}
+              style={backgroundBackground}
+              indicatorStyle={backgroundSecondary}
+              tabStyle={{ width: layout.width / props.state.routes.length }}
+            />
+            <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
+          </View>
+        )
+      }}
     >
       <MaterialTopTabs.Screen name="personal" options={{ title: 'Faves', icon: 'calendar-heart' }} />
       <MaterialTopTabs.Screen name="all" options={{ title: 'All' }} />

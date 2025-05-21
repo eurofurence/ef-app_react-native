@@ -1,162 +1,115 @@
 import React, { useCallback, useState } from 'react'
-import { View, TextInput, StyleSheet, Vibration } from 'react-native'
+import { View, TextInput, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { captureException } from '@sentry/react-native'
 import * as Clipboard from 'expo-clipboard'
-import * as Notifications from 'expo-notifications'
-import * as SecureStore from 'expo-secure-store'
-import { format } from 'date-fns'
+import * as SecureStore from '@/util/secureStorage'
 import { Button } from '@/components/generic/containers/Button'
-import { useToast } from '@/context/ToastContext'
+import { useToastContext } from '@/context/ui/ToastContext'
 import { Section } from '@/components/generic/atoms/Section'
-import { useThemeColorValue, useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useAuthContext } from '@/context/AuthContext'
-import { useNow } from '@/hooks/time/useNow'
-import { useCreateSyncRequest, useSendPrivateMessage } from '@/services/auth'
+import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
+import { useAuthContext } from '@/context/auth/Auth'
 import { withAlpha } from '@/context/Theme'
 import { useCache } from '@/context/data/Cache'
+import { vibrateAfter } from '@/util/vibrateAfter'
+import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
 
 export function DevButtons() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_buttons' })
-  const { synchronizeUi } = useCache()
-  const toast = useToast()
-  const [token, setToken] = useState('')
-  const { claims, refresh } = useAuthContext()
-  const now = useNow(5000)
+  const { synchronize } = useCache()
+  const { toast } = useToastContext()
+  const [tokenData, setTokenData] = useState('')
+  const { load, accessToken, refreshToken } = useAuthContext()
 
   const styleLighten = useThemeBackground('inverted')
-  const styleText = useThemeBackground('text')
-  const colorText = useThemeColorValue('text')
+  const styleText = useThemeColor('invText')
 
-  // Auth service hooks
-  const { execute: createSync, isLoading: isSyncing } = useCreateSyncRequest()
-  const { execute: sendMessage, isLoading: isSending } = useSendPrivateMessage({
-    RecipientUid: claims?.sub?.toString() || '',
-    AuthorName: 'tester',
-    ToastTitle: t('test_message_subject'),
-    ToastMessage: t('test_message_content'),
-    Subject: t('test_message_subject'),
-    Message: t('test_message_content'),
-  })
-
-  const onSendMessage = useCallback(async () => {
-    if (!claims) {
-      alert(t('no_auth_alert'))
-      return
-    }
-
+  // Copies the device push token for notifications.
+  const copyDevicePushToken = useCallback(async () => {
     try {
-      await sendMessage()
-      alert(`Sent a message to ${claims.sub}`)
+      const token = await getDevicePushToken()
+      await Clipboard.setStringAsync(token)
+      console.log(token ?? '')
+      toast('info', 'Device push token copied to clipboard', 5000)
     } catch (error) {
-      console.error('Failed to send message:', error)
-      alert(t('send_message_error'))
+      toast('warning', 'Failed to copy device push token', 5000)
+      captureException(error)
     }
-  }, [claims, sendMessage, t])
+  }, [toast])
+
+  // Refreshes the current login state.
+  const refreshLoginToken = useCallback(async () => {
+    try {
+      await refreshToken(true)
+      toast('info', 'Login token data refreshed', 5000)
+    } catch (error) {
+      toast('warning', 'Failed to refresh login token data', 5000)
+      captureException(error)
+    }
+  }, [refreshToken, toast])
+
+  // Logs in with the token data from the text input.
+  const loginWithTokenData = useCallback(async () => {
+    try {
+      await load(JSON.parse(tokenData))
+    } catch (error) {
+      captureException(error)
+    }
+  }, [load, tokenData])
+
+  // Copies the token data into the clipboard.
+  const copyTokenData = useCallback(async () => {
+    try {
+      const tokenData = await SecureStore.getItemAsync('tokenData')
+      await Clipboard.setStringAsync(tokenData ?? '')
+      console.log(tokenData ?? '')
+      toast('info', 'Token data copied to clipboard', 5000)
+    } catch (error) {
+      toast('warning', 'Failed to copy token data', 5000)
+      captureException(error)
+    }
+  }, [toast])
 
   return (
-    <View className="p-4">
+    <View style={styles.container}>
       <Section title={t('title')} subtitle={t('subtitle')} />
-
-      <Button containerStyle={styles.button} onPress={() => toast('warning', 'Toast ' + format(now, 'HH:mm:ss'), 5000)} icon="toaster">
-        {t('test_toast')}
-      </Button>
-
-      <Button
-        containerStyle={styles.button}
-        onPress={async () => {
-          try {
-            const token = await Notifications.getDevicePushTokenAsync()
-            await Clipboard.setStringAsync(token.data)
-            toast('info', 'Token copied to clipboard', 5000)
-          } catch (error) {
-            toast('warning', 'Failed to get or copy token', 5000)
-            captureException(error)
-          }
-        }}
-        icon="file-key"
-      >
-        {t('copy_token')}
-      </Button>
-
-      <Button
-        containerStyle={styles.button}
-        onPress={async () => {
-          try {
-            await SecureStore.setItemAsync('accessToken', token)
-            await SecureStore.deleteItemAsync('refreshToken')
-            await refresh()
-          } catch (error) {
-            captureException(error)
-          }
-        }}
-        icon="key-variant"
-      >
-        {t('set_token')}
-      </Button>
 
       <TextInput
         style={[styles.tokenField, styleLighten, styleText]}
-        value={token}
-        onChangeText={setToken}
-        placeholder={t('token_placeholder')}
-        placeholderTextColor={withAlpha(colorText, 0.6)}
-        className="opacity-60"
+        value={tokenData}
+        onChangeText={setTokenData}
+        placeholder={t('token_data_placeholder')}
+        placeholderTextColor={withAlpha(styleText.color, 0.6)}
       />
 
-      <Button
-        containerStyle={styles.button}
-        onPress={() => {
-          // TODO: I don't know how this is supposed to work.
-          // saveCache("settings", "lastSynchronised", {
-          //     cid: "",
-          //     cacheVersion: "",
-          //     lastSynchronised: now.toISOString(),
-          //     lastViewTimes: {}
-          // });
-        }}
-        icon="timer-cog"
-      >
-        {t('overwrite_update_time')}
+      <Button onPress={loginWithTokenData} icon="key-variant">
+        {t('set_token_data')}
       </Button>
 
-      <Button containerStyle={styles.button} onPress={() => synchronizeUi()} icon="refresh">
-        {t('sync_standard')}
+      <Button disabled={!accessToken} onPress={refreshLoginToken} icon="refresh-circle">
+        {t('refresh_login_tokens_and_claims')}
       </Button>
 
-      <Button
-        containerStyle={styles.button}
-        onPress={() => alert(t('sync_alert_error'))}
-        onLongPress={async () => {
-          console.log('Forcing FCM sync devices')
-          Vibration.vibrate(400)
-          try {
-            await createSync()
-            alert(t('sync_alert_done'))
-          } catch (error) {
-            console.error('Sync failed:', error)
-            alert(t('sync_alert_error'))
-          }
-        }}
-        icon="alert"
-      >
-        {t('sync', { status: isSyncing ? 'loading' : 'ready' })}
+      <Button disabled={!accessToken} onPress={copyTokenData} icon="file-key">
+        {t('copy_token_data')}
       </Button>
 
-      <Button containerStyle={styles.button} onPress={onSendMessage} icon="message-alert">
-        {t('send_private_message', { status: isSending ? 'loading' : 'ready' })}
+      <Button onPress={() => vibrateAfter(synchronize())} icon="refresh">
+        {t('sync')}
+      </Button>
+
+      <Button onPress={copyDevicePushToken} icon="file-key">
+        {t('copy_device_push_token')}
       </Button>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  button: {
-    marginVertical: 5,
+  container: {
+    gap: 10,
   },
   tokenField: {
-    marginHorizontal: 5,
-    marginVertical: 15,
     borderRadius: 10,
     padding: 10,
   },

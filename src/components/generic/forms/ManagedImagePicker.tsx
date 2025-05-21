@@ -5,10 +5,10 @@ import { Controller } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-import { useThemeBackground } from '../../../hooks/themes/useThemeHooks'
-import { Image, ImageProps } from '../atoms/Image'
-import { Label } from '../atoms/Label'
-import { Col } from '../containers/Col'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { Image, ImageProps } from '@/components/generic/atoms/Image'
+import { Label } from '@/components/generic/atoms/Label'
+import { Col } from '@/components/generic/containers/Col'
 
 type InnerManagedImagePickerProps<T extends object> = {
   /**
@@ -59,7 +59,7 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
             disabled={field.disabled}
             onPress={() => {
               ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                mediaTypes: ['images'],
                 allowsEditing: false,
                 allowsMultipleSelection: false,
                 quality: 1,

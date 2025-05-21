@@ -6,7 +6,6 @@ import { router } from 'expo-router'
 import { isWithinInterval, subMinutes } from 'date-fns'
 import { Section } from '../generic/atoms/Section'
 import { EventCard, eventInstanceForAny } from './EventCard'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
 
@@ -24,14 +23,12 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
   const { events } = useCache()
 
-  const zone = useZoneAbbr()
-
   const upcoming = useMemo(
     () =>
       filterUpcomingEvents(events, now)
         .filter((item) => !item.Hidden)
-        .map((details) => eventInstanceForAny(details, now, zone)),
-    [events, now, zone]
+        .map((details) => eventInstanceForAny(details, now)),
+    [events, now]
   )
 
   if (upcoming.length === 0) {

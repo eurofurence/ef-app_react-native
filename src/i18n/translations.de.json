@@ -263,18 +263,6 @@
     },
     "changeLanguage": "Sprache ändern",
     "currentLanguage": "Deine Sprachauswahl ist Deutsch!",
-    "dev_buttons": {
-      "no_auth_alert": "Du bist nicht angemeldet, kann nicht fortfahren.",
-      "send_private_message": "Private Nachrichten testen  {{ status }}",
-      "subtitle": "Löse API-Funktionen aus.",
-      "sync": "Synchronisierung erzwingen {{ status }}",
-      "sync_alert_done": "Alle verbundenen Geräte wurden Synchronisiert",
-      "sync_alert_error": "Halte den Knopf gedrückt, um die Funktion zu aktivieren",
-      "sync_standard": "Daten neu laden",
-      "test_message_content": "You have won a grand prize!",
-      "test_message_subject": "You have won a grand prize!",
-      "title": "Entwickler-Funktionen"
-    },
     "developer_settings": {
       "subtitle": "Du solltest diese besser nicht anfassen wenn Du nicht weisst was Du tust.",
       "title": "Entwickler-Einstellungen"

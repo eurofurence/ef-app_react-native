@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
 import React, { FC, ReactElement, useCallback, useMemo } from 'react'
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 import { router } from 'expo-router'
 import { KbSection } from './KbSection'
@@ -9,6 +9,7 @@ import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from '@/context/data/types.details'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 /**
  * The properties to the component.
@@ -33,7 +34,7 @@ function keyExtractor(item: KnowledgeGroupDetails | KnowledgeEntryDetails) {
 
 export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, empty, trailer, sticky = true, padEnd = true }) => {
   const theme = useThemeName()
-  const { isSynchronizing, synchronizeUi } = useCache()
+  const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(kbGroups, (item) => !('KnowledgeGroupId' in item)) : undefined), [kbGroups, sticky])
   const sectionStyle = useThemeBackground('surface')
 
@@ -62,7 +63,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
   return (
     <FlashList
       refreshing={isSynchronizing}
-      onRefresh={synchronizeUi}
+      onRefresh={() => vibrateAfter(synchronize())}
       contentContainerStyle={padEnd ? styles.container : undefined}
       scrollEnabled={true}
       stickyHeaderIndices={stickyIndices}
@@ -74,6 +75,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
       getItemType={getItemType}
       renderItem={renderItem}
       estimatedItemSize={59}
+      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
     />
   )

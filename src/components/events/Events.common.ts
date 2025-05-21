@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/react-native'
 import { TFunction } from 'i18next'
-import { parseISO, differenceInHours, isBefore } from 'date-fns'
+import { differenceInHours, isBefore } from 'date-fns'
 import { useMemo } from 'react'
 import { Share } from 'react-native'
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from '@/components/events/EventCard'
@@ -12,14 +12,13 @@ import { EventDetails } from '@/context/data/types.details'
 /**
  Returns a list of event instances according to conversion rules.
  * @param now The current moment.
- * @param zone Zone abbreviation.
  * @param items The items to transform.
  */
-export const useEventInstances = (now: Date, zone: string, items: readonly EventDetails[]) => {
+export const useEventInstances = (now: Date, items: readonly EventDetails[]) => {
   // Return direct mapping.
   return useMemo(() => {
-    return items.map((item) => eventInstanceForAny(item, now, zone))
-  }, [items, now, zone])
+    return items.map((item) => eventInstanceForAny(item, now))
+  }, [items, now])
 }
 
 /**
@@ -27,10 +26,9 @@ export const useEventInstances = (now: Date, zone: string, items: readonly Event
  * display dates with the context of the current day.
  * @param t The translation function.
  * @param now The current moment.
- * @param zone Zone abbreviation.
  * @param items The events on that day.
  */
-export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: readonly EventDetails[]) => {
+export const useEventDayGroups = (t: TFunction, now: Date, items: readonly EventDetails[]) => {
   return useMemo(() => {
     let hidden = 0
 
@@ -50,43 +48,43 @@ export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: 
     for (const item of items) {
       if (item.Hidden) {
         hidden++
-      } else if (isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      } else if (isBefore(now, item.End)) {
         // First pass not passed.
-        if (differenceInHours(parseISO(item.EndDateTimeUtc), parseISO(item.StartDateTimeUtc)) > 4) {
+        if (differenceInHours(item.End, item.Start) > 4) {
           if (!sectionedLongRunning) {
             result.push(eventSectionForPartOfDay(t, 'long_running'))
             sectionedLongRunning = true
           }
 
-          result.push(eventInstanceForNotPassed(item, now, zone))
+          result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'morning') {
           if (!sectionedMorning) {
             result.push(eventSectionForPartOfDay(t, 'morning'))
             sectionedMorning = true
           }
 
-          result.push(eventInstanceForNotPassed(item, now, zone))
+          result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'afternoon') {
           if (!sectionedAfternoon) {
             result.push(eventSectionForPartOfDay(t, 'afternoon'))
             sectionedAfternoon = true
           }
 
-          result.push(eventInstanceForNotPassed(item, now, zone))
+          result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'evening') {
           if (!sectionedEvening) {
             result.push(eventSectionForPartOfDay(t, 'evening'))
             sectionedEvening = true
           }
 
-          result.push(eventInstanceForNotPassed(item, now, zone))
+          result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'night') {
           if (!sectionedNight) {
             result.push(eventSectionForPartOfDay(t, 'night'))
             sectionedNight = true
           }
 
-          result.push(eventInstanceForNotPassed(item, now, zone))
+          result.push(eventInstanceForNotPassed(item, now))
         }
       }
     }
@@ -98,17 +96,17 @@ export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: 
 
     // Second pass not hidden and passed.
     for (const item of items) {
-      if (!item.Hidden && !isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      if (!item.Hidden && !isBefore(now, item.End)) {
         if (!sectionedPassed) {
           result.push(eventSectionForPassed(t))
           sectionedPassed = true
         }
-        result.push(eventInstanceForPassed(item, zone))
+        result.push(eventInstanceForPassed(item))
       }
     }
 
     return result
-  }, [t, now, zone, items])
+  }, [t, now, items])
 }
 
 /**
@@ -116,10 +114,9 @@ export const useEventDayGroups = (t: TFunction, now: Date, zone: string, items: 
  display standalone dates.
  * @param t The translation function.
  * @param now The current moment.
- * @param zone Zone abbreviation.
  * @param items The events.
  */
-export const useEventOtherGroups = (t: TFunction, now: Date, zone: string, items: readonly EventDetails[]) => {
+export const useEventOtherGroups = (t: TFunction, now: Date, items: readonly EventDetails[]) => {
   return useMemo(() => {
     let hidden = 0
 
@@ -136,13 +133,13 @@ export const useEventOtherGroups = (t: TFunction, now: Date, zone: string, items
         hidden++
       } else if (!item.ConferenceDay) {
         // Nothing, not applicable.
-      } else if (isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      } else if (isBefore(now, item.End)) {
         if (!(item.ConferenceDay.Date in sectionedDays)) {
           result.push(eventSectionForDate(t, item.ConferenceDay.Date))
           sectionedDays[item.ConferenceDay.Date] = true
         }
 
-        result.push(eventInstanceForNotPassed(item, now, zone))
+        result.push(eventInstanceForNotPassed(item, now))
       }
     }
 
@@ -153,17 +150,17 @@ export const useEventOtherGroups = (t: TFunction, now: Date, zone: string, items
 
     // Second pass not hidden and passed.
     for (const item of items) {
-      if (!item.Hidden && !isBefore(now, parseISO(item.EndDateTimeUtc))) {
+      if (!item.Hidden && !isBefore(now, item.End)) {
         if (!sectionedPassed) {
           result.push(eventSectionForPassed(t))
           sectionedPassed = true
         }
-        result.push(eventInstanceForPassed(item, zone))
+        result.push(eventInstanceForPassed(item))
       }
     }
 
     return result
-  }, [t, now, zone, items])
+  }, [t, now, items])
 }
 
 export const shareEvent = (event: EventDetails) =>

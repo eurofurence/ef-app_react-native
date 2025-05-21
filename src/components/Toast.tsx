@@ -6,7 +6,7 @@ import Animated, { Easing, useSharedValue, withSequence, withTiming } from 'reac
 import { Icon } from './generic/atoms/Icon'
 import { Label } from './generic/atoms/Label'
 import { Row } from './generic/containers/Row'
-import { ToastMessage, useToastDismiss } from '@/context/ToastContext'
+import { ToastMessage, useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 
 const iconSize = 18 // Matches regular font size.
@@ -18,7 +18,7 @@ export type ToastProps = ToastMessage & {
  * Displays a fading out toast on the tabs.
  * @param id The ID of the toast.
  * @param type The type of the toast.
- * @param content The content, may be a React node.
+ * @param content The content. May be a React node.
  * @param queued The queued and unmodified time.
  * @param lifetime The lifetime of this toast.
  * @param loose If false, will render as a box for stacking, otherwise loose/detached.
@@ -33,7 +33,7 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
   const iconName = (type === 'error' && 'alert-box') || (type === 'warning' && 'alert') || 'alert-circle'
   const styleBorder = useThemeBorder('darken')
   const opacity = useSharedValue(1)
-  const dismiss = useToastDismiss()
+  const { dismiss } = useToastContext()
 
   useEffect(() => {
     const remainingTime = lifetime - (seenTime - queued)

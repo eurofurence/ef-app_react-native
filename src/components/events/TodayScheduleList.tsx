@@ -5,7 +5,6 @@ import { router } from 'expo-router'
 import { isBefore, isSameDay } from 'date-fns'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { Section } from '@/components/generic/atoms/Section'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
 
@@ -19,13 +18,12 @@ export type TodayScheduleListProps = {
 export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
   const { eventsFavorite } = useCache()
-  const zone = useZoneAbbr()
 
   const today = useMemo(() => {
     const favorites = eventsFavorite.filter((item) => !item.Hidden)
 
-    return filterHappeningTodayEvents(favorites, now).map((details) => eventInstanceForAny(details, now, zone))
-  }, [eventsFavorite, now, zone])
+    return filterHappeningTodayEvents(favorites, now).map((details) => eventInstanceForAny(details, now))
+  }, [eventsFavorite, now])
 
   if (today.length === 0) {
     return null

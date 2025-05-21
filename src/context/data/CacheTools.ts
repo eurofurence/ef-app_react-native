@@ -110,14 +110,26 @@ function stringifyEntityStore(value: any) {
 }
 
 /**
+ * Compares two values. Applies `localeCompare` for strings.
+ * @param a The left value.
+ * @param b The right value.
+ */
+function compare<T>(a: T, b: T) {
+  if (typeof a === 'string' && typeof b === 'string') {
+    return a.localeCompare(b)
+  } else {
+    return a < b ? 1 : a > b ? -1 : 0
+  }
+}
+
+/**
  * Defines a synchronized entity field.
  * @param syncResponseField The API sync response field to synchronize the local values to.
  * @param orderBy The default order.
  * @param mode The order mode.
  */
 export function defineEntity<T extends RecordMetadata>(syncResponseField: string, orderBy: (item: T) => any, mode: 'asc' | 'desc' = 'asc'): SchemaEntities<T> {
-  const less = mode === 'asc' ? 1 : -1
-  const more = mode === 'asc' ? -1 : 1
+  const sign = mode === 'asc' ? 1 : -1
   return {
     defaultValue: emptyEntityStore,
     syncResponseField: syncResponseField,
@@ -132,11 +144,7 @@ export function defineEntity<T extends RecordMetadata>(syncResponseField: string
       return Object.assign(values, { dict })
     },
     compare(left: T, right: T): number {
-      const leftKey = orderBy(left)
-      const rightKey = orderBy(right)
-      if (leftKey < rightKey) return less
-      else if (leftKey > rightKey) return more
-      else return 0
+      return compare(orderBy(left), orderBy(right)) * sign
     },
   }
 }

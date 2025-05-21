@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
-import { StyleSheet, Vibration } from 'react-native'
+import { Dimensions, StyleSheet, Vibration } from 'react-native'
 
 import { router } from 'expo-router'
 import { EventSection, EventSectionProps } from './EventSection'
@@ -10,6 +10,7 @@ import { findIndices } from '@/util/findIndices'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 /**
  * The properties to the component.
@@ -35,7 +36,7 @@ function keyExtractor(item: SectionProps | EventDetailsInstance) {
 
 export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, eventsGroups, select, empty, trailer, cardType = 'duration', sticky = true, padEnd = true }) => {
   const theme = useThemeName()
-  const { isSynchronizing, synchronizeUi } = useCache()
+  const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !('details' in item)) : undefined), [eventsGroups, sticky])
 
   const onPress = useCallback((event: EventDetails) => {
@@ -67,7 +68,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
   return (
     <FlashList
       refreshing={isSynchronizing}
-      onRefresh={synchronizeUi}
+      onRefresh={() => vibrateAfter(synchronize())}
       contentContainerStyle={padEnd ? styles.container : undefined}
       scrollEnabled={true}
       stickyHeaderIndices={stickyIndices}
@@ -79,6 +80,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       estimatedItemSize={110}
+      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
     />
   )

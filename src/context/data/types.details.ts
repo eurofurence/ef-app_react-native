@@ -15,6 +15,10 @@ import {
 } from '@/context/data/types.api'
 
 export type AnnouncementDetails = AnnouncementRecord & {
+  ValidFrom: Date
+  ValidFromLocal: Date
+  ValidUntil: Date
+  ValidUntilLocal: Date
   NormalizedTitle: string
   Image?: ImageDetails
 }
@@ -39,6 +43,10 @@ export type EventDetails = EventRecord & {
   ConferenceRoom?: EventRoomDetails
   ConferenceDay?: EventDayDetails
   ConferenceTrack?: EventTrackDetails
+  Start: Date
+  StartLocal: Date
+  End: Date
+  EndLocal: Date
   Favorite: boolean
   Hidden: boolean
 }

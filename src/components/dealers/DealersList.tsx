@@ -1,12 +1,13 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 import { router } from 'expo-router'
 import { DealerCard, DealerDetailsInstance } from './DealerCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 import { DealerDetails } from '@/context/data/types.details'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 /**
  * The properties to the component.
@@ -25,7 +26,7 @@ function keyExtractor(item: DealerDetailsInstance) {
 
 export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trailer, padEnd = true }) => {
   const theme = useThemeName()
-  const { isSynchronizing, synchronizeUi } = useCache()
+  const { isSynchronizing, synchronize } = useCache()
 
   const onPress = useCallback((dealer: DealerDetails) => {
     router.navigate({
@@ -44,7 +45,7 @@ export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trai
   return (
     <FlashList
       refreshing={isSynchronizing}
-      onRefresh={synchronizeUi}
+      onRefresh={() => vibrateAfter(synchronize())}
       contentContainerStyle={padEnd ? styles.container : undefined}
       scrollEnabled={true}
       ListHeaderComponent={leader}
@@ -54,6 +55,7 @@ export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trai
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       estimatedItemSize={110}
+      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
     />
   )

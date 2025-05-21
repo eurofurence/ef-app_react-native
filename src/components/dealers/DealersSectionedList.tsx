@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
 import { router } from 'expo-router'
 import { DealerSection, DealerSectionProps } from './DealerSection'
@@ -10,6 +10,7 @@ import { findIndices } from '@/util/findIndices'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import { DealerDetails } from '@/context/data/types.details'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 /**
  * The properties to the component.
@@ -33,7 +34,7 @@ function keyExtractor(item: SectionProps | DealerDetailsInstance) {
 
 export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, dealersGroups, empty, trailer, sticky = true, padEnd = true }) => {
   const theme = useThemeName()
-  const { isSynchronizing, synchronizeUi } = useCache()
+  const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !('details' in item)) : undefined), [dealersGroups, sticky])
 
   const onPress = useCallback((dealer: DealerDetails) => {
@@ -57,7 +58,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
   return (
     <FlashList
       refreshing={isSynchronizing}
-      onRefresh={synchronizeUi}
+      onRefresh={() => vibrateAfter(synchronize())}
       contentContainerStyle={padEnd ? styles.container : undefined}
       scrollEnabled={true}
       stickyHeaderIndices={stickyIndices}
@@ -69,6 +70,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       estimatedItemSize={110}
+      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
     />
   )

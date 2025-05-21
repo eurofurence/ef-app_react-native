@@ -6,7 +6,7 @@ import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 
 import { Toast } from '@/components/Toast'
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
-import { useToastMessages } from '@/context/ToastContext'
+import { useToastMessages } from '@/context/ui/ToastContext'
 import { Tabs as CustomTabs, TabsRef } from '@/components/generic/containers/Tabs'
 import { MainMenu } from '@/components/mainmenu/MainMenu'
 import { useCache } from '@/context/data/Cache'
@@ -74,7 +74,7 @@ function AreasTabBar(props: BottomTabBarProps) {
       activity={isSynchronizing}
       notice={
         !toastMessages.length ? null : (
-          <View style={styles.toasts}>
+          <View>
             {[...toastMessages].reverse().map((toast) => (
               <Toast key={toast.id} {...toast} loose={false} />
             ))}
@@ -101,17 +101,11 @@ export default function TabsLayout() {
           }}
         />
         <Tabs.Screen
-          name="schedule/+not-found"
+          name="schedule"
           options={{
             title: t('events'),
             tabBarIcon: ({ color, size }) => <Icon name="calendar" size={size} color={color} />,
             href: 'schedule',
-          }}
-        />
-        <Tabs.Screen
-          name="schedule/index"
-          options={{
-            href: null,
           }}
         />
         <Tabs.Screen
@@ -131,20 +125,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     overflow: 'hidden',
-  },
-  toasts: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
-  },
-  activity: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 2,
-    backgroundColor: '#007AFF', // You might want to use your theme color here
   },
 })

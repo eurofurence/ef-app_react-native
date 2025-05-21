@@ -64,17 +64,6 @@
     },
     "changeLanguage": "Verander taal",
     "currentLanguage": "Jouw huidige taal is Nederlands!",
-    "dev_buttons": {
-      "no_auth_alert": "Je bent niet ingelogd. We stoppen nu.",
-      "send_private_message": "Ontvang een privebericht {{ status }}",
-      "subtitle": "Laat de API iets doen.",
-      "sync": "Forceer synchronizatie {{ status }}",
-      "sync_alert_done": "Alle apparaten zijn geinstructeerd om te verversen",
-      "sync_alert_error": "Je moet lang drukjken om deze functie te activeren",
-      "test_message_content": "Volgend jaar mag je meer werk doen!",
-      "test_message_subject": "Je hebt een grote prijs gewonnen!",
-      "title": "Ontwikkelaarsknoppen"
-    },
     "developer_settings": {
       "subtitle": "Hier moet je met je tengels vanaf blijven tenzij je weet wat je doet.",
       "title": "Ontwikkelaarsinstellingen"

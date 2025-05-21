@@ -7,12 +7,11 @@ export type EventCardTimeProps = {
   type: 'duration' | 'time'
   event: EventDetailsInstance
   done: boolean
-  zone: string
 }
 
-export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done, zone }) => {
+export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done }) => {
   const { start, day, startLocal, dayLocal, runtime } = event
-  const showLocal = zone !== 'UTC' && start !== startLocal
+  const showLocal = start !== startLocal
 
   return (
     <View style={styles.container}>
@@ -26,8 +25,8 @@ export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done, zone 
           </Label>
           {!showLocal ? null : (
             <>
-              <Label type="h3" color={done ? 'important' : 'white'}>
-                {startLocal}
+              <Label type="cap" variant="receded" color={done ? 'important' : 'white'}>
+                {startLocal} local
               </Label>
             </>
           )}
@@ -42,11 +41,11 @@ export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done, zone 
           </Label>
           {!showLocal ? null : (
             <>
-              <Label type="h3" color={done ? 'important' : 'white'}>
-                {startLocal}
+              <Label type="cap" variant="receded" color={done ? 'important' : 'white'}>
+                {startLocal} {dayLocal}
               </Label>
-              <Label type="cap" color={done ? 'important' : 'white'}>
-                {dayLocal}
+              <Label type="cap" variant="receded" color={done ? 'important' : 'white'}>
+                local
               </Label>
             </>
           )}

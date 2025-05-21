@@ -15,7 +15,6 @@ import { defineEntity, defineField } from '@/context/data/CacheTools'
 import { eurofurenceCacheVersion } from '@/configuration'
 import { formatISO } from 'date-fns'
 import { Settings } from '@/context/data/types.own'
-import { CommunicationDetails } from '@/context/data/types.details'
 
 /**
  * Storage schema for internal cache variables.
@@ -56,14 +55,6 @@ export const schemaValues = {
    * Currently registered notifications (i.e., event reminders).
    */
   notifications: defineField<readonly Notification[]>([]),
-
-  /**
-   * Current set of communications.
-   * @remarks This should not be kept here as it is based on the authentication
-   * state and maintaining it in the cache might not be "safe" enough when the
-   * authentication state changes.
-   */
-  communications: defineField<readonly CommunicationDetails[]>([]),
 } as const
 
 /**
@@ -79,7 +70,7 @@ export const schemaEntities = {
   dealers: defineEntity<DealerRecord>('Dealers', (item) => item.DisplayNameOrAttendeeNickname),
   images: defineEntity<ImageRecord>('Images', (item) => item.ContentHashSha1),
   events: defineEntity<EventRecord>('Events', (item) => item.StartDateTimeUtc),
-  eventDays: defineEntity<EventDayRecord>('EventConferenceDays', (item) => item.Name),
+  eventDays: defineEntity<EventDayRecord>('EventConferenceDays', (item) => item.Date),
   eventRooms: defineEntity<EventRoomRecord>('EventConferenceRooms', (item) => item.Name),
   eventTracks: defineEntity<EventTrackRecord>('EventConferenceTracks', (item) => item.Name),
   knowledgeGroups: defineEntity<KnowledgeGroupRecord>('KnowledgeGroups', (item) => item.Order),

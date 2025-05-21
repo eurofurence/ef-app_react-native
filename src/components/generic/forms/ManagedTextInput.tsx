@@ -8,11 +8,12 @@ export type ManagedTextInputProps<T> = TextInputProps & {
   name: Path<T>
   label?: string
   containerStyle?: StyleProp<ViewStyle>
+  errorTranslator?: (name: string, type: string) => string
 }
 
-export const ManagedTextInput = <T extends Record<string, any>>({ name, label, containerStyle, style, ...props }: ManagedTextInputProps<T>) => {
+export const ManagedTextInput = <T extends Record<string, any>>({ name, label, containerStyle, errorTranslator, style, ...props }: ManagedTextInputProps<T>) => {
   const {
-    field: { value, onChange, onBlur },
+    field: { name: fieldName, value, onChange, onBlur },
     fieldState: { error },
   } = useController<T>({
     name,
@@ -30,7 +31,7 @@ export const ManagedTextInput = <T extends Record<string, any>>({ name, label, c
       <TextInput value={value} onChangeText={onChange} onBlur={onBlur} style={[styles.input, { color: textColor }, style]} placeholderTextColor={textColor + '80'} {...props} />
       {error && (
         <Label type="caption" color="important" mt={4}>
-          {error.message}
+          {errorTranslator ? errorTranslator(fieldName, error.type) : error.message}
         </Label>
       )}
     </View>
