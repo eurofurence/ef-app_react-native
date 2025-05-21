@@ -1,13 +1,15 @@
-import { reactNativeTracingIntegration } from '@sentry/react-native'
-import { init as sentryInit } from '@sentry/react-native/dist/js/sdk'
-// eslint-disable-next-line import/no-unresolved
+import { reactNativeTracingIntegration, init as sentryInit } from '@sentry/react-native'
 import conventionConfig from '../../convention.config.json'
+import { isRunningInExpoGo } from 'expo'
 
 sentryInit({
   dsn: conventionConfig.sentry.dsn,
-  tracesSampleRate: 1,
+  tracesSampleRate: 0.8,
+  profilesSampleRate: 0.8,
   enabled: conventionConfig.sentry.enabled || false,
+  environment: conventionConfig.sentry.environment || 'production',
   debug: false,
+  enableNativeFramesTracking: !isRunningInExpoGo(), // Tracks slow and frozen frames in the application
   integrations: [
     reactNativeTracingIntegration({
       traceFetch: true,
