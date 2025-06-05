@@ -47,9 +47,17 @@ export default function DealersLayout() {
             <TabBar
               {...propsWithoutKey}
               navigationState={{ routes: props.state.routes, index: props.state.index }}
-              renderLabel={({ focused, route }) => {
-                const options = props.descriptors[route.key].options as TabViewOptions
-                return <TabLabel focused={focused} icon={options.icon} title={options.title} />
+              renderTabBarItem={({ labelStyle, key, ...tabBarItemProps }) => {
+                const routeKey = tabBarItemProps.route.key
+                const options = (props.descriptors[routeKey]?.options as TabViewOptions) || {}
+                return (
+                  <TabLabel
+                    focused={tabBarItemProps.navigationState.index === props.state.routes.findIndex((r) => r.key === routeKey)}
+                    icon={options.icon}
+                    title={options.title}
+                    labelStyle={labelStyle}
+                  />
+                )
               }}
               style={backgroundBackground}
               indicatorStyle={backgroundSecondary}
