@@ -1,4 +1,4 @@
-﻿module.exports = {
+module.exports = {
   // Start a new configuration root so the other rules are not applied to this
   // directory. Otherwise, there are a lot of parser errors.
   root: true,
