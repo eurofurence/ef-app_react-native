@@ -310,7 +310,8 @@
       "subtitle": "Make the app do something.",
       "sync": "Sync local data",
       "title": "Dev buttons",
-      "token_data_placeholder": "Enter token data"
+      "token_data_placeholder": "Enter token data",
+      "clear_async_storage": "Clear AsyncStorage data"
     },
     "dev_values": {
       "cache_values": "Cache values",

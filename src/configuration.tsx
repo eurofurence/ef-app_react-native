@@ -92,4 +92,5 @@ export const sentryEnvironment = conventionConfig.sentry.environment
  */
 export const syncDebug = conventionConfig.debug.showSync
 export const cacheDebug = conventionConfig.debug.showCache
+export const devMenu = conventionConfig.debug.devMenu
 export const i18nDebug = conventionConfig.debug.i18nDebug
