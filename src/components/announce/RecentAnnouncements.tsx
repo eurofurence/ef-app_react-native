@@ -42,8 +42,8 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
             announcement={item}
             onPress={(announcement) =>
               router.navigate({
-                pathname: '/announcements/[announcementId]',
-                params: { announcementId: announcement.Id },
+                pathname: '/announcements/[id]',
+                params: { id: announcement.Id },
               })
             }
           />

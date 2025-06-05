@@ -26,8 +26,8 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
   const onPress = useCallback(
     (announcement: AnnouncementDetails) =>
       router.navigate({
-        pathname: '/announcements/[announcementId]',
-        params: { announcementId: announcement.Id },
+        pathname: '/announcements/[id]',
+        params: { id: announcement.Id },
       }),
     []
   )
