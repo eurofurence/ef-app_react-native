@@ -1,7 +1,6 @@
-import { Label } from './Label'
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
 import { useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { Text } from 'react-native'
+import { Label } from './Label'
 
 export type TabLabelProps = {
   focused: boolean
@@ -25,16 +24,12 @@ export const TabLabel = ({ focused, icon, title, labelStyle }: TabLabelProps) =>
   }
 
   if (icon) {
-    return (
-      <Text style={[defaultStyle, labelStyle, focused && focusedStyle]}>
-        <Icon name={icon} color={iconColor} size={20} />
-      </Text>
-    )
+    return <Icon name={icon} color={iconColor} size={20} />
   } else {
     return (
-      <Text style={[defaultStyle, labelStyle, focused && focusedStyle]} numberOfLines={1} ellipsizeMode="tail">
+      <Label style={[defaultStyle, labelStyle, focused && focusedStyle]} numberOfLines={1} ellipsizeMode="tail">
         {title}
-      </Text>
+      </Label>
     )
   }
 }
