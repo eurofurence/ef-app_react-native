@@ -346,6 +346,7 @@
     "changeLanguage": "Change language",
     "currentLanguage": "Your current language is English!",
     "dev_buttons": {
+      "clear_async_storage": "Clear AsyncStorage data",
       "copy_device_push_token": "Copy device push token",
       "copy_token_data": "Copy token data",
       "no_auth_alert": "You are not logged in. Stopping.",

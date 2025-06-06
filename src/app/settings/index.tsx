@@ -13,7 +13,7 @@ export default function SettingsPage() {
   const { getValue } = useCache()
   const { t } = useTranslation('Settings')
 
-  const showDevMenu = Boolean(getValue('settings').devMenu)
+  const showDevMenu = getValue('settings').devMenu
 
   return (
     <>

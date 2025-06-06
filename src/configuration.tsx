@@ -81,8 +81,16 @@ export const authScopes = conventionConfig.auth.scopes
 export const authSettingsUrl = conventionConfig.auth.settingsUrl
 
 /**
+ * Sentry settings
+ */
+export const sentryDsn = conventionConfig.sentry.dsn
+export const sentryEnabled = conventionConfig.sentry.enabled
+export const sentryEnvironment = conventionConfig.sentry.environment
+
+/**
  * Debug settings
  */
 export const syncDebug = conventionConfig.debug.showSync
 export const cacheDebug = conventionConfig.debug.showCache
+export const devMenu = conventionConfig.debug.devMenu
 export const i18nDebug = conventionConfig.debug.i18nDebug

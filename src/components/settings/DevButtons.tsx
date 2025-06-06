@@ -1,18 +1,19 @@
-import React, { useCallback, useState } from 'react'
-import { View, TextInput, StyleSheet } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import { captureException } from '@sentry/react-native'
-import * as Clipboard from 'expo-clipboard'
-import * as SecureStore from '@/util/secureStorage'
+import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { useToastContext } from '@/context/ui/ToastContext'
-import { Section } from '@/components/generic/atoms/Section'
 import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
 import { storageKeyTokenResponse, useAuthContext } from '@/context/auth/Auth'
 import { withAlpha } from '@/context/Theme'
 import { useCache } from '@/context/data/Cache'
-import { vibrateAfter } from '@/util/vibrateAfter'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
+import * as SecureStore from '@/util/secureStorage'
+import { vibrateAfter } from '@/util/vibrateAfter'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { captureException } from '@sentry/react-native'
+import * as Clipboard from 'expo-clipboard'
+import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, TextInput, View } from 'react-native'
 
 export function DevButtons() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_buttons' })
@@ -70,6 +71,17 @@ export function DevButtons() {
     }
   }, [toast])
 
+  // Clears all AsyncStorage data
+  const clearAsyncStorage = useCallback(async () => {
+    try {
+      await AsyncStorage.clear()
+      toast('info', 'All AsyncStorage data cleared', 5000)
+    } catch (error) {
+      toast('warning', 'Failed to clear AsyncStorage data', 5000)
+      captureException(error)
+    }
+  }, [toast])
+
   return (
     <View style={styles.container}>
       <Section title={t('title')} subtitle={t('subtitle')} />
@@ -100,6 +112,10 @@ export function DevButtons() {
 
       <Button onPress={copyDevicePushToken} icon="file-key">
         {t('copy_device_push_token')}
+      </Button>
+
+      <Button onPress={clearAsyncStorage} icon="delete">
+        {t('clear_async_storage')}
       </Button>
     </View>
   )

@@ -12,7 +12,7 @@ import {
 } from '@/context/data/types.api'
 import { Notification } from '@/store/background/slice'
 import { defineEntity, defineField } from '@/context/data/CacheTools'
-import { eurofurenceCacheVersion } from '@/configuration'
+import { eurofurenceCacheVersion, devMenu } from '@/configuration'
 import { formatISO } from 'date-fns'
 import { Settings } from '@/context/data/types.own'
 
@@ -49,7 +49,9 @@ export const schemaValues = {
   /**
    * User settings.
    */
-  settings: defineField<Settings>({}),
+  settings: defineField<Settings>({
+    devMenu: devMenu,
+  }),
 
   /**
    * Currently registered notifications (i.e., event reminders).
