@@ -202,5 +202,5 @@ export const labelVariantStyles = StyleSheet.create({
   },
   receded: {
     opacity: 0.666,
-  }
+  },
 })
