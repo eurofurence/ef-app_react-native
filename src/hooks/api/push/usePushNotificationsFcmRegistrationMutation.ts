@@ -3,7 +3,6 @@ import { useMutation } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
 import { apiBase } from '@/configuration'
 import { PlatformOSType } from 'react-native'
-import { useCallback } from 'react'
 
 /**
  * Device registration.
@@ -37,8 +36,7 @@ export async function postPushNotificationsFcmRegistration(accessToken: string |
  */
 export function usePushNotificationsFcmRegistrationMutation() {
   const { accessToken } = useAuthContext()
-  const mutationFn = useCallback((data: PushNotificationsFcmRegistrationData) => postPushNotificationsFcmRegistration(accessToken, data), [accessToken])
   return useMutation({
-    mutationFn: mutationFn,
+    mutationFn: (data: PushNotificationsFcmRegistrationData) => postPushNotificationsFcmRegistration(accessToken, data),
   })
 }

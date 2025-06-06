@@ -25,7 +25,7 @@
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
   },
-  "ArtistAlley": {
+  "ArtistsAlley": {
     "dismiss": "Dismiss your edits",
     "display_name_label": "Display name",
     "display_name_placeholder": "Your preferred display name",
@@ -51,6 +51,52 @@
     "log_in_now": "Log-in now to get started!",
     "new_request": "Make a new request",
     "no_submission": "You haven't submitted a registration yet.",
+    "list": {
+      "header": "Table registration requests",
+      "register_self": "Register for yourself",
+      "Pending": "Pending registrations",
+      "Accepted": "Accepted registrations",
+      "Published": "Published registrations",
+      "Rejected": "Rejected registrations",
+      "moderate": "Moderate table requests"
+    },
+    "review": {
+      "accept_in_progress": "Accepting...",
+      "accept_succeeded": "Successfully accepted",
+      "accept_failed": "Something went wrong",
+      "reject_in_progress": "Rejecting...",
+      "reject_succeeded": "Successfully rejected",
+      "reject_failed": "Something went wrong",
+      "delete_in_progress": "Deleting...",
+      "confirm_choice": "Confirm choice",
+      "choice_accept": "Confirm accepting the registration",
+      "choice_reject": "Confirm rejecting the registration",
+      "choice_delete": "Confirm deleting the registration",
+      "delete": "Delete",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "delete_succeeded": "Successfully deleted",
+      "delete_failed": "Something went wrong",
+      "accept_request": "Accept this request",
+      "delete_registration": "Delete this registration",
+      "display_name_label": "Display name",
+      "explanation_status_accepted": "This registration has already been accepted by you or another team member.",
+      "explanation_status_pending": "The registration has not been reviewed yet. Verify the data and accept or reject it with the options below.",
+      "explanation_status_rejected": "This registration has already been rejected by you or another team member.",
+      "location_label": "Table number",
+      "reject_request": "Reject this request",
+      "status": {
+        "Accepted": "The registration was accepted.",
+        "Pending": "The registration is waiting to be approved.",
+        "Published": "The registration was accepted.",
+        "Rejected": "The registration was rejected."
+      },
+      "short_description_label": "Short description",
+      "submission_image_label": "Sample picture",
+      "telegram_handle_label": "Telegram handle (optional)",
+      "title": "Review registration request",
+      "website_url_label": "Website (optional)"
+    },
     "short_description_label": "Short description",
     "short_description_placeholder": "Information about you and what you will be offering",
     "status": {

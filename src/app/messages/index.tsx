@@ -44,8 +44,8 @@ export default function Messages() {
   const { data: communications, refetch, isPending } = useCommunicationsQuery()
   const { data: user } = useUserSelfQuery()
 
-  const isAdmin = user?.Roles?.includes('Admin') ?? false
-  const isPrivateMessageSender = user?.Roles?.includes('PrivateMessageSender') ?? false
+  const isAdmin = Boolean(user?.RoleMap?.Admin)
+  const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
 
   const sectionedData = useMemo(() => {
     const [unread, read] = partition(communications, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)

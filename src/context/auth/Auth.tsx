@@ -80,11 +80,14 @@ export type AuthContextType = {
   logout(): Promise<void>
 }
 
+export const storageKeyTokenResponse = 'tokenResponseConfig'
+export const storageKeyClaims = 'claims'
+
 /**
  * Gets the last stored token response.
  */
 export async function getLastTokenResponse() {
-  const tokenData = await SecureStore.getItemAsync('tokenResponseConfig')
+  const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
   return tokenData ? new TokenResponse(JSON.parse(tokenData)) : null
 }
 
@@ -142,20 +145,20 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
             )
 
             // Set the refreshed token instead.
-            await SecureStore.setItemAsync('tokenResponseConfig', JSON.stringify(refreshResponse.getRequestConfig()))
+            await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
             setTokenResponse(refreshResponse)
           } else {
             // Set expiring token, cannot refresh, but it's still valid for a bit.
-            await SecureStore.setItemAsync('tokenResponseConfig', JSON.stringify(loadResponse.getRequestConfig()))
+            await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(loadResponse.getRequestConfig()))
             setTokenResponse(loadResponse)
           }
         } else {
           // Set loaded token, it's OK.
-          await SecureStore.setItemAsync('tokenResponseConfig', JSON.stringify(loadResponse.getRequestConfig()))
+          await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(loadResponse.getRequestConfig()))
           setTokenResponse(loadResponse)
         }
       } catch (error) {
-        await SecureStore.deleteItemAsync('tokenResponseConfig')
+        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
         setTokenResponse(null)
         throw error
       }
@@ -184,10 +187,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         )
 
         // Save token data and set in state.
-        await SecureStore.setItemAsync('tokenResponseConfig', JSON.stringify(response.getRequestConfig()))
+        await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(response.getRequestConfig()))
         setTokenResponse(response)
       } catch (error) {
-        await SecureStore.deleteItemAsync('tokenResponseConfig')
+        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
         setTokenResponse(null)
         throw error
       }
@@ -208,10 +211,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         // Get claims, save and set in state.
         const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${tokenResponse.accessToken}` } })
         const claims = claimsResponse.data
-        await SecureStore.setItemAsync('claims', JSON.stringify(claims))
+        await SecureStore.setItemAsync(storageKeyClaims, JSON.stringify(claims))
         setClaims(claims)
       } catch (error) {
-        await SecureStore.deleteItemAsync('claims')
+        await SecureStore.deleteItemAsync(storageKeyClaims)
         setClaims(null)
         throw error
       }
@@ -245,11 +248,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         )
 
         // Set the refreshed token.
-        await SecureStore.setItemAsync('tokenResponseConfig', JSON.stringify(refreshResponse.getRequestConfig()))
+        await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
         setTokenResponse(refreshResponse)
       } catch (error) {
         // Set the refreshed token.
-        await SecureStore.deleteItemAsync('tokenResponseConfig')
+        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
         setTokenResponse(null)
         throw error
       }
@@ -288,7 +291,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
           .catch(captureException)
 
       // Always delete state and clear variables.
-      await SecureStore.deleteItemAsync('tokenResponseConfig')
+      await SecureStore.deleteItemAsync(storageKeyTokenResponse)
       setTokenResponse(null)
     }, [])
   )
@@ -300,7 +303,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
 
     // Fire off loading the state. Loading the token or setting it to null will then trigger claims fetching.
     ;(async () => {
-      const tokenData = await SecureStore.getItemAsync('tokenResponseConfig')
+      const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
       if (tokenData) {
         await load(JSON.parse(tokenData))
       } else {

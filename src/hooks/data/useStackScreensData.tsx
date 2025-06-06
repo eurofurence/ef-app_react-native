@@ -40,14 +40,21 @@ export function useStackScreensData(): StackScreenProps[] {
         swipeEnabled: true,
       },
       {
-        location: 'artist-alley/index',
+        location: 'artists-alley/[id]',
         title: t('artist_alley'),
         headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,
       },
       {
-        location: 'artist-alley/reg',
+        location: 'artists-alley/index',
+        title: t('artist_alley'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
+        location: 'artists-alley/reg',
         title: t('artist_alley'),
         headerLeft: CustomBack,
         headerShown: false,

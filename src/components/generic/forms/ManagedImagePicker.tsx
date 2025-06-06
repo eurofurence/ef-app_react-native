@@ -81,11 +81,9 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
               </View>
             )}
           </TouchableOpacity>
-          {fieldState.error && (
-            <Label type="minor" mt={4} color="notification">
-              {errorTranslator ? errorTranslator(field.name, fieldState.error.type) : fieldState.error.message}
-            </Label>
-          )}
+          <Label type="caption" color="notification" mt={5} mb={15}>
+            {!fieldState.error ? ' ' : errorTranslator ? errorTranslator(field.name, fieldState.error.type) : fieldState.error.message}
+          </Label>
         </Col>
       )}
       name={name.toString()}

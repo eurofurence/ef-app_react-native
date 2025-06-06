@@ -3,7 +3,24 @@ import { keepPreviousData, QueryFunctionContext, useQuery, UseQueryResult } from
 import { useAuthContext } from '@/context/auth/Auth'
 import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
-import { useCallback } from 'react'
+
+/**
+ * Extends user record with a role map.
+ */
+export type UserDetails = UserRecord & {
+  RoleMap: Record<string, true | undefined>
+}
+
+/**
+ * Transform the user record and add a role map.
+ * @param userRecord The record to transform.
+ */
+function selectWithRoles(userRecord: UserRecord): UserDetails {
+  return {
+    ...userRecord,
+    RoleMap: Object.fromEntries(userRecord.Roles.map((role) => [role, true])),
+  }
+}
 
 /**
  * Gets the user self-service data with the given access token and optionally an abort signal.
@@ -20,17 +37,17 @@ export async function getUserSelf(accessToken: string | null, signal?: GenericAb
       },
     })
     .then((res) => res.data as UserRecord)
+    .then(selectWithRoles)
 }
 
 /**
  * Uses a query for `getUserSelf` with the app auth state.
  */
-export function useUserSelfQuery(): UseQueryResult<UserRecord | null> {
+export function useUserSelfQuery(): UseQueryResult<UserDetails | null> {
   const { accessToken, claims } = useAuthContext()
-  const queryFn = useCallback((context: QueryFunctionContext) => getUserSelf(accessToken, context.signal), [accessToken])
   return useQuery({
     queryKey: [claims?.sub, 'self'],
-    queryFn: queryFn,
+    queryFn: (context: QueryFunctionContext) => getUserSelf(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
   })
 }

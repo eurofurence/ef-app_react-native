@@ -3,20 +3,20 @@ import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { ArtistAlleyOwnTableRegistrationRecord } from '@/store/eurofurence/types'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { sourceFromImage } from '@/components/generic/atoms/Image.common'
+import { TableRegistrationRecord } from '@/context/data/types.api'
 
-export type ArtistAlleyStatusProps = {
-  data: ArtistAlleyOwnTableRegistrationRecord
+export type ArtistsAlleyStatusProps = {
+  data: TableRegistrationRecord
   onEdit: () => void
 }
 
-export const ArtistAlleyStatus = ({ data, onEdit }: ArtistAlleyStatusProps) => {
+export const ArtistsAlleyStatus = ({ data, onEdit }: ArtistsAlleyStatusProps) => {
   // Get translation function.
-  const { t } = useTranslation('ArtistAlley')
+  const { t } = useTranslation('ArtistsAlley')
   const backgroundStyle = useThemeBackground('background')
 
   return (

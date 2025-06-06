@@ -1,5 +1,5 @@
 import { apiBase } from '@/configuration'
-import { ArtistAlleyPostTableRegistrationData } from '@/hooks/api/artist-alley/ArtistAlleyPostTableRegistrationData'
+import { ArtistsAlleyPostTableRegistrationData } from '@/hooks/api/artists-alley/ArtistsAlleyPostTableRegistrationData'
 import axios from 'axios'
 
 /**
@@ -7,7 +7,7 @@ import axios from 'axios'
  * @param accessToken The access token.
  * @param data The registration data.
  */
-export async function postArtistAlleyPostTableRegistrationRequest(accessToken: string | null, data: ArtistAlleyPostTableRegistrationData) {
+export async function postArtistsAlleyPostTableRegistrationRequest(accessToken: string | null, data: ArtistsAlleyPostTableRegistrationData) {
   if (!accessToken) throw new Error('Unauthorized')
 
   const requestImageFile = await fetch(data.imageUri).then(async (response) => {

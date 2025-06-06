@@ -56,8 +56,6 @@ export const useTokenManager = () => {
       // Acquire the proper token.
       const token = await getDevicePushToken()
 
-      console.log('FCM TOKEN:', token)
-
       // Register token as a device with all topics.
       await postPushNotificationsFcmRegistration(accessToken, {
         deviceId: token,

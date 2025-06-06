@@ -1,7 +1,7 @@
 /**
  * Communication-send data.
  */
-export type ArtistAlleyPostTableRegistrationData = {
+export type ArtistsAlleyPostTableRegistrationData = {
   displayName: string
   websiteUrl: string
   shortDescription: string

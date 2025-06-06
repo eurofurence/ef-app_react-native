@@ -8,7 +8,7 @@ import { Button } from '@/components/generic/containers/Button'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { Section } from '@/components/generic/atoms/Section'
 import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
-import { useAuthContext } from '@/context/auth/Auth'
+import { storageKeyTokenResponse, useAuthContext } from '@/context/auth/Auth'
 import { withAlpha } from '@/context/Theme'
 import { useCache } from '@/context/data/Cache'
 import { vibrateAfter } from '@/util/vibrateAfter'
@@ -27,9 +27,9 @@ export function DevButtons() {
   // Copies the device push token for notifications.
   const copyDevicePushToken = useCallback(async () => {
     try {
-      const token = await getDevicePushToken()
-      await Clipboard.setStringAsync(token)
-      console.log(token ?? '')
+      const pushToken = await getDevicePushToken()
+      await Clipboard.setStringAsync(pushToken)
+      console.log(pushToken ?? '')
       toast('info', 'Device push token copied to clipboard', 5000)
     } catch (error) {
       toast('warning', 'Failed to copy device push token', 5000)
@@ -60,7 +60,7 @@ export function DevButtons() {
   // Copies the token data into the clipboard.
   const copyTokenData = useCallback(async () => {
     try {
-      const tokenData = await SecureStore.getItemAsync('tokenData')
+      const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
       await Clipboard.setStringAsync(tokenData ?? '')
       console.log(tokenData ?? '')
       toast('info', 'Token data copied to clipboard', 5000)

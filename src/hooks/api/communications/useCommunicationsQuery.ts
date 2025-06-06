@@ -1,5 +1,5 @@
 import { CommunicationRecord } from '@/context/data/types.api'
-import { keepPreviousData, QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
+import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useAuthContext } from '@/context/auth/Auth'
 import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
@@ -27,10 +27,9 @@ export async function getCommunications(accessToken: string | null, signal?: Gen
  */
 export function useCommunicationsQuery(): UseQueryResult<CommunicationRecord[] | null> {
   const { accessToken, claims } = useAuthContext()
-  const queryFn = useCallback((context: QueryFunctionContext) => getCommunications(accessToken, context.signal), [accessToken])
   return useQuery({
     queryKey: [claims?.sub, 'communications'],
-    queryFn: queryFn,
+    queryFn: (context) => getCommunications(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
   })
 }
@@ -40,7 +39,7 @@ export function useCommunicationsQuery(): UseQueryResult<CommunicationRecord[] |
  * @param id The ID of the record, preferably a string.
  * @remarks Uses the same query as getting all records.
  */
-export function useCommunicationsItemQuery(id: string | any): UseQueryResult<CommunicationRecord | null> {
+export function useCommunicationsItemQuery(id: unknown): UseQueryResult<CommunicationRecord | null> {
   const { accessToken, claims } = useAuthContext()
 
   const findEntry = useCallback(
@@ -50,10 +49,9 @@ export function useCommunicationsItemQuery(id: string | any): UseQueryResult<Com
     [id]
   )
 
-  const queryFn = useCallback((context: QueryFunctionContext) => getCommunications(accessToken, context.signal), [accessToken])
   return useQuery({
     queryKey: [claims?.sub, 'communications'],
-    queryFn: queryFn,
+    queryFn: (context) => getCommunications(accessToken, context.signal),
     select: findEntry,
     placeholderData: (data) => keepPreviousData(data),
   })
