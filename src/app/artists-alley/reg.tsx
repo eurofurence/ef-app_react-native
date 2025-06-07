@@ -10,11 +10,11 @@ import { Badge } from '@/components/generic/containers/Badge'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Linking, StyleSheet } from 'react-native'
-import { ArtistAlleyEdit } from '@/components/artist-alley/ArtistAlleyEdit'
-import { ArtistAlleyStatus } from '@/components/artist-alley/ArtistAlleyStatus'
-import { ArtistAlleyUnauthorized } from '@/components/artist-alley/ArtistAlleyUnauthorized'
+import { ArtistsAlleyEdit } from '@/components/artists-alley/ArtistsAlleyEdit'
+import { ArtistsAlleyStatus } from '@/components/artists-alley/ArtistsAlleyStatus'
+import { ArtistsAlleyUnauthorized } from '@/components/artists-alley/ArtistsAlleyUnauthorized'
 import { artistAlleyUrl } from '@/configuration'
-import { useArtistAlleyOwnRegistrationQuery } from '@/hooks/api/artist-alley/useArtistAlleyOwnRegistrationQuery'
+import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -23,21 +23,21 @@ const stateToBackground = {
   Rejected: 'notification',
 } as const
 
-export default function ArtistAlleyRegistration() {
-  const { t } = useTranslation('ArtistAlley')
-  const { t: tStatus } = useTranslation('ArtistAlley', { keyPrefix: 'status' })
+export default function Register() {
+  const { t } = useTranslation('ArtistsAlley')
+  const { t: tStatus } = useTranslation('ArtistsAlley', { keyPrefix: 'status' })
 
   // Get user data for RBAC checks and pre-filling.
   const { loggedIn, claims } = useAuthContext()
   const { data: user } = useUserSelfQuery()
 
   // Get roles for preemptive RBAC.
-  const attending = Boolean(user?.Roles?.includes('Attendee'))
-  const checkedIn = Boolean(user?.Roles?.includes('AttendeeCheckedIn'))
+  const attending = Boolean(user?.RoleMap?.Attendee)
+  const checkedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
   const authorized = loggedIn && attending && checkedIn
 
   // Get current registration if available. Only run when authorized.
-  const { data, isPending, refetch } = useArtistAlleyOwnRegistrationQuery()
+  const { data, isPending, refetch } = useArtistsAlleyOwnRegistrationQuery()
 
   // Switch for show and edit modes.
   const [show, setShow] = useState(true)
@@ -60,9 +60,9 @@ export default function ArtistAlleyRegistration() {
         {authorized ? (
           !isPending ? (
             show && data ? (
-              <ArtistAlleyStatus data={data} onEdit={() => setShow(false)} />
+              <ArtistsAlleyStatus data={data} onEdit={() => setShow(false)} />
             ) : (
-              <ArtistAlleyEdit
+              <ArtistsAlleyEdit
                 prefill={{
                   displayName: data?.DisplayName ?? (claims?.name as string) ?? '',
                   websiteUrl: data?.WebsiteUrl ?? '',
@@ -77,7 +77,7 @@ export default function ArtistAlleyRegistration() {
             )
           ) : null
         ) : (
-          <ArtistAlleyUnauthorized loggedIn={loggedIn} attending={attending} checkedIn={checkedIn} />
+          <ArtistsAlleyUnauthorized loggedIn={loggedIn} attending={attending} checkedIn={checkedIn} />
         )}
       </Floater>
     </ScrollView>

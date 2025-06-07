@@ -7,9 +7,6 @@ import { captureNotificationException } from '@/sentryHelpers'
 // Set general notification handling strategy.
 setNotificationHandler({
   handleNotification: async ({ request: { content } }) => {
-    // Mark handling notification.
-    console.log('Handling notification', content)
-
     // Show if it's a notification trigger.
     return {
       shouldShowAlert: typeof content?.title === 'string' || typeof content?.body === 'string',
@@ -17,9 +14,8 @@ setNotificationHandler({
       shouldSetBadge: false,
     }
   },
-  handleSuccess: (id) => {
-    // Log success.
-    console.log(`Handled notification successfully, assigned ID: ${id}`)
+  handleSuccess: () => {
+    // Nothing.
   },
   handleError: (id, error) => {
     // Log error.

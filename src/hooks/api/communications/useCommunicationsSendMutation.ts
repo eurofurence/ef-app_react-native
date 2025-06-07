@@ -3,7 +3,6 @@ import { useMutation } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
 import { apiBase } from '@/configuration'
 import { queryClient } from '@/context/query/Query'
-import { useCallback } from 'react'
 
 /**
  * Communication-send data.
@@ -43,9 +42,8 @@ export async function postCommunicationsSend(accessToken: string | null, data: C
  */
 export function useCommunicationsSendMutation() {
   const { accessToken, claims } = useAuthContext()
-  const mutationFn = useCallback((data: CommunicationsSendData) => postCommunicationsSend(accessToken, data), [accessToken])
   return useMutation({
-    mutationFn: mutationFn,
+    mutationFn: (data: CommunicationsSendData) => postCommunicationsSend(accessToken, data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [claims?.sub, 'communications'] }),
   })
 }

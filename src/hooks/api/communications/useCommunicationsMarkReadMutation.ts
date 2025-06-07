@@ -11,7 +11,7 @@ import { parseISO } from 'date-fns'
  * @param id The ID of the message.
  * @param signal An abort signal.
  */
-export async function postCommunicationsMarkRead(accessToken: string | null, id: string, signal?: GenericAbortSignal) {
+export async function postCommunicationsMarkRead(accessToken: string | null, id: unknown, signal?: GenericAbortSignal) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
     .post(`${apiBase}/Communication/PrivateMessages/${id}/Read`, true, {
@@ -30,7 +30,7 @@ export async function postCommunicationsMarkRead(accessToken: string | null, id:
 export function useCommunicationsMarkReadMutation() {
   const { accessToken, claims } = useAuthContext()
   return useMutation({
-    mutationFn: (id: string) => postCommunicationsMarkRead(accessToken, id),
+    mutationFn: (id: unknown) => postCommunicationsMarkRead(accessToken, id),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: [claims?.sub, 'communications'] }),
   })
 }

@@ -1,7 +1,6 @@
 import axios, { GenericAbortSignal } from 'axios'
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { useCallback } from 'react'
 import { useMutation } from '@tanstack/react-query'
 
 /**
@@ -37,8 +36,7 @@ export async function postEventFeedback(accessToken: string | null, data: EventF
  */
 export function useEventFeedbackMutation() {
   const { accessToken } = useAuthContext()
-  const mutationFn = useCallback((data: EventFeedbackData) => postEventFeedback(accessToken, data), [accessToken])
   return useMutation({
-    mutationFn: mutationFn,
+    mutationFn: (data: EventFeedbackData) => postEventFeedback(accessToken, data),
   })
 }

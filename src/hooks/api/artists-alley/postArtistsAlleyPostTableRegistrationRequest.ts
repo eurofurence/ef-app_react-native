@@ -1,14 +1,14 @@
 import * as FileSystem from 'expo-file-system'
 import { FileSystemSessionType, FileSystemUploadType } from 'expo-file-system'
 import { apiBase } from '@/configuration'
-import { ArtistAlleyPostTableRegistrationData } from '@/hooks/api/artist-alley/ArtistAlleyPostTableRegistrationData'
+import { ArtistsAlleyPostTableRegistrationData } from '@/hooks/api/artists-alley/ArtistsAlleyPostTableRegistrationData'
 
 /**
  * Posts a table registration via the API with the given access token and registration data.
  * @param accessToken The access token.
  * @param data The registration data.
  */
-export async function postArtistAlleyPostTableRegistrationRequest(accessToken: string | null, data: ArtistAlleyPostTableRegistrationData) {
+export async function postArtistsAlleyPostTableRegistrationRequest(accessToken: string | null, data: ArtistsAlleyPostTableRegistrationData) {
   if (!accessToken) throw new Error('Unauthorized')
 
   // Check if uploading a new image or an existing. If existing, download.

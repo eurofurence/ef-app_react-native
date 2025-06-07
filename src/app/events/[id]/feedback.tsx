@@ -53,7 +53,7 @@ export default function EventFeedback() {
 
   const { loggedIn } = useAuthContext()
   const { data: user } = useUserSelfQuery()
-  const attending = Boolean(user?.Roles?.includes('Attendee'))
+  const attending = Boolean(user?.RoleMap?.Attendee)
 
   const disabled = !loggedIn || !attending
   const disabledReason = (!loggedIn && t('disabled_not_logged_in')) || (!attending && t('disabled_not_attending'))

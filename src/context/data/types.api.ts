@@ -144,8 +144,9 @@ export type UserRecord = {
     Status: string
   }[]
 }
+export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected'
 
-export type ArtistAlleyOwnTableRegistrationRecord = {
+export type TableRegistrationRecord = {
   LastChangeDateTimeUtc: string
   Id: string
   CreatedDateTimeUtc: string
@@ -158,5 +159,5 @@ export type ArtistAlleyOwnTableRegistrationRecord = {
   Location: string
   ImageId: string
   Image: ImageRecord
-  State: string
+  State: TableRegistrationRecordStatus
 }
