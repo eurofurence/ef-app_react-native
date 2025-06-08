@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { parseISO, format } from 'date-fns'
-import { useLocalSearchParams, router } from 'expo-router'
+import { useLocalSearchParams, router, Redirect } from 'expo-router'
 
 import { appStyles } from '@/components/AppStyles'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
@@ -43,7 +43,7 @@ export default function MessageItem() {
     }
   }, [message])
 
-  if (!message) return null
+  if (!message) return <Redirect href="/messages" />
 
   const formattedDate = message.ReceivedDateTimeUtc ? format(parseISO(message.ReceivedDateTimeUtc), 'PPpp') : ''
 

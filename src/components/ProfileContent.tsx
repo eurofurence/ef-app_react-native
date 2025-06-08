@@ -11,6 +11,7 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Claims, useAuthContext } from '@/context/auth/Auth'
 import { authSettingsUrl, conName } from '@/configuration'
 import { UserRecord } from '@/context/data/types.api'
+import { UserDetails } from '@/hooks/api/users/useUserSelfQuery'
 
 /**
  * User role pill.
@@ -53,7 +54,7 @@ const UserRegistration: FC<{ id: string; status: string }> = ({ id, status }) =>
 
 export type ProfileContentProps = {
   claims: Claims
-  user: UserRecord
+  user: UserDetails
   parentPad?: number
 }
 
@@ -69,8 +70,8 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
   const avatarBackground = useThemeBackground('primary')
   const { logout } = useAuthContext()
 
-  const isAttendee = user.Roles.includes('Attendee')
-  const isCheckedIn = user.Roles.includes('AttendeeCheckedIn')
+  const isAttendee = user.RoleMap.Attendee
+  const isCheckedIn = user.RoleMap.AttendeeCheckedIn
   const roleComplex = Boolean(user.Roles.find((role) => role !== 'Attendee' && role !== 'AttendeeCheckedIn'))
   return (
     <>

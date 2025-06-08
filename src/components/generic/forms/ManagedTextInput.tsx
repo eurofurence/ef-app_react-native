@@ -2,7 +2,8 @@ import { StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle } fro
 import { useController, Path } from 'react-hook-form'
 
 import { Label } from '../atoms/Label'
-import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useTheme } from '@/hooks/themes/useThemeHooks'
+import { useMemo } from 'react'
 
 export type ManagedTextInputProps<T> = TextInputProps & {
   name: Path<T>
@@ -19,21 +20,22 @@ export const ManagedTextInput = <T extends Record<string, any>>({ name, label, c
     name,
   })
 
-  const textColor = useThemeColorValue('text')
+  const theme = useTheme()
+  const inputStyle = useMemo(
+    () => ({
+      color: theme.text,
+      borderBottomColor: theme.soften,
+    }),
+    [theme]
+  )
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {label && (
-        <Label type="caption" mb={8}>
-          {label}
-        </Label>
-      )}
-      <TextInput value={value} onChangeText={onChange} onBlur={onBlur} style={[styles.input, { color: textColor }, style]} placeholderTextColor={textColor + '80'} {...props} />
-      {error && (
-        <Label type="caption" color="important" mt={4}>
-          {errorTranslator ? errorTranslator(fieldName, error.type) : error.message}
-        </Label>
-      )}
+      {label && <Label type="caption">{label}</Label>}
+      <TextInput value={value} onChangeText={onChange} onBlur={onBlur} style={[styles.input, inputStyle, style]} placeholderTextColor={theme.text + '80'} {...props} />
+      <Label type="caption" color="notification" mt={5} mb={15}>
+        {!error ? ' ' : errorTranslator ? errorTranslator(fieldName, error.type) : error.message}
+      </Label>
     </View>
   )
 }
