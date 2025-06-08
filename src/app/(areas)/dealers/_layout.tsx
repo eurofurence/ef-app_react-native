@@ -1,78 +1,56 @@
 import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
 import type { MaterialTopTabNavigationOptions, MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs'
 import { router, useLocalSearchParams, withLayoutContext } from 'expo-router'
-import { TabBar } from 'react-native-tab-view'
 import * as React from 'react'
-import { StyleSheet, useWindowDimensions, View } from 'react-native'
-import { TabLabel } from '@/components/generic/atoms/TabLabel'
+import { StyleSheet, View } from 'react-native'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Search } from '@/components/generic/atoms/Search'
-import { IconNames } from '@/components/generic/atoms/Icon'
+import { Icon, IconNames } from '@/components/generic/atoms/Icon'
 
 const { Navigator } = createMaterialTopTabNavigator()
 
 /**
- * Customized screen options for unified icon rendering handling.
- */
-type TabViewOptions = MaterialTopTabNavigationOptions & { icon?: IconNames }
-
-/**
  * Customized tab view for this layout.
  */
-const MaterialTopTabs = withLayoutContext<TabViewOptions, typeof Navigator, TabNavigationState<ParamListBase>, MaterialTopTabNavigationEventMap>(Navigator)
+const MaterialTopTabs = withLayoutContext<MaterialTopTabNavigationOptions, typeof Navigator, TabNavigationState<ParamListBase>, MaterialTopTabNavigationEventMap>(Navigator)
 
 function setFilter(value: string) {
   router.setParams({ query: value })
 }
 
+function createOptions(title: string | undefined, icon: IconNames | undefined = undefined): MaterialTopTabNavigationOptions {
+  if (icon === undefined) return { title: title }
+  return {
+    title: title,
+    tabBarShowLabel: false,
+    tabBarIcon: ({ color }) => <Icon name={icon} color={color} size={20} />,
+    tabBarShowIcon: true,
+  }
+}
+
 export default function DealersLayout() {
   const { query } = useLocalSearchParams<{ query?: string }>()
 
-  const layout = useWindowDimensions()
-
   const backgroundSurface = useThemeBackground('surface')
-  const backgroundBackground = useThemeBackground('background')
-  const backgroundSecondary = useThemeBackground('secondary')
 
   return (
     <MaterialTopTabs
       initialRouteName="all"
       style={StyleSheet.absoluteFill}
       screenOptions={{ sceneStyle: backgroundSurface }}
-      tabBar={(props) => {
-        const { key, ...propsWithoutKey } = props as typeof props & { key: any }
-        return (
-          <View>
-            <TabBar
-              {...propsWithoutKey}
-              navigationState={{ routes: props.state.routes, index: props.state.index }}
-              renderTabBarItem={({ labelStyle, key, ...tabBarItemProps }) => {
-                const routeKey = tabBarItemProps.route.key
-                const options = (props.descriptors[routeKey]?.options as TabViewOptions) || {}
-                return (
-                  <TabLabel
-                    focused={tabBarItemProps.navigationState.index === props.state.routes.findIndex((r) => r.key === routeKey)}
-                    icon={options.icon}
-                    title={options.title}
-                    labelStyle={labelStyle}
-                  />
-                )
-              }}
-              style={backgroundBackground}
-              indicatorStyle={backgroundSecondary}
-              tabStyle={{ width: layout.width / props.state.routes.length }}
-            />
-            <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
-          </View>
-        )
-      }}
+      tabBar={(props) => (
+        <View>
+          <MaterialTopTabBar {...props} />
+          <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
+        </View>
+      )}
     >
-      <MaterialTopTabs.Screen name="personal" options={{ title: 'Faves', icon: 'calendar-heart' }} />
-      <MaterialTopTabs.Screen name="all" options={{ title: 'All' }} />
-      <MaterialTopTabs.Screen name="regular" options={{ title: 'Regular' }} />
-      <MaterialTopTabs.Screen name="ad" options={{ title: 'AD' }} />
-      <MaterialTopTabs.Screen name="az" options={{ title: 'A-Z', icon: 'order-alphabetical-ascending' }} />
+      <MaterialTopTabs.Screen name="personal" options={createOptions('Faves', 'calendar-heart')} />
+      <MaterialTopTabs.Screen name="all" options={createOptions('All')} />
+      <MaterialTopTabs.Screen name="regular" options={createOptions('Regular')} />
+      <MaterialTopTabs.Screen name="ad" options={createOptions('AD')} />
+      <MaterialTopTabs.Screen name="az" options={createOptions('A-Z', 'order-alphabetical-ascending')} />
     </MaterialTopTabs>
   )
 }
