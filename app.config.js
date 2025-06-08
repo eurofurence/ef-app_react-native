@@ -29,6 +29,7 @@ module.exports = {
       supportsTablet: true,
       infoPlist: {
         UIBackgroundModes: ['fetch', 'remote-notification'],
+        ITSAppUsesNonExemptEncryption: false,
       },
       associatedDomains: ['applinks:app.eurofurence.org', 'applinks:app.test.eurofurence.org'],
     },
