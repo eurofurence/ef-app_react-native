@@ -6,6 +6,13 @@
       "title": "App Details"
     },
     "developed_by": "Entwickelt von",
+    "developer_settings_alert": {
+      "body": "Willst du die Entwickler-Einstellungen anschalten? Tue das nur, wenn du weißt was das Bedeutet und du für die Konsequenzen Verantwortung trägst. ",
+      "cancel": "Abbrechen",
+      "disable": "Ausschalten",
+      "enable": "Anschalten",
+      "title": "Entwickler-Menü"
+    },
     "extra_thanks": "Besonderen Dank",
     "header": "Über uns"
   },
@@ -14,7 +21,7 @@
     "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
     "sectionTitle": "Mitteilungen"
   },
-  "ArtistAlley": {
+  "ArtistsAlley": {
     "dismiss": "Änderungen verwerfen",
     "display_name_label": "Anzeigename",
     "display_name_placeholder": "Dein bevorzugter Anzeigename",
@@ -122,9 +129,13 @@
     "sponsor_event": "Sponsor-Event",
     "supersponsor_event": "Supersponsor-Event",
     "view_on_map": "Auf der Karte ansehen",
-    "when": "{{ day }}, {{ start }} bis {{ finish }}."
+    "viewing_event": "Event ansehen",
+    "when": "{{ day }}, {{ start }} bis {{ finish }}.",
+    "when_local": "{{ zone }}: {{ day }}, {{ start }} bis {{ finish }}."
   },
   "EventFeedback": {
+    "disabled_not_attending": "Nur Attendees können Feedback geben",
+    "disabled_not_logged_in": "Bitte melde dich an, um Feedback zu geben",
     "explanation": "Lass uns wissen, wie du {{ eventTitle }} fandest. Gib eine Bewertung und optional eine Nachricht ein, und wir schauen, dass diese bei der richtigen Person landen.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Wenn du spezifische Anmerkungen an die Veranstaltenden hast, schreibe diese hier auf.",
@@ -136,7 +147,6 @@
     "thank_you": "Vielen Dank für dein Feedback zu {{ eventTitle }}."
   },
   "Events": {
-    "long_running": "Läuft länger",
     "afternoon": "Nachmittags",
     "current_subtitle": "Diese Events finden gerade jetzt statt",
     "current_title": "Aktuelle Events",
@@ -148,9 +158,11 @@
     "favorites_subtitle": "Du wirst an diese Events erinnert werden",
     "favorites_title": "Favorisierte Events",
     "filter_by_day": "Tage ansehen",
+    "filter_by_host": "Vortragende ansehen",
     "filter_by_room": "Räume ansehen",
     "filter_by_track": "Kategorien ansehen",
     "finished": "Zu Ende",
+    "long_running": "Läuft länger",
     "morning": "Morgens",
     "night": "In der Nacht",
     "schedule_empty": "Du hast noch keine Events in Deinen Favoriten. Füge Events zu Deinen Favoriten hinzu, um Deine Agenda zu erstellen.",
@@ -205,6 +217,7 @@
     "more": "Mehr",
     "not_logged_in": "Du bist nicht angemeldet.",
     "open_messages": "Nachrichten öffnen",
+    "pm": "Private Nachrichten",
     "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen",
@@ -222,6 +235,7 @@
   "PrivateMessageList": {
     "from": "Von {{ author }}",
     "from_unknown": "Author unbekannt",
+    "header": "Private Nachrichten",
     "message_item_subtitle": "{{ status }} - Gesendet {{ time }}",
     "read": "Gelesen",
     "section_title_from": "Von {{authorName}}",
@@ -249,28 +263,9 @@
     },
     "changeLanguage": "Sprache ändern",
     "currentLanguage": "Deine Sprachauswahl ist Deutsch!",
-    "dev_buttons": {
-      "no_auth_alert": "Du bist nicht angemeldet, kann nicht fortfahren.",
-      "send_private_message": "Private Nachrichten testen  {{ status }}",
-      "subtitle": "Löse API-Funktionen aus.",
-      "sync": "Synchronisierung erzwingen {{ status }}",
-      "sync_alert_done": "Alle verbundenen Geräte wurden Synchronisiert",
-      "sync_alert_error": "Halte den Knopf gedrückt, um die Funktion zu aktivieren",
-      "sync_standard": "Daten neu laden",
-      "test_message_content": "You have won a grand prize!",
-      "test_message_subject": "You have won a grand prize!",
-      "title": "Entwickler-Funktionen"
-    },
     "developer_settings": {
       "subtitle": "Du solltest diese besser nicht anfassen wenn Du nicht weisst was Du tust.",
       "title": "Entwickler-Einstellungen"
-    },
-    "developer_settings_alert": {
-      "body": "Willst du die Entwickler-Einstellungen anschalten? Tue das nur, wenn du weißt was das Bedeutet und du für die Konsequenzen Verantwortung trägst. ",
-      "cancel": "Abbrechen",
-      "disable": "Ausschalten",
-      "enable": "Anschalten",
-      "title": "Entwickler-Menü"
     },
     "device_warnings": {
       "hide_device_warnings": "Kompatibilitätsprobleme verbergen",

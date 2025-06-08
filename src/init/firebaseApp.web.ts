@@ -1,19 +1,22 @@
-import { initializeApp } from "firebase/app";
+import { initializeApp } from 'firebase/app'
+
+// eslint-disable-next-line import/no-unresolved
+import conventionConfig from '../../convention.config.json'
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyCF365l8zUac096MFPLUtbPE6sqH182G2Q",
-    authDomain: "eurofurence-de86f.firebaseapp.com",
-    databaseURL: "https://eurofurence-de86f.firebaseio.com",
-    projectId: "eurofurence-de86f",
-    storageBucket: "eurofurence-de86f.appspot.com",
-    messagingSenderId: "1003745003618",
-    appId: "1:1003745003618:web:6eca6a1ec8f5d5bfe9e93b",
-    measurementId: "G-83EP75M02N",
-};
+  apiKey: conventionConfig.firebase.apiKey,
+  authDomain: conventionConfig.firebase.authDomain,
+  databaseURL: conventionConfig.firebase.authDomain,
+  projectId: conventionConfig.firebase.projectId,
+  storageBucket: conventionConfig.firebase.storageBucket,
+  messagingSenderId: conventionConfig.firebase.messagingSenderId,
+  appId: conventionConfig.firebase.appId,
+  measurementId: conventionConfig.firebase.measurementId,
+}
 
 /**
  * Firebase web app config. Only used on web, as react-native-firebase does not
  * integrate with web deployment.
  */
-export const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig)

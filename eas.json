@@ -1,7 +1,8 @@
 {
   "cli": {
     "version": ">= 0.55.1",
-    "appVersionSource": "remote"
+    "appVersionSource": "remote",
+    "promptToConfigurePushNotifications": false
   },
   "build": {
     "development": {
@@ -10,7 +11,6 @@
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview",
       "android": {
         "gradleCommand": ":app:assembleRelease --parallel --no-daemon"
       },
@@ -19,7 +19,6 @@
       }
     },
     "production": {
-      "channel": "production",
       "android": {
         "buildType": "app-bundle",
         "autoIncrement": "versionCode"

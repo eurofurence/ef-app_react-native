@@ -1,62 +1,39 @@
-import { capitalize } from "lodash";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { SettingContainer } from './SettingContainer'
+import { ThemeName } from '@/context/Theme'
+import { useTheme } from '@/hooks/themes/useTheme'
+import { ChoiceButtons } from '@/components/generic/atoms/ChoiceButtons'
+import { Col } from '@/components/generic/containers/Col'
+import { Label } from '@/components/generic/atoms/Label'
 
-import { useAppDispatch, useAppSelector } from "../../store";
-import { setTheme } from "../../store/settings/slice";
-import { ChoiceButtons } from "../generic/atoms/ChoiceButtons";
-import { Label } from "../generic/atoms/Label";
-import { Col } from "../generic/containers/Col";
-import { SettingContainer } from "./SettingContainer";
+type ThemeChoice = ThemeName | 'system'
 
-const usableThemes = [undefined, "light", "medium", "dark"];
+const usableThemes: ThemeChoice[] = ['light', 'medium', 'dark', 'system']
 
-/**
- * Shows currently selected theme and dispatches theme selector on change of
- * selection.
- * @constructor
- */
 export const ThemePicker = () => {
-    const { t } = useTranslation("Settings", { keyPrefix: "theme" });
-    const dispatch = useAppDispatch();
-    const theme = useAppSelector((state) => state.settingsSlice.theme);
-    const choices = usableThemes.includes(theme) ? usableThemes : [usableThemes[0], theme, ...usableThemes.slice(1)];
+  const { t } = useTranslation('Settings', { keyPrefix: 'theme' })
+  const { theme, setTheme } = useTheme()
 
-    return (
-        <SettingContainer>
-            <Col type="stretch">
-                <Label variant="bold">{t("title")}</Label>
-                <Label variant="narrow">{t("description")}</Label>
-
-                <ChoiceButtons
-                    style={styles.selector}
-                    choices={choices}
-                    choice={theme}
-                    setChoice={(choice) => dispatch(setTheme(choice))}
-                    getLabel={(choice) => t(choice ?? "system", capitalize(choice))}
-                />
-            </Col>
-        </SettingContainer>
-    );
-};
+  return (
+    <SettingContainer>
+      <Col type="stretch">
+        <Label variant="bold">{t('title')}</Label>
+        <Label variant="narrow">{t('description')}</Label>
+        <ChoiceButtons
+          style={styles.selector}
+          choices={usableThemes}
+          choice={theme === undefined ? 'system' : theme}
+          setChoice={(choice) => setTheme(choice === 'system' ? undefined : choice)}
+          getLabel={(choice) => t(choice)}
+        />
+      </Col>
+    </SettingContainer>
+  )
+}
 
 const styles = StyleSheet.create({
-    grow: {
-        flexGrow: 1,
-    },
-    selector: {
-        marginTop: 16,
-    },
-    button: {
-        borderRadius: 0,
-    },
-    left: {
-        borderBottomLeftRadius: 16,
-        borderTopLeftRadius: 16,
-    },
-    right: {
-        borderTopRightRadius: 16,
-        borderBottomRightRadius: 16,
-    },
-});
+  selector: {
+    marginTop: 16,
+  },
+})

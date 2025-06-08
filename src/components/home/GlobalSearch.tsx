@@ -1,81 +1,99 @@
-import { Moment } from "moment/moment";
-import React from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet } from "react-native";
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet } from 'react-native'
 
-import { useDealerInstances } from "../../routes/dealers/Dealers.common";
-import { useEventInstances } from "../../routes/events/Events.common";
-import { HomeProps } from "../../routes/home/Home";
-import { DealerDetails, EventDetails, KnowledgeEntryDetails } from "../../store/eurofurence/types";
-import { DealerCard } from "../dealers/DealerCard";
-import { EventCard } from "../events/EventCard";
-import { Section } from "../generic/atoms/Section";
-import { KbEntryCard } from "../kb/KbEntryCard";
-import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
-import { WithType } from "../../store/eurofurence/selectors/search";
+import { router } from 'expo-router'
+import { DealerCard } from '../dealers/DealerCard'
+import { EventCard } from '../events/EventCard'
+import { Section } from '../generic/atoms/Section'
+import { KbEntryCard } from '../kb/KbEntryCard'
+import { useDealerInstances } from '@/components/dealers/Dealers.common'
+import { useEventInstances } from '@/components/events/Events.common'
+import { GlobalSearchResult } from '@/context/data/types.own'
+import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
 
 export type GlobalSearchProps = {
-    navigation: HomeProps["navigation"];
-    now: Moment;
-    results: (WithType<DealerDetails, "dealer"> | WithType<EventDetails, "event"> | WithType<KnowledgeEntryDetails, "knowledgeEntry">)[] | null;
-};
+  now: Date
+  results: GlobalSearchResult[] | null
+}
 
-export const GlobalSearch = ({ navigation, now, results }: GlobalSearchProps) => {
-    const { t: tMenu } = useTranslation("Menu");
-    const { t: tDealers } = useTranslation("Dealers");
-    const { t: tEvents } = useTranslation("Events");
+export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
+  const { t: tMenu } = useTranslation('Menu')
 
-    // Zone abbreviation for events.
-    const zone = useZoneAbbr();
+  // Filter for type tags.
+  const dealerFiltered = useMemo(() => results?.filter((r) => r.type === 'dealer') as DealerDetails[], [results])
+  const eventsFiltered = useMemo(() => results?.filter((r) => r.type === 'event') as EventDetails[], [results])
+  const kbGroupsFiltered = useMemo(() => results?.filter((r) => r.type === 'knowledgeEntry') as KnowledgeEntryDetails[], [results])
 
-    // Use all dealers and group generically.
-    const dealers = useDealerInstances(tDealers, now, results?.filter((r) => r.type === "dealer") as DealerDetails[]);
-    const events = useEventInstances(tEvents, now, zone, results?.filter((r) => r.type === "event") as EventDetails[]);
-    const kbGroups = results?.filter((r) => r.type === "knowledgeEntry") as KnowledgeEntryDetails[];
+  // Use all dealers and group generically.
+  const dealers = useDealerInstances(now, dealerFiltered)
+  const events = useEventInstances(now, eventsFiltered)
+  const kbGroups = kbGroupsFiltered
 
-    if (!results) return null;
-    return (
+  if (!results) return null
+  return (
+    <>
+      {dealers && dealers.length > 0 && (
         <>
-            {!dealers?.length ? null : (
-                <>
-                    <Section icon="card-search" title={tMenu("dealers")} />
-                    {dealers.map((item) => (
-                        <DealerCard key={item.details.Id} containerStyle={styles.item} dealer={item} onPress={(dealer) => navigation.navigate("Dealer", { id: dealer.Id })} />
-                    ))}
-                </>
-            )}
-            {!events?.length ? null : (
-                <>
-                    <Section icon="card-search" title={tMenu("events")} />
-                    {events.map((item) => (
-                        <EventCard
-                            key={item.details.Id}
-                            containerStyle={styles.item}
-                            event={item}
-                            type="time"
-                            onPress={(event) =>
-                                navigation.navigate("Event", {
-                                    id: event.Id,
-                                })
-                            }
-                        />
-                    ))}
-                </>
-            )}
-            {!kbGroups?.length ? null : (
-                <>
-                    <Section icon="card-search" title={tMenu("info")} />
-                    {kbGroups.map((item) => (
-                        <KbEntryCard containerStyle={styles.item} entry={item} key={item.Id} onPress={(entry) => navigation.navigate("KnowledgeEntry", { id: entry.Id })} />
-                    ))}
-                </>
-            )}
+          <Section icon="card-search" title={tMenu('dealers')} />
+          {dealers.map((item) => (
+            <DealerCard
+              key={item.details.Id}
+              containerStyle={styles.item}
+              dealer={item}
+              onPress={(dealer) =>
+                router.navigate({
+                  pathname: '/dealers/[id]',
+                  params: { id: dealer.Id },
+                })
+              }
+            />
+          ))}
         </>
-    );
-};
+      )}
+      {events && events.length > 0 && (
+        <>
+          <Section icon="card-search" title={tMenu('events')} />
+          {events.map((item) => (
+            <EventCard
+              key={item.details.Id}
+              containerStyle={styles.item}
+              event={item}
+              type="time"
+              onPress={(event) =>
+                router.navigate({
+                  pathname: '/events/[id]',
+                  params: { eventId: event.Id },
+                })
+              }
+            />
+          ))}
+        </>
+      )}
+      {kbGroups && kbGroups.length > 0 && (
+        <>
+          <Section icon="card-search" title={tMenu('info')} />
+          {kbGroups.map((item) => (
+            <KbEntryCard
+              containerStyle={styles.item}
+              entry={item}
+              key={item.Id}
+              onPress={(entry) =>
+                router.navigate({
+                  pathname: '/knowledge/[id]',
+                  params: { id: entry.Id },
+                })
+              }
+            />
+          ))}
+        </>
+      )}
+    </>
+  )
+}
 
 const styles = StyleSheet.create({
-    item: {
-        paddingHorizontal: 20,
-    },
-});
+  item: {
+    paddingHorizontal: 20,
+  },
+})

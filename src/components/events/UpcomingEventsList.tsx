@@ -1,61 +1,64 @@
-import { Moment } from "moment/moment";
-import { FC, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import React, { FC, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
 
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useAppSelector } from "../../store";
-import { filterUpcomingEvents } from "../../store/eurofurence/selectors/events";
-import { eventsSelector } from "../../store/eurofurence/selectors/records";
-import { Section } from "../generic/atoms/Section";
-import { useZoneAbbr } from "../../hooks/time/useZoneAbbr";
-import { EventCard, eventInstanceForAny } from "./EventCard";
+import { router } from 'expo-router'
+import { isWithinInterval, subMinutes } from 'date-fns'
+import { Section } from '../generic/atoms/Section'
+import { EventCard, eventInstanceForAny } from './EventCard'
+import { useCache } from '@/context/data/Cache'
+import { EventDetails } from '@/context/data/types.details'
+
+const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
+  events.filter((it) => {
+    const startDate = new Date(it.StartDateTimeUtc)
+    const startMinus30 = subMinutes(startDate, 30)
+    return isWithinInterval(now, { start: startMinus30, end: startDate })
+  })
 
 export type UpcomingEventsListProps = {
-    now: Moment;
-};
+  now: Date
+}
 export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
-    const navigation = useAppNavigation("Areas");
+  const { t } = useTranslation('Events')
+  const { events } = useCache()
 
-    const { t } = useTranslation("Events");
+  const upcoming = useMemo(
+    () =>
+      filterUpcomingEvents(events, now)
+        .filter((item) => !item.Hidden)
+        .map((details) => eventInstanceForAny(details, now)),
+    [events, now]
+  )
 
-    const zone = useZoneAbbr();
-    const all = useAppSelector(eventsSelector.selectAll);
-    const events = useMemo(
-        () =>
-            filterUpcomingEvents(all, now)
-                .filter((item) => !item.Hidden)
-                .map((details) => eventInstanceForAny(details, now, zone)),
-        [all, now, zone],
-    );
+  if (upcoming.length === 0) {
+    return null
+  }
 
-    if (events.length === 0) {
-        return null;
-    }
-
-    return (
-        <>
-            <Section title={t("upcoming_title")} subtitle={t("upcoming_subtitle")} icon="clock" />
-            <View style={styles.condense}>
-                {events.map((event) => (
-                    <EventCard
-                        key={event.details.Id}
-                        event={event}
-                        type="time"
-                        onPress={(event) =>
-                            navigation.navigate("Event", {
-                                id: event.Id,
-                            })
-                        }
-                    />
-                ))}
-            </View>
-        </>
-    );
-};
+  return (
+    <>
+      <Section title={t('upcoming_title')} subtitle={t('upcoming_subtitle')} icon="clock" />
+      <View style={styles.condense}>
+        {upcoming.map((event) => (
+          <EventCard
+            key={event.details.Id}
+            event={event}
+            type="duration"
+            onPress={(event) =>
+              router.navigate({
+                pathname: '/events/[id]',
+                params: { id: event.Id },
+              })
+            }
+          />
+        ))}
+      </View>
+    </>
+  )
+}
 
 const styles = StyleSheet.create({
-    condense: {
-        marginVertical: -15,
-    },
-});
+  condense: {
+    marginVertical: -15,
+  },
+})

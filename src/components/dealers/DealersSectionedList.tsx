@@ -1,78 +1,86 @@
-import { FlashList } from "@shopify/flash-list";
-import { FC, ReactElement, useCallback, useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { FlashList } from '@shopify/flash-list'
+import { FC, ReactElement, useCallback, useMemo } from 'react'
+import { Dimensions, StyleSheet } from 'react-native'
 
-import { useThemeName } from "../../hooks/themes/useThemeHooks";
-import { DealersAdProps } from "../../routes/dealers/DealersAd";
-import { DealersAllProps } from "../../routes/dealers/DealersAll";
-import { DealersAlphaProps } from "../../routes/dealers/DealersAlpha";
-import { DealersRegularProps } from "../../routes/dealers/DealersRegular";
-import { PersonalDealersProps } from "../../routes/dealers/PersonalDealers";
-import { findIndices } from "../../util/findIndices";
-import { useSynchronizer } from "../sync/SynchronizationProvider";
-import { DealerDetails } from "../../store/eurofurence/types";
-import { DealerSection, DealerSectionProps } from "./DealerSection";
-import { DealerCard, DealerDetailsInstance } from "./DealerCard";
+import { router } from 'expo-router'
+import { DealerSection, DealerSectionProps } from './DealerSection'
+import { DealerCard, DealerDetailsInstance } from './DealerCard'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { findIndices } from '@/util/findIndices'
+import { SectionProps } from '@/components/generic/atoms/Section'
+import { useCache } from '@/context/data/Cache'
+import { DealerDetails } from '@/context/data/types.details'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 /**
  * The properties to the component.
  */
 export type DealersSectionedListProps = {
-    navigation:
-        | DealersAllProps["navigation"]
-        | PersonalDealersProps["navigation"]
-        | DealersRegularProps["navigation"]
-        | DealersAdProps["navigation"]
-        | DealersAlphaProps["navigation"];
-    leader?: ReactElement;
-    dealersGroups: (DealerSectionProps | DealerDetailsInstance)[];
-    empty?: ReactElement;
-    trailer?: ReactElement;
-    sticky?: boolean;
-    padEnd?: boolean;
-};
+  leader?: ReactElement
+  dealersGroups: (DealerSectionProps | DealerDetailsInstance)[]
+  empty?: ReactElement
+  trailer?: ReactElement
+  sticky?: boolean
+  padEnd?: boolean
+}
 
-export const DealersSectionedList: FC<DealersSectionedListProps> = ({ navigation, leader, dealersGroups, empty, trailer, sticky = true, padEnd = true }) => {
-    const theme = useThemeName();
-    const synchronizer = useSynchronizer();
-    const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !("details" in item)) : undefined), [dealersGroups, sticky]);
-    const onPress = useCallback(
-        (dealer: DealerDetails) => {
-            navigation.navigate("Dealer", { id: dealer.Id });
-        },
-        [navigation],
-    );
-    return (
-        <FlashList
-            refreshing={synchronizer.isSynchronizing}
-            onRefresh={synchronizer.synchronizeUi}
-            contentContainerStyle={padEnd ? styles.container : undefined}
-            scrollEnabled={true}
-            stickyHeaderIndices={stickyIndices}
-            ListHeaderComponent={leader}
-            ListFooterComponent={trailer}
-            ListEmptyComponent={empty}
-            data={dealersGroups}
-            getItemType={(item) => ("details" in item ? "row" : "sectionHeader")}
-            keyExtractor={(item) => ("details" in item ? item.details.Id : item.title)}
-            renderItem={({ item }) => {
-                if ("details" in item) {
-                    return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} />;
-                } else {
-                    return <DealerSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />;
-                }
-            }}
-            estimatedItemSize={110}
-            extraData={theme}
-        />
-    );
-};
+function getItemType(item: SectionProps | DealerDetailsInstance) {
+  return 'details' in item ? 'row' : 'sectionHeader'
+}
+
+function keyExtractor(item: SectionProps | DealerDetailsInstance) {
+  return 'details' in item ? item.details.Id : item.title
+}
+
+export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, dealersGroups, empty, trailer, sticky = true, padEnd = true }) => {
+  const theme = useThemeName()
+  const { isSynchronizing, synchronize } = useCache()
+  const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !('details' in item)) : undefined), [dealersGroups, sticky])
+
+  const onPress = useCallback((dealer: DealerDetails) => {
+    router.navigate({
+      pathname: '/dealers/[id]',
+      params: { id: dealer.Id },
+    })
+  }, [])
+
+  const renderItem = useCallback(
+    ({ item }: { item: SectionProps | DealerDetailsInstance }) => {
+      if ('details' in item) {
+        return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} />
+      } else {
+        return <DealerSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
+      }
+    },
+    [onPress]
+  )
+
+  return (
+    <FlashList
+      refreshing={isSynchronizing}
+      onRefresh={() => vibrateAfter(synchronize())}
+      contentContainerStyle={padEnd ? styles.container : undefined}
+      scrollEnabled={true}
+      stickyHeaderIndices={stickyIndices}
+      ListHeaderComponent={leader}
+      ListFooterComponent={trailer}
+      ListEmptyComponent={empty}
+      data={dealersGroups}
+      getItemType={getItemType}
+      keyExtractor={keyExtractor}
+      renderItem={renderItem}
+      estimatedItemSize={110}
+      estimatedListSize={Dimensions.get('window')}
+      extraData={theme}
+    />
+  )
+}
 
 const styles = StyleSheet.create({
-    item: {
-        paddingHorizontal: 20,
-    },
-    container: {
-        paddingBottom: 100,
-    },
-});
+  item: {
+    paddingHorizontal: 20,
+  },
+  container: {
+    paddingBottom: 100,
+  },
+})

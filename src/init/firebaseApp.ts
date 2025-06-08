@@ -1,7 +1,8 @@
-import type { FirebaseApp } from "firebase/app";
+import type { ReactNativeFirebase } from '@react-native-firebase/app'
 
 /**
  * Stub for Firebase JS framework, skipped when using the react-native
  * integration.
+ * TODO: Maybe we can get rid of this file?
  */
-export const firebaseApp: FirebaseApp = null as any;
+export const firebaseApp: ReactNativeFirebase.FirebaseApp = null as any

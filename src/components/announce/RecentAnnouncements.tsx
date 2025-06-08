@@ -1,76 +1,72 @@
-import { orderBy } from "lodash";
-import type { Moment } from "moment-timezone";
-import React, { useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+import { addMinutes, isAfter, isBefore, subMinutes, formatDistanceToNow } from 'date-fns'
+import { router } from 'expo-router'
+import { Section } from '../generic/atoms/Section'
+import { Button } from '../generic/containers/Button'
+import { AnnouncementCard } from './AnnouncementCard'
+import { useCache } from '@/context/data/Cache'
+import { AnnouncementDetails } from '@/context/data/types.details'
 
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useAppSelector } from "../../store";
-import { selectActiveAnnouncements } from "../../store/eurofurence/selectors/announcements";
-import { Section } from "../generic/atoms/Section";
-import { Button } from "../generic/containers/Button";
-import { AnnouncementCard, announcementInstanceForAny } from "./AnnouncementCard";
+const recentLimit = 2
 
-const recentLimit = 2;
+export const RecentAnnouncements = ({ now }: { now: Date }) => {
+  const { t } = useTranslation('Home')
+  const { announcements } = useCache()
 
-export type RecentAnnouncementsProps = {
-    now: Moment;
-};
+  const recent = useMemo(() => announcements.filter((item) => isAfter(now, subMinutes(item.ValidFrom, 5)) && isBefore(now, addMinutes(item.ValidUntil, 5))), [announcements, now])
 
-/**
- * Shows the two latest announcements and a button to open all of them,
- * @param now The current time.
- * @constructor
- */
-export const RecentAnnouncements = ({ now }: RecentAnnouncementsProps) => {
-    const navigation = useAppNavigation("Areas");
-    const { t } = useTranslation("Home");
+  /**
+   * Creates the announcement instance props for an upcoming or running announcement.
+   * @param details The details to use.
+   */
+  const announcementInstanceForAny = (details: AnnouncementDetails): AnnouncementDetailsInstance => {
+    const time = formatDistanceToNow(details.ValidFrom, { addSuffix: true })
+    return { details, time }
+  }
 
-    // Get all active announcements.
-    const announcements = useAppSelector((state) => selectActiveAnnouncements(state, now));
+  const recentAnnouncements = useMemo(() => recent.slice(0, recentLimit).map(announcementInstanceForAny), [recent])
 
-    // Select to the recent announcements.
-    const recentAnnouncements = useMemo(
-        () =>
-            orderBy(announcements, "ValidFromDateTimeUtc", "desc")
-                .slice(0, recentLimit)
-                .map((details) => announcementInstanceForAny(details, now)),
-        [announcements, now],
-    );
+  if (recentAnnouncements.length === 0) {
+    return null
+  }
 
-    // Skip if empty.
-    if (recentAnnouncements.length === 0) {
-        return null;
-    }
-
-    return (
-        <>
-            <Section title={t("recent_announcements")} subtitle={t("announcementsTitle", { count: announcements.length })} icon="newspaper" />
-            <View style={styles.condense}>
-                {recentAnnouncements.map((item) => (
-                    <AnnouncementCard
-                        key={item.details.Id}
-                        announcement={item}
-                        onPress={(announcement) =>
-                            navigation.navigate("AnnounceItem", {
-                                id: announcement.Id,
-                            })
-                        }
-                    />
-                ))}
-            </View>
-            <Button style={styles.button} onPress={() => navigation.navigate("AnnounceList")} outline>
-                {t("view_all_announcements")}
-            </Button>
-        </>
-    );
-};
+  return (
+    <>
+      <Section title={t('recent_announcements')} subtitle={t('announcementsTitle', { count: recent.length })} icon="newspaper" />
+      <View style={styles.condense}>
+        {recentAnnouncements.map((item) => (
+          <AnnouncementCard
+            key={item.details.Id}
+            announcement={item}
+            onPress={(announcement) =>
+              router.navigate({
+                pathname: '/announcements/[id]',
+                params: { id: announcement.Id },
+              })
+            }
+          />
+        ))}
+      </View>
+      <Button style={styles.button} onPress={() => router.navigate('AnnounceList')} outline>
+        {t('view_all_announcements')}
+      </Button>
+    </>
+  )
+}
 
 const styles = StyleSheet.create({
-    condense: {
-        marginVertical: -15,
-    },
-    button: {
-        marginTop: 20,
-    },
-});
+  condense: {
+    marginVertical: -15,
+  },
+  button: {
+    marginTop: 20,
+  },
+})
+
+// Define AnnouncementDetailsInstance type inside the file
+type AnnouncementDetailsInstance = {
+  details: AnnouncementDetails
+  time: string
+}
