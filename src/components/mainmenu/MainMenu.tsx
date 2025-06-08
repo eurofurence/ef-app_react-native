@@ -15,7 +15,7 @@ import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
 import { useCache } from '@/context/data/Cache'
 
 export type MainMenuProps = {
-  tabs: RefObject<TabsRef>
+  tabs: RefObject<TabsRef | null>
 }
 
 export function MainMenu({ tabs }: MainMenuProps) {

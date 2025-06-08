@@ -137,7 +137,7 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
       </GestureHandlerRootView>
     </Modal>
   )
-}) as <T>(props: ComboModalProps<T> & { ref: ForwardedRef<ComboModalRef<T>> }) => JSX.Element
+}) as <T>(props: ComboModalProps<T> & { ref: ForwardedRef<ComboModalRef<T>> }) => React.JSX.Element
 
 const styles = StyleSheet.create({
   rowLeft: {

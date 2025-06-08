@@ -8,8 +8,10 @@ import { captureNotificationException } from '@/sentryHelpers'
 setNotificationHandler({
   handleNotification: async ({ request: { content } }) => {
     // Show if it's a notification trigger.
+    const displayable = typeof content?.title === 'string' || typeof content?.body === 'string'
     return {
-      shouldShowAlert: typeof content?.title === 'string' || typeof content?.body === 'string',
+      shouldShowBanner: displayable,
+      shouldShowList: displayable,
       shouldPlaySound: false,
       shouldSetBadge: false,
     }

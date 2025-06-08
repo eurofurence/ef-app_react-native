@@ -113,7 +113,7 @@ export const themes: Record<string, Theme> = {
     primary: '#005953',
     secondary: '#3421bc',
     background: '#f7f7f7',
-    surface: '#f0f0f0',
+    surface: '#d7d7d7',
     inverted: '#040014',
     text: '#323034',
     important: '#000000',
@@ -134,8 +134,8 @@ export const themes: Record<string, Theme> = {
   medium: {
     primary: '#005953',
     secondary: '#3421bc',
-    background: '#989898',
-    surface: '#b6b6b6',
+    background: '#949494',
+    surface: '#bebebe',
     inverted: '#251c29',
     text: '#251c29',
     important: '#000000',
@@ -156,7 +156,7 @@ export const themes: Record<string, Theme> = {
   dark: {
     primary: '#69a3a2',
     secondary: '#917dff',
-    background: '#212121',
+    background: '#323232',
     surface: '#000000',
     inverted: '#e0dedb',
     text: '#e0dedb',

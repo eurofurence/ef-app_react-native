@@ -23,7 +23,7 @@ function getIconNameFromTabBarIcon(
     color: isFocused ? (activeTintColor ?? '#000') : (inactiveTintColor ?? '#999'),
     size: 24,
   })
-  if (React.isValidElement(element) && element.props.name) {
+  if (React.isValidElement<{ name: IconNames }>(element) && element.props.name) {
     return element.props.name
   }
   return 'home'
