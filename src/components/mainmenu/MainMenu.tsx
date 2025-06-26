@@ -1,18 +1,16 @@
-import { RefObject, useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet } from 'react-native'
-import { router } from 'expo-router'
-
-import { captureException } from '@sentry/react-native'
-import { catchEmUrl, conWebsite, menuColumns, showCatchEm, showLogin } from '@/configuration'
-import { TabsRef } from '@/components/generic/containers/Tabs'
-import { Tab } from '@/components/generic/containers/Tab'
-import { Grid } from '@/components/generic/containers/Grid'
 import { Col } from '@/components/generic/containers/Col'
-import { useAuthContext } from '@/context/auth/Auth'
-import { Button } from '@/components/generic/containers/Button'
+import { Grid } from '@/components/generic/containers/Grid'
+import { Tab } from '@/components/generic/containers/Tab'
+import { TabsRef } from '@/components/generic/containers/Tabs'
 import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
-import { useCache } from '@/context/data/Cache'
+import { catchEmUrl, conWebsite, efnavMapUrl, menuColumns, showCatchEm, showLogin } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
+import { captureException } from '@sentry/react-native'
+import { router } from 'expo-router'
+import { openBrowserAsync } from 'expo-web-browser'
+import { RefObject, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Linking } from 'react-native'
 
 export type MainMenuProps = {
   tabs: RefObject<TabsRef | null>
@@ -21,10 +19,6 @@ export type MainMenuProps = {
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
   const { loggedIn, claims, login } = useAuthContext()
-  const { maps } = useCache()
-
-  // Get browsable maps from cache
-  const browsableMaps = useMemo(() => maps.filter((map) => map.IsBrowseable), [maps])
 
   const handleNavigation = useCallback(
     (path: string) => {
@@ -67,24 +61,10 @@ export function MainMenu({ tabs }: MainMenuProps) {
         <Tab icon="cog" text={t('settings')} onPress={() => handleNavigation('/settings')} />
         <Tab icon="web" text={t('website')} onPress={() => Linking.openURL(conWebsite)} />
       </Grid>
-
-      <Col style={styles.mapsContainer}>
-        {browsableMaps.map((map) => (
-          <Button key={map.Id} containerStyle={styles.mapButton} icon="map" onPress={() => handleNavigation(`/maps/${map.Id}`)}>
-            {map.Description}
-          </Button>
-        ))}
-      </Col>
+      <Grid cols={2}>
+        <Tab icon="map" text={t('map')} onPress={() => openBrowserAsync(efnavMapUrl)} />
+        <Tab icon="information" text={t('about')} onPress={() => handleNavigation('/about')} />
+      </Grid>
     </Col>
   )
 }
-
-const styles = StyleSheet.create({
-  mapsContainer: {
-    padding: 30,
-    alignItems: 'stretch',
-  },
-  mapButton: {
-    marginVertical: 10,
-  },
-})

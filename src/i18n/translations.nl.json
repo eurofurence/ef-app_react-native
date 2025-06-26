@@ -42,6 +42,11 @@
   "KnowledgeGroups": {
     "header": "Informatie-artikelen"
   },
+  "Menu": {
+    "about": "Over",
+    "map": "Kaart",
+    "website": "Website"
+  },
   "PrivateMessageList": {
     "from": "Van {{ author }}",
     "from_unknown": "Van onbekende auteur",

@@ -105,6 +105,7 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
           params: { url, title: name },
         })
       }
+      style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
       onLongPress={onEasterEgg}
       delayLongPress={2000}
     >

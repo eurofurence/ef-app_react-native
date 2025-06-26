@@ -1,16 +1,16 @@
-import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
-import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
-import type { MaterialTopTabNavigationOptions, MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs'
-import { router, useLocalSearchParams, withLayoutContext } from 'expo-router'
-import * as React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { Search } from '@/components/generic/atoms/Search'
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
+import { Search } from '@/components/generic/atoms/Search'
 import { useCache } from '@/context/data/Cache'
 import { EventDayDetails } from '@/context/data/types.details'
-import { isSameDay } from 'date-fns'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
+import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
+import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
+import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
+import { isSameDay } from 'date-fns'
+import { router, useLocalSearchParams, withLayoutContext } from 'expo-router'
+import * as React from 'react'
+import { SafeAreaView, StyleSheet } from 'react-native'
 
 const { Navigator } = createMaterialTopTabNavigator()
 
@@ -59,10 +59,10 @@ export default function ScheduleLayout() {
       style={StyleSheet.absoluteFill}
       screenOptions={{ sceneStyle: backgroundSurface }}
       tabBar={(props) => (
-        <View>
+        <SafeAreaView>
           <MaterialTopTabBar {...props} />
           <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
-        </View>
+        </SafeAreaView>
       )}
     >
       <MaterialTopTabs.Screen name="filter" options={createOptions('Filter', 'filter-variant')} />

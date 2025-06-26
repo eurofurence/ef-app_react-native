@@ -1,15 +1,15 @@
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { Tabs } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 
 import { Toast } from '@/components/Toast'
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
-import { useToastMessages } from '@/context/ui/ToastContext'
 import { Tabs as CustomTabs, TabsRef } from '@/components/generic/containers/Tabs'
 import { MainMenu } from '@/components/mainmenu/MainMenu'
 import { useCache } from '@/context/data/Cache'
+import { useToastMessages } from '@/context/ui/ToastContext'
 
 function getIconNameFromTabBarIcon(
   tabBarIcon: ((props: { focused: boolean; color: string; size: number }) => React.ReactNode) | undefined,

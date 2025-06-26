@@ -25,7 +25,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
 
   return (
     <Row style={styles.padding} type="start" variant="center">
-      <Pressable disabled={!loggedIn || !onProfile} onPress={() => onProfile?.()}>
+      <Pressable disabled={!loggedIn || !onProfile} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]} onPress={() => onProfile?.()}>
         <Col type="center">
           <Image
             style={[avatarBackground, styles.avatarCircle]}

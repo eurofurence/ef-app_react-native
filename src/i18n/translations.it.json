@@ -98,6 +98,7 @@
     "header": "Articoli Informativi"
   },
   "Menu": {
+    "about": "Informazioni",
     "dealers": "Venditori",
     "events": "Eventi",
     "info": "Articoli informativi",
@@ -110,7 +111,8 @@
     "open_messages": "Apri i messaggi",
     "pm": "Messaggi privati",
     "services": "Servizi",
-    "settings": "Impostazioni"
+    "settings": "Impostazioni",
+    "map": "Mappa"
   },
   "Notification": {
     "announcement": "C'è un annuncio da {{conName}}",
