@@ -55,7 +55,13 @@ export const Header: FC<HeaderProps> = (props) => {
   return (
     <SafeAreaView>
       <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-        <Pressable hitSlop={backHitSlop} style={({ pressed }) => [styles.back, { opacity: pressed ? 0.5 : 1 }]} onPress={() => router.back()}>
+        <Pressable
+          hitSlop={backHitSlop}
+          style={({ pressed }) => [styles.back, { opacity: pressed ? 0.5 : 1 }]}
+          onPress={() => router.back()}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+        >
           <Icon name="chevron-left" size={iconSize} color={colorValue} />
         </Pressable>
 
@@ -65,7 +71,12 @@ export const Header: FC<HeaderProps> = (props) => {
 
         {/* Optional secondary action. */}
         {!('secondaryIcon' in props) ? null : (
-          <Pressable hitSlop={secondaryHitSlop} style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.5 : 1 }]} onPress={() => props.secondaryPress()}>
+          <Pressable
+            hitSlop={secondaryHitSlop}
+            style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.5 : 1 }]}
+            onPress={() => props.secondaryPress()}
+            accessibilityRole="button"
+          >
             <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
           </Pressable>
         )}

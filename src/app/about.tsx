@@ -108,6 +108,8 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
       style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
       onLongPress={onEasterEgg}
       delayLongPress={2000}
+      accessibilityRole="button"
+      accessibilityLabel={`${name} - ${role}`}
     >
       <Row type="center" style={{ marginVertical: 5 }}>
         <Image
@@ -191,7 +193,7 @@ export default function AboutScreen() {
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        <Pressable style={{ cursor: 'auto' }} onPress={toggleDevMenu}>
+        <Pressable style={{ cursor: 'auto' }} onPress={toggleDevMenu} accessibilityRole="button" accessibilityLabel="Toggle developer menu">
           <Col style={styles.marginAround} type="center">
             <Label type="h1" mb={10}>
               {conName} App

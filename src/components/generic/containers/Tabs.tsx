@@ -254,7 +254,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
   return (
     <>
       <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
-        <Pressable style={({ pressed }) => [StyleSheet.absoluteFill, { opacity: pressed ? 0.5 : 1 }]} onPress={close} />
+        <Pressable style={({ pressed }) => [StyleSheet.absoluteFill, { opacity: pressed ? 0.5 : 1 }]} onPress={close} accessibilityRole="button" accessibilityLabel="Close" />
       </Animated.View>
 
       <GestureDetector gesture={gesture}>
