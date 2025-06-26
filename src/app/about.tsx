@@ -1,5 +1,5 @@
 import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
-import { ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { Pressable, ScrollView } from 'react-native-gesture-handler'
 import { useTranslation } from 'react-i18next'
 import { router } from 'expo-router'
 import { Sound } from 'expo-av/build/Audio/Sound'
@@ -98,7 +98,7 @@ type CreditProps = {
 
 const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() =>
         router.navigate({
           pathname: '/images/web',
@@ -124,7 +124,7 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
           <Label>{role}</Label>
         </Col>
       </Row>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
@@ -189,7 +189,7 @@ export default function AboutScreen() {
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        <TouchableWithoutFeedback style={{ cursor: 'auto' }} onPress={toggleDevMenu}>
+        <Pressable style={{ cursor: 'auto' }} onPress={toggleDevMenu}>
           <Col style={styles.marginAround} type="center">
             <Label type="h1" mb={10}>
               {conName} App
@@ -207,7 +207,7 @@ export default function AboutScreen() {
               </Label>
             </Row>
           </Col>
-        </TouchableWithoutFeedback>
+        </Pressable>
 
         <Row style={styles.marginAround} gap={16}>
           <Button containerStyle={styles.flex} onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')} icon="help">
@@ -220,11 +220,13 @@ export default function AboutScreen() {
 
         <Section title={t('developed_by')} icon="code-json" />
         <Credit url="https://avatars.githubusercontent.com/u/3359222" name="Fenrikur" role="App Team Director and getting us to move our butts in gear" />
+        <Credit url="https://avatars.githubusercontent.com/u/30414906" name="Faye" role="React Development" />
         <Credit url="https://avatars.githubusercontent.com/u/5929561" name="Pazuzu" role="React Development" onEasterEgg={pazuzuEgg} />
         <Credit url="https://avatars.githubusercontent.com/u/5537850" name="Requinard" role="React Development support" onEasterEgg={requinardEgg} />
+        <Credit url="https://avatars.githubusercontent.com/u/16690224" name="Gendo Doggo" role="Backend Development" />
+        <Credit url="https://avatars.githubusercontent.com/u/29598855" name="Maakinoh" role="Backend Development" />
         <Credit url="https://avatars.githubusercontent.com/u/76539710" name="Meta" role="Backend Development" />
         <Credit url="https://avatars.githubusercontent.com/u/1616683" name="Rain" role="Backend Development" />
-        <Credit url="https://avatars.githubusercontent.com/u/29598855" name="Maakinoh" role="Backend Development" />
         <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
       </Floater>
     </ScrollView>
