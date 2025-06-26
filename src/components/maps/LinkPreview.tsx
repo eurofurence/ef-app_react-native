@@ -8,9 +8,12 @@ type LinkPreviewProps = {
 }
 
 export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress }) => {
-  const SCREEN_WIDTH = Dimensions.get('window').width
-  const IMAGE_WIDTH = SCREEN_WIDTH - 32 // 16px margin on each side
-  const IMAGE_HEIGHT = Math.round((IMAGE_WIDTH * 9) / 16) // 16:9 aspect ratio
+  const { SCREEN_WIDTH, IMAGE_WIDTH, IMAGE_HEIGHT } = React.useMemo(() => {
+    const SCREEN_WIDTH = Dimensions.get('window').width
+    const IMAGE_WIDTH = SCREEN_WIDTH - 32 // 16px margin on each side
+    const IMAGE_HEIGHT = Math.round((IMAGE_WIDTH * 9) / 16) // 16:9 aspect ratio
+    return { SCREEN_WIDTH, IMAGE_WIDTH, IMAGE_HEIGHT }
+  }, [Dimensions.get('window').width])
 
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
