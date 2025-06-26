@@ -22,6 +22,9 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress }) => {
     const fetchOgImage = async () => {
       try {
         const res = await fetch(url)
+        if (!res.ok) {
+          throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
+        }
         const html = await res.text()
         const meta = extractOgMeta(html)
         setImageUrl(meta.image || null)
