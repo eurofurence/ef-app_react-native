@@ -4,29 +4,28 @@ import React, { FC, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
+import { shareDealer } from '@/components/dealers/Dealers.common'
+import { Row } from '@/components/generic/containers/Row'
+import { conTimeZone } from '@/configuration'
+import { useCache } from '@/context/data/Cache'
+import { DealerDetails } from '@/context/data/types.details'
+import { useToastContext } from '@/context/ui/ToastContext'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useNow } from '@/hooks/time/useNow'
 import { format } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
-import { router } from 'expo-router'
+import { openBrowserAsync } from 'expo-web-browser'
 import { appStyles } from '../AppStyles'
 import { Banner } from '../generic/atoms/Banner'
 import { FaIcon } from '../generic/atoms/FaIcon'
 import { Image } from '../generic/atoms/Image'
+import { sourceFromImage } from '../generic/atoms/Image.common'
 import { Label } from '../generic/atoms/Label'
 import { Section } from '../generic/atoms/Section'
 import { Badge } from '../generic/containers/Badge'
 import { Button } from '../generic/containers/Button'
-import { ImageExButton } from '../generic/containers/ImageButton'
 import { LinkItem } from '../maps/LinkItem'
-import { sourceFromImage } from '../generic/atoms/Image.common'
-import { conTimeZone } from '@/configuration'
-import { shareDealer } from '@/components/dealers/Dealers.common'
-import { useNow } from '@/hooks/time/useNow'
-import { useToastContext } from '@/context/ui/ToastContext'
-import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
-import { useCache } from '@/context/data/Cache'
-import { Row } from '@/components/generic/containers/Row'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { DealerDetails } from '@/context/data/types.details'
+import { LinkPreview } from '../maps/LinkPreview'
 
 const DealerCategories = ({ dealer }: { dealer: DealerDetails }) => {
   // Nothing to display for no categories.
@@ -100,10 +99,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
   const avatarBackground = useThemeBackground('text')
 
-  const { maps, getValue, setValue } = useCache()
-  const isFavorite = dealer.Favorite
-
-  const mapLink = getValidLinksByTarget(maps, dealer.Id)
+  const { getValue, setValue } = useCache()
 
   const days = useMemo(
     () =>
@@ -171,8 +167,8 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Label>
       </Row>
 
-      <Button containerStyle={styles.marginAround} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
-        {isFavorite ? t('remove_favorite') : t('add_favorite')}
+      <Button containerStyle={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
+        {dealer.Favorite ? t('remove_favorite') : t('add_favorite')}
       </Button>
 
       {!shareButton ? null : (
@@ -199,19 +195,11 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Row>
       ) : null}
 
-      {mapLink.map(({ map, entry, link }, i) => (
-        <ImageExButton
-          key={i}
-          image={map.Image}
-          target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
-          onPress={() =>
-            router.navigate({
-              pathname: '/maps/[mapId]/[entryId]/[linkId]',
-              params: { mapId: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) },
-            })
-          }
-        />
-      ))}
+      {!dealer.MapLink ? null : (
+        <>
+          <LinkPreview url={dealer.MapLink} onPress={() => openBrowserAsync(dealer.MapLink ?? '')} />
+        </>
+      )}
 
       <DealerCategories dealer={dealer} />
 
