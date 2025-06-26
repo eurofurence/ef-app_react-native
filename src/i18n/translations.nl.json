@@ -26,6 +26,28 @@
   "EmptyScreen": {
     "notImplemented": "Deze content is niet zichtbaar."
   },
+  "Event": {
+    "about_title": "Details",
+    "add_favorite": "Favoriet",
+    "event_was_updated": "Het evenement is sinds je laatste bezoek bijgewerkt",
+    "give_feedback": "Feedback geven",
+    "hide": "Verbergen",
+    "label_event_description": "Meer informatie over het evenement",
+    "label_event_panelhosts": "Gehost door",
+    "label_event_room": "Ruimte",
+    "label_event_track": "Track",
+    "label_event_when": "Wanneer",
+    "mask_required": "Mondkapjes zijn verplicht voor dit evenement",
+    "remove_favorite": "Verwijder favoriet",
+    "reveal": "Toon in overzicht",
+    "share": "Deel dit evenement",
+    "sponsor_event": "Sponsor evenement",
+    "supersponsor_event": "Supersponsor evenement",
+    "view_on_map": "Bekijk op de kaart",
+    "viewing_event": "Bekijk evenement",
+    "when": "{{day}}, {{start}} tot {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} tot {{finish}}."
+  },
   "Home": {
     "announcementsTitle_one": "Er is {{ count }} aankondiging.",
     "announcementsTitle_other": "Er zijn {{ count }} aankondigingen.",
@@ -50,6 +72,29 @@
     "read": "Gelezen",
     "section_title_from": "Van {{authorName}}",
     "unread": "Ongelezen"
+  },
+  "Profile": {
+    "header": "Profiel",
+    "idp_settings": "Identity setting website",
+    "logged_in_as": "Je bent ingelogd als {{username}}",
+    "login_description": "Als je ingelogd bent, kan {{conName}} je persoonlijke berichten sturen. Het stelt je ook in staat om de Fursuit Catch 'em All te spelen en je aan te melden bij tafels in de Artist Alley.",
+    "logout": "Uitloggen",
+    "not_logged_in": "Je bent momenteel niet ingelogd",
+    "registration_nr": "Registratienummer",
+    "roles": "Rollen",
+    "roles_simple_attendee": "Nog niet aangemeld",
+    "roles_simple_checked_in": "Je bent aangemeld",
+    "roles_subtitle": "Je rollen in de {{conName}} app",
+    "status_names": {
+      "Approved": "Goedgekeurd",
+      "Cancelled": "Geannuleerd",
+      "CheckedIn": "Aangemeld",
+      "Deleted": "Verwijderd",
+      "New": "Nieuw",
+      "Paid": "Betaald",
+      "PartiallyPaid": "Gedeeltelijk betaald",
+      "Unknown": "Onbekend"
+    }
   },
   "Settings": {
     "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
