@@ -1,4 +1,3 @@
-import { defineConfig, globalIgnores } from 'eslint/config'
 import prettier from 'eslint-plugin-prettier'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -13,18 +12,17 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-export default defineConfig([
+export default [
   {
-    extends: compat.extends('expo', 'prettier'),
-
+    ignores: ['dist/*', '.expo', '**/node_modules'],
+  },
+  ...compat.extends('expo', 'prettier'),
+  {
     plugins: {
       prettier,
     },
-
     rules: {
       'prettier/prettier': 'error',
     },
   },
-  globalIgnores(['dist/*']),
-  globalIgnores(['﻿/.expo', '**/node_modules']),
-])
+]

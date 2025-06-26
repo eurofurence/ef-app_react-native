@@ -1,7 +1,7 @@
-  const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 export function extractOgMeta(html: string) {
   const getTag = (property: string) => {
-    const escapedProperty = escapeRegExp(property);
+    const escapedProperty = escapeRegExp(property)
     const regex = new RegExp(
       `<meta\\s+[^>]*?(?:property|name)=["']${escapedProperty}["'][^>]*?content=["']([^"']+)["'][^>]*?>|<meta\\s+[^>]*?content=["']([^"']+)["'][^>]*?(?:property|name)=["']${escapedProperty}["'][^>]*?>`,
       'i'
