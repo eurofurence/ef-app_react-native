@@ -1,24 +1,24 @@
-import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
-import { Pressable, ScrollView } from 'react-native-gesture-handler'
-import { useTranslation } from 'react-i18next'
-import { router } from 'expo-router'
-import { Sound } from 'expo-av/build/Audio/Sound'
-import React, { useCallback } from 'react'
-import { Alert, Linking, Platform, StyleSheet } from 'react-native'
-import { Row } from '@/components/generic/containers/Row'
+import { appStyles } from '@/components/AppStyles'
 import { Image } from '@/components/generic/atoms/Image'
-import { Col } from '@/components/generic/containers/Col'
 import { Label } from '@/components/generic/atoms/Label'
-import { Header } from '@/components/generic/containers/Header'
-import { Floater } from '@/components/generic/containers/Floater'
+import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
-import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
-import { useTheme } from '@/hooks/themes/useTheme'
-import { useCache } from '@/context/data/Cache'
-import { appStyles } from '@/components/AppStyles'
-import { useMultiTap } from '@/hooks/util/useMultiTap'
+import { Col } from '@/components/generic/containers/Col'
+import { Floater } from '@/components/generic/containers/Floater'
+import { Header } from '@/components/generic/containers/Header'
+import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
+import { useCache } from '@/context/data/Cache'
+import { useTheme } from '@/hooks/themes/useTheme'
+import { useMultiTap } from '@/hooks/util/useMultiTap'
+import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
+import { useAudioPlayer } from 'expo-audio'
+import { router } from 'expo-router'
+import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Alert, Linking, Platform, StyleSheet } from 'react-native'
+import { Pressable, ScrollView } from 'react-native-gesture-handler'
 
 const extraThanksMarkdown = `
 # Tooling
@@ -136,17 +136,18 @@ export default function AboutScreen() {
   const settings = getValue('settings')
 
   // Load static assets.
+  const cheeseSound = useAudioPlayer(require('@/assets/runtime/cheese.webm'))
+  const sheeshSound = useAudioPlayer(require('@/assets/runtime/sheesh.webm'))
+
   const requinardEgg = useCallback(async () => {
-    const { sound } = await Sound.createAsync(require('@/assets/runtime/cheese.webm'))
-    await sound.playAsync()
+    cheeseSound.play()
     setTheme('requinard')
-  }, [setTheme])
+  }, [cheeseSound, setTheme])
 
   const pazuzuEgg = useCallback(async () => {
-    const { sound } = await Sound.createAsync(require('@/assets/runtime/sheesh.webm'))
-    await sound.playAsync()
+    sheeshSound.play()
     setTheme('pazuzu')
-  }, [setTheme])
+  }, [sheeshSound, setTheme])
 
   const toggleDevMenu = useMultiTap(
     10,

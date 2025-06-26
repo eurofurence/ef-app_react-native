@@ -2,7 +2,7 @@
 import { convention } from './convention.config.json'
 
 const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/
-const [, appBaseProtocol, appBaseHost, appBasePath] = [...convention.appBase.match(urlMatcher)]
+const [appBaseProtocol, appBaseHost, appBasePath] = [...convention.appBase.match(urlMatcher)]
 
 module.exports = {
   expo: {
@@ -110,7 +110,7 @@ module.exports = {
       ],
       // Used to render audio.
       [
-        'expo-av',
+        'expo-audio',
         {
           microphonePermission: false,
         },
