@@ -1,6 +1,6 @@
-// eslint-disable-next-line import/no-unresolved
 import { initializeApp } from 'firebase/app'
 
+// eslint-disable-next-line import/no-unresolved
 import conventionConfig from '../../convention.config.json'
 
 // Initialize Firebase
