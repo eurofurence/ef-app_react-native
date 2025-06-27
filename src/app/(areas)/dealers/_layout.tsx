@@ -38,7 +38,7 @@ export default function DealersLayout() {
     <MaterialTopTabs
       initialRouteName="all"
       style={StyleSheet.absoluteFill}
-      screenOptions={{ sceneStyle: backgroundSurface }}
+      screenOptions={{ sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
       tabBar={(props) => (
         <View>
           <MaterialTopTabBar {...props} />
@@ -56,6 +56,9 @@ export default function DealersLayout() {
 }
 
 const styles = StyleSheet.create({
+  tabLabel: {
+    margin: 0,
+  },
   search: {
     marginVertical: 10,
   },

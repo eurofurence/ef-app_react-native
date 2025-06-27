@@ -31,7 +31,8 @@ export default function Review() {
   const { toast } = useToastContext()
 
   const { data, isPending, refetch } = useArtistsAlleyItemQuery(id)
-  // TODO: Checks like these, user must be present for these assertions to mean anything.
+
+  const rolesAvailable = Boolean(user?.RoleMap)
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isArtistAlleyAdmin = Boolean(user?.RoleMap?.ArtistAlleyAdmin)
   const isArtistAlleyModerator = Boolean(user?.RoleMap?.ArtistAlleyModerator)
@@ -99,7 +100,7 @@ export default function Review() {
     }
   }, [deleteRegistration, id, t, toast])
 
-  if (user && !isAdmin && !isArtistAlleyAdmin && !isArtistAlleyModerator) return <Redirect href="/artists-alley" />
+  if (rolesAvailable && !isAdmin && !isArtistAlleyAdmin && !isArtistAlleyModerator) return <Redirect href="/artists-alley" />
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />} stickyHeaderIndices={[0]}>

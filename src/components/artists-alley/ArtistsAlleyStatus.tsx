@@ -12,9 +12,10 @@ import { TableRegistrationRecord } from '@/context/data/types.api'
 export type ArtistsAlleyStatusProps = {
   data: TableRegistrationRecord
   onEdit: () => void
+  onCheckOut: () => void
 }
 
-export const ArtistsAlleyStatus = ({ data, onEdit }: ArtistsAlleyStatusProps) => {
+export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut }: ArtistsAlleyStatusProps) => {
   // Get translation function.
   const { t } = useTranslation('ArtistsAlley')
   const backgroundStyle = useThemeBackground('background')
@@ -52,6 +53,12 @@ export const ArtistsAlleyStatus = ({ data, onEdit }: ArtistsAlleyStatusProps) =>
       <Button style={styles.button} onPress={onEdit}>
         {data.State === 'Pending' ? t('edit_request') : t('new_request')}
       </Button>
+
+      {data.State === 'Accepted' ? (
+        <Button style={styles.button} onPress={onCheckOut}>
+          {t('check_out')}
+        </Button>
+      ) : null}
     </View>
   )
 }

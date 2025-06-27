@@ -8,9 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { useAuthContext } from '@/context/auth/Auth'
 import { Button } from '@/components/generic/containers/Button'
 import { artistsAlleySectionForState, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
-import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAlleySectionedList'
 import { Label } from '@/components/generic/atoms/Label'
+import { useNow } from '@/hooks/time/useNow'
+import { TableRegistrationInstance, tableRegistrationInstanceForAny } from '@/components/artists-alley/ArtistsAlleyCard'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'list' })
@@ -18,17 +19,21 @@ export default function List() {
   const { data: user } = useUserSelfQuery()
   const { data: source } = useArtistsAlleyAllQuery()
 
-  const items = useMemo((): (ArtistsAlleySectionProps | TableRegistrationRecord)[] => {
+  const now = useNow()
+
+  const items = useMemo((): (ArtistsAlleySectionProps | TableRegistrationInstance)[] => {
     if (!source) return []
     const pending = []
     const accepted = []
     const published = []
     const rejected = []
     for (const item of source) {
-      if (item.State === 'Pending') pending.push(item)
-      else if (item.State === 'Accepted') accepted.push(item)
-      else if (item.State === 'Published') published.push(item)
-      else if (item.State === 'Rejected') rejected.push(item)
+      const instance = tableRegistrationInstanceForAny(item, now)
+      if (instance.visibility === 'hidden') continue
+      if (item.State === 'Pending') pending.push(instance)
+      else if (item.State === 'Accepted') accepted.push(instance)
+      else if (item.State === 'Published') published.push(instance)
+      else if (item.State === 'Rejected') rejected.push(instance)
     }
 
     const result = []
@@ -50,8 +55,9 @@ export default function List() {
     }
 
     return result
-  }, [source, t])
+  }, [source, t, now])
 
+  const rolesAvailable = Boolean(user?.RoleMap)
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isArtistAlleyAdmin = Boolean(user?.RoleMap?.ArtistAlleyAdmin)
   const isArtistAlleyModerator = Boolean(user?.RoleMap?.ArtistAlleyModerator)
@@ -74,7 +80,8 @@ export default function List() {
     )
   }, [isAttending, isCheckedIn, loggedIn, t])
 
-  if (user && !isAdmin && !isArtistAlleyAdmin && !isArtistAlleyModerator) return <Redirect href="/artists-alley/reg" />
+  if (!loggedIn) return <Redirect href="/artists-alley/reg" />
+  if (rolesAvailable && !isAdmin && !isArtistAlleyAdmin && !isArtistAlleyModerator) return <Redirect href="/artists-alley/reg" />
 
   return (
     <View style={StyleSheet.absoluteFill}>

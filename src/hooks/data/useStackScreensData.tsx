@@ -82,6 +82,12 @@ export function useStackScreensData(): StackScreenProps[] {
         headerShown: false,
       },
       {
+        location: 'announcements/[id]',
+        title: t('announcements'),
+        headerLeft: CustomBack,
+        headerShown: false,
+      },
+      {
         location: 'images/[id]',
         title: t('image'),
         headerLeft: CustomBack,

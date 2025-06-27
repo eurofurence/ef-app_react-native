@@ -36,6 +36,7 @@ function typeChoiceLabel(choice: string) {
 export default function ComposeMessage() {
   const { data: user } = useUserSelfQuery()
 
+  const rolesAvailable = Boolean(user?.RoleMap)
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
 
@@ -58,7 +59,7 @@ export default function ComposeMessage() {
     },
     [mutate, toast]
   )
-  if (user && !isAdmin && !isPrivateMessageSender) return <Redirect href="/messages" />
+  if (rolesAvailable && !isAdmin && !isPrivateMessageSender) return <Redirect href="/messages" />
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>
