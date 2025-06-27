@@ -6,6 +6,9 @@ const [, appBaseProtocol, appBaseHost, appBasePath] = [...convention.appBase.mat
 
 module.exports = {
   expo: {
+    runtimeVersion: {
+      policy: 'appVersion',
+    },
     name: 'Eurofurence',
     slug: 'ef-app-react-native',
     description: 'Your one stop shop to the convention!',
