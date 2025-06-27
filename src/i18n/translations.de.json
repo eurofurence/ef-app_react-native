@@ -16,12 +16,17 @@
     "extra_thanks": "Besonderen Dank",
     "header": "Über uns"
   },
+  "Announcement": {
+    "header": "Mitteilung"
+  },
   "Announcements": {
+    "header": "Mitteilungen",
     "noAnnouncements": "Momentan gibt es keine Mitteilungen",
     "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
     "sectionTitle": "Mitteilungen"
   },
   "ArtistsAlley": {
+    "check_out": "Auschecken",
     "dismiss": "Änderungen verwerfen",
     "display_name_label": "Anzeigename",
     "display_name_placeholder": "Dein bevorzugter Anzeigename",

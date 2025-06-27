@@ -8,10 +8,65 @@
     "extra_thanks": "Extra te danken",
     "header": "Over"
   },
+  "Announcement": {
+    "header": "Aankondiging"
+  },
   "Announcements": {
+    "header": "Aankondigingen",
     "noAnnouncements": "Er zijn op dit moment geen actieve aankondigingen.",
     "sectionSubtitle": "Live aankondigingen van de conventie!",
     "sectionTitle": "Aankondigingen"
+  },
+  "ArtistsAlley": {
+    "check_out": "Uitchecken",
+    "dismiss": "Wijzigingen verwerpen",
+    "display_name_label": "Weergavenaam",
+    "display_name_placeholder": "Jouw voorkeurweergave naam",
+    "edit_request": "Aanvraag wijzigen",
+    "errors": {
+      "invalid_string": "Ongeldig formaat.",
+      "invalid_type": "Dit veld is verplicht.",
+      "location_invalid_string": "Voer het nummer van de tafel in die op je handout staat.",
+      "telegramHandle_invalid_string": "Dit lijkt niet op een geldig Telegram-handle.",
+      "too_small": "Dit veld is verplicht.",
+      "websiteUrl_invalid_string": "Voer je website in als: https://eurofurence.org"
+    },
+    "explanation_edit_change": "Je kunt je Artist Alley tafelregistratie hier wijzigen. Update je informatie, kies een afbeelding en stuur de wijzigingen.",
+    "explanation_edit_new": "Je hebt je nog niet geregistreerd voor een tafel in de Artist Alley, maar dat kun je hier en nu wijzigen. Kies gewoon een vrije tafel, vul het formulier in, kies een afbeelding en stuur ons je aanvraag.",
+    "explanation_status_accepted": "Je aanvraag is gecheckt en goedgekeurd. Als je later opnieuw op een andere tafel wilt registreren, kun je hieronder een nieuwe aanvraag stellen.",
+    "explanation_status_pending": "Je aanvraag wordt nog verwerkt. Als je een fout hebt gemaakt, kun je je gegevens hieronder wijzigen.",
+    "explanation_status_rejected": "Je aanvraag is afgewezen. Je kunt een nieuwe aanvraag maken om het opnieuw te proberen.",
+    "explanation_unauthorized": "Je kunt op dit moment nog niet op een tafel in de Artist Alley registreren. Dit is voor aanwezige deelnemers met een geldig ticket.",
+    "intro": "De Artist Alley biedt een gastvrije, creatieve en veilige omgeving voor alle artiesten en deelnemers. Met het formulier hieronder kunnen artiesten zich registreren wanneer ze een tafel in de Artist Alley opzetten en hun aanwezigheid daar bekendmaken aan deelnemers.",
+    "learn_more": "Leer meer over de Artist Alley",
+    "location_label": "Tafelnummer",
+    "location_placeholder": "Tafelnummer van je handout",
+    "log_in_now": "Meld je nu aan!",
+    "new_request": "Nieuwe aanvraag",
+    "no_submission": "Je hebt nog geen registratie ingediend.",
+    "short_description_label": "Korte beschrijving",
+    "short_description_placeholder": "Informatie over jezelf en je aanbod",
+    "status": {
+      "Accepted": "Je aanvraag is goedgekeurd.",
+      "Pending": "Je aanvraag wordt nog verwerkt.",
+      "Published": "Je aanvraag is goedgekeurd.",
+      "Rejected": "Je aanvraag is afgewezen."
+    },
+    "submission_image_label": "Voorbeeldafbeelding",
+    "submission_image_placeholder": "Kies een afbeelding van je tafel en aanbod",
+    "submit": "Aanvraag indienen",
+    "submit_failed": "Er is iets misgegaan, probeer het later nog eens.",
+    "submit_in_progress": "Aanvraag wordt verzonden …",
+    "submit_succeeded": "Bedankt! We hebben je aanvraag ontvangen.",
+    "telegram_handle_label": "Telegram-handle (optioneel)",
+    "telegram_handle_placeholder": "Openbare Telegram-handle voor deelnemers",
+    "title": "Artist Alley registratie",
+    "unauthorized_not_attending": "Zorg ervoor dat je een geldig ticket hebt voor deze jaarlijkse Conventie, voordat je je op een tafel in de Artist Alley kunt registreren.",
+    "unauthorized_not_checked_in": "Zorg ervoor dat je eerst bij het registratiekantoor incheckt en je Convention Badge ontvangt, voordat je je op een tafel in de Artist Alley kunt registreren.",
+    "unauthorized_not_logged_in": "Je moet je eerst in de app aanmelden, voordat je je op een tafel in de Artist Alley kunt registreren.",
+    "update": "Wijzig je aanvraag",
+    "website_url_label": "Website (optioneel)",
+    "website_url_placeholder": "URL naar je website"
   },
   "Countdown": {
     "after_event": "En dat was het weer! Tot volgend jaar!",
