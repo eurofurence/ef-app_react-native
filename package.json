@@ -1,16 +1,20 @@
 {
   "contributors": [
     {
-      "name": "Faye"
+      "name": "Faye",
+      "url": "https://github.com/docimin"
     },
     {
-      "name": "Luchs (pinselohrkater)"
+      "name": "Luchs (pinselohrkater)",
+      "url": "https://github.com/pinselohrkater"
     },
     {
-      "name": "PazuzuEU"
+      "name": "PazuzuEU",
+      "url": "https://github.com/lukashaertel"
     },
     {
-      "name": "requinard"
+      "name": "requinard",
+      "url": "https://github.com/requinard"
     }
   ],
   "dependencies": {
@@ -25,7 +29,7 @@
     "@react-native-firebase/analytics": "^22.2.1",
     "@react-native-firebase/app": "^22.2.1",
     "@react-native-masked-view/masked-view": "0.3.2",
-    "@react-native-picker/picker": "2.11.0",
+    "@react-native-picker/picker": "2.11.1",
     "@react-navigation/bottom-tabs": "^7.3.8",
     "@react-navigation/core": "^7.8.3",
     "@react-navigation/material-top-tabs": "^7.2.14",
@@ -37,17 +41,17 @@
     "axios": "^1.10.0",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
-    "expo": "~53.0.12",
+    "expo": "~53.0.13",
     "expo-application": "~6.1.4",
     "expo-asset": "~11.1.5",
-    "expo-audio": "~0.4.6",
+    "expo-audio": "~0.4.7",
     "expo-auth-session": "~6.2.0",
     "expo-build-properties": "~0.14.6",
     "expo-checkbox": "~4.1.4",
     "expo-clipboard": "~7.1.4",
     "expo-constants": "~17.1.6",
     "expo-crypto": "~14.1.5",
-    "expo-dev-client": "~5.2.1",
+    "expo-dev-client": "~5.2.2",
     "expo-device": "~7.1.4",
     "expo-file-system": "~18.1.10",
     "expo-image": "~2.3.0",
@@ -55,7 +59,7 @@
     "expo-linking": "~7.1.5",
     "expo-localization": "~16.1.5",
     "expo-notifications": "~0.31.3",
-    "expo-router": "~5.1.0",
+    "expo-router": "~5.1.1",
     "expo-secure-store": "~14.2.3",
     "expo-splash-screen": "~0.30.9",
     "expo-sqlite": "^15.2.12",
@@ -113,7 +117,9 @@
   "expo": {
     "doctor": {
       "reactNativeDirectoryCheck": {
-        "exclude": ["react-native-star-rating-widget"],
+        "exclude": [
+          "react-native-star-rating-widget"
+        ],
         "listUnknownPackages": false
       }
     }
