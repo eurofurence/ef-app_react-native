@@ -1,12 +1,18 @@
-import moment from "moment-timezone";
-import { useCalendars } from "expo-localization";
-import { useMemo } from "react";
-import { conTimeZone } from "../../configuration";
+import { useCalendars } from 'expo-localization'
+import { useMemo } from 'react'
+import { conTimeZone } from '@/configuration'
 
 /**
- * Uses the currently selected calendar's zone abbreviation.
+ * Uses the currently selected calendar's zone abbreviation without using moment.
  */
 export const useZoneAbbr = () => {
-    const calendar = useCalendars();
-    return useMemo(() => moment.tz(calendar[0]?.timeZone ?? conTimeZone).zoneAbbr(), [calendar[0]?.timeZone]);
-};
+  const calendars = useCalendars()
+  const timeZone = calendars[0]?.timeZone ?? conTimeZone
+  return useMemo(() => {
+    // Use Intl.DateTimeFormat with timeZoneName 'short' to get an abbreviated time zone
+    const formatter = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' })
+    const parts = formatter.formatToParts(new Date())
+    const zoneAbbr = parts.find((part) => part.type === 'timeZoneName')?.value
+    return zoneAbbr || ''
+  }, [timeZone])
+}

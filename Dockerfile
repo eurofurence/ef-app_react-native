@@ -1,9 +1,9 @@
 FROM node:lts
 
-COPY package.json yarn.lock* ./
+COPY package.json pnpm-lock.yaml* ./
 
-RUN yarn install
+RUN pnpm install
 
 COPY src/ assets/ android/ ./
 
-RUN yarn expo build:web
+RUN pnpm expo build:web

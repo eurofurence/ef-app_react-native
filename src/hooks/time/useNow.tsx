@@ -1,13 +1,12 @@
-import moment, { Moment } from "moment-timezone";
-import { useEffect, useState } from "react";
-
-import { useAppSelector } from "../../store";
+import { useEffect, useState } from 'react'
+import { addMilliseconds, getHours, getMinutes } from 'date-fns'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * Returns the current time with a millisecond offset.
  * @param amount The ms offset.
  */
-const nowWithOffset = (amount: number) => moment().add(amount, "millisecond");
+const nowWithOffset = (amount: number) => addMilliseconds(new Date(), amount)
 
 /**
  * True if the values are equal in a given quantization.
@@ -15,35 +14,35 @@ const nowWithOffset = (amount: number) => moment().add(amount, "millisecond");
  * @param b The second value.
  * @param resolution The resolution.
  */
-const sameInResolution = (a: number, b: number, resolution: number) => Math.floor(a / resolution) === Math.floor(b / resolution);
+const sameInResolution = (a: number, b: number, resolution: number) => Math.floor(a / resolution) === Math.floor(b / resolution)
 
 /**
  * Get the current date, which includes time travelling.
  * @param resolution Static if not live. Otherwise, gives the minute hand
  * precision of the clock. Starts an interval, so use in central places only.
  */
-export const useNow = (resolution: "static" | number = "static"): Moment => {
-    const amount = useAppSelector((state) => (state.timetravel.enabled ? state.timetravel.amount : 0));
+export const useNow = (resolution: 'static' | number = 'static'): Date => {
+  const { getValue } = useCache()
+  const settings = getValue('settings')
+  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
 
-    const [now, setNow] = useState(() => nowWithOffset(amount));
-    useEffect(() => {
-        setNow(nowWithOffset(amount));
-        if (resolution === "static") return;
+  const [now, setNow] = useState(() => nowWithOffset(offset))
 
-        const handle = setInterval(
-            () =>
-                setNow((current) => {
-                    const next = nowWithOffset(amount);
-                    const currentMinutes = current.hours() * 60 + current.minutes();
-                    const nextMinutes = next.hours() * 60 + next.minutes();
-                    return sameInResolution(currentMinutes, nextMinutes, resolution) ? current : next;
-                }),
-            500,
-        );
-        return () => {
-            clearInterval(handle);
-        };
-    }, [amount, resolution]);
+  useEffect(() => {
+    setNow(nowWithOffset(offset))
+    if (resolution === 'static') return
 
-    return now;
-};
+    const handle = setInterval(() => {
+      setNow((current) => {
+        const next = nowWithOffset(offset)
+        const currentMinutes = getHours(current) * 60 + getMinutes(current)
+        const nextMinutes = getHours(next) * 60 + getMinutes(next)
+        return sameInResolution(currentMinutes, nextMinutes, resolution) ? current : next
+      })
+    }, 500)
+
+    return () => clearInterval(handle)
+  }, [offset, resolution])
+
+  return now
+}

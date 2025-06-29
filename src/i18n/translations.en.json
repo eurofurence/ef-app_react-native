@@ -6,11 +6,19 @@
       "title": "App Details"
     },
     "developed_by": "Developed by",
+    "developer_settings_alert": {
+      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
+      "cancel": "Cancel",
+      "disable": "Disable",
+      "enable": "Enable",
+      "title": "Dev Settings Menu"
+    },
     "extra_thanks": "Extra Thanks",
     "header": "About"
   },
   "Announcement": {
-    "header": "Announcement"
+    "header": "Announcement",
+    "not_available": "This announcement is no longer available."
   },
   "Announcements": {
     "header": "Announcements",
@@ -18,7 +26,8 @@
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
   },
-  "ArtistAlley": {
+  "ArtistsAlley": {
+    "check_out": "Check out",
     "dismiss": "Dismiss your edits",
     "display_name_label": "Display name",
     "display_name_placeholder": "Your preferred display name",
@@ -39,11 +48,57 @@
     "explanation_unauthorized": "You currently cannot register at a table in the Artist Alley, which is only open to registered and checked-in attendees of the convention.",
     "intro": "The Artist Alley provides a welcoming, creative, and safe environment for all artists and attendees. With the form below, artists can register when setting up at a table in the Artist Alley and make their presence there known to attendees.",
     "learn_more": "Learn more about the Artist Alley",
+    "list": {
+      "Accepted": "Accepted registrations",
+      "Pending": "Pending registrations",
+      "Published": "Published registrations",
+      "Rejected": "Rejected registrations",
+      "header": "Table registration requests",
+      "moderate": "Moderate table requests",
+      "register_self": "Register for yourself"
+    },
     "location_label": "Table number",
     "location_placeholder": "Table number from handout on the table",
     "log_in_now": "Log-in now to get started!",
     "new_request": "Make a new request",
     "no_submission": "You haven't submitted a registration yet.",
+    "review": {
+      "accept_failed": "Something went wrong",
+      "accept_in_progress": "Accepting...",
+      "accept_request": "Accept this request",
+      "accept_succeeded": "Successfully accepted",
+      "cancel": "Cancel",
+      "choice_accept": "Confirm accepting the registration",
+      "choice_delete": "Confirm deleting the registration",
+      "choice_reject": "Confirm rejecting the registration",
+      "confirm": "Confirm",
+      "confirm_choice": "Confirm choice",
+      "delete": "Delete",
+      "delete_failed": "Something went wrong",
+      "delete_in_progress": "Deleting...",
+      "delete_registration": "Delete this registration",
+      "delete_succeeded": "Successfully deleted",
+      "display_name_label": "Display name",
+      "explanation_status_accepted": "This registration has already been accepted by you or another team member.",
+      "explanation_status_pending": "The registration has not been reviewed yet. Verify the data and accept or reject it with the options below.",
+      "explanation_status_rejected": "This registration has already been rejected by you or another team member.",
+      "location_label": "Table number",
+      "reject_failed": "Something went wrong",
+      "reject_in_progress": "Rejecting...",
+      "reject_request": "Reject this request",
+      "reject_succeeded": "Successfully rejected",
+      "short_description_label": "Short description",
+      "status": {
+        "Accepted": "The registration was accepted.",
+        "Pending": "The registration is waiting to be approved.",
+        "Published": "The registration was accepted.",
+        "Rejected": "The registration was rejected."
+      },
+      "submission_image_label": "Sample picture",
+      "telegram_handle_label": "Telegram handle (optional)",
+      "title": "Review registration request",
+      "website_url_label": "Website (optional)"
+    },
     "short_description_label": "Short description",
     "short_description_placeholder": "Information about you and what you will be offering",
     "status": {
@@ -83,13 +138,17 @@
     "attends_sat": "Saturday",
     "attends_thu": "Thursday",
     "categories": "Categories",
+    "copy_token": "Copy token",
     "dealer_was_updated": "Dealer was updated since your last visit",
     "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
     "in_after_dark": "Located in the after dark section",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
     "remove_favorite": "Unfavorite",
+    "set_token": "Set token",
     "table": "Table",
+    "test_toast": "Test toast notification",
+    "token_placeholder": "The JWT or Oryx token to set",
     "view_on_map": "View on map",
     "viewing_dealer": "Viewing dealer"
   },
@@ -127,6 +186,7 @@
     "sponsor_event": "Sponsor event",
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
+    "viewing_event": "Viewing event",
     "when": "{{day}}, {{start}} until {{finish}}.",
     "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
   },
@@ -144,7 +204,6 @@
     "thank_you": "Thanks for letting us know how you felt about {{ eventTitle }}."
   },
   "Events": {
-    "long_running": "Runs longer",
     "afternoon": "In the afternoon",
     "current_subtitle": "These events are currently happening",
     "current_title": "Current Events",
@@ -155,10 +214,12 @@
     "events_hidden_subtitle": "{{count}} events, reveal them again in Settings",
     "favorites_subtitle": "You will receive a reminder about these events",
     "favorites_title": "Favorite Events",
-    "filter_by_day": "Browse days",
-    "filter_by_room": "Browse rooms",
-    "filter_by_track": "Browse tracks",
+    "filter_by_day": "Filter days",
+    "filter_by_host": "Filter hosts",
+    "filter_by_room": "Filter rooms",
+    "filter_by_track": "Filter tracks",
     "finished": "Finished",
+    "long_running": "Runs longer",
     "morning": "In the morning",
     "night": "At night",
     "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
@@ -201,11 +262,13 @@
     "results": "In the viewed area"
   },
   "Menu": {
+    "about": "About",
     "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
     "home": "Home",
+    "image": "Image",
     "info": "Info articles",
     "less": "Less",
     "logged_in_now": "Log-in now",
@@ -213,10 +276,12 @@
     "more": "More",
     "not_logged_in": "You are currently not logged in.",
     "open_messages": "View messages",
+    "pm": "Private messages",
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
-    "website": "Website"
+    "website": "Website",
+    "map": "Map"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",
@@ -230,6 +295,7 @@
   "PrivateMessageList": {
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
+    "header": "Private Messages",
     "message_item_subtitle": "{{ status }} - Sent on {{ time }}",
     "no_data": "There's nothing here yet",
     "read": "Read",
@@ -264,7 +330,7 @@
     "title": "Reveal specific event"
   },
   "Search": {
-    "placeholder": "What are you looking for"
+    "placeholder": "Search…"
   },
   "Settings": {
     "about": "About",
@@ -283,28 +349,33 @@
     "changeLanguage": "Change language",
     "currentLanguage": "Your current language is English!",
     "dev_buttons": {
+      "clear_async_storage": "Clear AsyncStorage data",
+      "copy_device_push_token": "Copy device push token",
+      "copy_token_data": "Copy token data",
       "no_auth_alert": "You are not logged in. Stopping.",
       "overwrite_update_time": "Overwrite update time",
+      "refresh_login_tokens_and_claims": "Refresh token data",
       "send_private_message": "Receive Private Message {{ status }}",
-      "subtitle": "Make the API do something.",
-      "sync": "Force Resync {{ status }}",
-      "sync_alert_done": "Told all devices to synchronize",
-      "sync_alert_error": "Long hold to activate this function",
-      "sync_standard": "Sync",
-      "test_message_content": "You have won a grand prize!",
-      "test_message_subject": "You have won a grand prize!",
-      "title": "Dev Buttons"
+      "set_token_data": "Set token data",
+      "subtitle": "Make the app do something.",
+      "sync": "Sync local data",
+      "title": "Dev buttons",
+      "token_data_placeholder": "Enter token data"
+    },
+    "dev_values": {
+      "cache_values": "Cache values",
+      "claims": "User-info claims",
+      "device_push_token": "Device push token",
+      "noScheduledNotifications": "No notifications currently scheduled.",
+      "notifications": "Scheduled notifications",
+      "subtitle": "Operational data in the app.",
+      "title": "Dev values",
+      "token_data": "Full token response data",
+      "user": "Self service user data"
     },
     "developer_settings": {
       "subtitle": "You shouldn't touch these unless you know what you're doing.",
       "title": "Developer Settings"
-    },
-    "developer_settings_alert": {
-      "body": "Do you want to enable the developer settings? Only do this if you know what you're doing and you don't mind cleaning up your mess.",
-      "cancel": "Cancel",
-      "disable": "Disable",
-      "enable": "Enable",
-      "title": "Dev Settings Menu"
     },
     "device_warnings": {
       "hide_device_warnings": "Hide device warnings",

@@ -6,10 +6,22 @@
       "title": "Szczegóły aplikacji"
     },
     "developed_by": "Stworzone przez",
+    "developer_settings_alert": {
+      "body": "Czy chcesz włączyć ustawienia deweloperskie? Zrób to tylko jeśli wiesz co robisz i jeśli jesteś w stanie posprzątać po sobie ten cały bałagan.",
+      "cancel": "Anuluj",
+      "disable": "Wyłącz",
+      "enable": "Włącz",
+      "title": "Menu ustawień deweloperskich"
+    },
     "extra_thanks": "Szczególne podziękowania",
     "header": "O aplikacji"
   },
+  "Announcement": {
+    "header": "Ogłoszenie",
+    "not_available": "To ogłoszenie nie jest już dostępne."
+  },
   "Announcements": {
+    "header": "Ogłoszenia",
     "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",
     "sectionSubtitle": "Na żywo z konwentu",
     "sectionTitle": "Ogłoszenia"
@@ -44,14 +56,28 @@
     "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
   },
   "Event": {
+    "about_title": "O punkcie programu",
+    "add_favorite": "Dodaj do ulubi",
+    "event_was_updated": "Punkt programu został zaktualizowany od ostatniej wizyty",
+    "give_feedback": "Dodaj feedback",
+    "hide": "Ukryj z listy",
+    "label_event_description": "Więcej o tym wydarzeniu",
+    "label_event_panelhosts": "Organizowane przez",
+    "label_event_room": "Sala",
+    "label_event_track": "Ścieżka",
+    "label_event_when": "Kiedy",
     "mask_required": "Maseczki są obowiązkowe podczas tego punktu programu",
+    "remove_favorite": "Usuń z ulubionych",
+    "reveal": "Pokaż w listy",
+    "share": "Udostępnij to wydarzenie",
     "sponsor_event": "Punkt programu dla sponsorów",
     "supersponsor_event": "Punkt programu dla supersponsorów",
     "view_on_map": "Pokaż na mapie",
-    "when": "{{day}}, {{start}} do {{finish}}."
+    "viewing_event": "Przeglądany punkt programu",
+    "when": "{{day}}, {{start}} do {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} do {{finish}}."
   },
   "Events": {
-    "long_running": "Trwa dłużej",
     "afternoon": "Po południu",
     "current_subtitle": "Te punkty programu odbywają się w tej chwili",
     "current_title": "Bieżące punkty programu",
@@ -64,6 +90,7 @@
     "filter_by_room": "Przeglądaj wg. sal",
     "filter_by_track": "Przeglądaj wg. ścieżek",
     "finished": "Zakończony",
+    "long_running": "Trwa dłużej",
     "morning": "Rano",
     "night": "W nocy",
     "upcoming_favorites_title": "Ulubione punkty programu",
@@ -89,6 +116,7 @@
     "header": "Podstawowe informacje"
   },
   "Menu": {
+    "about": "O nas",
     "dealers": "Wystawcy",
     "events": "Program",
     "home": "Start",
@@ -100,8 +128,10 @@
     "more": "Menu",
     "not_logged_in": "Nie jesteś zalogowany",
     "open_messages": "Otwórz prywatne wiadomości",
+    "pm": "Prywatne wiadomości",
     "services": "Usługi",
-    "settings": "Ustawienia"
+    "settings": "Ustawienia",
+    "map": "Mapa"
   },
   "Notification": {
     "announcement": "Nowe ogłoszenie od {{conName}}",
@@ -110,6 +140,7 @@
   "PrivateMessageList": {
     "from": "Od {{ author }}",
     "from_unknown": "Od nieznanego nadawcy",
+    "header": "Prywatne wiadomości",
     "message_item_subtitle": "{{ status }} - Wysłana: {{ time }}",
     "read": "Wyświetl wiadomość",
     "section_title_from": "Od {{authorName}}",
@@ -135,27 +166,9 @@
     },
     "changeLanguage": "Zmień język",
     "currentLanguage": "Twój aktualnie używany język to polski! 🥟",
-    "dev_buttons": {
-      "no_auth_alert": "Nie jesteś zalogowany - zatrzymywanie...",
-      "send_private_message": "Odbierz prywatną wiadomość {{ status }}",
-      "subtitle": "Zmuś API żeby coś zrobiło.",
-      "sync": "Wymuszona synchronizacja {{ status }}",
-      "sync_alert_done": "Wszystkie urządzenia zsynchronizowane",
-      "sync_alert_error": "Przytrzymaj aby aktywować tę funkcję",
-      "test_message_content": "Właśnie wygrałeś mega nagrodę!",
-      "test_message_subject": "Właśnie wygrałeś mega nagrodę!",
-      "title": "Guziczki deweloperów"
-    },
     "developer_settings": {
       "subtitle": "Nie powinieneś tego ruszać o ile wiesz co robisz.",
       "title": "Ustawienia deweloperskie"
-    },
-    "developer_settings_alert": {
-      "body": "Czy chcesz włączyć ustawienia deweloperskie? Zrób to tylko jeśli wiesz co robisz i jeśli jesteś w stanie posprzątać po sobie ten cały bałagan.",
-      "cancel": "Anuluj",
-      "disable": "Wyłącz",
-      "enable": "Włącz",
-      "title": "Menu ustawień deweloperskich"
     },
     "header": "Ustawienia",
     "notifications": {
