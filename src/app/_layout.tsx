@@ -24,6 +24,7 @@ import '@/init/firebaseApp'
 import '@/init/sentryInit'
 import '@/init/setNotificationChannels'
 import '@/init/setNotificationHandler'
+import '@/init/setNotificationResponseHandler'
 import '@/init/splash'
 
 // Import global tailwind CSS.
