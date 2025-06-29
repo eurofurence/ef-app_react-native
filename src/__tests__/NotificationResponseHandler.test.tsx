@@ -24,17 +24,17 @@ describe('NotificationResponseHandler', () => {
     jest.resetModules()
   })
 
-  it('should register notification response listener on import', () => {
+  it('should register notification response listener on import', async () => {
     // Import the module to trigger the setup
-    require('@/init/setNotificationResponseHandler')
+    await import('@/init/setNotificationResponseHandler')
 
     expect(mockAddNotificationResponseReceivedListener).toHaveBeenCalledTimes(1)
     expect(typeof mockAddNotificationResponseReceivedListener.mock.calls[0][0]).toBe('function')
   })
 
-  it('should navigate to announcement when notification contains announcement ID', () => {
+  it('should navigate to announcement when notification contains announcement ID', async () => {
     // Import the module and get the listener function
-    require('@/init/setNotificationResponseHandler')
+    await import('@/init/setNotificationResponseHandler')
     const listenerFunction = mockAddNotificationResponseReceivedListener.mock.calls[0][0]
 
     const mockResponse = {
@@ -58,8 +58,8 @@ describe('NotificationResponseHandler', () => {
     })
   })
 
-  it('should handle different announcement ID field names', () => {
-    require('@/init/setNotificationResponseHandler')
+  it('should handle different announcement ID field names', async () => {
+    await import('@/init/setNotificationResponseHandler')
     const listenerFunction = mockAddNotificationResponseReceivedListener.mock.calls[0][0]
 
     const mockResponse = {
@@ -83,8 +83,8 @@ describe('NotificationResponseHandler', () => {
     })
   })
 
-  it('should not navigate when announcement ID is missing', () => {
-    require('@/init/setNotificationResponseHandler')
+  it('should not navigate when announcement ID is missing', async () => {
+    await import('@/init/setNotificationResponseHandler')
     const listenerFunction = mockAddNotificationResponseReceivedListener.mock.calls[0][0]
 
     const mockResponse = {
@@ -103,8 +103,8 @@ describe('NotificationResponseHandler', () => {
     expect(mockRouter.navigate).not.toHaveBeenCalled()
   })
 
-  it('should not navigate for non-announcement notifications', () => {
-    require('@/init/setNotificationResponseHandler')
+  it('should not navigate for non-announcement notifications', async () => {
+    await import('@/init/setNotificationResponseHandler')
     const listenerFunction = mockAddNotificationResponseReceivedListener.mock.calls[0][0]
 
     const mockResponse = {
