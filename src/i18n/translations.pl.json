@@ -16,6 +16,10 @@
     "extra_thanks": "Szczególne podziękowania",
     "header": "O aplikacji"
   },
+  "Announcement": {
+    "header": "Ogłoszenie",
+    "not_available": "To ogłoszenie nie jest już dostępne."
+  },
   "Announcements": {
     "header": "Ogłoszenia",
     "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",

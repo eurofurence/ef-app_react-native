@@ -9,7 +9,8 @@
     "header": "Over"
   },
   "Announcement": {
-    "header": "Aankondiging"
+    "header": "Aankondiging",
+    "not_available": "Deze aankondiging is niet meer beschikbaar."
   },
   "Announcements": {
     "header": "Aankondigingen",

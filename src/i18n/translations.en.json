@@ -17,7 +17,8 @@
     "header": "About"
   },
   "Announcement": {
-    "header": "Announcement"
+    "header": "Announcement",
+    "not_available": "This announcement is no longer available."
   },
   "Announcements": {
     "header": "Announcements",
@@ -26,7 +27,7 @@
     "sectionTitle": "Announcements"
   },
   "ArtistsAlley": {
-    "check_out" : "Check out",
+    "check_out": "Check out",
     "dismiss": "Dismiss your edits",
     "display_name_label": "Display name",
     "display_name_placeholder": "Your preferred display name",

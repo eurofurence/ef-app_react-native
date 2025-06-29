@@ -17,7 +17,8 @@
     "header": "Über uns"
   },
   "Announcement": {
-    "header": "Mitteilung"
+    "header": "Mitteilung",
+    "not_available": "Diese Mitteilung ist nicht mehr verfügbar."
   },
   "Announcements": {
     "header": "Mitteilungen",

@@ -9,7 +9,12 @@
     "extra_thanks": "Altri Ringraziamenti",
     "header": "Crediti"
   },
+  "Announcement": {
+    "header": "Annuncio",
+    "not_available": "Questo annuncio non è più disponibile."
+  },
   "Announcements": {
+    "header": "Annunci",
     "noAnnouncements": "Non ci sono annunci al momento.",
     "sectionSubtitle": "Aggiornamenti in tempo reale dalla convention",
     "sectionTitle": "Annunci"
