@@ -496,6 +496,3 @@ render.experimental.xml
 
 # Directory for storing things locally
 _private
-
-# Old files
-src-old/
