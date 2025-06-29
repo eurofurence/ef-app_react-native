@@ -44,6 +44,7 @@ export type EventRecord = RecordMetadata & {
   IsAcceptingFeedback?: boolean
   BannerImageId?: string
   PosterImageId?: string
+  MapLink?: string
   Tags?: string[]
 }
 export type DealerRecord = RecordMetadata & {
@@ -69,6 +70,7 @@ export type DealerRecord = RecordMetadata & {
   ArtPreviewCaption?: string
   IsAfterDark?: boolean
   Categories?: string[]
+  MapLink?: string
   Keywords?: { [category: string]: string[] }
 }
 export type EventDayRecord = RecordMetadata & {

@@ -1,24 +1,24 @@
-import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
-import { ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native-gesture-handler'
-import { useTranslation } from 'react-i18next'
-import { router } from 'expo-router'
-import { Sound } from 'expo-av/build/Audio/Sound'
-import React, { useCallback } from 'react'
-import { Alert, Linking, Platform, StyleSheet } from 'react-native'
-import { Row } from '@/components/generic/containers/Row'
+import { appStyles } from '@/components/AppStyles'
 import { Image } from '@/components/generic/atoms/Image'
-import { Col } from '@/components/generic/containers/Col'
 import { Label } from '@/components/generic/atoms/Label'
-import { Header } from '@/components/generic/containers/Header'
-import { Floater } from '@/components/generic/containers/Floater'
+import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
-import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
-import { useTheme } from '@/hooks/themes/useTheme'
-import { useCache } from '@/context/data/Cache'
-import { appStyles } from '@/components/AppStyles'
-import { useMultiTap } from '@/hooks/util/useMultiTap'
+import { Col } from '@/components/generic/containers/Col'
+import { Floater } from '@/components/generic/containers/Floater'
+import { Header } from '@/components/generic/containers/Header'
+import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
+import { useCache } from '@/context/data/Cache'
+import { useTheme } from '@/hooks/themes/useTheme'
+import { useMultiTap } from '@/hooks/util/useMultiTap'
+import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
+import { useAudioPlayer } from 'expo-audio'
+import { router } from 'expo-router'
+import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Alert, Linking, Platform, StyleSheet } from 'react-native'
+import { Pressable, ScrollView } from 'react-native-gesture-handler'
 
 const extraThanksMarkdown = `
 # Tooling
@@ -98,15 +98,18 @@ type CreditProps = {
 
 const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() =>
         router.navigate({
           pathname: '/images/web',
           params: { url, title: name },
         })
       }
+      style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
       onLongPress={onEasterEgg}
       delayLongPress={2000}
+      accessibilityRole="button"
+      accessibilityLabel={`${name} - ${role}`}
     >
       <Row type="center" style={{ marginVertical: 5 }}>
         <Image
@@ -124,7 +127,7 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
           <Label>{role}</Label>
         </Col>
       </Row>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
@@ -136,17 +139,18 @@ export default function AboutScreen() {
   const settings = getValue('settings')
 
   // Load static assets.
+  const cheeseSound = useAudioPlayer(require('@/assets/runtime/cheese.webm'))
+  const sheeshSound = useAudioPlayer(require('@/assets/runtime/sheesh.webm'))
+
   const requinardEgg = useCallback(async () => {
-    const { sound } = await Sound.createAsync(require('@/assets/runtime/cheese.webm'))
-    await sound.playAsync()
+    cheeseSound.play()
     setTheme('requinard')
-  }, [setTheme])
+  }, [cheeseSound, setTheme])
 
   const pazuzuEgg = useCallback(async () => {
-    const { sound } = await Sound.createAsync(require('@/assets/runtime/sheesh.webm'))
-    await sound.playAsync()
+    sheeshSound.play()
     setTheme('pazuzu')
-  }, [setTheme])
+  }, [sheeshSound, setTheme])
 
   const toggleDevMenu = useMultiTap(
     10,
@@ -189,7 +193,7 @@ export default function AboutScreen() {
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        <TouchableWithoutFeedback style={{ cursor: 'auto' }} onPress={toggleDevMenu}>
+        <Pressable style={{ cursor: 'auto' }} onPress={toggleDevMenu} accessibilityRole="button" accessibilityLabel="Toggle developer menu">
           <Col style={styles.marginAround} type="center">
             <Label type="h1" mb={10}>
               {conName} App
@@ -207,7 +211,7 @@ export default function AboutScreen() {
               </Label>
             </Row>
           </Col>
-        </TouchableWithoutFeedback>
+        </Pressable>
 
         <Row style={styles.marginAround} gap={16}>
           <Button containerStyle={styles.flex} onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')} icon="help">
@@ -220,11 +224,13 @@ export default function AboutScreen() {
 
         <Section title={t('developed_by')} icon="code-json" />
         <Credit url="https://avatars.githubusercontent.com/u/3359222" name="Fenrikur" role="App Team Director and getting us to move our butts in gear" />
+        <Credit url="https://avatars.githubusercontent.com/u/30414906" name="Faye" role="React Development" />
         <Credit url="https://avatars.githubusercontent.com/u/5929561" name="Pazuzu" role="React Development" onEasterEgg={pazuzuEgg} />
         <Credit url="https://avatars.githubusercontent.com/u/5537850" name="Requinard" role="React Development support" onEasterEgg={requinardEgg} />
+        <Credit url="https://avatars.githubusercontent.com/u/16690224" name="Gendo Doggo" role="Backend Development" />
+        <Credit url="https://avatars.githubusercontent.com/u/29598855" name="Maakinoh" role="Backend Development" />
         <Credit url="https://avatars.githubusercontent.com/u/76539710" name="Meta" role="Backend Development" />
         <Credit url="https://avatars.githubusercontent.com/u/1616683" name="Rain" role="Backend Development" />
-        <Credit url="https://avatars.githubusercontent.com/u/29598855" name="Maakinoh" role="Backend Development" />
         <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
       </Floater>
     </ScrollView>

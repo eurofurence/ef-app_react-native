@@ -27,6 +27,11 @@ export const conTimeZone = conventionConfig.convention.timeZone
 export const conWebsite = conventionConfig.convention.website
 
 /**
+ * EFNav map URL
+ */
+export const efnavMapUrl = conventionConfig.convention.efnavMapUrl
+
+/**
  * App base, non-API URLs are relative to this.
  */
 export const appBase = conventionConfig.convention.appBase

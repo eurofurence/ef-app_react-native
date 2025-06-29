@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Pressable } from 'react-native-gesture-handler'
 import { useTranslation } from 'react-i18next'
 
 import { Claims } from '@/context/auth/Auth'
@@ -25,7 +25,13 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
 
   return (
     <Row style={styles.padding} type="start" variant="center">
-      <TouchableOpacity disabled={!loggedIn || !onProfile} onPress={() => onProfile?.()}>
+      <Pressable
+        disabled={!loggedIn || !onProfile}
+        style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
+        onPress={() => onProfile?.()}
+        accessibilityRole="button"
+        accessibilityLabel="Profile"
+      >
         <Col type="center">
           <Image
             style={[avatarBackground, styles.avatarCircle]}
@@ -40,7 +46,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
             {claim.name}
           </Label>
         )}
-      </TouchableOpacity>
+      </Pressable>
 
       {loggedIn ? (
         <Button containerStyle={styles.buttonContainer} style={styles.button} icon="message" onPress={onMessages}>

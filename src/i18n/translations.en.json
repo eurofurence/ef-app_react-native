@@ -279,7 +279,8 @@
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
-    "website": "Website"
+    "website": "Website",
+    "map": "Map"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",

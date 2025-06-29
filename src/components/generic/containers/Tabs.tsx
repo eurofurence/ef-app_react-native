@@ -1,12 +1,13 @@
 import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useState } from 'react'
 import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { Gesture, GestureDetector, TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { Gesture, GestureDetector, Pressable } from 'react-native-gesture-handler'
 import Animated, { cancelAnimation, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
+import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import React from 'react'
 import { Continuous } from '../atoms/Continuous'
 import { IconNames } from '../atoms/Icon'
 import { Tab } from './Tab'
-import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 
 /**
  * Arguments to the tabs.
@@ -253,7 +254,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
   return (
     <>
       <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
-        <TouchableWithoutFeedback containerStyle={StyleSheet.absoluteFill} style={StyleSheet.absoluteFill} onPress={close} />
+        <Pressable style={({ pressed }) => [StyleSheet.absoluteFill, { opacity: pressed ? 0.5 : 1 }]} onPress={close} accessibilityRole="button" accessibilityLabel="Close" />
       </Animated.View>
 
       <GestureDetector gesture={gesture}>
@@ -265,7 +266,9 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
           )}
 
           <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating ? 'none' : 'auto'}>
-            {tabs?.map((tab, i) => <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />)}
+            {tabs?.map((tab, i) => (
+              <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />
+            ))}
 
             <Tab icon={isOpen ? 'arrow-down-circle' : 'menu'} text={isOpen ? textLess : textMore} onPress={isOpen ? close : open} indicate={indicateMore} />
 
@@ -327,6 +330,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: '100%',
+    paddingBottom: 20,
     right: 0,
   },
 })

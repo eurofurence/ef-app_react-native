@@ -1,12 +1,13 @@
-import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
+import { Icon, IconNames } from '@/components/generic/atoms/Icon'
+import { Search } from '@/components/generic/atoms/Search'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
 import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
-import type { MaterialTopTabNavigationOptions, MaterialTopTabNavigationEventMap } from '@react-navigation/material-top-tabs'
+import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 import { router, useLocalSearchParams, withLayoutContext } from 'expo-router'
 import * as React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { Search } from '@/components/generic/atoms/Search'
-import { Icon, IconNames } from '@/components/generic/atoms/Icon'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const { Navigator } = createMaterialTopTabNavigator()
 
@@ -31,6 +32,7 @@ function createOptions(title: string | undefined, icon: IconNames | undefined = 
 
 export default function DealersLayout() {
   const { query } = useLocalSearchParams<{ query?: string }>()
+  const insets = useSafeAreaInsets()
 
   const backgroundSurface = useThemeBackground('surface')
 
@@ -40,7 +42,7 @@ export default function DealersLayout() {
       style={StyleSheet.absoluteFill}
       screenOptions={{ sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
       tabBar={(props) => (
-        <View>
+        <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
           <MaterialTopTabBar {...props} />
           <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
         </View>
@@ -58,6 +60,9 @@ export default function DealersLayout() {
 const styles = StyleSheet.create({
   tabLabel: {
     margin: 0,
+  },
+  tabBarContainer: {
+    backgroundColor: 'transparent',
   },
   search: {
     marginVertical: 10,
