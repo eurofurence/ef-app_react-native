@@ -1,21 +1,20 @@
+import { AuthProvider } from '@/context/auth/Auth'
+import { CacheProvider } from '@/context/data/Cache'
+import { QueryProvider } from '@/context/query/Query'
+import { ToastProvider } from '@/context/ui/ToastContext'
+import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
+import { useStackScreensData } from '@/hooks/data/useStackScreensData'
+import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'
+import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
+import { useTokenManager } from '@/hooks/tokens/useTokenManager'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { SplashScreen, Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useMemo } from 'react'
-import { StyleSheet } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import 'react-native-reanimated'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { useStackScreensData } from '@/hooks/data/useStackScreensData'
-import { CacheProvider } from '@/context/data/Cache'
-import { useTheme, useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
-import { AuthProvider } from '@/context/auth/Auth'
-import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { QueryProvider } from '@/context/query/Query'
-import { ToastProvider } from '@/context/ui/ToastContext'
-import { useTokenManager } from '@/hooks/tokens/useTokenManager'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 // Import i18n configuration
 import '@/i18n'
@@ -60,7 +59,6 @@ export function MainLayout() {
   const theme = useTheme()
   const themeType = useThemeName()
 
-  const safeAreaStyle = useThemeBackground('surface')
   const screensData = useStackScreensData()
 
   // Wraps the app theme for react navigation.
@@ -84,10 +82,10 @@ export function MainLayout() {
   useTokenManager()
 
   return (
-    <BottomSheetModalProvider>
-      <ThemeProvider value={themeNavigation}>
-        <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
-        <SafeAreaView style={[StyleSheet.absoluteFill, safeAreaStyle]} onLayout={() => SplashScreen.hide()}>
+    <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
+      <BottomSheetModalProvider>
+        <ThemeProvider value={themeNavigation}>
+          <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'dark' : 'light'} />
           <Stack>
             {screensData.map((screen) => (
               <Stack.Screen
@@ -107,8 +105,8 @@ export function MainLayout() {
               />
             ))}
           </Stack>
-        </SafeAreaView>
-      </ThemeProvider>
-    </BottomSheetModalProvider>
+        </ThemeProvider>
+      </BottomSheetModalProvider>
+    </SafeAreaProvider>
   )
 }

@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native-gesture-handler'
+import { SafeAreaView, StyleSheet, View, ViewStyle } from 'react-native'
+import { Pressable, PressableProps } from 'react-native-gesture-handler'
 
 import { router } from 'expo-router'
 import { Continuous } from '../atoms/Continuous'
@@ -30,7 +30,7 @@ export type HeaderProps = PropsWithChildren<
 /**
  * Hit slop for the back button.
  */
-const backHitSlop: TouchableOpacityProps['hitSlop'] = {
+const backHitSlop: PressableProps['hitSlop'] = {
   left: 15,
   top: 15,
   bottom: 15,
@@ -40,7 +40,7 @@ const backHitSlop: TouchableOpacityProps['hitSlop'] = {
 /**
  * Hit slop for the secondary button if present.
  */
-const secondaryHitSlop: TouchableOpacityProps['hitSlop'] = {
+const secondaryHitSlop: PressableProps['hitSlop'] = {
   right: 15,
   top: 15,
   bottom: 15,
@@ -53,43 +53,56 @@ export const Header: FC<HeaderProps> = (props) => {
   const styleBorder = useThemeBorder('darken')
   const toastMessages = useToastMessages(5)
   return (
-    <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
-      <TouchableOpacity hitSlop={backHitSlop} containerStyle={styles.back} onPress={() => router.back()}>
-        <Icon name="chevron-left" size={iconSize} color={colorValue} />
-      </TouchableOpacity>
+    <SafeAreaView>
+      <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
+        <Pressable
+          hitSlop={backHitSlop}
+          style={({ pressed }) => [styles.back, { opacity: pressed ? 0.5 : 1 }]}
+          onPress={() => router.back()}
+          accessibilityRole="button"
+          accessibilityLabel="Back"
+        >
+          <Icon name="chevron-left" size={iconSize} color={colorValue} />
+        </Pressable>
 
-      <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
-        {props.children}
-      </Label>
+        <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
+          {props.children}
+        </Label>
 
-      {/* Optional secondary action. */}
-      {!('secondaryIcon' in props) ? null : (
-        <TouchableOpacity hitSlop={secondaryHitSlop} containerStyle={styles.secondary} onPress={() => props.secondaryPress()}>
-          <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
-        </TouchableOpacity>
-      )}
+        {/* Optional secondary action. */}
+        {!('secondaryIcon' in props) ? null : (
+          <Pressable
+            hitSlop={secondaryHitSlop}
+            style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.5 : 1 }]}
+            onPress={() => props.secondaryPress()}
+            accessibilityRole="button"
+          >
+            <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
+          </Pressable>
+        )}
 
-      {
-        // Loading header. Explicitly given as false, not loading.
-        props.loading === false ? (
-          <Continuous style={styles.loading} active={false} />
-        ) : // Explicitly given as true, loading.
-        props.loading === true ? (
-          <Continuous style={styles.loading} active={true} />
-        ) : // Not given, therefore no element.
-        null
-      }
+        {
+          // Loading header. Explicitly given as false, not loading.
+          props.loading === false ? (
+            <Continuous style={styles.loading} active={false} />
+          ) : // Explicitly given as true, loading.
+          props.loading === true ? (
+            <Continuous style={styles.loading} active={true} />
+          ) : // Not given, therefore no element.
+          null
+        }
 
-      {!toastMessages.length ? null : (
-        <View style={styles.toasts}>
-          <View style={styles.toastsInner}>
-            {[...toastMessages].reverse().map((toast) => (
-              <Toast key={toast.id} {...toast} loose={false} />
-            ))}
+        {!toastMessages.length ? null : (
+          <View style={styles.toasts}>
+            <View style={styles.toastsInner}>
+              {[...toastMessages].reverse().map((toast) => (
+                <Toast key={toast.id} {...toast} loose={false} />
+              ))}
+            </View>
           </View>
-        </View>
-      )}
-    </Row>
+        )}
+      </Row>
+    </SafeAreaView>
   )
 }
 

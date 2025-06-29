@@ -205,6 +205,7 @@
     "results": "In der Ansicht"
   },
   "Menu": {
+    "about": "Über uns",
     "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealer",
@@ -221,7 +222,8 @@
     "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen",
-    "website": "Webseite"
+    "website": "Webseite",
+    "map": "Karte"
   },
   "Notification": {
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",

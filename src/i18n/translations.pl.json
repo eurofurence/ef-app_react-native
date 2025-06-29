@@ -111,6 +111,7 @@
     "header": "Podstawowe informacje"
   },
   "Menu": {
+    "about": "O nas",
     "dealers": "Wystawcy",
     "events": "Program",
     "home": "Start",
@@ -124,7 +125,8 @@
     "open_messages": "Otwórz prywatne wiadomości",
     "pm": "Prywatne wiadomości",
     "services": "Usługi",
-    "settings": "Ustawienia"
+    "settings": "Ustawienia",
+    "map": "Mapa"
   },
   "Notification": {
     "announcement": "Nowe ogłoszenie od {{conName}}",

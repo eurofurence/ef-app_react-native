@@ -110,7 +110,7 @@ module.exports = {
       ],
       // Used to render audio.
       [
-        'expo-av',
+        'expo-audio',
         {
           microphonePermission: false,
         },

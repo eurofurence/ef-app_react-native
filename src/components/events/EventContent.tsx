@@ -1,39 +1,29 @@
+import { shareEvent } from '@/components/events/Events.common'
+import { conTimeZone } from '@/configuration'
+import { EventDetails } from '@/context/data/types.details'
+import { useEventReminder } from '@/hooks/data/useEventReminder'
+import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useNow } from '@/hooks/time/useNow'
 import { useIsFocused } from '@react-navigation/core'
+import { captureException } from '@sentry/react-native'
+import { differenceInMilliseconds } from 'date-fns'
+import { format } from 'date-fns-tz'
+import { useCalendars } from 'expo-localization'
+import { router } from 'expo-router'
+import { openBrowserAsync } from 'expo-web-browser'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
-import { useCalendars } from 'expo-localization'
-import { captureException } from '@sentry/react-native'
-import { router } from 'expo-router'
-import { differenceInMilliseconds } from 'date-fns'
-import { format } from 'date-fns-tz'
 import { Banner } from '../generic/atoms/Banner'
+import { Icon, platformShareIcon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { MarkdownContent } from '../generic/atoms/MarkdownContent'
 import { Progress } from '../generic/atoms/Progress'
 import { Section } from '../generic/atoms/Section'
 import { Badge } from '../generic/containers/Badge'
 import { Button } from '../generic/containers/Button'
-import { ImageExButton } from '../generic/containers/ImageButton'
 import { Row } from '../generic/containers/Row'
-import { Icon, platformShareIcon } from '../generic/atoms/Icon'
-import { conTimeZone } from '@/configuration'
-import { shareEvent } from '@/components/events/Events.common'
-import { useNow } from '@/hooks/time/useNow'
-import { useEventReminder } from '@/hooks/data/useEventReminder'
-import { getValidLinksByTarget } from '@/store/eurofurence/selectors/maps'
-import { LinkFragment } from '@/context/data/types.api'
-import { useCache } from '@/context/data/Cache'
-import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { EventDetails, MapDetails, MapEntryDetails } from '@/context/data/types.details'
-
-interface MapLink {
-  map: MapDetails
-  entry: MapEntryDetails
-  link: LinkFragment
-}
-
+import { LinkPreview } from '../maps/LinkPreview'
 /**
  * Props to the content.
  */
@@ -80,12 +70,6 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
   const progress = differenceInMilliseconds(now, new Date(event.StartDateTimeUtc)) / differenceInMilliseconds(new Date(event.EndDateTimeUtc), new Date(event.StartDateTimeUtc))
   const happening = progress >= 0.0 && progress <= 1.0
   const feedbackDisabled = progress < 0.0
-
-  const track = event.ConferenceTrack
-  const room = event.ConferenceRoom
-
-  const { maps } = useCache()
-  const mapLink = useMemo(() => getValidLinksByTarget(maps, room?.Id), [maps, room])
 
   const calendar = useCalendars()
   const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
@@ -139,7 +123,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Label>
       ) : null}
       {event.SubTitle ? <Label type="compact">{event.SubTitle}</Label> : null}
-      {track?.Name ? (
+      {event.ConferenceTrack?.Name ? (
         <Row style={styles.marginAround} gap={5}>
           <Label type="caption">{t('label_event_track')}</Label>
           <Label type="caption" color="important">
@@ -219,32 +203,22 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Button>
       )}
 
-      {room?.Name ? (
+      {event.ConferenceRoom?.Name ? (
         <Row style={styles.marginAround} gap={5}>
           <Label type="h3" variant="receded">
             {t('label_event_room')}
           </Label>
           <Label type="h3" color="important">
-            {room.Name}
+            {event.ConferenceRoom.Name}
           </Label>
         </Row>
       ) : null}
 
-      {!mapLink
-        ? null
-        : mapLink.map(({ map, entry, link }: MapLink, i: number) => (
-            <ImageExButton
-              key={i}
-              image={map.Image}
-              target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
-              onPress={() =>
-                router.navigate({
-                  pathname: '/maps/[mapId]/[entryId]/[linkId]',
-                  params: { mapId: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) },
-                })
-              }
-            />
-          ))}
+      {!event.MapLink ? null : (
+        <>
+          <LinkPreview url={event.MapLink} onPress={() => openBrowserAsync(event.MapLink ?? '')} />
+        </>
+      )}
 
       <Section icon="information" title={t('label_event_description')} />
       <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
