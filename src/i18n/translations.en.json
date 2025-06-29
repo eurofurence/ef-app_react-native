@@ -26,6 +26,7 @@
     "sectionTitle": "Announcements"
   },
   "ArtistsAlley": {
+    "check_out" : "Check out",
     "dismiss": "Dismiss your edits",
     "display_name_label": "Display name",
     "display_name_placeholder": "Your preferred display name",

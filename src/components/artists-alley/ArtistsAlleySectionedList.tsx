@@ -8,28 +8,27 @@ import { findIndices } from '@/util/findIndices'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistsAlleySection, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
-import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
+import { ArtistsAlleyCard, TableRegistrationInstance } from '@/components/artists-alley/ArtistsAlleyCard'
 
 /**
  * The properties to the component.
  */
 export type ArtistsAlleySectionedListProps = {
   leader?: ReactElement
-  items: (ArtistsAlleySectionProps | TableRegistrationRecord)[]
+  items: (ArtistsAlleySectionProps | TableRegistrationInstance)[]
   empty?: ReactElement
   trailer?: ReactElement
   sticky?: boolean
   padEnd?: boolean
 }
 
-function getItemType(item: SectionProps | TableRegistrationRecord) {
-  return 'title' in item ? 'sectionHeader' : 'row'
+function getItemType(item: SectionProps | TableRegistrationInstance) {
+  return 'details' in item ? 'row' : 'sectionHeader'
 }
 
-function keyExtractor(item: SectionProps | TableRegistrationRecord) {
-  return 'title' in item ? item.title : item.Id
+function keyExtractor(item: SectionProps | TableRegistrationInstance) {
+  return 'details' in item ? item.details.Id : item.title
 }
 
 export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({ leader, items, empty, trailer, sticky = true, padEnd = true }) => {
@@ -37,15 +36,15 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({ 
   const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(items, (item) => 'title' in item) : undefined), [items, sticky])
 
-  const onPress = useCallback((item: TableRegistrationRecord) => {
+  const onPress = useCallback((item: TableRegistrationInstance) => {
     router.navigate({
       pathname: '/artists-alley/[id]',
-      params: { id: item.Id },
+      params: { id: item.details.Id },
     })
   }, [])
 
   const renderItem = useCallback(
-    ({ item }: { item: ArtistsAlleySectionProps | TableRegistrationRecord }) => {
+    ({ item }: { item: ArtistsAlleySectionProps | TableRegistrationInstance }) => {
       if ('title' in item) {
         return <ArtistsAlleySection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
       } else {

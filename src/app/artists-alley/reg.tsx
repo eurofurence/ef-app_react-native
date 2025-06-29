@@ -1,7 +1,7 @@
 import { Header } from '@/components/generic/containers/Header'
 import { useAuthContext } from '@/context/auth/Auth'
 import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
@@ -15,6 +15,8 @@ import { ArtistsAlleyStatus } from '@/components/artists-alley/ArtistsAlleyStatu
 import { ArtistsAlleyUnauthorized } from '@/components/artists-alley/ArtistsAlleyUnauthorized'
 import { artistAlleyUrl } from '@/configuration'
 import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
+import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
+import { useToastContext } from '@/context/ui/ToastContext'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -38,9 +40,19 @@ export default function Register() {
 
   // Get current registration if available. Only run when authorized.
   const { data, isPending, refetch } = useArtistsAlleyOwnRegistrationQuery()
+  const { mutate: checkOut } = useArtistsAlleyCheckOutMutation()
+  const { toast } = useToastContext()
 
   // Switch for show and edit modes.
   const [show, setShow] = useState(true)
+
+  const onEdit = useCallback(() => setShow(false), [])
+  const onCheckOut = useCallback(() => {
+    checkOut(undefined, {
+      onSuccess: () => toast('info', 'Checked out'),
+      onError: () => toast('error', 'Failed to check out'),
+    })
+  }, [checkOut, toast])
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} refreshControl={authorized ? <RefreshControl refreshing={isPending} onRefresh={refetch} /> : undefined} stickyHeaderIndices={[0]}>
@@ -60,7 +72,7 @@ export default function Register() {
         {authorized ? (
           !isPending ? (
             show && data ? (
-              <ArtistsAlleyStatus data={data} onEdit={() => setShow(false)} />
+              <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} />
             ) : (
               <ArtistsAlleyEdit
                 prefill={{

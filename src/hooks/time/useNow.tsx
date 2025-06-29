@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { addMilliseconds, getHours, getMinutes } from 'date-fns'
-import { useTimeOffset } from '@/hooks/time/useTimeOffset'
+import { useCache } from '@/context/data/Cache'
 
 /**
  * Returns the current time with a millisecond offset.
@@ -22,18 +22,19 @@ const sameInResolution = (a: number, b: number, resolution: number) => Math.floo
  * precision of the clock. Starts an interval, so use in central places only.
  */
 export const useNow = (resolution: 'static' | number = 'static'): Date => {
-  const { getTimeOffset } = useTimeOffset()
-  const amount = getTimeOffset() || 0 // Assume it returns the ms offset
+  const { getValue } = useCache()
+  const settings = getValue('settings')
+  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
 
-  const [now, setNow] = useState(() => nowWithOffset(amount))
+  const [now, setNow] = useState(() => nowWithOffset(offset))
 
   useEffect(() => {
-    setNow(nowWithOffset(amount))
+    setNow(nowWithOffset(offset))
     if (resolution === 'static') return
 
     const handle = setInterval(() => {
       setNow((current) => {
-        const next = nowWithOffset(amount)
+        const next = nowWithOffset(offset)
         const currentMinutes = getHours(current) * 60 + getMinutes(current)
         const nextMinutes = getHours(next) * 60 + getMinutes(next)
         return sameInResolution(currentMinutes, nextMinutes, resolution) ? current : next
@@ -41,7 +42,7 @@ export const useNow = (resolution: 'static' | number = 'static'): Date => {
     }, 500)
 
     return () => clearInterval(handle)
-  }, [amount, resolution])
+  }, [offset, resolution])
 
   return now
 }

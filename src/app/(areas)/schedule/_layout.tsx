@@ -59,7 +59,7 @@ export default function ScheduleLayout() {
     <MaterialTopTabs
       initialRouteName={initialRouteName}
       style={StyleSheet.absoluteFill}
-      screenOptions={{ sceneStyle: backgroundSurface }}
+      screenOptions={{ sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
       tabBar={(props) => (
         <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
           <MaterialTopTabBar {...props} />
@@ -81,6 +81,9 @@ export default function ScheduleLayout() {
 }
 
 const styles = StyleSheet.create({
+  tabLabel: {
+    margin: 0,
+  },
   tabBarContainer: {
     backgroundColor: 'transparent',
   },
