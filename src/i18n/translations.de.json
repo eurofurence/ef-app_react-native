@@ -104,10 +104,10 @@
     "after_dark": "After Dark",
     "all": "Alle",
     "alphabetical": "A-Z",
-    "dealers_at_convention": "Dealer an der Eurofurence",
+    "dealers_at_convention": "Dealer auf der {{convention}}",
     "dealers_in_ad": "Im After Dark Bereich",
     "dealers_in_regular": "Im regulären Bereich",
-    "favorites_empty": "Du hast noch keine Dealer in Deinen Favoriten. Füge Dealer zu Deinen Favoriten hinzu, um sie für später Vorzumerken.",
+    "favorites_empty": "Du hast noch keine Dealer in Deinen Favoriten. Füge Dealer zu Deinen Favoriten hinzu, um sie für später vorzumerken.",
     "favorites_title": "Favoriten",
     "not_attending_on": "Nicht da am {{offDays}}",
     "regular": "Regulär",
@@ -244,16 +244,40 @@
     "from_unknown": "Author unbekannt",
     "header": "Private Nachrichten",
     "message_item_subtitle": "{{ status }} - Gesendet {{ time }}",
+    "no_data": "Es gibt hier noch nichts",
     "read": "Gelesen",
     "section_title_from": "Von {{authorName}}",
     "unread": "Ungelesen"
+  },
+  "Profile": {
+    "header": "Profil",
+    "idp_settings": "Identity setting website",
+    "logged_in_as": "Du bist angemeldet als {{username}}",
+    "login_description": "Wenn Du angemeldet bist, kann {{conName}} dir Private Nachrichten in der App zusenden. Außerdem kannst Du bei den Fursuit-Spielen teilnehmen und Dir Tische in der Artist Alley registieren.",
+    "logout": "Abmelden",
+    "not_logged_in": "Du bist nicht angemeldet",
+    "registration_nr": "Registrierungsnummer",
+    "roles": "Rollen",
+    "roles_simple_attendee": "Noch nicht eingecheckt",
+    "roles_simple_checked_in": "Du bist eingecheckt",
+    "roles_subtitle": "Deine Rollen in der {{conName}} App",
+    "status_names": {
+      "Approved": "Genehmigt",
+      "Cancelled": "Abgebrochen",
+      "CheckedIn": "Eingecheckt",
+      "Deleted": "Gelöscht",
+      "New": "Neu",
+      "Paid": "Bezahlt",
+      "PartiallyPaid": "Teilweise bezahlt",
+      "Unknown": "Unbekannt"
+    }
   },
   "RevealHidden": {
     "lead": "Klicke auf die Events, um diese in der Übersicht wider anzuzeigen",
     "title": "Events anzeigen"
   },
   "Search": {
-    "placeholder": "Wonach suchst Du"
+    "placeholder": "Suche…"
   },
   "Settings": {
     "about": "Über uns",
