@@ -1,12 +1,11 @@
-import { FlashList } from '@shopify/flash-list'
-import { FC, ReactElement, useCallback } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
-
-import { router } from 'expo-router'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
-
+import { ArtistsAlleyCard, TableRegistrationInstance, tableRegistrationInstanceForAny } from '@/components/artists-alley/ArtistsAlleyCard'
 import { TableRegistrationRecord } from '@/context/data/types.api'
-import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { useNow } from '@/hooks/time/useNow'
+import { FlashList } from '@shopify/flash-list'
+import { router } from 'expo-router'
+import { FC, ReactElement, useCallback, useMemo } from 'react'
+import { Dimensions, StyleSheet } from 'react-native'
 
 export type ArtistsAlleyListProps = {
   leader?: ReactElement
@@ -16,24 +15,29 @@ export type ArtistsAlleyListProps = {
   padEnd?: boolean
 }
 
-function keyExtractor(item: TableRegistrationRecord) {
-  return item.Id
+function keyExtractor(item: TableRegistrationInstance) {
+  return item.details.Id
 }
 
 export const ArtistsAlleyList: FC<ArtistsAlleyListProps> = ({ leader, items, empty, trailer, padEnd = true }) => {
   const theme = useThemeName()
+  const now = useNow()
+
+  const instances = useMemo(() => {
+    return items.map((item) => tableRegistrationInstanceForAny(item, now))
+  }, [items, now])
 
   const onPress = useCallback(
-    (item: TableRegistrationRecord) =>
+    (item: TableRegistrationInstance) =>
       router.navigate({
         pathname: '/artists-alley/[id]',
-        params: { id: item.Id },
+        params: { id: item.details.Id },
       }),
     []
   )
 
   const renderItem = useCallback(
-    ({ item }: { item: TableRegistrationRecord }) => {
+    ({ item }: { item: TableRegistrationInstance }) => {
       return <ArtistsAlleyCard containerStyle={styles.item} item={item} onPress={onPress} />
     },
     [onPress]
@@ -46,7 +50,7 @@ export const ArtistsAlleyList: FC<ArtistsAlleyListProps> = ({ leader, items, emp
       ListHeaderComponent={leader}
       ListFooterComponent={trailer}
       ListEmptyComponent={empty}
-      data={items}
+      data={instances}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
       estimatedItemSize={110}
