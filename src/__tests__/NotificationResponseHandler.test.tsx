@@ -27,7 +27,7 @@ describe('NotificationResponseHandler', () => {
   it('should register notification response listener on import', () => {
     // Import the module to trigger the setup
     require('@/init/setNotificationResponseHandler')
-    
+
     expect(mockAddNotificationResponseReceivedListener).toHaveBeenCalledTimes(1)
     expect(typeof mockAddNotificationResponseReceivedListener.mock.calls[0][0]).toBe('function')
   })
