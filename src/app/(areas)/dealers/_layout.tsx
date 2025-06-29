@@ -6,7 +6,8 @@ import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigat
 import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 import { router, useLocalSearchParams, withLayoutContext } from 'expo-router'
 import * as React from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const { Navigator } = createMaterialTopTabNavigator()
 
@@ -31,6 +32,7 @@ function createOptions(title: string | undefined, icon: IconNames | undefined = 
 
 export default function DealersLayout() {
   const { query } = useLocalSearchParams<{ query?: string }>()
+  const insets = useSafeAreaInsets()
 
   const backgroundSurface = useThemeBackground('surface')
 
@@ -40,10 +42,10 @@ export default function DealersLayout() {
       style={StyleSheet.absoluteFill}
       screenOptions={{ sceneStyle: backgroundSurface }}
       tabBar={(props) => (
-        <SafeAreaView>
+        <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
           <MaterialTopTabBar {...props} />
           <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
-        </SafeAreaView>
+        </View>
       )}
     >
       <MaterialTopTabs.Screen name="personal" options={createOptions('Faves', 'calendar-heart')} />
@@ -56,6 +58,9 @@ export default function DealersLayout() {
 }
 
 const styles = StyleSheet.create({
+  tabBarContainer: {
+    backgroundColor: 'transparent',
+  },
   search: {
     marginVertical: 10,
   },

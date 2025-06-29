@@ -10,7 +10,8 @@ import type { ParamListBase, TabNavigationState } from '@react-navigation/native
 import { isSameDay } from 'date-fns'
 import { router, useLocalSearchParams, withLayoutContext } from 'expo-router'
 import * as React from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const { Navigator } = createMaterialTopTabNavigator()
 
@@ -44,6 +45,7 @@ function dayTabTitle(day: EventDayDetails | undefined) {
 
 export default function ScheduleLayout() {
   const { query } = useLocalSearchParams<{ query?: string }>()
+  const insets = useSafeAreaInsets()
 
   const now = useNow('static')
 
@@ -59,10 +61,10 @@ export default function ScheduleLayout() {
       style={StyleSheet.absoluteFill}
       screenOptions={{ sceneStyle: backgroundSurface }}
       tabBar={(props) => (
-        <SafeAreaView>
+        <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
           <MaterialTopTabBar {...props} />
           <Search style={styles.search} filter={query || ''} setFilter={setFilter} />
-        </SafeAreaView>
+        </View>
       )}
     >
       <MaterialTopTabs.Screen name="filter" options={createOptions('Filter', 'filter-variant')} />
@@ -79,6 +81,9 @@ export default function ScheduleLayout() {
 }
 
 const styles = StyleSheet.create({
+  tabBarContainer: {
+    backgroundColor: 'transparent',
+  },
   search: {
     marginVertical: 10,
   },
