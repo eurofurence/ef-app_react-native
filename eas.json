@@ -11,7 +11,6 @@
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview",
       "android": {
         "gradleCommand": ":app:assembleRelease --parallel --no-daemon"
       },
@@ -20,7 +19,6 @@
       }
     },
     "production": {
-      "channel": "production",
       "android": {
         "buildType": "app-bundle",
         "autoIncrement": "versionCode"

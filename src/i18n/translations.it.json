@@ -9,7 +9,12 @@
     "extra_thanks": "Altri Ringraziamenti",
     "header": "Crediti"
   },
+  "Announcement": {
+    "header": "Annuncio",
+    "not_available": "Questo annuncio non è più disponibile."
+  },
   "Announcements": {
+    "header": "Annunci",
     "noAnnouncements": "Non ci sono annunci al momento.",
     "sectionSubtitle": "Aggiornamenti in tempo reale dalla convention",
     "sectionTitle": "Annunci"
@@ -40,14 +45,28 @@
     "not_attending_on": "Non disponibile il {{offDays}}"
   },
   "Event": {
-    "mask_required": "La mascherina è obbligatoria per questo evento",
-    "sponsor_event": "Eventi per sponsor",
-    "supersponsor_event": "Eventi per supersponsor",
+    "about_title": "Informazioni",
+    "add_favorite": "Favorito",
+    "event_was_updated": "L'evento è stato aggiornato dalla tua ultima visita",
+    "give_feedback": "Invia feedback",
+    "hide": "Nascondi dall'elenco",
+    "label_event_description": "Informazioni sull'evento",
+    "label_event_panelhosts": "Organizzato da",
+    "label_event_room": "Stanza",
+    "label_event_track": "Tracciato",
+    "label_event_when": "Quando",
+    "mask_required": "Le maschere sono obbligatorie per questo evento",
+    "remove_favorite": "Rimuovi da preferiti",
+    "reveal": "Rileva nell'elenco",
+    "share": "Condividi questo evento",
+    "sponsor_event": "Evento per sponsor",
+    "supersponsor_event": "Evento per supersponsor",
     "view_on_map": "Vedi sulla mappa",
-    "when": "{{day}}, {{start}} fino alle {{finish}}."
+    "viewing_event": "Visualizzando l'evento",
+    "when": "{{day}}, {{start}} fino alle {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} fino alle {{finish}}."
   },
   "Events": {
-    "long_running": "Funziona più a lungo",
     "afternoon": "Al pomeriggio",
     "current_subtitle": "Questi eventi si stanno svolgendo ora",
     "current_title": "Eventi in corso",
@@ -60,6 +79,7 @@
     "filter_by_room": "Organizza per stanze",
     "filter_by_track": "Organizza per tracciati",
     "finished": "Conclusi",
+    "long_running": "Funziona più a lungo",
     "morning": "Al mattino",
     "night": "Alla notte",
     "upcoming_favorites_title": "La tua agenda",
@@ -83,6 +103,7 @@
     "header": "Articoli Informativi"
   },
   "Menu": {
+    "about": "Informazioni",
     "dealers": "Venditori",
     "events": "Eventi",
     "info": "Articoli informativi",
@@ -93,8 +114,10 @@
     "more": "Di più",
     "not_logged_in": "Non hai effettuato l'accesso",
     "open_messages": "Apri i messaggi",
+    "pm": "Messaggi privati",
     "services": "Servizi",
-    "settings": "Impostazioni"
+    "settings": "Impostazioni",
+    "map": "Mappa"
   },
   "Notification": {
     "announcement": "C'è un annuncio da {{conName}}",
@@ -102,6 +125,7 @@
   },
   "PrivateMessageList": {
     "from": "Da {{ author }}",
+    "header": "Messaggi privati",
     "message_item_subtitle": "{{ status }} - Inviato {{ time }}",
     "read": "Letto",
     "section_title_from": "Da {{authorName}}",

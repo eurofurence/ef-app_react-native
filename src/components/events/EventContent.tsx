@@ -1,237 +1,257 @@
-import { useIsFocused } from "@react-navigation/core";
-import moment from "moment-timezone";
-import React, { FC, useMemo } from "react";
-import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
-
-import { useCalendars } from "expo-localization";
-import { captureException } from "@sentry/react-native";
-import { useEventReminder } from "../../hooks/events/useEventReminder";
-import { useAppNavigation } from "../../hooks/nav/useAppNavigation";
-import { useNow } from "../../hooks/time/useNow";
-import { shareEvent } from "../../routes/events/Events.common";
-import { useAppDispatch, useAppSelector } from "../../store";
-import { toggleEventHidden } from "../../store/auxiliary/slice";
-import { selectValidLinksByTarget } from "../../store/eurofurence/selectors/maps";
-import { EventDetails } from "../../store/eurofurence/types";
-import { Banner } from "../generic/atoms/Banner";
-import { Label } from "../generic/atoms/Label";
-import { MarkdownContent } from "../generic/atoms/MarkdownContent";
-import { Progress } from "../generic/atoms/Progress";
-import { Section } from "../generic/atoms/Section";
-import { Badge } from "../generic/containers/Badge";
-import { Button } from "../generic/containers/Button";
-import { ImageExButton } from "../generic/containers/ImageButton";
-import { Row } from "../generic/containers/Row";
-import { conTimeZone } from "../../configuration";
-import { platformShareIcon } from "../generic/atoms/Icon";
-
+import { shareEvent } from '@/components/events/Events.common'
+import { conTimeZone } from '@/configuration'
+import { EventDetails } from '@/context/data/types.details'
+import { useEventReminder } from '@/hooks/data/useEventReminder'
+import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useNow } from '@/hooks/time/useNow'
+import { useIsFocused } from '@react-navigation/core'
+import { captureException } from '@sentry/react-native'
+import { differenceInMilliseconds } from 'date-fns'
+import { format } from 'date-fns-tz'
+import { useCalendars } from 'expo-localization'
+import { router } from 'expo-router'
+import { openBrowserAsync } from 'expo-web-browser'
+import React, { FC, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+import { Banner } from '../generic/atoms/Banner'
+import { Icon, platformShareIcon } from '../generic/atoms/Icon'
+import { Label } from '../generic/atoms/Label'
+import { MarkdownContent } from '../generic/atoms/MarkdownContent'
+import { Progress } from '../generic/atoms/Progress'
+import { Section } from '../generic/atoms/Section'
+import { Badge } from '../generic/containers/Badge'
+import { Button } from '../generic/containers/Button'
+import { Row } from '../generic/containers/Row'
+import { LinkPreview } from '../maps/LinkPreview'
 /**
  * Props to the content.
  */
 export type EventContentProps = {
-    /**
-     * The event to display.
-     */
-    event: EventDetails;
+  /**
+   * The event to display.
+   */
+  event: EventDetails
 
-    /**
-     * The padding used by the parent horizontally.
-     */
-    parentPad?: number;
+  /**
+   * The padding used by the parent horizontally.
+   */
+  parentPad?: number
 
-    /**
-     * True if the event was updated.
-     */
-    updated?: boolean;
+  /**
+   * True if the event was updated.
+   */
+  updated?: boolean
 
-    /**
-     * True if a dedicated share button should be displayed.
-     */
-    shareButton?: boolean;
-};
+  /**
+   * True if a dedicated share button should be displayed.
+   */
+  shareButton?: boolean
+
+  /**
+   * Callback when the event's hidden state is toggled.
+   */
+  onToggleHidden?: (event: EventDetails) => void
+}
 
 /**
  * Placeholder blur hash.
  */
-const placeholder = "L38D%z^%020303D+bv~m%IWF-nIr/1309/667";
+const placeholder = { blurhash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667' }
 
-export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton }) => {
-    const navigation = useAppNavigation("Areas");
+export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton, onToggleHidden }) => {
+  const { t } = useTranslation('Event')
+  const { isFavorite, toggleReminder } = useEventReminder(event)
+  const isFocused = useIsFocused()
+  const now = useNow(isFocused ? 5 : 'static')
 
-    const { t } = useTranslation("Event");
-    const { isFavorite, toggleReminder } = useEventReminder(event);
-    const dispatch = useAppDispatch();
-    const isFocused = useIsFocused();
-    const now = useNow(isFocused ? 5 : "static");
+  const colorGlyph = useThemeColorValue('darken')
 
-    const progress = now.diff(moment.utc(event.StartDateTimeUtc)) / moment.utc(event.EndDateTimeUtc).diff(moment.utc(event.StartDateTimeUtc));
-    const happening = progress >= 0.0 && progress <= 1.0;
-    const feedbackDisabled = progress < 0.0;
+  const progress = differenceInMilliseconds(now, new Date(event.StartDateTimeUtc)) / differenceInMilliseconds(new Date(event.EndDateTimeUtc), new Date(event.StartDateTimeUtc))
+  const happening = progress >= 0.0 && progress <= 1.0
+  const feedbackDisabled = progress < 0.0
 
-    const track = event.ConferenceTrack;
-    const room = event.ConferenceRoom;
+  const calendar = useCalendars()
+  const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
+    const timeZone = calendar[0]?.timeZone ?? conTimeZone
+    const zone = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' }).format(new Date()).split(' ').pop()
+    const start = format(event.Start, 'p')
+    const end = format(event.End, 'p')
+    const day = format(event.Start, 'EEE')
+    const startLocal = format(event.StartLocal, 'p')
+    const endLocal = format(event.EndLocal, 'p')
+    const dayLocal = format(event.StartLocal, 'EEE')
+    return { zone, start, end, day, startLocal, endLocal, dayLocal }
+  }, [calendar, event.End, event.EndLocal, event.Start, event.StartLocal])
 
-    const mapLink = useAppSelector((state) => (!room ? undefined : selectValidLinksByTarget(state, room.Id)));
+  return (
+    <>
+      {!updated ? null : (
+        <Badge unpad={parentPad} badgeColor="warning" textColor="white">
+          {t('event_was_updated')}
+        </Badge>
+      )}
 
-    const calendar = useCalendars();
-    const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
-        // Start parsing.
-        const zone = moment.tz(calendar[0]?.timeZone ?? conTimeZone).zoneAbbr();
-        const eventStart = moment.utc(event.StartDateTimeUtc).tz(conTimeZone);
-        const eventEnd = moment.utc(event.EndDateTimeUtc).tz(conTimeZone);
+      {!event.SuperSponsorOnly ? null : (
+        <Badge unpad={parentPad} badgeColor="superSponsor" textColor="superSponsorText">
+          {t('supersponsor_event')}
+        </Badge>
+      )}
 
-        // Convert event start and duration to readable. Reorder with caution, as
-        // local moves the timezones.
-        const start = eventStart.format("LT");
-        const end = eventEnd.format("LT");
-        const day = eventStart.format("ddd");
-        const startLocal = eventStart.local().format("LT");
-        const endLocal = eventEnd.local().format("LT");
-        const dayLocal = eventStart.local().format("ddd");
+      {!event.SponsorOnly ? null : (
+        <Badge unpad={parentPad} badgeColor="sponsor" textColor="sponsorText">
+          {t('sponsor_event')}
+        </Badge>
+      )}
 
-        return {
-            zone,
-            start,
-            end,
-            day,
-            startLocal,
-            endLocal,
-            dayLocal,
-        };
-    }, [calendar, event.EndDateTimeUtc, event.StartDateTimeUtc]);
+      {!event.Poster ? null : (
+        <View style={styles.posterLine}>
+          <Banner image={event.Poster} placeholder={placeholder} viewable />
+        </View>
+      )}
+      {isFavorite || event.Glyph ? (
+        <View style={styles.glyphArranger}>
+          <View style={styles.glyphContainer}>
+            <Icon style={styles.glyph} color={colorGlyph} name={isFavorite ? 'heart' : event.Glyph} size={200} />
+          </View>
+        </View>
+      ) : null}
 
-    return (
+      {event.Title ? (
+        <Label type="h1" mt={20}>
+          {event.Title}
+        </Label>
+      ) : null}
+      {event.SubTitle ? <Label type="compact">{event.SubTitle}</Label> : null}
+      {event.ConferenceTrack?.Name ? (
+        <Row style={styles.marginAround} gap={5}>
+          <Label type="caption">{t('label_event_track')}</Label>
+          <Label type="caption" color="important">
+            {event.ConferenceTrack?.Name}
+          </Label>
+        </Row>
+      ) : null}
+
+      {!happening ? null : <Progress style={styles.marginBefore} value={progress} />}
+
+      <Label style={styles.marginAround} type="h3">
+        {t('when', {
+          day: day,
+          start: start,
+          finish: end,
+        })}
+        {start === startLocal ? null : (
+          <Label type="h3" variant="receded">
+            {' ' +
+              t('when_local', {
+                day: dayLocal,
+                start: startLocal,
+                finish: endLocal,
+                zone: zone,
+              })}
+          </Label>
+        )}
+      </Label>
+
+      <MarkdownContent style={styles.marginAround} defaultType="para">
+        {event.Abstract}
+      </MarkdownContent>
+
+      {event.PanelHosts ? (
+        <Row style={styles.marginAround} gap={5}>
+          <Label type="caption">{t('label_event_panelhosts')}</Label>
+          <Label type="caption" color="important">
+            {event.PanelHosts}
+          </Label>
+        </Row>
+      ) : null}
+
+      {!event.MaskRequired ? null : (
+        <Badge unpad={parentPad} icon="face-mask" textColor="secondary" textType="regular" textVariant="regular">
+          {t('mask_required')}
+        </Badge>
+      )}
+
+      {!shareButton ? null : (
+        <Button icon={platformShareIcon} onPress={() => shareEvent(event)}>
+          {t('share')}
+        </Button>
+      )}
+
+      <Row style={styles.marginAround} gap={16}>
+        <Button containerStyle={styles.flex} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleReminder().catch(captureException)}>
+          {isFavorite ? t('remove_favorite') : t('add_favorite')}
+        </Button>
+        <Button containerStyle={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
+          {event.Hidden ? t('reveal') : t('hide')}
+        </Button>
+      </Row>
+
+      {event.IsAcceptingFeedback && (
+        <Button
+          disabled={feedbackDisabled}
+          containerStyle={styles.marginAround}
+          icon="pencil"
+          onPress={() =>
+            router.navigate({
+              pathname: '/events/[id]/feedback',
+              params: { id: event.Id },
+            })
+          }
+        >
+          {t('give_feedback')}
+        </Button>
+      )}
+
+      {event.ConferenceRoom?.Name ? (
+        <Row style={styles.marginAround} gap={5}>
+          <Label type="h3" variant="receded">
+            {t('label_event_room')}
+          </Label>
+          <Label type="h3" color="important">
+            {event.ConferenceRoom.Name}
+          </Label>
+        </Row>
+      ) : null}
+
+      {!event.MapLink ? null : (
         <>
-            {!updated ? null : (
-                <Badge unpad={parentPad} badgeColor="warning" textColor="white">
-                    {t("event_was_updated")}
-                </Badge>
-            )}
-
-            {!event.SuperSponsorOnly ? null : (
-                <Badge unpad={parentPad} badgeColor="superSponsor" textColor="superSponsorText">
-                    {t("supersponsor_event")}
-                </Badge>
-            )}
-
-            {!event.SponsorOnly ? null : (
-                <Badge unpad={parentPad} badgeColor="sponsor" textColor="sponsorText">
-                    {t("sponsor_event")}
-                </Badge>
-            )}
-
-            {!event.Poster ? null : (
-                <View style={styles.posterLine}>
-                    <Banner image={event.Poster} placeholder={placeholder} viewable />
-                </View>
-            )}
-
-            <Section icon={isFavorite ? "heart" : event.Glyph} title={event.Title ?? ""} subtitle={event.SubTitle} />
-            {!happening ? null : <Progress value={progress} />}
-            <MarkdownContent defaultType="para" mb={20}>
-                {event.Abstract}
-            </MarkdownContent>
-
-            {!event.MaskRequired ? null : (
-                <Badge unpad={parentPad} icon="face-mask" textColor="secondary" textType="regular" textVariant="regular">
-                    {t("mask_required")}
-                </Badge>
-            )}
-
-            {!shareButton ? null : (
-                <Button icon={platformShareIcon} onPress={() => shareEvent(event)}>
-                    {t("share")}
-                </Button>
-            )}
-
-            <Row style={styles.marginBefore}>
-                <Button
-                    containerStyle={styles.rowLeft}
-                    outline={isFavorite}
-                    icon={isFavorite ? "heart-minus" : "heart-plus-outline"}
-                    onPress={() => toggleReminder().catch(captureException)}
-                >
-                    {isFavorite ? t("remove_favorite") : t("add_favorite")}
-                </Button>
-                <Button containerStyle={styles.rowRight} icon={event.Hidden ? "eye" : "eye-off"} onPress={() => dispatch(toggleEventHidden(event.Id))} outline>
-                    {event.Hidden ? t("reveal") : t("hide")}
-                </Button>
-            </Row>
-
-            {event.IsAcceptingFeedback && (
-                <Button disabled={feedbackDisabled} containerStyle={styles.marginBefore} icon="pencil" onPress={() => navigation.navigate("EventFeedback", { id: event.Id })}>
-                    {t("give_feedback")}
-                </Button>
-            )}
-
-            <Section icon="directions-fork" title={t("about_title")} />
-            <Label type="caption">{t("label_event_panelhosts")}</Label>
-            <Label type="h3" mb={20}>
-                {event.PanelHosts}
-            </Label>
-
-            <Label type="caption">{t("label_event_when")}</Label>
-            <Label type="h3" mb={20}>
-                {t("when", {
-                    day: day,
-                    start: start,
-                    finish: end,
-                })}
-                {start === startLocal ? null : (
-                    <Label type="bold">
-                        {" " +
-                            t("when_local", {
-                                day: dayLocal,
-                                start: startLocal,
-                                finish: endLocal,
-                                zone: zone,
-                            })}
-                    </Label>
-                )}
-            </Label>
-
-            <Label type="caption">{t("label_event_track")}</Label>
-            <Label type="h3" mb={20}>
-                {track?.Name || " "}
-            </Label>
-
-            <Label type="caption">{t("label_event_room")}</Label>
-            <Label type="h3" mb={20}>
-                {room?.Name || " "}
-            </Label>
-
-            {!mapLink
-                ? null
-                : mapLink.map(({ map, entry, link }, i) => (
-                      <ImageExButton
-                          key={i}
-                          image={map.Image}
-                          target={{ x: entry.X, y: entry.Y, size: entry.TapRadius * 10 }}
-                          onPress={() => navigation.navigate("Map", { id: map.Id, entryId: entry.Id, linkId: entry.Links.indexOf(link) })}
-                      />
-                  ))}
-
-            <Section icon="information" title={t("label_event_description")} />
-            <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
+          <LinkPreview url={event.MapLink} onPress={() => openBrowserAsync(event.MapLink ?? '')} />
         </>
-    );
-};
+      )}
+
+      <Section icon="information" title={t('label_event_description')} />
+      <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
+    </>
+  )
+}
 
 const styles = StyleSheet.create({
-    rowLeft: {
-        flex: 1,
-        marginRight: 8,
-    },
-    rowRight: {
-        flex: 1,
-        marginLeft: 8,
-    },
-    marginBefore: {
-        marginTop: 15,
-    },
-    posterLine: {
-        marginTop: 20,
-        alignItems: "center",
-    },
-});
+  flex: {
+    flex: 1,
+  },
+  marginBefore: {
+    marginTop: 10,
+  },
+  marginAround: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  posterLine: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  glyphArranger: {
+    width: '100%',
+    height: 0,
+  },
+  glyphContainer: {
+    position: 'absolute',
+    top: -20,
+    right: -50,
+  },
+  glyph: {
+    opacity: 0.2,
+    transform: [{ rotate: '15deg' }],
+  },
+})

@@ -8,10 +8,66 @@
     "extra_thanks": "Extra te danken",
     "header": "Over"
   },
+  "Announcement": {
+    "header": "Aankondiging",
+    "not_available": "Deze aankondiging is niet meer beschikbaar."
+  },
   "Announcements": {
+    "header": "Aankondigingen",
     "noAnnouncements": "Er zijn op dit moment geen actieve aankondigingen.",
     "sectionSubtitle": "Live aankondigingen van de conventie!",
     "sectionTitle": "Aankondigingen"
+  },
+  "ArtistsAlley": {
+    "check_out": "Uitchecken",
+    "dismiss": "Wijzigingen verwerpen",
+    "display_name_label": "Weergavenaam",
+    "display_name_placeholder": "Jouw voorkeurweergave naam",
+    "edit_request": "Aanvraag wijzigen",
+    "errors": {
+      "invalid_string": "Ongeldig formaat.",
+      "invalid_type": "Dit veld is verplicht.",
+      "location_invalid_string": "Voer het nummer van de tafel in die op je handout staat.",
+      "telegramHandle_invalid_string": "Dit lijkt niet op een geldig Telegram-handle.",
+      "too_small": "Dit veld is verplicht.",
+      "websiteUrl_invalid_string": "Voer je website in als: https://eurofurence.org"
+    },
+    "explanation_edit_change": "Je kunt je Artist Alley tafelregistratie hier wijzigen. Update je informatie, kies een afbeelding en stuur de wijzigingen.",
+    "explanation_edit_new": "Je hebt je nog niet geregistreerd voor een tafel in de Artist Alley, maar dat kun je hier en nu wijzigen. Kies gewoon een vrije tafel, vul het formulier in, kies een afbeelding en stuur ons je aanvraag.",
+    "explanation_status_accepted": "Je aanvraag is gecheckt en goedgekeurd. Als je later opnieuw op een andere tafel wilt registreren, kun je hieronder een nieuwe aanvraag stellen.",
+    "explanation_status_pending": "Je aanvraag wordt nog verwerkt. Als je een fout hebt gemaakt, kun je je gegevens hieronder wijzigen.",
+    "explanation_status_rejected": "Je aanvraag is afgewezen. Je kunt een nieuwe aanvraag maken om het opnieuw te proberen.",
+    "explanation_unauthorized": "Je kunt op dit moment nog niet op een tafel in de Artist Alley registreren. Dit is voor aanwezige deelnemers met een geldig ticket.",
+    "intro": "De Artist Alley biedt een gastvrije, creatieve en veilige omgeving voor alle artiesten en deelnemers. Met het formulier hieronder kunnen artiesten zich registreren wanneer ze een tafel in de Artist Alley opzetten en hun aanwezigheid daar bekendmaken aan deelnemers.",
+    "learn_more": "Leer meer over de Artist Alley",
+    "location_label": "Tafelnummer",
+    "location_placeholder": "Tafelnummer van je handout",
+    "log_in_now": "Meld je nu aan!",
+    "new_request": "Nieuwe aanvraag",
+    "no_submission": "Je hebt nog geen registratie ingediend.",
+    "short_description_label": "Korte beschrijving",
+    "short_description_placeholder": "Informatie over jezelf en je aanbod",
+    "status": {
+      "Accepted": "Je aanvraag is goedgekeurd.",
+      "Pending": "Je aanvraag wordt nog verwerkt.",
+      "Published": "Je aanvraag is goedgekeurd.",
+      "Rejected": "Je aanvraag is afgewezen."
+    },
+    "submission_image_label": "Voorbeeldafbeelding",
+    "submission_image_placeholder": "Kies een afbeelding van je tafel en aanbod",
+    "submit": "Aanvraag indienen",
+    "submit_failed": "Er is iets misgegaan, probeer het later nog eens.",
+    "submit_in_progress": "Aanvraag wordt verzonden …",
+    "submit_succeeded": "Bedankt! We hebben je aanvraag ontvangen.",
+    "telegram_handle_label": "Telegram-handle (optioneel)",
+    "telegram_handle_placeholder": "Openbare Telegram-handle voor deelnemers",
+    "title": "Artist Alley registratie",
+    "unauthorized_not_attending": "Zorg ervoor dat je een geldig ticket hebt voor deze jaarlijkse Conventie, voordat je je op een tafel in de Artist Alley kunt registreren.",
+    "unauthorized_not_checked_in": "Zorg ervoor dat je eerst bij het registratiekantoor incheckt en je Convention Badge ontvangt, voordat je je op een tafel in de Artist Alley kunt registreren.",
+    "unauthorized_not_logged_in": "Je moet je eerst in de app aanmelden, voordat je je op een tafel in de Artist Alley kunt registreren.",
+    "update": "Wijzig je aanvraag",
+    "website_url_label": "Website (optioneel)",
+    "website_url_placeholder": "URL naar je website"
   },
   "Countdown": {
     "after_event": "En dat was het weer! Tot volgend jaar!",
@@ -25,6 +81,28 @@
   },
   "EmptyScreen": {
     "notImplemented": "Deze content is niet zichtbaar."
+  },
+  "Event": {
+    "about_title": "Details",
+    "add_favorite": "Favoriet",
+    "event_was_updated": "Het evenement is sinds je laatste bezoek bijgewerkt",
+    "give_feedback": "Feedback geven",
+    "hide": "Verbergen",
+    "label_event_description": "Meer informatie over het evenement",
+    "label_event_panelhosts": "Gehost door",
+    "label_event_room": "Ruimte",
+    "label_event_track": "Track",
+    "label_event_when": "Wanneer",
+    "mask_required": "Mondkapjes zijn verplicht voor dit evenement",
+    "remove_favorite": "Verwijder favoriet",
+    "reveal": "Toon in overzicht",
+    "share": "Deel dit evenement",
+    "sponsor_event": "Sponsor evenement",
+    "supersponsor_event": "Supersponsor evenement",
+    "view_on_map": "Bekijk op de kaart",
+    "viewing_event": "Bekijk evenement",
+    "when": "{{day}}, {{start}} tot {{finish}}.",
+    "when_local": "{{zone}}: {{day}}, {{start}} tot {{finish}}."
   },
   "Home": {
     "announcementsTitle_one": "Er is {{ count }} aankondiging.",
@@ -42,13 +120,42 @@
   "KnowledgeGroups": {
     "header": "Informatie-artikelen"
   },
+  "Menu": {
+    "about": "Over",
+    "map": "Kaart",
+    "website": "Website"
+  },
   "PrivateMessageList": {
     "from": "Van {{ author }}",
     "from_unknown": "Van onbekende auteur",
+    "header": "Privéberichten",
     "message_item_subtitle": "{{ status }} - Verstuurd op {{ time }}",
     "read": "Gelezen",
     "section_title_from": "Van {{authorName}}",
     "unread": "Ongelezen"
+  },
+  "Profile": {
+    "header": "Profiel",
+    "idp_settings": "Identity setting website",
+    "logged_in_as": "Je bent ingelogd als {{username}}",
+    "login_description": "Als je ingelogd bent, kan {{conName}} je persoonlijke berichten sturen. Het stelt je ook in staat om de Fursuit Catch 'em All te spelen en je aan te melden bij tafels in de Artist Alley.",
+    "logout": "Uitloggen",
+    "not_logged_in": "Je bent momenteel niet ingelogd",
+    "registration_nr": "Registratienummer",
+    "roles": "Rollen",
+    "roles_simple_attendee": "Nog niet aangemeld",
+    "roles_simple_checked_in": "Je bent aangemeld",
+    "roles_subtitle": "Je rollen in de {{conName}} app",
+    "status_names": {
+      "Approved": "Goedgekeurd",
+      "Cancelled": "Geannuleerd",
+      "CheckedIn": "Aangemeld",
+      "Deleted": "Verwijderd",
+      "New": "Nieuw",
+      "Paid": "Betaald",
+      "PartiallyPaid": "Gedeeltelijk betaald",
+      "Unknown": "Onbekend"
+    }
   },
   "Settings": {
     "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
@@ -63,17 +170,6 @@
     },
     "changeLanguage": "Verander taal",
     "currentLanguage": "Jouw huidige taal is Nederlands!",
-    "dev_buttons": {
-      "no_auth_alert": "Je bent niet ingelogd. We stoppen nu.",
-      "send_private_message": "Ontvang een privebericht {{ status }}",
-      "subtitle": "Laat de API iets doen.",
-      "sync": "Forceer synchronizatie {{ status }}",
-      "sync_alert_done": "Alle apparaten zijn geinstructeerd om te verversen",
-      "sync_alert_error": "Je moet lang drukjken om deze functie te activeren",
-      "test_message_content": "Volgend jaar mag je meer werk doen!",
-      "test_message_subject": "Je hebt een grote prijs gewonnen!",
-      "title": "Ontwikkelaarsknoppen"
-    },
     "developer_settings": {
       "subtitle": "Hier moet je met je tengels vanaf blijven tenzij je weet wat je doet.",
       "title": "Ontwikkelaarsinstellingen"
