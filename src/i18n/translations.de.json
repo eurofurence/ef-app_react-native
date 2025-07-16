@@ -212,15 +212,16 @@
   },
   "Menu": {
     "about": "Über uns",
+    "announcements": "Ankündigungen",
     "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealer",
     "events": "Events",
-    "announcements": "Ankündigungen",
     "home": "Start",
     "info": "Wissenswertes",
     "less": "Zuklappen",
     "logged_in_now": "Jetzt anmelden",
+    "map": "Karte",
     "maps": "Karten",
     "more": "Mehr",
     "not_logged_in": "Du bist nicht angemeldet.",
@@ -229,8 +230,7 @@
     "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen",
-    "website": "Webseite",
-    "map": "Karte"
+    "website": "Webseite"
   },
   "Notification": {
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",
@@ -275,6 +275,7 @@
     }
   },
   "RevealHidden": {
+    "header": "Verborgene Events anzeigen",
     "lead": "Klicke auf die Events, um diese in der Übersicht wider anzuzeigen",
     "title": "Events anzeigen"
   },
@@ -360,9 +361,9 @@
   "Todo": {},
   "Viewer": {
     "announcement": "Ankündigung: {{name}}",
-    "artPreview": "Angebotsvorschau: {{name}}",
     "artist": "Dealer: {{name}}",
     "artistThumbnail": "Dealer-Avatar: {{name}}",
+    "artPreview": "Angebotsvorschau: {{name}}",
     "eventBanner": "Banner: {{name}}",
     "eventPoster": "Poster: {{name}}",
     "knowledgeEntryBanner": "Infoartikelbild: {{name}}",
