@@ -102,6 +102,26 @@
   "KnowledgeGroups": {
     "header": "Articoli Informativi"
   },
+  "LostAndFound": {
+    "category": "Categoria",
+    "contact_info": "Informazioni di contatto",
+    "description": "Descrizione",
+    "error_loading": "Errore nel caricamento degli elementi",
+    "header": "Lost & Found",
+    "item_not_found": "Elemento non trovato",
+    "loading": "Caricamento...",
+    "location": "Posizione",
+    "no_items": "Nessun elemento trovato",
+    "no_items_subtitle": "Al momento non ci sono elementi perduti o trovati",
+    "reported": "Segnalato",
+    "reported_by": "Segnalato da",
+    "status": {
+      "Found": "Trovato",
+      "Lost": "Perso",
+      "Returned": "Ritornato",
+      "Unknown": "Sconosciuto"
+    }
+  },
   "Menu": {
     "about": "Informazioni",
     "announcements": "Annunci",

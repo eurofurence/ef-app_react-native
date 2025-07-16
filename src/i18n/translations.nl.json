@@ -120,6 +120,26 @@
   "KnowledgeGroups": {
     "header": "Informatie-artikelen"
   },
+  "LostAndFound": {
+    "category": "Categorie",
+    "contact_info": "Contactinformatie",
+    "description": "Beschrijving",
+    "error_loading": "Fout bij laden van items",
+    "header": "Lost & Found",
+    "item_not_found": "Item niet gevonden",
+    "loading": "Laden...",
+    "location": "Locatie",
+    "no_items": "Geen items gevonden",
+    "no_items_subtitle": "Er zijn momenteel geen verloren of gevonden items gemeld",
+    "reported": "Gemeld",
+    "reported_by": "Gemeld door",
+    "status": {
+      "Found": "Gevonden",
+      "Lost": "Verloren",
+      "Returned": "Teruggegeven",
+      "Unknown": "Onbekend"
+    }
+  },
   "Menu": {
     "about": "Over",
     "announcements": "Aankondigingen",

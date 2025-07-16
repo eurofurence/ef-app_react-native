@@ -257,6 +257,26 @@
   "KnowledgeGroups": {
     "header": "Info Articles"
   },
+  "LostAndFound": {
+    "category": "Category",
+    "contact_info": "Contact Information",
+    "description": "Description",
+    "error_loading": "Error loading items",
+    "header": "Lost & Found",
+    "item_not_found": "Item not found",
+    "loading": "Loading...",
+    "location": "Location",
+    "no_items": "No items found",
+    "no_items_subtitle": "There are currently no lost or found items reported",
+    "reported": "Reported",
+    "reported_by": "Reported by",
+    "status": {
+      "Found": "Found",
+      "Lost": "Lost",
+      "Returned": "Returned",
+      "Unknown": "Unknown"
+    }
+  },
   "Maps": {
     "filtering": "Searching viewed area",
     "results": "In the viewed area"
@@ -273,6 +293,7 @@
     "info": "Info articles",
     "less": "Less",
     "logged_in_now": "Log-in now",
+    "lost_and_found": "Lost & Found",
     "map": "Map",
     "maps": "Maps",
     "more": "More",

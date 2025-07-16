@@ -163,3 +163,14 @@ export type TableRegistrationRecord = {
   Image: ImageRecord
   State: TableRegistrationRecordStatus
 }
+
+export type LostAndFoundRecord = RecordMetadata & {
+  ExternalId: number
+  ImageUrl?: string
+  Title: string
+  Description?: string
+  Status: 'Unknown' | 'Lost' | 'Found' | 'Returned'
+  LostDateTimeUtc?: string
+  FoundDateTimeUtc?: string
+  ReturnDateTimeUtc?: string
+}
