@@ -34,6 +34,7 @@ module.exports = {
       infoPlist: {
         UIBackgroundModes: ['fetch', 'remote-notification'],
         ITSAppUsesNonExemptEncryption: false,
+        NSMicrophoneUsageDescription: false,
       },
       associatedDomains: ['applinks:app.eurofurence.org', 'applinks:app.test.eurofurence.org'],
     },
@@ -78,7 +79,7 @@ module.exports = {
         },
       ],
       permissions: ['INTERNET', 'VIBRATE', 'WRITE_EXTERNAL_STORAGE'],
-      blockedPermissions: ['com.google.android.gms.permission.AD_ID'],
+      blockedPermissions: ['com.google.android.gms.permission.AD_ID', 'android.permission.RECORD_AUDIO'],
     },
     web: {
       bundler: 'metro',
@@ -113,6 +114,7 @@ module.exports = {
         'expo-audio',
         {
           microphonePermission: false,
+          enableMicrophone: false,
         },
       ],
       // Used for Artist Alley registration
