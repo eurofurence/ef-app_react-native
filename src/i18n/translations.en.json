@@ -50,12 +50,12 @@
     "learn_more": "Learn more about the Artist Alley",
     "list": {
       "Accepted": "Accepted registrations",
-      "Pending": "Pending registrations",
-      "Published": "Published registrations",
-      "Rejected": "Rejected registrations",
       "header": "Table registration requests",
       "moderate": "Moderate table requests",
-      "register_self": "Register for yourself"
+      "Pending": "Pending registrations",
+      "Published": "Published registrations",
+      "register_self": "Register for yourself",
+      "Rejected": "Rejected registrations"
     },
     "location_label": "Table number",
     "location_placeholder": "Table number from handout on the table",
@@ -263,16 +263,17 @@
   },
   "Menu": {
     "about": "About",
+    "announcements": "Announcements",
     "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
-    "announcements": "Announcements",
     "home": "Home",
     "image": "Image",
     "info": "Info articles",
     "less": "Less",
     "logged_in_now": "Log-in now",
+    "map": "Map",
     "maps": "Maps",
     "more": "More",
     "not_logged_in": "You are currently not logged in.",
@@ -281,8 +282,7 @@
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
-    "website": "Website",
-    "map": "Map"
+    "website": "Website"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",
@@ -327,6 +327,7 @@
     }
   },
   "RevealHidden": {
+    "header": "Reveal hidden events",
     "lead": "Click on any event to reveal it in the overview again",
     "title": "Reveal specific event"
   },
@@ -435,9 +436,9 @@
   "Todo": {},
   "Viewer": {
     "announcement": "Announcement: {{name}}",
-    "artPreview": "Art preview: {{name}}",
     "artist": "Artist: {{name}}",
     "artistThumbnail": "Artist thumbnail: {{name}}",
+    "artPreview": "Art preview: {{name}}",
     "eventBanner": "Banner: {{name}}",
     "eventPoster": "Poster: {{name}}",
     "knowledgeEntryBanner": "Info article image: {{name}}",

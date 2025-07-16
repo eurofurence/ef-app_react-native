@@ -24,7 +24,7 @@ export const HiddenEvents = () => {
       <Button containerStyle={styles.button} icon="folder-eye" onPress={unhideAllEvents}>
         {t('unhide_all')}
       </Button>
-      <Button containerStyle={styles.button} icon="eye" onPress={() => router.push('/settings/reveal-hidden')}>
+      <Button containerStyle={styles.button} icon="eye" onPress={() => router.push('/settings/reveal')}>
         {t('unhide_specific')}
       </Button>
     </SettingContainer>

@@ -104,12 +104,13 @@
   },
   "Menu": {
     "about": "Informazioni",
+    "announcements": "Annunci",
     "dealers": "Venditori",
     "events": "Eventi",
-    "announcements": "Annunci",
     "info": "Articoli informativi",
     "less": "Di meno",
     "logged_in_now": "Accedi ora",
+    "map": "Mappa",
     "maps": "Mappe",
     "messages_other": "Hai {{count}} nuovi messaggi",
     "more": "Di più",
@@ -117,8 +118,7 @@
     "open_messages": "Apri i messaggi",
     "pm": "Messaggi privati",
     "services": "Servizi",
-    "settings": "Impostazioni",
-    "map": "Mappa"
+    "settings": "Impostazioni"
   },
   "Notification": {
     "announcement": "C'è un annuncio da {{conName}}",
@@ -131,6 +131,11 @@
     "read": "Letto",
     "section_title_from": "Da {{authorName}}",
     "unread": "Non letto"
+  },
+  "RevealHidden": {
+    "header": "Eventi nascosti",
+    "lead": "Clicca su un evento per rivelarlo nell'elenco",
+    "title": "Eventi"
   },
   "Settings": {
     "about": "Crediti",

@@ -124,6 +124,7 @@
     "info": "Informacje",
     "less": "Ukryj",
     "logged_in_now": "Zaloguj się",
+    "map": "Mapa",
     "maps": "Mapy",
     "messages": "Masz {{count}} nowych wiadomości",
     "more": "Menu",
@@ -131,8 +132,7 @@
     "open_messages": "Otwórz prywatne wiadomości",
     "pm": "Prywatne wiadomości",
     "services": "Usługi",
-    "settings": "Ustawienia",
-    "map": "Mapa"
+    "settings": "Ustawienia"
   },
   "Notification": {
     "announcement": "Nowe ogłoszenie od {{conName}}",
@@ -151,6 +151,11 @@
     "logged_in_as": "Jesteś zalogowany jako {{username}}",
     "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
     "logout": "Wyloguj się"
+  },
+  "RevealHidden": {
+    "header": "Ukryte wydarzenia",
+    "lead": "Kliknij na wydarzenie, aby pokazać je na liście",
+    "title": "Wydarzenia"
   },
   "Settings": {
     "about": "O aplikacji",

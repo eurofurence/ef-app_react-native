@@ -158,6 +158,11 @@
       "Unknown": "Onbekend"
     }
   },
+  "RevealHidden": {
+    "header": "Verborgen evenementen weergeven",
+    "lead": "Klik op een evenement om het in de overzicht weer te geven",
+    "title": "Evenementen"
+  },
   "Settings": {
     "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
     "cache": {
