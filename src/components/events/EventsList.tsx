@@ -1,13 +1,13 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
-import { Dimensions, StyleSheet, Vibration } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
-import { router } from 'expo-router'
-import { EventCard, EventDetailsInstance } from './EventCard'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
+import { router } from 'expo-router'
+import { EventCard, EventDetailsInstance } from './EventCard'
 
 /**
  * The properties to the component.
@@ -34,19 +34,11 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
     })
   }, [])
 
-  const onLongPress = useCallback(
-    (event: EventDetails) => {
-      Vibration.vibrate(50)
-      select?.(event)
-    },
-    [select]
-  )
-
   const renderItem = useCallback(
     ({ item }: { item: EventDetailsInstance }) => {
-      return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />
+      return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} />
     },
-    [cardType, onLongPress, onPress]
+    [cardType, onPress]
   )
 
   return (
