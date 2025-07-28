@@ -1,13 +1,14 @@
 import { exchangeCodeAsync, refreshAsync, TokenResponse, TokenResponseConfig, useAuthRequest } from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { Platform } from 'react-native'
 
-import * as SecureStore from '@/util/secureStorage'
 import { authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
-import { captureException } from '@sentry/react-native'
-import axios from 'axios'
 import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
 import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
+import * as SecureStore from '@/util/secureStorage'
+import { captureException } from '@sentry/react-native'
+import axios from 'axios'
 
 /**
  * Thrown within the Auth context operations.
@@ -299,7 +300,9 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
   // Mount and unmount effect.
   useEffect(() => {
     // Warmup the browser to handle login requests.
-    WebBrowser.warmUpAsync().catch(captureException)
+    if (Platform.OS !== 'web') {
+      WebBrowser.warmUpAsync().catch(captureException)
+    }
 
     // Fire off loading the state. Loading the token or setting it to null will then trigger claims fetching.
     ;(async () => {
@@ -313,7 +316,9 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
 
     // On unmount, release browser.
     return () => {
-      WebBrowser.coolDownAsync().catch(captureException)
+      if (Platform.OS !== 'web') {
+        WebBrowser.coolDownAsync().catch(captureException)
+      }
     }
   }, [load])
 
