@@ -206,7 +206,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
 
         // Must have an access token.
         if (!tokenResponse?.accessToken) {
-          throw new AuthContextError('Invalid state for refreshing claims')
+          // No token available, just set claims to null and return early
+          await SecureStore.deleteItemAsync(storageKeyClaims)
+          setClaims(null)
+          return
         }
 
         // Get claims, save and set in state.
@@ -217,6 +220,26 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
       } catch (error) {
         await SecureStore.deleteItemAsync(storageKeyClaims)
         setClaims(null)
+
+        // If the error indicates an invalid token, try to refresh it
+        if (
+          error instanceof Error &&
+          (error.message.includes('Token is inactive') ||
+            error.message.includes('malformed') ||
+            error.message.includes('expired') ||
+            error.message.includes('invalid') ||
+            error.message.includes('Token validation failed'))
+        ) {
+          // Try to refresh the token
+          try {
+            await refreshToken(true)
+          } catch {
+            // If refresh also fails, clear the token and log out
+            await SecureStore.deleteItemAsync(storageKeyTokenResponse)
+            setTokenResponse(null)
+          }
+        }
+
         throw error
       }
     }, [])
@@ -230,7 +253,8 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
 
         // Must have a refresh token.
         if (!tokenResponse?.refreshToken) {
-          throw new AuthContextError('Invalid state for refreshing token')
+          // No refresh token available, just return early
+          return
         }
 
         // Token is still fresh, not actionable.
@@ -252,9 +276,22 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
         setTokenResponse(refreshResponse)
       } catch (error) {
-        // Set the refreshed token.
+        // Clear the token on any error
         await SecureStore.deleteItemAsync(storageKeyTokenResponse)
         setTokenResponse(null)
+
+        // If the error indicates an invalid token, log it for debugging
+        if (
+          error instanceof Error &&
+          (error.message.includes('Token is inactive') ||
+            error.message.includes('malformed') ||
+            error.message.includes('expired') ||
+            error.message.includes('invalid') ||
+            error.message.includes('Token validation failed'))
+        ) {
+          console.warn('Token refresh failed due to invalid token:', error.message)
+        }
+
         throw error
       }
     }, [])
@@ -325,13 +362,45 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
   // On token change, refresh claims.
   useEffect(() => {
     // Refresh claims, capture exceptions.
-    refreshClaims().catch(captureException)
+    refreshClaims().catch((error) => {
+      // Don't capture token validation errors to Sentry as they're expected
+      if (
+        error instanceof Error &&
+        (error.message.includes('Token is inactive') ||
+          error.message.includes('malformed') ||
+          error.message.includes('expired') ||
+          error.message.includes('invalid') ||
+          error.message.includes('Token validation failed'))
+      ) {
+        console.warn('Claims refresh failed due to token validation:', error.message)
+      } else {
+        captureException(error)
+      }
+    })
   }, [tokenResponse, refreshClaims])
 
   // Try refreshing the access token every ten minutes. Token expiry will be around an hour, so
   // this gives us ample time between expiry and the 'fresh' margin.
   useAsyncInterval(
-    useCallback(() => refreshToken().catch(captureException), [refreshToken]),
+    useCallback(
+      () =>
+        refreshToken().catch((error) => {
+          // Don't capture token validation errors to Sentry as they're expected
+          if (
+            error instanceof Error &&
+            (error.message.includes('Token is inactive') ||
+              error.message.includes('malformed') ||
+              error.message.includes('expired') ||
+              error.message.includes('invalid') ||
+              error.message.includes('Token validation failed'))
+          ) {
+            console.warn('Token refresh failed due to token validation:', error.message)
+          } else {
+            captureException(error)
+          }
+        }),
+      [refreshToken]
+    ),
     600_000
   )
 
