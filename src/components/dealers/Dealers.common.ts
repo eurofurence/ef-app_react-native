@@ -125,7 +125,8 @@ export const useDealerAlphabeticalGroups = (now: Date, items: readonly DealerDet
     const sectionedLetters: Record<string, boolean> = {}
     const result: (DealerSectionProps | DealerDetailsInstance)[] = []
     for (const item of items) {
-      const firstLetter = item.DisplayNameOrAttendeeNickname[0].toUpperCase()
+      const displayName = item.DisplayNameOrAttendeeNickname || item.DisplayName || 'Unknown'
+      const firstLetter = displayName[0]?.toUpperCase() || '#'
       if (!(firstLetter in sectionedLetters)) {
         result.push(dealerSectionForLetter(firstLetter))
         sectionedLetters[firstLetter] = true
@@ -139,9 +140,9 @@ export const useDealerAlphabeticalGroups = (now: Date, items: readonly DealerDet
 export const shareDealer = (dealer: DealerDetails) =>
   Share.share(
     {
-      title: dealer.DisplayNameOrAttendeeNickname,
+      title: dealer.DisplayNameOrAttendeeNickname || dealer.DisplayName || 'Unknown Dealer',
       url: `${appBase}/Web/Dealers/${dealer.Id}`,
-      message: `Check out ${dealer.DisplayNameOrAttendeeNickname} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
+      message: `Check out ${dealer.DisplayNameOrAttendeeNickname || dealer.DisplayName || 'Unknown Dealer'} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
     },
     {}
   ).catch(captureException)
