@@ -1,17 +1,17 @@
+import { useDealerGroups } from '@/components/dealers/Dealers.common'
+import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
+import { Label } from '@/components/generic/atoms/Label'
+import { Badge } from '@/components/generic/containers/Badge'
+import { conName } from '@/configuration'
+import { useCache } from '@/context/data/Cache'
+import { useDealersSearch } from '@/context/DealersSearchContext'
+import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { useNow } from '@/hooks/time/useNow'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-import { useLocalSearchParams } from 'expo-router'
-import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
-import { Badge } from '@/components/generic/containers/Badge'
-import { Label } from '@/components/generic/atoms/Label'
-import { conName } from '@/configuration'
-import { useDealerGroups } from '@/components/dealers/Dealers.common'
-import { useNow } from '@/hooks/time/useNow'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
-import { useCache } from '@/context/data/Cache'
 
 export default function AllScreen() {
-  const { query } = useLocalSearchParams<{ query?: string }>()
+  const { query } = useDealersSearch()
   const { t } = useTranslation('Dealers')
   const now = useNow()
 

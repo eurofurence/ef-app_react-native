@@ -1,13 +1,12 @@
-import { useIsFocused } from '@react-navigation/core'
-import React, { FC, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { BackHandler, StyleSheet, View, ViewStyle } from 'react-native'
-import { TextInput } from 'react-native-gesture-handler'
 import SearchPlus from '@expo/vector-icons/FontAwesome5'
+import { useIsFocused } from '@react-navigation/core'
+import React, { FC, useEffect, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { BackHandler, StyleSheet, TextInput, View, ViewStyle } from 'react-native'
 
-import { labelTypeStyles } from './Label'
 import { withAlpha } from '@/context/Theme'
 import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { labelTypeStyles } from './Label'
 
 export type SearchProps = {
   style?: ViewStyle
@@ -23,18 +22,24 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
   const styleText = useThemeColor('invText')
   const colorText = useThemeColorValue('invText')
 
+  // Use ref to track current filter without causing effect re-runs
+  const filterRef = useRef(filter)
+  filterRef.current = filter
+
   // Connect clearing search on back if focused. // TODO: Test if this feels nice.
   const isFocused = useIsFocused()
   useEffect(() => {
     if (!isFocused) return
-    if (!filter.length) return
 
     const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
-      setFilter('')
-      return true
+      if (filterRef.current.length > 0) {
+        setFilter('')
+        return true
+      }
+      return false
     })
     return () => subscription.remove()
-  }, [isFocused, filter, setFilter])
+  }, [isFocused, setFilter])
 
   return (
     <View style={[styles.container, styleLighten, style]}>

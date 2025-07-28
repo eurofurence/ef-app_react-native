@@ -49,7 +49,7 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
           />
         ))}
       </View>
-      <Button style={styles.button} onPress={() => router.navigate('AnnounceList')} outline>
+      <Button style={styles.button} onPress={() => router.navigate('/announcements')} outline>
         {t('view_all_announcements')}
       </Button>
     </>
