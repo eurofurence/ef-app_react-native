@@ -2,10 +2,10 @@
   "convention": {
     "name": "Eurofurence",
     "abbreviation": "EF",
-    "identifier": "EF28",
+    "identifier": "EF29",
     "timeZone": "Europe/Berlin",
-    "appBase": "https://app.eurofurence.org/EF28",
-    "apiBase": "https://app.eurofurence.org/EF28/Api",
+    "appBase": "https://app.eurofurence.org/EF29",
+    "apiBase": "https://app.eurofurence.org/EF29/Api",
     "menuColumns": 3,
     "showLogin": true,
     "showServices": true,
