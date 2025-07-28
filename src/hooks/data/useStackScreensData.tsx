@@ -88,6 +88,13 @@ export function useStackScreensData(): StackScreenProps[] {
         headerShown: false,
       },
       {
+        location: 'announcements/index',
+        title: t('announcements'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
         location: 'images/[id]',
         title: t('image'),
         headerLeft: CustomBack,
