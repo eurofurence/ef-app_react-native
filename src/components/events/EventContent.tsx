@@ -142,6 +142,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
           date: date,
           start: start,
           finish: end,
+          zone: zone,
         })}
         {start === startLocal ? null : (
           <Label type="h3" variant="receded">

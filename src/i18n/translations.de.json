@@ -136,8 +136,8 @@
     "supersponsor_event": "Supersponsor-Event",
     "view_on_map": "Auf der Karte ansehen",
     "viewing_event": "Event ansehen",
-    "when": "{{ day }} {{ date }}, {{ start }} - {{ finish }} {{ zone }}.",
-    "when_local": "{{ zone }}: {{ day }} {{ date }}, {{ start }} - {{ finish }}."
+    "when": "{{ day }} {{ date }}, {{ start }} – {{ finish }} {{ zone }}.",
+    "when_local": "{{ zone }}: {{ day }} {{ date }}, {{ start }} – {{ finish }}."
   },
   "EventFeedback": {
     "disabled_not_attending": "Nur Attendees können Feedback geben",
