@@ -187,8 +187,8 @@
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
     "viewing_event": "Viewing event",
-    "when": "{{day}}, {{start}} until {{finish}}.",
-    "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
+    "when": "{{day}} ({{date}}), {{start}} until {{finish}}.",
+    "when_local": "{{zone}}: {{day}} ({{date}}), {{start}} until {{finish}}."
   },
   "EventFeedback": {
     "disabled_not_attending": "Only attendees can give feedback",
