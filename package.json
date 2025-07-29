@@ -169,6 +169,6 @@
     "submit:web": "gh-pages -d web-build",
     "test": "jest"
   },
-  "version": "6.0.3"
+  "version": "6.0.5"
 }
 
