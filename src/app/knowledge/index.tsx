@@ -31,31 +31,52 @@ export default function Knowledge() {
 
   // Prepare final data for display
   const displayData = useMemo(() => {
-    if (searchResults) {
-      // When searching, we need to include both groups and matching entries
+    if (searchResults && filter.length > 0) {
+      // When searching, maintain proper group structure
       const matchingEntries = searchResults
       const matchingGroupIds = new Set(matchingEntries.map((entry) => entry.KnowledgeGroupId))
-      const matchingGroups = knowledgeGroups.filter((group) => matchingGroupIds.has(group.Id))
 
-      // Also search in group descriptions
+      // Also search in group names and descriptions with better settings
       const groupFuse = new Fuse(knowledgeGroups, {
-        keys: ['Name', 'Description'],
-        threshold: 0.3,
+        keys: [
+          { name: 'Name', weight: 2 },
+          { name: 'Description', weight: 1 },
+        ],
+        threshold: 0.3, // Use same threshold as entries for consistency
+        ignoreLocation: true,
+        includeScore: true,
       })
-      const matchingGroupsFromSearch = groupFuse.search(filter).map((result) => result.item)
+      const groupSearchResults = groupFuse.search(filter)
+      const matchingGroupsFromSearch = groupSearchResults.map((result) => result.item)
 
-      // Combine all matching groups and entries
-      const allMatchingGroups = [...matchingGroups, ...matchingGroupsFromSearch]
-      const uniqueGroups = allMatchingGroups.filter((group, index, self) => index === self.findIndex((g) => g.Id === group.Id))
+      // Get all groups that either contain matching entries or match the search themselves
+      const allRelevantGroups = knowledgeGroups.filter((group) => matchingGroupIds.has(group.Id) || matchingGroupsFromSearch.includes(group))
 
-      return [...uniqueGroups, ...matchingEntries]
+      // Build proper sectioned structure
+      const result: ((typeof knowledgeGroups)[0] | (typeof knowledgeEntries)[0])[] = []
+
+      for (const group of allRelevantGroups) {
+        result.push(group)
+
+        // Add matching entries for this group
+        const groupEntries = matchingEntries.filter((entry) => entry.KnowledgeGroupId === group.Id)
+        result.push(...groupEntries)
+
+        // If group matched search but has no matching entries, show all entries from that group
+        if (matchingGroupsFromSearch.includes(group) && groupEntries.length === 0) {
+          const allGroupEntries = knowledgeEntries.filter((entry) => entry.KnowledgeGroupId === group.Id)
+          result.push(...allGroupEntries)
+        }
+      }
+
+      return result
     }
 
-    // Normal display: show all groups and entries
+    // Normal display: show all groups and entries in proper structure
     return chain(groups)
       .flatMap(({ group, entries }) => [group, ...entries])
       .value()
-  }, [searchResults, groups, knowledgeGroups, filter])
+  }, [searchResults, groups, knowledgeGroups, knowledgeEntries, filter])
 
   return (
     <View style={StyleSheet.absoluteFill}>

@@ -9,8 +9,12 @@ import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails
  */
 export const searchOptions: IFuseOptions<any> = {
   shouldSort: true,
-  threshold: 0.25,
-  ignoreLocation: true,
+  threshold: 0.3, // More forgiving threshold for better partial matches
+  ignoreLocation: true, // Don't care where in the text the match is
+  includeMatches: false, // Don't need match details for performance
+  includeScore: false, // Don't need scores for performance
+  minMatchCharLength: 2, // Allow shorter matches for better partial search
+  findAllMatches: true, // Find all matches within threshold
 }
 
 /**
@@ -54,8 +58,8 @@ export const eventsSearchProperties: FuseOptionKey<EventDetails>[] = [
  * Knowledge base entry properties to include in the search.
  */
 export const knowledgeEntriesSearchProperties: FuseOptionKey<KnowledgeEntryDetails>[] = [
-  { name: 'Title', weight: 1.5 },
-  { name: 'Text', weight: 1 },
+  { name: 'Title', weight: 2 }, // Increased weight for titles
+  { name: 'Text', weight: 1 }, // Full text content
 ]
 
 /**
