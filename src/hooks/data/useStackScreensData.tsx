@@ -168,7 +168,7 @@ export function useStackScreensData(): StackScreenProps[] {
         swipeEnabled: true,
       },
       {
-        location: 'lost-and-found/[id]/index',
+        location: 'lost-and-found/[id]',
         title: t('lost_and_found'),
         headerLeft: CustomBack,
         headerShown: false,
