@@ -101,8 +101,8 @@
     "supersponsor_event": "Supersponsor evenement",
     "view_on_map": "Bekijk op de kaart",
     "viewing_event": "Bekijk evenement",
-    "when": "{{day}}, {{start}} tot {{finish}}.",
-    "when_local": "{{zone}}: {{day}}, {{start}} tot {{finish}}."
+    "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
+    "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
   "Home": {
     "announcementsTitle_one": "Er is {{ count }} aankondiging.",

@@ -74,8 +74,8 @@
     "supersponsor_event": "Punkt programu dla supersponsorów",
     "view_on_map": "Pokaż na mapie",
     "viewing_event": "Przeglądany punkt programu",
-    "when": "{{day}}, {{start}} do {{finish}}.",
-    "when_local": "{{zone}}: {{day}}, {{start}} do {{finish}}."
+    "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
+    "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
   "Events": {
     "afternoon": "Po południu",

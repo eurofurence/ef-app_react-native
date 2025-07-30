@@ -63,8 +63,8 @@
     "supersponsor_event": "Evento per supersponsor",
     "view_on_map": "Vedi sulla mappa",
     "viewing_event": "Visualizzando l'evento",
-    "when": "{{day}}, {{start}} fino alle {{finish}}.",
-    "when_local": "{{zone}}: {{day}}, {{start}} fino alle {{finish}}."
+    "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
+    "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
   "Events": {
     "afternoon": "Al pomeriggio",
