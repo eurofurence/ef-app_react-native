@@ -168,6 +168,20 @@ export function useStackScreensData(): StackScreenProps[] {
         swipeEnabled: true,
       },
       {
+        location: 'lost-and-found/index',
+        title: t('lost_and_found'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
+        location: 'lost-and-found/[id]',
+        title: t('lost_and_found'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
         location: '+not-found',
         headerShown: false,
       },

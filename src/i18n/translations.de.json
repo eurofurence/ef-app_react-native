@@ -206,6 +206,26 @@
   "KnowledgeGroups": {
     "header": "Wissenswertes"
   },
+  "LostAndFound": {
+    "category": "Kategorie",
+    "contact_info": "Kontaktinformationen",
+    "description": "Beschreibung",
+    "error_loading": "Fehler beim Laden der Elemente",
+    "header": "Lost & Found",
+    "item_not_found": "Element nicht gefunden",
+    "loading": "Laden...",
+    "location": "Ort",
+    "no_items": "Keine Elemente gefunden",
+    "no_items_subtitle": "Es gibt momentan keine verlorenen oder gefundenen Elemente",
+    "reported": "Gemeldet",
+    "reported_by": "Gemeldet von",
+    "status": {
+      "Found": "Gefunden",
+      "Lost": "Verloren",
+      "Returned": "Zurückgegeben",
+      "Unknown": "Unbekannt"
+    }
+  },
   "Maps": {
     "filtering": "Durchsuche Ansicht",
     "results": "In der Ansicht"

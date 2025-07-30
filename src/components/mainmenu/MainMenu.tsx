@@ -59,9 +59,8 @@ export function MainMenu({ tabs }: MainMenuProps) {
         <Tab icon="image-frame" text={t('artist_alley')} onPress={() => handleNavigation('/artists-alley')} />
         <Tab icon="card-account-details-outline" text={t('profile')} onPress={() => handleNavigation('/profile')} disabled={!loggedIn} />
         <Tab icon="cog" text={t('settings')} onPress={() => handleNavigation('/settings')} />
+        <Tab icon="magnify" text={t('lost_and_found')} onPress={() => handleNavigation('/lost-and-found')} />
         <Tab icon="web" text={t('website')} onPress={() => Linking.openURL(conWebsite)} />
-      </Grid>
-      <Grid cols={2}>
         <Tab icon="map" text={t('map')} onPress={() => openBrowserAsync(efnavMapUrl)} />
         <Tab icon="information" text={t('about')} onPress={() => handleNavigation('/about')} />
       </Grid>
