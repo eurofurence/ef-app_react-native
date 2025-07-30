@@ -1,33 +1,34 @@
-import { StyleSheet, View } from 'react-native'
-import { EventDayDetails, EventDetails, EventRoomDetails, EventTrackDetails } from '@/context/data/types.details'
-import { router, useLocalSearchParams } from 'expo-router'
-import { useTranslation } from 'react-i18next'
-import { useCache } from '@/context/data/Cache'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useNow } from '@/hooks/time/useNow'
-import * as React from 'react'
-import { useMemo, useRef, useState } from 'react'
-import { ComboModal, ComboModalRef } from '@/components/generic/atoms/ComboModal'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useEventOtherGroups } from '@/components/events/Events.common'
+import { EventsSectionedList } from '@/components/events/EventsSectionedList'
+import { ComboModal, ComboModalRef } from '@/components/generic/atoms/ComboModal'
 import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Tab } from '@/components/generic/containers/Tab'
-import { EventsSectionedList } from '@/components/events/EventsSectionedList'
+import { useCache } from '@/context/data/Cache'
+import { EventDayDetails, EventDetails, EventRoomDetails, EventTrackDetails } from '@/context/data/types.details'
+import { useScheduleSearch } from '@/context/ScheduleSearchContext'
+import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useNow } from '@/hooks/time/useNow'
+import { router } from 'expo-router'
+import * as React from 'react'
+import { useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })
 }
 
-export default function Filter() {
-  const { query } = useLocalSearchParams<{ query?: string }>()
+export default function FilterScreen() {
+  const { query } = useScheduleSearch()
   const { t } = useTranslation('Events')
   const { events, eventDays, eventTracks, eventRooms, eventHosts, searchEvents } = useCache()
 
   const activeStyle = useThemeBackground('secondary')
   const inactiveStyle = useThemeBackground('inverted')
 
-  const now = useNow(5)
+  const now = useNow()
 
   const daysRef = useRef<ComboModalRef<EventDayDetails>>(null)
   const tracksRef = useRef<ComboModalRef<EventTrackDetails>>(null)

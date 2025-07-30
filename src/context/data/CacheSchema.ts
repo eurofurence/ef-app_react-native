@@ -75,8 +75,8 @@ export const schemaEntities = {
   eventDays: defineEntity<EventDayRecord>('EventConferenceDays', (item) => item.Date),
   eventRooms: defineEntity<EventRoomRecord>('EventConferenceRooms', (item) => item.Name),
   eventTracks: defineEntity<EventTrackRecord>('EventConferenceTracks', (item) => item.Name),
-  knowledgeGroups: defineEntity<KnowledgeGroupRecord>('KnowledgeGroups', (item) => item.Order),
-  knowledgeEntries: defineEntity<KnowledgeEntryRecord>('KnowledgeEntries', (item) => item.Order),
+  knowledgeGroups: defineEntity<KnowledgeGroupRecord>('KnowledgeGroups', (item) => item.Order, 'desc'),
+  knowledgeEntries: defineEntity<KnowledgeEntryRecord>('KnowledgeEntries', (item) => item.Order, 'desc'),
   maps: defineEntity<MapRecord>('Maps', (item) => item.Order),
 } as const
 

@@ -1,8 +1,3 @@
-import { useMemo } from 'react'
-import { toZonedTime } from 'date-fns-tz'
-import { parseISO } from 'date-fns'
-import Fuse from 'fuse.js'
-import { chain } from 'lodash'
 import { conTimeZone } from '@/configuration'
 import {
   createCategoryMapper,
@@ -20,22 +15,15 @@ import {
   deriveIsSuperSponsorsOnly,
   deriveProfileUrlFromMastodonHandle,
 } from '@/context/data/useCacheExtensions.derived'
+import { parseISO } from 'date-fns'
+import { toZonedTime } from 'date-fns-tz'
+import Fuse from 'fuse.js'
+import { chain } from 'lodash'
+import { useMemo } from 'react'
 
-import { EventRecord, KnowledgeEntryRecord, MapRecord } from '@/context/data/types.api'
-import { EntityStore, filterEntityStore, mapEntityStore } from '@/context/data/CacheTools'
 import { StoreData } from '@/context/data/CacheStore'
-import {
-  announcementsSearchProperties,
-  dealersSearchProperties,
-  eventsSearchProperties,
-  globalSearchProperties,
-  knowledgeEntriesSearchProperties,
-  searchOptions,
-  searchOptionsGlobal,
-  useFuseMemo,
-  useFuseRecordMemo,
-} from '@/context/data/useCacheExtensions.searching'
-import { GlobalSearchResult, ImageLocation } from '@/context/data/types.own'
+import { EntityStore, filterEntityStore, mapEntityStore } from '@/context/data/CacheTools'
+import { EventRecord, KnowledgeEntryRecord, MapRecord } from '@/context/data/types.api'
 import {
   AnnouncementDetails,
   DealerDetails,
@@ -48,6 +36,18 @@ import {
   KnowledgeGroupDetails,
   MapDetails,
 } from '@/context/data/types.details'
+import { GlobalSearchResult, ImageLocation } from '@/context/data/types.own'
+import {
+  announcementsSearchProperties,
+  dealersSearchProperties,
+  eventsSearchProperties,
+  globalSearchProperties,
+  knowledgeEntriesSearchProperties,
+  searchOptions,
+  searchOptionsGlobal,
+  useFuseMemo,
+  useFuseRecordMemo,
+} from '@/context/data/useCacheExtensions.searching'
 
 /**
  * Resolved detailed entity data.

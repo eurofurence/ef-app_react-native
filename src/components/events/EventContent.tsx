@@ -8,6 +8,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { captureException } from '@sentry/react-native'
 import { differenceInMilliseconds } from 'date-fns'
 import { format } from 'date-fns-tz'
+import { de } from 'date-fns/locale/de'
 import { useCalendars } from 'expo-localization'
 import { router } from 'expo-router'
 import { openBrowserAsync } from 'expo-web-browser'
@@ -72,16 +73,17 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
   const feedbackDisabled = progress < 0.0
 
   const calendar = useCalendars()
-  const { zone, start, end, day, startLocal, endLocal, dayLocal } = useMemo(() => {
+  const { zone, start, end, day, startLocal, endLocal, dayLocal, date } = useMemo(() => {
     const timeZone = calendar[0]?.timeZone ?? conTimeZone
     const zone = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' }).format(new Date()).split(' ').pop()
-    const start = format(event.Start, 'p')
-    const end = format(event.End, 'p')
+    const start = format(event.Start, 'p', { locale: de })
+    const end = format(event.End, 'p', { locale: de })
     const day = format(event.Start, 'EEE')
-    const startLocal = format(event.StartLocal, 'p')
-    const endLocal = format(event.EndLocal, 'p')
+    const date = format(event.Start, 'yyyy-MM-dd')
+    const startLocal = format(event.StartLocal, 'p', { locale: de })
+    const endLocal = format(event.EndLocal, 'p', { locale: de })
     const dayLocal = format(event.StartLocal, 'EEE')
-    return { zone, start, end, day, startLocal, endLocal, dayLocal }
+    return { zone, start, end, day, startLocal, endLocal, dayLocal, date }
   }, [calendar, event.End, event.EndLocal, event.Start, event.StartLocal])
 
   return (
@@ -137,14 +139,17 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       <Label style={styles.marginAround} type="h3">
         {t('when', {
           day: day,
+          date: date,
           start: start,
           finish: end,
+          zone: zone,
         })}
         {start === startLocal ? null : (
           <Label type="h3" variant="receded">
             {' ' +
               t('when_local', {
                 day: dayLocal,
+                date: date,
                 start: startLocal,
                 finish: endLocal,
                 zone: zone,

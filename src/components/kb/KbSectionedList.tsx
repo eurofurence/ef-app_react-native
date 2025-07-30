@@ -2,14 +2,14 @@ import { FlashList } from '@shopify/flash-list'
 import React, { FC, ReactElement, useCallback, useMemo } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 
-import { router } from 'expo-router'
-import { KbSection } from './KbSection'
-import { KbEntryCard } from './KbEntryCard'
-import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
-import { findIndices } from '@/util/findIndices'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from '@/context/data/types.details'
+import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
+import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
+import { router } from 'expo-router'
+import { KbEntryCard } from './KbEntryCard'
+import { KbSection } from './KbSection'
 
 /**
  * The properties to the component.
