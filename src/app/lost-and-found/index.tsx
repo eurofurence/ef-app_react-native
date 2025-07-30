@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { LostAndFoundList } from '@/components/lost-and-found/LostAndFoundList'
 import { NoData } from '@/components/generic/containers/NoData'
-import { useLostAndFoundAllQuery } from '@/hooks/api/lost-and-found/useLostAndFoundAllQuery'
+import { useLostAndFoundQuery } from '@/hooks/api/lost-and-found/useLostAndFoundQuery'
 import { Header } from '@/components/generic/containers/Header'
 
 export default function LostAndFoundPage() {
@@ -13,7 +13,7 @@ export default function LostAndFoundPage() {
 
 const LostAndFoundContent: FC = () => {
   const { t } = useTranslation('LostAndFound')
-  const { data: items, isLoading, error } = useLostAndFoundAllQuery()
+  const { data: items, isLoading, error } = useLostAndFoundQuery()
 
   if (isLoading) {
     return (

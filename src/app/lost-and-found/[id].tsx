@@ -6,8 +6,10 @@ import { useTranslation } from 'react-i18next'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { NoData } from '@/components/generic/containers/NoData'
-import { useLostAndFoundItemQuery } from '@/hooks/api/lost-and-found/useLostAndFoundItemQuery'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
+import { useLostAndFoundItemQuery } from '@/hooks/api/lost-and-found/useLostAndFoundQuery'
+import { Header } from '@/components/generic/containers/Header'
+import { Floater } from '@/components/generic/containers/Floater'
 
 export default function LostAndFoundDetailPage() {
   return <LostAndFoundDetailContent />
@@ -22,6 +24,7 @@ const LostAndFoundDetailContent: FC = () => {
   if (isLoading) {
     return (
       <View style={styles.container}>
+        <Header>{t('header')}</Header>
         <NoData text={t('loading')} />
       </View>
     )
@@ -30,6 +33,7 @@ const LostAndFoundDetailContent: FC = () => {
   if (error || !item) {
     return (
       <View style={styles.container}>
+        <Header>{t('header')}</Header>
         <NoData text={t('item_not_found')} />
       </View>
     )
@@ -38,32 +42,34 @@ const LostAndFoundDetailContent: FC = () => {
   const statusColor = item.Status === 'Found' ? theme.primary : item.Status === 'Returned' ? theme.warning : theme.notification
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {item.ImageUrl && (
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: item.ImageUrl }} style={styles.image} />
-        </View>
-      )}
+    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+      <Header>{item.Title}</Header>
 
-      <View style={styles.header}>
-        <Label style={styles.title}>{item.Title}</Label>
-        <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
-          <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
-        </View>
-      </View>
+      <Floater>
+        {item.ImageUrl && (
+          <View style={styles.imageContainer}>
+            <Image source={{ uri: item.ImageUrl }} style={styles.image} />
+          </View>
+        )}
 
-      {item.Description && (
+        <View style={styles.header}>
+          <Label style={styles.title}>{item.Title}</Label>
+          <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+            <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
+          </View>
+        </View>
+
+        {item.Description && (
+          <View style={styles.section}>
+            <Label style={styles.sectionTitle}>{t('description')}</Label>
+            <Label style={styles.description}>{item.Description}</Label>
+          </View>
+        )}
+
         <View style={styles.section}>
-          <Label style={styles.sectionTitle}>{t('description')}</Label>
-          <Label style={styles.description}>{item.Description}</Label>
+          <Label style={styles.date}>{new Date(item.LastChangeDateTimeUtc).toLocaleString()}</Label>
         </View>
-      )}
-
-      <View style={styles.section}>
-        <Label style={styles.sectionTitle}>{t('status')}</Label>
-        <Label style={styles.description}>{item.Status}</Label>
-        <Label style={styles.date}>{new Date(item.LastChangeDateTimeUtc).toLocaleString()}</Label>
-      </View>
+      </Floater>
     </ScrollView>
   )
 }
@@ -77,7 +83,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginVertical: 20,
   },
   image: {
     width: 200,
@@ -88,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginBottom: 20,
+    marginVertical: 20,
   },
   title: {
     flex: 1,
