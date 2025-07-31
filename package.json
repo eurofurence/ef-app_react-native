@@ -134,7 +134,7 @@
   "license": "MIT",
   "main": "expo-router/entry",
   "name": "ef-app_react-native",
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.14.0",
   "prettier": {
     "endOfLine": "crlf",
     "semi": false,
@@ -171,4 +171,3 @@
   },
   "version": "6.0.7"
 }
-
