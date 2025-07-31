@@ -20,7 +20,7 @@ module.exports = {
     splash: {
       image: './assets/platform/splash.png',
       resizeMode: 'contain',
-      backgroundColor: '#231F20',
+      backgroundColor: '#1E303E',
     },
     updates: {
       fallbackToCacheTimeout: 0,
@@ -47,11 +47,11 @@ module.exports = {
       splash: {
         resizeMode: 'native',
         image: './assets/platform/splash.png',
-        backgroundColor: '#231F20',
+        backgroundColor: '#1E303E',
       },
       adaptiveIcon: {
         foregroundImage: './assets/platform/appicon-android.png',
-        backgroundColor: '#231F20',
+        backgroundColor: '#1E303E',
         monochromeImage: './assets/platform/appicon-android-monochrome.png',
       },
       intentFilters: [
