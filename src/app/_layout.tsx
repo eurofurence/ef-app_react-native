@@ -80,12 +80,12 @@ export function MainLayout() {
   useZoneAbbr()
   useEventReminderRescheduling()
   useTokenManager()
-
+  console.log(themeType)
   return (
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
       <BottomSheetModalProvider>
         <ThemeProvider value={themeNavigation}>
-          <StatusBar backgroundColor={theme.background} style={themeType === 'light' ? 'light' : 'dark'} />
+          <StatusBar backgroundColor={theme.background} style={themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
           <Stack>
             {screensData.map((screen) => (
               <Stack.Screen
