@@ -9,7 +9,7 @@ import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useTokenManager } from '@/hooks/tokens/useTokenManager'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { SplashScreen, Stack } from 'expo-router'
+import { SplashScreen, Stack, useSegments } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -58,6 +58,7 @@ export function MainLayout() {
   // Get the theme type for status bar configuration.
   const theme = useTheme()
   const themeType = useThemeName()
+  const segments = useSegments()
 
   const screensData = useStackScreensData()
 
@@ -80,12 +81,16 @@ export function MainLayout() {
   useZoneAbbr()
   useEventReminderRescheduling()
   useTokenManager()
-  console.log(themeType)
+
+  // Check if we're on the exact (areas)/index route
+  // TODO: Surely there's a better way to do this?
+  const isHomeView = !segments.length || (segments[0] === '(areas)' && (segments.length === 1 || segments.at(1) === 'index'))
+
   return (
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
       <BottomSheetModalProvider>
         <ThemeProvider value={themeNavigation}>
-          <StatusBar backgroundColor={theme.background} style={themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
+          <StatusBar backgroundColor={theme.background} style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
           <Stack>
             {screensData.map((screen) => (
               <Stack.Screen
