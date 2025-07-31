@@ -96,7 +96,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
 
 const styles = StyleSheet.create({
   cover: {
-    backgroundColor: '#00000060',
+    backgroundColor: '#00000020',
   },
   container: {
     height: 240,
@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 130,
-    aspectRatio: 682 / 1139,
+    aspectRatio: 1,
   },
 })
