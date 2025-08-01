@@ -13,7 +13,7 @@
     "website": "https://www.eurofurence.org",
     "catchEmUrl": "https://fursuit.eurofurence.org/catch-em-all",
     "artistAlleyUrl": "https://app.eurofurence.org/qr/artistalley",
-    "cacheVersion": 4,
+    "cacheVersion": 5,
     "efnavMapUrl": "https://nav.eurofurence.org"
   },
   "auth": {
