@@ -198,6 +198,58 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     }, [promptAsync, request])
   )
 
+  const refreshToken = useAsyncCallbackOnce(
+    useCallback(async (force?: boolean) => {
+      try {
+        // Get from secure store.
+        const tokenResponse = await getLastTokenResponse()
+
+        // Must have a refresh token.
+        if (!tokenResponse?.refreshToken) {
+          // No refresh token available, just return early
+          return
+        }
+
+        // Token is still fresh, not actionable.
+        if (!(force || !TokenResponse.isTokenFresh(tokenResponse, 300))) {
+          return
+        }
+
+        // Refresh with the current token.
+        const refreshResponse = await refreshAsync(
+          {
+            clientId: authClientId,
+            scopes: authScopes,
+            refreshToken: tokenResponse.refreshToken,
+          },
+          discovery
+        )
+
+        // Set the refreshed token.
+        await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
+        setTokenResponse(refreshResponse)
+      } catch (error) {
+        // Clear the token on any error
+        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
+        setTokenResponse(null)
+
+        // If the error indicates an invalid token, log it for debugging
+        if (
+          error instanceof Error &&
+          (error.message.includes('Token is inactive') ||
+            error.message.includes('malformed') ||
+            error.message.includes('expired') ||
+            error.message.includes('invalid') ||
+            error.message.includes('Token validation failed'))
+        ) {
+          console.warn('Token refresh failed due to invalid token:', error.message)
+        }
+
+        throw error
+      }
+    }, [])
+  )
+
   const refreshClaims = useAsyncCallbackOnce(
     useCallback(async () => {
       try {
@@ -261,59 +313,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
           throw error
         }
       }
-    }, [])
-  )
-
-  const refreshToken = useAsyncCallbackOnce(
-    useCallback(async (force?: boolean) => {
-      try {
-        // Get from secure store.
-        const tokenResponse = await getLastTokenResponse()
-
-        // Must have a refresh token.
-        if (!tokenResponse?.refreshToken) {
-          // No refresh token available, just return early
-          return
-        }
-
-        // Token is still fresh, not actionable.
-        if (!(force || !TokenResponse.isTokenFresh(tokenResponse, 300))) {
-          return
-        }
-
-        // Refresh with the current token.
-        const refreshResponse = await refreshAsync(
-          {
-            clientId: authClientId,
-            scopes: authScopes,
-            refreshToken: tokenResponse.refreshToken,
-          },
-          discovery
-        )
-
-        // Set the refreshed token.
-        await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
-        setTokenResponse(refreshResponse)
-      } catch (error) {
-        // Clear the token on any error
-        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
-        setTokenResponse(null)
-
-        // If the error indicates an invalid token, log it for debugging
-        if (
-          error instanceof Error &&
-          (error.message.includes('Token is inactive') ||
-            error.message.includes('malformed') ||
-            error.message.includes('expired') ||
-            error.message.includes('invalid') ||
-            error.message.includes('Token validation failed'))
-        ) {
-          console.warn('Token refresh failed due to invalid token:', error.message)
-        }
-
-        throw error
-      }
-    }, [])
+    }, [refreshToken])
   )
 
   const logout = useAsyncCallbackOnce(
@@ -357,7 +357,9 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
   useEffect(() => {
     // Warmup the browser to handle login requests.
     if (Platform.OS !== 'web') {
-      WebBrowser.warmUpAsync().catch(captureException)
+      WebBrowser.warmUpAsync().catch(() => {
+        return
+      })
     }
 
     // Fire off loading the state. Loading the token or setting it to null will then trigger claims fetching.
@@ -373,7 +375,9 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     // On unmount, release browser.
     return () => {
       if (Platform.OS !== 'web') {
-        WebBrowser.coolDownAsync().catch(captureException)
+        WebBrowser.coolDownAsync().catch(() => {
+          return
+        })
       }
     }
   }, [load])
