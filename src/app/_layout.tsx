@@ -28,6 +28,7 @@ import '@/init/splash'
 
 // Import global tailwind CSS.
 import '@/css/globals.css'
+import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 
 /**
  * The root layout for the application.
@@ -81,6 +82,7 @@ export function MainLayout() {
   useZoneAbbr()
   useEventReminderRescheduling()
   useTokenManager()
+  useNotificationResponseManager()
 
   // Check if we're on the exact (areas)/index route
   // TODO: Surely there's a better way to do this?
