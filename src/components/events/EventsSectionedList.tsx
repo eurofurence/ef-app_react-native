@@ -1,16 +1,16 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
-import { Dimensions, StyleSheet, Vibration } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 
-import { router } from 'expo-router'
-import { EventSection, EventSectionProps } from './EventSection'
-import { EventCard, EventDetailsInstance } from './EventCard'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { findIndices } from '@/util/findIndices'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
+import { router } from 'expo-router'
+import { EventCard, EventDetailsInstance } from './EventCard'
+import { EventSection, EventSectionProps } from './EventSection'
 
 /**
  * The properties to the component.
@@ -46,23 +46,15 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
     })
   }, [])
 
-  const onLongPress = useCallback(
-    (event: EventDetails) => {
-      Vibration.vibrate(50)
-      select?.(event)
-    },
-    [select]
-  )
-
   const renderItem = useCallback(
     ({ item }: { item: SectionProps | EventDetailsInstance }) => {
       if ('details' in item) {
-        return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />
+        return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} />
       } else {
         return <EventSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
       }
     },
-    [cardType, onLongPress, onPress]
+    [cardType, onPress]
   )
 
   return (

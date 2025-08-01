@@ -13,14 +13,14 @@ module.exports = {
     slug: 'ef-app-react-native',
     description: 'Your one stop shop to the convention!',
     owner: 'eurofurence',
-    version: '6.0.0',
+    version: '6.1.1',
     orientation: 'default',
     userInterfaceStyle: 'automatic',
     scheme: 'eurofurence',
     splash: {
       image: './assets/platform/splash.png',
       resizeMode: 'contain',
-      backgroundColor: '#231F20',
+      backgroundColor: '#1E303E',
     },
     updates: {
       fallbackToCacheTimeout: 0,
@@ -34,6 +34,7 @@ module.exports = {
       infoPlist: {
         UIBackgroundModes: ['fetch', 'remote-notification'],
         ITSAppUsesNonExemptEncryption: false,
+        NSMicrophoneUsageDescription: false,
       },
       associatedDomains: ['applinks:app.eurofurence.org', 'applinks:app.test.eurofurence.org'],
     },
@@ -41,14 +42,16 @@ module.exports = {
       package: 'org.eurofurence.connavigator',
       icon: './assets/platform/appicon-android.png',
       googleServicesFile: './assets/platform/google-services.json',
+      targetSdkVersion: 35,
+      compileSdkVersion: 35,
       splash: {
         resizeMode: 'native',
         image: './assets/platform/splash.png',
-        backgroundColor: '#231F20',
+        backgroundColor: '#1E303E',
       },
       adaptiveIcon: {
         foregroundImage: './assets/platform/appicon-android.png',
-        backgroundColor: '#231F20',
+        backgroundColor: '#1E303E',
         monochromeImage: './assets/platform/appicon-android-monochrome.png',
       },
       intentFilters: [
@@ -78,7 +81,7 @@ module.exports = {
         },
       ],
       permissions: ['INTERNET', 'VIBRATE', 'WRITE_EXTERNAL_STORAGE'],
-      blockedPermissions: ['com.google.android.gms.permission.AD_ID'],
+      blockedPermissions: ['com.google.android.gms.permission.AD_ID', 'android.permission.RECORD_AUDIO'],
     },
     web: {
       bundler: 'metro',
@@ -113,6 +116,7 @@ module.exports = {
         'expo-audio',
         {
           microphonePermission: false,
+          enableMicrophone: false,
         },
       ],
       // Used for Artist Alley registration
@@ -131,6 +135,11 @@ module.exports = {
             useFrameworks: 'static',
             cacheEnabled: true,
             privacyManifestAggregationEnabled: true,
+          },
+          android: {
+            compileSdkVersion: 35,
+            targetSdkVersion: 35,
+            buildToolsVersion: '35.0.0',
           },
         },
       ],

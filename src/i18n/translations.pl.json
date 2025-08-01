@@ -74,8 +74,8 @@
     "supersponsor_event": "Punkt programu dla supersponsorów",
     "view_on_map": "Pokaż na mapie",
     "viewing_event": "Przeglądany punkt programu",
-    "when": "{{day}}, {{start}} do {{finish}}.",
-    "when_local": "{{zone}}: {{day}}, {{start}} do {{finish}}."
+    "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
+    "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
   "Events": {
     "afternoon": "Po południu",
@@ -115,14 +115,36 @@
   "KnowledgeGroups": {
     "header": "Podstawowe informacje"
   },
+  "LostAndFound": {
+    "category": "Kategoria",
+    "contact_info": "Informacje kontaktowe",
+    "description": "Opis",
+    "error_loading": "Błąd podczas ładowania elementów",
+    "header": "Lost & Found",
+    "item_not_found": "Element nie znaleziony",
+    "loading": "Ładowanie...",
+    "location": "Lokalizacja",
+    "no_items": "Nie znaleziono elementów",
+    "no_items_subtitle": "Obecnie nie ma zgłoszonych elementów",
+    "reported": "Zgłoszony",
+    "reported_by": "Zgłoszony przez",
+    "status": {
+      "Found": "Znaleziony",
+      "Lost": "Zaginiony",
+      "Returned": "Zwrócony",
+      "Unknown": "Nieznany"
+    }
+  },
   "Menu": {
     "about": "O nas",
+    "announcements": "Ogłoszenia",
     "dealers": "Wystawcy",
     "events": "Program",
     "home": "Start",
     "info": "Informacje",
     "less": "Ukryj",
     "logged_in_now": "Zaloguj się",
+    "map": "Mapa",
     "maps": "Mapy",
     "messages": "Masz {{count}} nowych wiadomości",
     "more": "Menu",
@@ -130,8 +152,7 @@
     "open_messages": "Otwórz prywatne wiadomości",
     "pm": "Prywatne wiadomości",
     "services": "Usługi",
-    "settings": "Ustawienia",
-    "map": "Mapa"
+    "settings": "Ustawienia"
   },
   "Notification": {
     "announcement": "Nowe ogłoszenie od {{conName}}",
@@ -150,6 +171,11 @@
     "logged_in_as": "Jesteś zalogowany jako {{username}}",
     "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
     "logout": "Wyloguj się"
+  },
+  "RevealHidden": {
+    "header": "Ukryte wydarzenia",
+    "lead": "Kliknij na wydarzenie, aby pokazać je na liście",
+    "title": "Wydarzenia"
   },
   "Settings": {
     "about": "O aplikacji",

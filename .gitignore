@@ -208,6 +208,7 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+.xcode.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -493,6 +494,8 @@ render.experimental.xml
 # End of https://www.toptal.com/developers/gitignore/api/intellij+all,visualstudiocode,yarn,node,reactnative
 
 *.aab
+*.apk
+*.ipa
 
 # Directory for storing things locally
 _private

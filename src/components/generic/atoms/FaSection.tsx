@@ -48,7 +48,7 @@ export const FaSection: FC<FaSectionProps> = ({ style, icon = 'bookmark', title,
     <Col style={[styles.container, styleBackground, style]}>
       <Row type="center">
         {!icon ? <View style={styles.placeholder} /> : <FontAwesomeIcon color={iconColor} style={styles.icon} name={icon} size={iconSize} />}
-        <Label style={styles.containerFill} type="h1" variant={titleVariant} color={titleColor ?? 'important'} ellipsizeMode="tail">
+        <Label style={styles.containerFill} type="h2" variant={titleVariant} color={titleColor ?? 'important'} ellipsizeMode="tail">
           {title}
         </Label>
       </Row>
@@ -56,7 +56,7 @@ export const FaSection: FC<FaSectionProps> = ({ style, icon = 'bookmark', title,
       {!subtitle ? null : (
         <Row type="center">
           <View style={styles.placeholder} />
-          <Label style={styles.containerFill} type="h3" variant={subtitleVariant} color={subtitleColor ?? 'text'} ellipsizeMode="tail">
+          <Label style={styles.containerFill} type="h4" variant={subtitleVariant} color={subtitleColor ?? 'text'} ellipsizeMode="tail">
             {subtitle}
           </Label>
         </Row>

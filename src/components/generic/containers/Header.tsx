@@ -1,5 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react'
-import { SafeAreaView, StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 import { Pressable, PressableProps } from 'react-native-gesture-handler'
 
 import { router } from 'expo-router'
@@ -10,6 +10,7 @@ import { Row } from './Row'
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useToastMessages } from '@/context/ui/ToastContext'
 import { Toast } from '@/components/Toast'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const iconSize = 26
 const iconPad = 6
@@ -48,61 +49,60 @@ const secondaryHitSlop: PressableProps['hitSlop'] = {
 }
 
 export const Header: FC<HeaderProps> = (props) => {
+  const insets = useSafeAreaInsets()
   const colorValue = useThemeColorValue('text')
   const styleBackground = useThemeBackground('background')
   const styleBorder = useThemeBorder('darken')
   const toastMessages = useToastMessages(5)
   return (
-    <SafeAreaView>
-      <Row style={[styles.container, styleBackground, styleBorder, props.style]} type="center" variant="spaced">
+    <Row style={[styles.container, styleBackground, styleBorder, props.style, { paddingTop: styles.container.paddingTop + insets.top }]} type="center" variant="spaced">
+      <Pressable
+        hitSlop={backHitSlop}
+        style={({ pressed }) => [styles.back, { opacity: pressed ? 0.5 : 1 }]}
+        onPress={() => router.back()}
+        accessibilityRole="button"
+        accessibilityLabel="Back"
+      >
+        <Icon name="chevron-left" size={iconSize} color={colorValue} />
+      </Pressable>
+
+      <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
+        {props.children}
+      </Label>
+
+      {/* Optional secondary action. */}
+      {!('secondaryIcon' in props) ? null : (
         <Pressable
-          hitSlop={backHitSlop}
-          style={({ pressed }) => [styles.back, { opacity: pressed ? 0.5 : 1 }]}
-          onPress={() => router.back()}
+          hitSlop={secondaryHitSlop}
+          style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.5 : 1 }]}
+          onPress={() => props.secondaryPress()}
           accessibilityRole="button"
-          accessibilityLabel="Back"
         >
-          <Icon name="chevron-left" size={iconSize} color={colorValue} />
+          <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
         </Pressable>
+      )}
 
-        <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
-          {props.children}
-        </Label>
+      {
+        // Loading header. Explicitly given as false, not loading.
+        props.loading === false ? (
+          <Continuous style={styles.loading} active={false} />
+        ) : // Explicitly given as true, loading.
+        props.loading === true ? (
+          <Continuous style={styles.loading} active={true} />
+        ) : // Not given, therefore no element.
+        null
+      }
 
-        {/* Optional secondary action. */}
-        {!('secondaryIcon' in props) ? null : (
-          <Pressable
-            hitSlop={secondaryHitSlop}
-            style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.5 : 1 }]}
-            onPress={() => props.secondaryPress()}
-            accessibilityRole="button"
-          >
-            <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
-          </Pressable>
-        )}
-
-        {
-          // Loading header. Explicitly given as false, not loading.
-          props.loading === false ? (
-            <Continuous style={styles.loading} active={false} />
-          ) : // Explicitly given as true, loading.
-          props.loading === true ? (
-            <Continuous style={styles.loading} active={true} />
-          ) : // Not given, therefore no element.
-          null
-        }
-
-        {!toastMessages.length ? null : (
-          <View style={styles.toasts}>
-            <View style={styles.toastsInner}>
-              {[...toastMessages].reverse().map((toast) => (
-                <Toast key={toast.id} {...toast} loose={false} />
-              ))}
-            </View>
+      {!toastMessages.length ? null : (
+        <View style={styles.toasts}>
+          <View style={styles.toastsInner}>
+            {[...toastMessages].reverse().map((toast) => (
+              <Toast key={toast.id} {...toast} loose={false} />
+            ))}
           </View>
-        )}
-      </Row>
-    </SafeAreaView>
+        </View>
+      )}
+    </Row>
   )
 }
 

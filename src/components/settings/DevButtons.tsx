@@ -20,7 +20,7 @@ export function DevButtons() {
   const { synchronize } = useCache()
   const { toast } = useToastContext()
   const [tokenData, setTokenData] = useState('')
-  const { load, accessToken, refreshToken } = useAuthContext()
+  const { load, accessToken, refreshToken, logout } = useAuthContext()
 
   const styleLighten = useThemeBackground('inverted')
   const styleText = useThemeColor('invText')
@@ -82,6 +82,17 @@ export function DevButtons() {
     }
   }, [toast])
 
+  // Forces logout and clears browser session
+  const forceLogout = useCallback(async () => {
+    try {
+      await logout()
+      toast('info', 'Force logout completed', 5000)
+    } catch (error) {
+      toast('warning', 'Failed to force logout', 5000)
+      captureException(error)
+    }
+  }, [logout, toast])
+
   return (
     <View style={styles.container}>
       <Section title={t('title')} subtitle={t('subtitle')} />
@@ -116,6 +127,10 @@ export function DevButtons() {
 
       <Button onPress={clearAsyncStorage} icon="delete">
         {t('clear_async_storage')}
+      </Button>
+
+      <Button onPress={forceLogout} icon="logout">
+        {t('force_logout')}
       </Button>
     </View>
   )

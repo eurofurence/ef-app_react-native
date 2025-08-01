@@ -88,6 +88,13 @@ export function useStackScreensData(): StackScreenProps[] {
         headerShown: false,
       },
       {
+        location: 'announcements/index',
+        title: t('announcements'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
         location: 'images/[id]',
         title: t('image'),
         headerLeft: CustomBack,
@@ -156,6 +163,20 @@ export function useStackScreensData(): StackScreenProps[] {
       {
         location: 'about',
         title: t('about'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
+        location: 'lost-and-found/index',
+        title: t('lost_and_found'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
+        location: 'lost-and-found/[id]',
+        title: t('lost_and_found'),
         headerLeft: CustomBack,
         headerShown: false,
         swipeEnabled: true,

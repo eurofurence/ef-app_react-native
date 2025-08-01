@@ -1,14 +1,13 @@
 import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
 
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '../AppStyles'
 import { Image } from '../generic/atoms/Image'
-import { Label } from '../generic/atoms/Label'
 import { sourceFromImage } from '../generic/atoms/Image.common'
+import { Label } from '../generic/atoms/Label'
 import { isPresent, joinOffDays } from './utils'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { DealerDetails } from '@/context/data/types.details'
 
@@ -62,35 +61,37 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
   const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
   return (
-    <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
-      <View style={[styles.pre, stylePre]}>
-        <Image
-          key={dealer.details.Id}
-          recyclingKey={dealer.details.Id}
-          style={[avatarBackground, styles.avatarCircle]}
-          source={avatar}
-          contentFit="contain"
-          placeholder={require('@/assets/static/ych.png')}
-          transition={60}
-        />
-      </View>
+    <View style={containerStyle}>
+      <TouchableOpacity style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind} activeOpacity={0.7}>
+        <View style={[styles.pre, stylePre]}>
+          <Image
+            key={dealer.details.Id}
+            recyclingKey={dealer.details.Id}
+            style={[avatarBackground, styles.avatarCircle]}
+            source={avatar}
+            contentFit="contain"
+            placeholder={require('@/assets/static/ych.png')}
+            transition={60}
+          />
+        </View>
 
-      <View style={styles.main}>
-        <Label type="h3">{name}</Label>
+        <View style={styles.main}>
+          <Label type="h3">{name}</Label>
 
-        {!description ? null : (
-          <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
-            {description}
-          </Label>
-        )}
+          {!description ? null : (
+            <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+              {description}
+            </Label>
+          )}
 
-        {!offDays ? null : (
-          <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-            {t('not_attending_on', { offDays })}
-          </Label>
-        )}
-      </View>
-    </TouchableOpacity>
+          {!offDays ? null : (
+            <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+              {t('not_attending_on', { offDays })}
+            </Label>
+          )}
+        </View>
+      </TouchableOpacity>
+    </View>
   )
 }
 

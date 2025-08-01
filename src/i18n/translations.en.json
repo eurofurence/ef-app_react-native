@@ -50,12 +50,12 @@
     "learn_more": "Learn more about the Artist Alley",
     "list": {
       "Accepted": "Accepted registrations",
-      "Pending": "Pending registrations",
-      "Published": "Published registrations",
-      "Rejected": "Rejected registrations",
       "header": "Table registration requests",
       "moderate": "Moderate table requests",
-      "register_self": "Register for yourself"
+      "Pending": "Pending registrations",
+      "Published": "Published registrations",
+      "register_self": "Register for yourself",
+      "Rejected": "Rejected registrations"
     },
     "location_label": "Table number",
     "location_placeholder": "Table number from handout on the table",
@@ -187,8 +187,8 @@
     "supersponsor_event": "Supersponsor event",
     "view_on_map": "View on map",
     "viewing_event": "Viewing event",
-    "when": "{{day}}, {{start}} until {{finish}}.",
-    "when_local": "{{zone}}: {{day}}, {{start}} until {{finish}}."
+    "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
+    "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
   "EventFeedback": {
     "disabled_not_attending": "Only attendees can give feedback",
@@ -257,12 +257,33 @@
   "KnowledgeGroups": {
     "header": "Info Articles"
   },
+  "LostAndFound": {
+    "category": "Category",
+    "contact_info": "Contact Information",
+    "description": "Description",
+    "error_loading": "Error loading items",
+    "header": "Lost & Found",
+    "item_not_found": "Item not found",
+    "loading": "Loading...",
+    "location": "Location",
+    "no_items": "No items found",
+    "no_items_subtitle": "There are currently no lost or found items reported",
+    "reported": "Reported",
+    "reported_by": "Reported by",
+    "status": {
+      "Found": "Found",
+      "Lost": "Lost",
+      "Returned": "Returned",
+      "Unknown": "Unknown"
+    }
+  },
   "Maps": {
     "filtering": "Searching viewed area",
     "results": "In the viewed area"
   },
   "Menu": {
     "about": "About",
+    "announcements": "Announcements",
     "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
@@ -272,6 +293,8 @@
     "info": "Info articles",
     "less": "Less",
     "logged_in_now": "Log-in now",
+    "lost_and_found": "Lost & Found",
+    "map": "Map",
     "maps": "Maps",
     "more": "More",
     "not_logged_in": "You are currently not logged in.",
@@ -280,8 +303,7 @@
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
-    "website": "Website",
-    "map": "Map"
+    "website": "Website"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",
@@ -326,6 +348,7 @@
     }
   },
   "RevealHidden": {
+    "header": "Reveal hidden events",
     "lead": "Click on any event to reveal it in the overview again",
     "title": "Reveal specific event"
   },
@@ -352,6 +375,7 @@
       "clear_async_storage": "Clear AsyncStorage data",
       "copy_device_push_token": "Copy device push token",
       "copy_token_data": "Copy token data",
+      "force_logout": "Force logout",
       "no_auth_alert": "You are not logged in. Stopping.",
       "overwrite_update_time": "Overwrite update time",
       "refresh_login_tokens_and_claims": "Refresh token data",
@@ -434,9 +458,9 @@
   "Todo": {},
   "Viewer": {
     "announcement": "Announcement: {{name}}",
-    "artPreview": "Art preview: {{name}}",
     "artist": "Artist: {{name}}",
     "artistThumbnail": "Artist thumbnail: {{name}}",
+    "artPreview": "Art preview: {{name}}",
     "eventBanner": "Banner: {{name}}",
     "eventPoster": "Poster: {{name}}",
     "knowledgeEntryBanner": "Info article image: {{name}}",

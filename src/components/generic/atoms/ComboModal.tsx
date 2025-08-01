@@ -3,6 +3,7 @@ import * as React from 'react'
 import { ForwardedRef, forwardRef, ReactNode, useImperativeHandle, useMemo, useState } from 'react'
 import Fuse from 'fuse.js'
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Button } from '@/components/generic/containers/Button'
 import { Search } from '@/components/generic/atoms/Search'
 import { Label } from '@/components/generic/atoms/Label'
@@ -28,6 +29,7 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
   const styleBackground = useThemeBackground('background')
   const styleBorder = useThemeBorder('secondary')
   const styleDismiss = useThemeBackground('darken')
+  const insets = useSafeAreaInsets()
 
   const [resolve, setResolve] = useState<((result: T[] | null) => void) | undefined>(undefined)
   const [visible, setVisible] = useState(false)
@@ -93,7 +95,8 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
               flex: 1,
               flexShrink: 1,
               margin: 20,
-              marginBottom: 90,
+              marginTop: Math.max(20, insets.top + 10),
+              marginBottom: Math.max(90, insets.bottom + 20),
               borderRadius: 20,
               padding: 20,
               borderWidth: 2,

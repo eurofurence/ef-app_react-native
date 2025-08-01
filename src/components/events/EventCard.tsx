@@ -1,16 +1,15 @@
 import React, { FC, useCallback } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { calculateEventTiming } from '@/util/eventTiming'
 import { appStyles } from '../AppStyles'
 import { Icon } from '../generic/atoms/Icon'
+import { sourceFromImage } from '../generic/atoms/Image.common'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label } from '../generic/atoms/Label'
 import { Progress } from '../generic/atoms/Progress'
 import { Row } from '../generic/containers/Row'
-import { sourceFromImage } from '../generic/atoms/Image.common'
-import { calculateEventTiming } from '@/util/eventTiming'
 import { EventCardTime } from './EventCardTime'
 
 import { EventDetails } from '@/context/data/types.details'
@@ -81,71 +80,79 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
   const onLongPressBind = useCallback(() => onLongPress?.(event.details), [event.details, onLongPress])
 
   return (
-    <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
-      <View style={[styles.pre, stylePre]}>
-        {!glyph ? null : (
-          <View key="eventGlyph" style={styles.glyphContainer}>
-            <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
-          </View>
-        )}
-        <EventCardTime type={type} event={event} done={done} />
-
-        {!happening ? null : (
-          <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'} variant="receded">
-            LIVE
-          </Label>
-        )}
-      </View>
-
-      {event.details.Banner ? (
-        <View style={styles.mainPoster}>
-          <ImageBackground key={event.details.Id} recyclingKey={event.details.Id} source={sourceFromImage(event.details.Banner)} contentFit="cover" style={StyleSheet.absoluteFill}>
-            <View style={styles.tagArea2}>
-              <View style={styles.tagAreaInner}>
-                <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
-                  {title} {subtitle}
-                </Label>
-                {tag && (
-                  <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
-                    {tag}
-                  </Label>
-                )}
-              </View>
+    <View style={containerStyle}>
+      <TouchableOpacity style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+        <View style={[styles.pre, stylePre]}>
+          {!glyph ? null : (
+            <View key="eventGlyph" style={styles.glyphContainer}>
+              <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
             </View>
+          )}
+          <EventCardTime type={type} event={event} done={done} />
 
-            {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} color="white" />}
-          </ImageBackground>
+          {!happening ? null : (
+            <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'} variant="receded">
+              LIVE
+            </Label>
+          )}
         </View>
-      ) : (
-        <View style={styles.mainText}>
-          <Row>
-            <Label style={styles.title} type="h3">
-              {title}
+
+        {event.details.Banner ? (
+          <View style={styles.mainPoster}>
+            <ImageBackground
+              key={event.details.Id}
+              recyclingKey={event.details.Id}
+              source={sourceFromImage(event.details.Banner)}
+              contentFit="cover"
+              style={StyleSheet.absoluteFill}
+            >
+              <View style={styles.tagArea2}>
+                <View style={styles.tagAreaInner}>
+                  <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                    {title} {subtitle}
+                  </Label>
+                  {tag && (
+                    <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                      {tag}
+                    </Label>
+                  )}
+                </View>
+              </View>
+
+              {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} color="white" />}
+            </ImageBackground>
+          </View>
+        ) : (
+          <View style={styles.mainText}>
+            <Row>
+              <Label style={styles.title} type="h3">
+                {title}
+              </Label>
+
+              {badges?.map((icon) => (
+                <View key={icon} style={[styles.badgeFrame, styleBadgeFrame]}>
+                  <Icon name={icon} color={colorBadge} size={badgeIconSize} />
+                </View>
+              )) ?? null}
+            </Row>
+            <Label type="h4" variant="narrow">
+              {subtitle}
+            </Label>
+            <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+              {tag}
             </Label>
 
-            {badges?.map((icon) => (
-              <View key={icon} style={[styles.badgeFrame, styleBadgeFrame]}>
-                <Icon name={icon} color={colorBadge} size={badgeIconSize} />
-              </View>
-            )) ?? null}
-          </Row>
-          <Label type="h4" variant="narrow">
-            {subtitle}
-          </Label>
-          <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-            {tag}
-          </Label>
+            {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} />}
+          </View>
+        )}
 
-          {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} />}
-        </View>
-      )}
-
-      {!favorite ? null : (
-        <View key="eventFavorite" style={styles.favorite}>
-          <Icon name="heart" size={20} color={colorHeart} />
-        </View>
-      )}
-    </TouchableOpacity>
+        {!favorite ? null : (
+          <View key="eventFavorite" style={styles.favorite}>
+            <Icon name="heart" size={20} color={colorHeart} />
+          </View>
+        )}
+      </TouchableOpacity>
+    </View>
   )
 }
 

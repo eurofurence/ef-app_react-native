@@ -2,43 +2,44 @@ import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 
-import { useCache } from '@/context/data/Cache'
-import { EventDetails } from '@/context/data/types.details'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { vibrateAfter } from '@/util/vibrateAfter'
 import { router } from 'expo-router'
-import { EventCard, EventDetailsInstance } from './EventCard'
+import { LostAndFoundCard } from './LostAndFoundCard'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { useCache } from '@/context/data/Cache'
+import { LostAndFoundRecord } from '@/context/data/types.api'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 /**
  * The properties to the component.
  */
-export type EventsListProps = {
+export type LostAndFoundListProps = {
   leader?: ReactElement
-  events: EventDetailsInstance[]
-  select?: (event: EventDetails) => void
+  items: LostAndFoundRecord[]
   empty?: ReactElement
   trailer?: ReactElement
-  cardType?: 'duration' | 'time'
   padEnd?: boolean
 }
-const keyExtractor = (item: EventDetailsInstance) => item.details.Id
 
-export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty, trailer, cardType = 'duration', padEnd = true }) => {
+function keyExtractor(item: LostAndFoundRecord) {
+  return item.Id
+}
+
+export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, empty, trailer, padEnd = true }) => {
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
 
-  const onPress = useCallback((event: EventDetails) => {
+  const onPress = useCallback((item: LostAndFoundRecord) => {
     router.navigate({
-      pathname: '/events/[id]',
-      params: { id: event.Id },
+      pathname: '/lost-and-found/[id]',
+      params: { id: item.Id },
     })
   }, [])
 
   const renderItem = useCallback(
-    ({ item }: { item: EventDetailsInstance }) => {
-      return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} />
+    ({ item }: { item: LostAndFoundRecord }) => {
+      return <LostAndFoundCard containerStyle={styles.item} item={item} onPress={() => onPress(item)} />
     },
-    [cardType, onPress]
+    [onPress]
   )
 
   return (
@@ -50,10 +51,10 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
       ListHeaderComponent={leader}
       ListFooterComponent={trailer}
       ListEmptyComponent={empty}
-      data={events}
+      data={items}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      estimatedItemSize={110}
+      estimatedItemSize={120}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
     />

@@ -63,8 +63,8 @@
     "supersponsor_event": "Evento per supersponsor",
     "view_on_map": "Vedi sulla mappa",
     "viewing_event": "Visualizzando l'evento",
-    "when": "{{day}}, {{start}} fino alle {{finish}}.",
-    "when_local": "{{zone}}: {{day}}, {{start}} fino alle {{finish}}."
+    "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
+    "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
   "Events": {
     "afternoon": "Al pomeriggio",
@@ -102,13 +102,35 @@
   "KnowledgeGroups": {
     "header": "Articoli Informativi"
   },
+  "LostAndFound": {
+    "category": "Categoria",
+    "contact_info": "Informazioni di contatto",
+    "description": "Descrizione",
+    "error_loading": "Errore nel caricamento degli elementi",
+    "header": "Lost & Found",
+    "item_not_found": "Elemento non trovato",
+    "loading": "Caricamento...",
+    "location": "Posizione",
+    "no_items": "Nessun elemento trovato",
+    "no_items_subtitle": "Al momento non ci sono elementi perduti o trovati",
+    "reported": "Segnalato",
+    "reported_by": "Segnalato da",
+    "status": {
+      "Found": "Trovato",
+      "Lost": "Perso",
+      "Returned": "Ritornato",
+      "Unknown": "Sconosciuto"
+    }
+  },
   "Menu": {
     "about": "Informazioni",
+    "announcements": "Annunci",
     "dealers": "Venditori",
     "events": "Eventi",
     "info": "Articoli informativi",
     "less": "Di meno",
     "logged_in_now": "Accedi ora",
+    "map": "Mappa",
     "maps": "Mappe",
     "messages_other": "Hai {{count}} nuovi messaggi",
     "more": "Di più",
@@ -116,8 +138,7 @@
     "open_messages": "Apri i messaggi",
     "pm": "Messaggi privati",
     "services": "Servizi",
-    "settings": "Impostazioni",
-    "map": "Mappa"
+    "settings": "Impostazioni"
   },
   "Notification": {
     "announcement": "C'è un annuncio da {{conName}}",
@@ -130,6 +151,11 @@
     "read": "Letto",
     "section_title_from": "Da {{authorName}}",
     "unread": "Non letto"
+  },
+  "RevealHidden": {
+    "header": "Eventi nascosti",
+    "lead": "Clicca su un evento per rivelarlo nell'elenco",
+    "title": "Eventi"
   },
   "Settings": {
     "about": "Crediti",

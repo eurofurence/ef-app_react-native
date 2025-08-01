@@ -1,13 +1,14 @@
 import { exchangeCodeAsync, refreshAsync, TokenResponse, TokenResponseConfig, useAuthRequest } from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { Platform } from 'react-native'
 
-import * as SecureStore from '@/util/secureStorage'
 import { authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
-import { captureException } from '@sentry/react-native'
-import axios from 'axios'
 import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
 import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
+import * as SecureStore from '@/util/secureStorage'
+import { captureException } from '@sentry/react-native'
+import axios from 'axios'
 
 /**
  * Thrown within the Auth context operations.
@@ -197,30 +198,6 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     }, [promptAsync, request])
   )
 
-  const refreshClaims = useAsyncCallbackOnce(
-    useCallback(async () => {
-      try {
-        // Get from secure store.
-        const tokenResponse = await getLastTokenResponse()
-
-        // Must have an access token.
-        if (!tokenResponse?.accessToken) {
-          throw new AuthContextError('Invalid state for refreshing claims')
-        }
-
-        // Get claims, save and set in state.
-        const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${tokenResponse.accessToken}` } })
-        const claims = claimsResponse.data
-        await SecureStore.setItemAsync(storageKeyClaims, JSON.stringify(claims))
-        setClaims(claims)
-      } catch (error) {
-        await SecureStore.deleteItemAsync(storageKeyClaims)
-        setClaims(null)
-        throw error
-      }
-    }, [])
-  )
-
   const refreshToken = useAsyncCallbackOnce(
     useCallback(async (force?: boolean) => {
       try {
@@ -229,7 +206,8 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
 
         // Must have a refresh token.
         if (!tokenResponse?.refreshToken) {
-          throw new AuthContextError('Invalid state for refreshing token')
+          // No refresh token available, just return early
+          return
         }
 
         // Token is still fresh, not actionable.
@@ -251,12 +229,91 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
         setTokenResponse(refreshResponse)
       } catch (error) {
-        // Set the refreshed token.
+        // Clear the token on any error
         await SecureStore.deleteItemAsync(storageKeyTokenResponse)
         setTokenResponse(null)
+
+        // If the error indicates an invalid token, log it for debugging
+        if (
+          error instanceof Error &&
+          (error.message.includes('Token is inactive') ||
+            error.message.includes('malformed') ||
+            error.message.includes('expired') ||
+            error.message.includes('invalid') ||
+            error.message.includes('Token validation failed'))
+        ) {
+          console.warn('Token refresh failed due to invalid token:', error.message)
+        }
+
         throw error
       }
     }, [])
+  )
+
+  const refreshClaims = useAsyncCallbackOnce(
+    useCallback(async () => {
+      try {
+        // Get from secure store.
+        const tokenResponse = await getLastTokenResponse()
+
+        // Must have an access token.
+        if (!tokenResponse?.accessToken) {
+          // No token available, just set claims to null and return early
+          await SecureStore.deleteItemAsync(storageKeyClaims)
+          setClaims(null)
+          return
+        }
+
+        // Get claims, save and set in state.
+        const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${tokenResponse.accessToken}` } })
+        const claims = claimsResponse.data
+        await SecureStore.setItemAsync(storageKeyClaims, JSON.stringify(claims))
+        setClaims(claims)
+      } catch (error) {
+        await SecureStore.deleteItemAsync(storageKeyClaims)
+        setClaims(null)
+
+        // Check if this is an expected authentication error (401, 403, etc.)
+        const isAuthError =
+          error &&
+          typeof error === 'object' &&
+          'response' in error &&
+          error.response &&
+          typeof error.response === 'object' &&
+          'status' in error.response &&
+          error.response.status === 401
+
+        // If the error indicates an invalid token, try to refresh it
+        if (
+          error instanceof Error &&
+          (error.message.includes('Token is inactive') ||
+            error.message.includes('malformed') ||
+            error.message.includes('expired') ||
+            error.message.includes('invalid') ||
+            error.message.includes('Token validation failed') ||
+            isAuthError)
+        ) {
+          // Try to refresh the token
+          try {
+            await refreshToken(true)
+          } catch {
+            // If refresh also fails, clear the token and log out
+            await SecureStore.deleteItemAsync(storageKeyTokenResponse)
+            setTokenResponse(null)
+          }
+
+          // Don't throw auth errors as they're expected
+          if (isAuthError) {
+            return
+          }
+        }
+
+        // Only throw non-auth errors
+        if (!isAuthError) {
+          throw error
+        }
+      }
+    }, [refreshToken])
   )
 
   const logout = useAsyncCallbackOnce(
@@ -299,7 +356,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
   // Mount and unmount effect.
   useEffect(() => {
     // Warmup the browser to handle login requests.
-    WebBrowser.warmUpAsync().catch(captureException)
+    if (Platform.OS !== 'web') {
+      WebBrowser.warmUpAsync().catch(() => {
+        return
+      })
+    }
 
     // Fire off loading the state. Loading the token or setting it to null will then trigger claims fetching.
     ;(async () => {
@@ -313,20 +374,56 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
 
     // On unmount, release browser.
     return () => {
-      WebBrowser.coolDownAsync().catch(captureException)
+      if (Platform.OS !== 'web') {
+        WebBrowser.coolDownAsync().catch(() => {
+          return
+        })
+      }
     }
   }, [load])
 
   // On token change, refresh claims.
   useEffect(() => {
     // Refresh claims, capture exceptions.
-    refreshClaims().catch(captureException)
+    refreshClaims().catch((error) => {
+      // Don't capture token validation errors to Sentry as they're expected
+      if (
+        error instanceof Error &&
+        (error.message.includes('Token is inactive') ||
+          error.message.includes('malformed') ||
+          error.message.includes('expired') ||
+          error.message.includes('invalid') ||
+          error.message.includes('Token validation failed'))
+      ) {
+        console.warn('Claims refresh failed due to token validation:', error.message)
+      } else {
+        captureException(error)
+      }
+    })
   }, [tokenResponse, refreshClaims])
 
   // Try refreshing the access token every ten minutes. Token expiry will be around an hour, so
   // this gives us ample time between expiry and the 'fresh' margin.
   useAsyncInterval(
-    useCallback(() => refreshToken().catch(captureException), [refreshToken]),
+    useCallback(
+      () =>
+        refreshToken().catch((error) => {
+          // Don't capture token validation errors to Sentry as they're expected
+          if (
+            error instanceof Error &&
+            (error.message.includes('Token is inactive') ||
+              error.message.includes('malformed') ||
+              error.message.includes('expired') ||
+              error.message.includes('invalid') ||
+              error.message.includes('Token validation failed'))
+          ) {
+            console.warn('Token refresh failed due to token validation:', error.message)
+          } else {
+            captureException(error)
+          }
+        }),
+      [refreshToken]
+    ),
     600_000
   )
 

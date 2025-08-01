@@ -1,16 +1,16 @@
-import * as React from 'react'
-import { useTranslation } from 'react-i18next'
-import { useLocalSearchParams } from 'expo-router'
-import { useNow } from '@/hooks/time/useNow'
 import { useDealerGroups } from '@/components/dealers/Dealers.common'
 import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
-import { Badge } from '@/components/generic/containers/Badge'
 import { Label } from '@/components/generic/atoms/Label'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { Badge } from '@/components/generic/containers/Badge'
 import { useCache } from '@/context/data/Cache'
+import { useDealersSearch } from '@/context/DealersSearchContext'
+import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { useNow } from '@/hooks/time/useNow'
+import * as React from 'react'
+import { useTranslation } from 'react-i18next'
 
 export default function RegularScreen() {
-  const { query } = useLocalSearchParams<{ query?: string }>()
+  const { query } = useDealersSearch()
   const { t } = useTranslation('Dealers')
   const now = useNow()
 
