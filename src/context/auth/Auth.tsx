@@ -221,6 +221,16 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         await SecureStore.deleteItemAsync(storageKeyClaims)
         setClaims(null)
 
+        // Check if this is an expected authentication error (401, 403, etc.)
+        const isAuthError =
+          error &&
+          typeof error === 'object' &&
+          'response' in error &&
+          error.response &&
+          typeof error.response === 'object' &&
+          'status' in error.response &&
+          error.response.status === 401
+
         // If the error indicates an invalid token, try to refresh it
         if (
           error instanceof Error &&
@@ -228,7 +238,8 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
             error.message.includes('malformed') ||
             error.message.includes('expired') ||
             error.message.includes('invalid') ||
-            error.message.includes('Token validation failed'))
+            error.message.includes('Token validation failed') ||
+            isAuthError)
         ) {
           // Try to refresh the token
           try {
@@ -238,9 +249,17 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
             await SecureStore.deleteItemAsync(storageKeyTokenResponse)
             setTokenResponse(null)
           }
+
+          // Don't throw auth errors as they're expected
+          if (isAuthError) {
+            return
+          }
         }
 
-        throw error
+        // Only throw non-auth errors
+        if (!isAuthError) {
+          throw error
+        }
       }
     }, [])
   )
