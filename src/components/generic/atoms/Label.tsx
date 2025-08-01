@@ -97,8 +97,8 @@ export const labelTypeStyles = StyleSheet.create({
     fontWeight: '500',
   },
   h1: {
-    fontSize: 30,
-    lineHeight: 39,
+    fontSize: 28,
+    lineHeight: 36,
     fontWeight: '300',
   },
   h2: {
@@ -107,14 +107,14 @@ export const labelTypeStyles = StyleSheet.create({
     fontWeight: 'normal',
   },
   h3: {
-    fontSize: 20,
-    lineHeight: 26,
+    fontSize: 18,
+    lineHeight: 24,
     fontWeight: 'normal',
   },
   h4: {
     fontSize: 17,
     lineHeight: 23,
-    fontWeight: '600',
+    fontWeight: '400',
   },
   h5: {
     fontSize: 15,
