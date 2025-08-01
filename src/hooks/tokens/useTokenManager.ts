@@ -2,7 +2,6 @@ import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
-import { router } from 'expo-router'
 import { useAuthContext } from '@/context/auth/Auth'
 import { captureNotificationException } from '@/sentryHelpers'
 import { postPushNotificationsFcmRegistration } from '@/hooks/api/push/usePushNotificationsFcmRegistrationMutation'
@@ -67,44 +66,6 @@ export const useTokenManager = () => {
       return true
     })().catch((e) => captureNotificationException('Could not register and subscribe', e))
   }, [accessToken])
-
-  // Handle notification responses (when user taps on notification)
-  useEffect(() => {
-    const subscription = Notifications.addNotificationResponseReceivedListener((response) => {
-      const data = response.notification.request.content.data as Record<string, any>
-
-      if (!data) return
-
-      // Handle announcement notifications
-      if (data.Announcement && data.RelatedId) {
-        router.navigate({
-          pathname: '/announcements/[id]',
-          params: { id: data.RelatedId as string },
-        })
-        return
-      }
-
-      // Handle event notifications
-      if (data.Event && data.RelatedId) {
-        router.navigate({
-          pathname: '/events/[id]',
-          params: { id: data.RelatedId as string },
-        })
-        return
-      }
-
-      // Handle private message notifications
-      if (data.PrivateMessage && data.RelatedId) {
-        router.navigate({
-          pathname: '/messages/[id]',
-          params: { id: data.RelatedId as string },
-        })
-        return
-      }
-    })
-
-    return () => subscription.remove()
-  }, [])
 
   return null
 }
