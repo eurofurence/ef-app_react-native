@@ -198,53 +198,6 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     }, [promptAsync, request])
   )
 
-  const refreshClaims = useAsyncCallbackOnce(
-    useCallback(async () => {
-      try {
-        // Get from secure store.
-        const tokenResponse = await getLastTokenResponse()
-
-        // Must have an access token.
-        if (!tokenResponse?.accessToken) {
-          // No token available, just set claims to null and return early
-          await SecureStore.deleteItemAsync(storageKeyClaims)
-          setClaims(null)
-          return
-        }
-
-        // Get claims, save and set in state.
-        const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${tokenResponse.accessToken}` } })
-        const claims = claimsResponse.data
-        await SecureStore.setItemAsync(storageKeyClaims, JSON.stringify(claims))
-        setClaims(claims)
-      } catch (error) {
-        await SecureStore.deleteItemAsync(storageKeyClaims)
-        setClaims(null)
-
-        // If the error indicates an invalid token, try to refresh it
-        if (
-          error instanceof Error &&
-          (error.message.includes('Token is inactive') ||
-            error.message.includes('malformed') ||
-            error.message.includes('expired') ||
-            error.message.includes('invalid') ||
-            error.message.includes('Token validation failed'))
-        ) {
-          // Try to refresh the token
-          try {
-            await refreshToken(true)
-          } catch {
-            // If refresh also fails, clear the token and log out
-            await SecureStore.deleteItemAsync(storageKeyTokenResponse)
-            setTokenResponse(null)
-          }
-        }
-
-        throw error
-      }
-    }, [])
-  )
-
   const refreshToken = useAsyncCallbackOnce(
     useCallback(async (force?: boolean) => {
       try {
@@ -297,6 +250,72 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     }, [])
   )
 
+  const refreshClaims = useAsyncCallbackOnce(
+    useCallback(async () => {
+      try {
+        // Get from secure store.
+        const tokenResponse = await getLastTokenResponse()
+
+        // Must have an access token.
+        if (!tokenResponse?.accessToken) {
+          // No token available, just set claims to null and return early
+          await SecureStore.deleteItemAsync(storageKeyClaims)
+          setClaims(null)
+          return
+        }
+
+        // Get claims, save and set in state.
+        const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${tokenResponse.accessToken}` } })
+        const claims = claimsResponse.data
+        await SecureStore.setItemAsync(storageKeyClaims, JSON.stringify(claims))
+        setClaims(claims)
+      } catch (error) {
+        await SecureStore.deleteItemAsync(storageKeyClaims)
+        setClaims(null)
+
+        // Check if this is an expected authentication error (401, 403, etc.)
+        const isAuthError =
+          error &&
+          typeof error === 'object' &&
+          'response' in error &&
+          error.response &&
+          typeof error.response === 'object' &&
+          'status' in error.response &&
+          error.response.status === 401
+
+        // If the error indicates an invalid token, try to refresh it
+        if (
+          error instanceof Error &&
+          (error.message.includes('Token is inactive') ||
+            error.message.includes('malformed') ||
+            error.message.includes('expired') ||
+            error.message.includes('invalid') ||
+            error.message.includes('Token validation failed') ||
+            isAuthError)
+        ) {
+          // Try to refresh the token
+          try {
+            await refreshToken(true)
+          } catch {
+            // If refresh also fails, clear the token and log out
+            await SecureStore.deleteItemAsync(storageKeyTokenResponse)
+            setTokenResponse(null)
+          }
+
+          // Don't throw auth errors as they're expected
+          if (isAuthError) {
+            return
+          }
+        }
+
+        // Only throw non-auth errors
+        if (!isAuthError) {
+          throw error
+        }
+      }
+    }, [refreshToken])
+  )
+
   const logout = useAsyncCallbackOnce(
     useCallback(async () => {
       // Get from secure store.
@@ -338,7 +357,9 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
   useEffect(() => {
     // Warmup the browser to handle login requests.
     if (Platform.OS !== 'web') {
-      WebBrowser.warmUpAsync().catch(captureException)
+      WebBrowser.warmUpAsync().catch(() => {
+        return
+      })
     }
 
     // Fire off loading the state. Loading the token or setting it to null will then trigger claims fetching.
@@ -354,7 +375,9 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     // On unmount, release browser.
     return () => {
       if (Platform.OS !== 'web') {
-        WebBrowser.coolDownAsync().catch(captureException)
+        WebBrowser.coolDownAsync().catch(() => {
+          return
+        })
       }
     }
   }, [load])

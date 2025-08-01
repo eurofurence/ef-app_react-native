@@ -56,24 +56,29 @@ export default function Knowledge() {
       const result: ((typeof knowledgeGroups)[0] | (typeof knowledgeEntries)[0])[] = []
 
       for (const group of allRelevantGroups) {
-        result.push(group)
-
         // Add matching entries for this group
         const groupEntries = matchingEntries.filter((entry) => entry.KnowledgeGroupId === group.Id)
-        result.push(...groupEntries)
 
         // If group matched search but has no matching entries, show all entries from that group
         if (matchingGroupsFromSearch.includes(group) && groupEntries.length === 0) {
           const allGroupEntries = knowledgeEntries.filter((entry) => entry.KnowledgeGroupId === group.Id)
-          result.push(...allGroupEntries)
+          if (allGroupEntries.length > 0) {
+            result.push(group)
+            result.push(...allGroupEntries)
+          }
+        } else if (groupEntries.length > 0) {
+          // Only add group and entries if there are matching entries
+          result.push(group)
+          result.push(...groupEntries)
         }
       }
 
       return result
     }
 
-    // Normal display: show all groups and entries in proper structure
+    // Normal display: show all groups and entries in proper structure, but hide empty groups
     return chain(groups)
+      .filter(({ entries }) => entries.length > 0) // Only include groups that have entries
       .flatMap(({ group, entries }) => [group, ...entries])
       .value()
   }, [searchResults, groups, knowledgeGroups, knowledgeEntries, filter])
