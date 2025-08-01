@@ -134,7 +134,7 @@
   "license": "MIT",
   "main": "expo-router/entry",
   "name": "ef-app_react-native",
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@10.14.0",
   "prettier": {
     "endOfLine": "crlf",
     "semi": false,
@@ -169,6 +169,6 @@
     "submit:web": "gh-pages -d web-build",
     "test": "jest"
   },
-  "version": "6.0.6"
+  "version": "6.1.0"
 }
 

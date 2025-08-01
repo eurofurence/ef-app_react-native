@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 24,
+    paddingTop: 12,
     fontWeight: 'bold',
     marginRight: 12,
   },
