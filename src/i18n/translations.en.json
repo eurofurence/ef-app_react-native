@@ -375,6 +375,7 @@
       "clear_async_storage": "Clear AsyncStorage data",
       "copy_device_push_token": "Copy device push token",
       "copy_token_data": "Copy token data",
+      "force_logout": "Force logout",
       "no_auth_alert": "You are not logged in. Stopping.",
       "overwrite_update_time": "Overwrite update time",
       "refresh_login_tokens_and_claims": "Refresh token data",
