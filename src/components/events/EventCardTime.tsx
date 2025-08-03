@@ -10,23 +10,23 @@ export type EventCardTimeProps = {
 }
 
 export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done }) => {
-  const { start, day, startLocal, dayLocal, runtime } = event
+  const { start, end, day, startLocal, endLocal, dayLocal } = event
   const showLocal = start !== startLocal
 
   return (
     <View style={styles.container}>
       {type === 'duration' ? (
         <>
-          <Label type="h3" color={done ? 'important' : 'white'}>
-            {runtime}
+          <Label type="h3" variant="middle" color={done ? 'important' : 'white'}>
+            {start} {end}
           </Label>
           <Label type="cap" color={done ? 'important' : 'white'}>
-            {start}
+            {day}
           </Label>
           {!showLocal ? null : (
             <>
               <Label type="cap" variant="receded" color={done ? 'important' : 'white'}>
-                {startLocal} local
+                {startLocal} {endLocal} local
               </Label>
             </>
           )}
@@ -58,5 +58,6 @@ export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done }) => 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    justifyContent: 'center',
   },
 })

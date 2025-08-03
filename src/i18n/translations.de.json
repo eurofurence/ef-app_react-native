@@ -300,7 +300,11 @@
     "title": "Events anzeigen"
   },
   "Search": {
-    "placeholder": "Suche…"
+    "placeholder": "Suche…",
+    "clear_search": "Suche löschen",
+    "clear_search_hint": "Doppeltippen um das Suchfeld zu löschen",
+    "search_input_label": "Suchfeld",
+    "search_input_hint": "Text eingeben um nach Inhalten zu suchen"
   },
   "Settings": {
     "about": "Über uns",
