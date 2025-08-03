@@ -2,7 +2,7 @@ import SearchPlus from '@expo/vector-icons/FontAwesome5'
 import { useIsFocused } from '@react-navigation/core'
 import React, { FC, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { BackHandler, StyleSheet, TextInput, View, ViewStyle } from 'react-native'
+import { BackHandler, StyleSheet, TextInput, TouchableOpacity, View, ViewStyle } from 'react-native'
 
 import { withAlpha } from '@/context/Theme'
 import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
@@ -41,6 +41,10 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
     return () => subscription.remove()
   }, [isFocused, setFilter])
 
+  const handleClear = () => {
+    setFilter('')
+  }
+
   return (
     <View style={[styles.container, styleLighten, style]}>
       <SearchPlus name="search" size={18} color={colorText} style={styles.icon} />
@@ -51,7 +55,20 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
         onSubmitEditing={submit}
         placeholder={placeholder ?? t('placeholder')}
         placeholderTextColor={withAlpha(colorText, 0.6)}
+        accessibilityLabel={t('search_input_label')}
+        accessibilityHint={t('search_input_hint')}
       />
+      {filter.length > 0 && (
+        <TouchableOpacity
+          onPress={handleClear}
+          style={styles.clearButton}
+          accessibilityLabel={t('clear_search')}
+          accessibilityHint={t('clear_search_hint')}
+          accessibilityRole="button"
+        >
+          <SearchPlus name="times" size={16} color={colorText} />
+        </TouchableOpacity>
+      )}
     </View>
   )
 }
@@ -74,5 +91,12 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 16,
     borderWidth: 0,
+  },
+  clearButton: {
+    padding: 8,
+    marginLeft: 4,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })

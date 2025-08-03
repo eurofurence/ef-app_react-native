@@ -353,7 +353,11 @@
     "title": "Reveal specific event"
   },
   "Search": {
-    "placeholder": "Search…"
+    "placeholder": "Search…",
+    "clear_search": "Clear search",
+    "clear_search_hint": "Double tap to clear the search field",
+    "search_input_label": "Search input field",
+    "search_input_hint": "Enter text to search for content"
   },
   "Settings": {
     "about": "About",
