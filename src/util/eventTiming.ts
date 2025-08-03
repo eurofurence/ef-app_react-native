@@ -12,8 +12,10 @@ export function calculateEventTiming(details: EventDetails, now: Date | 'done') 
 
   // Convert to con timezone
   const start = format(details.Start, 'p', { timeZone: conTimeZone, locale: de }) // Local time format
+  const end = format(details.End, 'p', { timeZone: conTimeZone, locale: de }) // End time format
   const day = format(details.Start, 'EEE', { timeZone: conTimeZone }) // Day abbreviation
   const startLocal = format(details.StartLocal, 'p', { locale: de })
+  const endLocal = format(details.EndLocal, 'p', { locale: de })
   const dayLocal = format(details.StartLocal, 'EEE', {})
 
   // Calculate duration
@@ -24,8 +26,10 @@ export function calculateEventTiming(details: EventDetails, now: Date | 'done') 
   return {
     progress,
     start,
+    end,
     day,
     startLocal,
+    endLocal,
     dayLocal,
     runtime,
   }
