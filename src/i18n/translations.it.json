@@ -157,6 +157,13 @@
     "lead": "Clicca su un evento per rivelarlo nell'elenco",
     "title": "Eventi"
   },
+  "Search": {
+    "placeholder": "Cerca…",
+    "clear_search": "Cancella ricerca",
+    "clear_search_hint": "Doppio tap per cancellare il campo di ricerca",
+    "search_input_label": "Campo di ricerca",
+    "search_input_hint": "Inserisci testo per cercare contenuti"
+  },
   "Settings": {
     "about": "Crediti",
     "allowAnalytics": "Permetti la raccolta di dati analitici",

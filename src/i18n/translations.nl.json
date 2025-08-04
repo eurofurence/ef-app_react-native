@@ -183,6 +183,13 @@
     "lead": "Klik op een evenement om het in de overzicht weer te geven",
     "title": "Evenementen"
   },
+  "Search": {
+    "placeholder": "Zoeken…",
+    "clear_search": "Zoeken wissen",
+    "clear_search_hint": "Dubbeltap om het zoekveld te wissen",
+    "search_input_label": "Zoekveld",
+    "search_input_hint": "Voer tekst in om naar inhoud te zoeken"
+  },
   "Settings": {
     "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
     "cache": {

@@ -45,3 +45,19 @@ export const useEventReminder = (event: EventRecord) => {
     toggleReminder,
   }
 }
+
+/**
+ * Hook that provides long press functionality for toggling event favorites.
+ * @param event The event to handle long press for.
+ */
+export const useEventLongPress = (event: EventRecord) => {
+  const { toggleReminder } = useEventReminder(event)
+
+  const onLongPress = useCallback(() => {
+    toggleReminder().catch((error) => {
+      console.error('Failed to toggle event reminder:', error)
+    })
+  }, [toggleReminder])
+
+  return { onLongPress }
+}

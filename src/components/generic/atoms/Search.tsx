@@ -37,6 +37,8 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
         onSubmitEditing={submit}
         placeholder={placeholder ?? t('placeholder')}
         placeholderTextColor={withAlpha(colorText, 0.6)}
+        accessibilityLabel={t('search_input_label')}
+        accessibilityHint={t('search_input_hint')}
       />
       <Pressable hitSlop={15} onPress={() => setFilter('')} accessibilityRole="button" accessibilityLabel="Back">
         <Icon name="close" size={18} color={filter ? colorText : 'transparent'} style={styles.iconClear} />
