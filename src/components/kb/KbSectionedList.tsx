@@ -43,7 +43,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
       if ('KnowledgeGroupId' in item) {
         return (
           <KbEntryCard
-            containerStyle={styles.item}
+            style={styles.item}
             entry={item}
             onPress={(entry) =>
               router.navigate({
@@ -54,7 +54,7 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
           />
         )
       } else {
-        return <KbSection style={[styles.item, sectionStyle]} title={item.Name} subtitle={item.Description} icon={item.FontAwesomeIconName ?? 'bookmark'} />
+        return <KbSection style={[styles.section, sectionStyle]} title={item.Name} subtitle={item.Description} icon={item.FontAwesomeIconName ?? 'bookmark'} />
       }
     },
     [sectionStyle]
@@ -82,8 +82,11 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
 }
 
 const styles = StyleSheet.create({
-  item: {
+  section: {
     paddingHorizontal: 20,
+  },
+  item: {
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

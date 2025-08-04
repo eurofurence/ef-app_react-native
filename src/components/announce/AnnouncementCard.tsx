@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Pressable } from '@/components/generic/Pressable'
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
@@ -16,14 +16,13 @@ export type AnnouncementDetailsInstance = {
 }
 
 export type AnnouncementCardProps = {
-  containerStyle?: ViewStyle
   style?: ViewStyle
   announcement: AnnouncementDetailsInstance
   onPress?: (announcement: AnnouncementDetails) => void
   onLongPress?: (announcement: AnnouncementDetails) => void
 }
 
-export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, style, announcement, onPress, onLongPress }) => {
+export const AnnouncementCard: FC<AnnouncementCardProps> = ({ style, announcement, onPress, onLongPress }) => {
   // Dependent and independent styles.
   const styleContainer = useThemeBackground('background')
   const saturationValue = useThemeName() === 'dark' ? 0.5 : 0.7
@@ -31,8 +30,7 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, st
   const styleAreaIndicator = { backgroundColor: colorForArea(announcement.details.Area, saturationValue, 0.76) }
 
   return (
-    <TouchableOpacity
-      containerStyle={containerStyle}
+    <Pressable
       style={[styles.container, appStyles.shadow, styleContainer, style]}
       onPress={() => onPress?.(announcement.details)}
       onLongPress={() => onLongPress?.(announcement.details)}
@@ -49,7 +47,7 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, st
           {announcement.time} - {announcement.details.Area}
         </Label>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
@@ -58,11 +56,12 @@ const styles = StyleSheet.create({
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,
-    overflow: 'hidden',
     flexDirection: 'row',
   },
   pre: {
     overflow: 'hidden',
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
     width: 70,
     alignItems: 'center',
     justifyContent: 'center',

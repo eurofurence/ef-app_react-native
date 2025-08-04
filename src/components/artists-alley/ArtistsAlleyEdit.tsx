@@ -92,7 +92,7 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
 
   return (
     <FormProvider {...form}>
-      <Label type="compact" mt={20} mb={40}>
+      <Label type="compact" className="mt-5 mb-10">
         {t(mode === 'change' ? 'explanation_edit_change' : 'explanation_edit_new')}
       </Label>
 

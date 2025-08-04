@@ -21,13 +21,13 @@ export const ManagedChoiceButtons = <T extends FieldValues = FieldValues>({ name
   return (
     <View style={[styles.container, containerStyle]}>
       {label && (
-        <Label type="caption" mb={8}>
+        <Label type="caption" className="mb-2">
           {label}
         </Label>
       )}
       <ChoiceButtons choice={value} setChoice={onChange} style={[styles.input, style]} {...props} />
       {error && (
-        <Label type="caption" color="important" mt={4}>
+        <Label type="caption" color="important" className="mt-1">
           {error.message}
         </Label>
       )}

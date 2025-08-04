@@ -39,7 +39,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
           {dealers.map((item) => (
             <DealerCard
               key={item.details.Id}
-              containerStyle={styles.item}
+              style={styles.item}
               dealer={item}
               onPress={(dealer) =>
                 router.navigate({
@@ -57,7 +57,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
           {events.map((item) => (
             <EventCard
               key={item.details.Id}
-              containerStyle={styles.item}
+              style={styles.item}
               event={item}
               type="time"
               onPress={(event) =>
@@ -75,7 +75,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
           <Section icon="card-search" title={tMenu('info')} />
           {kbGroups.map((item) => (
             <KbEntryCard
-              containerStyle={styles.item}
+              style={styles.item}
               entry={item}
               key={item.Id}
               onPress={(entry) =>
@@ -94,6 +94,6 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
 })

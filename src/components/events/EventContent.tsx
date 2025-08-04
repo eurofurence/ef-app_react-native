@@ -120,7 +120,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       ) : null}
 
       {event.Title ? (
-        <Label type="h1" mt={20}>
+        <Label type="h1" className="mt-5">
           {event.Title}
         </Label>
       ) : null}
@@ -184,10 +184,10 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       )}
 
       <Row style={styles.marginAround} gap={16}>
-        <Button containerStyle={styles.flex} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleReminder().catch(captureException)}>
+        <Button style={styles.flex} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleReminder().catch(captureException)}>
           {isFavorite ? t('remove_favorite') : t('add_favorite')}
         </Button>
-        <Button containerStyle={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
+        <Button style={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
           {event.Hidden ? t('reveal') : t('hide')}
         </Button>
       </Row>
@@ -195,7 +195,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       {event.IsAcceptingFeedback && (
         <Button
           disabled={feedbackDisabled}
-          containerStyle={styles.marginAround}
+          style={styles.marginAround}
           icon="pencil"
           onPress={() =>
             router.navigate({

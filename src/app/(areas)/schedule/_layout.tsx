@@ -15,6 +15,10 @@ import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+export const unstable_settings = {
+  initialRouteName: 'day-1',
+}
+
 const { Navigator } = createMaterialTopTabNavigator()
 
 const MaterialTopTabs = withLayoutContext<MaterialTopTabNavigationOptions, typeof Navigator, TabNavigationState<ParamListBase>, MaterialTopTabNavigationEventMap>(Navigator)
@@ -54,7 +58,7 @@ export default function ScheduleLayout() {
       <MaterialTopTabs
         initialRouteName={initialRouteName}
         style={StyleSheet.absoluteFill}
-        screenOptions={{ sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
+        screenOptions={{ sceneStyle: backgroundSurface, tabBarItemStyle: styles.tabItem }}
         tabBar={(props) => (
           <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
             <MaterialTopTabBar {...props} />
@@ -77,8 +81,9 @@ export default function ScheduleLayout() {
 }
 
 const styles = StyleSheet.create({
-  tabLabel: {
+  tabItem: {
     margin: 0,
+    padding: 0,
   },
   tabBarContainer: {
     backgroundColor: 'transparent',

@@ -75,7 +75,7 @@ export default function ComposeMessage() {
             <ManagedTextInput<MessageSchema> name="subject" label="subject" placeholder="Subject" />
             <ManagedTextInput<MessageSchema> name="message" label="message" placeholder="Body of the message" numberOfLines={8} multiline />
 
-            {isPending && <Label mt={16}>Submitting</Label>}
+            {isPending && <Label className="mt-4">Submitting</Label>}
           </FormProvider>
         </View>
         <Button onPress={form.handleSubmit(onSend)}>Submit</Button>

@@ -8,15 +8,14 @@ import { Card } from '../generic/containers/Card'
 import { KnowledgeEntryDetails } from '@/context/data/types.details'
 
 export type KbEntryCardProps = {
-  containerStyle?: ViewStyle
   style?: ViewStyle
   onPress: (entry: KnowledgeEntryDetails) => void
   entry: KnowledgeEntryDetails
 }
 
-export const KbEntryCard: FC<KbEntryCardProps> = ({ containerStyle, style, entry, onPress }) => {
+export const KbEntryCard: FC<KbEntryCardProps> = ({ style, entry, onPress }) => {
   return (
-    <Card containerStyle={containerStyle} style={[styles.container, appStyles.shadow, style]} onPress={() => onPress(entry)}>
+    <Card style={[styles.container, appStyles.shadow, style]} onPress={() => onPress(entry)}>
       <Label type="h3">{entry.Title}</Label>
     </Card>
   )

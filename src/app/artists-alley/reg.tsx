@@ -63,7 +63,7 @@ export default function Register() {
             {tStatus(data.State)}
           </Badge>
         )}
-        <Label type="compact" mt={20}>
+        <Label type="compact" className="mt-5">
           {t('intro')}
         </Label>
         <Button style={styles.button} icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>

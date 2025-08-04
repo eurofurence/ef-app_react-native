@@ -1,6 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { Pressable, PressableProps } from 'react-native-gesture-handler'
 
 import { router } from 'expo-router'
 import { Continuous } from '../atoms/Continuous'
@@ -11,6 +10,7 @@ import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/
 import { useToastMessages } from '@/context/ui/ToastContext'
 import { Toast } from '@/components/Toast'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { Pressable, PressableProps } from '@/components/generic/Pressable'
 
 const iconSize = 26
 const iconPad = 6
@@ -56,13 +56,7 @@ export const Header: FC<HeaderProps> = (props) => {
   const toastMessages = useToastMessages(5)
   return (
     <Row style={[styles.container, styleBackground, styleBorder, props.style, { paddingTop: styles.container.paddingTop + insets.top }]} type="center" variant="spaced">
-      <Pressable
-        hitSlop={backHitSlop}
-        style={({ pressed }) => [styles.back, { opacity: pressed ? 0.5 : 1 }]}
-        onPress={() => router.back()}
-        accessibilityRole="button"
-        accessibilityLabel="Back"
-      >
+      <Pressable hitSlop={backHitSlop} style={styles.back} onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Back">
         <Icon name="chevron-left" size={iconSize} color={colorValue} />
       </Pressable>
 
@@ -72,12 +66,7 @@ export const Header: FC<HeaderProps> = (props) => {
 
       {/* Optional secondary action. */}
       {!('secondaryIcon' in props) ? null : (
-        <Pressable
-          hitSlop={secondaryHitSlop}
-          style={({ pressed }) => [styles.secondary, { opacity: pressed ? 0.5 : 1 }]}
-          onPress={() => props.secondaryPress()}
-          accessibilityRole="button"
-        >
+        <Pressable hitSlop={secondaryHitSlop} style={styles.secondary} onPress={() => props.secondaryPress()} accessibilityRole="button">
           <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
         </Pressable>
       )}

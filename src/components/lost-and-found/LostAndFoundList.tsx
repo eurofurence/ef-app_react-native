@@ -37,7 +37,7 @@ export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, emp
 
   const renderItem = useCallback(
     ({ item }: { item: LostAndFoundRecord }) => {
-      return <LostAndFoundCard containerStyle={styles.item} item={item} onPress={() => onPress(item)} />
+      return <LostAndFoundCard style={styles.item} item={item} onPress={() => onPress(item)} />
     },
     [onPress]
   )
@@ -63,7 +63,7 @@ export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, emp
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

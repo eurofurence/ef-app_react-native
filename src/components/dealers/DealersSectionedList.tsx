@@ -47,9 +47,9 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
   const renderItem = useCallback(
     ({ item }: { item: SectionProps | DealerDetailsInstance }) => {
       if ('details' in item) {
-        return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} />
+        return <DealerCard style={styles.item} dealer={item} onPress={onPress} />
       } else {
-        return <DealerSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
+        return <DealerSection style={styles.section} title={item.title} subtitle={item.subtitle} icon={item.icon} />
       }
     },
     [onPress]
@@ -77,8 +77,11 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
 }
 
 const styles = StyleSheet.create({
-  item: {
+  section: {
     paddingHorizontal: 20,
+  },
+  item: {
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

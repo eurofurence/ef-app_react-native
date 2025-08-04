@@ -2,7 +2,7 @@ import { format } from 'date-fns'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Pressable } from '@/components/generic/Pressable'
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Col } from '../generic/containers/Col'
@@ -13,21 +13,26 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { CommunicationRecord } from '@/context/data/types.api'
 
 export type PrivateMessageCardProps = {
-  containerStyle?: ViewStyle
   style?: ViewStyle
   item: CommunicationRecord
   onPress: (item: CommunicationRecord) => void
 }
 
-export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle, style, item, onPress }) => {
+export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ style, item, onPress }) => {
   const { t } = useTranslation('PrivateMessageList')
   const styleContainer = useThemeBackground('background')
 
   return (
-    <TouchableOpacity containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
+    <Pressable style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
       <Row style={styles.main}>
         <Col style={styles.title}>
-          <Label type="h4" mb={10} variant={item.ReadDateTimeUtc === null ? 'bold' : 'regular'} color={item.ReadDateTimeUtc === null ? 'important' : 'soften'} ellipsizeMode="tail">
+          <Label
+            type="h4"
+            className="mb-3"
+            variant={item.ReadDateTimeUtc === null ? 'bold' : 'regular'}
+            color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}
+            ellipsizeMode="tail"
+          >
             {item.Subject}
           </Label>
           <Label color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}>
@@ -41,7 +46,7 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle
           <Icon name="chevron-right" size={30} />
         </View>
       </Row>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
@@ -50,7 +55,6 @@ const styles = StyleSheet.create({
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,
-    overflow: 'hidden',
     flexDirection: 'row',
   },
   main: {

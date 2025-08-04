@@ -18,7 +18,8 @@ import { router } from 'expo-router'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Alert, Linking, Platform, StyleSheet } from 'react-native'
-import { Pressable, ScrollView } from 'react-native-gesture-handler'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Pressable } from '@/components/generic/Pressable'
 
 const extraThanksMarkdown = `
 # Tooling
@@ -105,7 +106,6 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
           params: { url, title: name },
         })
       }
-      style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
       onLongPress={onEasterEgg}
       delayLongPress={2000}
       accessibilityRole="button"
@@ -195,7 +195,7 @@ export default function AboutScreen() {
       <Floater contentStyle={appStyles.trailer}>
         <Pressable style={{ cursor: 'auto' }} onPress={toggleDevMenu} accessibilityRole="button" accessibilityLabel="Toggle developer menu">
           <Col style={styles.marginAround} type="center">
-            <Label type="h1" mb={10}>
+            <Label type="h1" className="mb-3">
               {conName} App
             </Label>
             <Row gap={5}>
@@ -214,10 +214,10 @@ export default function AboutScreen() {
         </Pressable>
 
         <Row style={styles.marginAround} gap={16}>
-          <Button containerStyle={styles.flex} onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')} icon="help">
+          <Button style={styles.flex} onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')} icon="help">
             {t('app_details.get_help')}
           </Button>
-          <Button containerStyle={styles.flex} onPress={() => Linking.openURL('https://github.com/eurofurence/ef-app_react-native/issues')} icon="bug">
+          <Button style={styles.flex} onPress={() => Linking.openURL('https://github.com/eurofurence/ef-app_react-native/issues')} icon="bug">
             {t('app_details.report_bug')}
           </Button>
         </Row>

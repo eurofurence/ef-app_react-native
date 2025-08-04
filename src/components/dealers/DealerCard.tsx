@@ -1,6 +1,6 @@
 import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '../AppStyles'
@@ -10,6 +10,7 @@ import { Label } from '../generic/atoms/Label'
 import { isPresent, joinOffDays } from './utils'
 
 import { DealerDetails } from '@/context/data/types.details'
+import { Pressable } from '@/components/generic/Pressable'
 
 export type DealerDetailsInstance = {
   details: DealerDetails
@@ -34,14 +35,13 @@ export function dealerInstanceForAny(details: DealerDetails, now: Date, day1: st
 }
 
 export type DealerCardProps = {
-  containerStyle?: ViewStyle
   style?: ViewStyle
   dealer: DealerDetailsInstance
   onPress?: (dealer: DealerDetails) => void
   onLongPress?: (dealer: DealerDetails) => void
 }
 
-export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer, onPress, onLongPress }) => {
+export const DealerCard: FC<DealerCardProps> = ({ style, dealer, onPress, onLongPress }) => {
   // Details and properties dereference.
   const name = dealer.details.DisplayNameOrAttendeeNickname
   const present = dealer.present
@@ -61,37 +61,33 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
   const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
   return (
-    <View style={containerStyle}>
-      <TouchableOpacity style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind} activeOpacity={0.7}>
-        <View style={[styles.pre, stylePre]}>
-          <Image
-            key={dealer.details.Id}
-            recyclingKey={dealer.details.Id}
-            style={[avatarBackground, styles.avatarCircle]}
-            source={avatar}
-            contentFit="contain"
-            placeholder={require('@/assets/static/ych.png')}
-            transition={60}
-          />
-        </View>
+    <Pressable style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+      <View style={[styles.pre, stylePre]}>
+        <Image
+          recyclingKey={dealer.details.Id}
+          style={[avatarBackground, styles.avatarCircle]}
+          source={avatar}
+          contentFit="contain"
+          placeholder={require('@/assets/static/ych.png')}
+        />
+      </View>
 
-        <View style={styles.main}>
-          <Label type="h3">{name}</Label>
+      <View style={styles.main}>
+        <Label type="h3">{name}</Label>
 
-          {!description ? null : (
-            <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
-              {description}
-            </Label>
-          )}
+        {!description ? null : (
+          <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+            {description}
+          </Label>
+        )}
 
-          {!offDays ? null : (
-            <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-              {t('not_attending_on', { offDays })}
-            </Label>
-          )}
-        </View>
-      </TouchableOpacity>
-    </View>
+        {!offDays ? null : (
+          <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+            {t('not_attending_on', { offDays })}
+          </Label>
+        )}
+      </View>
+    </Pressable>
   )
 }
 
@@ -100,7 +96,6 @@ const styles = StyleSheet.create({
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,
-    overflow: 'hidden',
     flexDirection: 'row',
   },
   background: {
@@ -110,6 +105,8 @@ const styles = StyleSheet.create({
   },
   pre: {
     overflow: 'hidden',
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
     width: 80,
     alignItems: 'center',
     justifyContent: 'center',

@@ -37,7 +37,7 @@ export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trai
 
   const renderItem = useCallback(
     ({ item }: { item: DealerDetailsInstance }) => {
-      return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} />
+      return <DealerCard style={styles.item} dealer={item} onPress={onPress} />
     },
     [onPress]
   )
@@ -63,7 +63,7 @@ export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trai
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

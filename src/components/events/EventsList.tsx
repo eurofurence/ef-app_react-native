@@ -36,7 +36,7 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
 
   const renderItem = useCallback(
     ({ item }: { item: EventDetailsInstance }) => {
-      return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} />
+      return <EventCard style={styles.item} event={item} type={cardType} onPress={onPress} />
     },
     [cardType, onPress]
   )
@@ -62,7 +62,7 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

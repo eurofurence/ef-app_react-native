@@ -26,12 +26,12 @@ export default function AnnounceItem() {
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
         {!announcement ? (
-          <Label type="h2" mt={30} mb={10}>
+          <Label type="h2" className="mt-8 mb-3">
             {t('not_available')}
           </Label>
         ) : (
           <>
-            <Label type="h1" mt={30} mb={10}>
+            <Label type="h1" className="mt-8 mb-3">
               {announcement.NormalizedTitle}
             </Label>
 

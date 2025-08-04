@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Pressable } from '@/components/generic/Pressable'
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
@@ -27,14 +27,13 @@ export function tableRegistrationInstanceForAny(details: TableRegistrationRecord
 }
 
 export type ArtistsAlleyCardProps = {
-  containerStyle?: ViewStyle
   style?: ViewStyle
   item: TableRegistrationInstance
   onPress?: (item: TableRegistrationInstance) => void
   onLongPress?: (item: TableRegistrationInstance) => void
 }
 
-export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, style, item, onPress, onLongPress }) => {
+export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ style, item, onPress, onLongPress }) => {
   // Dependent and independent styles.
   const styleContainer = useThemeBackground('background')
   const stylePre = useThemeBackground('primary')
@@ -45,9 +44,8 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
   if (item.visibility === 'hidden') return null
 
   return (
-    <TouchableOpacity
-      containerStyle={item.visibility === 'grayed' ? [containerStyle, styles.transparent] : containerStyle}
-      style={[styles.container, appStyles.shadow, styleContainer, style]}
+    <Pressable
+      style={[styles.container, appStyles.shadow, item.visibility === 'grayed' && styles.transparent, styleContainer, style]}
       onPress={() => onPress?.(item)}
       onLongPress={() => onLongPress?.(item)}
     >
@@ -74,7 +72,7 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
           {item.details.State}
         </Label>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
@@ -86,11 +84,12 @@ const styles = StyleSheet.create({
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,
-    overflow: 'hidden',
     flexDirection: 'row',
   },
   pre: {
     overflow: 'hidden',
+    borderTopLeftRadius: 16,
+    borderBottomLeftRadius: 16,
     width: 70,
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { StyleSheet } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Pressable } from '@/components/generic/Pressable'
 
 import { router } from 'expo-router'
 import { sourceFromImage } from './Image.common'
@@ -42,8 +42,8 @@ export const Banner = ({ style, image, title, placeholder, viewable }: BannerPro
   // Do not render if nothing given.
   if (!image) return null
   return (
-    <TouchableOpacity
-      containerStyle={[styles.container, backgroundStyle]}
+    <Pressable
+      style={[styles.container, backgroundStyle]}
       disabled={!viewable}
       onPress={() => {
         if (viewable && image)
@@ -54,7 +54,7 @@ export const Banner = ({ style, image, title, placeholder, viewable }: BannerPro
       }}
     >
       <Image style={[styles.image, aspect, style]} contentFit={undefined} source={sourceFromImage(image)} placeholder={placeholder} />
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

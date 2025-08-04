@@ -9,7 +9,6 @@ import { Search } from '@/components/generic/atoms/Search'
 import { Label } from '@/components/generic/atoms/Label'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 import { Row } from '@/components/generic/containers/Row'
-
 export type ComboModalProps<T> = {
   title?: string
   clear?: boolean
@@ -129,10 +128,10 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
           </ScrollView>
 
           <Row>
-            <Button containerStyle={styles.rowLeft} outline={true} onPress={cancel}>
+            <Button style={styles.rowLeft} outline={true} onPress={cancel}>
               {cancelText ?? 'Cancel'}
             </Button>
-            <Button containerStyle={styles.rowRight} outline={false} onPress={confirm}>
+            <Button style={styles.rowRight} outline={false} onPress={confirm}>
               {confirmText ?? 'Confirm'}
             </Button>
           </Row>

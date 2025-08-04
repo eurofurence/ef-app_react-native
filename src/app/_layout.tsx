@@ -13,7 +13,6 @@ import { SplashScreen, Stack, useSegments } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 // Import i18n configuration
@@ -30,6 +29,10 @@ import '@/init/splash'
 import '@/css/globals.css'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 
+export const unstable_settings = {
+  initialRouteName: '(areas)',
+}
+
 /**
  * The root layout for the application.
  * This layout is responsible for setting up the main layout and the data cache provider.
@@ -37,17 +40,15 @@ import { useNotificationResponseManager } from '@/hooks/notifications/useNotific
  */
 export default function RootLayout() {
   return (
-    <GestureHandlerRootView>
-      <QueryProvider>
-        <CacheProvider>
-          <AuthProvider>
-            <ToastProvider>
-              <MainLayout />
-            </ToastProvider>
-          </AuthProvider>
-        </CacheProvider>
-      </QueryProvider>
-    </GestureHandlerRootView>
+    <QueryProvider>
+      <CacheProvider>
+        <AuthProvider>
+          <ToastProvider>
+            <MainLayout />
+          </ToastProvider>
+        </AuthProvider>
+      </CacheProvider>
+    </QueryProvider>
   )
 }
 
@@ -92,26 +93,28 @@ export function MainLayout() {
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
       <BottomSheetModalProvider>
         <ThemeProvider value={themeNavigation}>
-          <StatusBar backgroundColor={theme.background} style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
-          <Stack>
-            {screensData.map((screen) => (
-              <Stack.Screen
-                key={screen.location}
-                name={screen.location}
-                options={{
-                  freezeOnBlur: screen.freezeOnBlur,
-                  keyboardHandlingEnabled: true,
-                  headerTitleAlign: 'left',
-                  headerShown: screen.headerShown,
-                  headerTitle: screen.title,
-                  headerLargeTitle: screen.headerLargeTitle,
-                  headerLeft: screen.headerLeft,
-                  headerRight: screen.headerRight,
-                  gestureEnabled: screen.swipeEnabled || false,
-                }}
-              />
-            ))}
-          </Stack>
+          <GestureHandlerRootView>
+            <StatusBar backgroundColor={theme.background} style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
+            <Stack>
+              {screensData.map((screen) => (
+                <Stack.Screen
+                  key={screen.location}
+                  name={screen.location}
+                  options={{
+                    freezeOnBlur: screen.freezeOnBlur,
+                    keyboardHandlingEnabled: true,
+                    headerTitleAlign: 'left',
+                    headerShown: screen.headerShown,
+                    headerTitle: screen.title,
+                    headerLargeTitle: screen.headerLargeTitle,
+                    headerLeft: screen.headerLeft,
+                    headerRight: screen.headerRight,
+                    gestureEnabled: screen.swipeEnabled || false,
+                  }}
+                />
+              ))}
+            </Stack>
+          </GestureHandlerRootView>
         </ThemeProvider>
       </BottomSheetModalProvider>
     </SafeAreaProvider>

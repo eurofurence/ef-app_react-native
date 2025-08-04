@@ -11,6 +11,10 @@ import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+export const unstable_settings = {
+  initialRouteName: 'all',
+}
+
 const { Navigator } = createMaterialTopTabNavigator()
 
 /**

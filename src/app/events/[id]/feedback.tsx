@@ -92,12 +92,12 @@ export default function EventFeedback() {
           </Button>
 
           {disabledReason && (
-            <Label type="caption" color="important" variant="middle" mt={16}>
+            <Label type="caption" color="important" variant="middle" className="mt-4">
               {disabledReason}
             </Label>
           )}
 
-          {isPending && <Label mt={16}>{t('submit_in_progress')}</Label>}
+          {isPending && <Label className="mt-4">{t('submit_in_progress')}</Label>}
         </FormProvider>
       </Floater>
     </ScrollView>

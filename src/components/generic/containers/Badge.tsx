@@ -29,7 +29,7 @@ export const Badge: FC<BadgeProps> = ({ unpad, badgeColor, textColor, textType =
     <View style={[styleContainer, styleBadgeColor]}>
       <Row style={[styles.content, styleContent]}>
         {!icon ? null : <Icon name={icon} size={iconSize} color={iconColor} />}
-        <Label style={styles.text} color={textColor} ml={10} type={textType} variant={textVariant}>
+        <Label style={styles.text} color={textColor} className="ml-3" type={textType} variant={textVariant}>
           {children}
         </Label>
       </Row>

@@ -104,7 +104,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
   const days = useMemo(
     () =>
       dealer.AttendanceDays.map((day) => {
-        const zonedDate = toZonedTime(new Date(day.Date), conTimeZone)
+        const zonedDate = toZonedTime(day.Date, conTimeZone)
         return format(zonedDate, 'EEEE')
       }).join(', '),
     [dealer]
@@ -146,12 +146,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
       {!dealer.Artist ? null : (
         <View style={[appStyles.shadow, avatarBackground, styles.avatarCircle]}>
-          <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.Artist)} />
+          <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.ArtistThumbnail)} />
         </View>
       )}
 
       {dealer.DisplayNameOrAttendeeNickname ? (
-        <Label type="h1" variant="middle" mb={10}>
+        <Label type="h1" variant="middle" className="mb-3">
           {dealer.DisplayNameOrAttendeeNickname}
         </Label>
       ) : null}
@@ -167,12 +167,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Label>
       </Row>
 
-      <Button containerStyle={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
+      <Button style={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
         {dealer.Favorite ? t('remove_favorite') : t('add_favorite')}
       </Button>
 
       {!shareButton ? null : (
-        <Button containerStyle={styles.marginAround} icon="share" onPress={() => shareDealer(dealer)}>
+        <Button style={styles.marginAround} icon="share" onPress={() => shareDealer(dealer)}>
           {t('share')}
         </Button>
       )}
@@ -211,22 +211,18 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         ))}
 
       {dealer.TelegramHandle && (
-        <Button
-          containerStyle={styles.marginAround}
-          onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
-          icon={(props) => <FaIcon name="telegram-plane" {...props} />}
-        >
+        <Button style={styles.marginAround} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)} icon={(props) => <FaIcon name="telegram-plane" {...props} />}>
           Telegram: {dealer.TelegramHandle}
         </Button>
       )}
       {dealer.TwitterHandle && (
-        <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
+        <Button style={styles.marginAround} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
           Twitter: {dealer.TwitterHandle}
         </Button>
       )}
       {dealer.DiscordHandle && (
         <Button
-          containerStyle={styles.marginAround}
+          style={styles.marginAround}
           onPress={async () => {
             if (!dealer.DiscordHandle) return null
             await Clipboard.setStringAsync(dealer.DiscordHandle)
@@ -238,12 +234,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Button>
       )}
       {dealer.MastodonHandle && (
-        <Button containerStyle={styles.marginAround} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
+        <Button style={styles.marginAround} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
           Mastodon: {dealer.MastodonHandle}
         </Button>
       )}
       {dealer.BlueskyHandle && (
-        <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
+        <Button style={styles.marginAround} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
           Bluesky: {dealer.BlueskyHandle}
         </Button>
       )}
@@ -256,7 +252,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             <View style={styles.posterLine}>
               <Banner image={dealer.ArtPreview} viewable />
 
-              <Label mt={10} type="caption" numberOfLines={4} ellipsizeMode="tail">
+              <Label className="mt-3" type="caption" numberOfLines={4} ellipsizeMode="tail">
                 {dealer.ArtPreviewCaption}
               </Label>
             </View>

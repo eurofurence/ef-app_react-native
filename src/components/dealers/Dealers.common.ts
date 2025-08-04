@@ -34,9 +34,9 @@ const compareCategory = (left: string, right: string) => {
 export const useDealerInstances = (now: Date, items: readonly DealerDetails[]) => {
   return useMemo(() => {
     // Using date-fns to compute day names for Monday, Tuesday, and Wednesday.
-    const day1 = format(setDay(new Date(), 1, { weekStartsOn: 0 }), 'EEEE')
-    const day2 = format(setDay(new Date(), 2, { weekStartsOn: 0 }), 'EEEE')
-    const day3 = format(setDay(new Date(), 3, { weekStartsOn: 0 }), 'EEEE')
+    const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
+    const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
+    const day3 = format(setDay(Date.now(), 3, { weekStartsOn: 0 }), 'EEEE')
     return items.map((item) => dealerInstanceForAny(item, now, day1, day2, day3))
   }, [now, items])
 }
@@ -48,9 +48,9 @@ export const useDealerInstances = (now: Date, items: readonly DealerDetails[]) =
  */
 export const useDealerGroups = (now: Date, items: readonly DealerDetails[]) => {
   return useMemo(() => {
-    const day1 = format(setDay(new Date(), 1, { weekStartsOn: 0 }), 'EEEE')
-    const day2 = format(setDay(new Date(), 2, { weekStartsOn: 0 }), 'EEEE')
-    const day3 = format(setDay(new Date(), 3, { weekStartsOn: 0 }), 'EEEE')
+    const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
+    const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
+    const day3 = format(setDay(Date.now(), 3, { weekStartsOn: 0 }), 'EEEE')
 
     // Build a map of categories.
     const categoryMap: Record<string, DealerDetailsInstance[]> = {}
@@ -80,9 +80,9 @@ export const useDealerGroups = (now: Date, items: readonly DealerDetails[]) => {
  */
 export const useDealerLocationGroups = (t: TFunction, now: Date, items: readonly DealerDetails[]) => {
   return useMemo(() => {
-    const day1 = format(setDay(new Date(), 1, { weekStartsOn: 0 }), 'EEEE')
-    const day2 = format(setDay(new Date(), 2, { weekStartsOn: 0 }), 'EEEE')
-    const day3 = format(setDay(new Date(), 3, { weekStartsOn: 0 }), 'EEEE')
+    const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
+    const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
+    const day3 = format(setDay(Date.now(), 3, { weekStartsOn: 0 }), 'EEEE')
 
     let sectionedRegular = false
     let sectionedAd = false
@@ -118,9 +118,9 @@ export const useDealerLocationGroups = (t: TFunction, now: Date, items: readonly
  */
 export const useDealerAlphabeticalGroups = (now: Date, items: readonly DealerDetails[]) => {
   return useMemo(() => {
-    const day1 = format(setDay(new Date(), 1, { weekStartsOn: 0 }), 'EEEE')
-    const day2 = format(setDay(new Date(), 2, { weekStartsOn: 0 }), 'EEEE')
-    const day3 = format(setDay(new Date(), 3, { weekStartsOn: 0 }), 'EEEE')
+    const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
+    const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
+    const day3 = format(setDay(Date.now(), 3, { weekStartsOn: 0 }), 'EEEE')
 
     const sectionedLetters: Record<string, boolean> = {}
     const result: (DealerSectionProps | DealerDetailsInstance)[] = []

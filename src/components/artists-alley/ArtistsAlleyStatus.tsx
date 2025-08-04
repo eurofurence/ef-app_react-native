@@ -22,32 +22,32 @@ export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut }: ArtistsAlleySta
 
   return (
     <View style={styles.container}>
-      <Label type="para" mt={20} mb={40}>
+      <Label type="para" className="mt-5 mb-10">
         {data.State === 'Pending' ? t('explanation_status_pending') : data.State === 'Rejected' ? t('explanation_status_rejected') : t('explanation_status_accepted')}
       </Label>
       <Label type="caption">{t('display_name_label')}</Label>
-      <Label type="h3" mb={20}>
+      <Label type="h3" className="mb-5">
         {data.DisplayName}
       </Label>
       <Label type="caption">{t('website_url_label')}</Label>
-      <Label type="h3" mb={20}>
+      <Label type="h3" className="mb-5">
         {data.WebsiteUrl}
       </Label>
       <Label type="caption">{t('short_description_label')}</Label>
-      <Label type="h3" mb={20}>
+      <Label type="h3" className="mb-5">
         {data.ShortDescription}
       </Label>
       <Label type="caption">{t('location_label')}</Label>
-      <Label type="h3" mb={20}>
+      <Label type="h3" className="mb-5">
         {data.Location}
       </Label>
       <Label type="caption">{t('telegram_handle_label')}</Label>
-      <Label type="h3" mb={20}>
+      <Label type="h3" className="mb-5">
         {data.TelegramHandle}
       </Label>
       <Label type="caption">{t('submission_image_label')}</Label>
       <View style={[styles.imageContainer, backgroundStyle]}>
-        <Image style={[styles.image, { aspectRatio: data.Image.Width / data.Image.Height }]} contentFit={undefined} source={sourceFromImage(data.Image)} placeholder={null} />
+        <Image style={{ aspectRatio: data.Image.Width / data.Image.Height }} contentFit={undefined} source={sourceFromImage(data.Image)} placeholder={null} />
       </View>
 
       <Button style={styles.button} onPress={onEdit}>
@@ -68,15 +68,10 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   imageContainer: {
-    width: '100%',
+    alignSelf: 'stretch',
     height: undefined,
     marginTop: 6,
     marginBottom: 16,
-  },
-  image: {
-    width: '100%',
-    minHeight: 200,
-    height: undefined,
   },
   button: {
     marginTop: 30,

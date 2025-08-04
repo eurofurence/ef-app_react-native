@@ -34,7 +34,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
 
   const renderItem = useCallback(
     ({ item }: { item: AnnouncementDetailsInstance }) => {
-      return <AnnouncementCard containerStyle={styles.item} announcement={item} onPress={onPress} />
+      return <AnnouncementCard style={styles.item} announcement={item} onPress={onPress} />
     },
     [onPress]
   )
@@ -58,7 +58,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

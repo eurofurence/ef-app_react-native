@@ -17,16 +17,12 @@ export const Warnings = () => {
     <SettingContainer>
       <Section title={t('title')} subtitle={t('subtitle')} icon="monitor-eye" />
 
-      <Button
-        containerStyle={styles.button}
-        icon={deviceWarnings.isHidden ? 'eye' : 'eye-off'}
-        onPress={deviceWarnings.isHidden ? deviceWarnings.showWarning : deviceWarnings.hideWarning}
-      >
+      <Button style={styles.button} icon={deviceWarnings.isHidden ? 'eye' : 'eye-off'} onPress={deviceWarnings.isHidden ? deviceWarnings.showWarning : deviceWarnings.hideWarning}>
         {deviceWarnings.isHidden ? t('show_device_warnings') : t('hide_device_warnings')}
       </Button>
 
       <Button
-        containerStyle={styles.button}
+        style={styles.button}
         icon={languageWarnings.isHidden ? 'eye' : 'eye-off'}
         onPress={languageWarnings.isHidden ? languageWarnings.showWarning : languageWarnings.hideWarning}
       >
@@ -34,7 +30,7 @@ export const Warnings = () => {
       </Button>
 
       <Button
-        containerStyle={styles.button}
+        style={styles.button}
         icon={timeZoneWarnings.isHidden ? 'eye' : 'eye-off'}
         onPress={timeZoneWarnings.isHidden ? timeZoneWarnings.showWarning : timeZoneWarnings.hideWarning}
       >

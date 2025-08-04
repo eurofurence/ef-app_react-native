@@ -55,49 +55,49 @@ export function TimeTravel() {
   return (
     <View testID="TimeTravel" className="p-4">
       <Section title={t('title')} icon="airplane" subtitle={t('subtitle')} />
-      <Label mb={5}>{t('originalTime', { time: format(new Date(), 'yyyy-MM-dd HH:mm:ss') })}</Label>
-      <Label mb={5}>{t('currentTime', { time: format(now, 'yyyy-MM-dd HH:mm:ss') })}</Label>
-      <Label mb={5}>{t('difference', { diff: `${Math.round(timeOffset / 1000)} seconds` })}</Label>
+      <Label className="mb-1">{t('originalTime', { time: format(new Date(), 'yyyy-MM-dd HH:mm:ss') })}</Label>
+      <Label className="mb-1">{t('currentTime', { time: format(now, 'yyyy-MM-dd HH:mm:ss') })}</Label>
+      <Label className="mb-1">{t('difference', { diff: `${Math.round(timeOffset / 1000)} seconds` })}</Label>
 
       <Row style={styles.row}>
-        <Button containerStyle={styles.button} outline={enabled} onPress={() => handleEnableTimeTravel(!enabled)}>
+        <Button style={styles.button} outline={enabled} onPress={() => handleEnableTimeTravel(!enabled)}>
           {enabled ? t('disable') : t('enable')}
         </Button>
-        <Button containerStyle={styles.button} onPress={handleResetTravel}>
+        <Button style={styles.button} onPress={handleResetTravel}>
           {t('reset')}
         </Button>
       </Row>
 
       <Row style={styles.row}>
-        <Button containerStyle={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_HOUR)}>
+        <Button style={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_HOUR)}>
           1h
         </Button>
-        <Button containerStyle={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_MINUTE)}>
+        <Button style={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_MINUTE)}>
           1m
         </Button>
-        <Button containerStyle={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_MINUTE)}>
+        <Button style={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_MINUTE)}>
           1m
         </Button>
-        <Button containerStyle={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_HOUR)}>
+        <Button style={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_HOUR)}>
           1h
         </Button>
       </Row>
 
       <Col style={styles.row} type="stretch">
         {weekBefore && (
-          <Button containerStyle={styles.button} icon="calendar-arrow-left" onPress={() => handleTravelToDate(weekBefore)}>
+          <Button style={styles.button} icon="calendar-arrow-left" onPress={() => handleTravelToDate(weekBefore)}>
             {t('week_before', { conName })}
           </Button>
         )}
 
         {eventDays.map((day: EventDayDetails) => (
-          <Button key={day.Id} containerStyle={styles.button} icon="calendar-cursor" onPress={() => handleTravelToDate(day.Date)}>
+          <Button key={day.Id} style={styles.button} icon="calendar-cursor" onPress={() => handleTravelToDate(day.Date)}>
             {day.Name}
           </Button>
         ))}
 
         {weekAfter && (
-          <Button containerStyle={styles.button} icon="calendar-arrow-right" onPress={() => handleTravelToDate(weekAfter)}>
+          <Button style={styles.button} icon="calendar-arrow-right" onPress={() => handleTravelToDate(weekAfter)}>
             {t('week_after', { conName })}
           </Button>
         )}

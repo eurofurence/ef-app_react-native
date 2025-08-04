@@ -68,11 +68,11 @@ export default function List() {
   const leader = useMemo(() => {
     return (
       <>
-        <Label type="lead" variant="middle" mt={30}>
+        <Label type="lead" variant="middle" className="mt-8">
           {t('moderate')}
         </Label>
         {!loggedIn && !isAttending && !isCheckedIn ? null : (
-          <Button containerStyle={styles.registerSelf} onPress={() => router.navigate('/artists-alley/reg')} outline={true}>
+          <Button style={styles.registerSelf} onPress={() => router.navigate('/artists-alley/reg')} outline={true}>
             {t('register_self')}
           </Button>
         )}

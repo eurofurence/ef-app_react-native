@@ -49,9 +49,9 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
   const renderItem = useCallback(
     ({ item }: { item: SectionProps | EventDetailsInstance }) => {
       if ('details' in item) {
-        return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} />
+        return <EventCard style={styles.item} event={item} type={cardType} onPress={onPress} />
       } else {
-        return <EventSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
+        return <EventSection style={styles.section} title={item.title} subtitle={item.subtitle} icon={item.icon} />
       }
     },
     [cardType, onPress]
@@ -79,8 +79,11 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
 }
 
 const styles = StyleSheet.create({
-  item: {
+  section: {
     paddingHorizontal: 20,
+  },
+  item: {
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,
