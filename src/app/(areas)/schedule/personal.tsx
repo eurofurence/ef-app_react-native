@@ -47,5 +47,5 @@ export default function Personal() {
     [t]
   )
 
-  return <EventsSectionedList eventsGroups={groups} select={selectEvent} cardType="time" leader={leader} empty={empty} />
+  return <EventsSectionedList eventsGroups={groups} select={selectEvent} cardType="duration" leader={leader} empty={empty} />
 }

@@ -113,7 +113,7 @@ export default function FilterScreen() {
         <Label type="para">Select the hosts to filter on.</Label>
       </ComboModal>
 
-      <EventsSectionedList eventsGroups={groups} select={selectEvent} cardType="time" leader={leader} />
+      <EventsSectionedList eventsGroups={groups} select={selectEvent} cardType="duration" leader={leader} />
     </>
   )
 }
