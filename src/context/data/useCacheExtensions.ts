@@ -208,17 +208,17 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       ...item,
       NormalizedTitle: deriveAnnouncementTitle(item.Title, item.Content),
       Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
-      ValidFrom: toZonedTime(parseISO(item.ValidFromDateTimeUtc), conTimeZone),
-      ValidFromLocal: parseISO(item.ValidFromDateTimeUtc),
-      ValidUntil: toZonedTime(parseISO(item.ValidUntilDateTimeUtc), conTimeZone),
-      ValidUntilLocal: parseISO(item.ValidUntilDateTimeUtc),
+      ValidFrom: toZonedTime(parseISO(item.ValidFromDateTimeUtc + 'Z'), conTimeZone),
+      ValidFromLocal: parseISO(item.ValidFromDateTimeUtc + 'Z'),
+      ValidUntil: toZonedTime(parseISO(item.ValidUntilDateTimeUtc + 'Z'), conTimeZone),
+      ValidUntilLocal: parseISO(item.ValidUntilDateTimeUtc + 'Z'),
     }))
   }, [images, data.announcements])
 
   const eventDays = useMemo((): EntityStore<EventDayDetails> => {
     return mapEntityStore(data.eventDays, (item) => ({
       ...item,
-      DayOfWeek: toZonedTime(parseISO(item.Date), conTimeZone).getDay(),
+      DayOfWeek: toZonedTime(parseISO(item.Date + 'Z'), conTimeZone).getDay(),
     }))
   }, [data.eventDays])
 
@@ -258,10 +258,10 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         ConferenceRoom: item.ConferenceRoomId ? eventRooms?.dict?.[item.ConferenceRoomId] : undefined,
         ConferenceDay: item.ConferenceDayId ? eventDays?.dict?.[item.ConferenceDayId] : undefined,
         ConferenceTrack: item.ConferenceTrackId ? eventTracks?.dict?.[item.ConferenceTrackId] : undefined,
-        Start: toZonedTime(parseISO(item.StartDateTimeUtc), conTimeZone),
-        StartLocal: parseISO(item.StartDateTimeUtc),
-        End: toZonedTime(parseISO(item.EndDateTimeUtc), conTimeZone),
-        EndLocal: parseISO(item.EndDateTimeUtc),
+        Start: toZonedTime(parseISO(item.StartDateTimeUtc + 'Z'), conTimeZone),
+        StartLocal: parseISO(item.StartDateTimeUtc + 'Z'),
+        End: toZonedTime(parseISO(item.EndDateTimeUtc + 'Z'), conTimeZone),
+        EndLocal: parseISO(item.EndDateTimeUtc + 'Z'),
         Favorite: Boolean(favoriteIds?.includes(item.Id)),
         Hidden: Boolean(data.settings.hiddenEvents?.includes(item.Id)),
       })

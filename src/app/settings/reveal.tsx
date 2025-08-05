@@ -7,6 +7,14 @@ import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
 import { useNow } from '@/hooks/time/useNow'
 import { useCache } from '@/context/data/Cache'
 import { Header } from '@/components/generic/containers/Header'
+import { useEventLongPress } from '@/hooks/data/useEventReminder'
+
+// Component for individual event card with long press functionality
+const HiddenEventCard = ({ item, onUnhide }: { item: any; onUnhide: (id: string) => void }) => {
+  const { onLongPress } = useEventLongPress(item.details)
+
+  return <EventCard key={item.details.Id} event={item} type="time" onPress={() => onUnhide(item.details.Id)} onLongPress={onLongPress} />
+}
 
 export default function RevealHiddenPage() {
   const { t } = useTranslation('RevealHidden')
@@ -40,7 +48,7 @@ export default function RevealHiddenPage() {
           </Label>
 
           {hiddenEvents.map((item) => (
-            <EventCard key={item.details.Id} event={item} type="time" onPress={() => handleUnhide(item.details.Id)} />
+            <HiddenEventCard key={item.details.Id} item={item} onUnhide={handleUnhide} />
           ))}
         </Floater>
       </ScrollView>

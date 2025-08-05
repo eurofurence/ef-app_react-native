@@ -11,6 +11,28 @@ import { useDealerInstances } from '@/components/dealers/Dealers.common'
 import { useEventInstances } from '@/components/events/Events.common'
 import { GlobalSearchResult } from '@/context/data/types.own'
 import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
+import { useEventLongPress } from '@/hooks/data/useEventReminder'
+
+// Component for individual event card with long press functionality
+const GlobalSearchEventCard = ({ item }: { item: any }) => {
+  const { onLongPress } = useEventLongPress(item.details)
+
+  return (
+    <EventCard
+      key={item.details.Id}
+      containerStyle={styles.item}
+      event={item}
+      type="time"
+      onPress={(event) =>
+        router.navigate({
+          pathname: '/events/[id]',
+          params: { eventId: event.Id },
+        })
+      }
+      onLongPress={onLongPress}
+    />
+  )
+}
 
 export type GlobalSearchProps = {
   now: Date
@@ -55,18 +77,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
         <>
           <Section icon="card-search" title={tMenu('events')} />
           {events.map((item) => (
-            <EventCard
-              key={item.details.Id}
-              containerStyle={styles.item}
-              event={item}
-              type="time"
-              onPress={(event) =>
-                router.navigate({
-                  pathname: '/events/[id]',
-                  params: { eventId: event.Id },
-                })
-              }
-            />
+            <GlobalSearchEventCard key={item.details.Id} item={item} />
           ))}
         </>
       )}

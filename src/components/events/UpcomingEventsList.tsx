@@ -8,6 +8,7 @@ import { Section } from '../generic/atoms/Section'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
+import { useEventLongPress } from '@/hooks/data/useEventReminder'
 
 const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
   events.filter((it) => {
@@ -15,6 +16,26 @@ const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
     const startMinus30 = subMinutes(startDate, 30)
     return isWithinInterval(now, { start: startMinus30, end: startDate })
   })
+
+// Component for individual event card with long press functionality
+const UpcomingEventCard = ({ event }: { event: any }) => {
+  const { onLongPress } = useEventLongPress(event.details)
+
+  return (
+    <EventCard
+      key={event.details.Id}
+      event={event}
+      type="duration"
+      onPress={(event) =>
+        router.navigate({
+          pathname: '/events/[id]',
+          params: { id: event.Id },
+        })
+      }
+      onLongPress={onLongPress}
+    />
+  )
+}
 
 export type UpcomingEventsListProps = {
   now: Date
@@ -40,17 +61,7 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
       <Section title={t('upcoming_title')} subtitle={t('upcoming_subtitle')} icon="clock" />
       <View style={styles.condense}>
         {upcoming.map((event) => (
-          <EventCard
-            key={event.details.Id}
-            event={event}
-            type="duration"
-            onPress={(event) =>
-              router.navigate({
-                pathname: '/events/[id]',
-                params: { id: event.Id },
-              })
-            }
-          />
+          <UpcomingEventCard key={event.details.Id} event={event} />
         ))}
       </View>
     </>

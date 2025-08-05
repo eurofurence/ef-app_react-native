@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   logoutButton: {
-    marginTop: 100,
+    marginTop: 20,
   },
   pill: {
     padding: 10,

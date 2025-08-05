@@ -68,24 +68,28 @@ export function useStackScreensData(): StackScreenProps[] {
         title: t('dealers'),
         headerLeft: CustomBack,
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'events/[id]/index',
         title: t('events'),
         headerLeft: CustomBack,
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'events/[id]/feedback',
         title: t('events'),
         headerLeft: CustomBack,
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'announcements/[id]',
         title: t('announcements'),
         headerLeft: CustomBack,
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'announcements/index',
@@ -99,12 +103,14 @@ export function useStackScreensData(): StackScreenProps[] {
         title: t('image'),
         headerLeft: CustomBack,
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'images/web',
         title: t('image'),
         headerLeft: CustomBack,
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'knowledge/[id]',
@@ -124,6 +130,7 @@ export function useStackScreensData(): StackScreenProps[] {
         location: 'maps/[...slug]',
         headerLeft: CustomBack,
         headerShown: false,
+        swipeEnabled: true,
       },
       {
         location: 'messages/index',

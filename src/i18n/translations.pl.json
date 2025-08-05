@@ -177,6 +177,13 @@
     "lead": "Kliknij na wydarzenie, aby pokazać je na liście",
     "title": "Wydarzenia"
   },
+  "Search": {
+    "placeholder": "Szukaj…",
+    "clear_search": "Wyczyść wyszukiwanie",
+    "clear_search_hint": "Dotknij dwukrotnie, aby wyczyścić pole wyszukiwania",
+    "search_input_label": "Pole wyszukiwania",
+    "search_input_hint": "Wprowadź tekst, aby wyszukać treści"
+  },
   "Settings": {
     "about": "O aplikacji",
     "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
