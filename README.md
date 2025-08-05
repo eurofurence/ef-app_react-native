@@ -12,5 +12,4 @@ If you wish to help, you can learn more about how you can contribute to this pro
 
 ### Why not an actual native app?
 
-Simply put - We got tired of maintaining the mess that is the android ecosystem. Everything is hard and a struggle. React provides a straightforward way to develop applications and
-with React Native we can easily push this out to mobile devices.
+Simply put - We got tired of maintaining the mess that is the android ecosystem. Everything is hard and a struggle. React provides a straightforward way to develop applications and with React Native we can easily push this out to mobile devices.
