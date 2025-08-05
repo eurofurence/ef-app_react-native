@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native'
-import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
+import { StyleSheet, RefreshControl, ScrollView } from 'react-native'
 import { useIsFocused } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { CountdownHeader } from '@/components/home/CountdownHeader'

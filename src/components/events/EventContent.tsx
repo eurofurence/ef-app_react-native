@@ -62,7 +62,8 @@ const placeholder = { blurhash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667' }
 
 export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton, onToggleHidden }) => {
   const { t } = useTranslation('Event')
-  const { isFavorite, toggleReminder } = useEventReminder(event)
+  const { checkReminder, toggleReminder } = useEventReminder()
+  const isFavorite = checkReminder(event)
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 5 : 'static')
 
@@ -120,7 +121,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       ) : null}
 
       {event.Title ? (
-        <Label type="h1" mt={20}>
+        <Label type="h1" className="mt-5">
           {event.Title}
         </Label>
       ) : null}
@@ -184,7 +185,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       )}
 
       <Row style={styles.marginAround} gap={16}>
-        <Button containerStyle={styles.flex} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleReminder().catch(captureException)}>
+        <Button
+          containerStyle={styles.flex}
+          outline={isFavorite}
+          icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'}
+          onPress={() => toggleReminder(event).catch(captureException)}
+        >
           {isFavorite ? t('remove_favorite') : t('add_favorite')}
         </Button>
         <Button containerStyle={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>

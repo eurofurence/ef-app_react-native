@@ -3,12 +3,12 @@ import * as React from 'react'
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image, ImageProps } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Col } from '@/components/generic/containers/Col'
+import { Pressable } from '@/components/generic/Pressable'
 
 type InnerManagedImagePickerProps<T extends object> = {
   /**
@@ -51,10 +51,9 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
   return (
     <Controller
       render={({ field, fieldState }) => (
-        // <Banner image={{}}
-        <Col>
+        <Col type="stretch">
           <Label type="caption">{label}</Label>
-          <TouchableOpacity
+          <Pressable
             containerStyle={[styles.container, backgroundStyle]}
             disabled={field.disabled}
             onPress={() => {
@@ -69,7 +68,7 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
             }}
           >
             <Image
-              style={[styles.image, field.disabled && styles.disabled, { aspectRatio }, style]}
+              style={[field.disabled && styles.disabled, { aspectRatio: aspectRatio ?? 16 / 9 }, style]}
               contentFit={undefined}
               source={field.value}
               placeholder={null}
@@ -80,8 +79,8 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
                 <Label>{placeholder}</Label>
               </View>
             )}
-          </TouchableOpacity>
-          <Label type="caption" color="notification" mt={5} mb={15}>
+          </Pressable>
+          <Label type="caption" color="notification" className="mt-1 mb-4">
             {!fieldState.error ? ' ' : errorTranslator ? errorTranslator(field.name, fieldState.error.type) : fieldState.error.message}
           </Label>
         </Col>
@@ -93,18 +92,12 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     height: undefined,
     marginTop: 6,
     marginBottom: 16,
   },
   disabled: {
     opacity: 0.4,
-  },
-  image: {
-    width: '100%',
-    minHeight: 200,
-    height: undefined,
   },
   labelContainer: {
     alignItems: 'center',

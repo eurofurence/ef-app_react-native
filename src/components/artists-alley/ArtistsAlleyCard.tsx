@@ -1,6 +1,5 @@
 import React, { FC } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
@@ -9,6 +8,7 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { stateToBackground } from '@/components/artists-alley/utils'
 import { differenceInHours, parseISO } from 'date-fns'
+import { Pressable } from '@/components/generic/Pressable'
 
 export type TableRegistrationInstance = {
   details: TableRegistrationRecord
@@ -40,14 +40,15 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
   const stylePre = useThemeBackground('primary')
   const styleAreaIndicator = useThemeBackground(stateToBackground[item.details.State])
   const styleDarken = useThemeBackground('darken')
+  const styleContent = item.visibility === 'grayed' ? styles.transparent : appStyles.shadow
 
   // Should be prefiltered, but we will also not show it.
   if (item.visibility === 'hidden') return null
 
   return (
-    <TouchableOpacity
-      containerStyle={item.visibility === 'grayed' ? [containerStyle, styles.transparent] : containerStyle}
-      style={[styles.container, appStyles.shadow, styleContainer, style]}
+    <Pressable
+      containerStyle={containerStyle}
+      style={[styles.container, styleContent, styleContainer, style]}
       onPress={() => onPress?.(item)}
       onLongPress={() => onLongPress?.(item)}
     >
@@ -74,7 +75,7 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
           {item.details.State}
         </Label>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

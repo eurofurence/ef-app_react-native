@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { StyleSheet, Text, TextProps, ViewStyle } from 'react-native'
+import { StyleSheet, Text, TextProps } from 'react-native'
 
 import { ThemeColor } from '@/context/Theme'
 import { useThemeColor } from '@/hooks/themes/useThemeHooks'
@@ -22,26 +22,6 @@ export type LabelProps = TextProps & {
    * The color name, a value from the theme.
    */
   color?: ThemeColor
-
-  /**
-   * Margin left.
-   */
-  ml?: number
-
-  /**
-   * Margin top.
-   */
-  mt?: number
-
-  /**
-   * Margin right.
-   */
-  mr?: number
-
-  /**
-   * Margin bottom.
-   */
-  mb?: number
 }
 
 /**
@@ -50,33 +30,18 @@ export type LabelProps = TextProps & {
  * @param type The type, one of some predefined primary style values.
  * @param variant The variant, one of some predefined secondary style values, overriding type.
  * @param color The color name, a value from the theme.
- * @param ml Margin left.
- * @param mt Margin top.
- * @param mr Margin right.
- * @param mb Margin bottom.
  * @param children The text content.
  * @param props Additional props passed to the root text element.
  * @constructor
  */
-export const Label: FC<LabelProps> = ({ style, type, variant, color, ml, mt, mr, mb, children, ...props }) => {
+export const Label: FC<LabelProps> = ({ style, type, variant, color, children, ...props }) => {
   // Value reads for named parameters.
   const styleType = type ? labelTypeStyles[type] : labelTypeStyles.regular
   const styleVariant = variant ? labelVariantStyles[variant] : labelVariantStyles.regular
   const styleColor = useThemeColor(color ?? 'text')
 
-  // Margin style, only created when a margin is defined.
-  let styleMargin: ViewStyle | null = null
-  if (typeof ml === 'number' || typeof mt === 'number' || typeof mr === 'number' || typeof mb === 'number') {
-    styleMargin = {}
-    if (typeof ml === 'number') styleMargin.marginLeft = ml
-    if (typeof mt === 'number') styleMargin.marginTop = mt
-    if (typeof mr === 'number') styleMargin.marginRight = mr
-    if (typeof mb === 'number') styleMargin.marginBottom = mb
-  }
-
-  // Return styled text.
   return (
-    <Text style={[styleType, styleVariant, styleMargin, styleColor, style]} {...props}>
+    <Text style={[styleType, styleVariant, styleColor, style]} {...props}>
       {children}
     </Text>
   )

@@ -1,10 +1,10 @@
 import { FC, ReactNode } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Icon, IconNames } from '../atoms/Icon'
 import { Label } from '../atoms/Label'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { Pressable } from '@/components/generic/Pressable'
 
 /**
  * Arguments to the tab.
@@ -61,7 +61,7 @@ export const Tab: FC<TabProps> = ({ style, disabled, icon, text, indicate, activ
   const styleBackground = useThemeBackground('notification')
 
   return (
-    <TouchableOpacity containerStyle={[styles.container, disabled && styles.disabled, style]} onPress={onPress} disabled={disabled}>
+    <Pressable containerStyle={[styles.container, disabled && styles.disabled, style]} onPress={onPress} disabled={disabled}>
       <View style={styles.item}>
         <Icon name={icon} size={24} color={colorValue} />
 
@@ -78,7 +78,7 @@ export const Tab: FC<TabProps> = ({ style, disabled, icon, text, indicate, activ
           {text}
         </Label>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 const styles = StyleSheet.create({

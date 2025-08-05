@@ -7,14 +7,8 @@ import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
 import { useNow } from '@/hooks/time/useNow'
 import { useCache } from '@/context/data/Cache'
 import { Header } from '@/components/generic/containers/Header'
-import { useEventLongPress } from '@/hooks/data/useEventReminder'
-
-// Component for individual event card with long press functionality
-const HiddenEventCard = ({ item, onUnhide }: { item: any; onUnhide: (id: string) => void }) => {
-  const { onLongPress } = useEventLongPress(item.details)
-
-  return <EventCard key={item.details.Id} event={item} type="time" onPress={() => onUnhide(item.details.Id)} onLongPress={onLongPress} />
-}
+import { EventDetails } from '@/context/data/types.details'
+import { useEventCardInteractions } from '@/components/events/Events.common'
 
 export default function RevealHiddenPage() {
   const { t } = useTranslation('RevealHidden')
@@ -26,17 +20,18 @@ export default function RevealHiddenPage() {
   const hiddenEvents = useMemo(() => events.filter((item) => item.Hidden).map((item) => eventInstanceForAny(item, now)), [events, now])
 
   // Handle unhiding an event
-  const handleUnhide = useCallback(
-    (eventId: string) => {
+  const onPress = useCallback(
+    (event: EventDetails) => {
       const settings = getValue('settings')
       const newSettings = {
         ...settings,
-        hiddenEvents: settings.hiddenEvents?.filter((item) => item !== eventId),
+        hiddenEvents: settings.hiddenEvents?.filter((item) => item !== event.Id),
       }
       setValue('settings', newSettings)
     },
     [getValue, setValue]
   )
+  const { onLongPress } = useEventCardInteractions()
 
   return (
     <>
@@ -48,7 +43,7 @@ export default function RevealHiddenPage() {
           </Label>
 
           {hiddenEvents.map((item) => (
-            <HiddenEventCard key={item.details.Id} item={item} onUnhide={handleUnhide} />
+            <EventCard key={item.details.Id} event={item} type="time" onPress={onPress} onLongPress={onLongPress} />
           ))}
         </Floater>
       </ScrollView>

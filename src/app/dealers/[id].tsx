@@ -1,6 +1,5 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { StyleSheet, ScrollView } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 

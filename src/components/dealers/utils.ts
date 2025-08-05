@@ -10,7 +10,7 @@ import { DealerDetails } from '@/context/data/types.details'
 export const isPresent = (dealer: DealerDetails, now: Date) => {
   // Use AttendanceDays from transformed data if available
   if (dealer.AttendanceDays?.length > 0) {
-    return dealer.AttendanceDays.some((day) => isSameDay(new Date(day.Date), now))
+    return dealer.AttendanceDays.some((day) => isSameDay(day.Date, now))
   }
 
   // Fallback to AttendsOn* properties if AttendanceDays not available

@@ -107,7 +107,9 @@ export const LanguagePicker = () => {
   return (
     <SettingContainer>
       <Label variant="bold">{t('changeLanguage')}</Label>
-      <Label variant="narrow">{t('currentLanguage')}</Label>
+      <Label variant="narrow" className="mb-2">
+        {t('currentLanguage')}
+      </Label>
 
       {!showPicker ? (
         <Button onPress={() => setShowPicker(true)}>{currentLanguageData.name}</Button>

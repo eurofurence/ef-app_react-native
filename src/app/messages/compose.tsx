@@ -4,10 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { Button } from '@/components/generic/containers/Button'
 import React, { useCallback } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
 import { Floater } from '@/components/generic/containers/Floater'
-import { ScrollView } from 'react-native-gesture-handler'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useCommunicationsSendMutation } from '@/hooks/api/communications/useCommunicationsSendMutation'
 import { ManagedChoiceButtons } from '@/components/generic/forms/ManagedChoiceButtons'
@@ -75,7 +74,7 @@ export default function ComposeMessage() {
             <ManagedTextInput<MessageSchema> name="subject" label="subject" placeholder="Subject" />
             <ManagedTextInput<MessageSchema> name="message" label="message" placeholder="Body of the message" numberOfLines={8} multiline />
 
-            {isPending && <Label mt={16}>Submitting</Label>}
+            {isPending && <Label className="mt-4">Submitting</Label>}
           </FormProvider>
         </View>
         <Button onPress={form.handleSubmit(onSend)}>Submit</Button>

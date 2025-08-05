@@ -23,7 +23,7 @@ export default function AzScreen() {
       dealersGroups={groups}
       leader={
         <>
-          <Label type="lead" variant="middle" mt={30}>
+          <Label type="lead" variant="middle" className="mt-8">
             {t('dealers_at_convention', { convention: conName })}
           </Label>
         </>

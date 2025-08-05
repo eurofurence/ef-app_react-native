@@ -21,7 +21,7 @@ export const ArtistsAlleyUnauthorized = ({ loggedIn, attending, checkedIn }: Art
 
   return (
     <View style={styles.container}>
-      <Label type="compact" mt={20}>
+      <Label type="compact" className="mt-5">
         {t('explanation_unauthorized')}
 
         {disabledReason && (

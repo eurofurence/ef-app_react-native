@@ -28,13 +28,13 @@ export const FavoritesChangedWarning = () => {
       <Section title={t('warnings.favorites_changed')} subtitle={t('warnings.favorites_changed_subtitle')} icon="update" />
 
       {changedEventFavorite.length > 0 && (
-        <Label mt={5}>
+        <Label className="mt-1">
           <Label variant="bold">{tMenu('events')}: </Label>
           {changedEventFavorite.map((event) => event.Title).join(', ')}
         </Label>
       )}
       {changedDealerFavorite.length > 0 && (
-        <Label mt={5}>
+        <Label className="mt-1">
           <Label variant="bold">{tMenu('dealers')}: </Label>
           {changedDealerFavorite.map((dealer) => dealer.DisplayNameOrAttendeeNickname).join(', ')}
         </Label>

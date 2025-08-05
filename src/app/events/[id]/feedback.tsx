@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
-import { StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { StyleSheet, ScrollView } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 
@@ -92,12 +91,12 @@ export default function EventFeedback() {
           </Button>
 
           {disabledReason && (
-            <Label type="caption" color="important" variant="middle" mt={16}>
+            <Label type="caption" color="important" variant="middle" className="mt-4">
               {disabledReason}
             </Label>
           )}
 
-          {isPending && <Label mt={16}>{t('submit_in_progress')}</Label>}
+          {isPending && <Label className="mt-4">{t('submit_in_progress')}</Label>}
         </FormProvider>
       </Floater>
     </ScrollView>

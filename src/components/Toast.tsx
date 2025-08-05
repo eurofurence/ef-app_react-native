@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import Animated, { Easing, useSharedValue, withSequence, withTiming } from 'react-native-reanimated'
 
 import { Icon } from './generic/atoms/Icon'
@@ -8,6 +7,7 @@ import { Label } from './generic/atoms/Label'
 import { Row } from './generic/containers/Row'
 import { ToastMessage, useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import { Pressable } from '@/components/generic/Pressable'
 
 const iconSize = 18 // Matches regular font size.
 
@@ -49,12 +49,12 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
     <Animated.View style={{ opacity }}>
       <Row style={[styleColor, styles.content, loose && styles.loose, styleBorder]}>
         <Icon name={iconName} size={iconSize} color="white" />
-        <Label style={styles.text} color={textColor} ml={10} type="regular" variant="middle">
+        <Label style={styles.text} color={textColor} className="ml-3" type="regular" variant="middle">
           {content}
         </Label>
-        <TouchableOpacity hitSlop={50} onPress={() => dismiss(id)}>
+        <Pressable hitSlop={50} onPress={() => dismiss(id)}>
           <Icon name="close-box-outline" size={iconSize} color={iconColor} />
-        </TouchableOpacity>
+        </Pressable>
       </Row>
     </Animated.View>
   )

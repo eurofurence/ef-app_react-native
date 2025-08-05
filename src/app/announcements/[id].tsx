@@ -1,6 +1,5 @@
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { format, parseISO } from 'date-fns'
@@ -26,12 +25,12 @@ export default function AnnounceItem() {
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
         {!announcement ? (
-          <Label type="h2" mt={30} mb={10}>
+          <Label type="h2" className="mt-8 mb-3">
             {t('not_available')}
           </Label>
         ) : (
           <>
-            <Label type="h1" mt={30} mb={10}>
+            <Label type="h1" className="mt-8 mb-3">
               {announcement.NormalizedTitle}
             </Label>
 

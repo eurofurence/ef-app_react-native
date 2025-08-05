@@ -26,7 +26,7 @@ export default function AdScreen() {
           <Badge unpad={0} badgeColor="lighten" textColor="text" textType="regular">
             {t('section_notice')}
           </Badge>
-          <Label type="lead" variant="middle" mt={30}>
+          <Label type="lead" variant="middle" className="mt-8">
             {t('dealers_in_ad')}
           </Label>
         </>

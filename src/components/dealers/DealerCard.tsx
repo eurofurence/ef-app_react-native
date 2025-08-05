@@ -1,8 +1,8 @@
 import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '../AppStyles'
 import { Image } from '../generic/atoms/Image'
 import { sourceFromImage } from '../generic/atoms/Image.common'
@@ -10,6 +10,8 @@ import { Label } from '../generic/atoms/Label'
 import { isPresent, joinOffDays } from './utils'
 
 import { DealerDetails } from '@/context/data/types.details'
+import { Icon } from '@/components/generic/atoms/Icon'
+import { Pressable } from '@/components/generic/Pressable'
 
 export type DealerDetailsInstance = {
   details: DealerDetails
@@ -47,6 +49,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
   const present = dealer.present
   const description = dealer.details.Categories?.join(', ')
   const offDays = dealer.offDays
+  const favorite = dealer.details.Favorite
   const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require('@/assets/static/ych.png')
 
   // Translation object.
@@ -54,44 +57,48 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
 
   // Dependent and independent styles.
   const styleBackground = useThemeBackground('background')
-  const stylePre = useThemeBackground(present ? 'primary' : 'darken')
+  const stylePre = useThemeBackground(!present ? 'darken' : favorite ? 'notification' : 'primary')
   const avatarBackground = useThemeBackground('text')
+  const colorHeart = useThemeColorValue('text')
 
   const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress])
   const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
   return (
-    <View style={containerStyle}>
-      <TouchableOpacity style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind} activeOpacity={0.7}>
-        <View style={[styles.pre, stylePre]}>
-          <Image
-            key={dealer.details.Id}
-            recyclingKey={dealer.details.Id}
-            style={[avatarBackground, styles.avatarCircle]}
-            source={avatar}
-            contentFit="contain"
-            placeholder={require('@/assets/static/ych.png')}
-            transition={60}
-          />
+    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+      <View style={[styles.pre, stylePre]}>
+        <Image
+          key={dealer.details.Id}
+          recyclingKey={dealer.details.Id}
+          style={[avatarBackground, styles.avatarCircle]}
+          source={avatar}
+          contentFit="contain"
+          placeholder={require('@/assets/static/ych.png')}
+        />
+      </View>
+
+      <View style={styles.main}>
+        <Label type="h3">{name}</Label>
+
+        {!description ? null : (
+          <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+            {description}
+          </Label>
+        )}
+
+        {!offDays ? null : (
+          <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+            {t('not_attending_on', { offDays })}
+          </Label>
+        )}
+      </View>
+
+      {!favorite ? null : (
+        <View key="eventFavorite" style={styles.favorite}>
+          <Icon name="heart" size={20} color={colorHeart} />
         </View>
-
-        <View style={styles.main}>
-          <Label type="h3">{name}</Label>
-
-          {!description ? null : (
-            <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
-              {description}
-            </Label>
-          )}
-
-          {!offDays ? null : (
-            <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-              {t('not_attending_on', { offDays })}
-            </Label>
-          )}
-        </View>
-      </TouchableOpacity>
-    </View>
+      )}
+    </Pressable>
   )
 }
 
@@ -142,5 +149,11 @@ const styles = StyleSheet.create({
   },
   tag: {
     textAlign: 'right',
+  },
+  favorite: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: 8,
   },
 })

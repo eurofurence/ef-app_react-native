@@ -21,7 +21,7 @@ export default function AnnouncementsList() {
   }, [announcements])
 
   const empty = (
-    <Label type="h2" mt={30} mb={10}>
+    <Label type="h2" className="mt-8 mb-3">
       {t('noAnnouncements')}
     </Label>
   )

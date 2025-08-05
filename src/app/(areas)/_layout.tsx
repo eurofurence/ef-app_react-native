@@ -11,6 +11,10 @@ import { MainMenu } from '@/components/mainmenu/MainMenu'
 import { useCache } from '@/context/data/Cache'
 import { useToastMessages } from '@/context/ui/ToastContext'
 
+export const unstable_settings = {
+  initialRouteName: 'index',
+}
+
 function getIconNameFromTabBarIcon(
   tabBarIcon: ((props: { focused: boolean; color: string; size: number }) => React.ReactNode) | undefined,
   isFocused: boolean,

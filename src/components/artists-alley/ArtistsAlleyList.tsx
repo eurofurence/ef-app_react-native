@@ -62,7 +62,7 @@ export const ArtistsAlleyList: FC<ArtistsAlleyListProps> = ({ leader, items, emp
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

@@ -3,13 +3,12 @@ import { useAuthContext } from '@/context/auth/Auth'
 import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { RefreshControl, ScrollView } from 'react-native-gesture-handler'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { appStyles } from '@/components/AppStyles'
 import { Badge } from '@/components/generic/containers/Badge'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
-import { Linking, StyleSheet } from 'react-native'
+import { Linking, StyleSheet, RefreshControl, ScrollView } from 'react-native'
 import { ArtistsAlleyEdit } from '@/components/artists-alley/ArtistsAlleyEdit'
 import { ArtistsAlleyStatus } from '@/components/artists-alley/ArtistsAlleyStatus'
 import { ArtistsAlleyUnauthorized } from '@/components/artists-alley/ArtistsAlleyUnauthorized'
@@ -63,7 +62,7 @@ export default function Register() {
             {tStatus(data.State)}
           </Badge>
         )}
-        <Label type="compact" mt={20}>
+        <Label type="compact" className="mt-5">
           {t('intro')}
         </Label>
         <Button style={styles.button} icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>

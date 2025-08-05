@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Pressable } from 'react-native-gesture-handler'
 import { useTranslation } from 'react-i18next'
 
 import { Claims } from '@/context/auth/Auth'
@@ -10,6 +9,7 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
+import { Pressable } from '@/components/generic/Pressable'
 
 type PagerPrimaryLoginProps = {
   loggedIn: boolean
@@ -25,13 +25,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
 
   return (
     <Row style={styles.padding} type="start" variant="center">
-      <Pressable
-        disabled={!loggedIn || !onProfile}
-        style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
-        onPress={() => onProfile?.()}
-        accessibilityRole="button"
-        accessibilityLabel="Profile"
-      >
+      <Pressable disabled={!loggedIn || !onProfile} onPress={() => onProfile?.()} accessibilityRole="button" accessibilityLabel="Profile">
         <Col type="center">
           <Image
             style={[avatarBackground, styles.avatarCircle]}
@@ -42,7 +36,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
           />
         </Col>
         {!claim?.name ? null : (
-          <Label style={styles.name} type="minor" mt={4} ellipsizeMode="tail" numberOfLines={1}>
+          <Label style={styles.name} type="minor" className="mt-1" ellipsizeMode="tail" numberOfLines={1}>
             {claim.name}
           </Label>
         )}

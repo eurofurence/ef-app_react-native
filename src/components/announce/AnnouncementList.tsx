@@ -58,7 +58,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

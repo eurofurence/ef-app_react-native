@@ -17,8 +17,7 @@ import { useAudioPlayer } from 'expo-audio'
 import { router } from 'expo-router'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Linking, Platform, StyleSheet } from 'react-native'
-import { Pressable, ScrollView } from 'react-native-gesture-handler'
+import { Alert, Linking, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 
 const extraThanksMarkdown = `
 # Tooling
@@ -98,14 +97,13 @@ type CreditProps = {
 
 const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
   return (
-    <Pressable
+    <TouchableOpacity
       onPress={() =>
         router.navigate({
           pathname: '/images/web',
           params: { url, title: name },
         })
       }
-      style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
       onLongPress={onEasterEgg}
       delayLongPress={2000}
       accessibilityRole="button"
@@ -127,7 +125,7 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
           <Label>{role}</Label>
         </Col>
       </Row>
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 
@@ -193,9 +191,9 @@ export default function AboutScreen() {
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        <Pressable style={{ cursor: 'auto' }} onPress={toggleDevMenu} accessibilityRole="button" accessibilityLabel="Toggle developer menu">
+        <TouchableOpacity style={{ cursor: 'auto' }} onPress={toggleDevMenu} accessibilityRole="button" accessibilityLabel="Toggle developer menu">
           <Col style={styles.marginAround} type="center">
-            <Label type="h1" mb={10}>
+            <Label type="h1" className="mb-3">
               {conName} App
             </Label>
             <Row gap={5}>
@@ -211,7 +209,7 @@ export default function AboutScreen() {
               </Label>
             </Row>
           </Col>
-        </Pressable>
+        </TouchableOpacity>
 
         <Row style={styles.marginAround} gap={16}>
           <Button containerStyle={styles.flex} onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')} icon="help">

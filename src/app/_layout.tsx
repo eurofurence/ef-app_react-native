@@ -30,6 +30,10 @@ import '@/init/splash'
 import '@/css/globals.css'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 
+export const unstable_settings = {
+  initialRouteName: '(areas)',
+}
+
 /**
  * The root layout for the application.
  * This layout is responsible for setting up the main layout and the data cache provider.

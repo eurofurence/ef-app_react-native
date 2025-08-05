@@ -28,9 +28,9 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
 
   const recentAnnouncements = useMemo(() => recent.slice(0, recentLimit).map(announcementInstanceForAny), [recent])
 
-  if (recentAnnouncements.length === 0) {
-    return null
-  }
+  // if (recentAnnouncements.length === 0) {
+  //   return null
+  // }
 
   return (
     <>

@@ -55,15 +55,15 @@ export function TimeTravel() {
   return (
     <View testID="TimeTravel" className="p-4">
       <Section title={t('title')} icon="airplane" subtitle={t('subtitle')} />
-      <Label mb={5}>{t('originalTime', { time: format(new Date(), 'yyyy-MM-dd HH:mm:ss') })}</Label>
-      <Label mb={5}>{t('currentTime', { time: format(now, 'yyyy-MM-dd HH:mm:ss') })}</Label>
-      <Label mb={5}>{t('difference', { diff: `${Math.round(timeOffset / 1000)} seconds` })}</Label>
+      <Label className="mb-1">{t('originalTime', { time: format(new Date(), 'yyyy-MM-dd HH:mm:ss') })}</Label>
+      <Label className="mb-1">{t('currentTime', { time: format(now, 'yyyy-MM-dd HH:mm:ss') })}</Label>
+      <Label className="mb-1">{t('difference', { diff: `${Math.round(timeOffset / 1000)} seconds` })}</Label>
 
       <Row style={styles.row}>
-        <Button containerStyle={styles.button} outline={enabled} onPress={() => handleEnableTimeTravel(!enabled)}>
+        <Button style={styles.button} outline={enabled} onPress={() => handleEnableTimeTravel(!enabled)}>
           {enabled ? t('disable') : t('enable')}
         </Button>
-        <Button containerStyle={styles.button} onPress={handleResetTravel}>
+        <Button style={styles.button} onPress={handleResetTravel}>
           {t('reset')}
         </Button>
       </Row>

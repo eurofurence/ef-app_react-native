@@ -27,16 +27,16 @@ export function DevValues() {
     <View className="p-4">
       <Section title={t('title')} subtitle={t('subtitle')} />
 
-      <Label mt={20} type="h3">
+      <Label className="mt-5" type="h3">
         {t('claims')}
       </Label>
-      <Label ml={8}>{claims ? JSON.stringify(claims, null, 2) : 'None'}</Label>
-      <Label mt={20} type="h3">
+      <Label className="ml-2">{claims ? JSON.stringify(claims, null, 2) : 'None'}</Label>
+      <Label className="mt-5" type="h3">
         {t('user')}
       </Label>
-      <Label ml={8}>{user ? JSON.stringify(user, null, 2) : 'None'}</Label>
+      <Label className="ml-2">{user ? JSON.stringify(user, null, 2) : 'None'}</Label>
 
-      <Label mt={20} type="h3">
+      <Label className="mt-5" type="h3">
         {t('notifications')}
       </Label>
       <View>
@@ -50,30 +50,34 @@ export function DevValues() {
           )
         })}
         {!notifications?.length && (
-          <Label type="regular" ml={8}>
+          <Label type="regular" className="ml-2">
             {t('noScheduledNotifications')}
           </Label>
         )}
       </View>
-      <Label mt={20} type="h3">
+      <Label className="mt-5" type="h3">
         {t('token_data')}
       </Label>
-      <Label ml={8}>{tokenResponse ? JSON.stringify(tokenResponse, null, 2) : 'None'}</Label>
+      <Label className="ml-2">{tokenResponse ? JSON.stringify(tokenResponse, null, 2) : 'None'}</Label>
 
-      <Label mt={20} type="h3">
+      <Label className="mt-5" type="h3">
         {t('device_push_token')}
       </Label>
-      <Label ml={8}>{devicePushToken ? JSON.stringify(devicePushToken, null, 2) : 'None'}</Label>
+      <Label className="ml-2">{devicePushToken ? JSON.stringify(devicePushToken, null, 2) : 'None'}</Label>
 
-      <Label mt={20} type="h3">
+      <Label className="mt-5" type="h3">
         {t('cache_values')}
       </Label>
       {Object.entries(data).map(([key, value]) => (
         <Fragment key={key}>
-          <Label mt={10} type="h4">
+          <Label className="mt-3" type="h4">
             {key}
           </Label>
-          {Array.isArray(value) ? <Label ml={8}>Array of length {value.length}</Label> : <Label ml={8}>{value ? JSON.stringify(value, null, 2) : 'None'}</Label>}
+          {Array.isArray(value) ? (
+            <Label className="ml-2">Array of length {value.length}</Label>
+          ) : (
+            <Label className="ml-2">{value ? JSON.stringify(value, null, 2) : 'None'}</Label>
+          )}
         </Fragment>
       ))}
     </View>

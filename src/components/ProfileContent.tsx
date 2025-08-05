@@ -99,7 +99,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         {claims.name as string}
       </Label>
 
-      <Label type="caption" variant="middle" mb={20}>
+      <Label type="caption" variant="middle" className="mb-5">
         {claims.email as string}
       </Label>
 
@@ -109,7 +109,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         ))}
       </View>
 
-      <Label mt={20} type="para">
+      <Label className="mt-5" type="para">
         {t('login_description', { conName })}
       </Label>
 

@@ -2,37 +2,15 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 
-import { router } from 'expo-router'
 import { DealerCard } from '../dealers/DealerCard'
 import { EventCard } from '../events/EventCard'
 import { Section } from '../generic/atoms/Section'
 import { KbEntryCard } from '../kb/KbEntryCard'
-import { useDealerInstances } from '@/components/dealers/Dealers.common'
-import { useEventInstances } from '@/components/events/Events.common'
+import { useDealerCardInteractions, useDealerInstances } from '@/components/dealers/Dealers.common'
+import { useEventCardInteractions, useEventInstances } from '@/components/events/Events.common'
 import { GlobalSearchResult } from '@/context/data/types.own'
 import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
-import { useEventLongPress } from '@/hooks/data/useEventReminder'
-
-// Component for individual event card with long press functionality
-const GlobalSearchEventCard = ({ item }: { item: any }) => {
-  const { onLongPress } = useEventLongPress(item.details)
-
-  return (
-    <EventCard
-      key={item.details.Id}
-      containerStyle={styles.item}
-      event={item}
-      type="time"
-      onPress={(event) =>
-        router.navigate({
-          pathname: '/events/[id]',
-          params: { eventId: event.Id },
-        })
-      }
-      onLongPress={onLongPress}
-    />
-  )
-}
+import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
 
 export type GlobalSearchProps = {
   now: Date
@@ -52,6 +30,10 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
   const events = useEventInstances(now, eventsFiltered)
   const kbGroups = kbGroupsFiltered
 
+  const dealerInteraction = useDealerCardInteractions()
+  const eventInteractions = useEventCardInteractions()
+  const kbEntryInteractions = useKbEntryCardInteractions()
+
   if (!results) return null
   return (
     <>
@@ -59,17 +41,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
         <>
           <Section icon="card-search" title={tMenu('dealers')} />
           {dealers.map((item) => (
-            <DealerCard
-              key={item.details.Id}
-              containerStyle={styles.item}
-              dealer={item}
-              onPress={(dealer) =>
-                router.navigate({
-                  pathname: '/dealers/[id]',
-                  params: { id: dealer.Id },
-                })
-              }
-            />
+            <DealerCard key={item.details.Id} style={styles.item} dealer={item} onPress={dealerInteraction.onPress} onLongPress={dealerInteraction.onLongPress} />
           ))}
         </>
       )}
@@ -77,7 +49,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
         <>
           <Section icon="card-search" title={tMenu('events')} />
           {events.map((item) => (
-            <GlobalSearchEventCard key={item.details.Id} item={item} />
+            <EventCard key={item.details.Id} style={styles.item} event={item} type="time" onPress={eventInteractions.onPress} onLongPress={eventInteractions.onLongPress} />
           ))}
         </>
       )}
@@ -85,17 +57,7 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
         <>
           <Section icon="card-search" title={tMenu('info')} />
           {kbGroups.map((item) => (
-            <KbEntryCard
-              containerStyle={styles.item}
-              entry={item}
-              key={item.Id}
-              onPress={(entry) =>
-                router.navigate({
-                  pathname: '/knowledge/[id]',
-                  params: { id: entry.Id },
-                })
-              }
-            />
+            <KbEntryCard style={styles.item} entry={item} key={item.Id} onPress={kbEntryInteractions.onPress} />
           ))}
         </>
       )}
@@ -105,6 +67,6 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
 
 const styles = StyleSheet.create({
   item: {
-    paddingHorizontal: 20,
+    marginHorizontal: 20,
   },
 })

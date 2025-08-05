@@ -7,9 +7,9 @@ import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from '@/co
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import { router } from 'expo-router'
 import { KbEntryCard } from './KbEntryCard'
 import { KbSection } from './KbSection'
+import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
 
 /**
  * The properties to the component.
@@ -38,26 +38,17 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
   const stickyIndices = useMemo(() => (sticky ? findIndices(kbGroups, (item) => !('KnowledgeGroupId' in item)) : undefined), [kbGroups, sticky])
   const sectionStyle = useThemeBackground('surface')
 
+  const { onPress } = useKbEntryCardInteractions()
+
   const renderItem = useCallback(
     ({ item }: { item: KnowledgeGroupDetails | KnowledgeEntryDetails }) => {
       if ('KnowledgeGroupId' in item) {
-        return (
-          <KbEntryCard
-            containerStyle={styles.item}
-            entry={item}
-            onPress={(entry) =>
-              router.navigate({
-                pathname: '/knowledge/[id]',
-                params: { id: entry.Id },
-              })
-            }
-          />
-        )
+        return <KbEntryCard containerStyle={styles.item} entry={item} onPress={onPress} />
       } else {
         return <KbSection style={[styles.item, sectionStyle]} title={item.Name} subtitle={item.Description} icon={item.FontAwesomeIconName ?? 'bookmark'} />
       }
     },
-    [sectionStyle]
+    [onPress, sectionStyle]
   )
 
   return (

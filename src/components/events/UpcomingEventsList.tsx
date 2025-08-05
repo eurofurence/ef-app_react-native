@@ -2,40 +2,20 @@ import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { router } from 'expo-router'
-import { isWithinInterval, subMinutes } from 'date-fns'
+import { isWithinInterval, parseISO, subMinutes } from 'date-fns'
 import { Section } from '../generic/atoms/Section'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
-import { useEventLongPress } from '@/hooks/data/useEventReminder'
+import { useEventCardInteractions } from '@/components/events/Events.common'
 
 const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
   events.filter((it) => {
-    const startDate = new Date(it.StartDateTimeUtc)
+    // TODO: Properly fix this.
+    const startDate = parseISO(it.StartDateTimeUtc + 'Z')
     const startMinus30 = subMinutes(startDate, 30)
     return isWithinInterval(now, { start: startMinus30, end: startDate })
   })
-
-// Component for individual event card with long press functionality
-const UpcomingEventCard = ({ event }: { event: any }) => {
-  const { onLongPress } = useEventLongPress(event.details)
-
-  return (
-    <EventCard
-      key={event.details.Id}
-      event={event}
-      type="duration"
-      onPress={(event) =>
-        router.navigate({
-          pathname: '/events/[id]',
-          params: { id: event.Id },
-        })
-      }
-      onLongPress={onLongPress}
-    />
-  )
-}
 
 export type UpcomingEventsListProps = {
   now: Date
@@ -52,6 +32,8 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
     [events, now]
   )
 
+  const { onPress, onLongPress } = useEventCardInteractions()
+
   if (upcoming.length === 0) {
     return null
   }
@@ -61,7 +43,7 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
       <Section title={t('upcoming_title')} subtitle={t('upcoming_subtitle')} icon="clock" />
       <View style={styles.condense}>
         {upcoming.map((event) => (
-          <UpcomingEventCard key={event.details.Id} event={event} />
+          <EventCard key={event.details.Id} event={event} type="duration" onPress={onPress} onLongPress={onLongPress} />
         ))}
       </View>
     </>
