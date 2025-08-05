@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/react-native'
 import { TFunction } from 'i18next'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { Share } from 'react-native'
 import { format, setDay } from 'date-fns'
 import { DealerDetailsInstance, dealerInstanceForAny } from '@/components/dealers/DealerCard'
@@ -8,6 +8,10 @@ import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocat
 import { appBase, conAbbr } from '@/configuration'
 
 import { DealerDetails } from '@/context/data/types.details'
+import { router } from 'expo-router'
+import { useCache } from '@/context/data/Cache'
+import { useToastContext } from '@/context/ui/ToastContext'
+import { useTranslation } from 'react-i18next'
 
 /**
  * Compares category, checks if the categories are adult labeled.
@@ -146,3 +150,62 @@ export const shareDealer = (dealer: DealerDetails) =>
     },
     {}
   ).catch(captureException)
+
+/**
+ * Returns a function that toggles dealer favorite state.
+ */
+export function useToggleFavorite() {
+  const { getValue, setValue } = useCache()
+  return useCallback(
+    (dealer: DealerDetails) => {
+      const settings = getValue('settings')
+      const remove = settings.favoriteDealers?.includes(dealer.Id)
+      if (remove) {
+        setValue('settings', {
+          ...settings,
+          favoriteDealers: settings.favoriteDealers?.filter((item) => item !== dealer.Id),
+        })
+        return 'removed'
+      } else {
+        setValue('settings', {
+          ...settings,
+          favoriteDealers: [...(settings.favoriteDealers ?? []), dealer.Id],
+        })
+        return 'added'
+      }
+    },
+    [getValue, setValue]
+  )
+}
+
+/**
+ * Uses default handlers for dealer card interaction, i.e., opening the dealer or toggling favorites.
+ */
+export function useDealerCardInteractions(notify = true) {
+  const { toast } = useToastContext()
+  const { t } = useTranslation('Dealers')
+
+  const toggleFavorite = useToggleFavorite()
+
+  const onPress = useCallback((dealer: DealerDetails) => {
+    router.navigate({
+      pathname: '/dealers/[id]',
+      params: { id: dealer.Id },
+    })
+  }, [])
+
+  const onLongPress = useCallback(
+    (dealer: DealerDetails) => {
+      const mode = toggleFavorite(dealer)
+      if (!notify) return
+      if (mode === 'added') toast('info', t('favorite_added'), 3000)
+      else if (mode === 'removed') toast('info', t('favorite_removed'), 3000)
+    },
+    [toggleFavorite, notify, toast, t]
+  )
+
+  return {
+    onPress,
+    onLongPress,
+  }
+}

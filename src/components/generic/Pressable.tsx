@@ -1,14 +1,13 @@
-// import { Pressable as RNGHPressable, PressableProps as RNGHPressableProps } from 'react-native'
-import { Pressable as RNGHPressable, PressableProps as RNGHPressableProps } from 'react-native-gesture-handler'
-import { StyleProp, ViewStyle } from 'react-native'
+import { StyleProp, TouchableOpacity, TouchableOpacityProps, View, ViewStyle } from 'react-native'
 
-const defaultActiveOpacity = 0.5
-
-export type PressableProps = Omit<RNGHPressableProps, 'style'> & {
-  activeOpacity?: number
-  style?: StyleProp<ViewStyle>
+export type PressableProps = TouchableOpacityProps & {
+  containerStyle?: StyleProp<ViewStyle>
 }
 
-export function Pressable({ activeOpacity, style, ...rest }: PressableProps) {
-  return <RNGHPressable style={({ pressed }) => [{ opacity: 1.0 }, style, pressed && { opacity: activeOpacity ?? defaultActiveOpacity }]} {...rest} />
+export function Pressable({ containerStyle, ...props }: PressableProps) {
+  return (
+    <View style={containerStyle}>
+      <TouchableOpacity {...props} delayLongPress={1000} />
+    </View>
+  )
 }

@@ -49,6 +49,7 @@ export function eventInstanceForPassed(details: EventDetails): EventDetailsInsta
 }
 
 export type EventCardProps = {
+  containerStyle?: ViewStyle
   style?: ViewStyle
   type?: 'duration' | 'time'
   event: EventDetailsInstance
@@ -56,7 +57,7 @@ export type EventCardProps = {
   onLongPress?: (event: EventDetails) => void
 }
 
-export const EventCard: FC<EventCardProps> = ({ style, type = 'duration', event, onPress, onLongPress }) => {
+export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'duration', event, onPress, onLongPress }) => {
   // Details and properties dereference.
   const badges = event.details.Badges
   const glyph = event.details.Glyph
@@ -80,7 +81,7 @@ export const EventCard: FC<EventCardProps> = ({ style, type = 'duration', event,
   const onLongPressBind = useCallback(() => onLongPress?.(event.details), [event.details, onLongPress])
 
   return (
-    <Pressable style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
       <View style={[styles.pre, stylePre]}>
         {!glyph ? null : (
           <View key="eventGlyph" style={styles.glyphContainer}>
@@ -153,6 +154,7 @@ const styles = StyleSheet.create({
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,
+    overflow: 'hidden',
     flexDirection: 'row',
   },
   glyphContainer: {
@@ -182,8 +184,6 @@ const styles = StyleSheet.create({
   },
   pre: {
     overflow: 'hidden',
-    borderTopLeftRadius: 16,
-    borderBottomLeftRadius: 16,
     width: 70,
     alignItems: 'center',
     justifyContent: 'center',

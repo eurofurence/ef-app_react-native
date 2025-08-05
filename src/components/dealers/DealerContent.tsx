@@ -1,13 +1,12 @@
 import * as Clipboard from 'expo-clipboard'
 import * as Linking from 'expo-linking'
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { shareDealer } from '@/components/dealers/Dealers.common'
+import { shareDealer, useToggleFavorite } from '@/components/dealers/Dealers.common'
 import { Row } from '@/components/generic/containers/Row'
 import { conTimeZone } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
 import { DealerDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
@@ -99,8 +98,6 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
   const avatarBackground = useThemeBackground('text')
 
-  const { getValue, setValue } = useCache()
-
   const days = useMemo(
     () =>
       dealer.AttendanceDays.map((day) => {
@@ -110,16 +107,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
     [dealer]
   )
 
-  const toggleFavorite = useCallback(() => {
-    const settings = getValue('settings')
-    const newSettings = {
-      ...settings,
-      favoriteDealers: settings.favoriteDealers?.includes(dealer.Id)
-        ? settings.favoriteDealers?.filter((item) => item !== dealer.Id)
-        : [...(settings.favoriteDealers ?? []), dealer.Id],
-    }
-    setValue('settings', newSettings)
-  }, [dealer.Id, getValue, setValue])
+  const toggleFavorite = useToggleFavorite()
 
   // Check if not-attending warning should be marked.
   const markNotAttending = useMemo(() => {
@@ -167,7 +155,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Label>
       </Row>
 
-      <Button style={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
+      <Button style={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleFavorite(dealer)}>
         {dealer.Favorite ? t('remove_favorite') : t('add_favorite')}
       </Button>
 
@@ -195,11 +183,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Row>
       ) : null}
 
-      {!dealer.MapLink ? null : (
-        <>
-          <LinkPreview url={dealer.MapLink} onPress={() => openBrowserAsync(dealer.MapLink ?? '')} />
-        </>
-      )}
+      {!dealer.MapLink ? null : <LinkPreview url={dealer.MapLink} onPress={() => openBrowserAsync(dealer.MapLink ?? '')} style={styles.fullWidth} />}
 
       <DealerCategories dealer={dealer} />
 
@@ -211,18 +195,22 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         ))}
 
       {dealer.TelegramHandle && (
-        <Button style={styles.marginAround} onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)} icon={(props) => <FaIcon name="telegram-plane" {...props} />}>
+        <Button
+          containerStyle={styles.marginAround}
+          onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
+          icon={(props) => <FaIcon name="telegram-plane" {...props} />}
+        >
           Telegram: {dealer.TelegramHandle}
         </Button>
       )}
       {dealer.TwitterHandle && (
-        <Button style={styles.marginAround} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
+        <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
           Twitter: {dealer.TwitterHandle}
         </Button>
       )}
       {dealer.DiscordHandle && (
         <Button
-          style={styles.marginAround}
+          containerStyle={styles.marginAround}
           onPress={async () => {
             if (!dealer.DiscordHandle) return null
             await Clipboard.setStringAsync(dealer.DiscordHandle)
@@ -234,12 +222,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Button>
       )}
       {dealer.MastodonHandle && (
-        <Button style={styles.marginAround} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
+        <Button containerStyle={styles.marginAround} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
           Mastodon: {dealer.MastodonHandle}
         </Button>
       )}
       {dealer.BlueskyHandle && (
-        <Button style={styles.marginAround} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
+        <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
           Bluesky: {dealer.BlueskyHandle}
         </Button>
       )}
@@ -294,6 +282,9 @@ const styles = StyleSheet.create({
   },
   aboutLine: {
     marginBottom: 20,
+  },
+  fullWidth: {
+    width: '100%',
   },
   posterLine: {
     marginBottom: 20,

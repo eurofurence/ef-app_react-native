@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle } from 'react-native'
 
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '../AppStyles'
 import { Image } from '../generic/atoms/Image'
 import { sourceFromImage } from '../generic/atoms/Image.common'
@@ -10,6 +10,7 @@ import { Label } from '../generic/atoms/Label'
 import { isPresent, joinOffDays } from './utils'
 
 import { DealerDetails } from '@/context/data/types.details'
+import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
 
 export type DealerDetailsInstance = {
@@ -35,18 +36,20 @@ export function dealerInstanceForAny(details: DealerDetails, now: Date, day1: st
 }
 
 export type DealerCardProps = {
+  containerStyle?: ViewStyle
   style?: ViewStyle
   dealer: DealerDetailsInstance
   onPress?: (dealer: DealerDetails) => void
   onLongPress?: (dealer: DealerDetails) => void
 }
 
-export const DealerCard: FC<DealerCardProps> = ({ style, dealer, onPress, onLongPress }) => {
+export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer, onPress, onLongPress }) => {
   // Details and properties dereference.
   const name = dealer.details.DisplayNameOrAttendeeNickname
   const present = dealer.present
   const description = dealer.details.Categories?.join(', ')
   const offDays = dealer.offDays
+  const favorite = dealer.details.Favorite
   const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require('@/assets/static/ych.png')
 
   // Translation object.
@@ -54,16 +57,18 @@ export const DealerCard: FC<DealerCardProps> = ({ style, dealer, onPress, onLong
 
   // Dependent and independent styles.
   const styleBackground = useThemeBackground('background')
-  const stylePre = useThemeBackground(present ? 'primary' : 'darken')
+  const stylePre = useThemeBackground(!present ? 'darken' : favorite ? 'notification' : 'primary')
   const avatarBackground = useThemeBackground('text')
+  const colorHeart = useThemeColorValue('text')
 
   const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress])
   const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
   return (
-    <Pressable style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
       <View style={[styles.pre, stylePre]}>
         <Image
+          key={dealer.details.Id}
           recyclingKey={dealer.details.Id}
           style={[avatarBackground, styles.avatarCircle]}
           source={avatar}
@@ -87,6 +92,12 @@ export const DealerCard: FC<DealerCardProps> = ({ style, dealer, onPress, onLong
           </Label>
         )}
       </View>
+
+      {!favorite ? null : (
+        <View key="eventFavorite" style={styles.favorite}>
+          <Icon name="heart" size={20} color={colorHeart} />
+        </View>
+      )}
     </Pressable>
   )
 }
@@ -96,6 +107,7 @@ const styles = StyleSheet.create({
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,
+    overflow: 'hidden',
     flexDirection: 'row',
   },
   background: {
@@ -105,8 +117,6 @@ const styles = StyleSheet.create({
   },
   pre: {
     overflow: 'hidden',
-    borderTopLeftRadius: 16,
-    borderBottomLeftRadius: 16,
     width: 80,
     alignItems: 'center',
     justifyContent: 'center',
@@ -139,5 +149,11 @@ const styles = StyleSheet.create({
   },
   tag: {
     textAlign: 'right',
+  },
+  favorite: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    padding: 8,
   },
 })

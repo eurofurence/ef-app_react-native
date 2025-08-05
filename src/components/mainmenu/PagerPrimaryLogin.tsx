@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet } from 'react-native'
-import { Pressable } from '@/components/generic/Pressable'
 import { useTranslation } from 'react-i18next'
 
 import { Claims } from '@/context/auth/Auth'
@@ -10,6 +9,7 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
+import { Pressable } from '@/components/generic/Pressable'
 
 type PagerPrimaryLoginProps = {
   loggedIn: boolean
@@ -43,11 +43,11 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
       </Pressable>
 
       {loggedIn ? (
-        <Button style={styles.button} icon="message" onPress={onMessages}>
+        <Button containerStyle={styles.buttonContainer} style={styles.button} icon="message" onPress={onMessages}>
           {t('open_messages')}
         </Button>
       ) : (
-        <Button style={styles.button} iconRight="login" onPress={onLogin}>
+        <Button containerStyle={styles.buttonContainer} style={styles.button} iconRight="login" onPress={onLogin}>
           {t('logged_in_now')}
         </Button>
       )}
@@ -60,14 +60,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 15,
   },
-  button: {
+  buttonContainer: {
     flexGrow: 1,
     flexShrink: 1,
-    marginLeft: 16,
   },
   name: {
     maxWidth: 60,
     textAlign: 'center',
+  },
+  button: {
+    marginLeft: 16,
   },
   avatarCircle: {
     width: 36,

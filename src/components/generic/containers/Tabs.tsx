@@ -1,5 +1,5 @@
 import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
-import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { BackHandler, Platform, StyleProp, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, { cancelAnimation, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
@@ -9,7 +9,6 @@ import { Continuous } from '../atoms/Continuous'
 import { IconNames } from '../atoms/Icon'
 import { Tab } from './Tab'
 import { useIsFocused } from '@react-navigation/core'
-import { Pressable } from '@/components/generic/Pressable'
 
 /**
  * Arguments to the tabs.
@@ -263,7 +262,9 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
   return (
     <>
       <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
-        <Pressable style={[StyleSheet.absoluteFill]} onPress={close} accessibilityRole="button" accessibilityLabel="Close" />
+        <TouchableWithoutFeedback style={StyleSheet.absoluteFill} onPress={close} accessibilityRole="button" accessibilityLabel="Close">
+          <View style={StyleSheet.absoluteFill} />
+        </TouchableWithoutFeedback>
       </Animated.View>
 
       <GestureDetector gesture={gesture}>

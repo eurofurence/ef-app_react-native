@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { Pressable } from '@/components/generic/Pressable'
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
@@ -9,6 +8,7 @@ import { colorForArea } from './utils'
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 
 import { AnnouncementDetails } from '@/context/data/types.details'
+import { Pressable } from '@/components/generic/Pressable'
 
 export type AnnouncementDetailsInstance = {
   details: AnnouncementDetails
@@ -16,13 +16,14 @@ export type AnnouncementDetailsInstance = {
 }
 
 export type AnnouncementCardProps = {
+  containerStyle?: ViewStyle
   style?: ViewStyle
   announcement: AnnouncementDetailsInstance
   onPress?: (announcement: AnnouncementDetails) => void
   onLongPress?: (announcement: AnnouncementDetails) => void
 }
 
-export const AnnouncementCard: FC<AnnouncementCardProps> = ({ style, announcement, onPress, onLongPress }) => {
+export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, style, announcement, onPress, onLongPress }) => {
   // Dependent and independent styles.
   const styleContainer = useThemeBackground('background')
   const saturationValue = useThemeName() === 'dark' ? 0.5 : 0.7
@@ -31,7 +32,7 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ style, announcemen
 
   return (
     <Pressable
-      style={[styles.container, appStyles.shadow, styleContainer, style]}
+      style={[containerStyle, styles.container, appStyles.shadow, styleContainer, style]}
       onPress={() => onPress?.(announcement.details)}
       onLongPress={() => onLongPress?.(announcement.details)}
     >
@@ -53,6 +54,7 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ style, announcemen
 
 const styles = StyleSheet.create({
   container: {
+    overflow: 'hidden',
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,

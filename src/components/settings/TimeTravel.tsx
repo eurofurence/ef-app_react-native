@@ -69,35 +69,35 @@ export function TimeTravel() {
       </Row>
 
       <Row style={styles.row}>
-        <Button style={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_HOUR)}>
+        <Button containerStyle={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_HOUR)}>
           1h
         </Button>
-        <Button style={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_MINUTE)}>
+        <Button containerStyle={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_MINUTE)}>
           1m
         </Button>
-        <Button style={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_MINUTE)}>
+        <Button containerStyle={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_MINUTE)}>
           1m
         </Button>
-        <Button style={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_HOUR)}>
+        <Button containerStyle={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_HOUR)}>
           1h
         </Button>
       </Row>
 
       <Col style={styles.row} type="stretch">
         {weekBefore && (
-          <Button style={styles.button} icon="calendar-arrow-left" onPress={() => handleTravelToDate(weekBefore)}>
+          <Button containerStyle={styles.button} icon="calendar-arrow-left" onPress={() => handleTravelToDate(weekBefore)}>
             {t('week_before', { conName })}
           </Button>
         )}
 
         {eventDays.map((day: EventDayDetails) => (
-          <Button key={day.Id} style={styles.button} icon="calendar-cursor" onPress={() => handleTravelToDate(day.Date)}>
+          <Button key={day.Id} containerStyle={styles.button} icon="calendar-cursor" onPress={() => handleTravelToDate(day.Date)}>
             {day.Name}
           </Button>
         ))}
 
         {weekAfter && (
-          <Button style={styles.button} icon="calendar-arrow-right" onPress={() => handleTravelToDate(weekAfter)}>
+          <Button containerStyle={styles.button} icon="calendar-arrow-right" onPress={() => handleTravelToDate(weekAfter)}>
             {t('week_after', { conName })}
           </Button>
         )}

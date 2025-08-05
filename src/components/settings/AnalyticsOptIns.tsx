@@ -1,12 +1,11 @@
 import React from 'react'
 import Checkbox from 'expo-checkbox'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
-import { Pressable } from '@/components/generic/Pressable'
+import { View } from 'react-native'
 import { SettingContainer } from './SettingContainer'
 import { Label } from '@/components/generic/atoms/Label'
-import { Col } from '@/components/generic/containers/Col'
 import { useCache } from '@/context/data/Cache'
+import { Pressable } from '@/components/generic/Pressable'
 
 /**
  * Analytics opt-in section with a checkbox to allow analytics.
@@ -26,24 +25,16 @@ export const AnalyticsOptIns = () => {
 
   return (
     <SettingContainer>
-      <Pressable style={styles.container} onPress={() => setAnalytics(!analyticsEnabled)} delayLongPress={1000}>
-        <Col style={styles.column}>
-          <Label variant="bold">{t('allowAnalytics')}</Label>
-          <Label variant="narrow">{t('allowAnalyticsSubtitle')}</Label>
-        </Col>
+      <Pressable onPress={() => setAnalytics(!analyticsEnabled)} hitSlop={16}>
+        <View className="flex-row items-center">
+          <View className="flex-1 mr-2">
+            <Label variant="bold">{t('allowAnalytics')}</Label>
+            <Label variant="narrow">{t('allowAnalyticsSubtitle')}</Label>
+          </View>
 
-        <Checkbox value={analyticsEnabled} />
+          <Checkbox value={analyticsEnabled} />
+        </View>
       </Pressable>
     </SettingContainer>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  column: {
-    flex: 1,
-  },
-})

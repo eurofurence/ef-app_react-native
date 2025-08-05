@@ -27,7 +27,7 @@ function renderItem({ item }: { item: CommunicationRecord }) {
   return (
     <PrivateMessageCard
       key={item.Id}
-      style={styles.item}
+      containerStyle={styles.item}
       onPress={() =>
         router.push({
           pathname: '/messages/[id]',
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   item: {
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

@@ -34,7 +34,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
 
   const renderItem = useCallback(
     ({ item }: { item: AnnouncementDetailsInstance }) => {
-      return <AnnouncementCard style={styles.item} announcement={item} onPress={onPress} />
+      return <AnnouncementCard containerStyle={styles.item} announcement={item} onPress={onPress} />
     },
     [onPress]
   )

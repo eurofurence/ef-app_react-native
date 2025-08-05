@@ -13,6 +13,7 @@ import { SplashScreen, Stack, useSegments } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 // Import i18n configuration
@@ -40,15 +41,17 @@ export const unstable_settings = {
  */
 export default function RootLayout() {
   return (
-    <QueryProvider>
-      <CacheProvider>
-        <AuthProvider>
-          <ToastProvider>
-            <MainLayout />
-          </ToastProvider>
-        </AuthProvider>
-      </CacheProvider>
-    </QueryProvider>
+    <GestureHandlerRootView>
+      <QueryProvider>
+        <CacheProvider>
+          <AuthProvider>
+            <ToastProvider>
+              <MainLayout />
+            </ToastProvider>
+          </AuthProvider>
+        </CacheProvider>
+      </QueryProvider>
+    </GestureHandlerRootView>
   )
 }
 
@@ -93,28 +96,26 @@ export function MainLayout() {
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
       <BottomSheetModalProvider>
         <ThemeProvider value={themeNavigation}>
-          <GestureHandlerRootView>
-            <StatusBar backgroundColor={theme.background} style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
-            <Stack>
-              {screensData.map((screen) => (
-                <Stack.Screen
-                  key={screen.location}
-                  name={screen.location}
-                  options={{
-                    freezeOnBlur: screen.freezeOnBlur,
-                    keyboardHandlingEnabled: true,
-                    headerTitleAlign: 'left',
-                    headerShown: screen.headerShown,
-                    headerTitle: screen.title,
-                    headerLargeTitle: screen.headerLargeTitle,
-                    headerLeft: screen.headerLeft,
-                    headerRight: screen.headerRight,
-                    gestureEnabled: screen.swipeEnabled || false,
-                  }}
-                />
-              ))}
-            </Stack>
-          </GestureHandlerRootView>
+          <StatusBar backgroundColor={theme.background} style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
+          <Stack>
+            {screensData.map((screen) => (
+              <Stack.Screen
+                key={screen.location}
+                name={screen.location}
+                options={{
+                  freezeOnBlur: screen.freezeOnBlur,
+                  keyboardHandlingEnabled: true,
+                  headerTitleAlign: 'left',
+                  headerShown: screen.headerShown,
+                  headerTitle: screen.title,
+                  headerLargeTitle: screen.headerLargeTitle,
+                  headerLeft: screen.headerLeft,
+                  headerRight: screen.headerRight,
+                  gestureEnabled: screen.swipeEnabled || false,
+                }}
+              />
+            ))}
+          </Stack>
         </ThemeProvider>
       </BottomSheetModalProvider>
     </SafeAreaProvider>

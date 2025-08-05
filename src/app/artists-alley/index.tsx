@@ -72,7 +72,7 @@ export default function List() {
           {t('moderate')}
         </Label>
         {!loggedIn && !isAttending && !isCheckedIn ? null : (
-          <Button style={styles.registerSelf} onPress={() => router.navigate('/artists-alley/reg')} outline={true}>
+          <Button containerStyle={styles.registerSelf} onPress={() => router.navigate('/artists-alley/reg')} outline={true}>
             {t('register_self')}
           </Button>
         )}

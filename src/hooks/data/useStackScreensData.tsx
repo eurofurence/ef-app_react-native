@@ -1,10 +1,10 @@
 import { router } from 'expo-router'
 import * as React from 'react'
+import { TouchableOpacity } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
-import { Pressable } from '@/components/generic/Pressable'
 
 export type StackScreenProps = NativeStackNavigationOptions & {
   location: string
@@ -13,9 +13,9 @@ export type StackScreenProps = NativeStackNavigationOptions & {
 
 const CustomBack = () => {
   return (
-    <Pressable onPress={router.back}>
+    <TouchableOpacity onPress={router.back}>
       <Icon name="arrow-left" size={24} color="black" />
-    </Pressable>
+    </TouchableOpacity>
   )
 }
 

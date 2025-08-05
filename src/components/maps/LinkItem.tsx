@@ -32,7 +32,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
   const onPress = useCallback(() => router.push(`/dealer/${link.Target}`), [link.Target])
 
-  if (!dealer || !dealer) {
+  if (!dealer) {
     return null
   }
 
@@ -81,7 +81,7 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
   }, [link.Target])
 
   return (
-    <Button style={styles.linkButton} onPress={onPress} icon={icon}>
+    <Button containerStyle={styles.linkButton} onPress={onPress} icon={icon}>
       {link.Name || sanitized(link.Target)}
     </Button>
   )
@@ -95,7 +95,7 @@ const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
   }, [map, entry, link])
 
   return !map || !entry ? null : (
-    <Button style={styles.linkButton} onPress={onPress}>
+    <Button containerStyle={styles.linkButton} onPress={onPress}>
       {link.Name}
     </Button>
   )
@@ -109,7 +109,7 @@ const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) =>
   }, [map, entry, link])
 
   return !map || !entry ? null : (
-    <Button style={styles.linkButton} onPress={onPress}>
+    <Button containerStyle={styles.linkButton} onPress={onPress}>
       {link.Name}
     </Button>
   )

@@ -5,17 +5,9 @@ import { Dimensions, StyleSheet } from 'react-native'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { useEventLongPress } from '@/hooks/data/useEventReminder'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import { router } from 'expo-router'
 import { EventCard, EventDetailsInstance } from './EventCard'
-
-// Component for individual event card with long press functionality
-const EventCardWithLongPress = ({ item, cardType, onPress }: { item: EventDetailsInstance; cardType: 'duration' | 'time'; onPress: (event: EventDetails) => void }) => {
-  const { onLongPress } = useEventLongPress(item.details)
-
-  return <EventCard style={styles.item} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />
-}
+import { useEventCardInteractions } from '@/components/events/Events.common'
 
 /**
  * The properties to the component.
@@ -35,18 +27,13 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
 
-  const onPress = useCallback((event: EventDetails) => {
-    router.navigate({
-      pathname: '/events/[id]',
-      params: { id: event.Id },
-    })
-  }, [])
+  const { onPress, onLongPress } = useEventCardInteractions()
 
   const renderItem = useCallback(
     ({ item }: { item: EventDetailsInstance }) => {
-      return <EventCardWithLongPress item={item} cardType={cardType} onPress={onPress} />
+      return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />
     },
-    [cardType, onPress]
+    [cardType, onLongPress, onPress]
   )
 
   return (
@@ -70,7 +57,7 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
 
 const styles = StyleSheet.create({
   item: {
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

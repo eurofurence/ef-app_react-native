@@ -62,7 +62,8 @@ const placeholder = { blurhash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667' }
 
 export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton, onToggleHidden }) => {
   const { t } = useTranslation('Event')
-  const { isFavorite, toggleReminder } = useEventReminder(event)
+  const { checkReminder, toggleReminder } = useEventReminder()
+  const isFavorite = checkReminder(event)
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 5 : 'static')
 
@@ -184,10 +185,15 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       )}
 
       <Row style={styles.marginAround} gap={16}>
-        <Button style={styles.flex} outline={isFavorite} icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleReminder().catch(captureException)}>
+        <Button
+          containerStyle={styles.flex}
+          outline={isFavorite}
+          icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'}
+          onPress={() => toggleReminder(event).catch(captureException)}
+        >
           {isFavorite ? t('remove_favorite') : t('add_favorite')}
         </Button>
-        <Button style={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
+        <Button containerStyle={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
           {event.Hidden ? t('reveal') : t('hide')}
         </Button>
       </Row>
@@ -195,7 +201,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       {event.IsAcceptingFeedback && (
         <Button
           disabled={feedbackDisabled}
-          style={styles.marginAround}
+          containerStyle={styles.marginAround}
           icon="pencil"
           onPress={() =>
             router.navigate({

@@ -38,7 +38,7 @@ export const ArtistsAlleyList: FC<ArtistsAlleyListProps> = ({ leader, items, emp
 
   const renderItem = useCallback(
     ({ item }: { item: TableRegistrationInstance }) => {
-      return <ArtistsAlleyCard style={styles.item} item={item} onPress={onPress} />
+      return <ArtistsAlleyCard containerStyle={styles.item} item={item} onPress={onPress} />
     },
     [onPress]
   )

@@ -1,14 +1,16 @@
 import { extractOgMeta } from '@/util/extractOgMeta'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import React, { useMemo } from 'react'
-import { ActivityIndicator, StyleSheet, Text, useWindowDimensions, ViewStyle } from 'react-native'
-import { Pressable } from '@/components/generic/Pressable'
+import React from 'react'
+import { ActivityIndicator, StyleProp, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native'
 import axios from 'axios'
 import { Image } from '@/components/generic/atoms/Image'
+import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import { Label } from '@/components/generic/atoms/Label'
 
 type LinkPreviewProps = {
   url: string
   onPress: () => void
+  style?: StyleProp<ViewStyle>
 }
 
 async function fetchOgMeta(url: string, signal?: AbortSignal) {
@@ -28,33 +30,30 @@ function useOgMeta(url: string) {
   })
 }
 
-export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress }) => {
-  const { width: screenWidth } = useWindowDimensions()
-  const styleSize: ViewStyle = useMemo(() => {
-    const width = screenWidth - 32 // 16px margin on each side
-    const height = Math.round((width * 9) / 16) // 16:9 aspect ratio
-    return { width, height, justifyContent: 'center', alignItems: 'center' }
-  }, [screenWidth])
-
+export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style }) => {
   const { data: ogMeta, isLoading, isError } = useOgMeta(url)
   const isDisabled = isError || !ogMeta?.image
+  const styleBackground = useThemeBackground('background')
+  const styleBorder = useThemeBorder('soften')
 
   return (
-    <Pressable onPress={onPress} activeOpacity={0.8} style={[styles.cardContainer, styleSize]} disabled={isLoading || isDisabled}>
-      {isLoading ? <ActivityIndicator /> : isDisabled ? <Text>No preview available</Text> : <Image source={{ uri: ogMeta.image }} style={styles.image} />}
-    </Pressable>
+    <TouchableOpacity onPress={onPress} style={[styles.cardContainer, styleBackground, styleBorder, style]} disabled={isLoading || isDisabled}>
+      {isLoading ? <ActivityIndicator /> : isDisabled ? <Label>No preview available</Label> : <Image source={{ uri: ogMeta.image }} style={styles.image} />}
+    </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   cardContainer: {
-    alignSelf: 'center',
+    height: undefined,
     marginVertical: 10,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    aspectRatio: 16 / 9,
   },
 
   image: {

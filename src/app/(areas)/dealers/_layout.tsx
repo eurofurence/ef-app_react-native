@@ -7,7 +7,7 @@ import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigat
 import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 import { withLayoutContext } from 'expo-router'
 import * as React from 'react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -37,6 +37,16 @@ export default function DealersLayout() {
   const backgroundSurface = useThemeBackground('surface')
   const [filter, setFilter] = useState('')
 
+  const options = useMemo(() => {
+    return {
+      personal: createOptions('Faves', 'calendar-heart'),
+      all: createOptions('All'),
+      regular: createOptions('Regular'),
+      ad: createOptions('AD'),
+      az: createOptions('A-Z', 'order-alphabetical-ascending'),
+    }
+  }, [])
+
   return (
     <DealersSearchContext.Provider value={{ query: filter, setQuery: setFilter }}>
       <MaterialTopTabs
@@ -50,11 +60,11 @@ export default function DealersLayout() {
           </View>
         )}
       >
-        <MaterialTopTabs.Screen name="personal" options={createOptions('Faves', 'calendar-heart')} />
-        <MaterialTopTabs.Screen name="all" options={createOptions('All')} />
-        <MaterialTopTabs.Screen name="regular" options={createOptions('Regular')} />
-        <MaterialTopTabs.Screen name="ad" options={createOptions('AD')} />
-        <MaterialTopTabs.Screen name="az" options={createOptions('A-Z', 'order-alphabetical-ascending')} />
+        <MaterialTopTabs.Screen name="personal" options={options.personal} />
+        <MaterialTopTabs.Screen name="all" options={options.all} />
+        <MaterialTopTabs.Screen name="regular" options={options.regular} />
+        <MaterialTopTabs.Screen name="ad" options={options.ad} />
+        <MaterialTopTabs.Screen name="az" options={options.az} />
       </MaterialTopTabs>
     </DealersSearchContext.Provider>
   )

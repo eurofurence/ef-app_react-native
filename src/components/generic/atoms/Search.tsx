@@ -6,8 +6,8 @@ import { StyleSheet, TextInput, View, ViewStyle } from 'react-native'
 import { withAlpha } from '@/context/Theme'
 import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { labelTypeStyles } from './Label'
-import { Pressable } from '@/components/generic/Pressable'
 import { Icon } from '@/components/generic/atoms/Icon'
+import { Pressable } from '@/components/generic/Pressable'
 
 export type SearchProps = {
   style?: ViewStyle

@@ -46,9 +46,9 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({ 
   const renderItem = useCallback(
     ({ item }: { item: ArtistsAlleySectionProps | TableRegistrationInstance }) => {
       if ('title' in item) {
-        return <ArtistsAlleySection style={styles.section} title={item.title} subtitle={item.subtitle} icon={item.icon} />
+        return <ArtistsAlleySection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
       } else {
-        return <ArtistsAlleyCard style={styles.item} item={item} onPress={onPress} />
+        return <ArtistsAlleyCard containerStyle={styles.item} item={item} onPress={onPress} />
       }
     },
     [onPress]
@@ -76,11 +76,8 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({ 
 }
 
 const styles = StyleSheet.create({
-  section: {
-    paddingHorizontal: 20,
-  },
   item: {
-    marginHorizontal: 20,
+    paddingHorizontal: 20,
   },
   container: {
     paddingBottom: 100,

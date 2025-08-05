@@ -21,6 +21,7 @@ export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, cho
       {choices.map((item, i) => (
         <Button
           key={typeof item === 'string' ? item : i}
+          containerStyle={styles.one}
           labelType={labelType}
           labelVariant={labelVariant}
           style={i === 0 ? styles.left : i === choices.length - 1 ? styles.right : styles.center}
@@ -35,22 +36,19 @@ export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, cho
 }
 
 const styles = StyleSheet.create({
-  center: {
+  one: {
     flex: 1,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 0,
-    borderTopLeftRadius: 0,
+  },
+  center: {
+    borderRadius: 0,
   },
   left: {
-    flex: 1,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
     borderBottomLeftRadius: 16,
     borderTopLeftRadius: 16,
   },
   right: {
-    flex: 1,
     borderTopRightRadius: 16,
     borderBottomRightRadius: 16,
     borderBottomLeftRadius: 0,

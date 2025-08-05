@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
 import { Card } from '@/components/generic/containers/Card'
@@ -14,17 +14,17 @@ import { LostAndFoundRecord } from '@/context/data/types.api'
 export type LostAndFoundCardProps = {
   item: LostAndFoundRecord
   onPress?: () => void
-  style?: ViewStyle
+  containerStyle?: any
 }
 
-export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, style }) => {
+export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, containerStyle }) => {
   const theme = useTheme()
   const { t } = useTranslation('LostAndFound')
 
   const statusColor = item.Status === 'Found' ? theme.primary : item.Status === 'Returned' ? theme.warning : theme.notification
 
   return (
-    <Card onPress={onPress} style={style}>
+    <Card onPress={onPress} containerStyle={containerStyle}>
       <View style={styles.container}>
         {item.ImageUrl && (
           <View style={styles.imageContainer}>

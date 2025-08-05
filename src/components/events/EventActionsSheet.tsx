@@ -1,8 +1,7 @@
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { debounce } from 'lodash'
 import { FC, useEffect, useMemo, useRef } from 'react'
-import { Platform, StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { Platform, StyleSheet, ScrollView } from 'react-native'
 
 import { useThemeBackground } from '../../hooks/themes/useThemeHooks'
 import { EventContent } from './EventContent'

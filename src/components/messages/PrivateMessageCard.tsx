@@ -2,7 +2,6 @@ import { format } from 'date-fns'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { Pressable } from '@/components/generic/Pressable'
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Col } from '../generic/containers/Col'
@@ -11,19 +10,21 @@ import { appStyles } from '../AppStyles'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { CommunicationRecord } from '@/context/data/types.api'
+import { Pressable } from '@/components/generic/Pressable'
 
 export type PrivateMessageCardProps = {
+  containerStyle?: ViewStyle
   style?: ViewStyle
   item: CommunicationRecord
   onPress: (item: CommunicationRecord) => void
 }
 
-export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ style, item, onPress }) => {
+export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle, style, item, onPress }) => {
   const { t } = useTranslation('PrivateMessageList')
   const styleContainer = useThemeBackground('background')
 
   return (
-    <Pressable style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
+    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
       <Row style={styles.main}>
         <Col style={styles.title}>
           <Label
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     minHeight: 80,
     marginVertical: 15,
     borderRadius: 16,
+    overflow: 'hidden',
     flexDirection: 'row',
   },
   main: {

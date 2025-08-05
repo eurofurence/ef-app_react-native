@@ -21,10 +21,10 @@ export const HiddenEvents = () => {
     <SettingContainer>
       <Section title={t('title')} subtitle={t('subtitle')} icon="monitor-eye" />
 
-      <Button style={styles.button} icon="folder-eye" onPress={unhideAllEvents}>
+      <Button containerStyle={styles.button} icon="folder-eye" onPress={unhideAllEvents}>
         {t('unhide_all')}
       </Button>
-      <Button style={styles.button} icon="eye" onPress={() => router.push('/settings/reveal')}>
+      <Button containerStyle={styles.button} icon="eye" onPress={() => router.push('/settings/reveal')}>
         {t('unhide_specific')}
       </Button>
     </SettingContainer>

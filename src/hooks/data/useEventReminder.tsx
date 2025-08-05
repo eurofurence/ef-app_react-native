@@ -5,19 +5,15 @@ import { EventRecord } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 
 /**
- * Uses event reminder creation, removal, and toggle callbacks, as well as the
+ * Uses event reminder creation, removal, and toggle callbacks, as well as retrieving the
  * current event reminder state.
- * @param event The event to check for.
  */
-export const useEventReminder = (event: EventRecord) => {
+export const useEventReminder = () => {
   const { getValue, setValue } = useCache()
 
   // Retrieve timeTravel value from cache, default to 0
   const settings = getValue('settings')
   const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
-
-  // Retrieve the reminder from cache
-  const reminder = Boolean(getValue('notifications')?.find((item) => item.recordId === event.Id))
 
   const save = useCallback(
     (notification: Notification) => setValue('notifications', [...(getValue('notifications')?.filter((item) => item.recordId !== notification.recordId) ?? []), notification]),
@@ -31,33 +27,26 @@ export const useEventReminder = (event: EventRecord) => {
     [getValue, setValue]
   )
 
-  const createReminder = useCallback(() => scheduleEventReminder(event, offset, save), [event, offset, save])
-  const removeReminder = useCallback(() => cancelEventReminder(event.Id, remove), [event.Id, remove])
-  const toggleReminder = useCallback(() => {
-    if (reminder) return cancelEventReminder(event, remove)
-    else return scheduleEventReminder(event, offset, save)
-  }, [reminder, event, remove, offset, save])
+  const checkReminder = useCallback((event: EventRecord) => Boolean(getValue('notifications')?.find((item) => item.recordId === event.Id)), [getValue])
+  const createReminder = useCallback((event: EventRecord) => scheduleEventReminder(event, offset, save), [offset, save])
+  const removeReminder = useCallback((event: EventRecord) => cancelEventReminder(event.Id, remove), [remove])
+  const toggleReminder = useCallback(
+    async (event: EventRecord) => {
+      if (checkReminder(event)) {
+        await cancelEventReminder(event, remove)
+        return 'removed'
+      } else {
+        await scheduleEventReminder(event, offset, save)
+        return 'added'
+      }
+    },
+    [checkReminder, remove, offset, save]
+  )
 
   return {
-    isFavorite: reminder,
+    checkReminder,
     createReminder,
     removeReminder,
     toggleReminder,
   }
-}
-
-/**
- * Hook that provides long press functionality for toggling event favorites.
- * @param event The event to handle long press for.
- */
-export const useEventLongPress = (event: EventRecord) => {
-  const { toggleReminder } = useEventReminder(event)
-
-  const onLongPress = useCallback(() => {
-    toggleReminder().catch((error) => {
-      console.error('Failed to toggle event reminder:', error)
-    })
-  }, [toggleReminder])
-
-  return { onLongPress }
 }

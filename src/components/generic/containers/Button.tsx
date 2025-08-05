@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { FC, ReactElement, ReactNode } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { Pressable } from '@/components/generic/Pressable'
 
 import { Icon, IconNames } from '../atoms/Icon'
 import { Label, LabelProps } from '../atoms/Label'
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { Pressable } from '@/components/generic/Pressable'
 
 export const buttonIconSize = 20
 const pad = 8
@@ -15,6 +15,7 @@ const border = 2
  * Arguments to the button.
  */
 export type ButtonProps = {
+  containerStyle?: StyleProp<ViewStyle>
   style?: StyleProp<ViewStyle>
   labelType?: LabelProps['type']
   labelVariant?: LabelProps['variant']
@@ -55,7 +56,7 @@ export type ButtonProps = {
   disabled?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({ style, labelType, labelVariant, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
+export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labelVariant, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
   // Computed styles.
   const baseStyle = outline ? styles.containerOutline : styles.containerFill
   const disabledStyle = disabled ? styles.disabled : null
@@ -76,7 +77,13 @@ export const Button: FC<ButtonProps> = ({ style, labelType, labelVariant, outlin
   else iconRightComponent = iconRight
 
   return (
-    <Pressable style={[styles.container, baseStyle, fillStyle, outline && borderStyle, disabledStyle, style]} onPress={onPress} onLongPress={onLongPress} disabled={disabled}>
+    <Pressable
+      containerStyle={containerStyle}
+      style={[styles.container, baseStyle, fillStyle, outline && borderStyle, disabledStyle, style]}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      disabled={disabled}
+    >
       {iconComponent}
 
       <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
@@ -90,10 +97,7 @@ export const Button: FC<ButtonProps> = ({ style, labelType, labelVariant, outlin
 
 const styles = StyleSheet.create({
   container: {
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    borderBottomLeftRadius: 16,
-    borderBottomRightRadius: 16,
+    borderRadius: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -109,11 +113,6 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.5,
-  },
-  content: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   placeholder: {
     width: buttonIconSize,

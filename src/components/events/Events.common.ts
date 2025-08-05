@@ -1,13 +1,17 @@
 import { captureException } from '@sentry/react-native'
 import { TFunction } from 'i18next'
 import { differenceInHours, isBefore } from 'date-fns'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { Share } from 'react-native'
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from '@/components/events/EventCard'
 import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from '@/components/events/EventSection'
 import { appBase, conAbbr } from '@/configuration'
 
 import { EventDetails } from '@/context/data/types.details'
+import { router } from 'expo-router'
+import { useEventReminder } from '@/hooks/data/useEventReminder'
+import { useToastContext } from '@/context/ui/ToastContext'
+import { useTranslation } from 'react-i18next'
 
 /**
  Returns a list of event instances according to conversion rules.
@@ -172,3 +176,34 @@ export const shareEvent = (event: EventDetails) =>
     },
     {}
   ).catch(captureException)
+
+/**
+ * Uses default handlers for event card interaction, i.e., opening the event or toggling favorites.
+ */
+export function useEventCardInteractions(notify = true) {
+  const { toggleReminder } = useEventReminder()
+  const { toast } = useToastContext()
+  const { t } = useTranslation('Events')
+
+  const onPress = useCallback((event: EventDetails) => {
+    router.navigate({
+      pathname: '/events/[id]',
+      params: { id: event.Id },
+    })
+  }, [])
+
+  const onLongPress = useCallback(
+    async (event: EventDetails) => {
+      const mode = await toggleReminder(event)
+      if (!notify) return
+      if (mode === 'added') toast('info', t('favorite_added'), 3000)
+      else if (mode === 'removed') toast('info', t('favorite_removed'), 3000)
+    },
+    [toggleReminder, notify, toast, t]
+  )
+
+  return {
+    onPress,
+    onLongPress,
+  }
+}
