@@ -23,7 +23,7 @@ import { useMemo } from 'react'
 
 import { StoreData } from '@/context/data/CacheStore'
 import { EntityStore, filterEntityStore, mapEntityStore } from '@/context/data/CacheTools'
-import { EventRecord, KnowledgeEntryRecord, MapRecord } from '@/context/data/types.api'
+import { ArtistAlleyRecord, EventRecord, KnowledgeEntryRecord, MapRecord } from '@/context/data/types.api'
 import {
   AnnouncementDetails,
   DealerDetails,
@@ -35,6 +35,7 @@ import {
   KnowledgeEntryDetails,
   KnowledgeGroupDetails,
   MapDetails,
+  ArtistAlleyDetails,
 } from '@/context/data/types.details'
 import { GlobalSearchResult, ImageLocation } from '@/context/data/types.own'
 import {
@@ -102,6 +103,11 @@ export type CacheExtensions = {
    * Map records with related entity resolution.
    */
   maps: EntityStore<MapDetails>
+
+  /**
+   * Artist Alley table registration records with related entity resolution.
+   */
+  artistAlley: EntityStore<ArtistAlleyDetails>
 
   /**
    * Events that are the user's favorite.
@@ -214,6 +220,16 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       ValidUntilLocal: parseISO(item.ValidUntilDateTimeUtc + 'Z'),
     }))
   }, [images, data.announcements])
+
+  const artistAlley = useMemo((): EntityStore<ArtistAlleyDetails> => {
+    return mapEntityStore(
+      data.artistAlley,
+      (item: ArtistAlleyRecord): ArtistAlleyDetails => ({
+        ...item,
+        Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
+      })
+    )
+  }, [images, data.artistAlley])
 
   const eventDays = useMemo((): EntityStore<EventDayDetails> => {
     return mapEntityStore(data.eventDays, (item) => ({
@@ -388,6 +404,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       knowledgeGroups,
       knowledgeEntries,
       maps,
+      artistAlley,
       announcements,
       eventDays,
       dealers,
@@ -418,6 +435,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       knowledgeGroups,
       knowledgeEntries,
       maps,
+      artistAlley,
       announcements,
       eventDays,
       dealers,

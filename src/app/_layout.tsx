@@ -43,13 +43,13 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <QueryProvider>
-        <CacheProvider>
-          <AuthProvider>
+        <AuthProvider>
+          <CacheProvider>
             <ToastProvider>
               <MainLayout />
             </ToastProvider>
-          </AuthProvider>
-        </CacheProvider>
+          </CacheProvider>
+        </AuthProvider>
       </QueryProvider>
     </GestureHandlerRootView>
   )

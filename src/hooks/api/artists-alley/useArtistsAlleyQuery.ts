@@ -1,8 +1,8 @@
-import { TableRegistrationRecord } from '@/context/data/types.api'
+import { ArtistAlleyRecord, TableRegistrationRecord } from '@/context/data/types.api'
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import { useAuthContext } from '@/context/auth/Auth'
 import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
+import { useAuthContext } from '@/context/auth/Auth'
 
 /**
  * Gets the artist alley records with the given access token and optionally an abort signal.
@@ -21,14 +21,26 @@ export async function getArtistsAlleyAll(accessToken: string | null, signal?: Ge
     .then((res) => res.data as TableRegistrationRecord[])
 }
 
+export async function getArtistsAlley(accessToken: string | null, signal?: GenericAbortSignal) {
+  if (!accessToken) throw new Error('Unauthorized')
+  return await axios
+    .get(`${apiBase}/ArtistsAlley`, {
+      signal: signal,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data as ArtistAlleyRecord[])
+}
+
 /**
  * Uses a query for `getArtistsAlleyAll` with the app auth state.
  */
-export function useArtistsAlleyAllQuery(): UseQueryResult<TableRegistrationRecord[] | null> {
+export function useArtistsAlleyQuery(usePrivileged: boolean): UseQueryResult<ArtistAlleyRecord[] | null> {
   const { accessToken, claims } = useAuthContext()
   return useQuery({
     queryKey: [claims?.sub, 'artists-alley'],
-    queryFn: (context) => getArtistsAlleyAll(accessToken, context.signal),
+    queryFn: (context) => (usePrivileged ? getArtistsAlleyAll(accessToken, context.signal) : getArtistsAlley(accessToken, context.signal)),
     placeholderData: (data) => keepPreviousData(data),
   })
 }

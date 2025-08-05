@@ -46,12 +46,18 @@ export default function Register() {
   const [show, setShow] = useState(true)
 
   const onEdit = useCallback(() => setShow(false), [])
+  const onCancel = useCallback(() => {
+    checkOut(undefined, {
+      onSuccess: () => toast('info', t('cancel_request_success')),
+      onError: () => toast('error', t('cancel_request_error')),
+    })
+  }, [checkOut, toast, t])
   const onCheckOut = useCallback(() => {
     checkOut(undefined, {
-      onSuccess: () => toast('info', 'Checked out'),
-      onError: () => toast('error', 'Failed to check out'),
+      onSuccess: () => toast('info', t('check_out_success')),
+      onError: () => toast('error', t('check_out_error')),
     })
-  }, [checkOut, toast])
+  }, [checkOut, toast, t])
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} refreshControl={authorized ? <RefreshControl refreshing={isPending} onRefresh={refetch} /> : undefined} stickyHeaderIndices={[0]}>
@@ -71,7 +77,7 @@ export default function Register() {
         {authorized ? (
           !isPending ? (
             show && data ? (
-              <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} />
+              <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} onCancel={onCancel} />
             ) : (
               <ArtistsAlleyEdit
                 prefill={{

@@ -18,6 +18,7 @@ import {
   usePersistor,
 } from '@/context/data/CacheStore'
 import axios from 'axios'
+import { useAuthContext } from '../auth/Auth'
 
 /**
  * Cache context.
@@ -164,6 +165,9 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
   const [isSynchronizing, setIsSynchronizing] = useState(false)
   const invocation = useRef<AbortController | null>(null)
 
+  // Get authentication details if available
+  const { accessToken } = useAuthContext()
+
   // Synchronization function.
   const synchronize = useCallback(async () => {
     const ownInvocation = new AbortController()
@@ -172,12 +176,20 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     setIsSynchronizing(true)
 
     const { lastSynchronised, cid, cacheVersion } = dataRef.current
+    console.log('synchronize:', lastSynchronised)
 
     // Sync fully if state is for a different convention.
     const path = lastSynchronised && cid === conId && cacheVersion === eurofurenceCacheVersion ? `Sync?since=${lastSynchronised}` : `Sync`
 
     try {
-      const data = await axios.get(`${apiBase}/${path}`, { signal: ownInvocation.signal }).then((res) => res.data)
+      const data = await axios
+        .get(`${apiBase}/${path}`, {
+          signal: ownInvocation.signal,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((res) => res.data)
 
       // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
       if (data.ConventionIdentifier !== conId || cacheVersion !== eurofurenceCacheVersion) {
@@ -198,7 +210,7 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
         setIsSynchronizing(false)
       }
     }
-  }, [])
+  }, [accessToken])
 
   // Run synchronize initially.
   useEffect(() => {

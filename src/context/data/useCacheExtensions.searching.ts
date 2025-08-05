@@ -2,7 +2,7 @@ import Fuse, { FuseOptionKey, IFuseOptions } from 'fuse.js'
 import { flatten } from 'lodash'
 import { useMemo } from 'react'
 import { GlobalSearchResult } from '@/context/data/types.own'
-import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
+import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails, ArtistAlleyDetails } from '@/context/data/types.details'
 
 /**
  * General search options.
@@ -73,6 +73,14 @@ export const announcementsSearchProperties: FuseOptionKey<AnnouncementDetails>[]
 ]
 
 /**
+ * Artist Alley properties to include in the search.
+ */
+export const artistAlleySearchProperties: FuseOptionKey<ArtistAlleyDetails>[] = [
+  { name: 'DisplayName', weight: 2 },
+  { name: 'ShortDescription', weight: 1 },
+]
+
+/**
  * Properties for global search to include in the search, combined from dealers,
  * events, and knowledge base entries.
  */
@@ -80,6 +88,7 @@ export const globalSearchProperties: FuseOptionKey<GlobalSearchResult>[] = [
   ...(dealersSearchProperties as any),
   ...(eventsSearchProperties as any),
   ...(knowledgeEntriesSearchProperties as any),
+  ...(artistAlleySearchProperties as any),
 ]
 
 /**
