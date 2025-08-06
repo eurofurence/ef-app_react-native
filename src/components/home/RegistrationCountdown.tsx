@@ -3,7 +3,7 @@ import { formatDistance, isAfter, isBefore } from 'date-fns'
 import { TFunction } from 'i18next'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { useAuthContext } from '@/context/auth/Auth'
 import { useCache } from '@/context/data/Cache'
@@ -17,7 +17,6 @@ import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Button } from '../generic/containers/Button'
 import { Col } from '../generic/containers/Col'
-import { padFloater } from '../generic/containers/Floater'
 import { Row } from '../generic/containers/Row'
 
 export type RegistrationCountdownProps = {
@@ -82,35 +81,34 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
 
   // Don't show if dismissed, if loading, if there's an error, or if user is logged in AND is an attendee
   const isAttendee = Boolean(user?.RoleMap?.Attendee)
-  if (isHidden === true || isLoading || error || (loggedIn && isAttendee)) return null
+  if (isHidden || isLoading || error || (loggedIn && isAttendee)) return null
 
   return (
-    <View style={styles.container}>
+    <>
       <Col style={styles.sectionContainer}>
         <Row type="center">
           <Icon color={iconColor} style={styles.icon} name="account-plus" size={24} />
           <Label style={styles.titleFill} type="h2" color="important" ellipsizeMode="tail">
             {t('registration_title')}
           </Label>
-          <Label type="compact" variant="bold" color="secondary" onPress={hideWarning}>
-            {tWarnings('hide')}
-          </Label>
         </Row>
       </Col>
-      <Label type="para">{countdownText}</Label>
+      <Label type="para">
+        {countdownText}
+        <Label type="compact" variant="bold" color="secondary" onPress={hideWarning}>
+          {' ' + tWarnings('hide')}
+        </Label>
+      </Label>
       {showButton && registrationUrl && (
         <Button style={styles.registerButton} icon="web" onPress={handleRegisterPress}>
           {t('register_now')}
         </Button>
       )}
-    </View>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: padFloater,
-  },
   sectionContainer: {
     paddingTop: 30,
     paddingBottom: 15,
