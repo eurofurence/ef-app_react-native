@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
+/* eslint-disable-next-line import/no-unresolved -- convention.config.json isn't available on github */
 import { convention } from './convention.config.json'
 
 const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/

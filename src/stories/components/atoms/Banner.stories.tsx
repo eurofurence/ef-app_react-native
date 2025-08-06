@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
-import { fn } from 'storybook/test'
 
 import { Banner } from '@/components/generic/atoms/Banner'
 

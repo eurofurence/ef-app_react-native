@@ -81,6 +81,14 @@
     "after_event": "Das war's! Wir hoffen wir sehen Dich nächstes Jahr wieder!",
     "before_event": "{{conName}} beginnt in {{diff}}(n)"
   },
+  "Registration": {
+    "registration_title": "Anmeldung",
+    "registration_opens_in": "Die Anmeldung öffnet in {{diff}}",
+    "registration_open": "Die Anmeldung ist jetzt geöffnet!",
+    "registration_closed": "Die Anmeldung ist geschlossen",
+    "register_now": "Jetzt anmelden",
+    "thank_you_see_you_next_year": "Vielen Dank und bis nächstes Jahr!"
+  },
   "Dealer": {
     "about": "Infos",
     "about_the_art": "Über das Angebot",
@@ -197,6 +205,7 @@
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "view_all_announcements": "Alle Mitteilungen anzeigen",
     "warnings": {
+      "language": "Übersetzung",
       "favorites_changed": "Favoriten geändert",
       "favorites_changed_subtitle": "Infos in Deinen Favoriten wurden geändert, seitdem Du diese das letzte mal angeschaut hast",
       "hide": "Verbergen",
@@ -332,9 +341,11 @@
     "device_warnings": {
       "hide_device_warnings": "Kompatibilitätsprobleme verbergen",
       "hide_language_warnings": "Übersetzungshinweise verbergen",
+      "hide_registration_countdown": "Anmeldungs-Countdown verbergen",
       "hide_time_zone_warnings": "Zeitzonenhinweise verbergen",
       "show_device_warnings": "Kompatibilitätsprobleme anzeigen",
       "show_language_warnings": "Übersetzungshinweise anzeigen",
+      "show_registration_countdown": "Anmeldungs-Countdown anzeigen",
       "show_time_zone_warnings": "Zeitzonenhinweise anzeigen",
       "subtitle": "Warnungen auf dem Startbildschirm anzeigen oder verbergen",
       "title": "Warnungen"

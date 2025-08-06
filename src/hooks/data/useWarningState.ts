@@ -3,7 +3,7 @@ import { useCache } from '@/context/data/Cache'
 /**
  * Possible warning keys.
  */
-export type WarningKey = 'deviceWarningsHidden' | 'languageWarningsHidden' | 'timeZoneWarningsHidden'
+export type WarningKey = 'deviceWarningsHidden' | 'languageWarningsHidden' | 'timeZoneWarningsHidden' | 'registrationCountdownHidden'
 
 /**
  * Provides state and mutation for device warnings.

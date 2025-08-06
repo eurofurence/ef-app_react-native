@@ -73,6 +73,14 @@
     "after_event": "En dat was het weer! Tot volgend jaar!",
     "before_event": "{{conName}} begint over {{diff}}"
   },
+  "Registration": {
+    "registration_title": "Registratie",
+    "registration_opens_in": "Registratie opent over {{diff}}",
+    "registration_open": "Registratie is nu open!",
+    "registration_closed": "Registratie is gesloten",
+    "register_now": "Nu Registreren",
+    "thank_you_see_you_next_year": "Bedankt en tot volgend jaar!"
+  },
   "Dealer": {
     "attends_fri": "Vrijdag",
     "attends_sat": "Zaterdag",
@@ -108,10 +116,12 @@
     "announcementsTitle_one": "Er is {{ count }} aankondiging.",
     "announcementsTitle_other": "Er zijn {{ count }} aankondigingen.",
     "announcementsTitle_zero": "Er zijn geen aankondigingen.",
+    "content_untranslated": "Je gebruikt de applicatie in een andere taal dan het Engels. Houd er rekening mee dat namen en teksten van alle dynamische inhoud uitsluitend in het Engels worden weergegeven.",
     "eventsTitle_one": "We vonden {{ count }} event.",
     "eventsTitle_other": "We hebben {{ count }} events gevondens.",
     "eventsTitle_zero": "Er zijn geen events.",
     "warnings": {
+      "language": "Vertaling",
       "no_notifications": "Jouw apparaat ondersteunt geen notificaties. Je zult geen herrinerringen krijgen voor evenementen.",
       "subtitle": "Vanwege jouw apparaat zijn sommige functionaliteiten niet beschikbaar",
       "title": "Problemen met apparaat"
@@ -217,6 +227,18 @@
       "no_messages": "We hebben geen bericht ontvangen van FCM",
       "subtitle": "Berichtjes die we hebben ontvangen van FCM",
       "title": "Afstandsberichtjes"
+    },
+    "device_warnings": {
+      "hide_device_warnings": "Verberg apparaatwaarschuwingen",
+      "hide_language_warnings": "Verberg taalwaarschuwingen",
+      "hide_registration_countdown": "Verberg registratie countdown",
+      "hide_time_zone_warnings": "Verberg tijdzonewaarschuwingen",
+      "show_device_warnings": "Toon apparaatwaarschuwingen",
+      "show_language_warnings": "Toon taalwaarschuwingen",
+      "show_registration_countdown": "Toon registratie countdown",
+      "show_time_zone_warnings": "Toon tijdzonewaarschuwingen",
+      "subtitle": "Toon of verberg waarschuwingen op het startscherm",
+      "title": "Waarschuwingen op startscherm"
     },
     "settingsSection": "Instellingen",
     "timeTravel": "Toon tijdreisinstellingen."
