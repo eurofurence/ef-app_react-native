@@ -61,6 +61,10 @@ export const Interactive: Story = {
 }
 
 export const DifferentTimes: Story = {
+  args: {
+    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <AnnouncementCard announcement={createAnnouncementInstance(mockAnnouncementDetails, 'Just now')} onPress={fn()} />
@@ -72,6 +76,10 @@ export const DifferentTimes: Story = {
 }
 
 export const DifferentAreas: Story = {
+  args: {
+    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       {mockAnnouncementDetailsDifferentAreas.map((details, index) => (
@@ -82,6 +90,10 @@ export const DifferentAreas: Story = {
 }
 
 export const MultipleAnnouncements: Story = {
+  args: {
+    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <AnnouncementCard announcement={createAnnouncementInstance(mockAnnouncementDetails)} onPress={fn()} />
