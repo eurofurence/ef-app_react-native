@@ -499,3 +499,6 @@ render.experimental.xml
 
 # Directory for storing things locally
 _private
+
+*storybook.log
+storybook-static

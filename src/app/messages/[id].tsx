@@ -51,7 +51,7 @@ export default function MessageItem() {
     <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
       <Header>{message.AuthorName}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        <Label type="h1" mt={30} mb={10}>
+        <Label type="h1" className="mt-8 mb-3">
           {message.Subject}
         </Label>
 

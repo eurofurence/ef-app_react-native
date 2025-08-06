@@ -13,14 +13,21 @@
     "website": "https://www.eurofurence.org",
     "catchEmUrl": "https://fursuit.eurofurence.org/catch-em-all",
     "artistAlleyUrl": "https://app.eurofurence.org/qr/artistalley",
-    "cacheVersion": 5,
-    "efnavMapUrl": "https://nav.eurofurence.org"
+    "cacheVersion": 6,
+    "efnavMapUrl": "https://nav.eurofurence.org",
+    "registrationDatesUrl": "https://www.eurofurence.org/data/dates.json",
+    "registrationUrl": "https://identity.eurofurence.org"
   },
   "auth": {
     "issuer": "https://identity.eurofurence.org",
     "redirect": "eurofurence://auth/login",
     "clientId": "<insert-client-id>",
-    "scopes": ["openid", "profile", "offline", "offline_access"],
+    "scopes": [
+      "openid",
+      "profile",
+      "offline",
+      "offline_access"
+    ],
     "settingsUrl": "https://identity.eurofurence.org/settings/profile"
   },
   "sentry": {
@@ -45,3 +52,4 @@
     "i18nDebug": false
   }
 }
+

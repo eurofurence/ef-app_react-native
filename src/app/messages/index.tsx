@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SectionList, StyleSheet } from 'react-native'
 import { chain, isEmpty, partition, startCase } from 'lodash'
-import { router } from 'expo-router'
+import { Redirect, router } from 'expo-router'
 
 import { Label } from '@/components/generic/atoms/Label'
 import { Header } from '@/components/generic/containers/Header'
@@ -12,7 +12,7 @@ import { NoData } from '@/components/generic/containers/NoData'
 import { CommunicationRecord } from '@/context/data/types.api'
 import { captureException } from '@sentry/react-native'
 import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
+import { useUserContext } from '@/context/auth/User'
 
 type Section = {
   title: string
@@ -42,7 +42,7 @@ function renderItem({ item }: { item: CommunicationRecord }) {
 export default function Messages() {
   const { t } = useTranslation('PrivateMessageList')
   const { data: communications, refetch, isPending } = useCommunicationsQuery()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
 
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
@@ -92,6 +92,9 @@ export default function Messages() {
     ),
     [sectionStyle]
   )
+
+  // Eject if not logged in.
+  if (!user) return <Redirect href="/" />
 
   return (
     <SectionList<CommunicationRecord, Section>

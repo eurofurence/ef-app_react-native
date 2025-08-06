@@ -1,9 +1,9 @@
 import { FC, PropsWithChildren } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '@/components/AppStyles'
+import { Pressable } from '@/components/generic/Pressable'
 
 type CardProps = PropsWithChildren<{
   onPress?: () => void
@@ -15,7 +15,7 @@ type CardProps = PropsWithChildren<{
 export const Card: FC<CardProps> = ({ children, onPress, onLongPress, containerStyle, style }) => {
   const cardStyle = useThemeBackground('background')
   return (
-    <TouchableOpacity
+    <Pressable
       containerStyle={containerStyle}
       style={[styles.container, appStyles.shadow, cardStyle, style]}
       onPress={onPress}
@@ -23,7 +23,7 @@ export const Card: FC<CardProps> = ({ children, onPress, onLongPress, containerS
       disabled={onPress === undefined && onLongPress === undefined}
     >
       <View style={styles.main}>{children}</View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

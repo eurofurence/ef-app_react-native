@@ -1,12 +1,12 @@
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useCache } from '@/context/data/Cache'
 
 /**
  * Uses the state of user favorite events and dealers. Also returns the last
  * viewed times as a record of ID to formatted time.
  */
-export function useFavoritesState() {
-  const { events, dealers, getValue } = useCache()
+export function useFavoritesUpdated() {
+  const { events, dealers, getValue, setValue } = useCache()
 
   const notifications = getValue('notifications')
   const settings = getValue('settings')
@@ -17,9 +17,18 @@ export function useFavoritesState() {
 
   const lastViewTimes = settings.lastViewTimes
 
+  const clear = useCallback(() => {
+    const settings = getValue('settings')
+    setValue('settings', {
+      ...settings,
+      lastViewTimes: {},
+    })
+  }, [getValue, setValue])
+
   return {
     favoriteEvents,
     favoriteDealers,
     lastViewTimes,
+    clear,
   }
 }

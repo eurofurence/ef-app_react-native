@@ -1,63 +1,45 @@
 import React, { FC } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { TableRegistrationRecord } from '@/context/data/types.api'
+import { TableRegistrationRecord, TableRegistrationRecordStatus } from '@/context/data/types.api'
 import { stateToBackground } from '@/components/artists-alley/utils'
-import { differenceInHours, parseISO } from 'date-fns'
-
-export type TableRegistrationInstance = {
-  details: TableRegistrationRecord
-  visibility: 'visible' | 'grayed' | 'hidden'
-}
-
-export function tableRegistrationInstanceForAny(details: TableRegistrationRecord, now: Date): TableRegistrationInstance {
-  // TODO: This time  calculation is fucky.
-  const date = parseISO(details.LastChangeDateTimeUtc + 'Z')
-  const age = differenceInHours(now, date)
-  const isGrayed = age > 1
-  const isHidden = age > 3
-  // TODO: Should not be fully hidden, otherwise no one will reject and the registrand is never notified.
-  const visibility = isHidden ? 'grayed' : isGrayed ? 'grayed' : 'visible'
-  return { details, visibility }
-}
+import { Pressable } from '@/components/generic/Pressable'
+import { ArtistAlleyDetails } from '@/context/data/types.details'
 
 export type ArtistsAlleyCardProps = {
   containerStyle?: ViewStyle
   style?: ViewStyle
-  item: TableRegistrationInstance
-  onPress?: (item: TableRegistrationInstance) => void
-  onLongPress?: (item: TableRegistrationInstance) => void
+  item: ArtistAlleyDetails | TableRegistrationRecord
+  onPress?: (item: ArtistAlleyDetails | TableRegistrationRecord) => void
+  onLongPress?: (item: ArtistAlleyDetails | TableRegistrationRecord) => void
 }
 
 export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, style, item, onPress, onLongPress }) => {
   // Dependent and independent styles.
   const styleContainer = useThemeBackground('background')
   const stylePre = useThemeBackground('primary')
-  const styleAreaIndicator = useThemeBackground(stateToBackground[item.details.State])
+  const state: TableRegistrationRecordStatus = 'State' in item && item.State ? item.State : 'Accepted'
+  const styleAreaIndicator = useThemeBackground(stateToBackground[state])
   const styleDarken = useThemeBackground('darken')
 
-  // Should be prefiltered, but we will also not show it.
-  if (item.visibility === 'hidden') return null
-
   return (
-    <TouchableOpacity
-      containerStyle={item.visibility === 'grayed' ? [containerStyle, styles.transparent] : containerStyle}
+    <Pressable
+      containerStyle={containerStyle}
       style={[styles.container, appStyles.shadow, styleContainer, style]}
       onPress={() => onPress?.(item)}
       onLongPress={() => onLongPress?.(item)}
     >
-      <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(item.details.Image)}>
+      <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(item.Image)}>
         <View style={[styles.tableContainer, styleDarken]}>
           <Label type="cap" color={'white'}>
             Table
           </Label>
           <Label type="h3" color={'white'}>
-            {item.details.Location}
+            {item.Location}
           </Label>
         </View>
         <View style={[styles.areaIndicator, styleAreaIndicator]} />
@@ -65,16 +47,16 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
 
       <View style={styles.main}>
         <Label style={styles.title} type="h3">
-          {item.details.DisplayName}
+          {item.DisplayName}
         </Label>
         <Label type="h4" variant="narrow">
-          {item.details.ShortDescription}
+          {item.ShortDescription}
         </Label>
         <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-          {item.details.State}
+          {'State' in item ? item.State : ''}
         </Label>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

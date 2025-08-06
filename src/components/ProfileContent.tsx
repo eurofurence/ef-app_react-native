@@ -8,9 +8,10 @@ import { Section } from './generic/atoms/Section'
 import { Badge } from './generic/containers/Badge'
 import { Button } from './generic/containers/Button'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { Claims, useAuthContext } from '@/context/auth/Auth'
+import { useAuthContext } from '@/context/auth/Auth'
 import { authSettingsUrl, conName } from '@/configuration'
 import { UserDetails } from '@/hooks/api/users/useUserSelfQuery'
+import { Claims } from '@/context/auth/Auth'
 
 /**
  * User role pill.
@@ -99,7 +100,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         {claims.name as string}
       </Label>
 
-      <Label type="caption" variant="middle" mb={20}>
+      <Label type="caption" variant="middle" className="mb-5">
         {claims.email as string}
       </Label>
 
@@ -109,7 +110,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         ))}
       </View>
 
-      <Label mt={20} type="para">
+      <Label className="mt-5" type="para">
         {t('login_description', { conName })}
       </Label>
 
@@ -121,7 +122,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         <>
           <Section icon="account-group" title={t('roles')} subtitle={t('roles_subtitle', { conName })} />
           <View style={styles.roles}>
-            {user.Roles.map((r) => (
+            {user.Roles.filter((value, index, array) => array.indexOf(value) === index).map((r) => (
               <UserRole key={r} role={r} />
             ))}
           </View>

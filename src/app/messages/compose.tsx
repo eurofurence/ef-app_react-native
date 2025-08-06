@@ -4,16 +4,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { Button } from '@/components/generic/containers/Button'
 import React, { useCallback } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, ScrollView } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
 import { Floater } from '@/components/generic/containers/Floater'
-import { ScrollView } from 'react-native-gesture-handler'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useCommunicationsSendMutation } from '@/hooks/api/communications/useCommunicationsSendMutation'
 import { ManagedChoiceButtons } from '@/components/generic/forms/ManagedChoiceButtons'
 import { Label } from '@/components/generic/atoms/Label'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { Redirect } from 'expo-router'
+import { useUserContext } from '@/context/auth/User'
 
 const messageSchema = z.object({
   type: z.literal('byRegistrationId').or(z.literal('byIdentityId')),
@@ -34,9 +33,8 @@ function typeChoiceLabel(choice: string) {
 }
 
 export default function ComposeMessage() {
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
 
-  const rolesAvailable = Boolean(user?.RoleMap)
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
 
@@ -59,7 +57,7 @@ export default function ComposeMessage() {
     },
     [mutate, toast]
   )
-  if (rolesAvailable && !isAdmin && !isPrivateMessageSender) return <Redirect href="/messages" />
+  if (!isAdmin && !isPrivateMessageSender) return <Redirect href="/messages" />
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>
@@ -75,7 +73,7 @@ export default function ComposeMessage() {
             <ManagedTextInput<MessageSchema> name="subject" label="subject" placeholder="Subject" />
             <ManagedTextInput<MessageSchema> name="message" label="message" placeholder="Body of the message" numberOfLines={8} multiline />
 
-            {isPending && <Label mt={16}>Submitting</Label>}
+            {isPending && <Label className="mt-4">Submitting</Label>}
           </FormProvider>
         </View>
         <Button onPress={form.handleSubmit(onSend)}>Submit</Button>

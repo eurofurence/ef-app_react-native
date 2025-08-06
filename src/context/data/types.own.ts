@@ -15,6 +15,17 @@ export type Settings = {
   timeTravelEnabled?: boolean
   warnings?: Record<string, boolean>
   favoriteDealers?: string[]
+  artistsAlleyLocal?: ArtistsAlleyLocal
+}
+
+/**
+ * Locally stored data for repeat registrations.
+ */
+export type ArtistsAlleyLocal = {
+  displayName: string
+  websiteUrl: string
+  shortDescription: string
+  telegramHandle: string
 }
 
 /**

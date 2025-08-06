@@ -20,13 +20,13 @@ export default function KnowledgeItem() {
       <Header>{entry?.Title}</Header>
       <Floater>
         {entry?.Images?.map((image, i) => (
-          <View key={i} style={styles.posterLine}>
+          <View key={i} className="my-2.5">
             <Banner image={image} viewable />
           </View>
         )) ?? null}
         <MarkdownContent>{entry?.Text ?? ''}</MarkdownContent>
         {entry?.Links?.map((link: LinkFragment) => (
-          <View style={styles.linkContainer} key={link.Target}>
+          <View className="mb-5" key={link.Target}>
             <LinkItem link={link} />
           </View>
         ))}
@@ -34,13 +34,3 @@ export default function KnowledgeItem() {
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  posterLine: {
-    marginVertical: 10,
-    alignItems: 'center',
-  },
-  linkContainer: {
-    marginBottom: 10,
-  },
-})

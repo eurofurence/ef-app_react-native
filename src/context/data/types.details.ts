@@ -1,6 +1,7 @@
 import { IconNames } from '@/components/generic/atoms/Icon'
 import {
   AnnouncementRecord,
+  ArtistAlleyRecord,
   CommunicationRecord,
   DealerRecord,
   EventDayRecord,
@@ -78,3 +79,6 @@ export type KnowledgeEntryDetails = KnowledgeEntryRecord & {
 }
 export type ImageDetails = ImageRecord
 export type CommunicationDetails = CommunicationRecord
+export type ArtistAlleyDetails = ArtistAlleyRecord & {
+  Image?: ImageDetails
+}

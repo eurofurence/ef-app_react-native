@@ -31,7 +31,7 @@ export default function PersonalScreen() {
         </Row>
       }
       empty={
-        <Label type="para" mt={20} ml={20} mr={20} variant="middle">
+        <Label type="para" className="mt-5 ml-5 mr-5" variant="middle">
           {t('favorites_empty')}
         </Label>
       }

@@ -23,6 +23,14 @@
     "after_event": "E con questo è tutto! Speriamo di rivederti l'anno prossimo!",
     "before_event": "{{conName}} inizierà {{diff}}"
   },
+  "Registration": {
+    "registration_title": "Registrazione",
+    "registration_opens_in": "La registrazione si aprirà {{diff}}",
+    "registration_open": "La registrazione è ora aperta!",
+    "registration_closed": "La registrazione è chiusa",
+    "register_now": "Registrati Ora",
+    "thank_you_see_you_next_year": "Grazie e ci vediamo l'anno prossimo!"
+  },
   "Dealer": {
     "about": "Informazioni",
     "about_the_art": "Informazioni sull'arte",
@@ -90,8 +98,10 @@
     "announcementsTitle_one": "C'è {{ count }} annuncio.",
     "announcementsTitle_other": "Ci sono {{ count }} annunci.",
     "announcementsTitle_zero": "Non ci sono annunci.",
+    "content_untranslated": "Stai utilizzando l'applicazione in una lingua diversa dall'inglese. Ti preghiamo di notare che i nomi e i testi di tutti i contenuti dinamici vengono visualizzati esclusivamente in inglese.",
     "eventsTitle_zero": "Non ci sono eventi.",
     "warnings": {
+      "language": "Traduzione",
       "no_image_caching": "Il dispositivo non può salvare le immagini nella cache. Senza una connessione internet, le immagini non saranno visualizzate.",
       "no_notifications": "Il dispositivo non supporta le notifiche pianificate. Non riceverai i promemoria per i prossimi eventi.",
       "no_push_notifications": "Il dispositivo non supporta le notifiche push. Non verrai automaticamente notificato di Annunci o Messaggi Privati.",
@@ -170,6 +180,18 @@
     "allowAnalyticsSubtitle": "Abilitando la raccolta di dati analitici permetterai di migliorare le funzionalità dell'applicazione. I dati sono forniti da Firebase e non sono condivisi con altre terze parti.",
     "changeLanguage": "Cambia lingua",
     "currentLanguage": "La tua lingua è Italiano 🤌",
+    "device_warnings": {
+      "hide_device_warnings": "Nascondi avvisi dispositivo",
+      "hide_language_warnings": "Nascondi avvisi lingua",
+      "hide_registration_countdown": "Nascondi countdown registrazione",
+      "hide_time_zone_warnings": "Nascondi avvisi fuso orario",
+      "show_device_warnings": "Mostra avvisi dispositivo",
+      "show_language_warnings": "Mostra avvisi lingua",
+      "show_registration_countdown": "Mostra countdown registrazione",
+      "show_time_zone_warnings": "Mostra avvisi fuso orario",
+      "subtitle": "Mostra o nascondi avvisi dispositivo nella schermata principale",
+      "title": "Avvisi nella schermata principale"
+    },
     "header": "Impostazioni",
     "settingsSection": "Impostazioni"
   }

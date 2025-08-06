@@ -27,7 +27,12 @@
     "sectionTitle": "Announcements"
   },
   "ArtistsAlley": {
+    "cancel_request": "Cancel your request",
+    "cancel_request_success": "Registration request cancelled",
+    "cancel_request_error": "Failed to cancel registration",
     "check_out": "Check out",
+    "check_out_success": "Checked out",
+    "check_out_error": "Failed to check out",
     "dismiss": "Dismiss your edits",
     "display_name_label": "Display name",
     "display_name_placeholder": "Your preferred display name",
@@ -50,11 +55,13 @@
     "learn_more": "Learn more about the Artist Alley",
     "list": {
       "Accepted": "Accepted registrations",
-      "header": "Table registration requests",
+      "artists_alley_empty": "There is currently no one registered for the Artist Alley. Be the first and register yourself here!",
+      "header": "Artist Alley",
+      "header_moderate": "Artist Alley Moderation",
       "moderate": "Moderate table requests",
       "Pending": "Pending registrations",
       "Published": "Published registrations",
-      "register_self": "Register for yourself",
+      "register_self": "Manage your Artist Alley registration",
       "Rejected": "Rejected registrations"
     },
     "location_label": "Table number",
@@ -120,12 +127,23 @@
     "unauthorized_not_checked_in": "Please check in and pick up your convention badge at the Registration Desk before trying to register at an Artist Alley table.",
     "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist alley.",
     "update": "Update your request",
+    "view": {
+      "title": "Artist Alley Table"
+    },
     "website_url_label": "Website (optional)",
     "website_url_placeholder": "URL to your website"
   },
   "Countdown": {
     "after_event": "That was it! We hope to see you again next year!",
     "before_event": "{{conName}} will start in {{diff}}"
+  },
+  "Registration": {
+    "registration_title": "Registration",
+    "registration_opens_in": "Registration opens in {{diff}}",
+    "registration_open": "Registration is now open!",
+    "registration_closed": "Registration has closed",
+    "register_now": "Register Now",
+    "thank_you_see_you_next_year": "Thank you and see you again next year!"
   },
   "Dealer": {
     "about": "About",
@@ -159,6 +177,8 @@
     "dealers_at_convention": "Dealers at {{convention}}",
     "dealers_in_ad": "After dark dealers den",
     "dealers_in_regular": "Regular dealers den",
+    "favorite_added": "Favorite added",
+    "favorite_removed": "Favorite removed",
     "favorites_empty": "You do not have any favorite dealers yet. Favorite some dealers to create your own list.",
     "favorites_title": "Your favorites",
     "not_attending_on": "Not in on {{offDays}}",
@@ -212,6 +232,8 @@
     "events_done": "Events concluded",
     "events_hidden": "Hidden",
     "events_hidden_subtitle": "{{count}} events, reveal them again in Settings",
+    "favorite_added": "Favorite added",
+    "favorite_removed": "Favorite removed",
     "favorites_subtitle": "You will receive a reminder about these events",
     "favorites_title": "Favorite Events",
     "filter_by_day": "Filter days",
@@ -244,6 +266,7 @@
     "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
+      "language": "Translation",
       "favorites_changed": "Favorites updated",
       "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
       "hide": "Hide",
@@ -387,6 +410,7 @@
       "set_token_data": "Set token data",
       "subtitle": "Make the app do something.",
       "sync": "Sync local data",
+      "clear": "Clear local data",
       "title": "Dev buttons",
       "token_data_placeholder": "Enter token data"
     },
@@ -408,9 +432,11 @@
     "device_warnings": {
       "hide_device_warnings": "Hide device warnings",
       "hide_language_warnings": "Hide language warnings",
+      "hide_registration_countdown": "Hide registration countdown",
       "hide_time_zone_warnings": "Hide time zone warnings",
       "show_device_warnings": "Show device warnings",
       "show_language_warnings": "Show language warnings",
+      "show_registration_countdown": "Show registration countdown",
       "show_time_zone_warnings": "Show time zone warnings",
       "subtitle": "Show or hide device warnigns on home screen",
       "title": "Warnings on home screen"

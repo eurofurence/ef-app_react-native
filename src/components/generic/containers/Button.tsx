@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { FC, ReactElement, ReactNode } from 'react'
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 
 import { Icon, IconNames } from '../atoms/Icon'
 import { Label, LabelProps } from '../atoms/Label'
 import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { Pressable } from '@/components/generic/Pressable'
 
 export const buttonIconSize = 20
 const pad = 8
@@ -77,7 +77,7 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labe
   else iconRightComponent = iconRight
 
   return (
-    <TouchableOpacity
+    <Pressable
       containerStyle={containerStyle}
       style={[styles.container, baseStyle, fillStyle, outline && borderStyle, disabledStyle, style]}
       onPress={onPress}
@@ -91,7 +91,7 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labe
       </Label>
 
       {iconRightComponent}
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
@@ -113,11 +113,6 @@ const styles = StyleSheet.create({
   },
   disabled: {
     opacity: 0.5,
-  },
-  content: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
   placeholder: {
     width: buttonIconSize,

@@ -6,7 +6,7 @@ import { Picker } from '@react-native-picker/picker'
 import { captureException } from '@sentry/react-native'
 import { orderBy } from 'lodash'
 import React, { useState, useEffect, useRef } from 'react'
-import { Animated } from 'react-native'
+import { Animated, Platform } from 'react-native'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../generic/containers/Button'
 import { SettingContainer } from './SettingContainer'
@@ -66,12 +66,12 @@ export const LanguagePicker = () => {
         Animated.timing(fadeAnim, {
           toValue: 1,
           duration: 300,
-          useNativeDriver: true,
+          useNativeDriver: Platform.OS !== 'web',
         }),
         Animated.timing(slideAnim, {
           toValue: 1,
           duration: 300,
-          useNativeDriver: true,
+          useNativeDriver: Platform.OS !== 'web',
         }),
       ]).start()
     } else {
@@ -79,12 +79,12 @@ export const LanguagePicker = () => {
         Animated.timing(fadeAnim, {
           toValue: 0,
           duration: 200,
-          useNativeDriver: true,
+          useNativeDriver: Platform.OS !== 'web',
         }),
         Animated.timing(slideAnim, {
           toValue: 0,
           duration: 200,
-          useNativeDriver: true,
+          useNativeDriver: Platform.OS !== 'web',
         }),
       ]).start(() => {
         setRenderPicker(false)
@@ -107,7 +107,9 @@ export const LanguagePicker = () => {
   return (
     <SettingContainer>
       <Label variant="bold">{t('changeLanguage')}</Label>
-      <Label variant="narrow">{t('currentLanguage')}</Label>
+      <Label variant="narrow" className="mb-2">
+        {t('currentLanguage')}
+      </Label>
 
       {!showPicker ? (
         <Button onPress={() => setShowPicker(true)}>{currentLanguageData.name}</Button>

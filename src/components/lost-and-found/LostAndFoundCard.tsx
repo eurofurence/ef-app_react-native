@@ -40,7 +40,7 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
               <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
             </View>
           </View>
-          {item.Description && (
+          {!item.Description ? null : (
             <Label style={styles.description} numberOfLines={3}>
               {item.Description}
             </Label>

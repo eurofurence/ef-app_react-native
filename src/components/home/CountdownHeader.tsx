@@ -86,7 +86,16 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
         <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
           {conId}
         </Label>
-        <Label ml={2} mb={labelTypeStyles.compact.fontSize - labelTypeStyles.compact.lineHeight} type="compact" variant="shadow" color="white" ellipsizeMode="tail">
+        <Label
+          style={{
+            marginLeft: 2,
+            marginBottom: labelTypeStyles.compact.fontSize - labelTypeStyles.compact.lineHeight,
+          }}
+          type="compact"
+          variant="shadow"
+          color="white"
+          ellipsizeMode="tail"
+        >
           {subtitle}
         </Label>
       </Col>

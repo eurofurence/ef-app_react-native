@@ -31,9 +31,9 @@ export const ManagedTextInput = <T extends Record<string, any>>({ name, label, c
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {label && <Label type="caption">{label}</Label>}
+      {!label ? null : <Label type="caption">{label}</Label>}
       <TextInput value={value} onChangeText={onChange} onBlur={onBlur} style={[styles.input, inputStyle, style]} placeholderTextColor={theme.text + '80'} {...props} />
-      <Label type="caption" color="notification" mt={5} mb={15}>
+      <Label type="caption" color="notification" className="mt-1 mb-4">
         {!error ? ' ' : errorTranslator ? errorTranslator(fieldName, error.type) : error.message}
       </Label>
     </View>

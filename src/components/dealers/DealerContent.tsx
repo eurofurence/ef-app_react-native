@@ -1,13 +1,12 @@
 import * as Clipboard from 'expo-clipboard'
 import * as Linking from 'expo-linking'
-import React, { FC, useCallback, useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { shareDealer } from '@/components/dealers/Dealers.common'
+import { shareDealer, useToggleFavorite } from '@/components/dealers/Dealers.common'
 import { Row } from '@/components/generic/containers/Row'
 import { conTimeZone } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
 import { DealerDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
@@ -99,27 +98,16 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
   const avatarBackground = useThemeBackground('text')
 
-  const { getValue, setValue } = useCache()
-
   const days = useMemo(
     () =>
       dealer.AttendanceDays.map((day) => {
-        const zonedDate = toZonedTime(new Date(day.Date), conTimeZone)
+        const zonedDate = toZonedTime(day.Date, conTimeZone)
         return format(zonedDate, 'EEEE')
       }).join(', '),
     [dealer]
   )
 
-  const toggleFavorite = useCallback(() => {
-    const settings = getValue('settings')
-    const newSettings = {
-      ...settings,
-      favoriteDealers: settings.favoriteDealers?.includes(dealer.Id)
-        ? settings.favoriteDealers?.filter((item) => item !== dealer.Id)
-        : [...(settings.favoriteDealers ?? []), dealer.Id],
-    }
-    setValue('settings', newSettings)
-  }, [dealer.Id, getValue, setValue])
+  const toggleFavorite = useToggleFavorite()
 
   // Check if not-attending warning should be marked.
   const markNotAttending = useMemo(() => {
@@ -146,12 +134,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
       {!dealer.Artist ? null : (
         <View style={[appStyles.shadow, avatarBackground, styles.avatarCircle]}>
-          <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.Artist)} />
+          <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.ArtistThumbnail)} />
         </View>
       )}
 
       {dealer.DisplayNameOrAttendeeNickname ? (
-        <Label type="h1" variant="middle" mb={10}>
+        <Label type="h1" variant="middle" className="mb-3">
           {dealer.DisplayNameOrAttendeeNickname}
         </Label>
       ) : null}
@@ -167,12 +155,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Label>
       </Row>
 
-      <Button containerStyle={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={toggleFavorite}>
+      <Button style={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleFavorite(dealer)}>
         {dealer.Favorite ? t('remove_favorite') : t('add_favorite')}
       </Button>
 
       {!shareButton ? null : (
-        <Button containerStyle={styles.marginAround} icon="share" onPress={() => shareDealer(dealer)}>
+        <Button style={styles.marginAround} icon="share" onPress={() => shareDealer(dealer)}>
           {t('share')}
         </Button>
       )}
@@ -195,11 +183,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         </Row>
       ) : null}
 
-      {!dealer.MapLink ? null : (
-        <>
-          <LinkPreview url={dealer.MapLink} onPress={() => openBrowserAsync(dealer.MapLink ?? '')} />
-        </>
-      )}
+      {!dealer.MapLink ? null : <LinkPreview url={dealer.MapLink} onPress={() => openBrowserAsync(dealer.MapLink ?? '')} style={styles.fullWidth} />}
 
       <DealerCategories dealer={dealer} />
 
@@ -256,7 +240,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             <View style={styles.posterLine}>
               <Banner image={dealer.ArtPreview} viewable />
 
-              <Label mt={10} type="caption" numberOfLines={4} ellipsizeMode="tail">
+              <Label className="mt-3" type="caption" numberOfLines={4} ellipsizeMode="tail">
                 {dealer.ArtPreviewCaption}
               </Label>
             </View>
@@ -298,6 +282,9 @@ const styles = StyleSheet.create({
   },
   aboutLine: {
     marginBottom: 20,
+  },
+  fullWidth: {
+    width: '100%',
   },
   posterLine: {
     marginBottom: 20,

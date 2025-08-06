@@ -1,3 +1,6 @@
+import { defineConfig } from 'eslint/config'
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from 'eslint-plugin-storybook'
 import prettier from 'eslint-plugin-prettier'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -12,7 +15,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-export default [
+export default defineConfig([
   {
     ignores: ['dist/*', '.expo', '**/node_modules'],
   },
@@ -25,4 +28,11 @@ export default [
       'prettier/prettier': 'error',
     },
   },
-]
+  {
+    files: ['app.config.js', 'src/configuration.tsx', 'src/init/firebaseApp.web.ts'],
+    linterOptions: {
+      reportUnusedDisableDirectives: 'off',
+    },
+  },
+  ...storybook.configs['flat/recommended'],
+])

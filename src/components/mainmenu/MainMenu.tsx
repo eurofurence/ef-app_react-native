@@ -20,14 +20,6 @@ export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
   const { loggedIn, claims, login } = useAuthContext()
 
-  const handleNavigation = useCallback(
-    (path: string) => {
-      router.navigate(path)
-      tabs.current?.close()
-    },
-    [tabs]
-  )
-
   const handleLogin = useCallback(() => {
     login().catch(captureException)
   }, [login])
@@ -44,25 +36,19 @@ export function MainMenu({ tabs }: MainMenuProps) {
   return (
     <Col type="stretch">
       {showLogin && (
-        <PagerPrimaryLogin
-          loggedIn={loggedIn}
-          claim={claims}
-          onMessages={() => handleNavigation('/messages')}
-          onLogin={handleLogin}
-          onProfile={() => handleNavigation('/profile')}
-        />
+        <PagerPrimaryLogin loggedIn={loggedIn} claim={claims} onMessages={() => router.navigate('/messages')} onLogin={handleLogin} onProfile={() => router.navigate('/profile')} />
       )}
 
       <Grid cols={menuColumns}>
-        <Tab icon="information-outline" text={t('info')} onPress={() => handleNavigation('/knowledge')} />
+        <Tab icon="information-outline" text={t('info')} onPress={() => router.navigate('/knowledge')} />
         {showCatchEm && <Tab icon="paw" text={t('catch_em')} onPress={handleCatchEmAll} disabled={!loggedIn} />}
-        <Tab icon="image-frame" text={t('artist_alley')} onPress={() => handleNavigation('/artists-alley')} />
-        <Tab icon="card-account-details-outline" text={t('profile')} onPress={() => handleNavigation('/profile')} disabled={!loggedIn} />
-        <Tab icon="cog" text={t('settings')} onPress={() => handleNavigation('/settings')} />
-        <Tab icon="magnify" text={t('lost_and_found')} onPress={() => handleNavigation('/lost-and-found')} disabled={!loggedIn} />
+        <Tab icon="image-frame" text={t('artist_alley')} onPress={() => router.navigate('/artists-alley')} />
+        <Tab icon="card-account-details-outline" text={t('profile')} onPress={() => router.navigate('/profile')} disabled={!loggedIn} />
+        <Tab icon="cog" text={t('settings')} onPress={() => router.navigate('/settings')} />
+        <Tab icon="magnify" text={t('lost_and_found')} onPress={() => router.navigate('/lost-and-found')} disabled={!loggedIn} />
         <Tab icon="web" text={t('website')} onPress={() => Linking.openURL(conWebsite)} />
         <Tab icon="map" text={t('map')} onPress={() => openBrowserAsync(efnavMapUrl)} />
-        <Tab icon="information" text={t('about')} onPress={() => handleNavigation('/about')} />
+        <Tab icon="information" text={t('about')} onPress={() => router.navigate('/about')} />
       </Grid>
     </Col>
   )

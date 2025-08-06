@@ -25,13 +25,13 @@ export const ManagedRating = <T extends Record<string, any>>({ name, label, enab
   return (
     <View style={[styles.container, style]}>
       {label && (
-        <Label type="caption" mb={8}>
+        <Label type="caption" className="mb-2">
           {label}
         </Label>
       )}
       <StarRating rating={value ?? 0} onChange={onChange} enableHalfStar={enableHalfStar} starSize={starSize} color={color} />
       {error && (
-        <Label type="caption" color="important" mt={4}>
+        <Label type="caption" color="important" className="mt-1">
           {error.message}
         </Label>
       )}

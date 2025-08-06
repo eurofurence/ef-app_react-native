@@ -2,15 +2,14 @@ import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 
-import { router } from 'expo-router'
 import { DealerSection, DealerSectionProps } from './DealerSection'
 import { DealerCard, DealerDetailsInstance } from './DealerCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
-import { DealerDetails } from '@/context/data/types.details'
 import { vibrateAfter } from '@/util/vibrateAfter'
+import { useDealerCardInteractions } from '@/components/dealers/Dealers.common'
 
 /**
  * The properties to the component.
@@ -36,23 +35,17 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !('details' in item)) : undefined), [dealersGroups, sticky])
-
-  const onPress = useCallback((dealer: DealerDetails) => {
-    router.navigate({
-      pathname: '/dealers/[id]',
-      params: { id: dealer.Id },
-    })
-  }, [])
+  const { onPress, onLongPress } = useDealerCardInteractions()
 
   const renderItem = useCallback(
     ({ item }: { item: SectionProps | DealerDetailsInstance }) => {
       if ('details' in item) {
-        return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} />
+        return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} onLongPress={onLongPress} />
       } else {
         return <DealerSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
       }
     },
-    [onPress]
+    [onLongPress, onPress]
   )
 
   return (

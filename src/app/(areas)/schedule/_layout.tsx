@@ -11,9 +11,13 @@ import type { ParamListBase, TabNavigationState } from '@react-navigation/native
 import { isSameDay } from 'date-fns'
 import { withLayoutContext } from 'expo-router'
 import * as React from 'react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+export const unstable_settings = {
+  initialRouteName: 'day-1',
+}
 
 const { Navigator } = createMaterialTopTabNavigator()
 
@@ -49,12 +53,26 @@ export default function ScheduleLayout() {
   const initialRouteName = getInitialRoute(eventDays, now)
   const [filter, setFilter] = useState('')
 
+  const options = useMemo(() => {
+    return {
+      filter: createOptions('Filter', 'filter-variant'),
+      personal: createOptions('Personal', 'calendar-heart'),
+      'day-1': createOptions(dayTabTitle(eventDays[0])),
+      'day-2': createOptions(dayTabTitle(eventDays[1])),
+      'day-3': createOptions(dayTabTitle(eventDays[2])),
+      'day-4': createOptions(dayTabTitle(eventDays[3])),
+      'day-5': createOptions(dayTabTitle(eventDays[4])),
+      'day-6': createOptions(dayTabTitle(eventDays[5])),
+      'day-7': createOptions(dayTabTitle(eventDays[6])),
+    }
+  }, [eventDays])
+
   return (
     <ScheduleSearchContext.Provider value={{ query: filter, setQuery: setFilter }}>
       <MaterialTopTabs
         initialRouteName={initialRouteName}
         style={StyleSheet.absoluteFill}
-        screenOptions={{ sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
+        screenOptions={{ sceneStyle: backgroundSurface, tabBarItemStyle: styles.tabItem }}
         tabBar={(props) => (
           <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
             <MaterialTopTabBar {...props} />
@@ -62,23 +80,24 @@ export default function ScheduleLayout() {
           </View>
         )}
       >
-        <MaterialTopTabs.Screen name="filter" options={createOptions('Filter', 'filter-variant')} />
-        <MaterialTopTabs.Screen name="personal" options={createOptions('Personal', 'calendar-heart')} />
-        <MaterialTopTabs.Screen name="day-1" options={createOptions(dayTabTitle(eventDays[0]))} redirect={eventDays.length < 1} />
-        <MaterialTopTabs.Screen name="day-2" options={createOptions(dayTabTitle(eventDays[1]))} redirect={eventDays.length < 2} />
-        <MaterialTopTabs.Screen name="day-3" options={createOptions(dayTabTitle(eventDays[2]))} redirect={eventDays.length < 3} />
-        <MaterialTopTabs.Screen name="day-4" options={createOptions(dayTabTitle(eventDays[3]))} redirect={eventDays.length < 4} />
-        <MaterialTopTabs.Screen name="day-5" options={createOptions(dayTabTitle(eventDays[4]))} redirect={eventDays.length < 5} />
-        <MaterialTopTabs.Screen name="day-6" options={createOptions(dayTabTitle(eventDays[5]))} redirect={eventDays.length < 6} />
-        <MaterialTopTabs.Screen name="day-7" options={createOptions(dayTabTitle(eventDays[6]))} redirect={eventDays.length < 7} />
+        <MaterialTopTabs.Screen name="filter" options={options.filter} />
+        <MaterialTopTabs.Screen name="personal" options={options.personal} />
+        <MaterialTopTabs.Screen name="day-1" options={options['day-1']} redirect={eventDays.length < 1} />
+        <MaterialTopTabs.Screen name="day-2" options={options['day-2']} redirect={eventDays.length < 2} />
+        <MaterialTopTabs.Screen name="day-3" options={options['day-3']} redirect={eventDays.length < 3} />
+        <MaterialTopTabs.Screen name="day-4" options={options['day-4']} redirect={eventDays.length < 4} />
+        <MaterialTopTabs.Screen name="day-5" options={options['day-5']} redirect={eventDays.length < 5} />
+        <MaterialTopTabs.Screen name="day-6" options={options['day-6']} redirect={eventDays.length < 6} />
+        <MaterialTopTabs.Screen name="day-7" options={options['day-7']} redirect={eventDays.length < 7} />
       </MaterialTopTabs>
     </ScheduleSearchContext.Provider>
   )
 }
 
 const styles = StyleSheet.create({
-  tabLabel: {
+  tabItem: {
     margin: 0,
+    padding: 0,
   },
   tabBarContainer: {
     backgroundColor: 'transparent',

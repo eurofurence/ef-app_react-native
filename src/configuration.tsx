@@ -1,4 +1,4 @@
-// eslint-disable-next-line import/no-unresolved
+/* eslint-disable-next-line import/no-unresolved -- convention.config.json isn't available on github */
 import conventionConfig from '../convention.config.json'
 
 /**
@@ -70,6 +70,12 @@ export const catchEmUrl = conventionConfig.convention.catchEmUrl
  * URL leading to the Artist Alley detail page for this convention.
  */
 export const artistAlleyUrl = conventionConfig.convention.artistAlleyUrl
+
+/**
+ * Registration configuration for this convention.
+ */
+export const registrationDatesUrl = conventionConfig.convention.registrationDatesUrl
+export const registrationUrl = conventionConfig.convention.registrationUrl
 
 /**
  * The cache version for this convention.

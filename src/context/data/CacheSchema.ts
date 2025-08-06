@@ -1,5 +1,6 @@
 import {
   AnnouncementRecord,
+  ArtistAlleyRecord,
   DealerRecord,
   EventDayRecord,
   EventRecord,
@@ -35,6 +36,11 @@ export const schemaInternal = {
    * Last synchronized time.
    */
   lastSynchronised: defineField<string>(formatISO(0)),
+
+  /**
+   * True if last sync was authorized.
+   */
+  lastSyncAuthorized: defineField<boolean>(false),
 } as const
 
 /**
@@ -68,13 +74,14 @@ export type SchemaValues = typeof schemaValues
  * Storage schema for synchronized entities.
  */
 export const schemaEntities = {
+  artistAlley: defineEntity<ArtistAlleyRecord>('TableRegistrations', (item) => item.DisplayName, 'asc'),
   announcements: defineEntity<AnnouncementRecord>('Announcements', (item) => item.ValidFromDateTimeUtc, 'desc'),
   dealers: defineEntity<DealerRecord>('Dealers', (item) => item.DisplayNameOrAttendeeNickname),
-  images: defineEntity<ImageRecord>('Images', (item) => item.ContentHashSha1),
   events: defineEntity<EventRecord>('Events', (item) => item.StartDateTimeUtc),
   eventDays: defineEntity<EventDayRecord>('EventConferenceDays', (item) => item.Date),
   eventRooms: defineEntity<EventRoomRecord>('EventConferenceRooms', (item) => item.Name),
   eventTracks: defineEntity<EventTrackRecord>('EventConferenceTracks', (item) => item.Name),
+  images: defineEntity<ImageRecord>('Images', (item) => item.ContentHashSha1),
   knowledgeGroups: defineEntity<KnowledgeGroupRecord>('KnowledgeGroups', (item) => item.Order, 'desc'),
   knowledgeEntries: defineEntity<KnowledgeEntryRecord>('KnowledgeEntries', (item) => item.Order, 'desc'),
   maps: defineEntity<MapRecord>('Maps', (item) => item.Order),

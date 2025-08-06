@@ -56,7 +56,7 @@ Contains the search definitions as well as hooks to provide the Fuse indices.
 ### [useCacheExtensions.ts](useCacheExtensions.ts)
 
 Uses the cache data and connects the records as well as extending them by
-data that is not provided by the API. To add new detials, find the appropriate
+data that is not provided by the API. To add new details, find the appropriate
 memo and apply the data changes within the `mapEntityStore` invocation.
 
 ## Adding data

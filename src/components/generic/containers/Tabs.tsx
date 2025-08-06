@@ -1,6 +1,6 @@
-import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useState } from 'react'
-import { BackHandler, Platform, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import { Gesture, GestureDetector, Pressable } from 'react-native-gesture-handler'
+import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
+import { BackHandler, Platform, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
+import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, { cancelAnimation, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
@@ -8,6 +8,7 @@ import React from 'react'
 import { Continuous } from '../atoms/Continuous'
 import { IconNames } from '../atoms/Icon'
 import { Tab } from './Tab'
+import { useIsFocused } from '@react-navigation/core'
 
 /**
  * Arguments to the tabs.
@@ -217,44 +218,53 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
   useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [open, close, closeImmediately])
 
   // Gesture handling
-  const gesture = Gesture.Pan()
-    .onBegin(() => {
-      startOffset.value = offset.value
-      cancelAnimation(offset)
-    })
-    .onUpdate((e) => {
-      const newOffset = -e.translationY / height.value + startOffset.value
-      offset.value = Math.max(0, Math.min(newOffset, 1))
-    })
-    .onEnd((e) => {
-      // Get state and gesture properties (i.e., if criteria are matched.
-      const isOpen = offset.get() > openThreshold
-      const drawnClosed = e.translationY > closeDragThreshold
-      const drawnOpen = e.translationY < -openDragThreshold
+  const gesture = useMemo(
+    () =>
+      Gesture.Pan()
+        .onBegin(() => {
+          startOffset.value = offset.value
+          cancelAnimation(offset)
+        })
+        .onUpdate((e) => {
+          const newOffset = -e.translationY / height.value + startOffset.value
+          offset.value = Math.max(0, Math.min(newOffset, 1))
+        })
+        .onEnd((e) => {
+          // Get state and gesture properties (i.e., if criteria are matched.
+          const isOpen = offset.get() > openThreshold
+          const drawnClosed = e.translationY > closeDragThreshold
+          const drawnOpen = e.translationY < -openDragThreshold
 
-      // Target. If open and drawn closed, close. If closed and drawn open, open. Otherwise fall back to original state.
-      let target: 0 | 1
-      if (isOpen && drawnClosed) target = 0
-      else if (!isOpen && drawnOpen) target = 1
-      else target = isOpen ? 1 : 0
+          // Target. If open and drawn closed, close. If closed and drawn open, open. Otherwise fall back to original state.
+          let target: 0 | 1
+          if (isOpen && drawnClosed) target = 0
+          else if (!isOpen && drawnOpen) target = 1
+          else target = isOpen ? 1 : 0
 
-      animating.set(true)
-      offset.value = withSpring(target, springConfig, () => {
-        animating.set(false)
-      })
-    })
+          animating.set(true)
+          offset.value = withSpring(target, springConfig, () => {
+            animating.set(false)
+          })
+        }),
+    [animating, height, offset, startOffset]
+  )
+
+  const isFocused = useIsFocused()
 
   // Connect to back handler
   useEffect(() => {
     if (Platform.OS === 'web') return
+    if (!isFocused) return
     const subscription = BackHandler.addEventListener('hardwareBackPress', () => close() ?? false)
     return () => subscription.remove()
-  }, [close])
+  }, [close, isFocused])
 
   return (
     <>
       <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
-        <Pressable style={({ pressed }) => [StyleSheet.absoluteFill, { opacity: pressed ? 0.5 : 1 }]} onPress={close} accessibilityRole="button" accessibilityLabel="Close" />
+        <TouchableOpacity style={StyleSheet.absoluteFill} onPress={close} accessibilityRole="button" accessibilityLabel="Close" activeOpacity={1}>
+          <View style={StyleSheet.absoluteFill} />
+        </TouchableOpacity>
       </Animated.View>
 
       <GestureDetector gesture={gesture}>

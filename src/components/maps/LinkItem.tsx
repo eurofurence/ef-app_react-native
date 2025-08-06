@@ -32,7 +32,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
   const onPress = useCallback(() => router.push(`/dealer/${link.Target}`), [link.Target])
 
-  if (!dealer || !dealer) {
+  if (!dealer) {
     return null
   }
 

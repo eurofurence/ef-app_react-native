@@ -1,20 +1,23 @@
 import { extractOgMeta } from '@/util/extractOgMeta'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import React, { useMemo } from 'react'
-import { ActivityIndicator, Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import { ActivityIndicator, StyleProp, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native'
+import axios from 'axios'
+import { Image } from '@/components/generic/atoms/Image'
+import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import { Label } from '@/components/generic/atoms/Label'
 
 type LinkPreviewProps = {
   url: string
   onPress: () => void
+  style?: StyleProp<ViewStyle>
 }
 
 async function fetchOgMeta(url: string, signal?: AbortSignal) {
-  const res = await fetch(url, { signal })
-  if (!res.ok) {
-    throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
-  }
-  const html = await res.text()
-  return extractOgMeta(html)
+  return await axios
+    .get(url, { signal, responseType: 'text' })
+    .then((res) => res.data)
+    .then((text) => extractOgMeta(text))
 }
 
 function useOgMeta(url: string) {
@@ -27,41 +30,35 @@ function useOgMeta(url: string) {
   })
 }
 
-export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress }) => {
-  const screenWidth = Dimensions.get('window').width
-  const { IMAGE_WIDTH, IMAGE_HEIGHT } = useMemo(() => {
-    const SCREEN_WIDTH = screenWidth
-    const IMAGE_WIDTH = SCREEN_WIDTH - 32 // 16px margin on each side
-    const IMAGE_HEIGHT = Math.round((IMAGE_WIDTH * 9) / 16) // 16:9 aspect ratio
-    return { SCREEN_WIDTH, IMAGE_WIDTH, IMAGE_HEIGHT }
-  }, [screenWidth])
-
+export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style }) => {
   const { data: ogMeta, isLoading, isError } = useOgMeta(url)
-
-  if (isLoading) return <ActivityIndicator style={{ height: IMAGE_HEIGHT, width: IMAGE_WIDTH }} />
-
-  if (isError || !ogMeta?.image)
-    return (
-      <View style={[styles.cardContainer, { width: IMAGE_WIDTH, height: IMAGE_HEIGHT, justifyContent: 'center', alignItems: 'center' }]}>
-        <Text>No preview available</Text>
-      </View>
-    )
+  const isDisabled = isError || !ogMeta?.image
+  const styleBackground = useThemeBackground('background')
+  const styleBorder = useThemeBorder('soften')
 
   return (
-    <TouchableOpacity onPress={onPress} activeOpacity={0.8} style={[styles.cardContainer, { width: IMAGE_WIDTH, height: IMAGE_HEIGHT }]}>
-      <Image source={{ uri: ogMeta.image }} style={{ width: IMAGE_WIDTH, height: IMAGE_HEIGHT, resizeMode: 'cover' }} />
+    <TouchableOpacity onPress={onPress} style={[styles.cardContainer, styleBackground, styleBorder, style]} disabled={isLoading || isDisabled}>
+      {isLoading ? <ActivityIndicator /> : isDisabled ? <Label>No preview available</Label> : <Image source={{ uri: ogMeta.image }} style={styles.image} />}
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   cardContainer: {
-    alignSelf: 'center',
+    height: undefined,
     marginVertical: 10,
     borderRadius: 12,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    aspectRatio: 16 / 9,
+  },
+
+  image: {
+    resizeMode: 'cover',
+    flex: 1,
+    alignSelf: 'stretch',
   },
 })

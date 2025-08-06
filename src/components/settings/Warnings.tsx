@@ -12,10 +12,19 @@ export const Warnings = () => {
   const deviceWarnings = useWarningState('deviceWarningsHidden')
   const languageWarnings = useWarningState('languageWarningsHidden')
   const timeZoneWarnings = useWarningState('timeZoneWarningsHidden')
+  const registrationCountdown = useWarningState('registrationCountdownHidden')
 
   return (
     <SettingContainer>
       <Section title={t('title')} subtitle={t('subtitle')} icon="monitor-eye" />
+
+      <Button
+        containerStyle={styles.button}
+        icon={registrationCountdown.isHidden ? 'eye' : 'eye-off'}
+        onPress={registrationCountdown.isHidden ? registrationCountdown.showWarning : registrationCountdown.hideWarning}
+      >
+        {registrationCountdown.isHidden ? t('show_registration_countdown') : t('hide_registration_countdown')}
+      </Button>
 
       <Button
         containerStyle={styles.button}

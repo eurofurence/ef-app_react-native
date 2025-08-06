@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react'
-import { StyleSheet } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
+import { StyleSheet, ScrollView } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 
@@ -15,10 +14,10 @@ import { Button } from '@/components/generic/containers/Button'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuthContext } from '@/context/auth/Auth'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
+import { useUserContext } from '@/context/auth/User'
 
 const feedbackSchema = z.object({
   rating: z
@@ -52,7 +51,7 @@ export default function EventFeedback() {
   const { mutate, isPending } = useEventFeedbackMutation()
 
   const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
   const attending = Boolean(user?.RoleMap?.Attendee)
 
   const disabled = !loggedIn || !attending
@@ -92,12 +91,12 @@ export default function EventFeedback() {
           </Button>
 
           {disabledReason && (
-            <Label type="caption" color="important" variant="middle" mt={16}>
+            <Label type="caption" color="important" variant="middle" className="mt-4">
               {disabledReason}
             </Label>
           )}
 
-          {isPending && <Label mt={16}>{t('submit_in_progress')}</Label>}
+          {isPending && <Label className="mt-4">{t('submit_in_progress')}</Label>}
         </FormProvider>
       </Floater>
     </ScrollView>
