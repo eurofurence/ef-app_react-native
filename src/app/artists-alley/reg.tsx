@@ -16,6 +16,7 @@ import { artistAlleyUrl } from '@/configuration'
 import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
 import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -40,6 +41,7 @@ export default function Register() {
   // Get current registration if available. Only run when authorized.
   const { data, isPending, refetch } = useArtistsAlleyOwnRegistrationQuery()
   const { mutate: checkOut } = useArtistsAlleyCheckOutMutation()
+  const { localData } = useArtistsAlleyLocalData()
   const { toast } = useToastContext()
 
   // Switch for show and edit modes.
@@ -58,6 +60,20 @@ export default function Register() {
       onError: () => toast('error', t('check_out_error')),
     })
   }, [checkOut, toast, t])
+
+  // Compose prefill data.
+  const prefill = {
+    // Prefilled from current registration, then local data, then reasonable default.
+    displayName: data?.DisplayName ?? localData?.displayName ?? (claims?.name as string) ?? '',
+    // Prefilled from current registration, then local data.
+    websiteUrl: data?.WebsiteUrl ?? localData?.websiteUrl ?? '',
+    shortDescription: data?.ShortDescription ?? localData?.shortDescription ?? '',
+    telegramHandle: data?.TelegramHandle ?? localData?.telegramHandle ?? '',
+    // Prefilled from current registration only.
+    imageUri: data?.Image?.Url ?? '',
+    // Never prefilled.
+    location: '',
+  }
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} refreshControl={authorized ? <RefreshControl refreshing={isPending} onRefresh={refetch} /> : undefined} stickyHeaderIndices={[0]}>
@@ -79,18 +95,7 @@ export default function Register() {
             show && data ? (
               <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} onCancel={onCancel} />
             ) : (
-              <ArtistsAlleyEdit
-                prefill={{
-                  displayName: data?.DisplayName ?? (claims?.name as string) ?? '',
-                  websiteUrl: data?.WebsiteUrl ?? '',
-                  shortDescription: data?.ShortDescription ?? '',
-                  telegramHandle: data?.TelegramHandle ?? '',
-                  imageUri: data?.Image?.Url ?? '',
-                  location: '',
-                }}
-                onDismiss={() => setShow(true)}
-                mode={data ? 'change' : 'new'}
-              />
+              <ArtistsAlleyEdit prefill={prefill} onDismiss={() => setShow(true)} mode={data ? 'change' : 'new'} />
             )
           ) : null
         ) : (

@@ -55,8 +55,11 @@
     "learn_more": "Learn more about the Artist Alley",
     "list": {
       "Accepted": "Accepted registrations",
+      "artists_alley_empty": "There is currently no one registered for the Artist Alley.",
+      "artists_alley_empty_checked_in": "There is currently no one registered for the Artist Alley. Be the first and register yourself here!",
       "header": "Artist Alley",
       "header_moderate": "Artist Alley Moderation",
+      "intro": "Lorem ipsum dolor sit amat",
       "moderate": "Moderate table requests",
       "Pending": "Pending registrations",
       "Published": "Published registrations",

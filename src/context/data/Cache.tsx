@@ -175,26 +175,39 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     invocation.current = ownInvocation
     setIsSynchronizing(true)
 
-    const { lastSynchronised, cid, cacheVersion } = dataRef.current
-    console.log('synchronize:', lastSynchronised)
+    // Get states to determine delta based sync or full sync.
+    const { lastSynchronised, cid, cacheVersion, lastSyncAuthorized } = dataRef.current
+    const isWithBaseline = Boolean(lastSynchronised)
+    const isSameCon = cid === conId
+    const isSameVersion = cacheVersion === eurofurenceCacheVersion
+    const isSameAuthState = Boolean(accessToken) === lastSyncAuthorized
+    const deltaBased = isWithBaseline && isSameCon && isSameVersion && isSameAuthState
+    console.log(`Synchronize called at ${new Date().toISOString()} in ${deltaBased ? 'delta mode' : 'full mode'}`, {
+      isWithBaseline,
+      isSameCon,
+      isSameVersion,
+      isSameAuthState,
+    })
 
     // Sync fully if state is for a different convention.
-    const path = lastSynchronised && cid === conId && cacheVersion === eurofurenceCacheVersion ? `Sync?since=${lastSynchronised}` : `Sync`
+    const path = deltaBased ? `Sync?since=${lastSynchronised}` : `Sync`
 
     try {
       const data = await axios
         .get(`${apiBase}/${path}`, {
           signal: ownInvocation.signal,
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+          headers: accessToken
+            ? {
+                Authorization: `Bearer ${accessToken}`,
+              }
+            : {},
         })
         .then((res) => res.data)
 
       // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
       if (data.ConventionIdentifier !== conId || cacheVersion !== eurofurenceCacheVersion) {
         dispatch(actionReset(initialState, 'CID or format change'))
-        dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, lastSynchronised))
+        dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, lastSynchronised, Boolean(accessToken)))
       }
 
       // Dispatch all received changes to the reducer.
@@ -204,7 +217,7 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
         dispatch(actionEntitiesChange(store, change.RemoveAllBeforeInsert, change.DeletedEntities, change.ChangedEntities))
       }
 
-      dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, data.CurrentDateTimeUtc))
+      dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, data.CurrentDateTimeUtc, Boolean(accessToken)))
     } finally {
       if (invocation.current === ownInvocation) {
         setIsSynchronizing(false)

@@ -11,6 +11,7 @@ import { Button } from '@/components/generic/containers/Button'
 import { Label } from '@/components/generic/atoms/Label'
 import { useArtistsAlleyTableRegistrationRequestMutation } from '@/hooks/api/artists-alley/useArtistsAlleyTableRegistrationRequestMutation'
 import { captureException } from '@sentry/react-native'
+import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
 
 const websiteUrlMatcher = /^\s*((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)\s*)?$/
 const telegramHandleMatcher = /^\s*(@?[a-zA-Z0-9_]{5,64}\s*)?$/
@@ -44,6 +45,7 @@ export type ArtistsAlleyEditProps = {
 export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditProps) => {
   // Get current registration. Create submit mutation.
   const { mutateAsync: submitRegistration, isPending } = useArtistsAlleyTableRegistrationRequestMutation()
+  const { setLocalData } = useArtistsAlleyLocalData()
 
   // Use toast function.
   const { toast } = useToastContext()
@@ -75,7 +77,18 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
   // Submit the data. On success, notify and dismiss the form, otherwise mark error.
   const doSubmit = useCallback(
     (data: ArtistsAlleySchema) => {
+      // Toast submit.
       toast('notice', t('submit_in_progress'))
+
+      // Store repeat data.
+      setLocalData({
+        displayName: data.displayName,
+        websiteUrl: data.websiteUrl,
+        shortDescription: data.shortDescription,
+        telegramHandle: data.telegramHandle,
+      })
+
+      // Submit remote, toast for success or error.
       submitRegistration(data).then(
         () => {
           toast('info', t('submit_succeeded'), 6000)
@@ -87,7 +100,7 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
         }
       )
     },
-    [submitRegistration, toast, t, onDismiss]
+    [toast, t, setLocalData, submitRegistration, onDismiss]
   )
 
   return (

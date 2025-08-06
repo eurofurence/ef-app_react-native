@@ -9,7 +9,6 @@ import { useAuthContext } from '@/context/auth/Auth'
 import { artistsAlleySectionForState, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
 import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAlleySectionedList'
 import { Label } from '@/components/generic/atoms/Label'
-import { useNow } from '@/hooks/time/useNow'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
 
@@ -22,8 +21,6 @@ export default function List() {
   const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
 
   const { data: source } = useArtistsAlleyQuery(isPrivileged)
-
-  const now = useNow()
 
   const items = useMemo((): (ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord)[] => {
     if (!source) return []

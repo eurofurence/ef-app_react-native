@@ -36,6 +36,11 @@ export const schemaInternal = {
    * Last synchronized time.
    */
   lastSynchronised: defineField<string>(formatISO(0)),
+
+  /**
+   * True if last sync was authorized.
+   */
+  lastSyncAuthorized: defineField<boolean>(false),
 } as const
 
 /**
