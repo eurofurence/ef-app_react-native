@@ -127,6 +127,14 @@
     "after_event": "That was it! We hope to see you again next year!",
     "before_event": "{{conName}} will start in {{diff}}"
   },
+  "Registration": {
+    "registration_title": "Registration",
+    "registration_opens_in": "Registration opens in {{diff}}",
+    "registration_open": "Registration is now open!",
+    "registration_closed": "Registration has closed",
+    "register_now": "Register Now",
+    "thank_you_see_you_next_year": "Thank you and see you again next year!"
+  },
   "Dealer": {
     "about": "About",
     "about_the_art": "About the art",
@@ -412,9 +420,11 @@
     "device_warnings": {
       "hide_device_warnings": "Hide device warnings",
       "hide_language_warnings": "Hide language warnings",
+      "hide_registration_countdown": "Hide registration countdown",
       "hide_time_zone_warnings": "Hide time zone warnings",
       "show_device_warnings": "Show device warnings",
       "show_language_warnings": "Show language warnings",
+      "show_registration_countdown": "Show registration countdown",
       "show_time_zone_warnings": "Show time zone warnings",
       "subtitle": "Show or hide device warnigns on home screen",
       "title": "Warnings on home screen"

@@ -30,6 +30,14 @@
     "after_event": "I to na tyle! Do zobaczenia w przyszłym roku!",
     "before_event": "{{conName}} zacznie się za {{diff}}"
   },
+  "Registration": {
+    "registration_title": "Rejestracja",
+    "registration_opens_in": "Rejestracja otworzy się za {{diff}}",
+    "registration_open": "Rejestracja jest teraz otwarta!",
+    "registration_closed": "Rejestracja jest zamknięta",
+    "register_now": "Zarejestruj się Teraz",
+    "thank_you_see_you_next_year": "Dziękujemy i do zobaczenia w przyszłym roku!"
+  },
   "Dealer": {
     "about": "Podsumowanie",
     "about_the_art": "Opis oferty",
@@ -213,6 +221,18 @@
       "no_messages": "Nie otrzymaliśmy żadnych wiadomości od FCM",
       "subtitle": "Wiadomości otrzymane z FCM",
       "title": "Wiadomości sdalne"
+    },
+    "device_warnings": {
+      "hide_device_warnings": "Ukryj ostrzeżenia urządzenia",
+      "hide_language_warnings": "Ukryj ostrzeżenia języka",
+      "hide_registration_countdown": "Ukryj odliczanie rejestracji",
+      "hide_time_zone_warnings": "Ukryj ostrzeżenia strefy czasowej",
+      "show_device_warnings": "Pokaż ostrzeżenia urządzenia",
+      "show_language_warnings": "Pokaż ostrzeżenia języka",
+      "show_registration_countdown": "Pokaż odliczanie rejestracji",
+      "show_time_zone_warnings": "Pokaż ostrzeżenia strefy czasowej",
+      "subtitle": "Pokaż lub ukryj ostrzeżenia na ekranie głównym",
+      "title": "Ostrzeżenia na ekranie głównym"
     },
     "settingsSection": "Ustawienia aplikacji",
     "timeTravel": "Pokaż ustawienia podróży w czasie."

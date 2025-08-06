@@ -13,8 +13,10 @@
     "website": "https://www.eurofurence.org",
     "catchEmUrl": "https://fursuit.eurofurence.org/catch-em-all",
     "artistAlleyUrl": "https://app.eurofurence.org/qr/artistalley",
-    "cacheVersion": 5,
-    "efnavMapUrl": "https://nav.eurofurence.org"
+    "cacheVersion": 6,
+    "efnavMapUrl": "https://nav.eurofurence.org",
+    "registrationDatesUrl": "https://www.eurofurence.org/data/dates.json",
+    "registrationUrl": "https://identity.eurofurence.org"
   },
   "auth": {
     "issuer": "https://identity.eurofurence.org",
@@ -45,3 +47,4 @@
     "i18nDebug": false
   }
 }
+
