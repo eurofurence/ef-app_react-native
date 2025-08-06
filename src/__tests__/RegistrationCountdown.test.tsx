@@ -5,6 +5,8 @@ import { useCache } from '@/context/data/Cache'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useNow } from '@/hooks/time/useNow'
+import { useAuthContext } from '@/context/auth/Auth'
+import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 
 // Mock expo-router
 jest.mock('@react-navigation/core', () => ({
@@ -29,6 +31,16 @@ jest.mock('@/hooks/data/useWarningState', () => ({
 // Mock useNow
 jest.mock('@/hooks/time/useNow', () => ({
   useNow: jest.fn(),
+}))
+
+// Mock auth context
+jest.mock('@/context/auth/Auth', () => ({
+  useAuthContext: jest.fn(),
+}))
+
+// Mock user self query
+jest.mock('@/hooks/api/users/useUserSelfQuery', () => ({
+  useUserSelfQuery: jest.fn(),
 }))
 
 // Mock translation
@@ -66,6 +78,8 @@ const mockUseCache = useCache as jest.MockedFunction<typeof useCache>
 const mockUseRegistrationDatesQuery = useRegistrationDatesQuery as jest.MockedFunction<typeof useRegistrationDatesQuery>
 const mockUseWarningState = useWarningState as jest.MockedFunction<typeof useWarningState>
 const mockUseNow = useNow as jest.MockedFunction<typeof useNow>
+const mockUseAuthContext = useAuthContext as jest.MockedFunction<typeof useAuthContext>
+const mockUseUserSelfQuery = useUserSelfQuery as jest.MockedFunction<typeof useUserSelfQuery>
 
 // Helper function to create mock cache
 const createMockCache = (eventDays: any[] = []) =>
@@ -121,6 +135,22 @@ describe('RegistrationCountdown', () => {
       showWarning: jest.fn(),
     })
     mockUseCache.mockReturnValue(createMockCache())
+    mockUseAuthContext.mockReturnValue({
+      loggedIn: false,
+      accessToken: null,
+      tokenResponse: null,
+      claims: null,
+      load: jest.fn(),
+      login: jest.fn(),
+      refreshClaims: jest.fn(),
+      refreshToken: jest.fn(),
+      logout: jest.fn(),
+    })
+    mockUseUserSelfQuery.mockReturnValue({
+      data: null,
+      isLoading: false,
+      error: null,
+    } as any)
   })
 
   describe('when registration is open', () => {
@@ -154,6 +184,53 @@ describe('RegistrationCountdown', () => {
       render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
 
       expect(screen.getByText('Register Now')).toBeTruthy()
+    })
+
+    it('should show countdown when user is logged in but not an attendee', () => {
+      mockUseAuthContext.mockReturnValue({
+        loggedIn: true,
+        accessToken: 'token',
+        tokenResponse: {} as any,
+        claims: {} as any,
+        load: jest.fn(),
+        login: jest.fn(),
+        refreshClaims: jest.fn(),
+        refreshToken: jest.fn(),
+        logout: jest.fn(),
+      })
+      mockUseUserSelfQuery.mockReturnValue({
+        data: { RoleMap: { Attendee: false } },
+        isLoading: false,
+        error: null,
+      } as any)
+
+      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+
+      expect(screen.getByText('Registration is now open!')).toBeTruthy()
+      expect(screen.getByText('Register Now')).toBeTruthy()
+    })
+
+    it('should not show countdown when user is logged in and is an attendee', () => {
+      mockUseAuthContext.mockReturnValue({
+        loggedIn: true,
+        accessToken: 'token',
+        tokenResponse: {} as any,
+        claims: {} as any,
+        load: jest.fn(),
+        login: jest.fn(),
+        refreshClaims: jest.fn(),
+        refreshToken: jest.fn(),
+        logout: jest.fn(),
+      })
+      mockUseUserSelfQuery.mockReturnValue({
+        data: { RoleMap: { Attendee: true } },
+        isLoading: false,
+        error: null,
+      } as any)
+
+      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+
+      expect(toJSON()).toBeNull()
     })
   })
 
