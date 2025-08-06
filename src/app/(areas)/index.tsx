@@ -38,12 +38,12 @@ export default function Index() {
     <ScrollView style={[StyleSheet.absoluteFill, backgroundSurface]} refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={() => vibrateAfter(synchronize())} />}>
       <CountdownHeader />
       <Search filter={filter} setFilter={setFilter} />
-      <RegistrationCountdown registrationUrl={registrationUrl} />
       <Floater contentStyle={appStyles.trailer}>
         <LanguageWarnings parentPad={padFloater} />
         <TimezoneWarning parentPad={padFloater} />
         <DeviceSpecificWarnings />
         <FavoritesChangedWarning />
+        <RegistrationCountdown registrationUrl={registrationUrl} />
         {results ? (
           <GlobalSearch now={now} results={results} />
         ) : (
