@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native'
 
-import { Button } from './Button';
+import { Button } from './Button'
 
 export type HeaderProps = {
-  user?: { name: string };
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
-};
+  user?: { name: string }
+  onLogin: () => void
+  onLogout: () => void
+  onCreateAccount: () => void
+}
 
 export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
   <View>
@@ -26,19 +26,13 @@ export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps
         ) : (
           <>
             <Button style={styles.button} size="small" onPress={onLogin} label="Log in" />
-            <Button
-              style={styles.button}
-              primary
-              size="small"
-              onPress={onCreateAccount}
-              label="Sign up"
-            />
+            <Button style={styles.button} primary size="small" onPress={onCreateAccount} label="Sign up" />
           </>
         )}
       </View>
     </View>
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -72,4 +66,4 @@ const styles = StyleSheet.create({
   userName: {
     fontWeight: '700',
   },
-});
+})

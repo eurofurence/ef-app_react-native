@@ -1,52 +1,36 @@
-import type { StyleProp, ViewStyle } from 'react-native';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import type { StyleProp, ViewStyle } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 export interface ButtonProps {
   /** Is this the principal call to action on the page? */
-  primary?: boolean;
+  primary?: boolean
   /** What background color to use */
-  backgroundColor?: string;
+  backgroundColor?: string
   /** How large should the button be? */
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large'
   /** Button contents */
-  label: string;
+  label: string
   /** Optional click handler */
-  onPress?: () => void;
-  style?: StyleProp<ViewStyle>;
+  onPress?: () => void
+  style?: StyleProp<ViewStyle>
 }
 
 /** Primary UI component for user interaction */
-export const Button = ({
-  primary = false,
-  size = 'medium',
-  backgroundColor,
-  label,
-  style,
-  onPress,
-}: ButtonProps) => {
-  const modeStyle = primary ? styles.primary : styles.secondary;
-  const textModeStyle = primary ? styles.primaryText : styles.secondaryText;
+export const Button = ({ primary = false, size = 'medium', backgroundColor, label, style, onPress }: ButtonProps) => {
+  const modeStyle = primary ? styles.primary : styles.secondary
+  const textModeStyle = primary ? styles.primaryText : styles.secondaryText
 
-  const sizeStyle = styles[size];
-  const textSizeStyle = textSizeStyles[size];
+  const sizeStyle = styles[size]
+  const textSizeStyle = textSizeStyles[size]
 
   return (
     <TouchableOpacity accessibilityRole="button" activeOpacity={0.6} onPress={onPress}>
-      <View
-        style={[
-          styles.button,
-          modeStyle,
-          sizeStyle,
-          style,
-          !!backgroundColor && { backgroundColor },
-          { borderColor: 'black' },
-        ]}
-      >
+      <View style={[styles.button, modeStyle, sizeStyle, style, !!backgroundColor && { backgroundColor }, { borderColor: 'black' }]}>
         <Text style={[textModeStyle, textSizeStyle]}>{label}</Text>
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   button: {
@@ -92,10 +76,10 @@ const styles = StyleSheet.create({
   largeText: {
     fontSize: 16,
   },
-});
+})
 
 const textSizeStyles = {
   small: styles.smallText,
   medium: styles.mediumText,
   large: styles.largeText,
-};
+}

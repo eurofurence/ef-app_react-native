@@ -1,5 +1,5 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
+import storybook from 'eslint-plugin-storybook'
 
 import prettier from 'eslint-plugin-prettier'
 import path from 'node:path'
@@ -15,13 +15,18 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-export default [{
-  ignores: ['dist/*', '.expo', '**/node_modules'],
-}, ...compat.extends('expo', 'prettier'), {
-  plugins: {
-    prettier,
+export default [
+  {
+    ignores: ['dist/*', '.expo', '**/node_modules'],
   },
-  rules: {
-    'prettier/prettier': 'error',
+  ...compat.extends('expo', 'prettier'),
+  {
+    plugins: {
+      prettier,
+    },
+    rules: {
+      'prettier/prettier': 'error',
+    },
   },
-}, ...storybook.configs["flat/recommended"]];
+  ...storybook.configs['flat/recommended'],
+]
