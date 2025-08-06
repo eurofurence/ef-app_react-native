@@ -14,10 +14,10 @@ import { Button } from '@/components/generic/containers/Button'
 import { FormProvider, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuthContext } from '@/context/auth/Auth'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
+import { useUserContext } from '@/context/auth/User'
 
 const feedbackSchema = z.object({
   rating: z
@@ -51,7 +51,7 @@ export default function EventFeedback() {
   const { mutate, isPending } = useEventFeedbackMutation()
 
   const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
   const attending = Boolean(user?.RoleMap?.Attendee)
 
   const disabled = !loggedIn || !attending

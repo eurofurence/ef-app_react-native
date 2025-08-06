@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next'
 import { Section } from '@/components/generic/atoms/Section'
 import { useAuthContext } from '@/context/auth/Auth'
 import { Label } from '@/components/generic/atoms/Label'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { useCache } from '@/context/data/Cache'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
+import { useUserContext } from '@/context/auth/User'
 
 export function DevValues() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_values' })
   const { tokenResponse, claims } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
   const { getValue } = useCache()
   const notifications = getValue('notifications')
 

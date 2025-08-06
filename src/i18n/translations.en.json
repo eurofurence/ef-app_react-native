@@ -27,7 +27,12 @@
     "sectionTitle": "Announcements"
   },
   "ArtistsAlley": {
+    "cancel_request": "Cancel your request",
+    "cancel_request_success": "Registration request cancelled",
+    "cancel_request_error": "Failed to cancel registration",
     "check_out": "Check out",
+    "check_out_success": "Checked out",
+    "check_out_error": "Failed to check out",
     "dismiss": "Dismiss your edits",
     "display_name_label": "Display name",
     "display_name_placeholder": "Your preferred display name",
@@ -50,11 +55,13 @@
     "learn_more": "Learn more about the Artist Alley",
     "list": {
       "Accepted": "Accepted registrations",
-      "header": "Table registration requests",
+      "artists_alley_empty": "There is currently no one registered for the Artist Alley. Be the first and register yourself here!",
+      "header": "Artist Alley",
+      "header_moderate": "Artist Alley Moderation",
       "moderate": "Moderate table requests",
       "Pending": "Pending registrations",
       "Published": "Published registrations",
-      "register_self": "Register for yourself",
+      "register_self": "Manage your Artist Alley registration",
       "Rejected": "Rejected registrations"
     },
     "location_label": "Table number",
@@ -120,6 +127,9 @@
     "unauthorized_not_checked_in": "Please check in and pick up your convention badge at the Registration Desk before trying to register at an Artist Alley table.",
     "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist alley.",
     "update": "Update your request",
+    "view": {
+      "title": "Artist Alley Table"
+    },
     "website_url_label": "Website (optional)",
     "website_url_placeholder": "URL to your website"
   },
@@ -391,6 +401,7 @@
       "set_token_data": "Set token data",
       "subtitle": "Make the app do something.",
       "sync": "Sync local data",
+      "clear": "Clear local data",
       "title": "Dev buttons",
       "token_data_placeholder": "Enter token data"
     },

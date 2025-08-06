@@ -102,7 +102,7 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
             },
           ]}
         >
-          {title && <Label type="h3">{title}</Label>}
+          {!title ? null : <Label type="h3">{title}</Label>}
 
           <Search filter={filter} setFilter={setFilter} submit={() => toggleSelectedFirstResult()} />
 

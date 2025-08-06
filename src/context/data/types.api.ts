@@ -146,22 +146,24 @@ export type UserRecord = {
     Status: string
   }[]
 }
-export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected'
 
-export type TableRegistrationRecord = {
-  LastChangeDateTimeUtc: string
-  Id: string
+export type ArtistAlleyRecord = RecordMetadata & {
   CreatedDateTimeUtc: string
-  OwnerUid: string
-  OwnerUsername: string
   DisplayName: string
   WebsiteUrl: string
   ShortDescription: string
   TelegramHandle: string
   Location: string
   ImageId: string
+}
+
+export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected'
+
+export type TableRegistrationRecord = ArtistAlleyRecord & {
+  OwnerUid?: string
+  OwnerUsername?: string
   Image: ImageRecord
-  State: TableRegistrationRecordStatus
+  State?: TableRegistrationRecordStatus
 }
 
 export type LostAndFoundRecord = RecordMetadata & {
