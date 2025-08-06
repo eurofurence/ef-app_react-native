@@ -80,7 +80,7 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
               </View>
             )}
           </Pressable>
-          <Label type="caption" color="notification" className="mt-1 mb-4">
+          <Label type="caption" color="notification" className="mt-1 mb-3">
             {!fieldState.error ? ' ' : errorTranslator ? errorTranslator(field.name, fieldState.error.type) : fieldState.error.message}
           </Label>
         </Col>
@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
   container: {
     height: undefined,
     marginTop: 6,
-    marginBottom: 16,
   },
   disabled: {
     opacity: 0.4,

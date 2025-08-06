@@ -21,12 +21,37 @@ export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut, onCancel }: Artis
   const { t } = useTranslation('ArtistsAlley')
   const backgroundStyle = useThemeBackground('background')
 
+  const statusText = (() => {
+    switch (data.State) {
+      case 'Pending':
+        return t('explanation_status_pending')
+      case 'Rejected':
+        return t('explanation_status_pending')
+      case 'Published':
+      case 'Accepted':
+        return t('explanation_status_accepted')
+      case 'CheckedOut':
+        return t('explanation_status_checkedout')
+      default:
+        return ''
+    }
+  })()
+
   return (
-    <View style={styles.container}>
-      <Label type="para" className="mt-5 mb-10">
-        {data.State === 'Pending' ? t('explanation_status_pending') : data.State === 'Rejected' ? t('explanation_status_rejected') : t('explanation_status_accepted')}
+    <View>
+      <Label type="compact" className="mt-5 mb-5">
+        {statusText}
       </Label>
-      <Label type="caption">{t('display_name_label')}</Label>
+      {data.State === 'Accepted' ? (
+        <Button onPress={onCheckOut} icon="exit-run">
+          {t('check_out')}
+        </Button>
+      ) : (
+        <Button onPress={onEdit}>{data.State === 'Pending' ? t('edit_request') : t('new_request')}</Button>
+      )}
+      <Label type="caption" className="mt-5">
+        {t('display_name_label')}
+      </Label>
       <Label type="h3" className="mb-5">
         {data.DisplayName}
       </Label>
@@ -46,24 +71,16 @@ export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut, onCancel }: Artis
       <Label type="h3" className="mb-5">
         {data.TelegramHandle}
       </Label>
-      <Label type="caption">{t('submission_image_label')}</Label>
-      <View style={[styles.imageContainer, backgroundStyle]}>
+      <Label type="caption" className="mb-2">
+        {t('submission_image_label')}
+      </Label>
+      <View style={[styles.imageContainer, backgroundStyle]} className="mb-5">
         <Image style={{ aspectRatio: data.Image.Width / data.Image.Height }} contentFit={undefined} source={sourceFromImage(data.Image)} placeholder={null} />
       </View>
 
-      <Button style={styles.button} onPress={onEdit}>
-        {data.State === 'Pending' ? t('edit_request') : t('new_request')}
-      </Button>
-
       {data.State === 'Pending' ? (
-        <Button style={styles.button} onPress={onCancel}>
+        <Button onPress={onCancel} className="mt-3">
           {t('cancel_request')}
-        </Button>
-      ) : null}
-
-      {data.State === 'Accepted' ? (
-        <Button style={styles.button} onPress={onCheckOut}>
-          {t('check_out')}
         </Button>
       ) : null}
     </View>
@@ -71,16 +88,8 @@ export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut, onCancel }: Artis
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingBottom: 100,
-  },
   imageContainer: {
     alignSelf: 'stretch',
     height: undefined,
-    marginTop: 6,
-    marginBottom: 16,
-  },
-  button: {
-    marginTop: 30,
   },
 })

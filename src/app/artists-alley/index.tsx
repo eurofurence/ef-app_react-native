@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
 import React, { useCallback, useEffect, useMemo } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Linking, StyleSheet, View } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/generic/containers/Button'
@@ -13,6 +13,7 @@ import { useIsFocused } from '@react-navigation/core'
 import { useUserContext } from '@/context/auth/User'
 import { useAuthContext } from '@/context/auth/Auth'
 import { captureException } from '@sentry/react-native'
+import { artistAlleyUrl } from '@/configuration'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
@@ -36,7 +37,10 @@ export default function List() {
   const leader = useMemo(() => {
     return (
       <View className="m-5 gap-4">
-        <Label type="compact">{t('intro')}</Label>
+        <Label type="para">{t('intro')}</Label>
+        <Button icon="link" outline onPress={() => Linking.openURL(artistAlleyUrl)}>
+          {t('learn_more')}
+        </Button>
 
         {!isCheckedIn ? null : (
           <Button icon="application-edit-outline" onPress={() => router.navigate('/artists-alley/reg')}>
@@ -54,7 +58,7 @@ export default function List() {
 
   const empty = useMemo(
     () => (
-      <Label type="para" className="mx-5" variant="middle">
+      <Label type="h3" className="mx-5" variant="middle">
         {t('list.artists_alley_empty')}
       </Label>
     ),
@@ -80,6 +84,12 @@ export default function List() {
       <View style={StyleSheet.absoluteFill}>
         <Header>{t('list.header')}</Header>
         <View className="m-5 pb-24">
+          <Label type="para" className="mb-5">
+            {t('intro')}
+          </Label>
+          <Button icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
+            {t('learn_more')}
+          </Button>
           <Label type="compact" className="my-5">
             {t('explanation_unauthorized')}
 

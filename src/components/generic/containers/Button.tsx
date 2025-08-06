@@ -17,6 +17,7 @@ const border = 2
 export type ButtonProps = {
   containerStyle?: StyleProp<ViewStyle>
   style?: StyleProp<ViewStyle>
+  className?: string
   labelType?: LabelProps['type']
   labelVariant?: LabelProps['variant']
 
@@ -56,7 +57,7 @@ export type ButtonProps = {
   disabled?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labelVariant, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
+export const Button: FC<ButtonProps> = ({ containerStyle, style, className, labelType, labelVariant, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
   // Computed styles.
   const baseStyle = outline ? styles.containerOutline : styles.containerFill
   const disabledStyle = disabled ? styles.disabled : null
@@ -83,6 +84,7 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labe
       onPress={onPress}
       onLongPress={onLongPress}
       disabled={disabled}
+      className={className}
     >
       {iconComponent}
 
