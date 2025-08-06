@@ -98,8 +98,10 @@
     "announcementsTitle_one": "C'è {{ count }} annuncio.",
     "announcementsTitle_other": "Ci sono {{ count }} annunci.",
     "announcementsTitle_zero": "Non ci sono annunci.",
+    "content_untranslated": "Stai utilizzando l'applicazione in una lingua diversa dall'inglese. Ti preghiamo di notare che i nomi e i testi di tutti i contenuti dinamici vengono visualizzati esclusivamente in inglese.",
     "eventsTitle_zero": "Non ci sono eventi.",
     "warnings": {
+      "language": "Traduzione",
       "no_image_caching": "Il dispositivo non può salvare le immagini nella cache. Senza una connessione internet, le immagini non saranno visualizzate.",
       "no_notifications": "Il dispositivo non supporta le notifiche pianificate. Non riceverai i promemoria per i prossimi eventi.",
       "no_push_notifications": "Il dispositivo non supporta le notifiche push. Non verrai automaticamente notificato di Annunci o Messaggi Privati.",

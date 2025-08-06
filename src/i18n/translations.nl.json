@@ -116,10 +116,12 @@
     "announcementsTitle_one": "Er is {{ count }} aankondiging.",
     "announcementsTitle_other": "Er zijn {{ count }} aankondigingen.",
     "announcementsTitle_zero": "Er zijn geen aankondigingen.",
+    "content_untranslated": "Je gebruikt de applicatie in een andere taal dan het Engels. Houd er rekening mee dat namen en teksten van alle dynamische inhoud uitsluitend in het Engels worden weergegeven.",
     "eventsTitle_one": "We vonden {{ count }} event.",
     "eventsTitle_other": "We hebben {{ count }} events gevondens.",
     "eventsTitle_zero": "Er zijn geen events.",
     "warnings": {
+      "language": "Vertaling",
       "no_notifications": "Jouw apparaat ondersteunt geen notificaties. Je zult geen herrinerringen krijgen voor evenementen.",
       "subtitle": "Vanwege jouw apparaat zijn sommige functionaliteiten niet beschikbaar",
       "title": "Problemen met apparaat"

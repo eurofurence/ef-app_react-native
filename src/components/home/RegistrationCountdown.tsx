@@ -3,7 +3,7 @@ import { formatDistance, isAfter, isBefore } from 'date-fns'
 import { TFunction } from 'i18next'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { useAuthContext } from '@/context/auth/Auth'
 import { useCache } from '@/context/data/Cache'
@@ -16,8 +16,6 @@ import { Linking } from 'react-native'
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Button } from '../generic/containers/Button'
-import { Col } from '../generic/containers/Col'
-import { Row } from '../generic/containers/Row'
 
 export type RegistrationCountdownProps = {
   registrationUrl?: string
@@ -85,20 +83,20 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
 
   return (
     <>
-      <Col style={styles.sectionContainer}>
-        <Row type="center">
-          <Icon color={iconColor} style={styles.icon} name="account-plus" size={24} />
-          <Label style={styles.titleFill} type="h2" color="important" ellipsizeMode="tail">
+      <View className="pt-8 pb-4 self-stretch">
+        <View className="self-stretch flex-row items-center">
+          <Icon color={iconColor} name="account-plus" size={24} />
+          <Label className="ml-2 flex-1" type="h2" color="important" ellipsizeMode="tail">
             {t('registration_title')}
           </Label>
-        </Row>
-      </Col>
-      <Label type="para">
-        {countdownText}
-        <Label type="compact" variant="bold" color="secondary" onPress={hideWarning}>
-          {' ' + tWarnings('hide')}
-        </Label>
-      </Label>
+          <Label className="leading-8" type="compact" variant="bold" color="secondary" onPress={hideWarning}>
+            {tWarnings('hide')}
+          </Label>
+        </View>
+      </View>
+
+      <Label type="para">{countdownText}</Label>
+
       {showButton && registrationUrl && (
         <Button style={styles.registerButton} icon="web" onPress={handleRegisterPress}>
           {t('register_now')}
@@ -109,16 +107,6 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    paddingTop: 30,
-    paddingBottom: 15,
-  },
-  icon: {
-    marginRight: 8,
-  },
-  titleFill: {
-    flex: 1,
-  },
   registerButton: {
     marginTop: 20,
   },

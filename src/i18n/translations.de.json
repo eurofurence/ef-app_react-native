@@ -205,6 +205,7 @@
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "view_all_announcements": "Alle Mitteilungen anzeigen",
     "warnings": {
+      "language": "Übersetzung",
       "favorites_changed": "Favoriten geändert",
       "favorites_changed_subtitle": "Infos in Deinen Favoriten wurden geändert, seitdem Du diese das letzte mal angeschaut hast",
       "hide": "Verbergen",

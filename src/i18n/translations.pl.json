@@ -109,10 +109,12 @@
     "announcementsTitle_one": "Jest {{ count }} ogłoszenie.",
     "announcementsTitle_other": "Jest {{ count }} ogłoszeń.",
     "announcementsTitle_zero": "Brak ogłoszeń.",
+    "content_untranslated": "Korzystasz z aplikacji w języku innym niż angielski. Należy pamiętać, że nazwy i teksty wszystkich treści dynamicznych są wyświetlane wyłącznie w języku angielskim.",
     "eventsTitle_one": "Pobraliśmy {{ count }} wydarzenie.",
     "eventsTitle_other": "Pobraliśmy {{ count }} wydarzeń.",
     "eventsTitle_zero": "Brak wydarzeń.",
     "warnings": {
+      "language": "Tłumaczenie",
       "no_image_caching": "Twoje urządzenie nie może przechowywać obrazów w pamięci podręcznej. Bez połączenia z internetem grafiki nie będą pokazywane.",
       "no_notifications": "Twoje urządzenie nie wspiera planowanych powiadomień. Nie będziesz otrzymywał komunikatów o nadchodzących wydarzeniach.",
       "no_push_notifications": "Twoje urządzenie nie wspiera powiadomień push. Nie będziesz powiadamiany o ogłoszeniach ani o prywatnych wiadomościach.",
