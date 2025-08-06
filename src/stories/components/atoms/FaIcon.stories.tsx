@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 
-import { FaIcon, FaIconNames } from '@/components/generic/atoms/FaIcon'
+import { FaIcon } from '@/components/generic/atoms/FaIcon'
 
 const meta = {
   title: 'Components/Atoms/FaIcon',

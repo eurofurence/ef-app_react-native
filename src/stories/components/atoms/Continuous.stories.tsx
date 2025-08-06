@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
-import { fn } from 'storybook/test'
 import { useState } from 'react'
 
 import { Continuous } from '@/components/generic/atoms/Continuous'
@@ -88,7 +87,7 @@ export const MultipleIndicators: Story = {
 
 export const Interactive: Story = {
   render: () => {
-    const [active, setActive] = useState(true)
+    const [active] = useState(true)
     return (
       <View style={{ gap: 20 }}>
         <Continuous color="secondary" active={active} />

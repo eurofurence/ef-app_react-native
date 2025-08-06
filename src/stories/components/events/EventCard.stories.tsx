@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
 
-import { EventCard, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from '@/components/events/EventCard'
+import { EventCard, eventInstanceForAny, eventInstanceForPassed } from '@/components/events/EventCard'
 import { mockEventDetails, mockEventDetailsWithBanner, mockEventDetailsPassed, mockEventDetailsSimple, mockEventDetailsLongTitle } from '@/stories/mocks/eventData'
 
 const meta = {

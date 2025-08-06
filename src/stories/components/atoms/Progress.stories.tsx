@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
-import { fn } from 'storybook/test'
+import { useState } from 'react'
 
 import { Progress } from '@/components/generic/atoms/Progress'
 
@@ -72,6 +72,10 @@ export const Full: Story = {
 }
 
 export const DifferentValues: Story = {
+  args: {
+    value: 0.5,
+    color: 'secondary',
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <Progress value={0.1} color="secondary" />
@@ -84,6 +88,10 @@ export const DifferentValues: Story = {
 }
 
 export const DifferentColors: Story = {
+  args: {
+    value: 0.6,
+    color: 'secondary',
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <Progress value={0.6} color="primary" />
@@ -95,8 +103,12 @@ export const DifferentColors: Story = {
 }
 
 export const Interactive: Story = {
+  args: {
+    value: 0.3,
+    color: 'secondary',
+  },
   render: () => {
-    const [value, setValue] = useState(0.3)
+    const [value] = useState(0.3)
     return (
       <View style={{ gap: 20 }}>
         <Progress value={value} color="secondary" />
