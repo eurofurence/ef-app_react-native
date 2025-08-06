@@ -6,5 +6,5 @@ export const stateToBackground: Record<TableRegistrationRecordStatus, ThemeColor
   Accepted: 'primary',
   Published: 'primary',
   Rejected: 'notification',
-  CheckedOut: 'secondary'
+  CheckedOut: 'secondary',
 } as const

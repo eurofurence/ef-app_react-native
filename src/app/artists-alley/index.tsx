@@ -84,7 +84,9 @@ export default function List() {
       <View style={StyleSheet.absoluteFill}>
         <Header>{t('list.header')}</Header>
         <View className="m-5 pb-24">
-          <Label type="para" className="mb-5">{t('intro')}</Label>
+          <Label type="para" className="mb-5">
+            {t('intro')}
+          </Label>
           <Button icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
             {t('learn_more')}
           </Button>

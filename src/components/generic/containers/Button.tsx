@@ -17,7 +17,7 @@ const border = 2
 export type ButtonProps = {
   containerStyle?: StyleProp<ViewStyle>
   style?: StyleProp<ViewStyle>
-  className?: string;
+  className?: string
   labelType?: LabelProps['type']
   labelVariant?: LabelProps['variant']
 

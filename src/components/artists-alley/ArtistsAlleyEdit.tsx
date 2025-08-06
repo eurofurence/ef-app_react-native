@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useCallback } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { ManagedImagePicker } from '@/components/generic/forms/ManagedImagePicker'
@@ -169,24 +168,3 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
     </FormProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  locked: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: '100%',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    paddingVertical: 8,
-    marginBottom: 16,
-  },
-  star: {
-    marginTop: 16,
-    marginBottom: 8,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  }
-})
