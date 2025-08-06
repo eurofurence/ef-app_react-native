@@ -1,6 +1,4 @@
 import { Header } from '@/components/generic/containers/Header'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
@@ -17,6 +15,7 @@ import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/u
 import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
+import { useUserContext } from '@/context/auth/User'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -30,13 +29,12 @@ export default function Register() {
   const { t: tStatus } = useTranslation('ArtistsAlley', { keyPrefix: 'status' })
 
   // Get user data for RBAC checks and pre-filling.
-  const { loggedIn, claims } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { claims, user } = useUserContext()
 
   // Get roles for preemptive RBAC.
   const attending = Boolean(user?.RoleMap?.Attendee)
   const checkedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
-  const authorized = loggedIn && attending && checkedIn
+  const authorized = user && attending && checkedIn
 
   // Get current registration if available. Only run when authorized.
   const { data, isPending, refetch } = useArtistsAlleyOwnRegistrationQuery()
@@ -99,7 +97,7 @@ export default function Register() {
             )
           ) : null
         ) : (
-          <ArtistsAlleyUnauthorized loggedIn={loggedIn} attending={attending} checkedIn={checkedIn} />
+          <ArtistsAlleyUnauthorized loggedIn={Boolean(user)} attending={attending} checkedIn={checkedIn} />
         )}
       </Floater>
     </ScrollView>

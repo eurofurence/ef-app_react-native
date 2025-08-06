@@ -1,4 +1,3 @@
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { Redirect, router } from 'expo-router'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
@@ -9,19 +8,18 @@ import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAll
 import { useCache } from '@/context/data/Cache'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
-import { useAuthContext } from '@/context/auth/Auth'
 import { Label } from '@/components/generic/atoms/Label'
 import { useIsFocused } from '@react-navigation/core'
+import { useUserContext } from '@/context/auth/User'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
-  const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
   const { artistAlley, synchronize } = useCache()
 
   // Get roles for preemptive RBAC.
-  const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
   const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
+  const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
 
   // Sync on focus, artist alley data might change more frequently than other parts of the app.
   const isFocused = useIsFocused()
@@ -51,10 +49,10 @@ export default function List() {
   const empty = useMemo(
     () => (
       <Label type="para" className="mx-5" variant="middle">
-        {isCheckedIn ? t('list.artists_alley_empty_checked_in') : t('list.artists_alley_empty')}
+        {t('list.artists_alley_empty')}
       </Label>
     ),
-    [isCheckedIn, t]
+    [t]
   )
   const onPress = useCallback((item: ArtistAlleyDetails | TableRegistrationRecord) => {
     router.navigate({
@@ -63,7 +61,7 @@ export default function List() {
     })
   }, [])
 
-  if (!loggedIn || (!isCheckedIn && !isPrivileged)) return <Redirect href="/artists-alley/reg" />
+  if (!isCheckedIn) return <Redirect href="/" />
 
   return (
     <View style={StyleSheet.absoluteFill}>

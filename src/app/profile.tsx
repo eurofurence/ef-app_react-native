@@ -5,17 +5,15 @@ import { ScrollView, StyleSheet, RefreshControl } from 'react-native'
 import { appStyles } from '@/components/AppStyles'
 import { ProfileContent } from '@/components/ProfileContent'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
-import { useAuthContext } from '@/context/auth/Auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
+import { useUserContext } from '@/context/auth/User'
 
 export default function Profile() {
-  const { loggedIn, refreshToken, claims } = useAuthContext()
-  const { data: user, refetch } = useUserSelfQuery()
+  const { claims, user, refresh } = useUserContext()
   const [isReloading, setIsReloading] = useState(false)
   const { synchronize, isSynchronizing } = useCache()
   const backgroundStyle = useThemeBackground('background')
@@ -27,18 +25,17 @@ export default function Profile() {
     setIsReloading(true)
     ;(async () => {
       try {
-        await refreshToken(true)
-        await refetch()
+        await refresh()
       } catch (error) {
         captureException(error)
       } finally {
         setIsReloading(false)
       }
     })()
-  }, [refreshToken, refetch, isReloading])
+  }, [refresh, isReloading])
 
-  // Navigate back if not logged in or unable to retrieve proper user data
-  if (!loggedIn) return <Redirect href="/" />
+  // Navigate back if not logged in.
+  if (!user) return <Redirect href="/" />
 
   return (
     <ScrollView

@@ -1,4 +1,3 @@
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { Redirect, router, useLocalSearchParams } from 'expo-router'
 import React, { useCallback } from 'react'
 import { useArtistsAlleyItemQuery } from '@/hooks/api/artists-alley/useArtistsAlleyItemQuery'
@@ -15,15 +14,14 @@ import { useArtistsAlleyItemDeleteMutation } from '@/hooks/api/artists-alley/use
 import { useToastContext } from '@/context/ui/ToastContext'
 import { captureException } from '@sentry/react-native'
 import { confirmPrompt } from '@/util/confirmPrompt'
-import { useAuthContext } from '@/context/auth/Auth'
+import { useUserContext } from '@/context/auth/User'
 
 export default function Moderate() {
   const { id } = useLocalSearchParams<{ id: string }>()
 
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'review' })
   const { t: tStatus } = useTranslation('ArtistsAlley', { keyPrefix: 'review.status' })
-  const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
 
   const { mutateAsync: changeStatus } = useArtistsAlleyItemStatusMutation()
   const { mutateAsync: deleteRegistration } = useArtistsAlleyItemDeleteMutation()
@@ -99,7 +97,7 @@ export default function Moderate() {
     }
   }, [deleteRegistration, id, t, toast])
 
-  if (!loggedIn || !isPrivileged) return <Redirect href="/artists-alley" />
+  if (!isAdmin || !isPrivileged) return <Redirect href="/artists-alley" />
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />} stickyHeaderIndices={[0]}>

@@ -1,5 +1,5 @@
 import { UserRecord } from '@/context/data/types.api'
-import { keepPreviousData, QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
+import { keepPreviousData, QueryFunctionContext, UndefinedInitialDataOptions, useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useAuthContext } from '@/context/auth/Auth'
 import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
@@ -41,13 +41,19 @@ export async function getUserSelf(accessToken: string | null, signal?: GenericAb
 }
 
 /**
+ * Options for `useUserSelfQuery`.
+ */
+export type UserSelfQueryOptions = Omit<UndefinedInitialDataOptions<UserDetails, Error, UserDetails>, 'queryKey' | 'queryFn' | 'placeholderData'>
+
+/**
  * Uses a query for `getUserSelf` with the app auth state.
  */
-export function useUserSelfQuery(): UseQueryResult<UserDetails | null> {
+export function useUserSelfQuery(options?: UserSelfQueryOptions): UseQueryResult<UserDetails | null> {
   const { accessToken, claims } = useAuthContext()
   return useQuery({
     queryKey: [claims?.sub, 'self'],
     queryFn: (context: QueryFunctionContext) => getUserSelf(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
+    ...options,
   })
 }

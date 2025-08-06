@@ -7,19 +7,17 @@ import { appStyles } from '@/components/AppStyles'
 import { useTranslation } from 'react-i18next'
 import { useCache } from '@/context/data/Cache'
 import { ArtistsAlleyContent } from '@/components/artists-alley/ArtistsAlleyContent'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
+import { useUserContext } from '@/context/auth/User'
 
 export default function View() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'view' })
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
   const { artistAlley } = useCache()
   const artistAlleyEntry = artistAlley.dict[id]
 
   const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
-  if (!loggedIn || !isCheckedIn) return <Redirect href="/artists-alley/reg" />
+  if (!user || !isCheckedIn) return <Redirect href="/artists-alley" />
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>

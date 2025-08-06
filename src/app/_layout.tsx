@@ -29,6 +29,7 @@ import '@/init/splash'
 // Import global tailwind CSS.
 import '@/css/globals.css'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
+import { UserProvider } from '@/context/auth/User'
 
 export const unstable_settings = {
   initialRouteName: '(areas)',
@@ -44,11 +45,13 @@ export default function RootLayout() {
     <GestureHandlerRootView>
       <QueryProvider>
         <AuthProvider>
-          <CacheProvider>
-            <ToastProvider>
-              <MainLayout />
-            </ToastProvider>
-          </CacheProvider>
+          <UserProvider>
+            <CacheProvider>
+              <ToastProvider>
+                <MainLayout />
+              </ToastProvider>
+            </CacheProvider>
+          </UserProvider>
         </AuthProvider>
       </QueryProvider>
     </GestureHandlerRootView>
