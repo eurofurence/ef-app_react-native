@@ -77,16 +77,24 @@ export const Interactive: Story = {
 }
 
 export const DifferentCategories: Story = {
+  args: {
+    dealer: createDealerInstance(mockDealerDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       {mockDealerDetailsDifferentCategories.map((details, index) => (
-        <DealerCard key={details.Id} dealer={createDealerInstance(details, details.Present, details.OffDays.join(', '))} onPress={fn()} />
+        <DealerCard key={details.Id} dealer={createDealerInstance(details)} onPress={fn()} />
       ))}
     </View>
   ),
 }
 
 export const MultipleDealers: Story = {
+  args: {
+    dealer: createDealerInstance(mockDealerDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <DealerCard dealer={createDealerInstance(mockDealerDetails)} onPress={fn()} />
@@ -98,6 +106,10 @@ export const MultipleDealers: Story = {
 }
 
 export const PresentVsAbsent: Story = {
+  args: {
+    dealer: createDealerInstance(mockDealerDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <DealerCard dealer={createDealerInstance(mockDealerDetails, true)} onPress={fn()} />
@@ -107,6 +119,10 @@ export const PresentVsAbsent: Story = {
 }
 
 export const FavoriteVsNotFavorite: Story = {
+  args: {
+    dealer: createDealerInstance(mockDealerDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <DealerCard dealer={createDealerInstance(mockDealerDetails)} onPress={fn()} />
