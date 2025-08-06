@@ -148,12 +148,21 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
         placeholder={t('submission_image_placeholder')}
       />
 
-      <Button style={styles.button} onPress={form.handleSubmit(doSubmit)} disabled={disabled}>
+      <Button
+        onPress={() => {
+          form.handleSubmit(doSubmit)()
+          // Show a toast informing user about invalid inputs as they may be off screen
+          if (Object.keys(form.formState.errors).length > 0) {
+            toast('error', tErrors('form_invalid'), 3000)
+          }
+        }}
+        disabled={disabled}
+      >
         {t(mode === 'change' ? 'update' : 'submit')}
       </Button>
 
       {mode === 'new' ? null : (
-        <Button style={styles.button} onPress={onDismiss} outline>
+        <Button onPress={onDismiss} className="mt-5" outline>
           {t('dismiss')}
         </Button>
       )}
@@ -179,8 +188,5 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginLeft: 'auto',
     marginRight: 'auto',
-  },
-  button: {
-    marginTop: 20,
-  },
+  }
 })

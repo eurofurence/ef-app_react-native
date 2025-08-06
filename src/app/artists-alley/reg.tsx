@@ -83,11 +83,11 @@ export default function Register() {
           </Badge>
         )}
 
-        <Label type="compact" className="mt-5">
+        <Label type="para" className="my-5">
           {t('intro')}
         </Label>
 
-        <Button style={styles.button} icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
+        <Button icon="link" outline onPress={() => Linking.openURL(artistAlleyUrl)}>
           {t('learn_more')}
         </Button>
 
@@ -102,9 +102,3 @@ export default function Register() {
     </ScrollView>
   )
 }
-
-const styles = StyleSheet.create({
-  button: {
-    marginTop: 20,
-  },
-})

@@ -157,7 +157,7 @@ export type ArtistAlleyRecord = RecordMetadata & {
   ImageId: string
 }
 
-export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected'
+export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected' | 'CheckedOut'
 
 export type TableRegistrationRecord = ArtistAlleyRecord & {
   OwnerUid?: string
