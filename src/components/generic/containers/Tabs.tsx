@@ -1,5 +1,5 @@
 import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
-import { BackHandler, Platform, StyleProp, StyleSheet, TouchableWithoutFeedback, View, ViewStyle } from 'react-native'
+import { BackHandler, Platform, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, { cancelAnimation, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
@@ -262,9 +262,9 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
   return (
     <>
       <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
-        <TouchableWithoutFeedback style={StyleSheet.absoluteFill} onPress={close} accessibilityRole="button" accessibilityLabel="Close">
+        <TouchableOpacity style={StyleSheet.absoluteFill} onPress={close} accessibilityRole="button" accessibilityLabel="Close" activeOpacity={1}>
           <View style={StyleSheet.absoluteFill} />
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
       </Animated.View>
 
       <GestureDetector gesture={gesture}>

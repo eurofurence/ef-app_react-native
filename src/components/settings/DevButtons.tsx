@@ -17,7 +17,7 @@ import { StyleSheet, TextInput, View } from 'react-native'
 
 export function DevButtons() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_buttons' })
-  const { synchronize } = useCache()
+  const { synchronize, clear } = useCache()
   const { toast } = useToastContext()
   const [tokenData, setTokenData] = useState('')
   const { load, accessToken, refreshToken, logout } = useAuthContext()
@@ -119,6 +119,10 @@ export function DevButtons() {
 
       <Button onPress={() => vibrateAfter(synchronize())} icon="refresh">
         {t('sync')}
+      </Button>
+
+      <Button onPress={() => vibrateAfter(clear())} icon="refresh">
+        {t('clear')}
       </Button>
 
       <Button onPress={copyDevicePushToken} icon="file-key">

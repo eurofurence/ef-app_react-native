@@ -11,8 +11,8 @@ import { useToastContext } from '@/context/ui/ToastContext'
 import { useCommunicationsSendMutation } from '@/hooks/api/communications/useCommunicationsSendMutation'
 import { ManagedChoiceButtons } from '@/components/generic/forms/ManagedChoiceButtons'
 import { Label } from '@/components/generic/atoms/Label'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { Redirect } from 'expo-router'
+import { useUserContext } from '@/context/auth/User'
 
 const messageSchema = z.object({
   type: z.literal('byRegistrationId').or(z.literal('byIdentityId')),
@@ -33,9 +33,8 @@ function typeChoiceLabel(choice: string) {
 }
 
 export default function ComposeMessage() {
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
 
-  const rolesAvailable = Boolean(user?.RoleMap)
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
 
@@ -58,7 +57,7 @@ export default function ComposeMessage() {
     },
     [mutate, toast]
   )
-  if (rolesAvailable && !isAdmin && !isPrivateMessageSender) return <Redirect href="/messages" />
+  if (!isAdmin && !isPrivateMessageSender) return <Redirect href="/messages" />
 
   return (
     <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>

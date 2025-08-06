@@ -1,98 +1,108 @@
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
-import { Redirect, router } from 'expo-router'
-import React, { useMemo } from 'react'
-import { useArtistsAlleyAllQuery } from '@/hooks/api/artists-alley/useArtistsAlleyAllQuery'
+import { router } from 'expo-router'
+import React, { useCallback, useEffect, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
-import { useAuthContext } from '@/context/auth/Auth'
 import { Button } from '@/components/generic/containers/Button'
-import { artistsAlleySectionForState, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
 import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAlleySectionedList'
+import { useCache } from '@/context/data/Cache'
+import { TableRegistrationRecord } from '@/context/data/types.api'
+import { ArtistAlleyDetails } from '@/context/data/types.details'
 import { Label } from '@/components/generic/atoms/Label'
-import { useNow } from '@/hooks/time/useNow'
-import { TableRegistrationInstance, tableRegistrationInstanceForAny } from '@/components/artists-alley/ArtistsAlleyCard'
+import { useIsFocused } from '@react-navigation/core'
+import { useUserContext } from '@/context/auth/User'
+import { useAuthContext } from '@/context/auth/Auth'
+import { captureException } from '@sentry/react-native'
 
 export default function List() {
-  const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'list' })
-  const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
-  const { data: source } = useArtistsAlleyAllQuery()
+  const { t } = useTranslation('ArtistsAlley')
+  const { user } = useUserContext()
+  const { login } = useAuthContext()
+  const { artistAlley, synchronize } = useCache()
 
-  const now = useNow()
-
-  const items = useMemo((): (ArtistsAlleySectionProps | TableRegistrationInstance)[] => {
-    if (!source) return []
-    const pending = []
-    const accepted = []
-    const published = []
-    const rejected = []
-    for (const item of source) {
-      const instance = tableRegistrationInstanceForAny(item, now)
-      if (instance.visibility === 'hidden') continue
-      if (item.State === 'Pending') pending.push(instance)
-      else if (item.State === 'Accepted') accepted.push(instance)
-      else if (item.State === 'Published') published.push(instance)
-      else if (item.State === 'Rejected') rejected.push(instance)
-    }
-
-    const result = []
-    if (pending.length) {
-      result.push(artistsAlleySectionForState(t, 'Pending'))
-      result.push(...pending)
-    }
-    if (accepted.length) {
-      result.push(artistsAlleySectionForState(t, 'Accepted'))
-      result.push(...accepted)
-    }
-    if (published.length) {
-      result.push(artistsAlleySectionForState(t, 'Published'))
-      result.push(...published)
-    }
-    if (rejected.length) {
-      result.push(artistsAlleySectionForState(t, 'Rejected'))
-      result.push(...rejected)
-    }
-
-    return result
-  }, [source, t, now])
-
-  const rolesAvailable = Boolean(user?.RoleMap)
-  const isAdmin = Boolean(user?.RoleMap?.Admin)
-  const isArtistAlleyAdmin = Boolean(user?.RoleMap?.ArtistAlleyAdmin)
-  const isArtistAlleyModerator = Boolean(user?.RoleMap?.ArtistAlleyModerator)
   // Get roles for preemptive RBAC.
+  const isLoggedIn = Boolean(user)
   const isAttending = Boolean(user?.RoleMap?.Attendee)
   const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
+  const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
+  const isAuthorized = isCheckedIn || isPrivileged
+
+  // Sync on focus, artist alley data might change more frequently than other parts of the app.
+  const isFocused = useIsFocused()
+  useEffect(() => {
+    if (isFocused) synchronize().catch(console.error)
+  }, [isFocused, synchronize])
 
   const leader = useMemo(() => {
     return (
-      <>
-        <Label type="lead" variant="middle" className="mt-8">
-          {t('moderate')}
-        </Label>
-        {!loggedIn && !isAttending && !isCheckedIn ? null : (
-          <Button containerStyle={styles.registerSelf} onPress={() => router.navigate('/artists-alley/reg')} outline={true}>
-            {t('register_self')}
+      <View className="m-5 gap-4">
+        <Label type="compact">{t('intro')}</Label>
+
+        {!isCheckedIn ? null : (
+          <Button icon="application-edit-outline" onPress={() => router.navigate('/artists-alley/reg')}>
+            {t('list.register_self')}
           </Button>
         )}
-      </>
+        {!isPrivileged ? null : (
+          <Button icon="shield-plus-outline" onPress={() => router.navigate('/artists-alley/moderate')}>
+            {t('list.moderate')}
+          </Button>
+        )}
+      </View>
     )
-  }, [isAttending, isCheckedIn, loggedIn, t])
+  }, [isPrivileged, isCheckedIn, t])
 
-  if (!loggedIn) return <Redirect href="/artists-alley/reg" />
-  if (rolesAvailable && !isAdmin && !isArtistAlleyAdmin && !isArtistAlleyModerator) return <Redirect href="/artists-alley/reg" />
+  const empty = useMemo(
+    () => (
+      <Label type="para" className="mx-5" variant="middle">
+        {t('list.artists_alley_empty')}
+      </Label>
+    ),
+    [t]
+  )
+  const onPress = useCallback((item: ArtistAlleyDetails | TableRegistrationRecord) => {
+    router.navigate({
+      pathname: '/artists-alley/[id]',
+      params: { id: item.Id },
+    })
+  }, [])
+
+  if (!isAuthorized) {
+    const disabledReason =
+      // Needs to be logged in.
+      (!isLoggedIn && t('unauthorized_not_logged_in')) ||
+      // Must be attending.
+      (!isAttending && t('unauthorized_not_attending')) ||
+      // Must be checked in.
+      (!isCheckedIn && t('unauthorized_not_checked_in'))
+
+    return (
+      <View style={StyleSheet.absoluteFill}>
+        <Header>{t('list.header')}</Header>
+        <View className="m-5 pb-24">
+          <Label type="compact" className="my-5">
+            {t('explanation_unauthorized')}
+
+            {disabledReason && (
+              <Label color="important" variant="bold">
+                {' ' + disabledReason}
+              </Label>
+            )}
+          </Label>
+          {isLoggedIn ? null : (
+            <Button iconRight="login" onPress={() => login().catch(captureException)}>
+              {t('log_in_now')}
+            </Button>
+          )}
+        </View>
+      </View>
+    )
+  }
 
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Header>{t('header')}</Header>
-      <ArtistsAlleySectionedList leader={leader} items={items} />
+      <Header>{t('list.header')}</Header>
+      <ArtistsAlleySectionedList items={[...artistAlley]} onPress={onPress} leader={leader} empty={empty} />
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  registerSelf: {
-    margin: 20,
-  },
-})
