@@ -5,10 +5,9 @@ import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useAuthContext } from '@/context/auth/Auth'
+import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
@@ -64,8 +63,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
   const { isHidden, hideWarning } = useWarningState('registrationCountdownHidden')
   const iconColor = useThemeColorValue('important')
   const { data, isLoading, error } = useRegistrationDatesQuery()
-  const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user, claims } = useUserContext()
 
   const { countdownText, showButton } = useRegistrationState(t, now, data?.startDate ?? null, data?.endDate ?? null, isLoading, error)
 
@@ -79,6 +77,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
 
   // Don't show if dismissed, if loading, if there's an error, or if user is logged in AND is an attendee
   const isAttendee = Boolean(user?.RoleMap?.Attendee)
+  const loggedIn = Boolean(claims)
   if (isHidden || isLoading || error || (loggedIn && isAttendee)) return null
 
   return (
