@@ -10,7 +10,7 @@ import { Button } from './generic/containers/Button'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAuthContext } from '@/context/auth/Auth'
 import { authSettingsUrl, conName } from '@/configuration'
-import { UserDetails } from '@/hooks/api/users/useUserSelfQuery'
+import { UserDetails } from '@/context/auth/User'
 import { Claims } from '@/context/auth/Auth'
 
 /**
