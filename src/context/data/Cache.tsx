@@ -182,12 +182,6 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     const isSameVersion = cacheVersion === eurofurenceCacheVersion
     const isSameAuthState = Boolean(accessToken) === lastSyncAuthorized
     const deltaBased = isWithBaseline && isSameCon && isSameVersion && isSameAuthState
-    console.log(`Synchronize called at ${new Date().toISOString()} in ${deltaBased ? 'delta mode' : 'full mode'}`, {
-      isWithBaseline,
-      isSameCon,
-      isSameVersion,
-      isSameAuthState,
-    })
 
     // Sync fully if state is for a different convention.
     const path = deltaBased ? `Sync?since=${lastSynchronised}` : `Sync`

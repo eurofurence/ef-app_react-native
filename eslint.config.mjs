@@ -1,3 +1,4 @@
+import { defineConfig } from 'eslint/config'
 import prettier from 'eslint-plugin-prettier'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -12,7 +13,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-export default [
+export default defineConfig([
   {
     ignores: ['dist/*', '.expo', '**/node_modules'],
   },
@@ -25,4 +26,10 @@ export default [
       'prettier/prettier': 'error',
     },
   },
-]
+  {
+    files: ['app.config.js', 'src/configuration.tsx', 'src/init/firebaseApp.web.ts'],
+    linterOptions: {
+      reportUnusedDisableDirectives: 'off',
+    },
+  },
+])

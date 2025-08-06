@@ -9,13 +9,13 @@ import { Button } from '@/components/generic/containers/Button'
 import { Linking, StyleSheet, RefreshControl, ScrollView } from 'react-native'
 import { ArtistsAlleyEdit } from '@/components/artists-alley/ArtistsAlleyEdit'
 import { ArtistsAlleyStatus } from '@/components/artists-alley/ArtistsAlleyStatus'
-import { ArtistsAlleyUnauthorized } from '@/components/artists-alley/ArtistsAlleyUnauthorized'
 import { artistAlleyUrl } from '@/configuration'
 import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
 import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
 import { useUserContext } from '@/context/auth/User'
+import { Redirect } from 'expo-router'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -32,9 +32,7 @@ export default function Register() {
   const { claims, user } = useUserContext()
 
   // Get roles for preemptive RBAC.
-  const attending = Boolean(user?.RoleMap?.Attendee)
-  const checkedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
-  const authorized = user && attending && checkedIn
+  const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
 
   // Get current registration if available. Only run when authorized.
   const { data, isPending, refetch } = useArtistsAlleyOwnRegistrationQuery()
@@ -73,8 +71,10 @@ export default function Register() {
     location: '',
   }
 
+  if (!isCheckedIn) return <Redirect href="/artists-alley" />
+
   return (
-    <ScrollView style={StyleSheet.absoluteFill} refreshControl={authorized ? <RefreshControl refreshing={isPending} onRefresh={refetch} /> : undefined} stickyHeaderIndices={[0]}>
+    <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />} stickyHeaderIndices={[0]}>
       <Header>{t('title')}</Header>
       <Floater containerStyle={appStyles.trailer}>
         {!data?.State ? null : (
@@ -82,23 +82,22 @@ export default function Register() {
             {tStatus(data.State)}
           </Badge>
         )}
+
         <Label type="compact" className="mt-5">
           {t('intro')}
         </Label>
+
         <Button style={styles.button} icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
           {t('learn_more')}
         </Button>
-        {authorized ? (
-          !isPending ? (
-            show && data ? (
-              <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} onCancel={onCancel} />
-            ) : (
-              <ArtistsAlleyEdit prefill={prefill} onDismiss={() => setShow(true)} mode={data ? 'change' : 'new'} />
-            )
-          ) : null
-        ) : (
-          <ArtistsAlleyUnauthorized loggedIn={Boolean(user)} attending={attending} checkedIn={checkedIn} />
-        )}
+
+        {!isPending ? (
+          show && data ? (
+            <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} onCancel={onCancel} />
+          ) : (
+            <ArtistsAlleyEdit prefill={prefill} onDismiss={() => setShow(true)} mode={data ? 'change' : 'new'} />
+          )
+        ) : null}
       </Floater>
     </ScrollView>
   )

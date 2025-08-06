@@ -1,4 +1,4 @@
-import { Redirect, router } from 'expo-router'
+import { router } from 'expo-router'
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
@@ -11,15 +11,21 @@ import { ArtistAlleyDetails } from '@/context/data/types.details'
 import { Label } from '@/components/generic/atoms/Label'
 import { useIsFocused } from '@react-navigation/core'
 import { useUserContext } from '@/context/auth/User'
+import { useAuthContext } from '@/context/auth/Auth'
+import { captureException } from '@sentry/react-native'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
   const { user } = useUserContext()
+  const { login } = useAuthContext()
   const { artistAlley, synchronize } = useCache()
 
   // Get roles for preemptive RBAC.
+  const isLoggedIn = Boolean(user)
+  const isAttending = Boolean(user?.RoleMap?.Attendee)
   const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
   const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
+  const isAuthorized = isCheckedIn || isPrivileged
 
   // Sync on focus, artist alley data might change more frequently than other parts of the app.
   const isFocused = useIsFocused()
@@ -61,7 +67,37 @@ export default function List() {
     })
   }, [])
 
-  if (!isCheckedIn) return <Redirect href="/" />
+  if (!isAuthorized) {
+    const disabledReason =
+      // Needs to be logged in.
+      (!isLoggedIn && t('unauthorized_not_logged_in')) ||
+      // Must be attending.
+      (!isAttending && t('unauthorized_not_attending')) ||
+      // Must be checked in.
+      (!isCheckedIn && t('unauthorized_not_checked_in'))
+
+    return (
+      <View style={StyleSheet.absoluteFill}>
+        <Header>{t('list.header')}</Header>
+        <View className="m-5 pb-24">
+          <Label type="compact" className="my-5">
+            {t('explanation_unauthorized')}
+
+            {disabledReason && (
+              <Label color="important" variant="bold">
+                {' ' + disabledReason}
+              </Label>
+            )}
+          </Label>
+          {isLoggedIn ? null : (
+            <Button iconRight="login" onPress={() => login().catch(captureException)}>
+              {t('log_in_now')}
+            </Button>
+          )}
+        </View>
+      </View>
+    )
+  }
 
   return (
     <View style={StyleSheet.absoluteFill}>
