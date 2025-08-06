@@ -6,7 +6,7 @@ import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrat
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useNow } from '@/hooks/time/useNow'
 import { useAuthContext } from '@/context/auth/Auth'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
+import { useUserContext } from '@/context/auth/User'
 
 // Mock expo-router
 jest.mock('@react-navigation/core', () => ({
@@ -38,9 +38,9 @@ jest.mock('@/context/auth/Auth', () => ({
   useAuthContext: jest.fn(),
 }))
 
-// Mock user self query
-jest.mock('@/hooks/api/users/useUserSelfQuery', () => ({
-  useUserSelfQuery: jest.fn(),
+// Mock user context
+jest.mock('@/context/auth/User', () => ({
+  useUserContext: jest.fn(),
 }))
 
 // Mock translation
@@ -79,7 +79,7 @@ const mockUseRegistrationDatesQuery = useRegistrationDatesQuery as jest.MockedFu
 const mockUseWarningState = useWarningState as jest.MockedFunction<typeof useWarningState>
 const mockUseNow = useNow as jest.MockedFunction<typeof useNow>
 const mockUseAuthContext = useAuthContext as jest.MockedFunction<typeof useAuthContext>
-const mockUseUserSelfQuery = useUserSelfQuery as jest.MockedFunction<typeof useUserSelfQuery>
+const mockUseUserContext = useUserContext as jest.MockedFunction<typeof useUserContext>
 
 // Helper function to create mock cache
 const createMockCache = (eventDays: any[] = []) =>
@@ -146,10 +146,10 @@ describe('RegistrationCountdown', () => {
       refreshToken: jest.fn(),
       logout: jest.fn(),
     })
-    mockUseUserSelfQuery.mockReturnValue({
-      data: null,
-      isLoading: false,
-      error: null,
+    mockUseUserContext.mockReturnValue({
+      claims: null,
+      user: null,
+      refresh: jest.fn(() => Promise.resolve()),
     } as any)
   })
 
@@ -198,10 +198,10 @@ describe('RegistrationCountdown', () => {
         refreshToken: jest.fn(),
         logout: jest.fn(),
       })
-      mockUseUserSelfQuery.mockReturnValue({
-        data: { RoleMap: { Attendee: false } },
-        isLoading: false,
-        error: null,
+      mockUseUserContext.mockReturnValue({
+        claims: { sub: '0' },
+        user: { RoleMap: { Attendee: false } },
+        refresh: jest.fn(() => Promise.resolve()),
       } as any)
 
       render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
@@ -222,10 +222,10 @@ describe('RegistrationCountdown', () => {
         refreshToken: jest.fn(),
         logout: jest.fn(),
       })
-      mockUseUserSelfQuery.mockReturnValue({
-        data: { RoleMap: { Attendee: true } },
-        isLoading: false,
-        error: null,
+      mockUseUserContext.mockReturnValue({
+        claims: { sub: '0' },
+        user: { RoleMap: { Attendee: true } },
+        refresh: jest.fn(() => Promise.resolve()),
       } as any)
 
       const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)

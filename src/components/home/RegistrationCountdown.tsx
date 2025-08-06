@@ -63,7 +63,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
   const { isHidden, hideWarning } = useWarningState('registrationCountdownHidden')
   const iconColor = useThemeColorValue('important')
   const { data, isLoading, error } = useRegistrationDatesQuery()
-  const { user, claims } = useUserContext()
+  const { user } = useUserContext()
 
   const { countdownText, showButton } = useRegistrationState(t, now, data?.startDate ?? null, data?.endDate ?? null, isLoading, error)
 
@@ -77,7 +77,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
 
   // Don't show if dismissed, if loading, if there's an error, or if user is logged in AND is an attendee
   const isAttendee = Boolean(user?.RoleMap?.Attendee)
-  const loggedIn = Boolean(claims)
+  const loggedIn = Boolean(user)
   if (isHidden || isLoading || error || (loggedIn && isAttendee)) return null
 
   return (
