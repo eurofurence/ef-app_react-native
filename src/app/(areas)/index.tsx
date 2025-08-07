@@ -114,8 +114,8 @@ export default function Index() {
         <RefreshControl
           refreshing={isSynchronizing}
           onRefresh={handleRefresh}
-          accessibilityLabel={t('pull_to_refresh')}
-          accessibilityHint={t('pull_to_refresh_hint')}
+          accessibilityLabel={a11y('pull_to_refresh')}
+          accessibilityHint={a11y('pull_to_refresh_hint')}
           accessibilityRole="button"
           accessibilityState={{
             busy: isSynchronizing,
