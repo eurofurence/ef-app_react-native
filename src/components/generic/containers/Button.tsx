@@ -134,11 +134,13 @@ export const Button: FC<ButtonProps> = ({
     >
       {iconComponent}
 
-      <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
-        {children}
-      </Label>
+      <View style={styles.textContainer}>
+        <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
+          {children}
+        </Label>
 
-      {iconRightComponent}
+        {iconRightComponent}
+      </View>
     </Pressable>
   )
 }
@@ -165,6 +167,12 @@ const styles = StyleSheet.create({
   placeholder: {
     width: buttonIconSize,
     height: buttonIconSize,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   text: {
     textAlign: 'center',
