@@ -16,7 +16,6 @@ import { captureException } from '@sentry/react-native'
 import { artistAlleyUrl } from '@/configuration'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
@@ -25,10 +24,6 @@ export default function List() {
   const { artistAlley, synchronize } = useCache()
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
-  const learnMoreButtonStyle = useTouchTarget(44)
-  const registerButtonStyle = useTouchTarget(44)
-  const moderateButtonStyle = useTouchTarget(44)
-  const loginButtonStyle = useTouchTarget(44)
 
   // Get roles for preemptive RBAC.
   const isLoggedIn = Boolean(user)
@@ -62,7 +57,6 @@ export default function List() {
           accessibilityRole="button"
           accessibilityLabel={t('accessibility.learn_more_button')}
           accessibilityHint={t('accessibility.learn_more_button_hint')}
-          style={learnMoreButtonStyle}
         >
           {t('learn_more')}
         </Button>
@@ -74,7 +68,6 @@ export default function List() {
             accessibilityRole="button"
             accessibilityLabel={t('accessibility.register_self_button')}
             accessibilityHint={t('accessibility.register_self_button_hint')}
-            style={registerButtonStyle}
           >
             {t('list.register_self')}
           </Button>
@@ -86,14 +79,13 @@ export default function List() {
             accessibilityRole="button"
             accessibilityLabel={t('accessibility.moderate_button')}
             accessibilityHint={t('accessibility.moderate_button_hint')}
-            style={moderateButtonStyle}
           >
             {t('list.moderate')}
           </Button>
         )}
       </View>
     )
-  }, [isPrivileged, isCheckedIn, t, learnMoreButtonStyle, registerButtonStyle, moderateButtonStyle])
+  }, [isPrivileged, isCheckedIn, t])
 
   const empty = useMemo(
     () => (
@@ -134,7 +126,6 @@ export default function List() {
               accessibilityRole="button"
               accessibilityLabel={t('accessibility.learn_more_button')}
               accessibilityHint={t('accessibility.learn_more_button_hint')}
-              style={learnMoreButtonStyle}
             >
               {t('learn_more')}
             </Button>
@@ -154,7 +145,6 @@ export default function List() {
                 accessibilityRole="button"
                 accessibilityLabel={t('accessibility.login_button')}
                 accessibilityHint={t('accessibility.login_button_hint')}
-                style={loginButtonStyle}
               >
                 {t('log_in_now')}
               </Button>
@@ -170,9 +160,7 @@ export default function List() {
       <StatusMessage message={announcementMessage} />
       <View style={StyleSheet.absoluteFill}>
         <Header>{t('list.header')}</Header>
-        <View ref={mainContentRef} accessibilityLabel={t('accessibility.artists_alley_list')} accessibilityHint={t('accessibility.artists_alley_list_hint')}>
-          <ArtistsAlleySectionedList items={[...artistAlley]} onPress={onPress} leader={leader} empty={empty} />
-        </View>
+        <ArtistsAlleySectionedList items={[...artistAlley]} onPress={onPress} leader={leader} empty={empty} />
       </View>
     </>
   )
