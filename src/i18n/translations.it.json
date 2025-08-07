@@ -362,7 +362,10 @@
       "no_search_results": "Nessun articolo informativo trovato per \"{{query}}\"",
       "search_results": "Trovati {{count}} articoli informativi per \"{{query}}\""
     },
-    "header": "Articoli Informativi"
+    "header": "Articoli Informativi",
+    "search": {
+      "placeholder": "Cerca articoli informativi…"
+    }
   },
   "LostAndFound": {
     "accessibility": {

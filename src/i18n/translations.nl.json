@@ -422,7 +422,10 @@
       "no_search_results": "Geen kennisartikelen gevonden voor \"{{query}}\"",
       "search_results": "{{count}} kennisartikelen gevonden voor \"{{query}}\""
     },
-    "header": "Informatie-artikelen"
+    "header": "Informatie-artikelen",
+    "search": {
+      "placeholder": "Zoek info-artikelen…"
+    }
   },
   "LostAndFound": {
     "accessibility": {

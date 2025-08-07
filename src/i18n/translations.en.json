@@ -513,7 +513,10 @@
       "no_search_results": "No knowledge articles found for \"{{query}}\"",
       "search_results": "Found {{count}} knowledge article{{s}} for \"{{query}}\""
     },
-    "header": "Info Articles"
+    "header": "Info Articles",
+    "search": {
+      "placeholder": "Search info articles…"
+    }
   },
   "LostAndFound": {
     "accessibility": {

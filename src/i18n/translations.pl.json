@@ -375,7 +375,10 @@
       "no_search_results": "Nie znaleziono artykułów informacyjnych dla \"{{query}}\"",
       "search_results": "Znaleziono {{count}} artykułów informacyjnych dla \"{{query}}\""
     },
-    "header": "Podstawowe informacje"
+    "header": "Podstawowe informacje",
+    "search": {
+      "placeholder": "Szukaj artykułów informacyjnych…"
+    }
   },
   "LostAndFound": {
     "accessibility": {

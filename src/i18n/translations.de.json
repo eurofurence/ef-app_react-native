@@ -450,7 +450,10 @@
       "no_search_results": "Keine Wissensartikel gefunden für \"{{query}}\"",
       "search_results": "{{count}} Wissensartikel gefunden für \"{{query}}\""
     },
-    "header": "Wissenswertes"
+    "header": "Wissenswertes",
+    "search": {
+      "placeholder": "Info-Artikel suchen…"
+    }
   },
   "LostAndFound": {
     "accessibility": {
