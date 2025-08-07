@@ -1,6 +1,6 @@
 import FontAwesomeIcon from '@expo/vector-icons/FontAwesome5'
 import React, { FC } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { AccessibilityRole, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import { Col } from '../containers/Col'
 import { Row } from '../containers/Row'
@@ -39,13 +39,29 @@ export type FaSectionProps = {
   subtitleColor?: ThemeColor
   titleVariant?: LabelProps['variant']
   subtitleVariant?: LabelProps['variant']
+  accessibilityRole?: AccessibilityRole
+  accessibilityLabel?: string
+  accessibilityHint?: string
 }
 
-export const FaSection: FC<FaSectionProps> = ({ style, icon = 'bookmark', title, subtitle, backgroundColor, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
+export const FaSection: FC<FaSectionProps> = ({
+  style,
+  icon = 'bookmark',
+  title,
+  subtitle,
+  backgroundColor,
+  titleColor,
+  subtitleColor,
+  titleVariant,
+  subtitleVariant,
+  accessibilityRole,
+  accessibilityLabel,
+  accessibilityHint,
+}) => {
   const styleBackground = useThemeBackground(backgroundColor ?? null)
   const iconColor = useThemeColorValue(titleColor ?? 'important')
   return (
-    <Col style={[styles.container, styleBackground, style]}>
+    <Col style={[styles.container, styleBackground, style]} accessibilityRole={accessibilityRole} accessibilityLabel={accessibilityLabel} accessibilityHint={accessibilityHint}>
       <Row type="center">
         {!icon ? <View style={styles.placeholder} /> : <FontAwesomeIcon color={iconColor} style={styles.icon} name={icon} size={iconSize} />}
         <Label style={styles.containerFill} type="h2" variant={titleVariant} color={titleColor ?? 'important'} ellipsizeMode="tail">

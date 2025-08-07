@@ -24,28 +24,42 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
   const statusColor = item.Status === 'Found' ? theme.primary : item.Status === 'Returned' ? theme.warning : theme.notification
 
   return (
-    <Card onPress={onPress} containerStyle={containerStyle}>
+    <Card
+      onPress={onPress}
+      containerStyle={containerStyle}
+      accessibilityRole="button"
+      accessibilityLabel={t('accessibility.lost_found_card', {
+        title: item.Title,
+        status: t(`status.${item.Status}`),
+        date: new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
+      })}
+      accessibilityHint={t('accessibility.lost_found_card_hint')}
+    >
       <View style={styles.container}>
         {item.ImageUrl && (
           <View style={styles.imageContainer}>
-            <Image source={{ uri: item.ImageUrl }} style={styles.image} />
+            <Image source={{ uri: item.ImageUrl }} style={styles.image} accessibilityLabel={t('accessibility.item_image', { title: item.Title })} />
           </View>
         )}
         <View style={styles.content}>
           <View style={styles.header}>
-            <Label style={styles.title} numberOfLines={2}>
+            <Label style={styles.title} numberOfLines={2} accessibilityRole="header">
               {item.Title}
             </Label>
-            <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+            <View
+              style={[styles.statusBadge, { backgroundColor: statusColor }]}
+              accessibilityLabel={t('accessibility.status_badge', { status: t(`status.${item.Status}`) })}
+              accessibilityRole="text"
+            >
               <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
             </View>
           </View>
           {!item.Description ? null : (
-            <Label style={styles.description} numberOfLines={3}>
+            <Label style={styles.description} numberOfLines={3} accessibilityLabel={t('accessibility.item_description', { description: item.Description })}>
               {item.Description}
             </Label>
           )}
-          <Label style={styles.date}>
+          <Label style={styles.date} accessibilityLabel={t('accessibility.reported_date', { date: new Date(item.LastChangeDateTimeUtc).toLocaleDateString() })}>
             {t('reported')}: {new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
           </Label>
         </View>

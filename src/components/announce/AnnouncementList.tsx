@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { router } from 'expo-router'
 import { AnnouncementCard, AnnouncementDetailsInstance } from './AnnouncementCard'
@@ -21,6 +22,7 @@ function keyExtractor(item: AnnouncementDetailsInstance) {
 }
 
 export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announcements, empty, trailer, padEnd = true }) => {
+  const { t } = useTranslation('Announcements')
   const theme = useThemeName()
 
   const onPress = useCallback(
@@ -52,6 +54,9 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityRole="list"
+      accessibilityLabel={t('accessibility.announcements_list')}
+      accessibilityHint={t('accessibility.announcements_list_hint')}
     />
   )
 }

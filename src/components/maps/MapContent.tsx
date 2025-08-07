@@ -151,8 +151,13 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
   }, [])
 
   return (
-    <View style={styles.container} testID="mapContainer">
-      <View style={styles.map}>
+    <View
+      style={styles.container}
+      testID="mapContainer"
+      accessibilityLabel={t('accessibility.map_container', { mapName: map.Description || 'Map' })}
+      accessibilityHint={t('accessibility.map_container_hint')}
+    >
+      <View style={styles.map} accessibilityLabel={t('accessibility.interactive_map')} accessibilityHint={t('accessibility.interactive_map_hint')} accessibilityRole="image">
         <ZoomableView
           ref={refZoom}
           contentWidth={map.Image.Width}
@@ -165,7 +170,16 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
           onTransform={onTransform}
         >
           <View style={styleContainer}>
-            <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={sourceFromImage(map.Image)} priority="high" />
+            <Image
+              style={styles.image}
+              allowDownscaling={false}
+              contentFit={undefined}
+              source={sourceFromImage(map.Image)}
+              priority="high"
+              accessibilityRole="image"
+              accessibilityLabel={t('accessibility.map_image', { mapName: map.Description || 'Map' })}
+              importantForAccessibility="no"
+            />
             {!entry ? null : <Marker style={styleMarker} markerSize={75} />}
           </View>
         </ZoomableView>
@@ -181,6 +195,8 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
             keyExtractor={keyExtractor}
             renderItem={renderItem}
             contentContainerStyle={styles.mapContentContainer}
+            accessibilityLabel={t('accessibility.map_results_list')}
+            accessibilityHint={t('accessibility.map_results_list_hint')}
           />
         </BottomSheet>
       )}

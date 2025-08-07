@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
 import Animated, { Easing, useSharedValue, withSequence, withTiming } from 'react-native-reanimated'
+import { useTranslation } from 'react-i18next'
 
 import { Icon } from './generic/atoms/Icon'
 import { Label } from './generic/atoms/Label'
@@ -8,6 +9,7 @@ import { Row } from './generic/containers/Row'
 import { ToastMessage, useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 import { Pressable } from '@/components/generic/Pressable'
+import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 
 const iconSize = 18 // Matches regular font size.
 
@@ -26,6 +28,8 @@ export type ToastProps = ToastMessage & {
  */
 export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps) => {
   const [seenTime] = useState(Date.now)
+  const { t: a11y } = useTranslation('Accessibility')
+  const closeButtonStyle = useTouchTarget(44)
 
   const styleColor = useThemeBackground((type === 'error' && 'notification') || (type === 'warning' && 'warning') || (type === 'info' && 'primary') || 'white')
   const iconColor = type === 'notice' ? 'black' : 'white'
@@ -52,7 +56,14 @@ export const Toast = ({ id, type, content, queued, lifetime, loose }: ToastProps
         <Label style={styles.text} color={textColor} className="ml-3" type="regular" variant="middle">
           {content}
         </Label>
-        <Pressable hitSlop={50} onPress={() => dismiss(id)}>
+        <Pressable
+          hitSlop={50}
+          onPress={() => dismiss(id)}
+          style={closeButtonStyle}
+          accessibilityLabel={a11y('toast_dismiss_button')}
+          accessibilityHint={a11y('toast_dismiss_button_hint')}
+          accessibilityRole="button"
+        >
           <Icon name="close-box-outline" size={iconSize} color={iconColor} />
         </Pressable>
       </Row>

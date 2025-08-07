@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
 import { StyleSheet, View, ViewStyle } from 'react-native'
+import { useTranslation } from 'react-i18next'
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
@@ -19,6 +20,8 @@ export type ArtistsAlleyCardProps = {
 }
 
 export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, style, item, onPress, onLongPress }) => {
+  const { t: tAccessibility } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
+
   // Dependent and independent styles.
   const styleContainer = useThemeBackground('background')
   const stylePre = useThemeBackground('primary')
@@ -26,12 +29,26 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
   const styleAreaIndicator = useThemeBackground(stateToBackground[state])
   const styleDarken = useThemeBackground('darken')
 
+  // Create accessibility label with context
+  const accessibilityLabel = tAccessibility('card_button', {
+    displayName: item.DisplayName,
+    location: item.Location,
+    status: state,
+  })
+
   return (
     <Pressable
       containerStyle={containerStyle}
       style={[styles.container, appStyles.shadow, styleContainer, style]}
       onPress={() => onPress?.(item)}
       onLongPress={() => onLongPress?.(item)}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={tAccessibility('card_button_hint')}
+      accessibilityState={{
+        selected: false,
+        disabled: false,
+      }}
     >
       <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(item.Image)}>
         <View style={[styles.tableContainer, styleDarken]}>

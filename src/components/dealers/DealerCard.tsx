@@ -64,8 +64,27 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
   const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress])
   const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
+  // Build comprehensive accessibility label
+  const accessibilityLabel = [
+    t('accessibility.dealer_card', { name }),
+    description && t('accessibility.dealer_categories', { categories: description }),
+    offDays && t('accessibility.dealer_off_days', { offDays }),
+    favorite && t('accessibility.dealer_favorited'),
+    !present && t('accessibility.dealer_not_present'),
+  ]
+    .filter(Boolean)
+    .join(', ')
+
   return (
-    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+    <Pressable
+      containerStyle={containerStyle}
+      style={[styles.container, appStyles.shadow, styleBackground, style]}
+      onPress={onPressBind}
+      onLongPress={onLongPressBind}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={t('accessibility.dealer_card_hint')}
+    >
       <View style={[styles.pre, stylePre]}>
         <Image
           key={dealer.details.Id}
@@ -74,20 +93,31 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
           source={avatar}
           contentFit="contain"
           placeholder={require('@/assets/static/ych.png')}
+          accessibilityLabel={t('accessibility.dealer_avatar', { name })}
+          accessibilityRole="image"
         />
       </View>
 
       <View style={styles.main}>
-        <Label type="h3">{name}</Label>
+        <Label type="h3" accessibilityRole="header">
+          {name}
+        </Label>
 
         {!description ? null : (
-          <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+          <Label
+            key="dealerDescription"
+            type="h4"
+            variant="narrow"
+            ellipsizeMode="tail"
+            numberOfLines={2}
+            accessibilityLabel={t('accessibility.dealer_categories', { categories: description })}
+          >
             {description}
           </Label>
         )}
 
         {!offDays ? null : (
-          <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+          <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1} accessibilityLabel={t('accessibility.dealer_off_days', { offDays })}>
             {t('not_attending_on', { offDays })}
           </Label>
         )}
@@ -95,7 +125,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
 
       {!favorite ? null : (
         <View key="eventFavorite" style={styles.favorite}>
-          <Icon name="heart" size={20} color={colorHeart} />
+          <Icon name="heart" size={20} color={colorHeart} accessibilityLabel={t('accessibility.dealer_favorite_icon')} accessibilityRole="image" />
         </View>
       )}
     </Pressable>

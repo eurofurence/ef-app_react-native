@@ -15,8 +15,8 @@ export type ArtistsAlleyContentProps = {
 }
 
 export const ArtistsAlleyContent = ({ data }: ArtistsAlleyContentProps) => {
-  // Get translation function.
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'review' })
+  const { t: tAccessibility } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
   const backgroundStyle = useThemeBackground('background')
 
   return (
@@ -26,7 +26,14 @@ export const ArtistsAlleyContent = ({ data }: ArtistsAlleyContentProps) => {
         {data.DisplayName}
       </Label>
       <Label type="caption">{t('website_url_label')}</Label>
-      <Label type="h3" className="mb-5" onPress={() => Linking.openURL(data.WebsiteUrl)}>
+      <Label
+        type="h3"
+        className="mb-5"
+        onPress={() => Linking.openURL(data.WebsiteUrl)}
+        accessibilityRole="link"
+        accessibilityLabel={tAccessibility('website_link', { url: data.WebsiteUrl })}
+        accessibilityHint={tAccessibility('website_link_hint')}
+      >
         {data.WebsiteUrl}
       </Label>
       <Label type="caption">{t('short_description_label')}</Label>
@@ -38,7 +45,14 @@ export const ArtistsAlleyContent = ({ data }: ArtistsAlleyContentProps) => {
         {data.Location}
       </Label>
       <Label type="caption">{t('telegram_handle_label')}</Label>
-      <Label type="h3" className="mb-5" onPress={() => Linking.openURL(`https://t.me/${data.TelegramHandle.replace('@', '')}`)}>
+      <Label
+        type="h3"
+        className="mb-5"
+        onPress={() => Linking.openURL(`https://t.me/${data.TelegramHandle.replace('@', '')}`)}
+        accessibilityRole="link"
+        accessibilityLabel={tAccessibility('telegram_link', { handle: data.TelegramHandle })}
+        accessibilityHint={tAccessibility('telegram_link_hint')}
+      >
         {data.TelegramHandle}
       </Label>
       <Label type="caption">{t('submission_image_label')}</Label>
@@ -48,6 +62,8 @@ export const ArtistsAlleyContent = ({ data }: ArtistsAlleyContentProps) => {
           contentFit={undefined}
           source={sourceFromImage(data.Image)}
           placeholder={null}
+          accessibilityRole="image"
+          accessibilityLabel={tAccessibility('submission_image', { displayName: data.DisplayName })}
         />
       </View>
     </View>

@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useMemo } from 'react'
 import { Linking, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 import { match } from 'ts-pattern'
 import { format, setDay } from 'date-fns'
 import { router } from 'expo-router'
@@ -56,6 +57,7 @@ const sanitized = (str: string) => {
 }
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
+  const { t } = useTranslation('Maps')
   const onPress = useCallback(() => {
     Linking.openURL(link.Target).catch()
   }, [link.Target])
@@ -80,14 +82,25 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
     return icon
   }, [link.Target])
 
+  const displayText = link.Name || sanitized(link.Target)
+  const host = hostName(link.Target)
+
   return (
-    <Button containerStyle={styles.linkButton} onPress={onPress} icon={icon}>
-      {link.Name || sanitized(link.Target)}
+    <Button
+      containerStyle={styles.linkButton}
+      onPress={onPress}
+      icon={icon}
+      accessibilityLabel={t('accessibility.web_external_link', { name: displayText, host })}
+      accessibilityHint={t('accessibility.web_external_link_hint')}
+      accessibilityRole="link"
+    >
+      {displayText}
     </Button>
   )
 }
 
 const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
+  const { t } = useTranslation('Maps')
   const onPress = useCallback(() => {
     if (map && entry) {
       router.push(`/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`)
@@ -95,13 +108,19 @@ const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
   }, [map, entry, link])
 
   return !map || !entry ? null : (
-    <Button containerStyle={styles.linkButton} onPress={onPress}>
+    <Button
+      containerStyle={styles.linkButton}
+      onPress={onPress}
+      accessibilityLabel={t('accessibility.map_entry_link', { name: link.Name })}
+      accessibilityHint={t('accessibility.map_entry_link_hint')}
+    >
       {link.Name}
     </Button>
   )
 }
 
 const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
+  const { t } = useTranslation('Maps')
   const onPress = useCallback(() => {
     if (map && entry) {
       router.push(`/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`)
@@ -109,7 +128,12 @@ const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({ map, entry, link }) =>
   }, [map, entry, link])
 
   return !map || !entry ? null : (
-    <Button containerStyle={styles.linkButton} onPress={onPress}>
+    <Button
+      containerStyle={styles.linkButton}
+      onPress={onPress}
+      accessibilityLabel={t('accessibility.event_conference_room_link', { name: link.Name })}
+      accessibilityHint={t('accessibility.event_conference_room_link_hint')}
+    >
       {link.Name}
     </Button>
   )

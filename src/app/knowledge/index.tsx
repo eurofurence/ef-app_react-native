@@ -1,18 +1,25 @@
-import { useMemo, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { chain } from 'lodash'
-import Fuse from 'fuse.js'
-import { useTranslation } from 'react-i18next'
-import { KbSectionedList } from '@/components/kb/KbSectionedList'
 import { Search } from '@/components/generic/atoms/Search'
+import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Header } from '@/components/generic/containers/Header'
+import { KbSectionedList } from '@/components/kb/KbSectionedList'
 import { useCache } from '@/context/data/Cache'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import Fuse from 'fuse.js'
+import { chain } from 'lodash'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
 
 export default function Knowledge() {
   const { t } = useTranslation('KnowledgeGroups')
+  const { t: a11y } = useTranslation('KnowledgeGroups')
   const { knowledgeGroups, knowledgeEntries, searchKnowledgeEntries } = useCache()
   const [filter, setFilter] = useState('')
+  const [announcementMessage, setAnnouncementMessage] = useState('')
+
+  // Focus management for the main content
+  const mainContentRef = useAccessibilityFocus<View>(200)
 
   // Use the pre-configured search functionality for entries
   const searchResults = useFuseResults(searchKnowledgeEntries, filter)
@@ -83,10 +90,36 @@ export default function Knowledge() {
       .value()
   }, [searchResults, groups, knowledgeGroups, knowledgeEntries, filter])
 
+  // Announce search results to screen readers
+  useEffect(() => {
+    if (filter && searchResults) {
+      const count = searchResults.length
+      if (count === 0) {
+        const message = a11y('accessibility.no_search_results', { query: filter })
+        setAnnouncementMessage(message)
+      } else {
+        const message = a11y('accessibility.search_results', { count, query: filter })
+        setAnnouncementMessage(message)
+      }
+    } else if (!filter) {
+      setAnnouncementMessage('')
+    }
+  }, [filter, searchResults, a11y])
+
   return (
-    <View style={StyleSheet.absoluteFill}>
-      <Header>{t('header')}</Header>
-      <KbSectionedList kbGroups={displayData} leader={<Search filter={filter} setFilter={setFilter} />} />
-    </View>
+    <>
+      {/* Status message for screen reader announcement */}
+      <StatusMessage message={announcementMessage} type="polite" visible={false} />
+
+      <View
+        style={StyleSheet.absoluteFill}
+        ref={mainContentRef}
+        accessibilityLabel={a11y('accessibility.kb_sectioned_list')}
+        accessibilityHint={a11y('accessibility.kb_sectioned_list_hint')}
+      >
+        <Header>{t('header')}</Header>
+        <KbSectionedList kbGroups={displayData} leader={<Search filter={filter} setFilter={setFilter} />} />
+      </View>
+    </>
   )
 }
