@@ -54,7 +54,7 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
       </Label>
       <Label type="caption">{t('submission_image_label')}</Label>
       <View style={[styles.imageContainer, backgroundStyle]}>
-        <Image style={{ aspectRatio: data.Image.Width / data.Image.Height }} contentFit={undefined} source={sourceFromImage(data.Image)} placeholder={null} />
+        <Image style={{ aspectRatio: (data.Image?.Width ?? 1) / (data.Image?.Height ?? 1) }} contentFit={undefined} source={sourceFromImage(data.Image)} placeholder={null} />
       </View>
 
       <View style={styles.buttons}>
