@@ -162,6 +162,7 @@ export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published'
 export type TableRegistrationRecord = ArtistAlleyRecord & {
   OwnerUid?: string
   OwnerUsername?: string
+  OwnerRegSysId?: string
   Image: ImageRecord
   State?: TableRegistrationRecordStatus
 }

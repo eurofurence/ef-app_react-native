@@ -28,6 +28,10 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
       <Label type="para" className="mt-5 mb-10">
         {data.State === 'Pending' ? t('explanation_status_pending') : data.State === 'Rejected' ? t('explanation_status_rejected') : t('explanation_status_accepted')}
       </Label>
+      <Label type="caption">{t('nickname_reg_id_label')}</Label>
+      <Label type="h3" className="mb-5">
+        {data.OwnerUsername} ({data.OwnerRegSysId})
+      </Label>
       <Label type="caption">{t('display_name_label')}</Label>
       <Label type="h3" className="mb-5">
         {data.DisplayName}
