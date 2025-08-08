@@ -1,15 +1,18 @@
+import { Redirect, router } from 'expo-router'
+import React, { useCallback, useMemo } from 'react'
+import { Linking, StyleSheet, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
+
 import { artistsAlleySectionForState, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
 import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAlleySectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { Header } from '@/components/generic/containers/Header'
+import { Button } from '@/components/generic/containers/Button'
 import { useUserContext } from '@/context/auth/User'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useArtistsAlleyQuery } from '@/hooks/api/artists-alley/useArtistsAlleyQuery'
-import { Redirect, router } from 'expo-router'
-import React, { useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { artistAlleyUrl } from '@/configuration'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'list' })
@@ -18,7 +21,7 @@ export default function List() {
   // Get roles for preemptive RBAC.
   const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
 
-  const { data: source } = useArtistsAlleyQuery(isPrivileged)
+  const { data: source, refetch, isFetching } = useArtistsAlleyQuery(isPrivileged)
 
   const items = useMemo((): (ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord)[] => {
     if (!source) return []
@@ -57,11 +60,17 @@ export default function List() {
 
   const leader = useMemo(() => {
     return (
-      <>
-        <Label type="lead" variant="middle" className="mt-8">
+      <View className="m-5 gap-4">
+        <Label type="h3" variant="middle">
           {t('moderate')}
         </Label>
-      </>
+        <Label type="compact" variant="middle">
+          {t('moderate_intro')}
+        </Label>
+        <Button icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
+          {t('moderate_rules')}
+        </Button>
+      </View>
     )
   }, [t])
 
@@ -76,8 +85,8 @@ export default function List() {
 
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Header>{t('header_moderate')}</Header>
-      <ArtistsAlleySectionedList leader={leader} items={items} onPress={onPress} />
+      <Header>{t('moderate_header')}</Header>
+      <ArtistsAlleySectionedList leader={leader} items={items} onPress={onPress} onRefresh={refetch} refreshing={isFetching} />
     </View>
   )
 }

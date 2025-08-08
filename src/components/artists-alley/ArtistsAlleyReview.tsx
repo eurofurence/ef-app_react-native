@@ -28,6 +28,10 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
       <Label type="para" className="mt-5 mb-10">
         {data.State === 'Pending' ? t('explanation_status_pending') : data.State === 'Rejected' ? t('explanation_status_rejected') : t('explanation_status_accepted')}
       </Label>
+      <Label type="caption">{t('nickname_reg_id_label')}</Label>
+      <Label type="h3" className="mb-5">
+        {data.OwnerUsername} ({data.OwnerRegSysId})
+      </Label>
       <Label type="caption">{t('display_name_label')}</Label>
       <Label type="h3" className="mb-5">
         {data.DisplayName}
@@ -65,7 +69,7 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
       <Label type="caption">{t('submission_image_label')}</Label>
       <View style={[styles.imageContainer, backgroundStyle]}>
         <Image
-          style={{ aspectRatio: data.Image.Width / data.Image.Height }}
+          style={{ aspectRatio: (data.Image?.Width ?? 1) / (data.Image?.Height ?? 1) }}
           contentFit={undefined}
           source={sourceFromImage(data.Image)}
           placeholder={null}
@@ -73,6 +77,7 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
           accessibilityLabel={tAccessibility('submission_image', { displayName: data.DisplayName })}
         />
       </View>
+
 
       <View style={styles.buttons}>
         {data.State === 'Pending' ? (

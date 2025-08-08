@@ -16,14 +16,15 @@ import { captureException } from '@sentry/react-native'
 import { artistAlleyUrl } from '@/configuration'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
   const { user } = useUserContext()
   const { login } = useAuthContext()
-  const { artistAlley, synchronize } = useCache()
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
+  const { artistAlley, synchronize, isSynchronizing } = useCache()
 
   // Get roles for preemptive RBAC.
   const isLoggedIn = Boolean(user)
@@ -160,7 +161,14 @@ export default function List() {
       <StatusMessage message={announcementMessage} />
       <View style={StyleSheet.absoluteFill}>
         <Header>{t('list.header')}</Header>
-        <ArtistsAlleySectionedList items={[...artistAlley]} onPress={onPress} leader={leader} empty={empty} />
+        <ArtistsAlleySectionedList
+          items={[...artistAlley]}
+          onPress={onPress}
+          onRefresh={() => vibrateAfter(synchronize())}
+          refreshing={isSynchronizing}
+          leader={leader}
+          empty={empty}
+        />
       </View>
     </>
   )

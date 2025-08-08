@@ -64,6 +64,7 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
 
       <View style={styles.main}>
         <Label style={styles.title} type="h3">
+          {'OwnerUsername' in item ? item.OwnerUsername + ' (' + item.OwnerRegSysId + ') — ' : ''}
           {item.DisplayName}
         </Label>
         <Label type="h4" variant="narrow">
