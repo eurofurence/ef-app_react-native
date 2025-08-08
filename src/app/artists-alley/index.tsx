@@ -14,12 +14,13 @@ import { useUserContext } from '@/context/auth/User'
 import { useAuthContext } from '@/context/auth/Auth'
 import { captureException } from '@sentry/react-native'
 import { artistAlleyUrl } from '@/configuration'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
   const { user } = useUserContext()
   const { login } = useAuthContext()
-  const { artistAlley, synchronize } = useCache()
+  const { artistAlley, synchronize, isSynchronizing } = useCache()
 
   // Get roles for preemptive RBAC.
   const isLoggedIn = Boolean(user)
@@ -112,7 +113,14 @@ export default function List() {
   return (
     <View style={StyleSheet.absoluteFill}>
       <Header>{t('list.header')}</Header>
-      <ArtistsAlleySectionedList items={[...artistAlley]} onPress={onPress} leader={leader} empty={empty} />
+      <ArtistsAlleySectionedList
+        items={[...artistAlley]}
+        onPress={onPress}
+        onRefresh={() => vibrateAfter(synchronize())}
+        refreshing={isSynchronizing}
+        leader={leader}
+        empty={empty}
+      />
     </View>
   )
 }

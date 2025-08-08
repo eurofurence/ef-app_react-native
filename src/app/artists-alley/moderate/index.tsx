@@ -1,7 +1,7 @@
 import { Redirect, router } from 'expo-router'
 import React, { useCallback, useMemo } from 'react'
 import { useArtistsAlleyQuery } from '@/hooks/api/artists-alley/useArtistsAlleyQuery'
-import { StyleSheet, View } from 'react-native'
+import { Linking, StyleSheet, View } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
 import { artistsAlleySectionForState, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
@@ -10,6 +10,8 @@ import { Label } from '@/components/generic/atoms/Label'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useUserContext } from '@/context/auth/User'
+import { Button } from '@/components/generic/containers/Button'
+import { artistAlleyUrl } from '@/configuration'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'list' })
@@ -18,7 +20,7 @@ export default function List() {
   // Get roles for preemptive RBAC.
   const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
 
-  const { data: source } = useArtistsAlleyQuery(isPrivileged)
+  const { data: source, refetch, isFetching } = useArtistsAlleyQuery(isPrivileged)
 
   const items = useMemo((): (ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord)[] => {
     if (!source) return []
@@ -57,11 +59,17 @@ export default function List() {
 
   const leader = useMemo(() => {
     return (
-      <>
-        <Label type="lead" variant="middle" className="mt-8">
+      <View className="m-5 gap-4">
+        <Label type="h3" variant="middle">
           {t('moderate')}
         </Label>
-      </>
+        <Label type="compact" variant="middle">
+          {t('moderate_intro')}
+        </Label>
+        <Button icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
+          {t('moderate_rules')}
+        </Button>
+      </View>
     )
   }, [t])
 
@@ -76,8 +84,8 @@ export default function List() {
 
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Header>{t('header_moderate')}</Header>
-      <ArtistsAlleySectionedList leader={leader} items={items} onPress={onPress} />
+      <Header>{t('moderate_header')}</Header>
+      <ArtistsAlleySectionedList leader={leader} items={items} onPress={onPress} onRefresh={refetch} refreshing={isFetching} />
     </View>
   )
 }
