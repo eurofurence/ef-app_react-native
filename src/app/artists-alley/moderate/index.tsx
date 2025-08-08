@@ -20,7 +20,7 @@ export default function List() {
   // Get roles for preemptive RBAC.
   const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
 
-  const { data: source } = useArtistsAlleyQuery(isPrivileged)
+  const { data: source, refetch, isFetching } = useArtistsAlleyQuery(isPrivileged)
 
   const items = useMemo((): (ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord)[] => {
     if (!source) return []
@@ -85,7 +85,7 @@ export default function List() {
   return (
     <View style={StyleSheet.absoluteFill}>
       <Header>{t('moderate_header')}</Header>
-      <ArtistsAlleySectionedList leader={leader} items={items} onPress={onPress} />
+      <ArtistsAlleySectionedList leader={leader} items={items} onPress={onPress} onRefresh={refetch} refreshing={isFetching} />
     </View>
   )
 }
