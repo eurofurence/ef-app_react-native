@@ -16,7 +16,7 @@ import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { Banner } from '../generic/atoms/Banner'
-import { Icon, platformShareIcon } from '../generic/atoms/Icon'
+import { Icon, IconNames, platformShareIcon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { MarkdownContent } from '../generic/atoms/MarkdownContent'
 import { Progress } from '../generic/atoms/Progress'
@@ -123,7 +123,10 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       {isFavorite || event.Glyph ? (
         <View style={styles.glyphArranger}>
           <View style={styles.glyphContainer}>
-            <Icon style={styles.glyph} color={colorGlyph} name={isFavorite ? 'heart' : event.Glyph} size={200} />
+            {(() => {
+              const iconName: IconNames = (isFavorite ? 'heart' : (event.Glyph as IconNames)) ?? 'blank'
+              return <Icon style={styles.glyph} color={colorGlyph} name={iconName} size={200} />
+            })()}
           </View>
         </View>
       ) : null}
