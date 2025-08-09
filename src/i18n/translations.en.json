@@ -595,6 +595,7 @@
       "zoomable_map_hint": "Pinch to zoom in or out, drag to move around"
     },
     "filtering": "Searching viewed area",
+    "preview_unavailable": "Map preview unavailable",
     "results": "In the viewed area"
   },
   "Menu": {

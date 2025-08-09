@@ -529,6 +529,7 @@
       "zoomable_map_hint": "Pinch zum Hinein- oder Herauszoomen, Ziehen zum Bewegen"
     },
     "filtering": "Durchsuche Ansicht",
+    "preview_unavailable": "Kartenvorschau nicht verfügbar",
     "results": "In der Ansicht"
   },
   "Menu": {

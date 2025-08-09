@@ -100,7 +100,7 @@ export function MainLayout() {
       <BottomSheetModalProvider>
         <ThemeProvider value={themeNavigation}>
           <StatusBar backgroundColor={theme.background} style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
-          <Stack>
+          <Stack initialRouteName="(areas)">
             {screensData.map((screen) => (
               <Stack.Screen
                 key={screen.location}

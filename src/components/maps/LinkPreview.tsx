@@ -60,13 +60,24 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style })
       accessibilityState={{ disabled: isLoading || isDisabled }}
     >
       {isLoading ? (
-        <ActivityIndicator accessibilityLabel={t('accessibility.loading_preview')} importantForAccessibility="no" />
+        <ActivityIndicator
+          accessibilityLabel={t('accessibility.loading_preview')}
+          importantForAccessibility="no"
+        />
       ) : isDisabled ? (
-        <Label accessibilityLabel={t('accessibility.no_preview_available')} importantForAccessibility="no">
-          No preview available
+        <Label
+          accessibilityLabel={t('accessibility.no_preview_available')}
+          importantForAccessibility="no"
+        >
+          {t('preview_unavailable')}
         </Label>
       ) : (
-        <Image source={{ uri: ogMeta.image }} style={styles.image} accessibilityRole="image" importantForAccessibility="no" />
+        <Image
+          source={{ uri: ogMeta.image }}
+          style={styles.image}
+          accessibilityRole="image"
+          importantForAccessibility="no"
+        />
       )}
     </TouchableOpacity>
   )

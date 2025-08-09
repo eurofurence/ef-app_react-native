@@ -424,6 +424,7 @@
     }
   },
   "Maps": {
+    "preview_unavailable": "Podgląd mapy niedostępny",
     "accessibility": {
       "bottom_sheet": "Panel wyników mapy",
       "bottom_sheet_hint": "Przeciągnij w górę, aby rozwinąć, w dół, aby zwinąć",
@@ -455,10 +456,10 @@
     },
     "filtering": "Przeszukiwanie widocznego obszaru",
     "results": "W widocznym obszarze"
-  },
-  "Menu": {
-    "about": "O nas",
-    "accessibility": {
+    },
+    "Menu": {
+      "about": "O nas",
+      "accessibility": {
       "about_tab": "Zakładka o aplikacji",
       "about_tab_hint": "Wyświetl informacje o aplikacji i autorach",
       "artist_alley_tab": "Zakładka Artist Alley",

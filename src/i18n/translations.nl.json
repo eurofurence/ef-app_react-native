@@ -471,6 +471,7 @@
     }
   },
   "Maps": {
+    "preview_unavailable": "Kaartvoorbeeld niet beschikbaar",
     "accessibility": {
       "bottom_sheet": "Kaartresultatenpaneel",
       "bottom_sheet_hint": "Veeg omhoog om uit te vouwen, omlaag om in te klappen",

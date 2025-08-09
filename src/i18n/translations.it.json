@@ -411,6 +411,7 @@
     }
   },
   "Maps": {
+    "preview_unavailable": "Anteprima mappa non disponibile",
     "accessibility": {
       "bottom_sheet": "Pannello risultati mappa",
       "bottom_sheet_hint": "Scorri verso l'alto per espandere, verso il basso per comprimere",
