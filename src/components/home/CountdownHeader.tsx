@@ -65,6 +65,7 @@ const useCountdownTitle = (t: TFunction, now: Date) => {
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
   const { t } = useTranslation('Countdown')
+  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 60 : 'static') // Convert to Date
 
@@ -72,18 +73,26 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
   const subtitle = useCountdownTitle(t, now)
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]} role="banner" accessibilityLabel={tAccessibility('countdown_header')} accessibilityHint={tAccessibility('countdown_header_hint')}>
       <ImageBackground
         key="banner"
         style={StyleSheet.absoluteFill}
         source={width < bannerBreakpoint ? require('@/assets/static/banner_narrow.png') : require('@/assets/static/banner_wide.png')}
         contentFit="cover"
         priority="high"
+        accessibilityLabel={tAccessibility('banner_image')}
+        accessibilityRole="image"
       />
       <View style={[StyleSheet.absoluteFill, styles.cover]} />
-      <Image style={styles.logo} source={require('@/assets/static/banner_logo.png')} priority="high" />
+      <Image
+        style={styles.logo}
+        source={require('@/assets/static/banner_logo.png')}
+        priority="high"
+        accessibilityLabel={tAccessibility('convention_logo')}
+        accessibilityRole="image"
+      />
       <Col variant="end" style={styles.textContainer}>
-        <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
+        <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail" accessibilityRole="header" accessibilityLabel={tAccessibility('convention_name', { name: conId })}>
           {conId}
         </Label>
         <Label
@@ -95,6 +104,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
           variant="shadow"
           color="white"
           ellipsizeMode="tail"
+          accessibilityLabel={tAccessibility('countdown_status', { status: subtitle })}
         >
           {subtitle}
         </Label>

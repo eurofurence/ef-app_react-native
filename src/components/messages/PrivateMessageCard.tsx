@@ -19,13 +19,35 @@ export type PrivateMessageCardProps = {
   onPress: (item: CommunicationRecord) => void
 }
 
-export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle, style, item, onPress }) => {
+export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({
+  containerStyle,
+  style,
+  item,
+  onPress,
+}) => {
   const { t } = useTranslation('PrivateMessageList')
   const styleContainer = useThemeBackground('background')
 
+  const readStatus = item.ReadDateTimeUtc === null ? t('unread') : t('read')
+  const formattedTime = format(new Date(item.CreatedDateTimeUtc), 'PPpp')
+
   return (
     <View style={containerStyle}>
-      <Pressable style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
+      <Pressable
+        style={[styles.container, appStyles.shadow, styleContainer, style]}
+        onPress={() => onPress?.(item)}
+        accessibilityRole="button"
+        accessibilityLabel={t('accessibility.message_card', {
+          subject: item.Subject,
+          status: readStatus,
+          time: formattedTime,
+        })}
+        accessibilityHint={t('accessibility.message_card_hint')}
+        accessibilityState={{
+          selected: false,
+          disabled: false,
+        }}
+      >
         <Row style={styles.main}>
           <Col style={styles.title}>
             <Label
@@ -37,14 +59,24 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle
             >
               {item.Subject}
             </Label>
-            <Label color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}>
+            <Label
+              color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}
+              accessibilityLabel={t('accessibility.message_status_time', {
+                status: readStatus,
+                time: formattedTime,
+              })}
+            >
               {t('message_item_subtitle', {
-                status: item.ReadDateTimeUtc === null ? t('unread') : t('read'),
-                time: format(new Date(item.CreatedDateTimeUtc), 'PPpp'),
+                status: readStatus,
+                time: formattedTime,
               })}
             </Label>
           </Col>
-          <View style={styles.itemChevron}>
+          <View
+            style={styles.itemChevron}
+            accessibilityElementsHidden={true}
+            importantForAccessibility="no"
+          >
             <Icon name="chevron-right" size={30} />
           </View>
         </Row>

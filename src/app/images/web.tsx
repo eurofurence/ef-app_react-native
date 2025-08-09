@@ -1,13 +1,13 @@
 import { ReactNativeZoomableView as ZoomableView } from '@openspacelabs/react-native-zoomable-view'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, Image as ReactImage } from 'react-native'
+import { Image as ReactImage, StyleSheet, View } from 'react-native'
 
-import { useLocalSearchParams } from 'expo-router'
-import { Header } from '@/components/generic/containers/Header'
-import { Image } from '@/components/generic/atoms/Image'
-import { minZoomFor, shareImage } from '@/components/images/Images.common'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
+import { Image } from '@/components/generic/atoms/Image'
+import { Header } from '@/components/generic/containers/Header'
+import { minZoomFor, shareImage } from '@/components/images/Images.common'
+import { useLocalSearchParams } from 'expo-router'
 
 const viewerPadding = 20
 

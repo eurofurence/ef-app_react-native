@@ -19,14 +19,6 @@ export type DealerDetailsInstance = {
   offDays: string
 }
 
-/**
- * Creates the dealer instance from the details and precomputed values.
- * @param details The dealer details.
- * @param now The current date.
- * @param day1 The first day label.
- * @param day2 The second day label.
- * @param day3 The third day label.
- */
 export function dealerInstanceForAny(details: DealerDetails, now: Date, day1: string, day2: string, day3: string): DealerDetailsInstance {
   return {
     details,
@@ -44,18 +36,18 @@ export type DealerCardProps = {
 }
 
 export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer, onPress, onLongPress }) => {
-  // Details and properties dereference.
   const name = dealer.details.DisplayNameOrAttendeeNickname
   const present = dealer.present
   const description = dealer.details.Categories?.join(', ')
   const offDays = dealer.offDays
   const favorite = dealer.details.Favorite
-  const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require('@/assets/static/ych.png')
+  const avatar =
+    sourceFromImage(dealer.details.ArtistThumbnail) ??
+    sourceFromImage(dealer.details.Artist) ??
+    require('@/assets/static/ych.png')
 
-  // Translation object.
   const { t } = useTranslation('Dealers')
 
-  // Dependent and independent styles.
   const styleBackground = useThemeBackground('background')
   const stylePre = useThemeBackground(!present ? 'darken' : favorite ? 'notification' : 'primary')
   const avatarBackground = useThemeBackground('text')
@@ -64,9 +56,26 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
   const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress])
   const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
+  const accessibilityLabel = [
+    t('accessibility.dealer_card', { name }),
+    description && t('accessibility.dealer_categories', { categories: description }),
+    offDays && t('accessibility.dealer_off_days', { offDays }),
+    favorite && t('accessibility.dealer_favorited'),
+    !present && t('accessibility.dealer_not_present'),
+  ]
+    .filter(Boolean)
+    .join(', ')
+
   return (
     <View style={containerStyle}>
-      <Pressable style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+      <Pressable
+        style={[styles.container, appStyles.shadow, styleBackground, style]}
+        onPress={onPressBind}
+        onLongPress={onLongPressBind}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={t('accessibility.dealer_card_hint')}
+      >
         <View style={[styles.pre, stylePre]}>
           <Image
             key={dealer.details.Id}
@@ -75,28 +84,52 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
             source={avatar}
             contentFit="contain"
             placeholder={require('@/assets/static/ych.png')}
+            accessibilityLabel={t('accessibility.dealer_avatar', { name })}
+            accessibilityRole="image"
           />
         </View>
 
         <View style={styles.main}>
-          <Label type="h3">{name}</Label>
+          <Label type="h3" accessibilityRole="header">
+            {name}
+          </Label>
 
-          {!description ? null : (
-            <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+          {!!description && (
+            <Label
+              key="dealerDescription"
+              type="h4"
+              variant="narrow"
+              ellipsizeMode="tail"
+              numberOfLines={2}
+              accessibilityLabel={t('accessibility.dealer_categories', { categories: description })}
+            >
               {description}
             </Label>
           )}
 
-          {!offDays ? null : (
-            <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+          {!!offDays && (
+            <Label
+              key="dealerOffDays"
+              style={styles.tag}
+              type="regular"
+              ellipsizeMode="head"
+              numberOfLines={1}
+              accessibilityLabel={t('accessibility.dealer_off_days', { offDays })}
+            >
               {t('not_attending_on', { offDays })}
             </Label>
           )}
         </View>
 
-        {!favorite ? null : (
+        {!!favorite && (
           <View key="eventFavorite" style={styles.favorite}>
-            <Icon name="heart" size={20} color={colorHeart} />
+            <Icon
+              name="heart"
+              size={20}
+              color={colorHeart}
+              accessibilityLabel={t('accessibility.dealer_favorite_icon')}
+              accessibilityRole="image"
+            />
           </View>
         )}
       </Pressable>
@@ -112,11 +145,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     flexDirection: 'row',
   },
-  background: {
-    position: 'absolute',
-    width: undefined,
-    height: undefined,
-  },
   pre: {
     overflow: 'hidden',
     width: 80,
@@ -128,22 +156,6 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     borderRadius: 35,
-  },
-  image: {
-    position: 'absolute',
-    width: undefined,
-    height: undefined,
-    left: -10,
-    top: -10,
-    right: -10,
-    bottom: -10,
-  },
-  imageOverlay: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0,
   },
   main: {
     flex: 1,

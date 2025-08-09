@@ -2,13 +2,13 @@ import { ReactNativeZoomableView as ZoomableView } from '@openspacelabs/react-na
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useLocalSearchParams } from 'expo-router'
-import { Image } from '@/components/generic/atoms/Image'
-import { Header } from '@/components/generic/containers/Header'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
+import { Image } from '@/components/generic/atoms/Image'
 import { sourceFromImage } from '@/components/generic/atoms/Image.common'
-import { useCache } from '@/context/data/Cache'
+import { Header } from '@/components/generic/containers/Header'
 import { minZoomFor, shareImage } from '@/components/images/Images.common'
+import { useCache } from '@/context/data/Cache'
+import { useLocalSearchParams } from 'expo-router'
 
 const viewerPadding = 20
 

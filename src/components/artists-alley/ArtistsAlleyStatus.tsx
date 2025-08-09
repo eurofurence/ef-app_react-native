@@ -17,8 +17,8 @@ export type ArtistsAlleyStatusProps = {
 }
 
 export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut, onCancel }: ArtistsAlleyStatusProps) => {
-  // Get translation function.
   const { t } = useTranslation('ArtistsAlley')
+  const { t: tAccessibility } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
   const backgroundStyle = useThemeBackground('background')
 
   const statusText = (() => {
@@ -39,15 +39,21 @@ export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut, onCancel }: Artis
 
   return (
     <View>
-      <Label type="compact" className="mt-5 mb-5">
+      <Label type="compact" className="mt-5 mb-5" accessibilityRole="text" accessibilityLabel={`Current status: ${statusText}`}>
         {statusText}
       </Label>
       {data.State === 'Accepted' ? (
-        <Button onPress={onCheckOut} icon="exit-run">
+        <Button onPress={onCheckOut} icon="exit-run" accessibilityLabel={tAccessibility('checkout_button')} accessibilityHint={tAccessibility('checkout_button_hint')}>
           {t('check_out')}
         </Button>
       ) : (
-        <Button onPress={onEdit}>{data.State === 'Pending' ? t('edit_request') : t('new_request')}</Button>
+        <Button
+          onPress={onEdit}
+          accessibilityLabel={data.State === 'Pending' ? tAccessibility('edit_button') : tAccessibility('new_request_button')}
+          accessibilityHint={data.State === 'Pending' ? tAccessibility('edit_button_hint') : tAccessibility('new_request_button_hint')}
+        >
+          {data.State === 'Pending' ? t('edit_request') : t('new_request')}
+        </Button>
       )}
       <Label type="caption" className="mt-5">
         {t('display_name_label')}
@@ -75,11 +81,18 @@ export const ArtistsAlleyStatus = ({ data, onEdit, onCheckOut, onCancel }: Artis
         {t('submission_image_label')}
       </Label>
       <View style={[styles.imageContainer, backgroundStyle]} className="mb-5">
-        <Image style={{ aspectRatio: data.Image.Width / data.Image.Height }} contentFit={undefined} source={sourceFromImage(data.Image)} placeholder={null} />
+        <Image
+          style={{ aspectRatio: data.Image.Width / data.Image.Height }}
+          contentFit={undefined}
+          source={sourceFromImage(data.Image)}
+          placeholder={null}
+          accessibilityRole="image"
+          accessibilityLabel={tAccessibility('submission_image', { displayName: data.DisplayName })}
+        />
       </View>
 
       {data.State === 'Pending' ? (
-        <Button onPress={onCancel} className="mt-3">
+        <Button onPress={onCancel} className="mt-3" accessibilityLabel={tAccessibility('cancel_button')} accessibilityHint={tAccessibility('cancel_button_hint')}>
           {t('cancel_request')}
         </Button>
       ) : null}

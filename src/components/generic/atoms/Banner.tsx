@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native'
 import { router } from 'expo-router'
 import { sourceFromImage } from './Image.common'
 import { Image, ImageProps } from './Image'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { ImageDetails } from '@/context/data/types.details'
 import { Pressable } from '@/components/generic/Pressable'
@@ -38,12 +37,11 @@ export type BannerProps = {
 
 export const Banner = ({ style, image, title, placeholder, viewable }: BannerProps) => {
   const aspect = !image ? {} : { aspectRatio: image.Width / image.Height }
-  const backgroundStyle = useThemeBackground('background')
   // Do not render if nothing given.
   if (!image) return null
   return (
     <Pressable
-      containerStyle={[styles.container, backgroundStyle]}
+      containerStyle={[styles.container]}
       disabled={!viewable}
       onPress={() => {
         if (viewable && image)

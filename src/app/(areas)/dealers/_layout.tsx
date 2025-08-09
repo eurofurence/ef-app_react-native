@@ -8,6 +8,7 @@ import type { ParamListBase, TabNavigationState } from '@react-navigation/native
 import { withLayoutContext } from 'expo-router'
 import * as React from 'react'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -33,6 +34,7 @@ function createOptions(title: string | undefined, icon: IconNames | undefined = 
 }
 
 export default function DealersLayout() {
+  const { t } = useTranslation('Dealers')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
   const [filter, setFilter] = useState('')
@@ -56,7 +58,7 @@ export default function DealersLayout() {
         tabBar={(props) => (
           <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
             <MaterialTopTabBar {...props} />
-            <Search style={styles.search} filter={filter} setFilter={setFilter} />
+            <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
           </View>
         )}
       >

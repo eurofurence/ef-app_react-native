@@ -25,6 +25,7 @@ const getUtcOffset = (date: Date, timeZone: string): number => {
 
 export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => {
   const { t } = useTranslation('Home')
+  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
   const { timeZone } = useCalendars()[0]
   const { isHidden, hideWarning } = useWarningState('timeZoneWarningsHidden')
 
@@ -41,9 +42,24 @@ export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => 
   }
 
   return (
-    <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="clock">
-      {t('different_timezone', { convention: conName, conTimeZone, deviceTimeZone: timeZone })}
-      <Label variant="bold" color="secondary" onPress={hideWarning}>
+    <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="clock" role="alert" accessibilityLabel={tAccessibility('timezone_warning_container')}>
+      <Label
+        accessibilityLabel={tAccessibility('timezone_warning_content', {
+          convention: conName,
+          conTimeZone,
+          deviceTimeZone: timeZone,
+        })}
+      >
+        {t('different_timezone', { convention: conName, conTimeZone, deviceTimeZone: timeZone })}
+      </Label>
+      <Label
+        variant="bold"
+        color="secondary"
+        onPress={hideWarning}
+        accessibilityRole="button"
+        accessibilityLabel={tAccessibility('hide_timezone_warning')}
+        accessibilityHint={tAccessibility('hide_timezone_warning_hint')}
+      >
         {' ' + t('warnings.hide')}
       </Label>
     </Badge>

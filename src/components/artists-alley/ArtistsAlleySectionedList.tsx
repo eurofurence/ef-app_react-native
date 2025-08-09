@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { SectionProps } from '@/components/generic/atoms/Section'
@@ -48,6 +49,9 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({
   const theme = useThemeName()
   const stickyIndices = useMemo(() => (sticky ? findIndices(items, (item) => 'title' in item) : undefined), [items, sticky])
 
+  // Get translation function for accessibility
+  const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
+
   const renderItem = useCallback(
     ({ item }: { item: ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord }) => {
       if ('Id' in item) {
@@ -76,6 +80,9 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityRole="list"
+      accessibilityLabel={t('artists_alley_list')}
+      accessibilityHint={t('refresh_list_hint')}
     />
   )
 }

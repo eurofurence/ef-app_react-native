@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { formatDistanceToNow } from 'date-fns'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
 
-import { Header } from '@/components/generic/containers/Header'
-import { Label } from '@/components/generic/atoms/Label'
 import { AnnouncementList } from '@/components/announce/AnnouncementList'
+import { Label } from '@/components/generic/atoms/Label'
+import { Header } from '@/components/generic/containers/Header'
 import { useCache } from '@/context/data/Cache'
 import { AnnouncementDetails } from '@/context/data/types.details'
 
@@ -21,13 +21,13 @@ export default function AnnouncementsList() {
   }, [announcements])
 
   const empty = (
-    <Label type="h2" className="mt-8 mb-3">
+    <Label type="h2" className="mt-8 mb-3" accessibilityLabel={t('accessibility.empty_state')} accessibilityHint={t('accessibility.empty_state_hint')} accessibilityRole="alert">
       {t('noAnnouncements')}
     </Label>
   )
 
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <View style={StyleSheet.absoluteFill} accessibilityLabel={t('accessibility.main_container')}>
       <Header>{t('header')}</Header>
       <AnnouncementList announcements={announcementInstances} empty={empty} />
     </View>
