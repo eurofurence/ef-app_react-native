@@ -16,7 +16,7 @@ export function useEventReminderRescheduling() {
 
   // Retrieve timeTravel value from cache, default to 0
   const settings = getValue('settings')
-  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
+  const offset = settings?.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
 
   const notifications = getValue('notifications')
 
@@ -26,26 +26,24 @@ export function useEventReminderRescheduling() {
     let preempted = false
 
     lastPromise.current = (async () => {
-      // Await the last invocation, there might be changes that still
-      // need to be handled.
-      await lastPromise.current.catch()
+      await lastPromise.current.catch(() => {})
 
-      // Intercepted before it even began, can stop here.
       if (preempted) return
 
-      // Create a new set of notifications that might have been rescheduled.
       const newNotifications: Notification[] = []
       let changed = false
 
       for (const notification of notifications) {
-        // Find the event from the record ID in the reminder data.
         const event = events.dict[notification.recordId]
 
-        // Event is still present. But it might have changed.
         if (event) {
-          // Check if changed. If so, reschedule it,
-          if (isAfter(parseDefaultISO(event.LastChangeDateTimeUtc), parseDefaultISO(notification.dateCreatedUtc))) {
-            // Cancel and reschedule. Add new notification.
+          // Check if event changed since notification was created
+          if (
+            isAfter(
+              parseDefaultISO(event.LastChangeDateTimeUtc),
+              parseDefaultISO(notification.dateCreatedUtc)
+            )
+          ) {
             try {
               await cancelEventReminder(notification)
               const newNotification = await scheduleEventReminder(event, offset)
@@ -55,11 +53,11 @@ export function useEventReminderRescheduling() {
               captureException(error)
             }
           } else {
-            // Unchanged, add the old notification.
+            // Unchanged event, keep existing notification
             newNotifications.push(notification)
           }
         } else {
-          // Doesn't exist anymore, remove the reminder and don't add the notification.
+          // Event no longer exists; cancel notification and remove it
           try {
             await cancelEventReminder(notification)
             changed = true
@@ -69,7 +67,6 @@ export function useEventReminderRescheduling() {
         }
       }
 
-      // Only dispatch if changed.
       if (changed) {
         setValue('notifications', newNotifications)
       }

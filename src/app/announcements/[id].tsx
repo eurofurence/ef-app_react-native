@@ -1,4 +1,5 @@
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns'
+import { parseISO } from 'date-fns'
 import { useLocalSearchParams } from 'expo-router'
 import React from 'react'
 import { ScrollView, StyleSheet, View } from 'react-native'
@@ -79,8 +80,11 @@ export default function AnnounceItem() {
             </Row>
             <Rule style={styles.rule} />
 
-            {!announcement.Image ? null : (
-              <View style={styles.posterLine} accessibilityLabel={t('accessibility.banner_image')}>
+            {!!announcement.Image && (
+              <View
+                style={styles.posterLine}
+                accessibilityLabel={t('accessibility.banner_image')}
+              >
                 <Banner image={announcement.Image} viewable />
               </View>
             )}

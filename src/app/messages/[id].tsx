@@ -92,7 +92,6 @@ export default function MessageItem() {
 
             <Row style={styles.byline} variant="spaced">
               <Label>{formattedDate}</Label>
-
               <Label style={styles.tag} ellipsizeMode="head" numberOfLines={1}>
                 {t('from', { authorName: message.AuthorName })}
               </Label>
