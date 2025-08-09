@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { StyleSheet, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
 
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
@@ -16,9 +16,11 @@ export type KbEntryCardProps = {
 
 export const KbEntryCard: FC<KbEntryCardProps> = ({ containerStyle, style, entry, onPress }) => {
   return (
-    <Card containerStyle={containerStyle} style={[styles.container, appStyles.shadow, style]} onPress={() => onPress(entry)}>
-      <Label type="h3">{entry.Title}</Label>
-    </Card>
+    <View style={containerStyle}>
+      <Card style={[styles.container, appStyles.shadow, style]} onPress={() => onPress(entry)}>
+        <Label type="h3">{entry.Title}</Label>
+      </Card>
+    </View>
   )
 }
 const styles = StyleSheet.create({

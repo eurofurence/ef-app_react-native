@@ -24,33 +24,35 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
   const statusColor = item.Status === 'Found' ? theme.primary : item.Status === 'Returned' ? theme.warning : theme.notification
 
   return (
-    <Card onPress={onPress} containerStyle={containerStyle}>
-      <View style={styles.container}>
-        {item.ImageUrl && (
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: item.ImageUrl }} style={styles.image} />
-          </View>
-        )}
-        <View style={styles.content}>
-          <View style={styles.header}>
-            <Label style={styles.title} numberOfLines={2}>
-              {item.Title}
-            </Label>
-            <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
-              <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
+    <View style={containerStyle}>
+      <Card onPress={onPress}>
+        <View style={styles.container}>
+          {item.ImageUrl && (
+            <View style={styles.imageContainer}>
+              <Image source={{ uri: item.ImageUrl }} style={styles.image} />
             </View>
-          </View>
-          {!item.Description ? null : (
-            <Label style={styles.description} numberOfLines={3}>
-              {item.Description}
-            </Label>
           )}
-          <Label style={styles.date}>
-            {t('reported')}: {new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
-          </Label>
+          <View style={styles.content}>
+            <View style={styles.header}>
+              <Label style={styles.title} numberOfLines={2}>
+                {item.Title}
+              </Label>
+              <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+                <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
+              </View>
+            </View>
+            {!item.Description ? null : (
+              <Label style={styles.description} numberOfLines={3}>
+                {item.Description}
+              </Label>
+            )}
+            <Label style={styles.date}>
+              {t('reported')}: {new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
+            </Label>
+          </View>
         </View>
-      </View>
-    </Card>
+      </Card>
+    </View>
   )
 }
 

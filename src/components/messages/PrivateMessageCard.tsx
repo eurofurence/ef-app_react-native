@@ -24,30 +24,32 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle
   const styleContainer = useThemeBackground('background')
 
   return (
-    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
-      <Row style={styles.main}>
-        <Col style={styles.title}>
-          <Label
-            type="h4"
-            className="mb-3"
-            variant={item.ReadDateTimeUtc === null ? 'bold' : 'regular'}
-            color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}
-            ellipsizeMode="tail"
-          >
-            {item.Subject}
-          </Label>
-          <Label color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}>
-            {t('message_item_subtitle', {
-              status: item.ReadDateTimeUtc === null ? t('unread') : t('read'),
-              time: format(new Date(item.CreatedDateTimeUtc), 'PPpp'),
-            })}
-          </Label>
-        </Col>
-        <View style={styles.itemChevron}>
-          <Icon name="chevron-right" size={30} />
-        </View>
-      </Row>
-    </Pressable>
+    <View style={containerStyle}>
+      <Pressable style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={() => onPress?.(item)}>
+        <Row style={styles.main}>
+          <Col style={styles.title}>
+            <Label
+              type="h4"
+              className="mb-3"
+              variant={item.ReadDateTimeUtc === null ? 'bold' : 'regular'}
+              color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}
+              ellipsizeMode="tail"
+            >
+              {item.Subject}
+            </Label>
+            <Label color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}>
+              {t('message_item_subtitle', {
+                status: item.ReadDateTimeUtc === null ? t('unread') : t('read'),
+                time: format(new Date(item.CreatedDateTimeUtc), 'PPpp'),
+              })}
+            </Label>
+          </Col>
+          <View style={styles.itemChevron}>
+            <Icon name="chevron-right" size={30} />
+          </View>
+        </Row>
+      </Pressable>
+    </View>
   )
 }
 
