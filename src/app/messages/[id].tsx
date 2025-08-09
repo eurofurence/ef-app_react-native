@@ -63,9 +63,7 @@ export default function MessageItem() {
 
   if (!message) return <Redirect href="/messages" />
 
-  const formattedDate = message.ReceivedDateTimeUtc
-    ? format(parseDefaultISO(message.ReceivedDateTimeUtc), 'PPpp')
-    : ''
+  const formattedDate = message.ReceivedDateTimeUtc ? format(parseDefaultISO(message.ReceivedDateTimeUtc), 'PPpp') : ''
 
   return (
     <>
@@ -81,11 +79,7 @@ export default function MessageItem() {
       >
         <Header>{message.AuthorName}</Header>
         <Floater contentStyle={appStyles.trailer}>
-          <View
-            ref={mainContentRef}
-            accessibilityLabel={a11y('accessibility.message_content')}
-            accessibilityRole="text"
-          >
+          <View ref={mainContentRef} accessibilityLabel={a11y('accessibility.message_content')} accessibilityRole="text">
             <Label type="h1" className="mt-8 mb-3">
               {message.Subject}
             </Label>

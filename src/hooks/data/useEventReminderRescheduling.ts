@@ -38,12 +38,7 @@ export function useEventReminderRescheduling() {
 
         if (event) {
           // Check if event changed since notification was created
-          if (
-            isAfter(
-              parseDefaultISO(event.LastChangeDateTimeUtc),
-              parseDefaultISO(notification.dateCreatedUtc)
-            )
-          ) {
+          if (isAfter(parseDefaultISO(event.LastChangeDateTimeUtc), parseDefaultISO(notification.dateCreatedUtc))) {
             try {
               await cancelEventReminder(notification)
               const newNotification = await scheduleEventReminder(event, offset)

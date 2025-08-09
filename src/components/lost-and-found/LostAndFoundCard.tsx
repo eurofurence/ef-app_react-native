@@ -18,12 +18,7 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
   const theme = useTheme()
   const { t } = useTranslation('LostAndFound')
 
-  const statusColor =
-    item.Status === 'Found'
-      ? theme.primary
-      : item.Status === 'Returned'
-      ? theme.warning
-      : theme.notification
+  const statusColor = item.Status === 'Found' ? theme.primary : item.Status === 'Returned' ? theme.warning : theme.notification
 
   return (
     <View style={containerStyle}>
@@ -40,20 +35,12 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
         <View style={styles.container}>
           {item.ImageUrl && (
             <View style={styles.imageContainer}>
-              <Image
-                source={{ uri: item.ImageUrl }}
-                style={styles.image}
-                accessibilityLabel={t('accessibility.item_image', { title: item.Title })}
-              />
+              <Image source={{ uri: item.ImageUrl }} style={styles.image} accessibilityLabel={t('accessibility.item_image', { title: item.Title })} />
             </View>
           )}
           <View style={styles.content}>
             <View style={styles.header}>
-              <Label
-                style={styles.title}
-                numberOfLines={2}
-                accessibilityRole="header"
-              >
+              <Label style={styles.title} numberOfLines={2} accessibilityRole="header">
                 {item.Title}
               </Label>
               <View

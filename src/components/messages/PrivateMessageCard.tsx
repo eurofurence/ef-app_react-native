@@ -19,12 +19,7 @@ export type PrivateMessageCardProps = {
   onPress: (item: CommunicationRecord) => void
 }
 
-export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({
-  containerStyle,
-  style,
-  item,
-  onPress,
-}) => {
+export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle, style, item, onPress }) => {
   const { t } = useTranslation('PrivateMessageList')
   const styleContainer = useThemeBackground('background')
 
@@ -72,11 +67,7 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({
               })}
             </Label>
           </Col>
-          <View
-            style={styles.itemChevron}
-            accessibilityElementsHidden={true}
-            importantForAccessibility="no"
-          >
+          <View style={styles.itemChevron} accessibilityElementsHidden={true} importantForAccessibility="no">
             <Icon name="chevron-right" size={30} />
           </View>
         </Row>

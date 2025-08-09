@@ -35,12 +35,7 @@ export default function NotFoundScreen() {
       {/* Status message for screen reader announcement */}
       <StatusMessage message={announcementMessage} type="assertive" visible={false} />
 
-      <View
-        style={[styles.container, backgroundStyle]}
-        ref={mainContentRef}
-        accessibilityLabel={a11y('not_found_content')}
-        accessibilityRole="text"
-      >
+      <View style={[styles.container, backgroundStyle]} ref={mainContentRef} accessibilityLabel={a11y('not_found_content')} accessibilityRole="text">
         <Label type="h1" accessibilityRole="header">
           {a11y('page_not_found_title')}
         </Label>
@@ -55,14 +50,7 @@ export default function NotFoundScreen() {
           {pathStable}
         </Label>
 
-        <Link
-          href="/"
-          style={[styles.link, homeLinkStyle]}
-          accessibilityLabel={a11y('go_home')}
-          accessibilityHint={a11y('go_home_hint')}
-          accessibilityRole="button"
-          replace
-        >
+        <Link href="/" style={[styles.link, homeLinkStyle]} accessibilityLabel={a11y('go_home')} accessibilityHint={a11y('go_home_hint')} accessibilityRole="button" replace>
           <Label type={'underlined'}>{a11y('go_home_text')}</Label>
         </Link>
       </View>
