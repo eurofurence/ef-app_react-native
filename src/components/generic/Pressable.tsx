@@ -15,10 +15,6 @@ export function Pressable({ containerStyle, minTouchSize = 44, ...props }: Press
   // Set default accessibility props if not provided
   const accessible = props.accessible !== undefined ? props.accessible : true
   const accessibilityRole = props.accessibilityRole || 'button'
-
-  return (
-    <View style={containerStyle}>
-      <TouchableOpacity {...props} style={touchableStyle} delayLongPress={1000} accessible={accessible} accessibilityRole={accessibilityRole} />
-    </View>
-  )
+  
+  return <TouchableOpacity {...props} style={[containerStyle, props.style]} delayLongPress={1000} accessible={accessible} accessibilityRole={accessibilityRole} />
 }
