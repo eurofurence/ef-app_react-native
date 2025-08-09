@@ -31,24 +31,26 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, st
   const styleAreaIndicator = { backgroundColor: colorForArea(announcement.details.Area, saturationValue, 0.76) }
 
   return (
-    <Pressable
-      style={[containerStyle, styles.container, appStyles.shadow, styleContainer, style]}
-      onPress={() => onPress?.(announcement.details)}
-      onLongPress={() => onLongPress?.(announcement.details)}
-    >
-      <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(announcement.details.Image)}>
-        <View style={[styles.areaIndicator, styleAreaIndicator]} />
-      </ImageBackground>
+    <View style={containerStyle}>
+      <Pressable
+        style={[styles.container, appStyles.shadow, styleContainer, style]}
+        onPress={() => onPress?.(announcement.details)}
+        onLongPress={() => onLongPress?.(announcement.details)}
+      >
+        <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(announcement.details.Image)}>
+          <View style={[styles.areaIndicator, styleAreaIndicator]} />
+        </ImageBackground>
 
-      <View style={styles.main}>
-        <Label style={styles.title} type="h3">
-          {announcement.details.NormalizedTitle}
-        </Label>
-        <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-          {announcement.time} - {announcement.details.Area}
-        </Label>
-      </View>
-    </Pressable>
+        <View style={styles.main}>
+          <Label style={styles.title} type="h3">
+            {announcement.details.NormalizedTitle}
+          </Label>
+          <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+            {announcement.time} - {announcement.details.Area}
+          </Label>
+        </View>
+      </Pressable>
+    </View>
   )
 }
 

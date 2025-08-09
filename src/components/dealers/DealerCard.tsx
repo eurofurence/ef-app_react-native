@@ -65,40 +65,42 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
   const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
 
   return (
-    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
-      <View style={[styles.pre, stylePre]}>
-        <Image
-          key={dealer.details.Id}
-          recyclingKey={dealer.details.Id}
-          style={[avatarBackground, styles.avatarCircle]}
-          source={avatar}
-          contentFit="contain"
-          placeholder={require('@/assets/static/ych.png')}
-        />
-      </View>
-
-      <View style={styles.main}>
-        <Label type="h3">{name}</Label>
-
-        {!description ? null : (
-          <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
-            {description}
-          </Label>
-        )}
-
-        {!offDays ? null : (
-          <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-            {t('not_attending_on', { offDays })}
-          </Label>
-        )}
-      </View>
-
-      {!favorite ? null : (
-        <View key="eventFavorite" style={styles.favorite}>
-          <Icon name="heart" size={20} color={colorHeart} />
+    <View style={containerStyle}>
+      <Pressable style={[styles.container, appStyles.shadow, styleBackground, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+        <View style={[styles.pre, stylePre]}>
+          <Image
+            key={dealer.details.Id}
+            recyclingKey={dealer.details.Id}
+            style={[avatarBackground, styles.avatarCircle]}
+            source={avatar}
+            contentFit="contain"
+            placeholder={require('@/assets/static/ych.png')}
+          />
         </View>
-      )}
-    </Pressable>
+
+        <View style={styles.main}>
+          <Label type="h3">{name}</Label>
+
+          {!description ? null : (
+            <Label key="dealerDescription" type="h4" variant="narrow" ellipsizeMode="tail" numberOfLines={2}>
+              {description}
+            </Label>
+          )}
+
+          {!offDays ? null : (
+            <Label key="dealerOffDays" style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+              {t('not_attending_on', { offDays })}
+            </Label>
+          )}
+        </View>
+
+        {!favorite ? null : (
+          <View key="eventFavorite" style={styles.favorite}>
+            <Icon name="heart" size={20} color={colorHeart} />
+          </View>
+        )}
+      </Pressable>
+    </View>
   )
 }
 

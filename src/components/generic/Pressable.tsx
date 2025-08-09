@@ -5,9 +5,5 @@ export type PressableProps = TouchableOpacityProps & {
 }
 
 export function Pressable({ containerStyle, ...props }: PressableProps) {
-  return (
-    <View style={containerStyle}>
-      <TouchableOpacity {...props} delayLongPress={1000} />
-    </View>
-  )
+  return <TouchableOpacity {...props} style={[containerStyle, props.style]} delayLongPress={1000} />
 }
