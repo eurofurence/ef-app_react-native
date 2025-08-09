@@ -44,6 +44,7 @@ module.exports = {
       googleServicesFile: './assets/platform/google-services.json',
       targetSdkVersion: 35,
       compileSdkVersion: 35,
+      edgeToEdgeEnabled: true,
       splash: {
         resizeMode: 'native',
         image: './assets/platform/splash.png',
