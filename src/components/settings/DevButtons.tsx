@@ -1,16 +1,16 @@
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
+import { storageKeyTokenResponse, useAuthContext } from '@/context/auth/Auth'
+import { useCache } from '@/context/data/Cache'
+import { withAlpha } from '@/context/Theme'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
-import { storageKeyTokenResponse, useAuthContext } from '@/context/auth/Auth'
-import { withAlpha } from '@/context/Theme'
-import { useCache } from '@/context/data/Cache'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
 import * as SecureStore from '@/util/secureStorage'
 import { vibrateAfter } from '@/util/vibrateAfter'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { captureException } from '@sentry/react-native'
-import * as Clipboard from 'expo-clipboard'
+import { setStringAsync } from 'expo-clipboard'
 import React, { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, View } from 'react-native'
@@ -29,7 +29,7 @@ export function DevButtons() {
   const copyDevicePushToken = useCallback(async () => {
     try {
       const pushToken = await getDevicePushToken()
-      await Clipboard.setStringAsync(pushToken)
+      await setStringAsync(pushToken)
       console.log(pushToken ?? '')
       toast('info', 'Device push token copied to clipboard', 5000)
     } catch (error) {
@@ -62,7 +62,7 @@ export function DevButtons() {
   const copyTokenData = useCallback(async () => {
     try {
       const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
-      await Clipboard.setStringAsync(tokenData ?? '')
+      await setStringAsync(tokenData ?? '')
       console.log(tokenData ?? '')
       toast('info', 'Token data copied to clipboard', 5000)
     } catch (error) {

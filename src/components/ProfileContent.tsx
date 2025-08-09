@@ -12,6 +12,7 @@ import { useAuthContext } from '@/context/auth/Auth'
 import { authSettingsUrl, conName } from '@/configuration'
 import { UserDetails } from '@/context/auth/User'
 import { Claims } from '@/context/auth/Auth'
+import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 
 /**
  * User role pill.
@@ -67,8 +68,11 @@ export type ProfileContentProps = {
  */
 export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPad = 0 }) => {
   const { t } = useTranslation('Profile')
+  const { t: a11y } = useTranslation('Profile')
   const avatarBackground = useThemeBackground('primary')
   const { logout } = useAuthContext()
+  const idpButtonStyle = useTouchTarget(44)
+  const logoutButtonStyle = useTouchTarget(44)
 
   const isAttendee = user.RoleMap.Attendee
   const isCheckedIn = user.RoleMap.AttendeeCheckedIn
@@ -93,6 +97,8 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
           transition={60}
           cachePolicy="memory"
           priority="high"
+          accessibilityLabel={a11y('accessibility.user_avatar', { name: claims.name as string })}
+          accessibilityHint={a11y('accessibility.avatar_hint')}
         />
       </View>
 
@@ -114,7 +120,15 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         {t('login_description', { conName })}
       </Label>
 
-      <Button style={styles.idpButton} outline icon="web" onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}>
+      <Button
+        style={[styles.idpButton, idpButtonStyle]}
+        outline
+        icon="web"
+        onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}
+        accessibilityLabel={a11y('accessibility.idp_settings_button')}
+        accessibilityHint={a11y('accessibility.idp_settings_button_hint')}
+        accessibilityRole="button"
+      >
         {t('idp_settings')}
       </Button>
 
@@ -129,7 +143,14 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         </>
       )}
 
-      <Button style={styles.logoutButton} icon="logout" onPress={() => logout().catch(captureException)}>
+      <Button
+        style={[styles.logoutButton, logoutButtonStyle]}
+        icon="logout"
+        onPress={() => logout().catch(captureException)}
+        accessibilityLabel={a11y('accessibility.logout_button')}
+        accessibilityHint={a11y('accessibility.logout_button_hint')}
+        accessibilityRole="button"
+      >
         {t('logout')}
       </Button>
     </>

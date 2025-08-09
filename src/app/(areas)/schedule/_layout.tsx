@@ -10,8 +10,8 @@ import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigat
 import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 import { isSameDay } from 'date-fns'
 import { withLayoutContext } from 'expo-router'
-import * as React from 'react'
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -46,6 +46,7 @@ function dayTabTitle(day: EventDayDetails | undefined) {
 }
 
 export default function ScheduleLayout() {
+  const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
   const now = useNow('static')
   const backgroundSurface = useThemeBackground('surface')
@@ -76,7 +77,7 @@ export default function ScheduleLayout() {
         tabBar={(props) => (
           <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
             <MaterialTopTabBar {...props} />
-            <Search style={styles.search} filter={filter} setFilter={setFilter} />
+            <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
           </View>
         )}
       >

@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { router } from 'expo-router'
 import { LostAndFoundCard } from './LostAndFoundCard'
@@ -26,6 +27,7 @@ function keyExtractor(item: LostAndFoundRecord) {
 
 export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, empty, trailer, padEnd = true }) => {
   const theme = useThemeName()
+  const { t } = useTranslation('LostAndFound')
   const { isSynchronizing, synchronize } = useCache()
 
   const onPress = useCallback((item: LostAndFoundRecord) => {
@@ -57,6 +59,8 @@ export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, emp
       estimatedItemSize={120}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityLabel={t('accessibility.lost_found_list')}
+      accessibilityHint={t('accessibility.lost_found_list_hint')}
     />
   )
 }

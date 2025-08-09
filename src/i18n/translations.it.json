@@ -9,32 +9,174 @@
     "extra_thanks": "Altri Ringraziamenti",
     "header": "Crediti"
   },
+  "Accessibility": {
+    "cancel": "Annulla",
+    "cancel_hint": "Chiude il dialogo senza salvare le modifiche",
+    "clear_selection": "Cancella tutte le selezioni",
+    "clear_selection_hint": "Rimuove tutti gli elementi attualmente selezionati",
+    "confirm": "Conferma",
+    "confirm_hint": "Salva le selezioni e chiude il dialogo",
+    "content_loaded": "Contenuto caricato con successo",
+    "deselect_item_hint": "Tocca per deselezionare questo elemento",
+    "filter_options": "Opzioni di filtro",
+    "go_home": "Vai alla schermata principale",
+    "go_home_hint": "Naviga alla schermata principale",
+    "go_home_text": "Vai alla schermata principale!",
+    "main_content": "Area principale del contenuto",
+    "main_sections": "Sezioni principali del contenuto",
+    "modal_actions": "Azioni del dialogo",
+    "not_found_content": "Contenuto pagina non trovata",
+    "options_list": "Opzioni disponibili",
+    "page_not_found": "Pagina non trovata. La pagina richiesta \"{{path}}\" non esiste.",
+    "page_not_found_title": "Questa schermata non esiste.",
+    "pull_to_refresh": "Pulisci per aggiornare",
+    "pull_to_refresh_hint": "Scorri verso il basso per aggiornare il contenuto più recente",
+    "refresh_completed": "Contenuto aggiornato",
+    "refreshing_content": "Contenuto aggiornato, attendere",
+    "requested_path": "Percorso richiesto",
+    "requested_path_hint": "Il percorso che è stato richiesto ma non trovato",
+    "search_input_hint": "Inserisci testo per cercare contenuti",
+    "search_input_label": "Campo di ricerca",
+    "search_results": "Risultati della ricerca",
+    "select_item_hint": "Tocca per selezionare questo elemento",
+    "selection_modal": "Dialogo di selezione",
+    "tab_active_hint": "Tab attualmente selezionato",
+    "tab_inactive_hint": "Tocca per selezionare questo tab",
+    "tab_indicator": "Ha notifiche",
+    "external_link": "Link esterno a {{url}}",
+    "external_link_hint": "Apre il link in una nuova finestra del browser",
+    "toast_dismiss_button": "Chiudi notifica",
+    "toast_dismiss_button_hint": "Tocca per chiudere questa notifica"
+  },
   "Announcement": {
+    "accessibility": {
+      "area_author_info": "Da {{area}} di {{author}}",
+      "banner_image": "Immagine banner annuncio",
+      "banner_image_hint": "Tocca per visualizzare l'immagine completa",
+      "byline_info": "Metadati annuncio",
+      "content_area": "Contenuto annuncio",
+      "date_info": "Pubblicato il {{date}}",
+      "loading_announcement": "Caricamento dettagli annuncio",
+      "not_available_message": "Annuncio non disponibile",
+      "page_description": "Pagina dettagli annuncio",
+      "scroll_view": "Area contenuto annuncio",
+      "scroll_view_hint": "Scorri per navigare attraverso il contenuto dell'annuncio",
+      "title_heading": "Titolo annuncio"
+    },
     "header": "Annuncio",
     "not_available": "Questo annuncio non è più disponibile."
   },
   "Announcements": {
+    "accessibility": {
+      "announcement_card": "Annuncio: {{title}} da {{area}}, {{time}}",
+      "announcement_card_hint": "Tocca per visualizzare i dettagli completi dell'annuncio",
+      "announcements_list": "Elenco annunci",
+      "announcements_list_hint": "Scorri per navigare tra gli annunci",
+      "area_indicator": "Indicatore area per {{area}}",
+      "empty_state": "Nessun annuncio disponibile",
+      "empty_state_hint": "Al momento non ci sono annunci attivi da visualizzare",
+      "list_page_description": "Pagina elenco annunci",
+      "main_container": "Contenuto pagina annunci",
+      "recent_announcements_section": "Sezione annunci recenti",
+      "view_all_button": "Visualizza tutti gli annunci",
+      "view_all_button_hint": "Apre l'elenco completo degli annunci"
+    },
     "header": "Annunci",
     "noAnnouncements": "Non ci sono annunci al momento.",
     "sectionSubtitle": "Aggiornamenti in tempo reale dalla convention",
     "sectionTitle": "Annunci"
   },
+  "ArtistsAlley": {
+    "accessibility": {
+      "accept_button": "Accetta richiesta di registrazione",
+      "accept_button_hint": "Approva la registrazione e la pubblica nell'elenco Artist Alley",
+      "artists_alley_entry_content": "Area contenuto voce Artist Alley",
+      "artists_alley_entry_loaded": "Voce Artist Alley per {{name}} caricata",
+      "artists_alley_entry_not_found": "Voce Artist Alley non trovata",
+      "artists_alley_entry_scroll": "Vista scroll voce Artist Alley",
+      "artists_alley_entry_scroll_hint": "Scorri attraverso i dettagli della voce Artist Alley",
+      "artists_alley_list": "Elenco registrazioni Artist Alley",
+      "artists_alley_list_hint": "Elenco delle registrazioni e tavoli Artist Alley",
+      "artists_alley_list_loaded": "Elenco Artist Alley caricato",
+      "artists_alley_unauthorized": "Accesso Artist Alley non autorizzato",
+      "artists_alley_unauthorized_content": "Area contenuto Artist Alley non autorizzata",
+      "cancel_button": "Annulla richiesta di registrazione",
+      "cancel_button_hint": "Annulla la tua richiesta di registrazione in sospeso",
+      "card_button": "Tavolo Artist Alley {{displayName}} al tavolo {{location}}, stato: {{status}}",
+      "card_button_hint": "Tocca per visualizzare i dettagli, doppio tocco per aprire le opzioni",
+      "checkout_button": "Esci dal tavolo",
+      "checkout_button_hint": "Ti segna come uscito dal tuo tavolo Artist Alley",
+      "delete_button": "Elimina registrazione",
+      "delete_button_hint": "Rimuove permanentemente questa registrazione",
+      "edit_button": "Modifica richiesta di registrazione",
+      "edit_button_hint": "Apre il modulo per modificare i dettagli della registrazione",
+      "learn_more_button": "Scopri di più sull'Artist Alley",
+      "learn_more_button_hint": "Apre le informazioni Artist Alley nel browser",
+      "login_button": "Pulsante di accesso",
+      "login_button_hint": "Accedi al tuo account",
+      "moderate_button": "Modera richieste Artist Alley",
+      "moderate_button_hint": "Apre l'interfaccia di moderazione per le registrazioni Artist Alley",
+      "moderation_entry_content": "Area contenuto moderazione Artist Alley",
+      "moderation_entry_loaded": "Voce moderazione Artist Alley per {{name}} con stato {{status}} caricata",
+      "moderation_entry_not_found": "Voce moderazione Artist Alley non trovata",
+      "moderation_entry_scroll": "Vista scroll moderazione Artist Alley",
+      "moderation_entry_scroll_hint": "Scorri attraverso i dettagli della moderazione Artist Alley",
+      "new_request_button": "Fai una nuova richiesta di registrazione",
+      "new_request_button_hint": "Apre il modulo per creare una nuova registrazione Artist Alley",
+      "refresh_list": "Aggiorna elenco Artist Alley",
+      "refresh_list_hint": "Trascina verso il basso per aggiornare le ultime registrazioni",
+      "register_self_button": "Gestisci la tua registrazione Artist Alley",
+      "register_self_button_hint": "Apre il modulo per gestire la tua registrazione tavolo Artist Alley",
+      "registration_form_content": "Area contenuto modulo registrazione Artist Alley",
+      "registration_form_loaded": "Modulo registrazione Artist Alley caricato con stato {{status}}",
+      "registration_form_new": "Nuovo modulo registrazione Artist Alley caricato",
+      "registration_form_scroll": "Vista scroll modulo registrazione Artist Alley",
+      "registration_form_scroll_hint": "Scorri attraverso il modulo registrazione Artist Alley",
+      "reject_button": "Rifiuta richiesta di registrazione",
+      "reject_button_hint": "Rifiuta la richiesta di registrazione",
+      "submission_image": "Opera d'arte di esempio da {{displayName}}",
+      "telegram_link": "Contatta su Telegram {{handle}}",
+      "telegram_link_hint": "Apre la chat di Telegram",
+      "website_link": "Visita il sito web {{url}}",
+      "website_link_hint": "Apre il sito web nel browser"
+    }
+  },
   "Countdown": {
     "after_event": "E con questo è tutto! Speriamo di rivederti l'anno prossimo!",
     "before_event": "{{conName}} inizierà {{diff}}"
-  },
-  "Registration": {
-    "registration_title": "Registrazione",
-    "registration_opens_in": "La registrazione si aprirà {{diff}}",
-    "registration_open": "La registrazione è ora aperta!",
-    "registration_closed": "La registrazione è chiusa",
-    "register_now": "Registrati Ora",
-    "thank_you_see_you_next_year": "Grazie e ci vediamo l'anno prossimo!"
   },
   "Dealer": {
     "about": "Informazioni",
     "about_the_art": "Informazioni sull'arte",
     "about_the_artist": "Informazioni sull'artista",
+    "accessibility": {
+      "about_art_text": "Informazioni sull'arte: {{text}}",
+      "about_artist_text": "Informazioni sull'artista: {{text}}",
+      "add_favorite_button": "Aggiungi venditore ai preferiti",
+      "add_favorite_hint": "Aggiunge questo venditore alla tua lista dei preferiti",
+      "art_preview_caption": "Didascalia anteprima arte: {{caption}}",
+      "bluesky_button": "Visita {{handle}} su Bluesky",
+      "bluesky_button_hint": "Apre profilo Bluesky nel browser",
+      "dealer_attendance": "Informazioni presenza: {{days}}",
+      "dealer_avatar": "Immagine profilo per {{name}}",
+      "dealer_content_area": "Contenuto informazioni venditore",
+      "dealer_description": "Descrizione venditore: {{description}}",
+      "dealer_name_heading": "Nome venditore: {{name}}",
+      "discord_button": "Copia handle Discord {{handle}}",
+      "discord_button_hint": "Copia handle Discord negli appunti",
+      "mastodon_button": "Visita {{handle}} su Mastodon",
+      "mastodon_button_hint": "Apre profilo Mastodon nel browser",
+      "page_description": "Pagina dettagli venditore",
+      "remove_favorite_button": "Rimuovi venditore dai preferiti",
+      "remove_favorite_hint": "Rimuove questo venditore dalla tua lista dei preferiti",
+      "scroll_view_hint": "Scorri per navigare attraverso le informazioni del venditore",
+      "share_dealer_button": "Condividi informazioni venditore",
+      "share_dealer_hint": "Apre opzioni di condivisione per questo venditore",
+      "telegram_button": "Contatta {{handle}} su Telegram",
+      "telegram_button_hint": "Apre Telegram per contattare questo venditore",
+      "twitter_button": "Visita {{handle}} su Twitter",
+      "twitter_button_hint": "Apre profilo Twitter nel browser"
+    },
     "attends": "Disponibile",
     "attends_fri": "Venerdì",
     "attends_sat": "Sabato",
@@ -48,12 +190,37 @@
     "viewing_dealer": "Visualizzando il venditore"
   },
   "Dealers": {
+    "accessibility": {
+      "dealer_avatar": "Immagine profilo per {{name}}",
+      "dealer_card": "Venditore: {{name}}",
+      "dealer_card_hint": "Tocca per visualizzare dettagli venditore, tieni premuto per opzioni",
+      "dealer_categories": "Categorie: {{categories}}",
+      "dealer_favorite_icon": "Indicatore preferito",
+      "dealer_favorited": "Preferito",
+      "dealer_not_present": "Non presente oggi",
+      "dealer_off_days": "Non presente il {{offDays}}",
+      "dealers_list": "Elenco venditori",
+      "dealers_list_hint": "Scorri per navigare tra i venditori, trascina verso il basso per aggiornare",
+      "dealers_sectioned_list": "Venditori organizzati per sezioni",
+      "dealers_sectioned_list_hint": "Scorri per navigare tra i venditori raggruppati per categoria, trascina verso il basso per aggiornare"
+    },
     "all": "Tutti",
     "dealers_at_convention": "Venditori a {{convention}}",
-    "not_attending_on": "Non disponibile il {{offDays}}"
+    "not_attending_on": "Non disponibile il {{offDays}}",
+    "search": {
+      "placeholder": "Cerca venditori…"
+    }
   },
   "Event": {
     "about_title": "Informazioni",
+    "accessibility": {
+      "event_content": "Contenuto evento",
+      "event_details_loaded": "Dettagli evento caricati per {{title}}",
+      "event_details_scroll": "Vista scroll dettagli evento",
+      "event_details_scroll_hint": "Vista scrollabile contenente dettagli evento",
+      "event_header": "Intestazione evento",
+      "event_header_hint": "Intestazione contenente titolo evento e pulsante condividi"
+    },
     "add_favorite": "Favorito",
     "event_was_updated": "L'evento è stato aggiornato dalla tua ultima visita",
     "give_feedback": "Invia feedback",
@@ -74,6 +241,27 @@
     "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
     "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
+  "EventFeedback": {
+    "accessibility": {
+      "feedback_form_content": "Contenuto modulo feedback",
+      "feedback_form_loaded": "Modulo feedback caricato per {{title}}",
+      "feedback_form_scroll": "Vista scroll modulo feedback",
+      "feedback_form_scroll_hint": "Vista scrollabile contenente modulo feedback",
+      "submit_feedback": "Invia feedback",
+      "submit_feedback_hint": "Invia la tua valutazione e messaggio per questo evento"
+    },
+    "disabled_not_attending": "Solo i partecipanti possono dare feedback",
+    "disabled_not_logged_in": "Effettua l'accesso per dare feedback",
+    "explanation": "Facci sapere come ti è sembrato {{ eventTitle }} lasciandoci una valutazione e magari anche un messaggio! Ci assicureremo che arrivi alla persona giusta.",
+    "header": "Feedback: {{ eventTitle }}",
+    "message_placeholder": "Hai altri feedback specifici per gli organizzatori? Scrivilo qui.",
+    "message_title": "Messaggio di feedback",
+    "rating_title": "Quanto ti è piaciuto questo evento?",
+    "submit": "Invia feedback",
+    "submit_failed": "Qualcosa è andato storto durante l'invio. Riprova più tardi . . .",
+    "submit_in_progress": "Invio in corso . . .",
+    "thank_you": "Grazie per averci fatto sapere come ti è sembrato {{ eventTitle }}."
+  },
   "Events": {
     "afternoon": "Al pomeriggio",
     "current_subtitle": "Questi eventi si stanno svolgendo ora",
@@ -81,6 +269,7 @@
     "evening": "Alla sera",
     "events_count": "{{count}} eventi",
     "events_done": "Eventi conclusi",
+    "events_list": "Events list",
     "favorites_subtitle": "Riceverai un promemoria per questi eventi",
     "favorites_title": "Eventi preferiti",
     "filter_by_day": "Organizza per giorni",
@@ -90,17 +279,67 @@
     "long_running": "Funziona più a lungo",
     "morning": "Al mattino",
     "night": "Alla notte",
+    "search": {
+      "placeholder": "Cerca eventi…"
+    },
     "upcoming_favorites_title": "La tua agenda",
     "upcoming_subtitle": "Questi eventi inizieranno nei prossimi 30 minuti",
     "upcoming_title": "Eventi in arrivo"
   },
   "Home": {
+    "accessibility": {
+      "banner_image": "Immagine di sfondo banner convention",
+      "changed_dealers_list": "{{count}} venditori aggiornati: {{dealers}}",
+      "changed_events_list": "{{count}} eventi aggiornati: {{events}}",
+      "convention_logo": "Logo convention",
+      "convention_name": "Nome convention: {{name}}",
+      "countdown_header": "Intestazione convention con countdown e banner",
+      "countdown_header_hint": "Mostra il branding della convention e lo stato attuale dell'evento",
+      "countdown_status": "Stato evento: {{status}}",
+      "dealers_search_section": "{{count}} risultati venditori",
+      "device_warning_container": "Avviso compatibilità dispositivo",
+      "device_warning_content": "Informazioni compatibilità dispositivo",
+      "events_search_section": "{{count}} risultati eventi",
+      "favorites_warning_container": "Notifica aggiornamento preferiti",
+      "favorites_warning_description": "Informazioni sui preferiti aggiornati",
+      "hide_device_warning": "Nascondi avviso dispositivo",
+      "hide_device_warning_hint": "Chiude questo avviso di compatibilità dispositivo",
+      "hide_favorites_warning": "Nascondi avviso preferiti",
+      "hide_favorites_warning_hint": "Chiude questa notifica di aggiornamento preferiti",
+      "hide_language_warning": "Nascondi avviso lingua",
+      "hide_language_warning_hint": "Chiude questo avviso di stato traduzione",
+      "hide_registration_warning": "Nascondi avviso registrazione",
+      "hide_registration_warning_hint": "Chiude questa notifica di stato registrazione",
+      "hide_timezone_warning": "Nascondi avviso fuso orario",
+      "hide_timezone_warning_hint": "Chiude questa notifica di differenza fuso orario",
+      "knowledge_search_section": "{{count}} risultati articoli informativi",
+      "language_warning_container": "Avviso stato traduzione",
+      "language_warning_content": "Informazioni stato traduzione",
+      "register_now_button": "Registrati per la convention",
+      "register_now_button_hint": "Apre il sito web di registrazione nel browser",
+      "registration_icon": "Indicatore registrazione",
+      "registration_status": "Stato registrazione: {{status}}",
+      "registration_warning_container": "Notifica stato registrazione",
+      "search_results_container": "Risultati ricerca",
+      "search_results_container_hint": "Mostra i risultati di ricerca organizzati per categoria",
+      "timezone_warning_container": "Notifica differenza fuso orario",
+      "timezone_warning_content": "Il fuso orario del tuo dispositivo ({{deviceTimeZone}}) differisce dal fuso orario {{convention}} ({{conTimeZone}})",
+      "translate_icon": "Indicatore traduzione",
+      "update_icon": "Indicatore aggiornamento",
+      "warning_icon": "Indicatore avviso"
+    },
     "announcementsTitle_one": "C'è {{ count }} annuncio.",
     "announcementsTitle_other": "Ci sono {{ count }} annunci.",
     "announcementsTitle_zero": "Non ci sono annunci.",
     "content_untranslated": "Stai utilizzando l'applicazione in una lingua diversa dall'inglese. Ti preghiamo di notare che i nomi e i testi di tutti i contenuti dinamici vengono visualizzati esclusivamente in inglese.",
     "eventsTitle_zero": "Non ci sono eventi.",
+    "search": {
+      "placeholder": "Cerca eventi, venditori e articoli informativi…"
+    },
     "warnings": {
+      "favorites_changed": "Preferiti aggiornati",
+      "favorites_changed_subtitle": "Alcuni dei tuoi preferiti sono stati aggiornati dall'ultima volta che li hai visualizzati",
+      "hide": "Nascondi",
       "language": "Traduzione",
       "no_image_caching": "Il dispositivo non può salvare le immagini nella cache. Senza una connessione internet, le immagini non saranno visualizzate.",
       "no_notifications": "Il dispositivo non supporta le notifiche pianificate. Non riceverai i promemoria per i prossimi eventi.",
@@ -110,9 +349,48 @@
     }
   },
   "KnowledgeGroups": {
-    "header": "Articoli Informativi"
+    "accessibility": {
+      "kb_entry_card": "Articolo informativo: {{title}}",
+      "kb_entry_card_hint": "Tocca per visualizzare i dettagli completi dell'articolo",
+      "kb_entry_content": "Contenuto articolo informativo",
+      "kb_entry_loaded": "Articolo informativo caricato: {{title}}",
+      "kb_entry_scroll": "Vista scroll articolo informativo",
+      "kb_entry_scroll_hint": "Vista scrollabile contenente il contenuto dell'articolo informativo",
+      "kb_section_header": "Sezione: {{title}} - {{subtitle}}",
+      "kb_sectioned_list": "Elenco articoli informativi",
+      "kb_sectioned_list_hint": "Scorri per navigare tra gli articoli, trascina verso il basso per aggiornare",
+      "no_search_results": "Nessun articolo informativo trovato per \"{{query}}\"",
+      "search_results": "Trovati {{count}} articoli informativi per \"{{query}}\""
+    },
+    "header": "Articoli Informativi",
+    "search": {
+      "placeholder": "Cerca articoli informativi…"
+    }
   },
   "LostAndFound": {
+    "accessibility": {
+      "date_section": "Sezione informazioni data",
+      "description_section": "Sezione descrizione elemento",
+      "detail_page_scroll_view": "Dettagli elemento Lost & Found per {{title}}",
+      "detail_page_scroll_view_hint": "Scorri per scorrere le informazioni dell'elemento",
+      "empty_state": "Nessun elemento trovato",
+      "empty_state_hint": "Al momento non ci sono elementi perduti o trovati segnalati",
+      "error_state": "Errore caricamento elementi",
+      "error_state_hint": "Si è verificato un errore durante il caricamento degli elementi Lost & Found",
+      "item_description": "Descrizione: {{description}}",
+      "item_image": "Immagine di {{title}}",
+      "item_image_hint": "Tocca per visualizzare l'immagine a dimensione intera",
+      "item_title": "Titolo elemento: {{title}}",
+      "loading_state": "Caricamento elementi Lost & Found",
+      "loading_state_hint": "Attendere mentre gli elementi vengono caricati",
+      "lost_found_card": "Elemento Lost & Found: {{title}}, stato: {{status}}, segnalato il {{date}}",
+      "lost_found_card_hint": "Tocca per visualizzare i dettagli completi dell'elemento",
+      "lost_found_list": "Elenco elementi Lost & Found",
+      "lost_found_list_hint": "Scorri per navigare tra gli elementi, trascina verso il basso per aggiornare",
+      "main_container": "Contenuto pagina Lost & Found",
+      "reported_date": "Segnalato il {{date}}",
+      "status_badge": "Stato: {{status}}"
+    },
     "category": "Categoria",
     "contact_info": "Informazioni di contatto",
     "description": "Descrizione",
@@ -133,10 +411,78 @@
     }
   },
   "Maps": {
-    "preview_unavailable": "Anteprima mappa non disponibile"
+    "preview_unavailable": "Anteprima mappa non disponibile",
+    "accessibility": {
+      "bottom_sheet": "Pannello risultati mappa",
+      "bottom_sheet_hint": "Scorri verso l'alto per espandere, verso il basso per comprimere",
+      "event_conference_room_link": "Sala conferenze: {{name}}",
+      "event_conference_room_link_hint": "Visualizza questa posizione sala conferenze",
+      "interactive_map": "Vista mappa interattiva",
+      "interactive_map_hint": "Usa il pizzico per zoomare, trascina per muoverti sulla mappa",
+      "link_preview_available": "Anteprima link per {{url}}",
+      "link_preview_hint": "Tocca per aprire link",
+      "link_preview_loading": "Caricamento anteprima link",
+      "link_preview_unavailable": "Anteprima link non disponibile",
+      "loading_preview": "Caricamento anteprima",
+      "map_container": "Contenitore mappa per {{mapName}}",
+      "map_container_hint": "Mappa interattiva con zoom, trascinamento e aree cliccabili",
+      "map_entry_link": "Posizione mappa: {{name}}",
+      "map_entry_link_hint": "Naviga a questa posizione sulla mappa",
+      "map_image": "Immagine mappa per {{mapName}}",
+      "map_marker": "Marcatore posizione",
+      "map_marker_hint": "Indica la posizione selezionata sulla mappa",
+      "map_page": "Pagina mappa interattiva",
+      "map_page_hint": "Naviga ed esplora la mappa con gesti di zoom e trascinamento",
+      "map_results_list": "Risultati ricerca mappa",
+      "map_results_list_hint": "Elenco di posizioni e link trovati nell'area mappa corrente",
+      "no_preview_available": "Nessuna anteprima disponibile",
+      "web_external_link": "Link esterno a {{name}} su {{host}}",
+      "web_external_link_hint": "Apre sito web esterno nel browser",
+      "zoomable_map": "Interfaccia mappa zoomabile",
+      "zoomable_map_hint": "Pizzica per ingrandire o rimpicciolire, trascina per muoverti"
+    },
+    "filtering": "Ricerca nell'area visibile",
+    "results": "Nell'area visibile"
   },
   "Menu": {
     "about": "Informazioni",
+    "accessibility": {
+      "about_tab": "Scheda informazioni",
+      "about_tab_hint": "Visualizza informazioni app e crediti",
+      "artist_alley_tab": "Scheda Artist Alley",
+      "artist_alley_tab_hint": "Sfoglia e registrati per tavoli Artist Alley",
+      "avatar_default": "Avatar profilo predefinito",
+      "avatar_with_name": "Avatar profilo per {{name}}",
+      "catch_em_tab": "Scheda gioco Catch-em-all",
+      "catch_em_tab_disabled_hint": "Accesso richiesto per giocare a catch-em-all",
+      "catch_em_tab_hint": "Gioca al gioco di cattura fursuit",
+      "info_tab": "Scheda articoli informativi",
+      "info_tab_hint": "Sfoglia base di conoscenza e articoli informativi",
+      "login_button": "Pulsante accesso",
+      "login_button_hint": "Tocca per accedere al tuo account",
+      "login_section": "Sezione accesso e profilo",
+      "lost_found_tab": "Scheda Lost & Found",
+      "lost_found_tab_disabled_hint": "Accesso richiesto per accedere a Lost & Found",
+      "lost_found_tab_hint": "Sfoglia oggetti smarriti e trovati",
+      "main_menu": "Menu di navigazione principale",
+      "main_menu_hint": "Navigazione primaria dell'app con schede per diverse sezioni",
+      "map_tab": "Scheda mappa interattiva",
+      "map_tab_hint": "Apre mappa interattiva convention nel browser",
+      "menu_tabs": "Schede di navigazione",
+      "messages_button": "Visualizza messaggi",
+      "messages_button_hint": "Apri i tuoi messaggi privati",
+      "profile_button": "Pulsante profilo",
+      "profile_button_disabled_hint": "Accesso richiesto per accedere al profilo",
+      "profile_button_hint": "Tocca per visualizzare il tuo profilo",
+      "profile_button_with_name": "Pulsante profilo per {{name}}",
+      "profile_tab": "Scheda profilo",
+      "profile_tab_disabled_hint": "Accesso richiesto per accedere al profilo",
+      "profile_tab_hint": "Visualizza e gestisci il tuo profilo",
+      "settings_tab": "Scheda impostazioni",
+      "settings_tab_hint": "Configura preferenze e impostazioni dell'app",
+      "website_tab": "Scheda sito web convention",
+      "website_tab_hint": "Apre sito web convention nel browser"
+    },
     "announcements": "Annunci",
     "dealers": "Venditori",
     "events": "Eventi",
@@ -157,7 +503,34 @@
     "announcement": "C'è un annuncio da {{conName}}",
     "private_message": "Hai ricevuto un nuovo messaggio privato"
   },
+  "PrivateMessageCompose": {
+    "accessibility": {
+      "compose_form_content": "Contenuto modulo di composizione",
+      "compose_form_loaded": "Modulo di composizione messaggio caricato",
+      "compose_form_scroll": "Vista scroll modulo di composizione",
+      "compose_form_scroll_hint": "Vista scrollabile contenente il modulo di composizione messaggio",
+      "submit_message": "Invia messaggio",
+      "submit_message_hint": "Invia il messaggio composto al destinatario"
+    }
+  },
+  "PrivateMessageItem": {
+    "accessibility": {
+      "message_content": "Contenuto messaggio",
+      "message_loaded": "Messaggio caricato: {{subject}} da {{author}}",
+      "message_scroll": "Vista scroll messaggio",
+      "message_scroll_hint": "Vista scrollabile contenente il contenuto del messaggio"
+    },
+    "from": "Da {{authorName}}",
+    "header": "Messaggio privato",
+    "read_at": "Letto alle {{time}}"
+  },
   "PrivateMessageList": {
+    "accessibility": {
+      "messages_list": "Lista messaggi",
+      "messages_list_hint": "Lista di messaggi privati organizzati per mittente e stato di lettura",
+      "messages_loaded": "Caricati {{total}} messaggi, {{unread}} non letti",
+      "no_messages": "Nessun messaggio disponibile"
+    },
     "from": "Da {{ author }}",
     "header": "Messaggi privati",
     "message_item_subtitle": "{{ status }} - Inviato {{ time }}",
@@ -165,17 +538,67 @@
     "section_title_from": "Da {{authorName}}",
     "unread": "Non letto"
   },
+  "Profile": {
+    "accessibility": {
+      "avatar_hint": "Tocca per visualizzare il profilo",
+      "idp_settings_button": "Pulsante impostazioni identità",
+      "idp_settings_button_hint": "Apre il sito web delle impostazioni identità nel browser",
+      "loading_profile": "Caricamento profilo",
+      "logout_button": "Pulsante logout",
+      "logout_button_hint": "Esce dal tuo account",
+      "profile_content_area": "Contenuto profilo",
+      "profile_scroll_view": "Scorrimento profilo",
+      "profile_scroll_view_hint": "Scorri attraverso le tue informazioni di profilo",
+      "user_avatar": "Immagine profilo utente per {{name}}"
+    },
+    "header": "Profilo",
+    "idp_settings": "Sito di impostazione identità",
+    "logged_in_as": "Sei loggato come {{username}}",
+    "login_description": "Sei loggato permette a {{conName}} di inviarti messaggi personalizzati. Ti permette anche di partecipare al gioco Fursuit Catch 'em All e di registrarti per tavoli nell'Artist Alley.",
+    "logout": "Esci",
+    "not_logged_in": "Non sei loggato",
+    "registration_nr": "Numero di registrazione",
+    "roles": "Ruoli",
+    "roles_simple_attendee": "Non ancora registrato",
+    "roles_simple_checked_in": "Sei registrato",
+    "roles_subtitle": "I tuoi ruoli nell'app {{conName}}",
+    "status_names": {
+      "Approved": "Approvato",
+      "Cancelled": "Annullato",
+      "CheckedIn": "Registrato",
+      "Deleted": "Eliminato",
+      "New": "Nuovo",
+      "Paid": "Pagato",
+      "PartiallyPaid": "Parzialmente pagato",
+      "Unknown": "Sconosciuto"
+    }
+  },
+  "Registration": {
+    "register_now": "Registrati Ora",
+    "registration_closed": "La registrazione è chiusa",
+    "registration_open": "La registrazione è ora aperta!",
+    "registration_opens_in": "La registrazione si aprirà {{diff}}",
+    "registration_title": "Registrazione",
+    "thank_you_see_you_next_year": "Grazie e ci vediamo l'anno prossimo!"
+  },
   "RevealHidden": {
     "header": "Eventi nascosti",
     "lead": "Clicca su un evento per rivelarlo nell'elenco",
-    "title": "Eventi"
+    "title": "Eventi",
+    "accessibility": {
+      "no_hidden_events": "Nessun evento nascosto trovato",
+      "hidden_events_loaded": "{{count}} eventi nascosti caricati",
+      "reveal_hidden_scroll": "Vista scroll eventi nascosti",
+      "reveal_hidden_scroll_hint": "Scorri attraverso gli eventi nascosti per rivelarli",
+      "reveal_hidden_content": "Area contenuto eventi nascosti"
+    }
   },
   "Search": {
-    "placeholder": "Cerca…",
     "clear_search": "Cancella ricerca",
     "clear_search_hint": "Doppio tap per cancellare il campo di ricerca",
-    "search_input_label": "Campo di ricerca",
-    "search_input_hint": "Inserisci testo per cercare contenuti"
+    "placeholder": "Cerca…",
+    "search_input_hint": "Inserisci testo per cercare contenuti",
+    "search_input_label": "Campo di ricerca"
   },
   "Settings": {
     "about": "Crediti",
@@ -196,6 +619,12 @@
       "title": "Avvisi nella schermata principale"
     },
     "header": "Impostazioni",
-    "settingsSection": "Impostazioni"
+    "settingsSection": "Impostazioni",
+    "accessibility": {
+      "settings_page_loaded": "Pagina impostazioni caricata",
+      "settings_scroll": "Vista scroll pagina impostazioni",
+      "settings_scroll_hint": "Scorri attraverso le opzioni e preferenze delle impostazioni",
+      "settings_content": "Area contenuto impostazioni"
+    }
   }
 }

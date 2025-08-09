@@ -2,12 +2,14 @@ import { useLocalSearchParams } from 'expo-router'
 import * as React from 'react'
 import { useMemo } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useTranslation } from 'react-i18next'
 import { Header } from '@/components/generic/containers/Header'
 import { MapContent, MapContentProps } from '@/components/maps/MapContent'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
 
 export default function MapItem() {
+  const { t } = useTranslation('Maps')
   const params = useLocalSearchParams<{ slug: string[] }>()
 
   // Extract parameters from the slug array
@@ -48,7 +50,7 @@ export default function MapItem() {
   }, [mapCache, link])
 
   return (
-    <View style={[StyleSheet.absoluteFill, backgroundStyle]}>
+    <View style={[StyleSheet.absoluteFill, backgroundStyle]} accessibilityLabel={t('accessibility.map_page')} accessibilityHint={t('accessibility.map_page_hint')}>
       <Header>{titleText}</Header>
       {!mapCache?.Image || (entryId && !entry) || (linkId && !link) ? null : <MapContent map={mapCache as MapContentProps['map']} entry={entry} link={link} />}
     </View>

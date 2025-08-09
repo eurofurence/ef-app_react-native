@@ -16,32 +16,174 @@
     "extra_thanks": "Szczególne podziękowania",
     "header": "O aplikacji"
   },
+  "Accessibility": {
+    "cancel": "Anuluj",
+    "cancel_hint": "Zamyka dialog bez zapisywania zmian",
+    "clear_selection": "Wyczyść wszystkie wybrane",
+    "clear_selection_hint": "Usuwa wszystkie obecnie wybrane elementy",
+    "confirm": "Potwierdź",
+    "confirm_hint": "Zapisuje wybrane elementy i zamyka dialog",
+    "content_loaded": "Treści załadowane pomyślnie",
+    "deselect_item_hint": "Dotknij, aby odznaczyć ten element",
+    "filter_options": "Opcje filtrowania",
+    "go_home": "Przejdź do ekranu głównego",
+    "go_home_hint": "Przechodzi do głównego ekranu",
+    "go_home_text": "Przejdź do ekranu głównego!",
+    "main_content": "Główny obszar treści",
+    "main_sections": "Główne sekcje treści",
+    "modal_actions": "Akcje dialogu",
+    "not_found_content": "Zawartość strony nie znaleziona",
+    "options_list": "Dostępne opcje",
+    "page_not_found": "Strona nie została znaleziona. Żądana strona \"{{path}}\" nie istnieje.",
+    "page_not_found_title": "Ten ekran nie istnieje.",
+    "pull_to_refresh": "Pulsuj, aby odświeżyć",
+    "pull_to_refresh_hint": "Przeciągnij w dół, aby odświeżyć najnowsze treści",
+    "refresh_completed": "Treści odświeżone",
+    "refreshing_content": "Treści są odświeżane, proszę czekać",
+    "requested_path": "Żądana ścieżka",
+    "requested_path_hint": "Ścieżka, która została żądana, ale nie została znaleziona",
+    "search_input_hint": "Wprowadź tekst, aby wyszukać treści",
+    "search_input_label": "Pole wyszukiwania",
+    "search_results": "Wyniki wyszukiwania",
+    "select_item_hint": "Dotknij, aby wybrać ten element",
+    "selection_modal": "Dialog wyboru",
+    "tab_active_hint": "Aktualnie wybrany tab",
+    "tab_inactive_hint": "Dotknij, aby wybrać ten tab",
+    "tab_indicator": "Ma powiadomienia",
+    "external_link": "Link zewnętrzny do {{url}}",
+    "external_link_hint": "Otwiera link w nowym oknie przeglądarki",
+    "toast_dismiss_button": "Zamknij powiadomienie",
+    "toast_dismiss_button_hint": "Dotknij, aby zamknąć to powiadomienie"
+  },
   "Announcement": {
+    "accessibility": {
+      "area_author_info": "Z {{area}} przez {{author}}",
+      "banner_image": "Obraz banera ogłoszenia",
+      "banner_image_hint": "Dotknij, aby wyświetlić pełny obraz",
+      "byline_info": "Metadane ogłoszenia",
+      "content_area": "Treść ogłoszenia",
+      "date_info": "Opublikowano {{date}}",
+      "loading_announcement": "Ładowanie szczegółów ogłoszenia",
+      "not_available_message": "Ogłoszenie niedostępne",
+      "page_description": "Strona szczegółów ogłoszenia",
+      "scroll_view": "Obszar treści ogłoszenia",
+      "scroll_view_hint": "Przeciągnij, aby przewinąć treść ogłoszenia",
+      "title_heading": "Tytuł ogłoszenia"
+    },
     "header": "Ogłoszenie",
     "not_available": "To ogłoszenie nie jest już dostępne."
   },
   "Announcements": {
+    "accessibility": {
+      "announcement_card": "Ogłoszenie: {{title}} z {{area}}, {{time}}",
+      "announcement_card_hint": "Dotknij, aby wyświetlić pełne szczegóły ogłoszenia",
+      "announcements_list": "Lista ogłoszeń",
+      "announcements_list_hint": "Przeciągnij, aby nawigować przez ogłoszenia",
+      "area_indicator": "Wskaźnik obszaru dla {{area}}",
+      "empty_state": "Brak dostępnych ogłoszeń",
+      "empty_state_hint": "Obecnie nie ma aktywnych ogłoszeń do wyświetlenia",
+      "list_page_description": "Strona listy ogłoszeń",
+      "main_container": "Zawartość strony ogłoszeń",
+      "recent_announcements_section": "Sekcja najnowszych ogłoszeń",
+      "view_all_button": "Wyświetl wszystkie ogłoszenia",
+      "view_all_button_hint": "Otwiera pełną listę ogłoszeń"
+    },
     "header": "Ogłoszenia",
     "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",
     "sectionSubtitle": "Na żywo z konwentu",
     "sectionTitle": "Ogłoszenia"
   },
+  "ArtistsAlley": {
+    "accessibility": {
+      "accept_button": "Zaakceptuj wniosek o rejestrację",
+      "accept_button_hint": "Zatwierdza rejestrację i publikuje ją na liście Artist Alley",
+      "artists_alley_entry_content": "Obszar zawartości wpisu Artist Alley",
+      "artists_alley_entry_loaded": "Wpis Artist Alley dla {{name}} załadowany",
+      "artists_alley_entry_not_found": "Wpis Artist Alley nie znaleziony",
+      "artists_alley_entry_scroll": "Widok przewijania wpisu Artist Alley",
+      "artists_alley_entry_scroll_hint": "Przewiń przez szczegóły wpisu Artist Alley",
+      "artists_alley_list": "Lista rejestracji Artist Alley",
+      "artists_alley_list_hint": "Lista rejestracji i stolików Artist Alley",
+      "artists_alley_list_loaded": "Lista Artist Alley załadowana",
+      "artists_alley_unauthorized": "Dostęp do Artist Alley nieautoryzowany",
+      "artists_alley_unauthorized_content": "Obszar zawartości Artist Alley nieautoryzowany",
+      "cancel_button": "Anuluj wniosek o rejestrację",
+      "cancel_button_hint": "Anuluje twój oczekujący wniosek o rejestrację",
+      "card_button": "Stoisko Artist Alley {{displayName}} przy stoliku {{location}}, status: {{status}}",
+      "card_button_hint": "Dotknij, aby wyświetlić szczegóły, podwójne dotknięcie, aby otworzyć opcje",
+      "checkout_button": "Wyloguj się ze stolika",
+      "checkout_button_hint": "Oznacza cię jako wylogowanego ze stolika Artist Alley",
+      "delete_button": "Usuń rejestrację",
+      "delete_button_hint": "Trwale usuwa tę rejestrację",
+      "edit_button": "Edytuj wniosek o rejestrację",
+      "edit_button_hint": "Otwiera formularz do modyfikacji szczegółów rejestracji",
+      "learn_more_button": "Dowiedz się więcej o Artist Alley",
+      "learn_more_button_hint": "Otwiera informacje o Artist Alley w przeglądarce",
+      "login_button": "Przycisk logowania",
+      "login_button_hint": "Loguje do twojego konta",
+      "moderate_button": "Moderuj wnioski Artist Alley",
+      "moderate_button_hint": "Otwiera interfejs moderacji dla rejestracji Artist Alley",
+      "moderation_entry_content": "Obszar zawartości moderacji Artist Alley",
+      "moderation_entry_loaded": "Wpis moderacji Artist Alley dla {{name}} ze statusem {{status}} załadowany",
+      "moderation_entry_not_found": "Wpis moderacji Artist Alley nie znaleziony",
+      "moderation_entry_scroll": "Widok przewijania moderacji Artist Alley",
+      "moderation_entry_scroll_hint": "Przewiń przez szczegóły moderacji Artist Alley",
+      "new_request_button": "Złóż nowy wniosek o rejestrację",
+      "new_request_button_hint": "Otwiera formularz do utworzenia nowej rejestracji Artist Alley",
+      "refresh_list": "Odśwież listę Artist Alley",
+      "refresh_list_hint": "Przeciągnij w dół, aby odświeżyć najnowsze rejestracje",
+      "register_self_button": "Zarządzaj swoją rejestracją Artist Alley",
+      "register_self_button_hint": "Otwiera formularz do zarządzania twoją rejestracją stolika Artist Alley",
+      "registration_form_content": "Obszar zawartości formularza rejestracji Artist Alley",
+      "registration_form_loaded": "Formularz rejestracji Artist Alley załadowany ze statusem {{status}}",
+      "registration_form_new": "Nowy formularz rejestracji Artist Alley załadowany",
+      "registration_form_scroll": "Widok przewijania formularza rejestracji Artist Alley",
+      "registration_form_scroll_hint": "Przewiń przez formularz rejestracji Artist Alley",
+      "reject_button": "Odrzuć wniosek o rejestrację",
+      "reject_button_hint": "Odrzuca wniosek o rejestrację",
+      "submission_image": "Przykładowa grafika od {{displayName}}",
+      "telegram_link": "Skontaktuj się przez Telegram {{handle}}",
+      "telegram_link_hint": "Otwiera czat Telegram",
+      "website_link": "Odwiedź stronę internetową {{url}}",
+      "website_link_hint": "Otwiera stronę internetową w przeglądarce"
+    }
+  },
   "Countdown": {
     "after_event": "I to na tyle! Do zobaczenia w przyszłym roku!",
     "before_event": "{{conName}} zacznie się za {{diff}}"
-  },
-  "Registration": {
-    "registration_title": "Rejestracja",
-    "registration_opens_in": "Rejestracja otworzy się za {{diff}}",
-    "registration_open": "Rejestracja jest teraz otwarta!",
-    "registration_closed": "Rejestracja jest zamknięta",
-    "register_now": "Zarejestruj się Teraz",
-    "thank_you_see_you_next_year": "Dziękujemy i do zobaczenia w przyszłym roku!"
   },
   "Dealer": {
     "about": "Podsumowanie",
     "about_the_art": "Opis oferty",
     "about_the_artist": "O artyście",
+    "accessibility": {
+      "about_art_text": "O sztuce: {{text}}",
+      "about_artist_text": "O artyście: {{text}}",
+      "add_favorite_button": "Dodaj wystawcę do ulubionych",
+      "add_favorite_hint": "Dodaje tego wystawcę do twojej listy ulubionych",
+      "art_preview_caption": "Podpis podglądu sztuki: {{caption}}",
+      "bluesky_button": "Odwiedź {{handle}} na Bluesky",
+      "bluesky_button_hint": "Otwiera profil Bluesky w przeglądarce",
+      "dealer_attendance": "Informacje o obecności: {{days}}",
+      "dealer_avatar": "Zdjęcie profilowe dla {{name}}",
+      "dealer_content_area": "Zawartość informacji o wystawcy",
+      "dealer_description": "Opis wystawcy: {{description}}",
+      "dealer_name_heading": "Nazwa wystawcy: {{name}}",
+      "discord_button": "Skopiuj handle Discord {{handle}}",
+      "discord_button_hint": "Kopiuje handle Discord do schowka",
+      "mastodon_button": "Odwiedź {{handle}} na Mastodon",
+      "mastodon_button_hint": "Otwiera profil Mastodon w przeglądarce",
+      "page_description": "Strona szczegółów wystawcy",
+      "remove_favorite_button": "Usuń wystawcę z ulubionych",
+      "remove_favorite_hint": "Usuwa tego wystawcę z twojej listy ulubionych",
+      "scroll_view_hint": "Przeciągnij, aby przewinąć informacje o wystawcy",
+      "share_dealer_button": "Udostępnij informacje o wystawcy",
+      "share_dealer_hint": "Otwiera opcje udostępniania dla tego wystawcy",
+      "telegram_button": "Skontaktuj się z {{handle}} na Telegram",
+      "telegram_button_hint": "Otwiera Telegram, aby skontaktować się z tym wystawcą",
+      "twitter_button": "Odwiedź {{handle}} na Twitter",
+      "twitter_button_hint": "Otwiera profil Twitter w przeglądarce"
+    },
     "after_dark": "After dark",
     "attends": "Bierze udział w dniach",
     "attends_fri": "Piątek",
@@ -56,15 +198,40 @@
     "viewing_dealer": "Przeglądany wystawca"
   },
   "Dealers": {
+    "accessibility": {
+      "dealer_avatar": "Zdjęcie profilowe dla {{name}}",
+      "dealer_card": "Wystawca: {{name}}",
+      "dealer_card_hint": "Dotknij, aby wyświetlić szczegóły wystawcy, przytrzymaj dla opcji",
+      "dealer_categories": "Kategorie: {{categories}}",
+      "dealer_favorite_icon": "Wskaźnik ulubionych",
+      "dealer_favorited": "Ulubiony",
+      "dealer_not_present": "Dziś nieobecny",
+      "dealer_off_days": "Nie obecny w {{offDays}}",
+      "dealers_list": "Lista wystawców",
+      "dealers_list_hint": "Przeciągnij, aby nawigować przez wystawców, przeciągnij w dół, aby odświeżyć",
+      "dealers_sectioned_list": "Wystawcy zorganizowani według sekcji",
+      "dealers_sectioned_list_hint": "Przeciągnij, aby nawigować przez wystawców pogrupowanych według kategorii, przeciągnij w dół, aby odświeżyć"
+    },
     "all": "Wszyscy",
     "dealers_at_convention": "Wystawcy na {{convention}}",
-    "not_attending_on": "Nie biorą udziału w {{offDays}}"
+    "not_attending_on": "Nie biorą udziału w {{offDays}}",
+    "search": {
+      "placeholder": "Szukaj wystawców…"
+    }
   },
   "EmptyScreen": {
     "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
   },
   "Event": {
     "about_title": "O punkcie programu",
+    "accessibility": {
+      "event_content": "Zawartość wydarzenia",
+      "event_details_loaded": "Szczegóły wydarzenia załadowane dla {{title}}",
+      "event_details_scroll": "Widok przewijania szczegółów wydarzenia",
+      "event_details_scroll_hint": "Przewijalny widok zawierający szczegóły wydarzenia",
+      "event_header": "Nagłówek wydarzenia",
+      "event_header_hint": "Nagłówek zawierający tytuł wydarzenia i przycisk udostępniania"
+    },
     "add_favorite": "Dodaj do ulubi",
     "event_was_updated": "Punkt programu został zaktualizowany od ostatniej wizyty",
     "give_feedback": "Dodaj feedback",
@@ -85,6 +252,27 @@
     "when": "{{day}} {{date}}, {{start}} – {{finish}} {{zone}}.",
     "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
+  "EventFeedback": {
+    "accessibility": {
+      "feedback_form_content": "Zawartość formularza feedbacku",
+      "feedback_form_loaded": "Formularz feedbacku załadowany dla {{title}}",
+      "feedback_form_scroll": "Widok przewijania formularza feedbacku",
+      "feedback_form_scroll_hint": "Przewijalny widok zawierający formularz feedbacku",
+      "submit_feedback": "Wyślij feedback",
+      "submit_feedback_hint": "Wysyła Twoją ocenę i wiadomość dla tego wydarzenia"
+    },
+    "disabled_not_attending": "Tylko uczestnicy mogą dawać feedback",
+    "disabled_not_logged_in": "Zaloguj się, aby dać feedback",
+    "explanation": "Daj nam znać, jak Ci się podobało {{ eventTitle }}, zostawiając nam ocenę i może nawet wiadomość! Upewnimy się, że trafi do właściwej osoby.",
+    "header": "Feedback: {{ eventTitle }}",
+    "message_placeholder": "Czy masz jakieś konkretne uwagi dla organizatorów? Napisz je tutaj.",
+    "message_title": "Wiadomość z feedbackiem",
+    "rating_title": "Jak bardzo podobało Ci się to wydarzenie?",
+    "submit": "Wyślij feedback",
+    "submit_failed": "Coś poszło nie tak podczas wysyłania. Spróbuj ponownie później . . .",
+    "submit_in_progress": "Wysyłanie . . .",
+    "thank_you": "Dziękujemy za informację, jak Ci się podobało {{ eventTitle }}."
+  },
   "Events": {
     "afternoon": "Po południu",
     "current_subtitle": "Te punkty programu odbywają się w tej chwili",
@@ -92,6 +280,7 @@
     "evening": "Wieczorem",
     "events_count": "",
     "events_done": "Punkt programu zakończył się",
+    "events_list": "Events list",
     "favorites_subtitle": "Otrzymasz powiadomienie o tym wydarzeniu",
     "favorites_title": "Ulubione punkty programu",
     "filter_by_day": "Przeglądaj wg. dni",
@@ -101,11 +290,55 @@
     "long_running": "Trwa dłużej",
     "morning": "Rano",
     "night": "W nocy",
+    "search": {
+      "placeholder": "Szukaj wydarzeń…"
+    },
     "upcoming_favorites_title": "Ulubione punkty programu",
     "upcoming_subtitle": "Te punkty programu zaczną się w przeciągu 30 minut",
     "upcoming_title": "Nadchodzące wydarzenia"
   },
   "Home": {
+    "accessibility": {
+      "banner_image": "Obraz tła banera konwentu",
+      "changed_dealers_list": "{{count}} zaktualizowanych wystawców: {{dealers}}",
+      "changed_events_list": "{{count}} zaktualizowanych wydarzeń: {{events}}",
+      "convention_logo": "Logo konwentu",
+      "convention_name": "Nazwa konwentu: {{name}}",
+      "countdown_header": "Nagłówek konwentu z odliczaniem i banerem",
+      "countdown_header_hint": "Pokazuje branding konwentu i aktualny status wydarzenia",
+      "countdown_status": "Status wydarzenia: {{status}}",
+      "dealers_search_section": "{{count}} wyników wystawców",
+      "device_warning_container": "Ostrzeżenie kompatybilności urządzenia",
+      "device_warning_content": "Informacje o kompatybilności urządzenia",
+      "events_search_section": "{{count}} wyników wydarzeń",
+      "favorites_warning_container": "Powiadomienie o aktualizacji ulubionych",
+      "favorites_warning_description": "Informacje o zaktualizowanych ulubionych",
+      "hide_device_warning": "Ukryj ostrzeżenie urządzenia",
+      "hide_device_warning_hint": "Zamyka to ostrzeżenie kompatybilności urządzenia",
+      "hide_favorites_warning": "Ukryj ostrzeżenie ulubionych",
+      "hide_favorites_warning_hint": "Zamyka to powiadomienie o aktualizacji ulubionych",
+      "hide_language_warning": "Ukryj ostrzeżenie języka",
+      "hide_language_warning_hint": "Zamyka to ostrzeżenie statusu tłumaczenia",
+      "hide_registration_warning": "Ukryj ostrzeżenie rejestracji",
+      "hide_registration_warning_hint": "Zamyka to powiadomienie o statusie rejestracji",
+      "hide_timezone_warning": "Ukryj ostrzeżenie strefy czasowej",
+      "hide_timezone_warning_hint": "Zamyka to powiadomienie o różnicy strefy czasowej",
+      "knowledge_search_section": "{{count}} wyników artykułów informacyjnych",
+      "language_warning_container": "Ostrzeżenie statusu tłumaczenia",
+      "language_warning_content": "Informacje o statusie tłumaczenia",
+      "register_now_button": "Zarejestruj się na konwent",
+      "register_now_button_hint": "Otwiera stronę rejestracji w przeglądarce",
+      "registration_icon": "Wskaźnik rejestracji",
+      "registration_status": "Status rejestracji: {{status}}",
+      "registration_warning_container": "Powiadomienie o statusie rejestracji",
+      "search_results_container": "Wyniki wyszukiwania",
+      "search_results_container_hint": "Pokazuje wyniki wyszukiwania zorganizowane według kategorii",
+      "timezone_warning_container": "Powiadomienie o różnicy strefy czasowej",
+      "timezone_warning_content": "Strefa czasowa twojego urządzenia ({{deviceTimeZone}}) różni się od strefy czasowej {{convention}} ({{conTimeZone}})",
+      "translate_icon": "Wskaźnik tłumaczenia",
+      "update_icon": "Wskaźnik aktualizacji",
+      "warning_icon": "Wskaźnik ostrzeżenia"
+    },
     "announcementsTitle_one": "Jest {{ count }} ogłoszenie.",
     "announcementsTitle_other": "Jest {{ count }} ogłoszeń.",
     "announcementsTitle_zero": "Brak ogłoszeń.",
@@ -113,7 +346,13 @@
     "eventsTitle_one": "Pobraliśmy {{ count }} wydarzenie.",
     "eventsTitle_other": "Pobraliśmy {{ count }} wydarzeń.",
     "eventsTitle_zero": "Brak wydarzeń.",
+    "search": {
+      "placeholder": "Szukaj wydarzeń, wystawców i artykułów informacyjnych…"
+    },
     "warnings": {
+      "favorites_changed": "Ulubione zaktualizowane",
+      "favorites_changed_subtitle": "Niektóre z twoich ulubionych zostały zaktualizowane od ostatniego wyświetlenia",
+      "hide": "Ukryj",
       "language": "Tłumaczenie",
       "no_image_caching": "Twoje urządzenie nie może przechowywać obrazów w pamięci podręcznej. Bez połączenia z internetem grafiki nie będą pokazywane.",
       "no_notifications": "Twoje urządzenie nie wspiera planowanych powiadomień. Nie będziesz otrzymywał komunikatów o nadchodzących wydarzeniach.",
@@ -123,9 +362,48 @@
     }
   },
   "KnowledgeGroups": {
-    "header": "Podstawowe informacje"
+    "accessibility": {
+      "kb_entry_card": "Artykuł informacyjny: {{title}}",
+      "kb_entry_card_hint": "Dotknij, aby wyświetlić pełne szczegóły artykułu",
+      "kb_entry_content": "Treść artykułu informacyjnego",
+      "kb_entry_loaded": "Artykuł informacyjny załadowany: {{title}}",
+      "kb_entry_scroll": "Widok przewijania artykułu informacyjnego",
+      "kb_entry_scroll_hint": "Przewijalny widok zawierający treść artykułu informacyjnego",
+      "kb_section_header": "Sekcja: {{title}} - {{subtitle}}",
+      "kb_sectioned_list": "Lista artykułów informacyjnych",
+      "kb_sectioned_list_hint": "Przeciągnij, aby nawigować przez artykuły, przeciągnij w dół, aby odświeżyć",
+      "no_search_results": "Nie znaleziono artykułów informacyjnych dla \"{{query}}\"",
+      "search_results": "Znaleziono {{count}} artykułów informacyjnych dla \"{{query}}\""
+    },
+    "header": "Podstawowe informacje",
+    "search": {
+      "placeholder": "Szukaj artykułów informacyjnych…"
+    }
   },
   "LostAndFound": {
+    "accessibility": {
+      "date_section": "Sekcja informacji o dacie",
+      "description_section": "Sekcja opisu elementu",
+      "detail_page_scroll_view": "Szczegóły elementu Lost & Found dla {{title}}",
+      "detail_page_scroll_view_hint": "Przeciągnij, aby przewinąć informacje o elemencie",
+      "empty_state": "Nie znaleziono elementów",
+      "empty_state_hint": "Obecnie nie ma zgłoszonych zaginionych lub znalezionych elementów",
+      "error_state": "Błąd ładowania elementów",
+      "error_state_hint": "Wystąpił błąd podczas ładowania elementów Lost & Found",
+      "item_description": "Opis: {{description}}",
+      "item_image": "Obraz {{title}}",
+      "item_image_hint": "Dotknij, aby wyświetlić obraz w pełnym rozmiarze",
+      "item_title": "Tytuł elementu: {{title}}",
+      "loading_state": "Ładowanie elementów Lost & Found",
+      "loading_state_hint": "Proszę czekać podczas ładowania elementów",
+      "lost_found_card": "Element Lost & Found: {{title}}, status: {{status}}, zgłoszony {{date}}",
+      "lost_found_card_hint": "Dotknij, aby wyświetlić pełne szczegóły elementu",
+      "lost_found_list": "Lista elementów Lost & Found",
+      "lost_found_list_hint": "Przeciągnij, aby nawigować przez elementy, przeciągnij w dół, aby odświeżyć",
+      "main_container": "Zawartość strony Lost & Found",
+      "reported_date": "Zgłoszony {{date}}",
+      "status_badge": "Status: {{status}}"
+    },
     "category": "Kategoria",
     "contact_info": "Informacje kontaktowe",
     "description": "Opis",
@@ -146,10 +424,78 @@
     }
   },
   "Maps": {
-    "preview_unavailable": "Podgląd mapy niedostępny"
-  },
-  "Menu": {
-    "about": "O nas",
+    "preview_unavailable": "Podgląd mapy niedostępny",
+    "accessibility": {
+      "bottom_sheet": "Panel wyników mapy",
+      "bottom_sheet_hint": "Przeciągnij w górę, aby rozwinąć, w dół, aby zwinąć",
+      "event_conference_room_link": "Sala konferencyjna: {{name}}",
+      "event_conference_room_link_hint": "Zobacz lokalizację tej sali konferencyjnej",
+      "interactive_map": "Interaktywny widok mapy",
+      "interactive_map_hint": "Użyj szczypania do powiększania, przeciągania do poruszania się po mapie",
+      "link_preview_available": "Podgląd linku dla {{url}}",
+      "link_preview_hint": "Dotknij, aby otworzyć link",
+      "link_preview_loading": "Ładowanie podglądu linku",
+      "link_preview_unavailable": "Podgląd linku niedostępny",
+      "loading_preview": "Ładowanie podglądu",
+      "map_container": "Kontener mapy dla {{mapName}}",
+      "map_container_hint": "Interaktywna mapa z zoom, przeciąganiem i klikalnymi obszarami",
+      "map_entry_link": "Lokalizacja na mapie: {{name}}",
+      "map_entry_link_hint": "Nawiguj do tej lokalizacji na mapie",
+      "map_image": "Obraz mapy dla {{mapName}}",
+      "map_marker": "Znacznik lokalizacji",
+      "map_marker_hint": "Wskazuje wybraną lokalizację na mapie",
+      "map_page": "Interaktywna strona mapy",
+      "map_page_hint": "Nawiguj i eksploruj mapę za pomocą gestów zoom i przeciągania",
+      "map_results_list": "Wyniki wyszukiwania mapy",
+      "map_results_list_hint": "Lista lokalizacji i linków znalezionych w bieżącym obszarze mapy",
+      "no_preview_available": "Brak dostępnego podglądu",
+      "web_external_link": "Link zewnętrzny do {{name}} na {{host}}",
+      "web_external_link_hint": "Otwiera zewnętrzną stronę internetową w przeglądarce",
+      "zoomable_map": "Interfejs mapy z możliwością powiększania",
+      "zoomable_map_hint": "Szczypnij, aby powiększyć lub pomniejszyć, przeciągnij, aby się poruszać"
+    },
+    "filtering": "Przeszukiwanie widocznego obszaru",
+    "results": "W widocznym obszarze"
+    },
+    "Menu": {
+      "about": "O nas",
+      "accessibility": {
+      "about_tab": "Zakładka o aplikacji",
+      "about_tab_hint": "Wyświetl informacje o aplikacji i autorach",
+      "artist_alley_tab": "Zakładka Artist Alley",
+      "artist_alley_tab_hint": "Przeglądaj i rejestruj stoiska Artist Alley",
+      "avatar_default": "Domyślny awatar profilu",
+      "avatar_with_name": "Awatar profilu dla {{name}}",
+      "catch_em_tab": "Zakładka gry Catch-em-all",
+      "catch_em_tab_disabled_hint": "Wymagane logowanie, aby grać w catch-em-all",
+      "catch_em_tab_hint": "Graj w grę łapania fursuitów",
+      "info_tab": "Zakładka artykułów informacyjnych",
+      "info_tab_hint": "Przeglądaj bazę wiedzy i artykuły informacyjne",
+      "login_button": "Przycisk logowania",
+      "login_button_hint": "Dotknij, aby zalogować się do konta",
+      "login_section": "Sekcja logowania i profilu",
+      "lost_found_tab": "Zakładka Lost & Found",
+      "lost_found_tab_disabled_hint": "Wymagane logowanie, aby uzyskać dostęp do Lost & Found",
+      "lost_found_tab_hint": "Przeglądaj zagubione i znalezione przedmioty",
+      "main_menu": "Główne menu nawigacyjne",
+      "main_menu_hint": "Główna nawigacja aplikacji z zakładkami dla różnych sekcji",
+      "map_tab": "Zakładka interaktywnej mapy",
+      "map_tab_hint": "Otwiera interaktywną mapę konwentu w przeglądarce",
+      "menu_tabs": "Zakładki nawigacyjne",
+      "messages_button": "Wyświetl wiadomości",
+      "messages_button_hint": "Otwórz swoje prywatne wiadomości",
+      "profile_button": "Przycisk profilu",
+      "profile_button_disabled_hint": "Wymagane logowanie, aby uzyskać dostęp do profilu",
+      "profile_button_hint": "Dotknij, aby wyświetlić swój profil",
+      "profile_button_with_name": "Przycisk profilu dla {{name}}",
+      "profile_tab": "Zakładka profilu",
+      "profile_tab_disabled_hint": "Wymagane logowanie, aby uzyskać dostęp do profilu",
+      "profile_tab_hint": "Wyświetl i zarządzaj swoim profilem",
+      "settings_tab": "Zakładka ustawień",
+      "settings_tab_hint": "Konfiguruj preferencje i ustawienia aplikacji",
+      "website_tab": "Zakładka strony konwentu",
+      "website_tab_hint": "Otwiera stronę konwentu w przeglądarce"
+    },
     "announcements": "Ogłoszenia",
     "dealers": "Wystawcy",
     "events": "Program",
@@ -171,7 +517,34 @@
     "announcement": "Nowe ogłoszenie od {{conName}}",
     "private_message": "Dostałeś nową prywatną wiadomość"
   },
+  "PrivateMessageCompose": {
+    "accessibility": {
+      "compose_form_content": "Treść formularza wiadomości",
+      "compose_form_loaded": "Formularz wiadomości załadowany",
+      "compose_form_scroll": "Przewijanie formularza wiadomości",
+      "compose_form_scroll_hint": "Przewijany widok zawierający formularz wiadomości",
+      "submit_message": "Wyślij wiadomość",
+      "submit_message_hint": "Wyślij skomponowaną wiadomość do odbiorcy"
+    }
+  },
+  "PrivateMessageItem": {
+    "accessibility": {
+      "message_content": "Treść wiadomości",
+      "message_loaded": "Wiadomość załadowana: {{subject}} od {{author}}",
+      "message_scroll": "Przewijanie wiadomości",
+      "message_scroll_hint": "Przewijany widok zawierający treść wiadomości"
+    },
+    "from": "Od {{authorName}}",
+    "header": "Prywatna wiadomość",
+    "read_at": "Przeczytana o {{time}}"
+  },
   "PrivateMessageList": {
+    "accessibility": {
+      "messages_list": "Lista wiadomości",
+      "messages_list_hint": "Lista prywatnych wiadomości uporządkowanych według nadawcy i statusu odczytu",
+      "messages_loaded": "Załadowano {{total}} wiadomości, {{unread}} nieprzeczytanych",
+      "no_messages": "Brak dostępnych wiadomości"
+    },
     "from": "Od {{ author }}",
     "from_unknown": "Od nieznanego nadawcy",
     "header": "Prywatne wiadomości",
@@ -181,21 +554,66 @@
     "unread": "Nieprzeczytane"
   },
   "Profile": {
+    "accessibility": {
+      "avatar_hint": "Dotknij, aby wyświetlić profil",
+      "idp_settings_button": "Przycisk ustawień tożsamości",
+      "idp_settings_button_hint": "Otwiera stronę ustawień tożsamości w przeglądarce",
+      "loading_profile": "Ładowanie profilu",
+      "logout_button": "Przycisk wylogowania",
+      "logout_button_hint": "Wylogowuje z twojego konta",
+      "profile_content_area": "Obszar profilu",
+      "profile_scroll_view": "Przeglądanie profilu",
+      "profile_scroll_view_hint": "Przewijanie przez informacje o profilu",
+      "user_avatar": "Awatar profilu użytkownika dla {{name}}"
+    },
+    "header": "Profil",
+    "idp_settings": "Strona ustawień tożsamości",
     "logged_in_as": "Jesteś zalogowany jako {{username}}",
     "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
-    "logout": "Wyloguj się"
+    "logout": "Wyloguj się",
+    "not_logged_in": "Nie jesteś zalogowany",
+    "registration_nr": "Numer rejestracji",
+    "roles": "Role",
+    "roles_simple_attendee": "Jeszcze nie zarejestrowany",
+    "roles_simple_checked_in": "Jesteś zarejestrowany",
+    "roles_subtitle": "Twoje role w aplikacji {{conName}}",
+    "status_names": {
+      "Approved": "Zatwierdzony",
+      "Cancelled": "Anulowany",
+      "CheckedIn": "Zarejestrowany",
+      "Deleted": "Usunięty",
+      "New": "Nowy",
+      "Paid": "Opłacony",
+      "PartiallyPaid": "Częściowo opłacony",
+      "Unknown": "Nieznany"
+    }
+  },
+  "Registration": {
+    "register_now": "Zarejestruj się Teraz",
+    "registration_closed": "Rejestracja jest zamknięta",
+    "registration_open": "Rejestracja jest teraz otwarta!",
+    "registration_opens_in": "Rejestracja otworzy się za {{diff}}",
+    "registration_title": "Rejestracja",
+    "thank_you_see_you_next_year": "Dziękujemy i do zobaczenia w przyszłym roku!"
   },
   "RevealHidden": {
     "header": "Ukryte wydarzenia",
     "lead": "Kliknij na wydarzenie, aby pokazać je na liście",
-    "title": "Wydarzenia"
+    "title": "Wydarzenia",
+    "accessibility": {
+      "no_hidden_events": "Nie znaleziono ukrytych wydarzeń",
+      "hidden_events_loaded": "Załadowano {{count}} ukrytych wydarzeń",
+      "reveal_hidden_scroll": "Widok przewijania ukrytych wydarzeń",
+      "reveal_hidden_scroll_hint": "Przewiń przez ukryte wydarzenia, aby je pokazać",
+      "reveal_hidden_content": "Obszar zawartości ukrytych wydarzeń"
+    }
   },
   "Search": {
-    "placeholder": "Szukaj…",
     "clear_search": "Wyczyść wyszukiwanie",
     "clear_search_hint": "Dotknij dwukrotnie, aby wyczyścić pole wyszukiwania",
-    "search_input_label": "Pole wyszukiwania",
-    "search_input_hint": "Wprowadź tekst, aby wyszukać treści"
+    "placeholder": "Szukaj…",
+    "search_input_hint": "Wprowadź tekst, aby wyszukać treści",
+    "search_input_label": "Pole wyszukiwania"
   },
   "Settings": {
     "about": "O aplikacji",
@@ -216,17 +634,6 @@
       "subtitle": "Nie powinieneś tego ruszać o ile wiesz co robisz.",
       "title": "Ustawienia deweloperskie"
     },
-    "header": "Ustawienia",
-    "notifications": {
-      "no_notifications": "Brak zaplanowanych powiadomień!",
-      "subtitle": "Wszystkie zaplanowane powiadomienia na tym urządzeniu",
-      "title": "Powiadomienia"
-    },
-    "remote_messages": {
-      "no_messages": "Nie otrzymaliśmy żadnych wiadomości od FCM",
-      "subtitle": "Wiadomości otrzymane z FCM",
-      "title": "Wiadomości sdalne"
-    },
     "device_warnings": {
       "hide_device_warnings": "Ukryj ostrzeżenia urządzenia",
       "hide_language_warnings": "Ukryj ostrzeżenia języka",
@@ -239,8 +646,25 @@
       "subtitle": "Pokaż lub ukryj ostrzeżenia na ekranie głównym",
       "title": "Ostrzeżenia na ekranie głównym"
     },
+    "header": "Ustawienia",
+    "notifications": {
+      "no_notifications": "Brak zaplanowanych powiadomień!",
+      "subtitle": "Wszystkie zaplanowane powiadomienia na tym urządzeniu",
+      "title": "Powiadomienia"
+    },
+    "remote_messages": {
+      "no_messages": "Nie otrzymaliśmy żadnych wiadomości od FCM",
+      "subtitle": "Wiadomości otrzymane z FCM",
+      "title": "Wiadomości sdalne"
+    },
     "settingsSection": "Ustawienia aplikacji",
-    "timeTravel": "Pokaż ustawienia podróży w czasie."
+    "timeTravel": "Pokaż ustawienia podróży w czasie.",
+    "accessibility": {
+      "settings_page_loaded": "Strona ustawień załadowana",
+      "settings_scroll": "Widok przewijania strony ustawień",
+      "settings_scroll_hint": "Przewiń przez opcje i preferencje ustawień",
+      "settings_content": "Obszar zawartości ustawień"
+    }
   },
   "TimeTravel": {
     "currentTime": "Bieżący: {{ time }}",
