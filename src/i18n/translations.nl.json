@@ -150,6 +150,9 @@
       "Unknown": "Onbekend"
     }
   },
+  "Maps": {
+    "preview_unavailable": "Kaartvoorbeeld niet beschikbaar"
+  },
   "Menu": {
     "about": "Over",
     "announcements": "Aankondigingen",

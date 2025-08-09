@@ -132,6 +132,9 @@
       "Unknown": "Sconosciuto"
     }
   },
+  "Maps": {
+    "preview_unavailable": "Anteprima mappa non disponibile"
+  },
   "Menu": {
     "about": "Informazioni",
     "announcements": "Annunci",

@@ -145,6 +145,9 @@
       "Unknown": "Nieznany"
     }
   },
+  "Maps": {
+    "preview_unavailable": "Podgląd mapy niedostępny"
+  },
   "Menu": {
     "about": "O nas",
     "announcements": "Ogłoszenia",

@@ -307,6 +307,7 @@
   },
   "Maps": {
     "filtering": "Searching viewed area",
+    "preview_unavailable": "Map preview unavailable",
     "results": "In the viewed area"
   },
   "Menu": {

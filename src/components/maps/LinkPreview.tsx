@@ -6,6 +6,7 @@ import axios from 'axios'
 import { Image } from '@/components/generic/atoms/Image'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 import { Label } from '@/components/generic/atoms/Label'
+import { useTranslation } from 'react-i18next'
 
 type LinkPreviewProps = {
   url: string
@@ -31,6 +32,7 @@ function useOgMeta(url: string) {
 }
 
 export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style }) => {
+  const { t } = useTranslation('Maps')
   const { data: ogMeta, isLoading, isError } = useOgMeta(url)
   const isDisabled = isError || !ogMeta?.image
   const styleBackground = useThemeBackground('background')
@@ -38,7 +40,7 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style })
 
   return (
     <TouchableOpacity onPress={onPress} style={[styles.cardContainer, styleBackground, styleBorder, style]} disabled={isLoading || isDisabled}>
-      {isLoading ? <ActivityIndicator /> : isDisabled ? <Label>No preview available</Label> : <Image source={{ uri: ogMeta.image }} style={styles.image} />}
+      {isLoading ? <ActivityIndicator /> : isDisabled ? <Label>{t('preview_unavailable')}</Label> : <Image source={{ uri: ogMeta.image }} style={styles.image} />}
     </TouchableOpacity>
   )
 }

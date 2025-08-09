@@ -241,6 +241,7 @@
   },
   "Maps": {
     "filtering": "Durchsuche Ansicht",
+    "preview_unavailable": "Kartenvorschau nicht verfügbar",
     "results": "In der Ansicht"
   },
   "Menu": {
