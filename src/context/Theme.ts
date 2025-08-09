@@ -35,8 +35,8 @@ export type Theme = {
   important: string
 
   /**
-     Text color on inverted.
-     */
+   * Text color on inverted.
+   */
   invText: string
 
   /**
@@ -80,19 +80,34 @@ export type Theme = {
   superSponsor: string
 
   /**
-   * Background for sponsor badge.
-   */
-  sponsor: string
-
-  /**
    * Text on super-sponsor badge.
    */
   superSponsorText: string
 
   /**
+   * Background for sponsor badge.
+   */
+  sponsor: string
+
+  /**
    * Text on sponsor badge.
    */
   sponsorText: string
+
+  /**
+   * Background for staff badge.
+   */
+  staff: string
+
+  /**
+   * Text on staff badge.
+   */
+  staffText: string
+
+  /**
+   * Background for internal events.
+   */
+  internal: string
 
   /**
    * Map marker.
@@ -129,6 +144,9 @@ export const themes: Record<string, Theme> = {
     superSponsorText: '#fff7f0',
     sponsor: '#ffd700',
     sponsorText: '#323034',
+    staff: '#ec661f',
+    staffText: '#fff7f0',
+    internal: '#ffc2a1',
     marker: '#ff2f66',
   },
   medium: {
@@ -151,6 +169,9 @@ export const themes: Record<string, Theme> = {
     superSponsorText: '#fff7f0',
     sponsor: '#ffd700',
     sponsorText: '#323034',
+    staff: '#ec661f',
+    staffText: '#fff7f0',
+    internal: '#b97754',
     marker: '#ff2f66',
   },
   dark: {
@@ -173,6 +194,9 @@ export const themes: Record<string, Theme> = {
     superSponsorText: '#fff7f0',
     sponsor: '#ffd700',
     sponsorText: '#323034',
+    staff: '#ec661f',
+    staffText: '#fff7f0',
+    internal: '#895336ff',
     marker: '#ff2f66',
   },
   requinard: {
@@ -195,6 +219,9 @@ export const themes: Record<string, Theme> = {
     superSponsorText: '#fff7f0',
     sponsor: '#ffd700',
     sponsorText: '#323034',
+    staff: '#ec661f',
+    staffText: '#fff7f0',
+    internal: '#ffc2a1',
     marker: '#ff2f66',
   },
   pazuzu: {
@@ -217,6 +244,9 @@ export const themes: Record<string, Theme> = {
     superSponsorText: '#fff7f0',
     sponsor: '#ffd700',
     sponsorText: '#323034',
+    staff: '#ec661f',
+    staffText: '#fff7f0',
+    internal: '#ffc2a1',
     marker: '#ff2f66',
   },
 }
