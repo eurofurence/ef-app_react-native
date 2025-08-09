@@ -23,28 +23,14 @@ export type EventDetailsInstance = {
   details: EventDetails
 } & ReturnType<typeof calculateEventTiming>
 
-/**
- * Creates the event instance props for an upcoming or running event.
- * @param details The details to use.
- * @param now The current time to check against.
- */
 export function eventInstanceForAny(details: EventDetails, now: Date): EventDetailsInstance {
   return { details, ...calculateEventTiming(details, now) }
 }
 
-/**
- * Creates the event instance props for an upcoming or running event.
- * @param details The details to use.
- * @param now The current time to check against.
- */
 export function eventInstanceForNotPassed(details: EventDetails, now: Date): EventDetailsInstance {
   return { details, ...calculateEventTiming(details, now) }
 }
 
-/**
- * Creates the event instance props for a passed event.
- * @param details The details to use.
- */
 export function eventInstanceForPassed(details: EventDetails): EventDetailsInstance {
   return { details, ...calculateEventTiming(details, 'done') }
 }
@@ -58,100 +44,127 @@ export type EventCardProps = {
   onLongPress?: (event: EventDetails) => void
 }
 
-export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'duration', event, onPress, onLongPress }) => {
+export const EventCard: FC<EventCardProps> = ({
+  containerStyle,
+  style,
+  type = 'duration',
+  event,
+  onPress,
+  onLongPress,
+}) => {
   const { t } = useTranslation('Events')
-  // Details and properties dereference.
-  const badges = event.details.Badges
-  const glyph: IconNames | undefined = event.details.IsInternal ? 'tools' : event.details.Glyph
-  const title = event.details.Title
-  const subtitle = event.details.SubTitle
-  const tag = event.details.ConferenceRoom?.ShortName ?? event.details.ConferenceRoom?.Name
-  const favorite = event.details.Favorite
+
+  const {
+    details: {
+      Badges: badges,
+      IsInternal,
+      Glyph,
+      Title: title,
+      SubTitle: subtitle,
+      ConferenceRoom,
+      Favorite: favorite,
+      Banner,
+      Id,
+    },
+  } = event
+
+  const tag = ConferenceRoom?.ShortName ?? ConferenceRoom?.Name
+
+  const glyph: IconNames | undefined = IsInternal ? 'tools' : Glyph
   const happening = event.progress >= 0.0 && event.progress <= 1.0
   const done = event.progress > 1.0
   const progress = event.progress
 
-  // Dependent and independent styles.
   const stylePublicContainer = useThemeBackground('background')
   const styleInternalContainer = useThemeBackground('internal')
-  const styleContainer = event.details.IsInternal ? styleInternalContainer : stylePublicContainer
+  const styleContainer = IsInternal ? styleInternalContainer : stylePublicContainer
   const stylePre = useThemeBackground(done ? 'darken' : favorite ? 'notification' : 'primary')
   const styleBadgeFrame = useThemeBackground('secondary')
   const colorBadge = useThemeColorValue('white')
   const colorGlyph = useThemeColorValue('lighten')
-  const colorHeart = useThemeColorValue(event.details.Banner ? 'white' : 'text')
+  const colorHeart = useThemeColorValue(Banner ? 'white' : 'text')
 
   const onPressBind = useCallback(() => onPress?.(event.details), [event.details, onPress])
   const onLongPressBind = useCallback(() => onLongPress?.(event.details), [event.details, onLongPress])
 
   return (
-    <Pressable containerStyle={containerStyle} style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
-      <View style={[styles.pre, stylePre]}>
-        {!glyph ? null : (
-          <View key="eventGlyph" style={styles.glyphContainer}>
-            <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
-          </View>
-        )}
-        <EventCardTime type={type} event={event} done={done} />
-
-        {!happening ? null : (
-          <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'} variant="receded">
-            LIVE
-          </Label>
-        )}
-      </View>
-
-      {event.details.Banner ? (
-        <View style={styles.mainPoster}>
-          <ImageBackground key={event.details.Id} recyclingKey={event.details.Id} source={sourceFromImage(event.details.Banner)} contentFit="cover" style={StyleSheet.absoluteFill}>
-            <View style={styles.tagArea2}>
-              <View style={styles.tagAreaInner}>
-                <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
-                  {title} {subtitle}
-                </Label>
-                {tag && (
-                  <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
-                    {event.details.IsInternal ? t('internal') + ' – ' : ''}
-                    {tag}
-                  </Label>
-                )}
-              </View>
+    <View style={containerStyle}>
+      <Pressable
+        style={[styles.container, appStyles.shadow, styleContainer, style]}
+        onPress={onPressBind}
+        onLongPress={onLongPressBind}
+      >
+        <View style={[styles.pre, stylePre]}>
+          {glyph && (
+            <View key="eventGlyph" style={styles.glyphContainer}>
+              <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
             </View>
+          )}
+          <EventCardTime type={type} event={event} done={done} />
 
-            {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} color="white" />}
-          </ImageBackground>
+          {happening && (
+            <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'} variant="receded">
+              LIVE
+            </Label>
+          )}
         </View>
-      ) : (
-        <View style={styles.mainText}>
-          <Row>
-            <Label style={styles.title} type="h3">
-              {title}
+
+        {Banner ? (
+          <View style={styles.mainPoster}>
+            <ImageBackground
+              key={Id}
+              recyclingKey={Id}
+              source={sourceFromImage(Banner)}
+              contentFit="cover"
+              style={StyleSheet.absoluteFill}
+            >
+              <View style={styles.tagArea2}>
+                <View style={styles.tagAreaInner}>
+                  <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                    {IsInternal ? `${t('internal')} – ` : ''}
+                    {tag || `${title} ${subtitle}`}
+                  </Label>
+                  {tag && (
+                    <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                      {tag}
+                    </Label>
+                  )}
+                </View>
+              </View>
+              {happening && <Progress key="eventProgress" style={styles.progress} value={progress} color="white" />}
+            </ImageBackground>
+          </View>
+        ) : (
+          <View style={styles.mainText}>
+            <Row>
+              <Label style={styles.title} type="h3">
+                {title}
+              </Label>
+              {badges?.map((icon) => (
+                <View key={icon} style={[styles.badgeFrame, styleBadgeFrame]}>
+                  <Icon name={icon} color={colorBadge} size={badgeIconSize} />
+                </View>
+              ))}
+            </Row>
+            <Label type="h4" variant="narrow">
+              {subtitle}
+            </Label>
+            <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+              {IsInternal ? `${t('internal')} – ` : ''}
+              {tag}
             </Label>
 
-            {badges?.map((icon) => (
-              <View key={icon} style={[styles.badgeFrame, styleBadgeFrame]}>
-                <Icon name={icon} color={colorBadge} size={badgeIconSize} />
-              </View>
-            )) ?? null}
-          </Row>
-          <Label type="h4" variant="narrow">
-            {subtitle}
-          </Label>
-          <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-            {event.details.IsInternal ? t('internal') + ' – ' : ''}
-            {tag}
-          </Label>
+            {happening && <Progress key="eventProgress" style={styles.progress} value={progress} />}
+          </View>
+        )}
 
-          {!happening ? null : <Progress key="eventProgress" style={styles.progress} value={progress} />}
-        </View>
-      )}
-
-      {!favorite ? null : (
-        <View key="eventFavorite" style={styles.favorite}>
-          <Icon name="heart" size={20} color={colorHeart} />
-        </View>
-      )}
-    </Pressable>
+        {favorite && (
+          <View key="eventFavorite" style={styles.favorite}>
+            <Icon name="heart" size={20} color={colorHeart} />
+          </View>
+        )}
+      </Pressable>
+    </View>
   )
 }
 
@@ -206,26 +219,8 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
   },
-  subtitleArea: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   tag: {
     textAlign: 'right',
-  },
-  tagArea: {
-    position: 'absolute',
-    left: 0,
-    bottom: 0,
-    right: 0,
-    backgroundColor: '#000000A0',
-    paddingLeft: 16,
-    paddingBottom: 16,
-    paddingRight: 16,
-    paddingTop: 32,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'flex-end',
   },
   tagArea2: {
     display: 'flex',

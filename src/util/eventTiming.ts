@@ -1,9 +1,10 @@
-import { differenceInMilliseconds, parseISO } from 'date-fns'
+import { differenceInMilliseconds } from 'date-fns'
 import { format, toZonedTime } from 'date-fns-tz'
 import { de } from 'date-fns/locale/de'
 import { conTimeZone } from '@/configuration'
 
 import { EventDetails } from '@/context/data/types.details'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export function calculateEventTiming(details: EventDetails, now: Date | 'done') {
   // Calculate progress
@@ -41,7 +42,7 @@ export function calculateEventTiming(details: EventDetails, now: Date | 'done') 
  * @returns The formatted weekday name
  */
 export function formatWeekdayInConventionTimezone(dateStr: string): string {
-  const date = parseISO(dateStr)
+  const date = parseDefaultISO(dateStr)
   const zonedDate = toZonedTime(date, conTimeZone)
   return format(zonedDate, 'EEEE', { timeZone: conTimeZone })
 }

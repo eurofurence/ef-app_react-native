@@ -2,17 +2,17 @@ import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { isWithinInterval, parseISO, subMinutes } from 'date-fns'
+import { isWithinInterval, subMinutes } from 'date-fns'
 import { Section } from '../generic/atoms/Section'
 import { EventCard, eventInstanceForAny } from './EventCard'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
 import { useEventCardInteractions } from '@/components/events/Events.common'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
   events.filter((it) => {
-    // TODO: Properly fix this.
-    const startDate = parseISO(it.StartDateTimeUtc + 'Z')
+    const startDate = parseDefaultISO(it.StartDateTimeUtc)
     const startMinus30 = subMinutes(startDate, 30)
     return isWithinInterval(now, { start: startMinus30, end: startDate })
   })

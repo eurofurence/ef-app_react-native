@@ -1,17 +1,17 @@
-import React from 'react'
-import { StyleSheet, ScrollView } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 import { DealerContent } from '@/components/dealers/DealerContent'
+import { shareDealer } from '@/components/dealers/Dealers.common'
+import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { useCache } from '@/context/data/Cache'
 import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
 import { useLatchTrue } from '@/hooks/util/useLatchTrue'
-import { platformShareIcon } from '@/components/generic/atoms/Icon'
-import { shareDealer } from '@/components/dealers/Dealers.common'
-import { useCache } from '@/context/data/Cache'
 
 export default function DealerItem() {
   const { t } = useTranslation('Dealer')
@@ -23,10 +23,18 @@ export default function DealerItem() {
   const updated = useUpdateSinceNote(dealer)
   const showUpdated = useLatchTrue(updated)
 
+  const dealerName = dealer?.DisplayNameOrAttendeeNickname ?? t('viewing_dealer')
+
   return (
-    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+    <ScrollView
+      style={StyleSheet.absoluteFill}
+      stickyHeaderIndices={[0]}
+      stickyHeaderHiddenOnScroll
+      accessibilityLabel={t('accessibility.page_description')}
+      accessibilityHint={t('accessibility.scroll_view_hint')}
+    >
       <Header secondaryIcon={platformShareIcon} secondaryPress={() => dealer && shareDealer(dealer)}>
-        {dealer?.DisplayNameOrAttendeeNickname ?? t('viewing_dealer')}
+        {dealerName}
       </Header>
       <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />}</Floater>
     </ScrollView>

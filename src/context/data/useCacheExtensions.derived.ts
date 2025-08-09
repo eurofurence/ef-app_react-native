@@ -1,10 +1,11 @@
-import { getHours, parseISO } from 'date-fns'
+import { getHours } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
 import { flatMap, maxBy, uniq } from 'lodash'
 import { DealerRecord } from './types.api'
 import { IconNames } from '@/components/generic/atoms/Icon'
 import { conTimeZone } from '@/configuration'
 import { AttendanceDay, EventDayDetails } from '@/context/data/types.details'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export function deriveHosts(panelHosts: string | undefined) {
   return (
@@ -16,7 +17,7 @@ export function deriveHosts(panelHosts: string | undefined) {
 }
 
 export function deriveCategorizedTime(dateStr: string) {
-  const date = toZonedTime(parseISO(dateStr), conTimeZone)
+  const date = toZonedTime(parseDefaultISO(dateStr), conTimeZone)
   const hours = getHours(date)
   if (6 <= hours && hours < 13) return 'morning'
   if (13 <= hours && hours < 17) return 'afternoon'

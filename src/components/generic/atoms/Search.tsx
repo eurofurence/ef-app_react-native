@@ -5,6 +5,7 @@ import { StyleSheet, TextInput, View, ViewStyle } from 'react-native'
 
 import { withAlpha } from '@/context/Theme'
 import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 import { labelTypeStyles } from './Label'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
@@ -23,13 +24,23 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
   const styleText = useThemeColor('invText')
   const colorText = useThemeColorValue('invText')
 
+  // Enhanced touch targets for accessibility
+  const clearButtonStyle = useTouchTarget(44, styles.clearButton)
+
   // Use ref to track current filter without causing effect re-runs
   const filterRef = useRef(filter)
   filterRef.current = filter
 
   return (
     <View style={[styles.container, styleLighten, style]}>
-      <SearchPlus name="search" size={18} color={colorText} style={styles.iconSearch} />
+      <SearchPlus
+        name="search"
+        size={18}
+        color={colorText}
+        style={styles.iconSearch}
+        accessibilityElementsHidden={true} // Hide decorative icon from screen readers
+        importantForAccessibility="no"
+      />
       <TextInput
         style={[styles.searchField, styleText, labelTypeStyles.regular]}
         value={filter}
@@ -37,12 +48,25 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
         onSubmitEditing={submit}
         placeholder={placeholder ?? t('placeholder')}
         placeholderTextColor={withAlpha(colorText, 0.6)}
-        accessibilityLabel={t('search_input_label')}
-        accessibilityHint={t('search_input_hint')}
+        accessibilityLabel={t('search_input_label', { defaultValue: 'Search input' })}
+        accessibilityHint={t('search_input_hint', { defaultValue: 'Enter text to search for events, dealers, and more' })}
+        accessibilityRole="search"
+        returnKeyType="search"
+        clearButtonMode="never" // We provide our own clear button with better accessibility
       />
-      <Pressable hitSlop={15} onPress={() => setFilter('')} accessibilityRole="button" accessibilityLabel="Back">
-        <Icon name="close" size={18} color={filter ? colorText : 'transparent'} style={styles.iconClear} />
-      </Pressable>
+      {filter ? (
+        <Pressable
+          style={clearButtonStyle}
+          onPress={() => setFilter('')}
+          accessibilityRole="button"
+          accessibilityLabel={t('clear_search', { defaultValue: 'Clear search' })}
+          accessibilityHint={t('clear_search_hint', { defaultValue: 'Clears the current search text' })}
+        >
+          <Icon name="close" size={18} color={colorText} style={styles.iconClear} />
+        </Pressable>
+      ) : (
+        <View style={styles.clearButtonPlaceholder} />
+      )}
     </View>
   )
 }
@@ -61,7 +85,15 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   iconClear: {
-    marginLeft: 8,
+    // Icon positioning handled by touch target container
+  },
+  clearButton: {
+    // Additional styles merged with touch target styles
+    marginLeft: 4,
+  },
+  clearButtonPlaceholder: {
+    width: 44, // Match the touch target width to maintain consistent layout
+    height: 44,
   },
   searchField: {
     flex: 1,

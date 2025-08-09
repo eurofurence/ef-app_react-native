@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
 import { DealerCard } from '../dealers/DealerCard'
 import { EventCard } from '../events/EventCard'
@@ -19,6 +19,7 @@ export type GlobalSearchProps = {
 
 export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
   const { t: tMenu } = useTranslation('Menu')
+  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
 
   // Filter for type tags.
   const dealerFiltered = useMemo(() => results?.filter((r) => r.type === 'dealer') as DealerDetails[], [results])
@@ -36,32 +37,32 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
 
   if (!results) return null
   return (
-    <>
+    <View accessibilityLabel={tAccessibility('search_results_container')} accessibilityHint={tAccessibility('search_results_container_hint')}>
       {dealers && dealers.length > 0 && (
-        <>
+        <View accessibilityLabel={tAccessibility('dealers_search_section', { count: dealers.length })}>
           <Section icon="card-search" title={tMenu('dealers')} />
           {dealers.map((item) => (
             <DealerCard key={item.details.Id} style={styles.item} dealer={item} onPress={dealerInteraction.onPress} onLongPress={dealerInteraction.onLongPress} />
           ))}
-        </>
+        </View>
       )}
       {events && events.length > 0 && (
-        <>
+        <View accessibilityLabel={tAccessibility('events_search_section', { count: events.length })}>
           <Section icon="card-search" title={tMenu('events')} />
           {events.map((item) => (
             <EventCard key={item.details.Id} style={styles.item} event={item} type="time" onPress={eventInteractions.onPress} onLongPress={eventInteractions.onLongPress} />
           ))}
-        </>
+        </View>
       )}
       {kbGroups && kbGroups.length > 0 && (
-        <>
+        <View accessibilityLabel={tAccessibility('knowledge_search_section', { count: kbGroups.length })}>
           <Section icon="card-search" title={tMenu('info')} />
           {kbGroups.map((item) => (
             <KbEntryCard style={styles.item} entry={item} key={item.Id} onPress={kbEntryInteractions.onPress} />
           ))}
-        </>
+        </View>
       )}
-    </>
+    </View>
   )
 }
 

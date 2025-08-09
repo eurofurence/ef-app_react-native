@@ -75,11 +75,7 @@ UserContext.displayName = 'UserContext'
 export const UserProvider = ({ children }: { children?: ReactNode | undefined }) => {
   const { accessToken, claims, refreshToken, refreshClaims } = useAuthContext()
   // Wrap self query. Add some options.
-  const {
-    data: user,
-    error,
-    refetch,
-  } = useQuery({
+  const { data: user, refetch } = useQuery({
     queryKey: [claims?.sub, 'self'],
     queryFn: (context: QueryFunctionContext) => getUserSelf(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
@@ -103,8 +99,6 @@ export const UserProvider = ({ children }: { children?: ReactNode | undefined })
     [claims, user, refreshToken, refreshClaims, refetch]
   )
 
-  // Don't run if query has not finished yet.
-  if (user === undefined && error === null) return null
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 

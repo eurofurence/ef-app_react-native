@@ -16,35 +16,155 @@
     "extra_thanks": "Extra Thanks",
     "header": "About"
   },
+  "Accessibility": {
+    "cancel": "Cancel",
+    "cancel_hint": "Closes dialog without saving changes",
+    "clear_selection": "Clear all selections",
+    "clear_selection_hint": "Removes all currently selected items",
+    "confirm": "Confirm",
+    "confirm_hint": "Saves selections and closes dialog",
+    "content_loaded": "Content loaded successfully",
+    "deselect_item_hint": "Tap to deselect this item",
+    "filter_options": "Filter options",
+    "go_home": "Go to home screen",
+    "go_home_hint": "Navigates to the main home screen",
+    "go_home_text": "Go to home screen!",
+    "main_content": "Main content area",
+    "main_sections": "Main content sections",
+    "modal_actions": "Dialog actions",
+    "not_found_content": "Page not found content",
+    "options_list": "Available options",
+    "page_not_found": "Page not found. The requested page \"{{path}}\" does not exist.",
+    "page_not_found_title": "This screen does not exist.",
+    "pull_to_refresh": "Pull to refresh content",
+    "pull_to_refresh_hint": "Swipe down to refresh the latest content",
+    "refresh_completed": "Content refresh completed",
+    "refreshing_content": "Refreshing content, please wait",
+    "requested_path": "Requested path",
+    "requested_path_hint": "The path that was requested but not found",
+    "search_input_hint": "Enter text to search for content",
+    "search_input_label": "Search input field",
+    "search_results": "Search results",
+    "select_item_hint": "Tap to select this item",
+    "selection_modal": "Selection dialog",
+    "tab_active_hint": "Currently selected tab",
+    "tab_inactive_hint": "Tap to select this tab",
+    "tab_indicator": "Has notifications",
+    "external_link": "External link to {{url}}",
+    "external_link_hint": "Opens the link in a new browser window",
+    "toast_dismiss_button": "Dismiss notification",
+    "toast_dismiss_button_hint": "Tap to close this notification"
+  },
   "Announcement": {
+    "accessibility": {
+      "area_author_info": "From {{area}} by {{author}}",
+      "banner_image": "Announcement banner image",
+      "banner_image_hint": "Tap to view full image",
+      "byline_info": "Announcement metadata",
+      "content_area": "Announcement content",
+      "date_info": "Published on {{date}}",
+      "loading_announcement": "Loading announcement details",
+      "not_available_message": "Announcement not available",
+      "page_description": "Announcement detail page",
+      "scroll_view": "Announcement content area",
+      "scroll_view_hint": "Swipe to scroll through announcement content",
+      "title_heading": "Announcement title"
+    },
     "header": "Announcement",
     "not_available": "This announcement is no longer available."
   },
   "Announcements": {
+    "accessibility": {
+      "announcement_card": "Announcement: {{title}} from {{area}}, {{time}}",
+      "announcement_card_hint": "Tap to view full announcement details",
+      "announcements_list": "Announcements list",
+      "announcements_list_hint": "Swipe to navigate through announcements",
+      "area_indicator": "Area indicator for {{area}}",
+      "empty_state": "No announcements available",
+      "empty_state_hint": "There are currently no active announcements to display",
+      "list_page_description": "Announcements list page",
+      "main_container": "Announcements page content",
+      "recent_announcements_section": "Recent announcements section",
+      "view_all_button": "View all announcements",
+      "view_all_button_hint": "Opens the full announcements list"
+    },
     "header": "Announcements",
     "noAnnouncements": "There are currently no active announcements",
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
   },
   "ArtistsAlley": {
+    "accessibility": {
+      "accept_button": "Accept registration request",
+      "accept_button_hint": "Approves the registration and publishes it to the Artist Alley listing",
+      "artists_alley_entry_content": "Artist Alley entry content area",
+      "artists_alley_entry_loaded": "Artist Alley entry for {{name}} loaded",
+      "artists_alley_entry_not_found": "Artist Alley entry not found",
+      "artists_alley_entry_scroll": "Artist Alley entry scroll view",
+      "artists_alley_entry_scroll_hint": "Scroll through Artist Alley entry details",
+      "artists_alley_list": "Artist Alley registrations list",
+      "artists_alley_list_hint": "List of Artist Alley registrations and tables",
+      "artists_alley_list_loaded": "Artist Alley list loaded",
+      "artists_alley_unauthorized": "Artist Alley access unauthorized",
+      "artists_alley_unauthorized_content": "Artist Alley unauthorized content area",
+      "cancel_button": "Cancel registration request",
+      "cancel_button_hint": "Cancels your pending registration request",
+      "card_button": "Artist Alley table {{displayName}} at table {{location}}, status: {{status}}",
+      "card_button_hint": "Tap to view details, double tap to open options",
+      "checkout_button": "Check out from table",
+      "checkout_button_hint": "Marks you as checked out from your Artist Alley table",
+      "delete_button": "Delete registration",
+      "delete_button_hint": "Permanently removes this registration",
+      "edit_button": "Edit registration request",
+      "edit_button_hint": "Opens form to modify registration details",
+      "learn_more_button": "Learn more about Artist Alley",
+      "learn_more_button_hint": "Opens Artist Alley information in browser",
+      "login_button": "Login button",
+      "login_button_hint": "Signs in to your account",
+      "moderate_button": "Moderate Artist Alley requests",
+      "moderate_button_hint": "Opens moderation interface for Artist Alley registrations",
+      "moderation_entry_content": "Artist Alley moderation content area",
+      "moderation_entry_loaded": "Artist Alley moderation entry for {{name}} with status {{status}} loaded",
+      "moderation_entry_not_found": "Artist Alley moderation entry not found",
+      "moderation_entry_scroll": "Artist Alley moderation scroll view",
+      "moderation_entry_scroll_hint": "Scroll through Artist Alley moderation details",
+      "new_request_button": "Make new registration request",
+      "new_request_button_hint": "Opens form to create a new Artist Alley registration",
+      "refresh_list": "Refresh Artist Alley list",
+      "refresh_list_hint": "Pull down to refresh the latest registrations",
+      "register_self_button": "Manage your Artist Alley registration",
+      "register_self_button_hint": "Opens form to manage your Artist Alley table registration",
+      "registration_form_content": "Artist Alley registration form content area",
+      "registration_form_loaded": "Artist Alley registration form loaded with status {{status}}",
+      "registration_form_new": "New Artist Alley registration form loaded",
+      "registration_form_scroll": "Artist Alley registration form scroll view",
+      "registration_form_scroll_hint": "Scroll through Artist Alley registration form",
+      "reject_button": "Reject registration request",
+      "reject_button_hint": "Rejects the registration request",
+      "submission_image": "Sample artwork from {{displayName}}",
+      "telegram_link": "Contact on Telegram {{handle}}",
+      "telegram_link_hint": "Opens Telegram chat",
+      "website_link": "Visit website {{url}}",
+      "website_link_hint": "Opens website in browser"
+    },
     "cancel_request": "Cancel your request",
-    "cancel_request_success": "Registration request cancelled",
     "cancel_request_error": "Failed to cancel registration",
+    "cancel_request_success": "Registration request cancelled",
     "check_out": "Check out",
-    "check_out_success": "Checked out",
     "check_out_error": "Failed to check out",
+    "check_out_success": "Checked out",
     "dismiss": "Dismiss your edits",
     "display_name_label": "Display name",
     "display_name_placeholder": "Your preferred display name",
     "edit_request": "Edit your request",
     "errors": {
+      "form_invalid": "Some fields have invalid input.",
       "invalid_string": "Incorrect format.",
       "invalid_type": "This is required.",
       "location_invalid_string": "Enter the number on the handout at your table.",
       "telegramHandle_invalid_string": "This does not look like a valid Telegram handle.",
       "too_small": "This is required.",
-      "websiteUrl_invalid_string": "Write your website like: https://eurofurence.org",
-      "form_invalid": "Some fields have invalid input."
+      "websiteUrl_invalid_string": "Write your website like: https://eurofurence.org"
     },
     "explanation_edit_change": "You can change your Artist Alley table registration details here. Just update your information, select a picture, and submit it.",
     "explanation_edit_new": "You haven't registered at a table in the Artist Alley yet, but you can change that here and now. Just pick a free table to set up at, enter the necessary information, select a picture, and submit it.",
@@ -142,18 +262,38 @@
     "after_event": "That was it! We hope to see you again next year!",
     "before_event": "{{conName}} will start in {{diff}}"
   },
-  "Registration": {
-    "registration_title": "Registration",
-    "registration_opens_in": "Registration opens in {{diff}}",
-    "registration_open": "Registration is now open!",
-    "registration_closed": "Registration has closed",
-    "register_now": "Register Now",
-    "thank_you_see_you_next_year": "Thank you and see you again next year!"
-  },
   "Dealer": {
     "about": "About",
     "about_the_art": "About the art",
     "about_the_artist": "About the artist",
+    "accessibility": {
+      "about_art_text": "About the art: {{text}}",
+      "about_artist_text": "About the artist: {{text}}",
+      "add_favorite_button": "Add dealer to favorites",
+      "add_favorite_hint": "Adds this dealer to your favorites list",
+      "art_preview_caption": "Art preview caption: {{caption}}",
+      "bluesky_button": "Visit {{handle}} on Bluesky",
+      "bluesky_button_hint": "Opens Bluesky profile in browser",
+      "dealer_attendance": "Attendance information: {{days}}",
+      "dealer_avatar": "Profile image for {{name}}",
+      "dealer_content_area": "Dealer information content",
+      "dealer_description": "Dealer description: {{description}}",
+      "dealer_name_heading": "Dealer name: {{name}}",
+      "discord_button": "Copy Discord handle {{handle}}",
+      "discord_button_hint": "Copies Discord handle to clipboard",
+      "mastodon_button": "Visit {{handle}} on Mastodon",
+      "mastodon_button_hint": "Opens Mastodon profile in browser",
+      "page_description": "Dealer detail page",
+      "remove_favorite_button": "Remove dealer from favorites",
+      "remove_favorite_hint": "Removes this dealer from your favorites list",
+      "scroll_view_hint": "Swipe to scroll through dealer information",
+      "share_dealer_button": "Share dealer information",
+      "share_dealer_hint": "Opens sharing options for this dealer",
+      "telegram_button": "Contact {{handle}} on Telegram",
+      "telegram_button_hint": "Opens Telegram to contact this dealer",
+      "twitter_button": "Visit {{handle}} on Twitter",
+      "twitter_button_hint": "Opens Twitter profile in browser"
+    },
     "add_favorite": "Favorite",
     "after_dark": "After dark",
     "attends": "Attends on",
@@ -176,6 +316,20 @@
     "viewing_dealer": "Viewing dealer"
   },
   "Dealers": {
+    "accessibility": {
+      "dealer_avatar": "Profile image for {{name}}",
+      "dealer_card": "Dealer: {{name}}",
+      "dealer_card_hint": "Tap to view dealer details, long press for options",
+      "dealer_categories": "Categories: {{categories}}",
+      "dealer_favorite_icon": "Favorite indicator",
+      "dealer_favorited": "Favorited",
+      "dealer_not_present": "Not present today",
+      "dealer_off_days": "Not attending on {{offDays}}",
+      "dealers_list": "Dealers list",
+      "dealers_list_hint": "Swipe to navigate through dealers, pull down to refresh",
+      "dealers_sectioned_list": "Dealers organized by sections",
+      "dealers_sectioned_list_hint": "Swipe to navigate through dealers grouped by category, pull down to refresh"
+    },
     "after_dark": "After dark",
     "all": "All",
     "alphabetical": "A-Z",
@@ -188,6 +342,9 @@
     "favorites_title": "Your favorites",
     "not_attending_on": "Not in on {{offDays}}",
     "regular": "Regular",
+    "search": {
+      "placeholder": "Search dealers…"
+    },
     "section_notice": "Dealer grouping is picked by the app based on most unique category"
   },
   "EmptyScreen": {
@@ -195,6 +352,14 @@
   },
   "Event": {
     "about_title": "About",
+    "accessibility": {
+      "event_content": "Event content",
+      "event_details_loaded": "Event details loaded for {{title}}",
+      "event_details_scroll": "Event details scroll view",
+      "event_details_scroll_hint": "Scrollable view containing event details",
+      "event_header": "Event header",
+      "event_header_hint": "Header containing event title and share button"
+    },
     "add_favorite": "Favorite",
     "event_was_updated": "Event was updated since your last visit",
     "give_feedback": "Give Feedback",
@@ -217,6 +382,14 @@
     "when_local": "{{zone}}: {{day}} {{date}}, {{start}} – {{finish}}."
   },
   "EventFeedback": {
+    "accessibility": {
+      "feedback_form_content": "Feedback form content",
+      "feedback_form_loaded": "Feedback form loaded for {{title}}",
+      "feedback_form_scroll": "Feedback form scroll view",
+      "feedback_form_scroll_hint": "Scrollable view containing feedback form",
+      "submit_feedback": "Submit feedback",
+      "submit_feedback_hint": "Submits your rating and message for this event"
+    },
     "disabled_not_attending": "Only attendees can give feedback",
     "disabled_not_logged_in": "Please log in to give feedback",
     "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
@@ -238,6 +411,7 @@
     "events_done": "Events concluded",
     "events_hidden": "Hidden",
     "events_hidden_subtitle": "{{count}} events, reveal them again in Settings",
+    "events_list": "Events list",
     "favorite_added": "Favorite added",
     "favorite_removed": "Favorite removed",
     "favorites_subtitle": "You will receive a reminder about these events",
@@ -253,7 +427,9 @@
     "night": "At night",
     "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
     "schedule_title": "Your Schedule",
-    "search": "Search",
+    "search": {
+      "placeholder": "Search events…"
+    },
     "today_schedule_subtitle": "You will receive a reminder before this event starts",
     "today_schedule_title": "Today's schedule",
     "upcoming_favorites_title": "Favorite Events",
@@ -261,6 +437,47 @@
     "upcoming_title": "Upcoming Events"
   },
   "Home": {
+    "accessibility": {
+      "banner_image": "Convention banner background image",
+      "changed_dealers_list": "{{count}} updated dealers: {{dealers}}",
+      "changed_events_list": "{{count}} updated events: {{events}}",
+      "convention_logo": "Convention logo",
+      "convention_name": "Convention name: {{name}}",
+      "countdown_header": "Convention header with countdown and banner",
+      "countdown_header_hint": "Shows convention branding and current event status",
+      "countdown_status": "Event status: {{status}}",
+      "dealers_search_section": "{{count}} dealer results",
+      "device_warning_container": "Device compatibility warning",
+      "device_warning_content": "Device compatibility information",
+      "events_search_section": "{{count}} event results",
+      "favorites_warning_container": "Favorites update notification",
+      "favorites_warning_description": "Information about updated favorites",
+      "hide_device_warning": "Hide device warning",
+      "hide_device_warning_hint": "Dismisses this device compatibility warning",
+      "hide_favorites_warning": "Hide favorites warning",
+      "hide_favorites_warning_hint": "Dismisses this favorites update notification",
+      "hide_language_warning": "Hide language warning",
+      "hide_language_warning_hint": "Dismisses this translation status warning",
+      "hide_registration_warning": "Hide registration warning",
+      "hide_registration_warning_hint": "Dismisses this registration status notification",
+      "hide_timezone_warning": "Hide timezone warning",
+      "hide_timezone_warning_hint": "Dismisses this timezone difference notification",
+      "knowledge_search_section": "{{count}} info article results",
+      "language_warning_container": "Translation status warning",
+      "language_warning_content": "Translation status information",
+      "register_now_button": "Register for convention",
+      "register_now_button_hint": "Opens registration website in browser",
+      "registration_icon": "Registration indicator",
+      "registration_status": "Registration status: {{status}}",
+      "registration_warning_container": "Registration status notification",
+      "search_results_container": "Search results",
+      "search_results_container_hint": "Shows search results organized by category",
+      "timezone_warning_container": "Timezone difference notification",
+      "timezone_warning_content": "Your device timezone ({{deviceTimeZone}}) differs from {{convention}} timezone ({{conTimeZone}})",
+      "translate_icon": "Translation indicator",
+      "update_icon": "Update indicator",
+      "warning_icon": "Warning indicator"
+    },
     "announcementsTitle_one": "There is {{ count }} announcements.",
     "announcementsTitle_other": "There are {{ count }} announcements.",
     "announcementsTitle_zero": "There are no announcements.",
@@ -270,13 +487,16 @@
     "eventsTitle_other": "We have retrieved {{ count }} events.",
     "eventsTitle_zero": "There are no events.",
     "recent_announcements": "Recent announcements",
+    "search": {
+      "placeholder": "Search events, dealers and info articles…"
+    },
     "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
-      "language": "Translation",
       "favorites_changed": "Favorites updated",
       "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
       "hide": "Hide",
+      "language": "Translation",
       "no_image_caching": "Your device cannot cache images. Without an internet connection, images will not be shown.",
       "no_notifications": "Your device does not support scheduled notifications. You will not receive reminders about upcoming events.",
       "no_push_notifications": "Your device does not support push notifications. You will not be automatically notified of Announcements or Private Messages.",
@@ -285,9 +505,48 @@
     }
   },
   "KnowledgeGroups": {
-    "header": "Info Articles"
+    "accessibility": {
+      "kb_entry_card": "Knowledge article: {{title}}",
+      "kb_entry_card_hint": "Tap to view full article details",
+      "kb_entry_content": "Knowledge article content",
+      "kb_entry_loaded": "Knowledge article loaded: {{title}}",
+      "kb_entry_scroll": "Knowledge article scroll view",
+      "kb_entry_scroll_hint": "Scrollable view containing knowledge article content",
+      "kb_section_header": "Section: {{title}} - {{subtitle}}",
+      "kb_sectioned_list": "Knowledge articles list",
+      "kb_sectioned_list_hint": "Swipe to navigate through articles, pull down to refresh",
+      "no_search_results": "No knowledge articles found for \"{{query}}\"",
+      "search_results": "Found {{count}} knowledge article{{s}} for \"{{query}}\""
+    },
+    "header": "Info Articles",
+    "search": {
+      "placeholder": "Search info articles…"
+    }
   },
   "LostAndFound": {
+    "accessibility": {
+      "date_section": "Date information section",
+      "description_section": "Item description section",
+      "detail_page_scroll_view": "Lost and found item details for {{title}}",
+      "detail_page_scroll_view_hint": "Swipe to scroll through item information",
+      "empty_state": "No items found",
+      "empty_state_hint": "There are currently no lost or found items reported",
+      "error_state": "Error loading items",
+      "error_state_hint": "There was an error loading the lost and found items",
+      "item_description": "Description: {{description}}",
+      "item_image": "Image of {{title}}",
+      "item_image_hint": "Tap to view full size image",
+      "item_title": "Item title: {{title}}",
+      "loading_state": "Loading lost and found items",
+      "loading_state_hint": "Please wait while items are being loaded",
+      "lost_found_card": "Lost and found item: {{title}}, status: {{status}}, reported on {{date}}",
+      "lost_found_card_hint": "Tap to view full item details",
+      "lost_found_list": "Lost and found items list",
+      "lost_found_list_hint": "Swipe to navigate through items, pull down to refresh",
+      "main_container": "Lost and Found page content",
+      "reported_date": "Reported on {{date}}",
+      "status_badge": "Status: {{status}}"
+    },
     "category": "Category",
     "contact_info": "Contact Information",
     "description": "Description",
@@ -308,11 +567,78 @@
     }
   },
   "Maps": {
+    "accessibility": {
+      "bottom_sheet": "Map results panel",
+      "bottom_sheet_hint": "Swipe up to expand, swipe down to collapse",
+      "event_conference_room_link": "Conference room: {{name}}",
+      "event_conference_room_link_hint": "View this conference room location",
+      "interactive_map": "Interactive map view",
+      "interactive_map_hint": "Use pinch to zoom, drag to pan around the map",
+      "link_preview_available": "Link preview for {{url}}",
+      "link_preview_hint": "Tap to open link",
+      "link_preview_loading": "Loading link preview",
+      "link_preview_unavailable": "Link preview unavailable",
+      "loading_preview": "Loading preview",
+      "map_container": "Map container for {{mapName}}",
+      "map_container_hint": "Interactive map with zoom, pan, and clickable areas",
+      "map_entry_link": "Map location: {{name}}",
+      "map_entry_link_hint": "Navigate to this location on the map",
+      "map_image": "Map image for {{mapName}}",
+      "map_marker": "Location marker",
+      "map_marker_hint": "Indicates the selected location on the map",
+      "map_page": "Interactive map page",
+      "map_page_hint": "Navigate and explore the map with zoom and pan gestures",
+      "map_results_list": "Map search results",
+      "map_results_list_hint": "List of locations and links found in the current map area",
+      "no_preview_available": "No preview available",
+      "web_external_link": "External link to {{name}} on {{host}}",
+      "web_external_link_hint": "Opens external website in browser",
+      "zoomable_map": "Zoomable map interface",
+      "zoomable_map_hint": "Pinch to zoom in or out, drag to move around"
+    },
     "filtering": "Searching viewed area",
+    "preview_unavailable": "Map preview unavailable",
     "results": "In the viewed area"
   },
   "Menu": {
     "about": "About",
+    "accessibility": {
+      "about_tab": "About tab",
+      "about_tab_hint": "View app information and credits",
+      "artist_alley_tab": "Artist Alley tab",
+      "artist_alley_tab_hint": "Browse and register for Artist Alley tables",
+      "avatar_default": "Default profile avatar",
+      "avatar_with_name": "Profile avatar for {{name}}",
+      "catch_em_tab": "Catch-em-all game tab",
+      "catch_em_tab_disabled_hint": "Login required to play catch-em-all",
+      "catch_em_tab_hint": "Play the fursuit catching game",
+      "info_tab": "Info articles tab",
+      "info_tab_hint": "Browse knowledge base and information articles",
+      "login_button": "Login button",
+      "login_button_hint": "Tap to log into your account",
+      "login_section": "Login and profile section",
+      "lost_found_tab": "Lost & Found tab",
+      "lost_found_tab_disabled_hint": "Login required to access lost and found",
+      "lost_found_tab_hint": "Browse lost and found items",
+      "main_menu": "Main navigation menu",
+      "main_menu_hint": "Primary app navigation with tabs for different sections",
+      "map_tab": "Interactive map tab",
+      "map_tab_hint": "Opens interactive convention map in browser",
+      "menu_tabs": "Navigation tabs",
+      "messages_button": "View messages",
+      "messages_button_hint": "Open your private messages",
+      "profile_button": "Profile button",
+      "profile_button_disabled_hint": "Login required to access profile",
+      "profile_button_hint": "Tap to view your profile",
+      "profile_button_with_name": "Profile button for {{name}}",
+      "profile_tab": "Profile tab",
+      "profile_tab_disabled_hint": "Login required to access profile",
+      "profile_tab_hint": "View and manage your profile",
+      "settings_tab": "Settings tab",
+      "settings_tab_hint": "Configure app preferences and settings",
+      "website_tab": "Convention website tab",
+      "website_tab_hint": "Opens convention website in browser"
+    },
     "announcements": "Announcements",
     "artist_alley": "Artist alley",
     "catch_em": "Catch-em-all",
@@ -339,12 +665,34 @@
     "announcement": "There is an announcement from {{conName}}",
     "private_message": "You received a new private message"
   },
+  "PrivateMessageCompose": {
+    "accessibility": {
+      "compose_form_content": "Compose message form content",
+      "compose_form_loaded": "Compose message form loaded",
+      "compose_form_scroll": "Compose message form scroll view",
+      "compose_form_scroll_hint": "Scrollable view containing the compose message form",
+      "submit_message": "Submit message",
+      "submit_message_hint": "Send the composed message to the recipient"
+    }
+  },
   "PrivateMessageItem": {
+    "accessibility": {
+      "message_content": "Message content",
+      "message_loaded": "Message loaded: {{subject}} from {{author}}",
+      "message_scroll": "Message scroll view",
+      "message_scroll_hint": "Scrollable view containing message content"
+    },
     "from": "From {{authorName}}",
     "header": "Private Message",
     "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {
+    "accessibility": {
+      "messages_list": "Messages list",
+      "messages_list_hint": "List of private messages organized by sender and read status",
+      "messages_loaded": "Loaded {{total}} messages, {{unread}} unread",
+      "no_messages": "No messages available"
+    },
     "from": "From {{ author }}",
     "from_unknown": "From unknown author",
     "header": "Private Messages",
@@ -355,6 +703,18 @@
     "unread": "Unread"
   },
   "Profile": {
+    "accessibility": {
+      "avatar_hint": "Tap to view profile",
+      "idp_settings_button": "Identity settings button",
+      "idp_settings_button_hint": "Opens identity settings website in browser",
+      "loading_profile": "Loading profile",
+      "logout_button": "Logout button",
+      "logout_button_hint": "Signs out of your account",
+      "profile_content_area": "Profile content area",
+      "profile_scroll_view": "Profile scroll view",
+      "profile_scroll_view_hint": "Scroll through your profile information",
+      "user_avatar": "User profile image for {{name}}"
+    },
     "header": "Profile",
     "idp_settings": "Identity setting website",
     "logged_in_as": "You are logged in as {{username}}",
@@ -377,17 +737,32 @@
       "Unknown": "Unknown"
     }
   },
+  "Registration": {
+    "register_now": "Register Now",
+    "registration_closed": "Registration has closed",
+    "registration_open": "Registration is now open!",
+    "registration_opens_in": "Registration opens in {{diff}}",
+    "registration_title": "Registration",
+    "thank_you_see_you_next_year": "Thank you and see you again next year!"
+  },
   "RevealHidden": {
     "header": "Reveal hidden events",
     "lead": "Click on any event to reveal it in the overview again",
-    "title": "Reveal specific event"
+    "title": "Reveal specific event",
+    "accessibility": {
+      "no_hidden_events": "No hidden events found",
+      "hidden_events_loaded": "{{count}} hidden events loaded",
+      "reveal_hidden_scroll": "Reveal hidden events scroll view",
+      "reveal_hidden_scroll_hint": "Scroll through hidden events to reveal them",
+      "reveal_hidden_content": "Hidden events content area"
+    }
   },
   "Search": {
-    "placeholder": "Search…",
     "clear_search": "Clear search",
     "clear_search_hint": "Double tap to clear the search field",
-    "search_input_label": "Search input field",
-    "search_input_hint": "Enter text to search for content"
+    "placeholder": "Search…",
+    "search_input_hint": "Enter text to search for content",
+    "search_input_label": "Search input field"
   },
   "Settings": {
     "about": "About",
@@ -406,6 +781,7 @@
     "changeLanguage": "Change language",
     "currentLanguage": "Your current language is English!",
     "dev_buttons": {
+      "clear": "Clear local data",
       "clear_async_storage": "Clear AsyncStorage data",
       "copy_device_push_token": "Copy device push token",
       "copy_token_data": "Copy token data",
@@ -417,7 +793,6 @@
       "set_token_data": "Set token data",
       "subtitle": "Make the app do something.",
       "sync": "Sync local data",
-      "clear": "Clear local data",
       "title": "Dev buttons",
       "token_data_placeholder": "Enter token data"
     },
@@ -478,7 +853,13 @@
       "system": "System",
       "title": "Change the application theme"
     },
-    "timeTravel": "Show time travel settings."
+    "timeTravel": "Show time travel settings.",
+    "accessibility": {
+      "settings_page_loaded": "Settings page loaded",
+      "settings_scroll": "Settings page scroll view",
+      "settings_scroll_hint": "Scroll through settings options and preferences",
+      "settings_content": "Settings content area"
+    }
   },
   "TimeTravel": {
     "currentTime": "Current: {{ time }}",

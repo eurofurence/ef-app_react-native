@@ -87,6 +87,7 @@ export type EventRoomRecord = RecordMetadata & {
   Name: string
   ShortName?: string
   IsInternal?: boolean
+  MapLink?: string
 }
 export type MapRecord = RecordMetadata & {
   // TODO: Verify nullability.

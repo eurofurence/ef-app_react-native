@@ -1,5 +1,4 @@
 import * as ImagePicker from 'expo-image-picker'
-import * as React from 'react'
 import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'

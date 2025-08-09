@@ -33,7 +33,11 @@ jest.mock('react-i18next', () => ({
 // Mock date-fns
 jest.mock('date-fns', () => ({
   format: jest.fn(() => 'Jan 1, 2022, 12:00 AM'),
-  parseISO: jest.fn(() => new Date('2022-01-01T00:00:00Z')),
+}))
+
+// Mock date-fns
+jest.mock('@/util/parseDefaultISO', () => ({
+  parseDefaultISO: jest.fn(() => new Date('2022-01-01T00:00:00Z')),
 }))
 
 // Mock ToastContext

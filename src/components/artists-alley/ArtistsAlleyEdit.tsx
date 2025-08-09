@@ -104,7 +104,7 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
 
   return (
     <FormProvider {...form}>
-      <Label type="compact" className="mt-5 mb-10">
+      <Label type="compact" className="mt-5 mb-10" accessibilityRole="text">
         {t(mode === 'change' ? 'explanation_edit_change' : 'explanation_edit_new')}
       </Label>
 
@@ -156,12 +156,13 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
           }
         }}
         disabled={disabled}
+        accessibilityHint={mode === 'change' ? 'Updates your Artist Alley registration with the new information' : 'Submits your Artist Alley registration for review'}
       >
         {t(mode === 'change' ? 'update' : 'submit')}
       </Button>
 
       {mode === 'new' ? null : (
-        <Button onPress={onDismiss} className="mt-5" outline>
+        <Button onPress={onDismiss} className="mt-5" outline accessibilityHint="Cancels editing and returns to the previous screen without saving changes">
           {t('dismiss')}
         </Button>
       )}

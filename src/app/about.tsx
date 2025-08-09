@@ -212,10 +212,24 @@ export default function AboutScreen() {
         </TouchableOpacity>
 
         <Row style={styles.marginAround} gap={16}>
-          <Button containerStyle={styles.flex} onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')} icon="help">
+          <Button
+            containerStyle={styles.flex}
+            onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')}
+            icon="help"
+            accessible
+            accessibilityLabel={t('app_details.get_help')}
+            accessibilityRole="link"
+          >
             {t('app_details.get_help')}
           </Button>
-          <Button containerStyle={styles.flex} onPress={() => Linking.openURL('https://github.com/eurofurence/ef-app_react-native/issues')} icon="bug">
+          <Button
+            containerStyle={styles.flex}
+            onPress={() => Linking.openURL('https://github.com/eurofurence/ef-app_react-native/issues')}
+            icon="bug"
+            accessible
+            accessibilityLabel={t('app_details.report_bug')}
+            accessibilityRole="link"
+          >
             {t('app_details.report_bug')}
           </Button>
         </Row>

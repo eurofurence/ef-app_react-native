@@ -1,4 +1,3 @@
-import * as Clipboard from 'expo-clipboard'
 import * as Linking from 'expo-linking'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +12,7 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import { format } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
+import { setStringAsync } from 'expo-clipboard'
 import { openBrowserAsync } from 'expo-web-browser'
 import { appStyles } from '../AppStyles'
 import { Banner } from '../generic/atoms/Banner'
@@ -134,33 +134,58 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
       {!dealer.Artist ? null : (
         <View style={[appStyles.shadow, avatarBackground, styles.avatarCircle]}>
-          <Image contentFit="cover" style={styles.avatarImage} source={sourceFromImage(dealer.ArtistThumbnail)} />
+          <Image
+            contentFit="cover"
+            style={styles.avatarImage}
+            source={sourceFromImage(dealer.ArtistThumbnail)}
+            accessibilityLabel={t('accessibility.dealer_avatar', { name: dealer.DisplayNameOrAttendeeNickname })}
+            accessibilityRole="image"
+          />
         </View>
       )}
 
       {dealer.DisplayNameOrAttendeeNickname ? (
-        <Label type="h1" variant="middle" className="mb-3">
+        <Label
+          type="h1"
+          variant="middle"
+          className="mb-3"
+          accessibilityRole="header"
+          accessibilityLabel={t('accessibility.dealer_name_heading', { name: dealer.DisplayNameOrAttendeeNickname })}
+        >
           {dealer.DisplayNameOrAttendeeNickname}
         </Label>
       ) : null}
 
-      <Label style={styles.marginAround} type="para">
+      <Label style={styles.marginAround} type="para" accessibilityLabel={t('accessibility.dealer_description', { description: dealer.ShortDescriptionContent })}>
         {dealer.ShortDescriptionContent}
       </Label>
 
-      <Row style={styles.marginAround} gap={5}>
+      <Row style={styles.marginAround} gap={5} accessibilityLabel={t('accessibility.dealer_attendance', { days })}>
         <Label type="caption">{t('attends')}</Label>
         <Label type="caption" color="important">
           {days}
         </Label>
       </Row>
 
-      <Button style={styles.marginAround} outline={dealer.Favorite} icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'} onPress={() => toggleFavorite(dealer)}>
+      <Button
+        style={styles.marginAround}
+        outline={dealer.Favorite}
+        icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'}
+        onPress={() => toggleFavorite(dealer)}
+        accessibilityLabel={dealer.Favorite ? t('accessibility.remove_favorite_button') : t('accessibility.add_favorite_button')}
+        accessibilityHint={dealer.Favorite ? t('accessibility.remove_favorite_hint') : t('accessibility.add_favorite_hint')}
+      >
         {dealer.Favorite ? t('remove_favorite') : t('add_favorite')}
       </Button>
 
       {!shareButton ? null : (
-        <Button style={styles.marginAround} icon="share" onPress={() => shareDealer(dealer)}>
+        <Button
+          style={styles.marginAround}
+          icon="share"
+          onPress={() => shareDealer(dealer)}
+          accessibilityLabel={t('accessibility.share_dealer_button')}
+          accessibilityHint={t('accessibility.share_dealer_hint')}
+        >
           {t('share')}
         </Button>
       )}
@@ -199,12 +224,20 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
           containerStyle={styles.marginAround}
           onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
           icon={(props) => <FaIcon name="telegram-plane" {...props} />}
+          accessibilityLabel={t('accessibility.telegram_button', { handle: dealer.TelegramHandle })}
+          accessibilityHint={t('accessibility.telegram_button_hint')}
         >
           Telegram: {dealer.TelegramHandle}
         </Button>
       )}
       {dealer.TwitterHandle && (
-        <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)} icon="twitter">
+        <Button
+          containerStyle={styles.marginAround}
+          onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)}
+          icon="twitter"
+          accessibilityLabel={t('accessibility.twitter_button', { handle: dealer.TwitterHandle })}
+          accessibilityHint={t('accessibility.twitter_button_hint')}
+        >
           Twitter: {dealer.TwitterHandle}
         </Button>
       )}
@@ -213,21 +246,35 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
           containerStyle={styles.marginAround}
           onPress={async () => {
             if (!dealer.DiscordHandle) return null
-            await Clipboard.setStringAsync(dealer.DiscordHandle)
+            await setStringAsync(dealer.DiscordHandle)
             toast('info', t('discord_handle_copied', { discordHandle: dealer.DiscordHandle }), 5000)
           }}
           icon="discord"
+          accessibilityLabel={t('accessibility.discord_button', { handle: dealer.DiscordHandle })}
+          accessibilityHint={t('accessibility.discord_button_hint')}
         >
           Discord: {dealer.DiscordHandle}
         </Button>
       )}
       {dealer.MastodonHandle && (
-        <Button containerStyle={styles.marginAround} onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)} icon="mastodon">
+        <Button
+          containerStyle={styles.marginAround}
+          onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)}
+          icon="mastodon"
+          accessibilityLabel={t('accessibility.mastodon_button', { handle: dealer.MastodonHandle })}
+          accessibilityHint={t('accessibility.mastodon_button_hint')}
+        >
           Mastodon: {dealer.MastodonHandle}
         </Button>
       )}
       {dealer.BlueskyHandle && (
-        <Button containerStyle={styles.marginAround} onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)} icon="cloud">
+        <Button
+          containerStyle={styles.marginAround}
+          onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)}
+          icon="cloud"
+          accessibilityLabel={t('accessibility.bluesky_button', { handle: dealer.BlueskyHandle })}
+          accessibilityHint={t('accessibility.bluesky_button_hint')}
+        >
           Bluesky: {dealer.BlueskyHandle}
         </Button>
       )}
@@ -240,13 +287,21 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             <View style={styles.posterLine}>
               <Banner image={dealer.ArtPreview} viewable />
 
-              <Label className="mt-3" type="caption" numberOfLines={4} ellipsizeMode="tail">
+              <Label
+                className="mt-3"
+                type="caption"
+                numberOfLines={4}
+                ellipsizeMode="tail"
+                accessibilityLabel={t('accessibility.art_preview_caption', { caption: dealer.ArtPreviewCaption })}
+              >
                 {dealer.ArtPreviewCaption}
               </Label>
             </View>
           )}
 
-          <Label type="para">{dealer.AboutTheArtText}</Label>
+          <Label type="para" accessibilityLabel={t('accessibility.about_art_text', { text: dealer.AboutTheArtText })}>
+            {dealer.AboutTheArtText}
+          </Label>
         </>
       )}
 
@@ -260,7 +315,9 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             </View>
           )}
 
-          <Label type="para">{dealer.AboutTheArtistText}</Label>
+          <Label type="para" accessibilityLabel={t('accessibility.about_artist_text', { text: dealer.AboutTheArtistText })}>
+            {dealer.AboutTheArtistText}
+          </Label>
         </>
       )}
     </>
