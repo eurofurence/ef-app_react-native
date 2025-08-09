@@ -9,9 +9,12 @@ export type PressableProps = TouchableOpacityProps & {
 }
 
 export function Pressable({ containerStyle, minTouchSize = 44, ...props }: PressableProps) {
+  // Ensure minimum touch target size for accessibility
+  const touchableStyle = props.style ? [props.style, { minHeight: minTouchSize, minWidth: minTouchSize }] : { minHeight: minTouchSize, minWidth: minTouchSize }
+
   // Set default accessibility props if not provided
   const accessible = props.accessible !== undefined ? props.accessible : true
   const accessibilityRole = props.accessibilityRole || 'button'
 
-  return <TouchableOpacity {...props} style={[containerStyle, props.style]} delayLongPress={1000} accessible={accessible} accessibilityRole={accessibilityRole} />
+  return <TouchableOpacity {...props} style={[containerStyle, touchableStyle, props.style]} delayLongPress={1000} accessible={accessible} accessibilityRole={accessibilityRole} />
 }
