@@ -78,7 +78,6 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
         />
       </View>
 
-
       <View style={styles.buttons}>
         {data.State === 'Pending' ? (
           <>

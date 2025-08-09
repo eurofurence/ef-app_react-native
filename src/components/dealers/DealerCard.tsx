@@ -41,10 +41,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
   const description = dealer.details.Categories?.join(', ')
   const offDays = dealer.offDays
   const favorite = dealer.details.Favorite
-  const avatar =
-    sourceFromImage(dealer.details.ArtistThumbnail) ??
-    sourceFromImage(dealer.details.Artist) ??
-    require('@/assets/static/ych.png')
+  const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require('@/assets/static/ych.png')
 
   const { t } = useTranslation('Dealers')
 
@@ -123,13 +120,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
 
         {!!favorite && (
           <View key="eventFavorite" style={styles.favorite}>
-            <Icon
-              name="heart"
-              size={20}
-              color={colorHeart}
-              accessibilityLabel={t('accessibility.dealer_favorite_icon')}
-              accessibilityRole="image"
-            />
+            <Icon name="heart" size={20} color={colorHeart} accessibilityLabel={t('accessibility.dealer_favorite_icon')} accessibilityRole="image" />
           </View>
         )}
       </Pressable>
