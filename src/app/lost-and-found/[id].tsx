@@ -42,32 +42,55 @@ const LostAndFoundDetailContent: FC = () => {
   const statusColor = item.Status === 'Found' ? theme.primary : item.Status === 'Returned' ? theme.warning : theme.notification
 
   return (
-    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+    <ScrollView
+      style={StyleSheet.absoluteFill}
+      stickyHeaderIndices={[0]}
+      stickyHeaderHiddenOnScroll
+      accessibilityLabel={t('accessibility.detail_page_scroll_view', { title: item.Title })}
+      accessibilityHint={t('accessibility.detail_page_scroll_view_hint')}
+    >
       <Header>{item.Title}</Header>
 
       <Floater>
         {item.ImageUrl && (
           <View style={styles.imageContainer}>
-            <Image source={{ uri: item.ImageUrl }} style={styles.image} />
+            <Image
+              source={{ uri: item.ImageUrl }}
+              style={styles.image}
+              accessibilityLabel={t('accessibility.item_image', { title: item.Title })}
+              accessibilityHint={t('accessibility.item_image_hint')}
+            />
           </View>
         )}
 
         <View style={styles.header}>
-          <Label style={styles.title}>{item.Title}</Label>
-          <View style={[styles.statusBadge, { backgroundColor: statusColor }]}>
+          <Label style={styles.title} accessibilityRole="header" accessibilityLabel={t('accessibility.item_title', { title: item.Title })}>
+            {item.Title}
+          </Label>
+          <View
+            style={[styles.statusBadge, { backgroundColor: statusColor }]}
+            accessibilityLabel={t('accessibility.status_badge', { status: t(`status.${item.Status}`) })}
+            accessibilityRole="text"
+          >
             <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
           </View>
         </View>
 
         {item.Description && (
-          <View style={styles.section}>
-            <Label style={styles.sectionTitle}>{t('description')}</Label>
-            <Label style={styles.description}>{item.Description}</Label>
+          <View style={styles.section} accessibilityLabel={t('accessibility.description_section')}>
+            <Label style={styles.sectionTitle} accessibilityRole="header">
+              {t('description')}
+            </Label>
+            <Label style={styles.description} accessibilityLabel={t('accessibility.item_description', { description: item.Description })}>
+              {item.Description}
+            </Label>
           </View>
         )}
 
-        <View style={styles.section}>
-          <Label style={styles.date}>{new Date(item.LastChangeDateTimeUtc).toLocaleString()}</Label>
+        <View style={styles.section} accessibilityLabel={t('accessibility.date_section')}>
+          <Label style={styles.date} accessibilityLabel={t('accessibility.reported_date', { date: new Date(item.LastChangeDateTimeUtc).toLocaleString() })}>
+            {new Date(item.LastChangeDateTimeUtc).toLocaleString()}
+          </Label>
         </View>
       </Floater>
     </ScrollView>

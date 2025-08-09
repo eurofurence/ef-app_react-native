@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { DealerSection, DealerSectionProps } from './DealerSection'
 import { DealerCard, DealerDetailsInstance } from './DealerCard'
@@ -32,6 +33,7 @@ function keyExtractor(item: SectionProps | DealerDetailsInstance) {
 }
 
 export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, dealersGroups, empty, trailer, sticky = true, padEnd = true }) => {
+  const { t } = useTranslation('Dealers')
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(dealersGroups, (item) => !('details' in item)) : undefined), [dealersGroups, sticky])
@@ -65,6 +67,8 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityLabel={t('accessibility.dealers_sectioned_list')}
+      accessibilityHint={t('accessibility.dealers_sectioned_list_hint')}
     />
   )
 }

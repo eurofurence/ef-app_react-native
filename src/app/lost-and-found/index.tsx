@@ -17,33 +17,33 @@ const LostAndFoundContent: FC = () => {
 
   if (isLoading) {
     return (
-      <View style={StyleSheet.absoluteFill}>
+      <View style={StyleSheet.absoluteFill} accessibilityLabel={t('accessibility.main_container')}>
         <Header>{t('header')}</Header>
-        <NoData text={t('loading')} />
+        <NoData text={t('loading')} accessibilityLabel={t('accessibility.loading_state')} accessibilityHint={t('accessibility.loading_state_hint')} />
       </View>
     )
   }
 
   if (error) {
     return (
-      <View style={StyleSheet.absoluteFill}>
+      <View style={StyleSheet.absoluteFill} accessibilityLabel={t('accessibility.main_container')}>
         <Header>{t('header')}</Header>
-        <NoData text={t('error_loading')} />
+        <NoData text={t('error_loading')} accessibilityLabel={t('accessibility.error_state')} accessibilityHint={t('accessibility.error_state_hint')} />
       </View>
     )
   }
 
   if (!items || items.length === 0) {
     return (
-      <View style={StyleSheet.absoluteFill}>
+      <View style={StyleSheet.absoluteFill} accessibilityLabel={t('accessibility.main_container')}>
         <Header>{t('header')}</Header>
-        <NoData text={t('no_items')} />
+        <NoData text={t('no_items')} accessibilityLabel={t('accessibility.empty_state')} accessibilityHint={t('accessibility.empty_state_hint')} />
       </View>
     )
   }
 
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <View style={StyleSheet.absoluteFill} accessibilityLabel={t('accessibility.main_container')}>
       <Header>{t('header')}</Header>
       <LostAndFoundList items={items} />
     </View>
