@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, View, ScrollView } from 'react-native'
+import { Modal, StyleSheet, View, ScrollView, ModalProps } from 'react-native'
 import * as React from 'react'
 import { ForwardedRef, forwardRef, ReactNode, useImperativeHandle, useMemo, useState } from 'react'
 import Fuse from 'fuse.js'
@@ -9,6 +9,9 @@ import { Search } from '@/components/generic/atoms/Search'
 import { Label } from '@/components/generic/atoms/Label'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 import { Row } from '@/components/generic/containers/Row'
+
+const supportedOrientations: ModalProps['supportedOrientations'] = ['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']
+
 export type ComboModalProps<T> = {
   title?: string
   clear?: boolean
@@ -82,7 +85,7 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
   }
 
   return (
-    <Modal visible={visible} transparent={true} onRequestClose={() => cancel()}>
+    <Modal visible={visible} transparent={true} onRequestClose={() => cancel()} supportedOrientations={supportedOrientations}>
       <GestureHandlerRootView>
         <View style={[styleDismiss, StyleSheet.absoluteFill]} />
         <View
