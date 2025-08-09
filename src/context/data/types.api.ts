@@ -42,6 +42,7 @@ export type EventRecord = RecordMetadata & {
   PanelHosts?: string
   IsDeviatingFromConBook?: boolean
   IsAcceptingFeedback?: boolean
+  IsInternal?: boolean
   BannerImageId?: string
   PosterImageId?: string
   MapLink?: string
@@ -76,13 +77,17 @@ export type DealerRecord = RecordMetadata & {
 export type EventDayRecord = RecordMetadata & {
   Name: string
   Date: string
+  IsInternal?: boolean
 }
 export type EventTrackRecord = RecordMetadata & {
   Name: string
+  IsInternal?: boolean
 }
 export type EventRoomRecord = RecordMetadata & {
   Name: string
   ShortName?: string
+  IsInternal?: boolean
+  MapLink?: string
 }
 export type MapRecord = RecordMetadata & {
   // TODO: Verify nullability.
@@ -157,11 +162,12 @@ export type ArtistAlleyRecord = RecordMetadata & {
   ImageId: string
 }
 
-export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected'
+export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected' | 'CheckedOut'
 
 export type TableRegistrationRecord = ArtistAlleyRecord & {
   OwnerUid?: string
   OwnerUsername?: string
+  OwnerRegSysId?: string
   Image: ImageRecord
   State?: TableRegistrationRecordStatus
 }

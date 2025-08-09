@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/react-native'
 import { Redirect } from 'expo-router'
 import React, { useCallback, useState } from 'react'
-import { ScrollView, StyleSheet, RefreshControl } from 'react-native'
+import { ScrollView, StyleSheet, RefreshControl, View } from 'react-native'
 import { appStyles } from '@/components/AppStyles'
 import { ProfileContent } from '@/components/ProfileContent'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
@@ -18,6 +18,7 @@ export default function Profile() {
   const { synchronize, isSynchronizing } = useCache()
   const backgroundStyle = useThemeBackground('background')
   const { t } = useTranslation('Profile')
+  const { t: a11y } = useTranslation('Accessibility')
 
   const doReload = useCallback(() => {
     if (isReloading) return
@@ -40,14 +41,24 @@ export default function Profile() {
   return (
     <ScrollView
       style={[StyleSheet.absoluteFill, backgroundStyle]}
-      refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={() => vibrateAfter(synchronize())} />}
+      refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={() => vibrateAfter(synchronize())} accessibilityLabel={a11y('pull_to_refresh')} />}
       stickyHeaderIndices={[0]}
       stickyHeaderHiddenOnScroll
+      accessibilityLabel={t('accessibility.profile_scroll_view')}
+      accessibilityHint={t('accessibility.profile_scroll_view_hint')}
     >
       <Header secondaryIcon="refresh" secondaryPress={isReloading ? () => undefined : doReload} loading={isReloading}>
         {t('header')}
       </Header>
-      <Floater contentStyle={appStyles.trailer}>{!claims || !user ? null : <ProfileContent claims={claims} user={user} parentPad={padFloater} />}</Floater>
+      <Floater contentStyle={appStyles.trailer}>
+        {!claims || !user ? (
+          <View accessibilityLabel={t('accessibility.loading_profile')}>{null}</View>
+        ) : (
+          <View accessibilityLabel={t('accessibility.profile_content_area')}>
+            <ProfileContent claims={claims} user={user} parentPad={padFloater} />
+          </View>
+        )}
+      </Floater>
     </ScrollView>
   )
 }

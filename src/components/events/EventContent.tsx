@@ -87,6 +87,8 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     return { zone, start, end, day, startLocal, endLocal, dayLocal, date }
   }, [calendar, event.End, event.EndLocal, event.Start, event.StartLocal])
 
+  const mapLink = event.MapLink ?? event.ConferenceRoom?.MapLink
+
   return (
     <>
       {!updated ? null : (
@@ -104,6 +106,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
       {!event.SponsorOnly ? null : (
         <Badge unpad={parentPad} badgeColor="sponsor" textColor="sponsorText">
           {t('sponsor_event')}
+        </Badge>
+      )}
+
+      {!event.IsInternal ? null : (
+        <Badge unpad={parentPad} badgeColor="staff" textColor="staffText">
+          {t('internal_event')}
         </Badge>
       )}
 
@@ -225,11 +233,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Row>
       ) : null}
 
-      {!event.MapLink ? null : (
-        <>
-          <LinkPreview url={event.MapLink} onPress={() => openBrowserAsync(event.MapLink ?? '')} />
-        </>
-      )}
+      {!mapLink ? null : <LinkPreview url={mapLink} onPress={() => openBrowserAsync(mapLink)} style={styles.fullWidth} />}
 
       <Section icon="information" title={t('label_event_description')} />
       <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
@@ -251,6 +255,9 @@ const styles = StyleSheet.create({
   posterLine: {
     marginTop: 20,
     alignItems: 'center',
+  },
+  fullWidth: {
+    width: '100%',
   },
   glyphArranger: {
     width: '100%',

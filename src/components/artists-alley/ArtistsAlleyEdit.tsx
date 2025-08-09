@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import React, { useCallback } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet } from 'react-native'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { ManagedImagePicker } from '@/components/generic/forms/ManagedImagePicker'
@@ -105,7 +104,7 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
 
   return (
     <FormProvider {...form}>
-      <Label type="compact" className="mt-5 mb-10">
+      <Label type="compact" className="mt-5 mb-10" accessibilityRole="text">
         {t(mode === 'change' ? 'explanation_edit_change' : 'explanation_edit_new')}
       </Label>
 
@@ -148,39 +147,25 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
         placeholder={t('submission_image_placeholder')}
       />
 
-      <Button style={styles.button} onPress={form.handleSubmit(doSubmit)} disabled={disabled}>
+      <Button
+        onPress={() => {
+          form.handleSubmit(doSubmit)()
+          // Show a toast informing user about invalid inputs as they may be off screen
+          if (Object.keys(form.formState.errors).length > 0) {
+            toast('error', tErrors('form_invalid'), 3000)
+          }
+        }}
+        disabled={disabled}
+        accessibilityHint={mode === 'change' ? 'Updates your Artist Alley registration with the new information' : 'Submits your Artist Alley registration for review'}
+      >
         {t(mode === 'change' ? 'update' : 'submit')}
       </Button>
 
       {mode === 'new' ? null : (
-        <Button style={styles.button} onPress={onDismiss} outline>
+        <Button onPress={onDismiss} className="mt-5" outline accessibilityHint="Cancels editing and returns to the previous screen without saving changes">
           {t('dismiss')}
         </Button>
       )}
     </FormProvider>
   )
 }
-
-const styles = StyleSheet.create({
-  locked: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: '100%',
-    borderBottomColor: 'black',
-    borderBottomWidth: 1,
-    paddingVertical: 8,
-    marginBottom: 16,
-  },
-  star: {
-    marginTop: 16,
-    marginBottom: 8,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  button: {
-    marginTop: 20,
-  },
-})

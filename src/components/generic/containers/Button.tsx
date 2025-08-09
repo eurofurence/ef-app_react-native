@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FC, ReactElement, ReactNode } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { AccessibilityRole, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import { Icon, IconNames } from '../atoms/Icon'
 import { Label, LabelProps } from '../atoms/Label'
@@ -17,6 +17,7 @@ const border = 2
 export type ButtonProps = {
   containerStyle?: StyleProp<ViewStyle>
   style?: StyleProp<ViewStyle>
+  className?: string
   labelType?: LabelProps['type']
   labelVariant?: LabelProps['variant']
 
@@ -54,15 +55,55 @@ export type ButtonProps = {
    * If true, button is disabled.
    */
   disabled?: boolean
+
+  /**
+   * If true, the button is accessible.
+   */
+  accessible?: boolean
+
+  /**
+   * The accessibility role of the button.
+   */
+  accessibilityRole?: AccessibilityRole
+
+  /**
+   * The accessibility label of the button.
+   */
+  accessibilityLabel?: string
+
+  /**
+   * The accessibility hint of the button.
+   */
+  accessibilityHint?: string
 }
 
-export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labelVariant, outline, icon, iconRight, children, onPress, onLongPress, disabled }) => {
+export const Button: FC<ButtonProps> = ({
+  containerStyle,
+  style,
+  className,
+  labelType,
+  labelVariant,
+  outline,
+  icon,
+  iconRight,
+  children,
+  onPress,
+  onLongPress,
+  disabled,
+  accessible = true,
+  accessibilityRole = 'button',
+  accessibilityLabel,
+  accessibilityHint,
+}) => {
   // Computed styles.
   const baseStyle = outline ? styles.containerOutline : styles.containerFill
   const disabledStyle = disabled ? styles.disabled : null
   const borderStyle = useThemeBorder('inverted')
   const fillStyle = useThemeBackground(outline ? 'transparent' : 'inverted')
   const color = useThemeColorValue(outline ? 'important' : 'invImportant')
+
+  // Auto-generate accessibility label if not provided
+  const computedAccessibilityLabel = accessibilityLabel || (typeof children === 'string' ? children : undefined)
 
   let iconComponent
   if (!icon) iconComponent = <View style={styles.placeholder} />
@@ -83,14 +124,23 @@ export const Button: FC<ButtonProps> = ({ containerStyle, style, labelType, labe
       onPress={onPress}
       onLongPress={onLongPress}
       disabled={disabled}
+      className={className}
+      accessible={accessible}
+      accessibilityRole={accessibilityRole}
+      accessibilityLabel={computedAccessibilityLabel}
+      accessibilityState={{ disabled }}
+      accessibilityHint={accessibilityHint}
+      minTouchSize={44} // Ensure minimum touch target size
     >
       {iconComponent}
 
-      <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
-        {children}
-      </Label>
+      <View style={styles.textContainer}>
+        <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
+          {children}
+        </Label>
 
-      {iconRightComponent}
+        {iconRightComponent}
+      </View>
     </Pressable>
   )
 }
@@ -117,6 +167,12 @@ const styles = StyleSheet.create({
   placeholder: {
     width: buttonIconSize,
     height: buttonIconSize,
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
   text: {
     textAlign: 'center',

@@ -5,10 +5,9 @@ import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useAuthContext } from '@/context/auth/Auth'
+import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
-import { useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
@@ -59,13 +58,13 @@ const useRegistrationState = (t: TFunction, now: Date, startDate: Date | null, e
 export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registrationUrl }) => {
   const { t } = useTranslation('Registration')
   const { t: tWarnings } = useTranslation('Home', { keyPrefix: 'warnings' })
+  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 60 : 'static')
   const { isHidden, hideWarning } = useWarningState('registrationCountdownHidden')
   const iconColor = useThemeColorValue('important')
   const { data, isLoading, error } = useRegistrationDatesQuery()
-  const { loggedIn } = useAuthContext()
-  const { data: user } = useUserSelfQuery()
+  const { user } = useUserContext()
 
   const { countdownText, showButton } = useRegistrationState(t, now, data?.startDate ?? null, data?.endDate ?? null, isLoading, error)
 
@@ -79,26 +78,44 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
 
   // Don't show if dismissed, if loading, if there's an error, or if user is logged in AND is an attendee
   const isAttendee = Boolean(user?.RoleMap?.Attendee)
+  const loggedIn = Boolean(user)
   if (isHidden || isLoading || error || (loggedIn && isAttendee)) return null
 
   return (
     <>
-      <View className="pt-8 pb-4 self-stretch">
+      <View className="pt-8 pb-4 self-stretch" role="alert" accessibilityLabel={tAccessibility('registration_warning_container')}>
         <View className="self-stretch flex-row items-center">
-          <Icon color={iconColor} name="account-plus" size={24} />
-          <Label className="ml-2 flex-1" type="h2" color="important" ellipsizeMode="tail">
+          <Icon color={iconColor} name="account-plus" size={24} accessibilityLabel={tAccessibility('registration_icon')} accessibilityRole="image" />
+          <Label className="ml-2 flex-1" type="h2" color="important" ellipsizeMode="tail" accessibilityRole="header">
             {t('registration_title')}
           </Label>
-          <Label className="leading-8" type="compact" variant="bold" color="secondary" onPress={hideWarning}>
+          <Label
+            className="leading-8"
+            type="compact"
+            variant="bold"
+            color="secondary"
+            onPress={hideWarning}
+            accessibilityRole="button"
+            accessibilityLabel={tAccessibility('hide_registration_warning')}
+            accessibilityHint={tAccessibility('hide_registration_warning_hint')}
+          >
             {tWarnings('hide')}
           </Label>
         </View>
       </View>
 
-      <Label type="para">{countdownText}</Label>
+      <Label type="para" accessibilityLabel={tAccessibility('registration_status', { status: countdownText })}>
+        {countdownText}
+      </Label>
 
       {showButton && registrationUrl && (
-        <Button style={styles.registerButton} icon="web" onPress={handleRegisterPress}>
+        <Button
+          style={styles.registerButton}
+          icon="web"
+          onPress={handleRegisterPress}
+          accessibilityLabel={tAccessibility('register_now_button')}
+          accessibilityHint={tAccessibility('register_now_button_hint')}
+        >
           {t('register_now')}
         </Button>
       )}

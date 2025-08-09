@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from 'react-native'
 
 import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
-import { formatDistance, isSameDay, parseISO } from 'date-fns' // Import date-fns utilities
+import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
 import { Image } from '../generic/atoms/Image'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label, labelTypeStyles } from '../generic/atoms/Label'
@@ -14,6 +14,7 @@ import { useNow } from '@/hooks/time/useNow'
 import { conId, conName, conTimeZone } from '@/configuration'
 import { EventDayRecord } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export type CountdownHeaderProps = {
   style?: StyleProp<ViewStyle>
@@ -26,7 +27,7 @@ const bannerBreakpoint = 600
  */
 const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
   const localDate1 = fromZonedTime(date1, timezone) // Convert date1 to UTC based on the timezone
-  const localDate2 = fromZonedTime(parseISO(date2), timezone) // Convert date2 (event date) to UTC based on the timezone
+  const localDate2 = fromZonedTime(parseDefaultISO(date2), timezone) // Convert date2 (event date) to UTC based on the timezone
 
   return isSameDay(localDate1, localDate2) // Compare the two dates
 }
@@ -65,6 +66,7 @@ const useCountdownTitle = (t: TFunction, now: Date) => {
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
   const { t } = useTranslation('Countdown')
+  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 60 : 'static') // Convert to Date
 
@@ -72,18 +74,26 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
   const subtitle = useCountdownTitle(t, now)
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, style]} role="banner" accessibilityLabel={tAccessibility('countdown_header')} accessibilityHint={tAccessibility('countdown_header_hint')}>
       <ImageBackground
         key="banner"
         style={StyleSheet.absoluteFill}
         source={width < bannerBreakpoint ? require('@/assets/static/banner_narrow.png') : require('@/assets/static/banner_wide.png')}
         contentFit="cover"
         priority="high"
+        accessibilityLabel={tAccessibility('banner_image')}
+        accessibilityRole="image"
       />
       <View style={[StyleSheet.absoluteFill, styles.cover]} />
-      <Image style={styles.logo} source={require('@/assets/static/banner_logo.png')} priority="high" />
+      <Image
+        style={styles.logo}
+        source={require('@/assets/static/banner_logo.png')}
+        priority="high"
+        accessibilityLabel={tAccessibility('convention_logo')}
+        accessibilityRole="image"
+      />
       <Col variant="end" style={styles.textContainer}>
-        <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail">
+        <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail" accessibilityRole="header" accessibilityLabel={tAccessibility('convention_name', { name: conId })}>
           {conId}
         </Label>
         <Label
@@ -95,6 +105,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
           variant="shadow"
           color="white"
           ellipsizeMode="tail"
+          accessibilityLabel={tAccessibility('countdown_status', { status: subtitle })}
         >
           {subtitle}
         </Label>

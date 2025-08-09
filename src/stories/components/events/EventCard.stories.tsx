@@ -94,6 +94,10 @@ export const Interactive: Story = {
 }
 
 export const MultipleEvents: Story = {
+  args: {
+    event: createEventInstance(mockEventDetails),
+    onPress: fn(),
+  },
   render: () => (
     <View style={{ gap: 15 }}>
       <EventCard event={createEventInstance(mockEventDetails)} onPress={fn()} />
@@ -105,24 +109,28 @@ export const MultipleEvents: Story = {
 }
 
 export const EventStates: Story = {
+  args: {
+    event: createEventInstance(mockEventDetails),
+    onPress: fn(),
+  },
   render: () => {
     const now = new Date()
     const upcomingEvent = {
       ...mockEventDetails,
-      Start: new Date(now.getTime() + 2 * 60 * 60 * 1000).toISOString(), // 2 hours from now
-      End: new Date(now.getTime() + 3 * 60 * 60 * 1000).toISOString(),
+      Start: new Date(now.getTime() + 2 * 60 * 60 * 1000), // 2 hours from now
+      End: new Date(now.getTime() + 3 * 60 * 60 * 1000),
     }
 
     const runningEvent = {
       ...mockEventDetails,
-      Start: new Date(now.getTime() - 30 * 60 * 1000).toISOString(), // Started 30 minutes ago
-      End: new Date(now.getTime() + 30 * 60 * 1000).toISOString(), // Ends in 30 minutes
+      Start: new Date(now.getTime() - 30 * 60 * 1000), // Started 30 minutes ago
+      End: new Date(now.getTime() + 30 * 60 * 1000), // Ends in 30 minutes
     }
 
     const passedEvent = {
       ...mockEventDetails,
-      Start: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString(), // Started 2 hours ago
-      End: new Date(now.getTime() - 1 * 60 * 60 * 1000).toISOString(), // Ended 1 hour ago
+      Start: new Date(now.getTime() - 2 * 60 * 60 * 1000), // Started 2 hours ago
+      End: new Date(now.getTime() - 1 * 60 * 60 * 1000), // Ended 1 hour ago
     }
 
     return (

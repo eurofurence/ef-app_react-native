@@ -1,11 +1,10 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { SectionProps } from '@/components/generic/atoms/Section'
-import { useCache } from '@/context/data/Cache'
-import { vibrateAfter } from '@/util/vibrateAfter'
 import { ArtistsAlleySection, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
 import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
@@ -23,6 +22,8 @@ export type ArtistsAlleySectionedListProps = {
   padEnd?: boolean
   onPress?: (item: ArtistAlleyDetails | TableRegistrationRecord) => void
   onLongPress?: (item: ArtistAlleyDetails | TableRegistrationRecord) => void
+  onRefresh?: (() => void) | null | undefined
+  refreshing?: boolean | null | undefined
 }
 
 function getItemType(item: SectionProps | ArtistAlleyDetails | TableRegistrationRecord) {
@@ -33,10 +34,23 @@ function keyExtractor(item: SectionProps | ArtistAlleyDetails | TableRegistratio
   return 'Id' in item ? item.Id : item.title
 }
 
-export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({ leader, items, empty, trailer, sticky = true, padEnd = true, onPress, onLongPress }) => {
+export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({
+  leader,
+  items,
+  empty,
+  trailer,
+  sticky = true,
+  padEnd = true,
+  onPress,
+  onLongPress,
+  onRefresh,
+  refreshing,
+}) => {
   const theme = useThemeName()
-  const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(items, (item) => 'title' in item) : undefined), [items, sticky])
+
+  // Get translation function for accessibility
+  const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
 
   const renderItem = useCallback(
     ({ item }: { item: ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord }) => {
@@ -51,8 +65,8 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({ 
 
   return (
     <FlashList
-      refreshing={isSynchronizing}
-      onRefresh={() => vibrateAfter(synchronize())}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
       contentContainerStyle={padEnd ? styles.container : undefined}
       scrollEnabled={true}
       stickyHeaderIndices={stickyIndices}
@@ -66,6 +80,9 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({ 
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityRole="list"
+      accessibilityLabel={t('artists_alley_list')}
+      accessibilityHint={t('refresh_list_hint')}
     />
   )
 }

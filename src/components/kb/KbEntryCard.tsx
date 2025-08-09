@@ -1,5 +1,6 @@
 import React, { FC } from 'react'
-import { StyleSheet, ViewStyle } from 'react-native'
+import { StyleSheet, View, ViewStyle } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
@@ -15,12 +16,23 @@ export type KbEntryCardProps = {
 }
 
 export const KbEntryCard: FC<KbEntryCardProps> = ({ containerStyle, style, entry, onPress }) => {
+  const { t } = useTranslation('KnowledgeGroups')
+
   return (
-    <Card containerStyle={containerStyle} style={[styles.container, appStyles.shadow, style]} onPress={() => onPress(entry)}>
-      <Label type="h3">{entry.Title}</Label>
-    </Card>
+    <View style={containerStyle}>
+      <Card
+        style={[styles.container, appStyles.shadow, style]}
+        onPress={() => onPress(entry)}
+        accessibilityRole="button"
+        accessibilityLabel={t('accessibility.kb_entry_card', { title: entry.Title })}
+        accessibilityHint={t('accessibility.kb_entry_card_hint')}
+      >
+        <Label type="h3">{entry.Title}</Label>
+      </Card>
+    </View>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     minHeight: 40,

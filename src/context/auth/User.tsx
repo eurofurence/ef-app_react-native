@@ -1,6 +1,45 @@
-import { UserDetails, useUserSelfQuery } from '@/hooks/api/users/useUserSelfQuery'
 import { createContext, ReactNode, useContext, useMemo } from 'react'
 import { Claims, useAuthContext } from '@/context/auth/Auth'
+import { UserRecord } from '@/context/data/types.api'
+import { keepPreviousData, QueryFunctionContext, useQuery } from '@tanstack/react-query'
+import { apiBase } from '@/configuration'
+import axios, { GenericAbortSignal } from 'axios'
+
+/**
+ * Extends user record with a role map.
+ */
+export type UserDetails = UserRecord & {
+  RoleMap: Record<string, true | undefined>
+}
+
+/**
+ * Transform the user record and add a role map.
+ * @param userRecord The record to transform.
+ */
+function selectWithRoles(userRecord: UserRecord): UserDetails {
+  return {
+    ...userRecord,
+    RoleMap: Object.fromEntries(userRecord.Roles.map((role) => [role, true])),
+  }
+}
+
+/**
+ * Gets the user self-service data with the given access token and optionally an abort signal.
+ * @param accessToken The access token.
+ * @param signal An abort signal.
+ */
+async function getUserSelf(accessToken: string | null, signal?: GenericAbortSignal) {
+  if (!accessToken) throw new Error('Unauthorized')
+  return await axios
+    .get(`${apiBase}/Users/:self`, {
+      signal: signal,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    .then((res) => res.data as UserRecord)
+    .then(selectWithRoles)
+}
 
 /**
  * User context type.
@@ -34,13 +73,12 @@ UserContext.displayName = 'UserContext'
  * @constructor
  */
 export const UserProvider = ({ children }: { children?: ReactNode | undefined }) => {
-  const { claims, refreshToken, refreshClaims } = useAuthContext()
+  const { accessToken, claims, refreshToken, refreshClaims } = useAuthContext()
   // Wrap self query. Add some options.
-  const {
-    data: user,
-    error,
-    refetch,
-  } = useUserSelfQuery({
+  const { data: user, refetch } = useQuery({
+    queryKey: [claims?.sub, 'self'],
+    queryFn: (context: QueryFunctionContext) => getUserSelf(accessToken, context.signal),
+    placeholderData: (data) => keepPreviousData(data),
     refetchInterval: 60_000,
     retry: false,
   })
@@ -61,8 +99,6 @@ export const UserProvider = ({ children }: { children?: ReactNode | undefined })
     [claims, user, refreshToken, refreshClaims, refetch]
   )
 
-  // Don't run if query has not finished yet.
-  if (user === undefined && error === null) return null
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 

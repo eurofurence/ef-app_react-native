@@ -1,18 +1,20 @@
-import { useCallback, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { SectionList, StyleSheet } from 'react-native'
-import { chain, isEmpty, partition, startCase } from 'lodash'
 import { Redirect, router } from 'expo-router'
+import { chain, isEmpty, partition, startCase } from 'lodash'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { SectionList, StyleSheet, View } from 'react-native'
 
 import { Label } from '@/components/generic/atoms/Label'
+import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Header } from '@/components/generic/containers/Header'
-import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { NoData } from '@/components/generic/containers/NoData'
-import { CommunicationRecord } from '@/context/data/types.api'
-import { captureException } from '@sentry/react-native'
-import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
+import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
 import { useUserContext } from '@/context/auth/User'
+import { CommunicationRecord } from '@/context/data/types.api'
+import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { captureException } from '@sentry/react-native'
 
 type Section = {
   title: string
@@ -41,8 +43,13 @@ function renderItem({ item }: { item: CommunicationRecord }) {
 
 export default function Messages() {
   const { t } = useTranslation('PrivateMessageList')
+  const { t: a11y } = useTranslation('PrivateMessageList')
   const { data: communications, refetch, isPending } = useCommunicationsQuery()
   const { user } = useUserContext()
+  const [announcementMessage, setAnnouncementMessage] = useState('')
+
+  // Focus management for the main content
+  const mainContentRef = useAccessibilityFocus<View>(200)
 
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
@@ -71,6 +78,24 @@ export default function Messages() {
     return [...unreadSections, ...readSections] as Section[]
   }, [communications, t])
 
+  // Announce messages loaded to screen readers
+  useEffect(() => {
+    if (communications) {
+      const totalMessages = communications.length
+      const unreadCount = communications.filter((msg) => msg.ReadDateTimeUtc === null).length
+
+      if (totalMessages === 0) {
+        setAnnouncementMessage(a11y('accessibility.no_messages'))
+      } else {
+        const message = a11y('accessibility.messages_loaded', {
+          total: totalMessages,
+          unread: unreadCount,
+        })
+        setAnnouncementMessage(message)
+      }
+    }
+  }, [communications, a11y])
+
   const sectionStyle = useThemeBackground('background')
 
   const emptyComponent = useMemo(() => <NoData text={t('no_data')} />, [t])
@@ -97,19 +122,31 @@ export default function Messages() {
   if (!user) return <Redirect href="/" />
 
   return (
-    <SectionList<CommunicationRecord, Section>
-      style={StyleSheet.absoluteFill}
-      sections={sectionedData}
-      contentContainerStyle={styles.container}
-      keyExtractor={keyExtractor}
-      stickySectionHeadersEnabled
-      onRefresh={() => refetch().catch(captureException)}
-      refreshing={isPending}
-      ListEmptyComponent={emptyComponent}
-      ListHeaderComponent={headerComponent}
-      renderSectionHeader={renderSection}
-      renderItem={renderItem}
-    />
+    <>
+      {/* Status message for screen reader announcement */}
+      <StatusMessage message={announcementMessage} type="polite" visible={false} />
+
+      <View
+        style={StyleSheet.absoluteFill}
+        ref={mainContentRef}
+        accessibilityLabel={a11y('accessibility.messages_list')}
+        accessibilityHint={a11y('accessibility.messages_list_hint')}
+      >
+        <SectionList<CommunicationRecord, Section>
+          style={StyleSheet.absoluteFill}
+          sections={sectionedData}
+          contentContainerStyle={styles.container}
+          keyExtractor={keyExtractor}
+          stickySectionHeadersEnabled
+          onRefresh={() => refetch().catch(captureException)}
+          refreshing={isPending}
+          ListEmptyComponent={emptyComponent}
+          ListHeaderComponent={headerComponent}
+          renderSectionHeader={renderSection}
+          renderItem={renderItem}
+        />
+      </View>
+    </>
   )
 }
 

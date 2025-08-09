@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
-import { parseISO } from 'date-fns'
 import { registrationDatesUrl } from '@/configuration'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 interface RegistrationDates {
   'reg-start': string
@@ -26,8 +26,8 @@ export async function getRegistrationDates(signal?: GenericAbortSignal): Promise
 
   const data: RegistrationDates = response.data
 
-  const parsedStartDate = parseISO(data['reg-start'])
-  const parsedEndDate = parseISO(data['reg-end'])
+  const parsedStartDate = parseDefaultISO(data['reg-start'])
+  const parsedEndDate = parseDefaultISO(data['reg-end'])
 
   if (isNaN(parsedStartDate.getTime())) {
     throw new Error('Invalid start date format received from server')

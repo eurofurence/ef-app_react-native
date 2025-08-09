@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import { scheduleEventReminder, cancelEventReminder } from '@/util/eventReminders'
-import { Notification } from '@/store/background/slice'
 import { EventRecord } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
 
@@ -15,32 +14,59 @@ export const useEventReminder = () => {
   const settings = getValue('settings')
   const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
 
-  const save = useCallback(
-    (notification: Notification) => setValue('notifications', [...(getValue('notifications')?.filter((item) => item.recordId !== notification.recordId) ?? []), notification]),
-    [getValue, setValue]
+  /**
+   * Returns true if a notification on the event's record ID is present.
+   */
+  const checkReminder = useCallback(
+    (event: EventRecord) => {
+      return Boolean(getValue('notifications')?.find((item) => item.recordId === event.Id))
+    },
+    [getValue]
   )
 
-  const remove = useCallback(
-    (id: string) => {
-      setValue('notifications', getValue('notifications')?.filter((item) => item.recordId !== id) ?? [])
+  /**
+   * Schedules a reminder and saves it to the notifications.
+   */
+  const createReminder = useCallback(
+    async (event: EventRecord) => {
+      const notification = await scheduleEventReminder(event, offset)
+      const current = getValue('notifications')
+      setValue('notifications', [...(current ?? []), notification])
+    },
+    [getValue, setValue, offset]
+  )
+
+  /**
+   * Removes a reminder for the event record if present in the currently tracked notifications.
+   */
+  const removeReminder = useCallback(
+    async (event: EventRecord) => {
+      const current = getValue('notifications')
+      const notification = current?.find((item) => item.recordId === event.Id)
+      if (!notification) return
+      await cancelEventReminder(notification)
+      setValue(
+        'notifications',
+        current?.filter((item) => item.recordId !== event.Id)
+      )
     },
     [getValue, setValue]
   )
 
-  const checkReminder = useCallback((event: EventRecord) => Boolean(getValue('notifications')?.find((item) => item.recordId === event.Id)), [getValue])
-  const createReminder = useCallback((event: EventRecord) => scheduleEventReminder(event, offset, save), [offset, save])
-  const removeReminder = useCallback((event: EventRecord) => cancelEventReminder(event.Id, remove), [remove])
+  /**
+   * If a reminder exists, removes it, otherwise creates one. Returns the mode it used.
+   */
   const toggleReminder = useCallback(
     async (event: EventRecord) => {
       if (checkReminder(event)) {
-        await cancelEventReminder(event, remove)
+        await removeReminder(event)
         return 'removed'
       } else {
-        await scheduleEventReminder(event, offset, save)
+        await createReminder(event)
         return 'added'
       }
     },
-    [checkReminder, remove, offset, save]
+    [checkReminder, removeReminder, createReminder]
   )
 
   return {

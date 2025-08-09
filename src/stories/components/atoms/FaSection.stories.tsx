@@ -66,6 +66,11 @@ export const WithoutSubtitle: Story = {
 }
 
 export const DifferentColors: Story = {
+  args: {
+    icon: 'heart',
+    title: 'Red Heart Section',
+    subtitle: 'With custom colors',
+  },
   render: () => (
     <View style={{ gap: 20 }}>
       <FaSection icon="heart" title="Red Heart Section" subtitle="With custom colors" backgroundColor="notification" titleColor="important" subtitleColor="text" />

@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { AccessibilityRole, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '@/components/AppStyles'
@@ -10,9 +10,12 @@ type CardProps = PropsWithChildren<{
   onLongPress?: () => void
   containerStyle?: StyleProp<ViewStyle> | undefined
   style?: StyleProp<ViewStyle> | undefined
+  accessibilityRole?: AccessibilityRole
+  accessibilityLabel?: string
+  accessibilityHint?: string
 }>
 
-export const Card: FC<CardProps> = ({ children, onPress, onLongPress, containerStyle, style }) => {
+export const Card: FC<CardProps> = ({ children, onPress, onLongPress, containerStyle, style, accessibilityRole, accessibilityLabel, accessibilityHint }) => {
   const cardStyle = useThemeBackground('background')
   return (
     <Pressable
@@ -21,6 +24,9 @@ export const Card: FC<CardProps> = ({ children, onPress, onLongPress, containerS
       onPress={onPress}
       onLongPress={onLongPress}
       disabled={onPress === undefined && onLongPress === undefined}
+      accessibilityRole={accessibilityRole}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
     >
       <View style={styles.main}>{children}</View>
     </Pressable>

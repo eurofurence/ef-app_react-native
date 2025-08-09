@@ -1,6 +1,6 @@
 import { router } from 'expo-router'
-import React, { useCallback, useEffect, useMemo } from 'react'
-import { StyleSheet, View } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { Linking, StyleSheet, View } from 'react-native'
 import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/generic/containers/Button'
@@ -13,12 +13,18 @@ import { useIsFocused } from '@react-navigation/core'
 import { useUserContext } from '@/context/auth/User'
 import { useAuthContext } from '@/context/auth/Auth'
 import { captureException } from '@sentry/react-native'
+import { artistAlleyUrl } from '@/configuration'
+import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
+import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
   const { user } = useUserContext()
   const { login } = useAuthContext()
-  const { artistAlley, synchronize } = useCache()
+  const [announcementMessage, setAnnouncementMessage] = useState<string>('')
+  const mainContentRef = useAccessibilityFocus<View>(200)
+  const { artistAlley, synchronize, isSynchronizing } = useCache()
 
   // Get roles for preemptive RBAC.
   const isLoggedIn = Boolean(user)
@@ -33,18 +39,48 @@ export default function List() {
     if (isFocused) synchronize().catch(console.error)
   }, [isFocused, synchronize])
 
+  useEffect(() => {
+    if (isAuthorized) {
+      setAnnouncementMessage(t('accessibility.artists_alley_list_loaded'))
+    } else {
+      setAnnouncementMessage(t('accessibility.artists_alley_unauthorized'))
+    }
+  }, [isAuthorized, t])
+
   const leader = useMemo(() => {
     return (
       <View className="m-5 gap-4">
-        <Label type="compact">{t('intro')}</Label>
+        <Label type="para">{t('intro')}</Label>
+        <Button
+          icon="link"
+          outline
+          onPress={() => Linking.openURL(artistAlleyUrl)}
+          accessibilityRole="button"
+          accessibilityLabel={t('accessibility.learn_more_button')}
+          accessibilityHint={t('accessibility.learn_more_button_hint')}
+        >
+          {t('learn_more')}
+        </Button>
 
         {!isCheckedIn ? null : (
-          <Button icon="application-edit-outline" onPress={() => router.navigate('/artists-alley/reg')}>
+          <Button
+            icon="application-edit-outline"
+            onPress={() => router.navigate('/artists-alley/reg')}
+            accessibilityRole="button"
+            accessibilityLabel={t('accessibility.register_self_button')}
+            accessibilityHint={t('accessibility.register_self_button_hint')}
+          >
             {t('list.register_self')}
           </Button>
         )}
         {!isPrivileged ? null : (
-          <Button icon="shield-plus-outline" onPress={() => router.navigate('/artists-alley/moderate')}>
+          <Button
+            icon="shield-plus-outline"
+            onPress={() => router.navigate('/artists-alley/moderate')}
+            accessibilityRole="button"
+            accessibilityLabel={t('accessibility.moderate_button')}
+            accessibilityHint={t('accessibility.moderate_button_hint')}
+          >
             {t('list.moderate')}
           </Button>
         )}
@@ -54,7 +90,7 @@ export default function List() {
 
   const empty = useMemo(
     () => (
-      <Label type="para" className="mx-5" variant="middle">
+      <Label type="h3" className="mx-5" variant="middle">
         {t('list.artists_alley_empty')}
       </Label>
     ),
@@ -77,32 +113,63 @@ export default function List() {
       (!isCheckedIn && t('unauthorized_not_checked_in'))
 
     return (
-      <View style={StyleSheet.absoluteFill}>
-        <Header>{t('list.header')}</Header>
-        <View className="m-5 pb-24">
-          <Label type="compact" className="my-5">
-            {t('explanation_unauthorized')}
-
-            {disabledReason && (
-              <Label color="important" variant="bold">
-                {' ' + disabledReason}
-              </Label>
-            )}
-          </Label>
-          {isLoggedIn ? null : (
-            <Button iconRight="login" onPress={() => login().catch(captureException)}>
-              {t('log_in_now')}
+      <>
+        <StatusMessage message={announcementMessage} />
+        <View style={StyleSheet.absoluteFill}>
+          <Header>{t('list.header')}</Header>
+          <View className="m-5 pb-24" ref={mainContentRef} accessibilityLabel={t('accessibility.artists_alley_unauthorized_content')} accessibilityRole="text">
+            <Label type="para" className="mb-5">
+              {t('intro')}
+            </Label>
+            <Button
+              icon="link"
+              onPress={() => Linking.openURL(artistAlleyUrl)}
+              accessibilityRole="button"
+              accessibilityLabel={t('accessibility.learn_more_button')}
+              accessibilityHint={t('accessibility.learn_more_button_hint')}
+            >
+              {t('learn_more')}
             </Button>
-          )}
+            <Label type="compact" className="my-5">
+              {t('explanation_unauthorized')}
+
+              {disabledReason && (
+                <Label color="important" variant="bold">
+                  {' ' + disabledReason}
+                </Label>
+              )}
+            </Label>
+            {isLoggedIn ? null : (
+              <Button
+                iconRight="login"
+                onPress={() => login().catch(captureException)}
+                accessibilityRole="button"
+                accessibilityLabel={t('accessibility.login_button')}
+                accessibilityHint={t('accessibility.login_button_hint')}
+              >
+                {t('log_in_now')}
+              </Button>
+            )}
+          </View>
         </View>
-      </View>
+      </>
     )
   }
 
   return (
-    <View style={StyleSheet.absoluteFill}>
-      <Header>{t('list.header')}</Header>
-      <ArtistsAlleySectionedList items={[...artistAlley]} onPress={onPress} leader={leader} empty={empty} />
-    </View>
+    <>
+      <StatusMessage message={announcementMessage} />
+      <View style={StyleSheet.absoluteFill}>
+        <Header>{t('list.header')}</Header>
+        <ArtistsAlleySectionedList
+          items={[...artistAlley]}
+          onPress={onPress}
+          onRefresh={() => vibrateAfter(synchronize())}
+          refreshing={isSynchronizing}
+          leader={leader}
+          empty={empty}
+        />
+      </View>
+    </>
   )
 }

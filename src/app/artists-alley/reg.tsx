@@ -1,21 +1,24 @@
-import { Header } from '@/components/generic/containers/Header'
-import { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { appStyles } from '@/components/AppStyles'
-import { Badge } from '@/components/generic/containers/Badge'
-import { Label } from '@/components/generic/atoms/Label'
-import { Button } from '@/components/generic/containers/Button'
-import { Linking, StyleSheet, RefreshControl, ScrollView } from 'react-native'
+import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
 import { ArtistsAlleyEdit } from '@/components/artists-alley/ArtistsAlleyEdit'
 import { ArtistsAlleyStatus } from '@/components/artists-alley/ArtistsAlleyStatus'
+import { Label } from '@/components/generic/atoms/Label'
+import { Badge } from '@/components/generic/containers/Badge'
+import { Button } from '@/components/generic/containers/Button'
+import { Floater, padFloater } from '@/components/generic/containers/Floater'
+import { Header } from '@/components/generic/containers/Header'
 import { artistAlleyUrl } from '@/configuration'
-import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
-import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
-import { useToastContext } from '@/context/ui/ToastContext'
-import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
 import { useUserContext } from '@/context/auth/User'
+import { useToastContext } from '@/context/ui/ToastContext'
+import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
+import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
 import { Redirect } from 'expo-router'
+import { useCallback, useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Linking, RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
+import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
+import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -27,6 +30,7 @@ const stateToBackground = {
 export default function Register() {
   const { t } = useTranslation('ArtistsAlley')
   const { t: tStatus } = useTranslation('ArtistsAlley', { keyPrefix: 'status' })
+  const { t: a11y } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
 
   // Get user data for RBAC checks and pre-filling.
   const { claims, user } = useUserContext()
@@ -42,6 +46,9 @@ export default function Register() {
 
   // Switch for show and edit modes.
   const [show, setShow] = useState(true)
+  const [announcementMessage, setAnnouncementMessage] = useState<string>('')
+  const mainContentRef = useAccessibilityFocus<View>(200)
+  const learnMoreButtonStyle = useTouchTarget(44)
 
   const onEdit = useCallback(() => setShow(false), [])
   const onCancel = useCallback(() => {
@@ -56,6 +63,14 @@ export default function Register() {
       onError: () => toast('error', t('check_out_error')),
     })
   }, [checkOut, toast, t])
+
+  useEffect(() => {
+    if (data) {
+      setAnnouncementMessage(a11y('registration_form_loaded', { status: data.State }))
+    } else {
+      setAnnouncementMessage(a11y('registration_form_new'))
+    }
+  }, [data, a11y])
 
   // Compose prefill data.
   const prefill = {
@@ -74,37 +89,50 @@ export default function Register() {
   if (!isCheckedIn) return <Redirect href="/artists-alley" />
 
   return (
-    <ScrollView style={StyleSheet.absoluteFill} refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />} stickyHeaderIndices={[0]}>
-      <Header>{t('title')}</Header>
-      <Floater containerStyle={appStyles.trailer}>
-        {!data?.State ? null : (
-          <Badge unpad={padFloater} badgeColor={stateToBackground[data.State as keyof typeof stateToBackground]} textColor="white">
-            {tStatus(data.State)}
-          </Badge>
-        )}
+    <>
+      <StatusMessage message={announcementMessage} />
+      <ScrollView
+        style={StyleSheet.absoluteFill}
+        refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
+        stickyHeaderIndices={[0]}
+        accessibilityLabel={a11y('registration_form_scroll')}
+        accessibilityHint={a11y('registration_form_scroll_hint')}
+      >
+        <Header>{t('title')}</Header>
+        <Floater containerStyle={appStyles.trailer}>
+          <View ref={mainContentRef} accessibilityLabel={a11y('registration_form_content')} accessibilityRole="text">
+            {!data?.State ? null : (
+              <Badge unpad={padFloater} badgeColor={stateToBackground[data.State as keyof typeof stateToBackground]} textColor="white">
+                {tStatus(data.State)}
+              </Badge>
+            )}
 
-        <Label type="compact" className="mt-5">
-          {t('intro')}
-        </Label>
+            <Label type="para" className="my-5">
+              {t('intro')}
+            </Label>
 
-        <Button style={styles.button} icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
-          {t('learn_more')}
-        </Button>
+            <Button
+              icon="link"
+              outline
+              onPress={() => Linking.openURL(artistAlleyUrl)}
+              accessibilityRole="button"
+              accessibilityLabel={a11y('learn_more_button')}
+              accessibilityHint={a11y('learn_more_button_hint')}
+              style={learnMoreButtonStyle}
+            >
+              {t('learn_more')}
+            </Button>
 
-        {!isPending ? (
-          show && data ? (
-            <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} onCancel={onCancel} />
-          ) : (
-            <ArtistsAlleyEdit prefill={prefill} onDismiss={() => setShow(true)} mode={data ? 'change' : 'new'} />
-          )
-        ) : null}
-      </Floater>
-    </ScrollView>
+            {!isPending ? (
+              show && data ? (
+                <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} onCancel={onCancel} />
+              ) : (
+                <ArtistsAlleyEdit prefill={prefill} onDismiss={() => setShow(true)} mode={data ? 'change' : 'new'} />
+              )
+            ) : null}
+          </View>
+        </Floater>
+      </ScrollView>
+    </>
   )
 }
-
-const styles = StyleSheet.create({
-  button: {
-    marginTop: 20,
-  },
-})
