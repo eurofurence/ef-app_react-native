@@ -15,7 +15,6 @@ import {
   deriveIsSuperSponsorsOnly,
   deriveProfileUrlFromMastodonHandle,
 } from '@/context/data/useCacheExtensions.derived'
-import { parseISO } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
 import Fuse from 'fuse.js'
 import { chain } from 'lodash'
@@ -49,6 +48,7 @@ import {
   useFuseMemo,
   useFuseRecordMemo,
 } from '@/context/data/useCacheExtensions.searching'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
  * Resolved detailed entity data.
@@ -214,10 +214,10 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       ...item,
       NormalizedTitle: deriveAnnouncementTitle(item.Title, item.Content),
       Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
-      ValidFrom: toZonedTime(parseISO(item.ValidFromDateTimeUtc + 'Z'), conTimeZone),
-      ValidFromLocal: parseISO(item.ValidFromDateTimeUtc + 'Z'),
-      ValidUntil: toZonedTime(parseISO(item.ValidUntilDateTimeUtc + 'Z'), conTimeZone),
-      ValidUntilLocal: parseISO(item.ValidUntilDateTimeUtc + 'Z'),
+      ValidFrom: toZonedTime(parseDefaultISO(item.ValidFromDateTimeUtc), conTimeZone),
+      ValidFromLocal: parseDefaultISO(item.ValidFromDateTimeUtc),
+      ValidUntil: toZonedTime(parseDefaultISO(item.ValidUntilDateTimeUtc), conTimeZone),
+      ValidUntilLocal: parseDefaultISO(item.ValidUntilDateTimeUtc),
     }))
   }, [images, data.announcements])
 
@@ -234,7 +234,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   const eventDays = useMemo((): EntityStore<EventDayDetails> => {
     return mapEntityStore(data.eventDays, (item) => ({
       ...item,
-      DayOfWeek: toZonedTime(parseISO(item.Date + 'Z'), conTimeZone).getDay(),
+      DayOfWeek: toZonedTime(parseDefaultISO(item.Date), conTimeZone).getDay(),
     }))
   }, [data.eventDays])
 
@@ -274,10 +274,10 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         ConferenceRoom: item.ConferenceRoomId ? eventRooms?.dict?.[item.ConferenceRoomId] : undefined,
         ConferenceDay: item.ConferenceDayId ? eventDays?.dict?.[item.ConferenceDayId] : undefined,
         ConferenceTrack: item.ConferenceTrackId ? eventTracks?.dict?.[item.ConferenceTrackId] : undefined,
-        Start: toZonedTime(parseISO(item.StartDateTimeUtc + 'Z'), conTimeZone),
-        StartLocal: parseISO(item.StartDateTimeUtc + 'Z'),
-        End: toZonedTime(parseISO(item.EndDateTimeUtc + 'Z'), conTimeZone),
-        EndLocal: parseISO(item.EndDateTimeUtc + 'Z'),
+        Start: toZonedTime(parseDefaultISO(item.StartDateTimeUtc), conTimeZone),
+        StartLocal: parseDefaultISO(item.StartDateTimeUtc),
+        End: toZonedTime(parseDefaultISO(item.EndDateTimeUtc), conTimeZone),
+        EndLocal: parseDefaultISO(item.EndDateTimeUtc),
         Favorite: Boolean(favoriteIds?.includes(item.Id)),
         Hidden: Boolean(data.settings.hiddenEvents?.includes(item.Id)),
       })

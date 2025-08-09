@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from 'react-native'
 
 import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
-import { formatDistance, isSameDay, parseISO } from 'date-fns' // Import date-fns utilities
+import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
 import { Image } from '../generic/atoms/Image'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label, labelTypeStyles } from '../generic/atoms/Label'
@@ -14,6 +14,7 @@ import { useNow } from '@/hooks/time/useNow'
 import { conId, conName, conTimeZone } from '@/configuration'
 import { EventDayRecord } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export type CountdownHeaderProps = {
   style?: StyleProp<ViewStyle>
@@ -26,7 +27,7 @@ const bannerBreakpoint = 600
  */
 const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
   const localDate1 = fromZonedTime(date1, timezone) // Convert date1 to UTC based on the timezone
-  const localDate2 = fromZonedTime(parseISO(date2), timezone) // Convert date2 (event date) to UTC based on the timezone
+  const localDate2 = fromZonedTime(parseDefaultISO(date2), timezone) // Convert date2 (event date) to UTC based on the timezone
 
   return isSameDay(localDate1, localDate2) // Compare the two dates
 }

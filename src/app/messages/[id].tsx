@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { parseISO, format } from 'date-fns'
+import { format } from 'date-fns'
 import { useLocalSearchParams, router, Redirect } from 'expo-router'
 
 import { appStyles } from '@/components/AppStyles'
@@ -15,6 +15,7 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCommunicationsMarkReadMutation } from '@/hooks/api/communications/useCommunicationsMarkReadMutation'
 
 import { useCommunicationsItemQuery } from '@/hooks/api/communications/useCommunicationsQuery'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 const readOpenTimeRequirement = 1500
 
@@ -45,7 +46,7 @@ export default function MessageItem() {
 
   if (!message) return <Redirect href="/messages" />
 
-  const formattedDate = message.ReceivedDateTimeUtc ? format(parseISO(message.ReceivedDateTimeUtc), 'PPpp') : ''
+  const formattedDate = message.ReceivedDateTimeUtc ? format(parseDefaultISO(message.ReceivedDateTimeUtc), 'PPpp') : ''
 
   return (
     <ScrollView style={[StyleSheet.absoluteFill, backgroundStyle]} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>

@@ -1,8 +1,9 @@
 import { useEffect, useMemo } from 'react'
-import { isAfter, parseISO } from 'date-fns'
+import { isAfter } from 'date-fns'
 import { useNow } from '@/hooks/time/useNow'
 import { RecordMetadata } from '@/context/data/types.api'
 import { useCache } from '@/context/data/Cache'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
  * Gets the last viewed time of this record and if the record has changed
@@ -17,7 +18,7 @@ export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, dela
   const settings = getValue('settings')
   const lastViewed = item ? (settings.lastViewTimes?.[item.Id] ?? null) : null
 
-  const updated = useMemo(() => Boolean(item && lastViewed && isAfter(parseISO(item.LastChangeDateTimeUtc), parseISO(lastViewed))), [item, lastViewed])
+  const updated = useMemo(() => Boolean(item && lastViewed && isAfter(parseDefaultISO(item.LastChangeDateTimeUtc), parseDefaultISO(lastViewed))), [item, lastViewed])
 
   useEffect(() => {
     if (!item) return

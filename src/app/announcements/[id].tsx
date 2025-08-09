@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, ScrollView } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns'
 
 import { appStyles } from '@/components/AppStyles'
 import { Banner } from '@/components/generic/atoms/Banner'
@@ -13,6 +13,7 @@ import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
 import { Rule } from '@/components/generic/atoms/Rule'
 import { useCache } from '@/context/data/Cache'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export default function AnnounceItem() {
   const { t } = useTranslation('Announcement')
@@ -35,7 +36,7 @@ export default function AnnounceItem() {
             </Label>
 
             <Row style={styles.byline} variant="spaced">
-              <Label>{format(parseISO(announcement.ValidFromDateTimeUtc), 'PPpp')}</Label>
+              <Label>{format(parseDefaultISO(announcement.ValidFromDateTimeUtc), 'PPpp')}</Label>
 
               <Label style={styles.tag} ellipsizeMode="head" numberOfLines={1}>
                 {announcement.Area} - {announcement.Author}

@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
 import { apiBase } from '@/configuration'
 import { queryClient } from '@/context/query/Query'
-import { parseISO } from 'date-fns'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
  * Posts communication read to the API with the given access token, message ID, and optionally an abort signal.
@@ -21,7 +21,7 @@ export async function postCommunicationsMarkRead(accessToken: string | null, id:
         'Content-Type': 'application/json',
       },
     })
-    .then((res) => parseISO(res.data))
+    .then((res) => parseDefaultISO(res.data))
 }
 
 /**
