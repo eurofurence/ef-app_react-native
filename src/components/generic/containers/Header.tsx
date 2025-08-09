@@ -19,12 +19,20 @@ export type HeaderProps = PropsWithChildren<
   | {
       style?: ViewStyle
       loading?: boolean
+      /** Optional accessibility label for the header title */
+      accessibilityLabel?: string
     }
   | {
       style?: ViewStyle
       secondaryIcon: IconNames
       secondaryPress: () => void
       loading?: boolean
+      /** Optional accessibility label for the header title */
+      accessibilityLabel?: string
+      /** Accessibility label for the secondary action */
+      secondaryAccessibilityLabel?: string
+      /** Accessibility hint for the secondary action */
+      secondaryAccessibilityHint?: string
     }
 >
 
@@ -60,13 +68,27 @@ export const Header: FC<HeaderProps> = (props) => {
         <Icon name="chevron-left" size={iconSize} color={colorValue} />
       </Pressable>
 
-      <Label style={styles.text} type="lead" ellipsizeMode="tail" numberOfLines={1}>
+      <Label
+        style={styles.text}
+        type="lead"
+        ellipsizeMode="tail"
+        numberOfLines={1}
+        accessibilityRole="header"
+        accessibilityLabel={('accessibilityLabel' in props && props.accessibilityLabel) || undefined}
+      >
         {props.children}
       </Label>
 
       {/* Optional secondary action. */}
       {!('secondaryIcon' in props) ? null : (
-        <Pressable hitSlop={secondaryHitSlop} style={styles.secondary} onPress={() => props.secondaryPress()} accessibilityRole="button">
+        <Pressable
+          hitSlop={secondaryHitSlop}
+          style={styles.secondary}
+          onPress={() => props.secondaryPress()}
+          accessibilityRole="button"
+          accessibilityLabel={props.secondaryAccessibilityLabel}
+          accessibilityHint={props.secondaryAccessibilityHint}
+        >
           <Icon name={props.secondaryIcon} size={iconSize} color={colorValue} />
         </Pressable>
       )}

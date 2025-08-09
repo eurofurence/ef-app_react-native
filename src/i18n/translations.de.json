@@ -634,6 +634,7 @@
   },
   "Profile": {
     "accessibility": {
+      "default_avatar": "Standard-Profilavatar",
       "avatar_hint": "Tippen um Profil anzuzeigen",
       "idp_settings_button": "Identity-Einstellungen Schaltfläche",
       "idp_settings_button_hint": "Öffnet Identity-Einstellungswebsite im Browser",

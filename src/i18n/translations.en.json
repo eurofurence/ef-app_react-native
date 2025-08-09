@@ -704,6 +704,7 @@
   },
   "Profile": {
     "accessibility": {
+      "default_avatar": "Default profile avatar",
       "avatar_hint": "Tap to view profile",
       "idp_settings_button": "Identity settings button",
       "idp_settings_button_hint": "Opens identity settings website in browser",
