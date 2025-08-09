@@ -42,6 +42,7 @@ export type EventRecord = RecordMetadata & {
   PanelHosts?: string
   IsDeviatingFromConBook?: boolean
   IsAcceptingFeedback?: boolean
+  IsInternal?: boolean
   BannerImageId?: string
   PosterImageId?: string
   MapLink?: string
@@ -76,13 +77,16 @@ export type DealerRecord = RecordMetadata & {
 export type EventDayRecord = RecordMetadata & {
   Name: string
   Date: string
+  IsInternal?: boolean
 }
 export type EventTrackRecord = RecordMetadata & {
   Name: string
+  IsInternal?: boolean
 }
 export type EventRoomRecord = RecordMetadata & {
   Name: string
   ShortName?: string
+  IsInternal?: boolean
 }
 export type MapRecord = RecordMetadata & {
   // TODO: Verify nullability.

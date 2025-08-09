@@ -4,7 +4,7 @@ import { StyleSheet, View, ViewStyle } from 'react-native'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { calculateEventTiming } from '@/util/eventTiming'
 import { appStyles } from '../AppStyles'
-import { Icon } from '../generic/atoms/Icon'
+import { Icon, IconNames } from '../generic/atoms/Icon'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label } from '../generic/atoms/Label'
@@ -14,6 +14,7 @@ import { EventCardTime } from './EventCardTime'
 
 import { EventDetails } from '@/context/data/types.details'
 import { Pressable } from '@/components/generic/Pressable'
+import { useTranslation } from 'react-i18next'
 
 const glyphIconSize = 90
 const badgeIconSize = 20
@@ -58,9 +59,10 @@ export type EventCardProps = {
 }
 
 export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'duration', event, onPress, onLongPress }) => {
+  const { t } = useTranslation('Events')
   // Details and properties dereference.
   const badges = event.details.Badges
-  const glyph = event.details.Glyph
+  const glyph: IconNames | undefined = event.details.IsInternal ? 'tools' : event.details.Glyph
   const title = event.details.Title
   const subtitle = event.details.SubTitle
   const tag = event.details.ConferenceRoom?.ShortName ?? event.details.ConferenceRoom?.Name
@@ -70,7 +72,9 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
   const progress = event.progress
 
   // Dependent and independent styles.
-  const styleContainer = useThemeBackground('background')
+  const stylePublicContainer = useThemeBackground('background')
+  const styleInternalContainer = useThemeBackground('internal')
+  const styleContainer = event.details.IsInternal ? styleInternalContainer : stylePublicContainer
   const stylePre = useThemeBackground(done ? 'darken' : favorite ? 'notification' : 'primary')
   const styleBadgeFrame = useThemeBackground('secondary')
   const colorBadge = useThemeColorValue('white')
@@ -107,6 +111,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
                 </Label>
                 {tag && (
                   <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                    {event.details.IsInternal ? t('internal') + ' – ' : ''}
                     {tag}
                   </Label>
                 )}
@@ -133,6 +138,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
             {subtitle}
           </Label>
           <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+            {event.details.IsInternal ? t('internal') + ' – ' : ''}
             {tag}
           </Label>
 

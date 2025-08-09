@@ -107,6 +107,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Badge>
       )}
 
+      {!event.IsInternal ? null : (
+        <Badge unpad={parentPad} badgeColor="staff" textColor="staffText">
+          {t('internal_event')}
+        </Badge>
+      )}
+
       {!event.Poster ? null : (
         <View style={styles.posterLine}>
           <Banner image={event.Poster} placeholder={placeholder} viewable />
