@@ -9,7 +9,7 @@ import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useTokenManager } from '@/hooks/tokens/useTokenManager'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { SplashScreen, Stack, useSegments } from 'expo-router'
+import { Redirect, SplashScreen, Stack, useSegments } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -30,6 +30,7 @@ import '@/init/splash'
 import '@/css/globals.css'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 import { UserProvider } from '@/context/auth/User'
+import { useDeepLinkRedirect } from '@/hooks/routing/useDeepLinkRedirect'
 
 export const unstable_settings = {
   initialRouteName: '(areas)',
@@ -90,6 +91,10 @@ export function MainLayout() {
   useEventReminderRescheduling()
   useTokenManager()
   useNotificationResponseManager()
+
+  // Handle legacy deep linking (links compatible with web app).
+  const deepLinkRedirect = useDeepLinkRedirect()
+  if (deepLinkRedirect !== null) return <Redirect href={deepLinkRedirect} />
 
   // Check if we're on the exact (areas)/index route
   // TODO: Surely there's a better way to do this?
