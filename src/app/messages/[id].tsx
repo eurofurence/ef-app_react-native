@@ -1,4 +1,4 @@
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns'
 import { Redirect, router, useLocalSearchParams } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +16,7 @@ import { useCommunicationsMarkReadMutation } from '@/hooks/api/communications/us
 import { useCommunicationsItemQuery } from '@/hooks/api/communications/useCommunicationsQuery'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 const readOpenTimeRequirement = 1500
 
@@ -62,7 +63,9 @@ export default function MessageItem() {
 
   if (!message) return <Redirect href="/messages" />
 
-  const formattedDate = message.ReceivedDateTimeUtc ? format(parseISO(message.ReceivedDateTimeUtc), 'PPpp') : ''
+  const formattedDate = message.ReceivedDateTimeUtc
+    ? format(parseDefaultISO(message.ReceivedDateTimeUtc), 'PPpp')
+    : ''
 
   return (
     <>
@@ -78,16 +81,17 @@ export default function MessageItem() {
       >
         <Header>{message.AuthorName}</Header>
         <Floater contentStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={a11y('accessibility.message_content')} accessibilityRole="text">
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={a11y('accessibility.message_content')}
+            accessibilityRole="text"
+          >
             <Label type="h1" className="mt-8 mb-3">
               {message.Subject}
             </Label>
 
             <Row style={styles.byline} variant="spaced">
-              <Label>
-                <Label>{formattedDate}</Label>
-              </Label>
-
+              <Label>{formattedDate}</Label>
               <Label style={styles.tag} ellipsizeMode="head" numberOfLines={1}>
                 {t('from', { authorName: message.AuthorName })}
               </Label>

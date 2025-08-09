@@ -1,8 +1,9 @@
-import { isAfter, parseISO } from 'date-fns'
+import { isAfter } from 'date-fns'
 import { useEffect, useRef } from 'react'
 import { useCache } from '@/context/data/Cache'
 import { Notification } from '@/store/background/slice'
 import { cancelEventReminder, rescheduleEventReminder } from '@/util/eventReminders'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
  * Synchronizes currently scheduled device notifications with incoming event
@@ -50,7 +51,7 @@ export function useEventReminderRescheduling() {
         // Event is still present. But it might have changed.
         if (event) {
           // Check if changed. If so, reschedule it,
-          if (isAfter(parseISO(event.LastChangeDateTimeUtc), parseISO(notification.dateCreatedUtc))) {
+          if (isAfter(parseDefaultISO(event.LastChangeDateTimeUtc), parseDefaultISO(notification.dateCreatedUtc))) {
             await rescheduleEventReminder(event, 0, add, remove).catch((error) => console.warn('Reschedule error:', error))
           }
         } else {
