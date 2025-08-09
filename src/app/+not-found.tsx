@@ -17,7 +17,7 @@ export default function NotFoundScreen() {
         <Label type="regular" color="invText" style={[backgroundPathStyle, styles.path]}>
           {pathStable}
         </Label>
-        <Link href="/" style={styles.link}>
+        <Link href="/" style={styles.link} replace>
           <Label type={'underlined'}>Go to home screen!</Label>
         </Link>
       </View>

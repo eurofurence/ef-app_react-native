@@ -33,14 +33,13 @@ function useOgMeta(url: string) {
 
 export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style }) => {
   const { t } = useTranslation('Maps')
-  const { data: ogMeta, isLoading, isError } = useOgMeta(url)
-  const isDisabled = isError || !ogMeta?.image
+  const { data: ogMeta, isLoading } = useOgMeta(url)
   const styleBackground = useThemeBackground('background')
   const styleBorder = useThemeBorder('soften')
 
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.cardContainer, styleBackground, styleBorder, style]} disabled={isLoading || isDisabled}>
-      {isLoading ? <ActivityIndicator /> : isDisabled ? <Label>{t('preview_unavailable')}</Label> : <Image source={{ uri: ogMeta.image }} style={styles.image} />}
+    <TouchableOpacity onPress={onPress} style={[styles.cardContainer, styleBackground, styleBorder, style]}>
+      {isLoading ? <ActivityIndicator /> : !ogMeta?.image ? <Label>{t('preview_unavailable')}</Label> : <Image source={{ uri: ogMeta.image }} style={styles.image} />}
     </TouchableOpacity>
   )
 }

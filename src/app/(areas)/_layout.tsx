@@ -96,7 +96,7 @@ export default function TabsLayout() {
 
   return (
     <View style={styles.container}>
-      <Tabs screenOptions={{ headerShown: false }} tabBar={(props) => <AreasTabBar {...props} />}>
+      <Tabs initialRouteName="index" screenOptions={{ headerShown: false }} tabBar={(props) => <AreasTabBar {...props} />}>
         <Tabs.Screen
           name="index"
           options={{
