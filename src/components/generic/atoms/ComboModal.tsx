@@ -1,4 +1,4 @@
-import { Modal, StyleSheet, View, ScrollView } from 'react-native'
+import { Modal, StyleSheet, View, ScrollView, ModalProps } from 'react-native'
 import * as React from 'react'
 import { ForwardedRef, forwardRef, ReactNode, useImperativeHandle, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -10,6 +10,9 @@ import { Search } from '@/components/generic/atoms/Search'
 import { Label } from '@/components/generic/atoms/Label'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 import { Row } from '@/components/generic/containers/Row'
+
+const supportedOrientations: ModalProps['supportedOrientations'] = ['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']
+
 export type ComboModalProps<T> = {
   title?: string
   clear?: boolean
@@ -25,7 +28,10 @@ export type ComboModalRef<T> = {
 }
 
 // eslint-disable-next-line react/display-name
-export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, cancelText, confirmText, children }: ComboModalProps<T>, ref: ForwardedRef<ComboModalRef<T>>) => {
+export const ComboModal = forwardRef(<T,>(
+  { title, clear, getKey, getLabel, cancelText, confirmText, children }: ComboModalProps<T>,
+  ref: ForwardedRef<ComboModalRef<T>>
+) => {
   const { t: a11y } = useTranslation('Accessibility')
   const styleBackground = useThemeBackground('background')
   const styleBorder = useThemeBorder('secondary')
@@ -45,7 +51,8 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
 
   const clearSelected = () => setSelected([])
 
-  const toggleSelected = (item: T) => (selected.includes(item) ? setSelected(selected.filter((other) => item !== other)) : setSelected([...selected, item]))
+  const toggleSelected = (item: T) =>
+    selected.includes(item) ? setSelected(selected.filter((other) => item !== other)) : setSelected([...selected, item])
 
   const toggleSelectedFirstResult = () => {
     if (!filtered?.length) return
@@ -84,7 +91,7 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
   }
 
   return (
-    <Modal visible={visible} transparent={true} onRequestClose={() => cancel()} accessibilityViewIsModal={true}>
+    <Modal visible={visible} transparent={true} onRequestClose={() => cancel()} supportedOrientations={supportedOrientations}>
       <GestureHandlerRootView>
         <View style={[styleDismiss, StyleSheet.absoluteFill]} accessibilityElementsHidden={true} importantForAccessibility="no" />
         <View
@@ -142,7 +149,9 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
                   iconRight={itemSelected ? 'checkbox-marked-outline' : undefined}
                   accessibilityLabel={itemLabel}
                   accessibilityHint={
-                    itemSelected ? a11y('deselect_item_hint', { defaultValue: 'Tap to deselect this item' }) : a11y('select_item_hint', { defaultValue: 'Tap to select this item' })
+                    itemSelected
+                      ? a11y('deselect_item_hint', { defaultValue: 'Tap to deselect this item' })
+                      : a11y('select_item_hint', { defaultValue: 'Tap to select this item' })
                   }
                 >
                   {itemLabel}
