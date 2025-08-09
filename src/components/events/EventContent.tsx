@@ -87,6 +87,8 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
     return { zone, start, end, day, startLocal, endLocal, dayLocal, date }
   }, [calendar, event.End, event.EndLocal, event.Start, event.StartLocal])
 
+  const mapLink = event.MapLink ?? event.ConferenceRoom?.MapLink
+
   return (
     <>
       {!updated ? null : (
@@ -225,11 +227,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Row>
       ) : null}
 
-      {!event.MapLink ? null : (
-        <>
-          <LinkPreview url={event.MapLink} onPress={() => openBrowserAsync(event.MapLink ?? '')} />
-        </>
-      )}
+      {!mapLink ? null : <LinkPreview url={mapLink} onPress={() => openBrowserAsync(mapLink)} />}
 
       <Section icon="information" title={t('label_event_description')} />
       <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
