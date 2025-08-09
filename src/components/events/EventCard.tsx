@@ -44,28 +44,11 @@ export type EventCardProps = {
   onLongPress?: (event: EventDetails) => void
 }
 
-export const EventCard: FC<EventCardProps> = ({
-  containerStyle,
-  style,
-  type = 'duration',
-  event,
-  onPress,
-  onLongPress,
-}) => {
+export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'duration', event, onPress, onLongPress }) => {
   const { t } = useTranslation('Events')
 
   const {
-    details: {
-      Badges: badges,
-      IsInternal,
-      Glyph,
-      Title: title,
-      SubTitle: subtitle,
-      ConferenceRoom,
-      Favorite: favorite,
-      Banner,
-      Id,
-    },
+    details: { Badges: badges, IsInternal, Glyph, Title: title, SubTitle: subtitle, ConferenceRoom, Favorite: favorite, Banner, Id },
   } = event
 
   const tag = ConferenceRoom?.ShortName ?? ConferenceRoom?.Name
@@ -89,11 +72,7 @@ export const EventCard: FC<EventCardProps> = ({
 
   return (
     <View style={containerStyle}>
-      <Pressable
-        style={[styles.container, appStyles.shadow, styleContainer, style]}
-        onPress={onPressBind}
-        onLongPress={onLongPressBind}
-      >
+      <Pressable style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
         <View style={[styles.pre, stylePre]}>
           {glyph && (
             <View key="eventGlyph" style={styles.glyphContainer}>
@@ -111,13 +90,7 @@ export const EventCard: FC<EventCardProps> = ({
 
         {Banner ? (
           <View style={styles.mainPoster}>
-            <ImageBackground
-              key={Id}
-              recyclingKey={Id}
-              source={sourceFromImage(Banner)}
-              contentFit="cover"
-              style={StyleSheet.absoluteFill}
-            >
+            <ImageBackground key={Id} recyclingKey={Id} source={sourceFromImage(Banner)} contentFit="cover" style={StyleSheet.absoluteFill}>
               <View style={styles.tagArea2}>
                 <View style={styles.tagAreaInner}>
                   <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
