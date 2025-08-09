@@ -2,8 +2,9 @@ import { isAfter } from 'date-fns'
 import { useEffect, useRef } from 'react'
 import { useCache } from '@/context/data/Cache'
 import { Notification } from '@/store/background/slice'
-import { cancelEventReminder, rescheduleEventReminder } from '@/util/eventReminders'
+import { cancelEventReminder, scheduleEventReminder } from '@/util/eventReminders'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
+import { captureException } from '@sentry/react-native'
 
 /**
  * Synchronizes currently scheduled device notifications with incoming event
@@ -12,6 +13,11 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
  */
 export function useEventReminderRescheduling() {
   const { events, getValue, setValue } = useCache()
+
+  // Retrieve timeTravel value from cache, default to 0
+  const settings = getValue('settings')
+  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
+
   const notifications = getValue('notifications')
 
   const lastPromise = useRef(Promise.resolve())
@@ -27,22 +33,9 @@ export function useEventReminderRescheduling() {
       // Intercepted before it even began, can stop here.
       if (preempted) return
 
-      // Start creating an updated notifications list.
-      const newNotifications = [...notifications]
+      // Create a new set of notifications that might have been rescheduled.
+      const newNotifications: Notification[] = []
       let changed = false
-
-      // Add value to the `newNotifications` array.
-      const add = (notification: Notification) => {
-        newNotifications.push(notification)
-        changed = true
-      }
-
-      // Remove from the `newNotifications` array by ID.
-      const remove = (id: string) => {
-        const index = newNotifications.findIndex((item) => item.recordId === id)
-        if (index >= 0) newNotifications.splice(index, 1)
-        changed = true
-      }
 
       for (const notification of notifications) {
         // Find the event from the record ID in the reminder data.
@@ -52,11 +45,27 @@ export function useEventReminderRescheduling() {
         if (event) {
           // Check if changed. If so, reschedule it,
           if (isAfter(parseDefaultISO(event.LastChangeDateTimeUtc), parseDefaultISO(notification.dateCreatedUtc))) {
-            await rescheduleEventReminder(event, 0, add, remove).catch((error) => console.warn('Reschedule error:', error))
+            // Cancel and reschedule. Add new notification.
+            try {
+              await cancelEventReminder(notification)
+              const newNotification = await scheduleEventReminder(event, offset)
+              newNotifications.push(newNotification)
+              changed = true
+            } catch (error) {
+              captureException(error)
+            }
+          } else {
+            // Unchanged, add the old notification.
+            newNotifications.push(notification)
           }
         } else {
-          // Doesn't exist anymore, remove the reminder.
-          await cancelEventReminder(notification.recordId, remove).catch((error) => console.warn('Cancel reminder error:', error))
+          // Doesn't exist anymore, remove the reminder and don't add the notification.
+          try {
+            await cancelEventReminder(notification)
+            changed = true
+          } catch (error) {
+            captureException(error)
+          }
         }
       }
 
@@ -69,5 +78,5 @@ export function useEventReminderRescheduling() {
     return () => {
       preempted = true
     }
-  }, [events, notifications, setValue])
+  }, [events, notifications, offset, setValue])
 }
