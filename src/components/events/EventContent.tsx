@@ -227,7 +227,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Row>
       ) : null}
 
-      {!mapLink ? null : <LinkPreview url={mapLink} onPress={() => openBrowserAsync(mapLink)} />}
+      {!mapLink ? null : <LinkPreview url={mapLink} onPress={() => openBrowserAsync(mapLink)} style={styles.fullWidth} />}
 
       <Section icon="information" title={t('label_event_description')} />
       <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
@@ -249,6 +249,9 @@ const styles = StyleSheet.create({
   posterLine: {
     marginTop: 20,
     alignItems: 'center',
+  },
+  fullWidth: {
+    width: '100%',
   },
   glyphArranger: {
     width: '100%',
