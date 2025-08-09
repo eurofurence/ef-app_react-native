@@ -40,15 +40,74 @@ export function MainMenu({ tabs }: MainMenuProps) {
       )}
 
       <Grid cols={menuColumns}>
-        <Tab icon="information-outline" text={t('info')} onPress={() => router.navigate('/knowledge')} />
-        {showCatchEm && <Tab icon="paw" text={t('catch_em')} onPress={handleCatchEmAll} disabled={!loggedIn} />}
-        <Tab icon="image-frame" text={t('artist_alley')} onPress={() => router.navigate('/artists-alley')} />
-        <Tab icon="card-account-details-outline" text={t('profile')} onPress={() => router.navigate('/profile')} disabled={!loggedIn} />
-        <Tab icon="cog" text={t('settings')} onPress={() => router.navigate('/settings')} />
-        <Tab icon="magnify" text={t('lost_and_found')} onPress={() => router.navigate('/lost-and-found')} disabled={!loggedIn} />
-        <Tab icon="web" text={t('website')} onPress={() => Linking.openURL(conWebsite)} />
-        <Tab icon="map" text={t('map')} onPress={() => openBrowserAsync(efnavMapUrl)} />
-        <Tab icon="information" text={t('about')} onPress={() => router.navigate('/about')} />
+        <Tab
+          icon="information-outline"
+          text={t('info')}
+          onPress={() => router.navigate('/knowledge')}
+          accessibilityLabel={t('accessibility.info_tab')}
+          accessibilityHint={t('accessibility.info_tab_hint')}
+        />
+        {showCatchEm && (
+          <Tab
+            icon="paw"
+            text={t('catch_em')}
+            onPress={handleCatchEmAll}
+            disabled={!loggedIn}
+            accessibilityLabel={t('accessibility.catch_em_tab')}
+            accessibilityHint={loggedIn ? t('accessibility.catch_em_tab_hint') : t('accessibility.catch_em_tab_disabled_hint')}
+          />
+        )}
+        <Tab
+          icon="image-frame"
+          text={t('artist_alley')}
+          onPress={() => router.navigate('/artists-alley')}
+          accessibilityLabel={t('accessibility.artist_alley_tab')}
+          accessibilityHint={t('accessibility.artist_alley_tab_hint')}
+        />
+        <Tab
+          icon="card-account-details-outline"
+          text={t('profile')}
+          onPress={() => router.navigate('/profile')}
+          disabled={!loggedIn}
+          accessibilityLabel={t('accessibility.profile_tab')}
+          accessibilityHint={loggedIn ? t('accessibility.profile_tab_hint') : t('accessibility.profile_tab_disabled_hint')}
+        />
+        <Tab
+          icon="cog"
+          text={t('settings')}
+          onPress={() => router.navigate('/settings')}
+          accessibilityLabel={t('accessibility.settings_tab')}
+          accessibilityHint={t('accessibility.settings_tab_hint')}
+        />
+        <Tab
+          icon="magnify"
+          text={t('lost_and_found')}
+          onPress={() => router.navigate('/lost-and-found')}
+          disabled={!loggedIn}
+          accessibilityLabel={t('accessibility.lost_found_tab')}
+          accessibilityHint={loggedIn ? t('accessibility.lost_found_tab_hint') : t('accessibility.lost_found_tab_disabled_hint')}
+        />
+        <Tab
+          icon="web"
+          text={t('website')}
+          onPress={() => Linking.openURL(conWebsite)}
+          accessibilityLabel={t('accessibility.website_tab')}
+          accessibilityHint={t('accessibility.website_tab_hint')}
+        />
+        <Tab
+          icon="map"
+          text={t('map')}
+          onPress={() => openBrowserAsync(efnavMapUrl)}
+          accessibilityLabel={t('accessibility.map_tab')}
+          accessibilityHint={t('accessibility.map_tab_hint')}
+        />
+        <Tab
+          icon="information"
+          text={t('about')}
+          onPress={() => router.navigate('/about')}
+          accessibilityLabel={t('accessibility.about_tab')}
+          accessibilityHint={t('accessibility.about_tab_hint')}
+        />
       </Grid>
     </Col>
   )

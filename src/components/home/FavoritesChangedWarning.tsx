@@ -9,6 +9,7 @@ import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 export const FavoritesChangedWarning = () => {
   const { t: tMenu } = useTranslation('Menu')
   const { t } = useTranslation('Home')
+  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
   const iconColor = useThemeColorValue('important')
   const { favoriteEvents, favoriteDealers, lastViewTimes, clear } = useFavoritesUpdated()
 
@@ -28,28 +29,51 @@ export const FavoritesChangedWarning = () => {
 
   return (
     <>
-      <View className="pt-8 pb-4 self-stretch">
+      <View className="pt-8 pb-4 self-stretch" role="alert" accessibilityLabel={tAccessibility('favorites_warning_container')}>
         <View className="self-stretch flex-row items-center">
-          <Icon color={iconColor} name="update" size={24} />
-          <Label className="ml-2 flex-1" type="h2" color="important" ellipsizeMode="tail">
+          <Icon color={iconColor} name="update" size={24} accessibilityLabel={tAccessibility('update_icon')} accessibilityRole="image" />
+          <Label className="ml-2 flex-1" type="h2" color="important" ellipsizeMode="tail" accessibilityRole="header">
             {t('warnings.favorites_changed')}
           </Label>
-          <Label className="leading-8" type="compact" variant="bold" color="secondary" onPress={clear}>
+          <Label
+            className="leading-8"
+            type="compact"
+            variant="bold"
+            color="secondary"
+            onPress={clear}
+            accessibilityRole="button"
+            accessibilityLabel={tAccessibility('hide_favorites_warning')}
+            accessibilityHint={tAccessibility('hide_favorites_warning_hint')}
+          >
             {t('warnings.hide')}
           </Label>
         </View>
       </View>
 
-      <Label type="para">{t('warnings.favorites_changed_subtitle')}</Label>
+      <Label type="para" accessibilityLabel={tAccessibility('favorites_warning_description')}>
+        {t('warnings.favorites_changed_subtitle')}
+      </Label>
 
       {changedEventFavorite.length > 0 && (
-        <Label className="mt-1">
+        <Label
+          className="mt-1"
+          accessibilityLabel={tAccessibility('changed_events_list', {
+            count: changedEventFavorite.length,
+            events: changedEventFavorite.map((event) => event.Title).join(', '),
+          })}
+        >
           <Label variant="bold">{tMenu('events')}: </Label>
           {changedEventFavorite.map((event) => event.Title).join(', ')}
         </Label>
       )}
       {changedDealerFavorite.length > 0 && (
-        <Label className="mt-1">
+        <Label
+          className="mt-1"
+          accessibilityLabel={tAccessibility('changed_dealers_list', {
+            count: changedDealerFavorite.length,
+            dealers: changedDealerFavorite.map((dealer) => dealer.DisplayNameOrAttendeeNickname).join(', '),
+          })}
+        >
           <Label variant="bold">{tMenu('dealers')}: </Label>
           {changedDealerFavorite.map((dealer) => dealer.DisplayNameOrAttendeeNickname).join(', ')}
         </Label>

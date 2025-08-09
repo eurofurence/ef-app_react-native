@@ -22,17 +22,11 @@
     "issuer": "https://identity.eurofurence.org",
     "redirect": "eurofurence://auth/login",
     "clientId": "<insert-client-id>",
-    "scopes": [
-      "openid",
-      "profile",
-      "offline",
-      "offline_access"
-    ],
+    "scopes": ["openid", "profile", "offline", "offline_access"],
     "settingsUrl": "https://identity.eurofurence.org/settings/profile"
   },
   "sentry": {
     "dsn": "",
-    "enabled": false,
     "environment": "production"
   },
   "firebase": {
@@ -52,4 +46,3 @@
     "i18nDebug": false
   }
 }
-

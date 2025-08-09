@@ -1,23 +1,26 @@
-import React, { useCallback } from 'react'
-import { StyleSheet, ScrollView } from 'react-native'
 import { router, useLocalSearchParams } from 'expo-router'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, View } from 'react-native'
 
+import { Label } from '@/components/generic/atoms/Label'
+import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
+import { Button } from '@/components/generic/containers/Button'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
-import { useCache } from '@/context/data/Cache'
-import { z } from 'zod'
-import { Label } from '@/components/generic/atoms/Label'
 import { ManagedRating } from '@/components/generic/forms/ManagedRating'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { Button } from '@/components/generic/containers/Button'
-import { FormProvider, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuthContext } from '@/context/auth/Auth'
-import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
-import { useToastContext } from '@/context/ui/ToastContext'
-import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { useUserContext } from '@/context/auth/User'
+import { useCache } from '@/context/data/Cache'
+import { useToastContext } from '@/context/ui/ToastContext'
+import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
+import { useTheme } from '@/hooks/themes/useThemeHooks'
+import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { useTouchTarget } from '@/hooks/util/useTouchTarget'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FormProvider, useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 const feedbackSchema = z.object({
   rating: z
@@ -38,6 +41,13 @@ export default function EventFeedback() {
   const theme = useTheme()
   const { events } = useCache()
   const event = events.dict[eventId]
+  const [announcementMessage, setAnnouncementMessage] = useState('')
+
+  // Focus management for the main content
+  const mainContentRef = useAccessibilityFocus<View>(200)
+
+  // Touch target for the submit button
+  const submitButtonStyle = useTouchTarget(44)
 
   const form = useForm<FeedbackSchema>({
     resolver: zodResolver(feedbackSchema),
@@ -57,6 +67,14 @@ export default function EventFeedback() {
   const disabled = !loggedIn || !attending
   const disabledReason = (!loggedIn && t('disabled_not_logged_in')) || (!attending && t('disabled_not_attending'))
 
+  // Announce the feedback form to screen readers
+  useEffect(() => {
+    if (event) {
+      const message = t('accessibility.feedback_form_loaded', { title: event.Title })
+      setAnnouncementMessage(message)
+    }
+  }, [event, t])
+
   const submit = useCallback(
     (args: FeedbackSchema) => {
       mutate(args, {
@@ -71,35 +89,62 @@ export default function EventFeedback() {
   )
 
   return (
-    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]}>
-      <Header>{t('header', { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Header>
-      <Floater>
-        <FormProvider {...form}>
-          <Label variant="narrow">
-            {t('explanation', {
-              eventTitle: event?.Title,
-              interpolation: { escapeValue: false },
-            })}
-          </Label>
+    <>
+      {/* Status message for screen reader announcement */}
+      <StatusMessage message={announcementMessage} type="assertive" visible={false} />
 
-          <ManagedRating<FeedbackSchema> name="rating" label={t('rating_title')} minRating={1} enableHalfStar={false} color={theme.secondary} style={styles.star} starSize={52} />
+      <ScrollView
+        style={StyleSheet.absoluteFill}
+        stickyHeaderIndices={[0]}
+        accessibilityLabel={t('accessibility.feedback_form_scroll')}
+        accessibilityHint={t('accessibility.feedback_form_scroll_hint')}
+      >
+        <Header>{t('header', { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Header>
+        <Floater>
+          <View ref={mainContentRef} accessibilityLabel={t('accessibility.feedback_form_content')} accessibilityRole="text">
+            <FormProvider {...form}>
+              <Label variant="narrow">
+                {t('explanation', {
+                  eventTitle: event?.Title,
+                  interpolation: { escapeValue: false },
+                })}
+              </Label>
 
-          <ManagedTextInput<FeedbackSchema> name="message" label={t('message_title')} placeholder={t('message_placeholder')} numberOfLines={8} multiline />
+              <ManagedRating<FeedbackSchema>
+                name="rating"
+                label={t('rating_title')}
+                minRating={1}
+                enableHalfStar={false}
+                color={theme.secondary}
+                style={styles.star}
+                starSize={52}
+              />
 
-          <Button onPress={form.handleSubmit(submit)} disabled={isPending || disabled}>
-            {t('submit')}
-          </Button>
+              <ManagedTextInput<FeedbackSchema> name="message" label={t('message_title')} placeholder={t('message_placeholder')} numberOfLines={8} multiline />
 
-          {disabledReason && (
-            <Label type="caption" color="important" variant="middle" className="mt-4">
-              {disabledReason}
-            </Label>
-          )}
+              <Button
+                onPress={form.handleSubmit(submit)}
+                disabled={isPending || disabled}
+                style={submitButtonStyle}
+                accessibilityLabel={t('accessibility.submit_feedback')}
+                accessibilityHint={t('accessibility.submit_feedback_hint')}
+                accessibilityRole="button"
+              >
+                {t('submit')}
+              </Button>
 
-          {isPending && <Label className="mt-4">{t('submit_in_progress')}</Label>}
-        </FormProvider>
-      </Floater>
-    </ScrollView>
+              {disabledReason && (
+                <Label type="caption" color="important" variant="middle" className="mt-4">
+                  {disabledReason}
+                </Label>
+              )}
+
+              {isPending && <Label className="mt-4">{t('submit_in_progress')}</Label>}
+            </FormProvider>
+          </View>
+        </Floater>
+      </ScrollView>
+    </>
   )
 }
 

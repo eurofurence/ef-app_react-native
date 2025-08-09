@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import React, { FC, ReactElement, useCallback, useMemo } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { useCache } from '@/context/data/Cache'
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from '@/context/data/types.details'
@@ -34,6 +35,7 @@ function keyExtractor(item: KnowledgeGroupDetails | KnowledgeEntryDetails) {
 
 export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, empty, trailer, sticky = true, padEnd = true }) => {
   const theme = useThemeName()
+  const { t } = useTranslation('KnowledgeGroups')
   const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(kbGroups, (item) => !('KnowledgeGroupId' in item)) : undefined), [kbGroups, sticky])
   const sectionStyle = useThemeBackground('surface')
@@ -68,6 +70,8 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
       estimatedItemSize={59}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityLabel={t('accessibility.kb_sectioned_list')}
+      accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
     />
   )
 }

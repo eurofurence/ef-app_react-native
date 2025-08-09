@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { DealerCard, DealerDetailsInstance } from './DealerCard'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
@@ -24,6 +25,7 @@ function keyExtractor(item: DealerDetailsInstance) {
 }
 
 export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trailer, padEnd = true }) => {
+  const { t } = useTranslation('Dealers')
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
   const { onPress, onLongPress } = useDealerCardInteractions()
@@ -50,6 +52,8 @@ export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trai
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityLabel={t('accessibility.dealers_list')}
+      accessibilityHint={t('accessibility.dealers_list_hint')}
     />
   )
 }

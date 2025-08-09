@@ -1,6 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
@@ -35,6 +36,7 @@ function keyExtractor(item: SectionProps | EventDetailsInstance) {
 }
 
 export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, eventsGroups, select, empty, trailer, cardType = 'duration', sticky = true, padEnd = true }) => {
+  const { t } = useTranslation('Events')
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
   const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !('details' in item)) : undefined), [eventsGroups, sticky])
@@ -69,6 +71,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
+      accessibilityLabel={t('events_list', { defaultValue: 'Events list' })}
     />
   )
 }
