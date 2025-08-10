@@ -53,6 +53,7 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
       {filter ? (
         <Pressable
           onPress={() => setFilter('')}
+          style={styles.clearButtonContainer}
           accessibilityRole="button"
           accessibilityLabel={t('clear_search', { defaultValue: 'Clear search' })}
           accessibilityHint={t('clear_search_hint', { defaultValue: 'Clears the current search text' })}
@@ -81,6 +82,10 @@ const styles = StyleSheet.create({
   },
   iconClear: {
     // Icon positioning handled by touch target container
+  },
+  clearButtonContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   clearButton: {
     // Additional styles merged with touch target styles
