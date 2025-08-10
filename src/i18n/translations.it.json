@@ -540,6 +540,7 @@
   },
   "Profile": {
     "accessibility": {
+      "default_avatar": "Avatar profilo predefinito",
       "avatar_hint": "Tocca per visualizzare il profilo",
       "idp_settings_button": "Pulsante impostazioni identità",
       "idp_settings_button_hint": "Apre il sito web delle impostazioni identità nel browser",

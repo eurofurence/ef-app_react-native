@@ -59,11 +59,17 @@ export default function EventItem() {
         accessibilityLabel={t('accessibility.event_details_scroll')}
         accessibilityHint={t('accessibility.event_details_scroll_hint')}
       >
-        <Header secondaryIcon={platformShareIcon} secondaryPress={() => event && shareEvent(event)}>
+        <Header
+          secondaryIcon={platformShareIcon}
+          secondaryPress={() => event && shareEvent(event)}
+          accessibilityLabel={t('accessibility.event_header')}
+          secondaryAccessibilityLabel={t('Event.share')}
+          secondaryAccessibilityHint={t('Event.accessibility.event_header_hint')}
+        >
           {event?.Title ?? t('viewing_event')}
         </Header>
         <Floater contentStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={t('accessibility.event_content')} accessibilityRole="text">
+          <View ref={mainContentRef} onLayout={(r) => console.log(r.target)} accessibilityLabel={t('accessibility.event_content')} accessibilityRole="text">
             {!event ? null : <EventContent event={event} parentPad={padFloater} updated={showUpdated} onToggleHidden={handleToggleHidden} />}
           </View>
         </Floater>

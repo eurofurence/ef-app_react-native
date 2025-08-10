@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleProp, StyleSheet, ViewStyle } from 'react-native'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
 import { Button } from '@/components/generic/containers/Button'
 import { Row } from '@/components/generic/containers/Row'
@@ -17,13 +17,15 @@ export type ChoiceButtonsProps<T = string> = {
 
 export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, choice, setChoice, getLabel }: ChoiceButtonsProps<T>) => {
   return (
-    <Row type="center" variant="center" style={style}>
+    <Row type="stretch" variant="center" style={style}>
       {choices.map((item, i) => (
         <Button
           key={typeof item === 'string' ? item : i}
           containerStyle={styles.one}
           labelType={labelType}
           labelVariant={labelVariant}
+          icon={<View />}
+          iconRight={<View />}
           style={i === 0 ? styles.left : i === choices.length - 1 ? styles.right : styles.center}
           outline={item === choice}
           onPress={() => setChoice(item)}

@@ -25,4 +25,9 @@ export const appStyles = StyleSheet.create({
   trailer: {
     paddingBottom: 100,
   },
+
+  minTouchSize: {
+    minWidth: 44,
+    minHeight: 44,
+  },
 })

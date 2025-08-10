@@ -105,7 +105,7 @@ export const Button: FC<ButtonProps> = ({
   // Auto-generate accessibility label if not provided
   const computedAccessibilityLabel = accessibilityLabel || (typeof children === 'string' ? children : undefined)
 
-  let iconComponent
+  let iconComponent: ReactNode
   if (!icon) iconComponent = <View style={styles.placeholder} />
   else if (typeof icon === 'string') iconComponent = <Icon name={icon} size={buttonIconSize} color={color} />
   else if (icon instanceof Function) iconComponent = icon({ size: buttonIconSize, color })
@@ -130,17 +130,14 @@ export const Button: FC<ButtonProps> = ({
       accessibilityLabel={computedAccessibilityLabel}
       accessibilityState={{ disabled }}
       accessibilityHint={accessibilityHint}
-      minTouchSize={44} // Ensure minimum touch target size
     >
       {iconComponent}
 
-      <View style={styles.textContainer}>
-        <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
-          {children}
-        </Label>
+      <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
+        {children}
+      </Label>
 
-        {iconRightComponent}
-      </View>
+      {iconRightComponent}
     </Pressable>
   )
 }
@@ -175,9 +172,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   text: {
+    flex: 1,
+    flexGrow: 1,
+    flexShrink: 0,
     textAlign: 'center',
-    textAlignVertical: 'center',
-    height: 22,
   },
   outlineText: {
     textAlign: 'center',

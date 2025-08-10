@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react'
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { useTranslation } from 'react-i18next'
+import { appStyles } from '@/components/AppStyles'
 
 export default function NotFoundScreen() {
   const { t: a11y } = useTranslation('Accessibility')
@@ -18,9 +18,6 @@ export default function NotFoundScreen() {
 
   // Focus management for the main content
   const mainContentRef = useAccessibilityFocus<View>(200)
-
-  // Touch target for the home link
-  const homeLinkStyle = useTouchTarget(44)
 
   // Announce the error page to screen readers
   useEffect(() => {
@@ -50,7 +47,14 @@ export default function NotFoundScreen() {
           {pathStable}
         </Label>
 
-        <Link href="/" style={[styles.link, homeLinkStyle]} accessibilityLabel={a11y('go_home')} accessibilityHint={a11y('go_home_hint')} accessibilityRole="button" replace>
+        <Link
+          href="/"
+          style={[styles.link, appStyles.minTouchSize]}
+          accessibilityLabel={a11y('go_home')}
+          accessibilityHint={a11y('go_home_hint')}
+          accessibilityRole="button"
+          replace
+        >
           <Label type={'underlined'}>{a11y('go_home_text')}</Label>
         </Link>
       </View>

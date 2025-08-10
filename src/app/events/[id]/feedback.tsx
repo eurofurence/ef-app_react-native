@@ -17,7 +17,6 @@ import { useToastContext } from '@/context/ui/ToastContext'
 import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -45,9 +44,6 @@ export default function EventFeedback() {
 
   // Focus management for the main content
   const mainContentRef = useAccessibilityFocus<View>(200)
-
-  // Touch target for the submit button
-  const submitButtonStyle = useTouchTarget(44)
 
   const form = useForm<FeedbackSchema>({
     resolver: zodResolver(feedbackSchema),
@@ -125,7 +121,6 @@ export default function EventFeedback() {
               <Button
                 onPress={form.handleSubmit(submit)}
                 disabled={isPending || disabled}
-                style={submitButtonStyle}
                 accessibilityLabel={t('accessibility.submit_feedback')}
                 accessibilityHint={t('accessibility.submit_feedback_hint')}
                 accessibilityRole="button"

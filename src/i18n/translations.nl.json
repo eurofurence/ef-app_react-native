@@ -585,6 +585,7 @@
   },
   "Profile": {
     "accessibility": {
+      "default_avatar": "Standaard profielavatar",
       "avatar_hint": "Tik om profiel te bekijken",
       "idp_settings_button": "Identity-instellingen knop",
       "idp_settings_button_hint": "Opent identity-instellingen website in browser",
