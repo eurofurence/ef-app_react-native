@@ -3,7 +3,7 @@ import { Search } from '@/components/generic/atoms/Search'
 import { useCache } from '@/context/data/Cache'
 import { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
 import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
@@ -13,6 +13,7 @@ import { withLayoutContext } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import { Pressable } from '@/components/generic/Pressable'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const unstable_settings = {
@@ -50,9 +51,12 @@ export default function ScheduleLayout() {
   const insets = useSafeAreaInsets()
   const now = useNow('static')
   const backgroundSurface = useThemeBackground('surface')
-  const { eventDays } = useCache()
+  const { eventDays, getValue, setValue } = useCache()
   const initialRouteName = getInitialRoute(eventDays, now)
   const [filter, setFilter] = useState('')
+  const showInternal = getValue('settings').showInternalEvents ?? true
+  const iconColor = useThemeColorValue('staff')
+  const toggleBackground = useThemeBackground('inverted')
 
   const options = useMemo(() => {
     return {
@@ -77,7 +81,20 @@ export default function ScheduleLayout() {
         tabBar={(props) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
-            <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+            <View style={styles.searchRow}>
+              <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+              <Pressable
+                onPress={() => setValue('settings', { ...getValue('settings'), showInternalEvents: !showInternal })}
+                accessibilityRole="button"
+                accessibilityLabel={
+                  showInternal ? t('hide_internal_events', { defaultValue: 'Hide internal events' }) : t('show_internal_events', { defaultValue: 'Show internal events' })
+                }
+                accessibilityHint={t('toggle_internal_events', { defaultValue: 'Toggle internal events filter' })}
+                style={[styles.toggle, toggleBackground]}
+              >
+                <Icon name={showInternal ? 'briefcase-variant-outline' : 'briefcase-variant-off-outline'} size={22} color={iconColor} />
+              </Pressable>
+            </View>
           </View>
         )}
       >
@@ -104,6 +121,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   search: {
+    flexGrow: 1,
     marginVertical: 10,
+    marginLeft: 10,
+    marginRight: 0,
+  },
+  searchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingRight: 10,
+  },
+  toggle: {
+    height: 44,
+    width: 44,
+    marginLeft: 6,
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 10,
   },
 })

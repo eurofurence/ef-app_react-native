@@ -57,6 +57,7 @@ export const schemaValues = {
    */
   settings: defineField<Settings>({
     devMenu: devMenu,
+    showInternalEvents: true,
   }),
 
   /**

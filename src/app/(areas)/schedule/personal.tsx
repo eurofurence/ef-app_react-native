@@ -21,9 +21,11 @@ export default function Personal() {
   const { t } = useTranslation('Events')
   const now = useNow()
 
-  const { eventsFavorite, searchEventsFavorite } = useCache()
+  const { eventsFavorite, searchEventsFavorite, getValue } = useCache()
   const search = useFuseResults(searchEventsFavorite, query ?? '')
-  const groups = useEventOtherGroups(t, now, search ?? eventsFavorite)
+  const showInternal = getValue('settings').showInternalEvents ?? true
+  const filtered = (search ?? eventsFavorite).filter((e) => showInternal || !e.IsInternal)
+  const groups = useEventOtherGroups(t, now, filtered)
 
   const leader = useMemo(
     () => (

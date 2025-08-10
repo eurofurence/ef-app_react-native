@@ -16,6 +16,11 @@ export type Settings = {
   warnings?: Record<string, boolean>
   favoriteDealers?: string[]
   artistsAlleyLocal?: ArtistsAlleyLocal
+  /**
+   * If true, internal events are shown in the events views.
+   * Defaults to true.
+   */
+  showInternalEvents?: boolean
 }
 
 /**

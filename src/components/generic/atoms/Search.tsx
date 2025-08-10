@@ -69,13 +69,14 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
     marginHorizontal: 5,
     marginVertical: 15,
     paddingHorizontal: 10,
-    backgroundColor: 'white', // You can replace this with dynamic theming
+    backgroundColor: 'white',
   },
   iconSearch: {
     marginRight: 8,
