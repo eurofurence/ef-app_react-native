@@ -12,7 +12,7 @@ import { useAuthContext } from '@/context/auth/Auth'
 import { authSettingsUrl, conName } from '@/configuration'
 import { UserDetails } from '@/context/auth/User'
 import { Claims } from '@/context/auth/Auth'
-import { useTouchTarget } from '@/hooks/util/useTouchTarget'
+import { appStyles } from '@/components/AppStyles'
 
 /**
  * User role pill.
@@ -71,8 +71,6 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
   const { t: a11y } = useTranslation('Profile')
   const avatarBackground = useThemeBackground('primary')
   const { logout } = useAuthContext()
-  const idpButtonStyle = useTouchTarget(44)
-  const logoutButtonStyle = useTouchTarget(44)
 
   const isAttendee = user.RoleMap.Attendee
   const isCheckedIn = user.RoleMap.AttendeeCheckedIn
@@ -121,7 +119,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
       </Label>
 
       <Button
-        style={[styles.idpButton, idpButtonStyle]}
+        style={styles.idpButton}
         outline
         icon="web"
         onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}
@@ -144,7 +142,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
       )}
 
       <Button
-        style={[styles.logoutButton, logoutButtonStyle]}
+        style={styles.logoutButton}
         icon="logout"
         onPress={() => logout().catch(captureException)}
         accessibilityLabel={a11y('accessibility.logout_button')}

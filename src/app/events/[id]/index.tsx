@@ -69,7 +69,7 @@ export default function EventItem() {
           {event?.Title ?? t('viewing_event')}
         </Header>
         <Floater contentStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={t('accessibility.event_content')} accessibilityRole="text">
+          <View ref={mainContentRef} onLayout={(r) => console.log(r.target)} accessibilityLabel={t('accessibility.event_content')} accessibilityRole="text">
             {!event ? null : <EventContent event={event} parentPad={padFloater} updated={showUpdated} onToggleHidden={handleToggleHidden} />}
           </View>
         </Floater>

@@ -195,7 +195,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Button>
       )}
 
-      <Row style={styles.marginAround} gap={16}>
+      <Row type="stretch" style={styles.marginAround} gap={16}>
         <Button
           containerStyle={styles.flex}
           outline={isFavorite}

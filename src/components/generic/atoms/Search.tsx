@@ -5,10 +5,10 @@ import { StyleSheet, TextInput, View, ViewStyle } from 'react-native'
 
 import { withAlpha } from '@/context/Theme'
 import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 import { labelTypeStyles } from './Label'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
+import { appStyles } from '@/components/AppStyles'
 
 export type SearchProps = {
   style?: ViewStyle
@@ -23,9 +23,6 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
   const styleLighten = useThemeBackground('inverted')
   const styleText = useThemeColor('invText')
   const colorText = useThemeColorValue('invText')
-
-  // Enhanced touch targets for accessibility
-  const clearButtonStyle = useTouchTarget(44, styles.clearButton)
 
   // Use ref to track current filter without causing effect re-runs
   const filterRef = useRef(filter)
@@ -56,7 +53,6 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
       />
       {filter ? (
         <Pressable
-          style={clearButtonStyle}
           onPress={() => setFilter('')}
           accessibilityRole="button"
           accessibilityLabel={t('clear_search', { defaultValue: 'Clear search' })}

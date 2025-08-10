@@ -69,16 +69,16 @@ export function TimeTravel() {
       </Row>
 
       <Row style={styles.row}>
-        <Button containerStyle={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_HOUR)}>
+        <Button containerStyle={styles.button} icon="chevron-left" iconRight={<View />} onPress={() => handleTravel(-ONE_HOUR)}>
           1h
         </Button>
-        <Button containerStyle={styles.button} icon="chevron-left" onPress={() => handleTravel(-ONE_MINUTE)}>
+        <Button containerStyle={styles.button} icon="chevron-left" iconRight={<View />} onPress={() => handleTravel(-ONE_MINUTE)}>
           1m
         </Button>
-        <Button containerStyle={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_MINUTE)}>
+        <Button containerStyle={styles.button} icon={<View />} iconRight="chevron-right" onPress={() => handleTravel(ONE_MINUTE)}>
           1m
         </Button>
-        <Button containerStyle={styles.button} iconRight="chevron-right" onPress={() => handleTravel(ONE_HOUR)}>
+        <Button containerStyle={styles.button} icon={<View />} iconRight="chevron-right" onPress={() => handleTravel(ONE_HOUR)}>
           1h
         </Button>
       </Row>

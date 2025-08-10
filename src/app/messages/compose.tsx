@@ -9,7 +9,6 @@ import { useUserContext } from '@/context/auth/User'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useCommunicationsSendMutation } from '@/hooks/api/communications/useCommunicationsSendMutation'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Redirect } from 'expo-router'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -17,6 +16,7 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { z } from 'zod'
+import { appStyles } from '@/components/AppStyles'
 
 const messageSchema = z.object({
   type: z.literal('byRegistrationId').or(z.literal('byIdentityId')),
@@ -43,7 +43,6 @@ export default function ComposeMessage() {
 
   // Focus management for the main content
   const mainContentRef = useAccessibilityFocus<View>(200)
-  const submitButtonStyle = useTouchTarget(44)
 
   const isAdmin = Boolean(user?.RoleMap?.Admin)
   const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
@@ -102,7 +101,6 @@ export default function ComposeMessage() {
           </View>
           <Button
             onPress={form.handleSubmit(onSend)}
-            style={submitButtonStyle}
             accessibilityLabel={t('accessibility.submit_message')}
             accessibilityHint={t('accessibility.submit_message_hint')}
             accessibilityRole="button"
