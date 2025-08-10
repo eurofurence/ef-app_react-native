@@ -10,10 +10,22 @@ import * as SecureStore from '@/util/secureStorage'
 import { captureException } from '@sentry/react-native'
 import axios from 'axios'
 
-/**
- * Thrown within the Auth context operations.
- */
-export class AuthContextError extends Error {}
+function isAuthError(error: unknown): error is Error {
+  return Boolean(
+    error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && error.response.status === 401
+  )
+}
+
+function isTokenError(error: unknown): error is Error {
+  return (
+    error instanceof Error &&
+    (error.message.includes('Token is inactive') ||
+      error.message.includes('malformed') ||
+      error.message.includes('expired') ||
+      error.message.includes('invalid') ||
+      error.message.includes('Token validation failed'))
+  )
+}
 
 /**
  * Discovery entries.
@@ -234,17 +246,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         setTokenResponse(null)
 
         // If the error indicates an invalid token, log it for debugging
-        if (
-          error instanceof Error &&
-          (error.message.includes('Token is inactive') ||
-            error.message.includes('malformed') ||
-            error.message.includes('expired') ||
-            error.message.includes('invalid') ||
-            error.message.includes('Token validation failed'))
-        ) {
-          console.warn('Token refresh failed due to invalid token:', error.message)
-        }
-
+        if (isTokenError(error)) console.warn('Token refresh failed due to invalid token:', error.message)
         throw error
       }
     }, [])
@@ -273,47 +275,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         await SecureStore.deleteItemAsync(storageKeyClaims)
         setClaims(null)
 
-        // Check if this is an expected authentication error (401, 403, etc.)
-        const isAuthError =
-          error &&
-          typeof error === 'object' &&
-          'response' in error &&
-          error.response &&
-          typeof error.response === 'object' &&
-          'status' in error.response &&
-          error.response.status === 401
-
-        // If the error indicates an invalid token, try to refresh it
-        if (
-          error instanceof Error &&
-          (error.message.includes('Token is inactive') ||
-            error.message.includes('malformed') ||
-            error.message.includes('expired') ||
-            error.message.includes('invalid') ||
-            error.message.includes('Token validation failed') ||
-            isAuthError)
-        ) {
-          // Try to refresh the token
-          try {
-            await refreshToken(true)
-          } catch {
-            // If refresh also fails, clear the token and log out
-            await SecureStore.deleteItemAsync(storageKeyTokenResponse)
-            setTokenResponse(null)
-          }
-
-          // Don't throw auth errors as they're expected
-          if (isAuthError) {
-            return
-          }
-        }
-
-        // Only throw non-auth errors
-        if (!isAuthError) {
-          throw error
-        }
+        if (isAuthError(error) || isTokenError(error)) console.warn('Claims not refreshed due to token error:', error.message)
+        throw error
       }
-    }, [refreshToken])
+    }, [])
   )
 
   const logout = useAsyncCallbackOnce(
@@ -387,14 +352,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     // Refresh claims, capture exceptions.
     refreshClaims().catch((error) => {
       // Don't capture token validation errors to Sentry as they're expected
-      if (
-        error instanceof Error &&
-        (error.message.includes('Token is inactive') ||
-          error.message.includes('malformed') ||
-          error.message.includes('expired') ||
-          error.message.includes('invalid') ||
-          error.message.includes('Token validation failed'))
-      ) {
+      if (isTokenError(error)) {
         console.warn('Claims refresh failed due to token validation:', error.message)
       } else {
         captureException(error)
@@ -409,14 +367,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
       () =>
         refreshToken().catch((error) => {
           // Don't capture token validation errors to Sentry as they're expected
-          if (
-            error instanceof Error &&
-            (error.message.includes('Token is inactive') ||
-              error.message.includes('malformed') ||
-              error.message.includes('expired') ||
-              error.message.includes('invalid') ||
-              error.message.includes('Token validation failed'))
-          ) {
+          if (isTokenError(error)) {
             console.warn('Token refresh failed due to token validation:', error.message)
           } else {
             captureException(error)
