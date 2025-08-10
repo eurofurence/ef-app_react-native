@@ -33,35 +33,27 @@ function useOgMeta(url: string) {
 
 export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style }) => {
   const { t } = useTranslation('Maps')
-  const { data: ogMeta, isLoading, isError } = useOgMeta(url)
-  const isDisabled = isError || !ogMeta?.image
+  const { data: ogMeta, isLoading } = useOgMeta(url)
   const styleBackground = useThemeBackground('background')
   const styleBorder = useThemeBorder('soften')
 
   const getAccessibilityLabel = () => {
     if (isLoading) return t('accessibility.link_preview_loading')
-    if (isDisabled) return t('accessibility.link_preview_unavailable')
+    if (!ogMeta?.image) return t('accessibility.link_preview_unavailable')
     return t('accessibility.link_preview_available', { url })
-  }
-
-  const getAccessibilityHint = () => {
-    if (isLoading || isDisabled) return undefined
-    return t('accessibility.link_preview_hint')
   }
 
   return (
     <TouchableOpacity
       onPress={onPress}
       style={[styles.cardContainer, styleBackground, styleBorder, style]}
-      disabled={isLoading || isDisabled}
       accessibilityRole="button"
       accessibilityLabel={getAccessibilityLabel()}
-      accessibilityHint={getAccessibilityHint()}
-      accessibilityState={{ disabled: isLoading || isDisabled }}
+      accessibilityHint={t('accessibility.link_preview_hint')}
     >
       {isLoading ? (
         <ActivityIndicator accessibilityLabel={t('accessibility.loading_preview')} importantForAccessibility="no" />
-      ) : isDisabled ? (
+      ) : !ogMeta?.image ? (
         <Label accessibilityLabel={t('accessibility.no_preview_available')} importantForAccessibility="no">
           {t('preview_unavailable')}
         </Label>

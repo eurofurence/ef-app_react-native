@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { AccessibilityInfo, findNodeHandle } from 'react-native'
+import { AccessibilityInfo, findNodeHandle, Platform } from 'react-native'
 
 /**
  * Hook to automatically focus an element for screen readers when it mounts
@@ -9,6 +9,7 @@ export const useAccessibilityFocus = <T extends React.Component>(delay?: number)
   const ref = useRef<T>(null)
 
   useEffect(() => {
+    if (Platform.OS === 'web') return
     if (ref.current) {
       const timeoutId = setTimeout(() => {
         const nodeHandle = findNodeHandle(ref.current)

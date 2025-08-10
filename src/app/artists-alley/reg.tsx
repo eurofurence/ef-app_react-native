@@ -18,7 +18,6 @@ import { useTranslation } from 'react-i18next'
 import { Linking, RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { useTouchTarget } from '@/hooks/util/useTouchTarget'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -48,7 +47,6 @@ export default function Register() {
   const [show, setShow] = useState(true)
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
-  const learnMoreButtonStyle = useTouchTarget(44)
 
   const onEdit = useCallback(() => setShow(false), [])
   const onCancel = useCallback(() => {
@@ -118,7 +116,6 @@ export default function Register() {
               accessibilityRole="button"
               accessibilityLabel={a11y('learn_more_button')}
               accessibilityHint={a11y('learn_more_button_hint')}
-              style={learnMoreButtonStyle}
             >
               {t('learn_more')}
             </Button>

@@ -456,10 +456,10 @@
     },
     "filtering": "Przeszukiwanie widocznego obszaru",
     "results": "W widocznym obszarze"
-    },
-    "Menu": {
-      "about": "O nas",
-      "accessibility": {
+  },
+  "Menu": {
+    "about": "O nas",
+    "accessibility": {
       "about_tab": "Zakładka o aplikacji",
       "about_tab_hint": "Wyświetl informacje o aplikacji i autorach",
       "artist_alley_tab": "Zakładka Artist Alley",
@@ -555,6 +555,7 @@
   },
   "Profile": {
     "accessibility": {
+      "default_avatar": "Domyślny awatar profilu",
       "avatar_hint": "Dotknij, aby wyświetlić profil",
       "idp_settings_button": "Przycisk ustawień tożsamości",
       "idp_settings_button_hint": "Otwiera stronę ustawień tożsamości w przeglądarce",

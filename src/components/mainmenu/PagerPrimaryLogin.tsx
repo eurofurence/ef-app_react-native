@@ -68,7 +68,7 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
         <Button
           containerStyle={styles.buttonContainer}
           style={styles.button}
-          iconRight="login"
+          icon="login"
           onPress={onLogin}
           accessibilityLabel={t('accessibility.login_button')}
           accessibilityHint={t('accessibility.login_button_hint')}

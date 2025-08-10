@@ -41,7 +41,7 @@ export const Banner = ({ style, image, title, placeholder, viewable }: BannerPro
   if (!image) return null
   return (
     <Pressable
-      containerStyle={[styles.container]}
+      containerStyle={styles.container}
       disabled={!viewable}
       onPress={() => {
         if (viewable && image)
