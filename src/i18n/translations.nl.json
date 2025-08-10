@@ -335,6 +335,9 @@
     "long_running": "Langer aan",
     "morning": "In de ochtend",
     "night": "In de nacht",
+    "hide_internal_events": "Interne evenementen verbergen",
+    "show_internal_events": "Interne evenementen tonen",
+    "toggle_internal_events": "Interne-evenementenfilter wisselen",
     "schedule_empty": "Je hebt nog geen favoriete evenementen. Maak een favoriet en maak je eigen agenda.",
     "schedule_title": "Je agenda",
     "search": {

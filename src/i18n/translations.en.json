@@ -425,6 +425,9 @@
     "long_running": "Runs longer",
     "morning": "In the morning",
     "night": "At night",
+    "hide_internal_events": "Hide internal events",
+    "show_internal_events": "Show internal events",
+    "toggle_internal_events": "Toggle internal events filter",
     "schedule_empty": "You do not have any favorite events yet. Favorite some events to create your own schedule.",
     "schedule_title": "Your Schedule",
     "search": {

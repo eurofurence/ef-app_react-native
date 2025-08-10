@@ -279,6 +279,9 @@
     "long_running": "Funziona più a lungo",
     "morning": "Al mattino",
     "night": "Alla notte",
+    "hide_internal_events": "Nascondi eventi interni",
+    "show_internal_events": "Mostra eventi interni",
+    "toggle_internal_events": "Attiva/disattiva filtro eventi interni",
     "search": {
       "placeholder": "Cerca eventi…"
     },

@@ -290,6 +290,9 @@
     "long_running": "Trwa dłużej",
     "morning": "Rano",
     "night": "W nocy",
+    "hide_internal_events": "Ukryj wydarzenia wewnętrzne",
+    "show_internal_events": "Pokaż wydarzenia wewnętrzne",
+    "toggle_internal_events": "Przełącz filtr wydarzeń wewnętrznych",
     "search": {
       "placeholder": "Szukaj wydarzeń…"
     },

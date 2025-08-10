@@ -20,9 +20,11 @@ export function DayView({ day }: { day: EventDayDetails }) {
   const { t } = useTranslation('Events')
   const now = useNow(5)
 
-  const { eventsByDay, searchEventsByDay } = useCache()
+  const { eventsByDay, searchEventsByDay, getValue } = useCache()
   const search = useFuseResults(searchEventsByDay[day.Id], query ?? '')
-  const groups = useEventDayGroups(t, now, search ?? eventsByDay[day.Id])
+  const showInternal = getValue('settings').showInternalEvents ?? true
+  const filtered = (search ?? eventsByDay[day.Id]).filter((e) => showInternal || !e.IsInternal)
+  const groups = useEventDayGroups(t, now, filtered)
 
   const leader = useMemo(
     () => (
