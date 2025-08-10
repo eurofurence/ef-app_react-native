@@ -21,9 +21,16 @@ export default function AnnouncementsList() {
   }, [announcements])
 
   const empty = (
-    <Label type="h2" className="mt-8 mb-3" accessibilityLabel={t('accessibility.empty_state')} accessibilityHint={t('accessibility.empty_state_hint')} accessibilityRole="alert">
-      {t('noAnnouncements')}
-    </Label>
+    <View
+      className="items-center justify-center p-8"
+      accessibilityLabel={t('accessibility.empty_state')}
+      accessibilityHint={t('accessibility.empty_state_hint')}
+      accessibilityRole="text"
+    >
+      <Label type="h2" variant="middle">
+        {t('noAnnouncements')}
+      </Label>
+    </View>
   )
 
   return (
