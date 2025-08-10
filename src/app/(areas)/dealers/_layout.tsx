@@ -58,7 +58,7 @@ export default function DealersLayout() {
         tabBar={(props) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
-            <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+            <Search className={'my-2.5 mx-2.5'} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
           </View>
         )}
       >
@@ -78,8 +78,5 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     backgroundColor: 'transparent',
-  },
-  search: {
-    marginVertical: 10,
   },
 })

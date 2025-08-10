@@ -125,7 +125,7 @@ export default function Knowledge() {
         accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
       >
         <Header>{t('header')}</Header>
-        <KbSectionedList kbGroups={displayData} leader={<Search filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />} />
+        <KbSectionedList kbGroups={displayData} leader={<Search className="my-2.5 mx-2.5" filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />} />
       </View>
     </>
   )

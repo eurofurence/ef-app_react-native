@@ -10,6 +10,7 @@ import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
 
 export type SearchProps = {
+  className?: string
   style?: ViewStyle
   filter: string
   setFilter: (value: string) => void
@@ -17,7 +18,7 @@ export type SearchProps = {
   submit?: () => void
 }
 
-export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder, submit }) => {
+export const Search: FC<SearchProps> = ({ className, style, filter, setFilter, placeholder, submit }) => {
   const { t } = useTranslation('Search')
   const styleLighten = useThemeBackground('inverted')
   const styleText = useThemeColor('invText')
@@ -28,12 +29,12 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
   filterRef.current = filter
 
   return (
-    <View style={[styles.container, styleLighten, style]}>
+    <View className={className} style={[styles.container, styleLighten, style]}>
       <SearchPlus
         name="search"
         size={18}
         color={colorText}
-        style={styles.iconSearch}
+        className={'mr-2'}
         accessibilityElementsHidden={true} // Hide decorative icon from screen readers
         importantForAccessibility="no"
       />
@@ -58,7 +59,7 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
           accessibilityLabel={t('clear_search', { defaultValue: 'Clear search' })}
           accessibilityHint={t('clear_search_hint', { defaultValue: 'Clears the current search text' })}
         >
-          <Icon name="close" size={18} color={colorText} style={styles.iconClear} />
+          <Icon name="close" size={18} color={colorText} className={'ml-2'} />
         </Pressable>
       ) : (
         <View style={styles.clearButtonPlaceholder} />
@@ -69,7 +70,6 @@ export const Search: FC<SearchProps> = ({ style, filter, setFilter, placeholder,
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
@@ -77,12 +77,6 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     paddingHorizontal: 10,
     backgroundColor: 'white',
-  },
-  iconSearch: {
-    marginRight: 8,
-  },
-  iconClear: {
-    // Icon positioning handled by touch target container
   },
   clearButtonContainer: {
     alignItems: 'center',
