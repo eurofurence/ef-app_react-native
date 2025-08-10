@@ -1,5 +1,7 @@
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
+import { Pressable } from '@/components/generic/Pressable'
+import { useCurrentUser } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
@@ -13,7 +15,6 @@ import { withLayoutContext } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { Pressable } from '@/components/generic/Pressable'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const unstable_settings = {
@@ -57,6 +58,8 @@ export default function ScheduleLayout() {
   const showInternal = getValue('settings').showInternalEvents ?? true
   const iconColor = useThemeColorValue('staff')
   const toggleBackground = useThemeBackground('inverted')
+  const user = useCurrentUser()
+  const isStaff = Boolean(user?.RoleMap?.Staff)
 
   const options = useMemo(() => {
     return {
@@ -83,17 +86,19 @@ export default function ScheduleLayout() {
             <MaterialTopTabBar {...props} />
             <View style={styles.searchRow}>
               <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
-              <Pressable
-                onPress={() => setValue('settings', { ...getValue('settings'), showInternalEvents: !showInternal })}
-                accessibilityRole="button"
-                accessibilityLabel={
-                  showInternal ? t('hide_internal_events', { defaultValue: 'Hide internal events' }) : t('show_internal_events', { defaultValue: 'Show internal events' })
-                }
-                accessibilityHint={t('toggle_internal_events', { defaultValue: 'Toggle internal events filter' })}
-                style={[styles.toggle, toggleBackground]}
-              >
-                <Icon name={showInternal ? 'briefcase-variant-outline' : 'briefcase-variant-off-outline'} size={22} color={iconColor} />
-              </Pressable>
+              {isStaff && (
+                <Pressable
+                  onPress={() => setValue('settings', { ...getValue('settings'), showInternalEvents: !showInternal })}
+                  accessibilityRole="button"
+                  accessibilityLabel={
+                    showInternal ? t('hide_internal_events', { defaultValue: 'Hide internal events' }) : t('show_internal_events', { defaultValue: 'Show internal events' })
+                  }
+                  accessibilityHint={t('toggle_internal_events', { defaultValue: 'Toggle internal events filter' })}
+                  style={[styles.toggle, toggleBackground]}
+                >
+                  <Icon name={showInternal ? 'briefcase-variant-outline' : 'briefcase-variant-off-outline'} size={22} color={iconColor} />
+                </Pressable>
+              )}
             </View>
           </View>
         )}
@@ -139,5 +144,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
+  },
+  toggleDisabled: {
+    opacity: 0.4,
   },
 })
