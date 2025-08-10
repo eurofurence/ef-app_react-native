@@ -54,9 +54,9 @@ export default function DealersLayout() {
       <MaterialTopTabs
         initialRouteName="all"
         style={StyleSheet.absoluteFill}
-        screenOptions={{ sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
+        screenOptions={{ tabBarStyle: { paddingTop: insets.top }, sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
         tabBar={(props) => (
-          <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
+          <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
             <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
           </View>

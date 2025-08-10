@@ -73,9 +73,9 @@ export default function ScheduleLayout() {
       <MaterialTopTabs
         initialRouteName={initialRouteName}
         style={StyleSheet.absoluteFill}
-        screenOptions={{ sceneStyle: backgroundSurface, tabBarItemStyle: styles.tabItem }}
+        screenOptions={{ tabBarStyle: { paddingTop: insets.top }, sceneStyle: backgroundSurface, tabBarItemStyle: styles.tabItem }}
         tabBar={(props) => (
-          <View style={[styles.tabBarContainer, { paddingTop: insets.top }]}>
+          <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
             <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
           </View>
