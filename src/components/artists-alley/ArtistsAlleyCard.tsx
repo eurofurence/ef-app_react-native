@@ -37,44 +37,45 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({ containerStyle, st
   })
 
   return (
-    <Pressable
-      containerStyle={containerStyle}
-      style={[styles.container, appStyles.shadow, styleContainer, style]}
-      onPress={() => onPress?.(item)}
-      onLongPress={() => onLongPress?.(item)}
-      accessibilityRole="button"
-      accessibilityLabel={accessibilityLabel}
-      accessibilityHint={tAccessibility('card_button_hint')}
-      accessibilityState={{
-        selected: false,
-        disabled: false,
-      }}
-    >
-      <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(item.Image)}>
-        <View style={[styles.tableContainer, styleDarken]}>
-          <Label type="cap" color={'white'}>
-            Table
+    <View style={containerStyle}>
+      <Pressable
+        style={[styles.container, appStyles.shadow, styleContainer, style]}
+        onPress={() => onPress?.(item)}
+        onLongPress={() => onLongPress?.(item)}
+        accessibilityRole="button"
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={tAccessibility('card_button_hint')}
+        accessibilityState={{
+          selected: false,
+          disabled: false,
+        }}
+      >
+        <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(item.Image)}>
+          <View style={[styles.tableContainer, styleDarken]}>
+            <Label type="cap" color={'white'}>
+              Table
+            </Label>
+            <Label type="h3" color={'white'}>
+              {item.Location}
+            </Label>
+          </View>
+          <View style={[styles.areaIndicator, styleAreaIndicator]} />
+        </ImageBackground>
+
+        <View style={styles.main}>
+          <Label style={styles.title} type="h3">
+            {'OwnerUsername' in item ? item.OwnerUsername + ' (' + item.OwnerRegSysId + ') — ' : ''}
+            {item.DisplayName}
           </Label>
-          <Label type="h3" color={'white'}>
-            {item.Location}
+          <Label type="h4" variant="narrow">
+            {item.ShortDescription}
+          </Label>
+          <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+            {'State' in item ? item.State : ''}
           </Label>
         </View>
-        <View style={[styles.areaIndicator, styleAreaIndicator]} />
-      </ImageBackground>
-
-      <View style={styles.main}>
-        <Label style={styles.title} type="h3">
-          {'OwnerUsername' in item ? item.OwnerUsername + ' (' + item.OwnerRegSysId + ') — ' : ''}
-          {item.DisplayName}
-        </Label>
-        <Label type="h4" variant="narrow">
-          {item.ShortDescription}
-        </Label>
-        <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
-          {'State' in item ? item.State : ''}
-        </Label>
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   )
 }
 

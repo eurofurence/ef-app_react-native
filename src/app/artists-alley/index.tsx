@@ -9,7 +9,6 @@ import { useCache } from '@/context/data/Cache'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
 import { Label } from '@/components/generic/atoms/Label'
-import { useIsFocused } from '@react-navigation/core'
 import { useUserContext } from '@/context/auth/User'
 import { useAuthContext } from '@/context/auth/Auth'
 import { captureException } from '@sentry/react-native'
@@ -32,12 +31,6 @@ export default function List() {
   const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
   const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
   const isAuthorized = isCheckedIn || isPrivileged
-
-  // Sync on focus, artist alley data might change more frequently than other parts of the app.
-  const isFocused = useIsFocused()
-  useEffect(() => {
-    if (isFocused) synchronize().catch(console.error)
-  }, [isFocused, synchronize])
 
   useEffect(() => {
     if (isAuthorized) {
