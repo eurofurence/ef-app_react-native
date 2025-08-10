@@ -8,7 +8,6 @@ import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/t
 import { labelTypeStyles } from './Label'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
-import { appStyles } from '@/components/AppStyles'
 
 export type SearchProps = {
   style?: ViewStyle

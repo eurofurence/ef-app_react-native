@@ -9,7 +9,6 @@ import { Row } from './generic/containers/Row'
 import { ToastMessage, useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 import { Pressable } from '@/components/generic/Pressable'
-import { appStyles } from '@/components/AppStyles'
 
 const iconSize = 18 // Matches regular font size.
 

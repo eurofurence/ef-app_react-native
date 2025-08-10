@@ -12,7 +12,6 @@ import { useAuthContext } from '@/context/auth/Auth'
 import { authSettingsUrl, conName } from '@/configuration'
 import { UserDetails } from '@/context/auth/User'
 import { Claims } from '@/context/auth/Auth'
-import { appStyles } from '@/components/AppStyles'
 
 /**
  * User role pill.

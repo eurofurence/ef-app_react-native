@@ -20,7 +20,6 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { appStyles } from '@/components/AppStyles'
 
 const feedbackSchema = z.object({
   rating: z
