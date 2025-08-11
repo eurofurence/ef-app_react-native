@@ -140,7 +140,7 @@ export default function List() {
                 accessibilityLabel={t('accessibility.login_button')}
                 accessibilityHint={t('accessibility.login_button_hint')}
               >
-                {t('log_in_now')}
+                {t('login_now')}
               </Button>
             )}
           </View>

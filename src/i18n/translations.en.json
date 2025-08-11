@@ -198,7 +198,7 @@
     },
     "location_label": "Table number",
     "location_placeholder": "Table number from handout on the table",
-    "log_in_now": "Log-in now!",
+    "login_now": "Log in now!",
     "new_request": "Make a new request",
     "no_submission": "You haven't submitted a registration yet.",
     "review": {
@@ -659,7 +659,7 @@
     "image": "Image",
     "info": "Info articles",
     "less": "Less",
-    "logged_in_now": "Log-in now",
+    "logged_in_now": "Log in now",
     "lost_and_found": "Lost & Found",
     "map": "Map",
     "maps": "Maps",
@@ -750,6 +750,14 @@
     }
   },
   "Registration": {
+    "accessibility": {
+      "login_button": "Login button",
+      "login_button_hint": "Tap to log into your account",
+      "register_now_button": "Register button",
+      "register_now_button_hint": "Tap to open the registration website of Eurofurence in a browser."
+    },
+    "login": "Login",
+    "login_prompt": "Already have a Eurofurence account? Then log in to unlock all features!",
     "register_now": "Register Now",
     "registration_closed": "Registration has closed",
     "registration_open": "Registration is now open!",

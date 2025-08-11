@@ -3,7 +3,7 @@ import { formatDistance, isAfter, isBefore } from 'date-fns'
 import { TFunction } from 'i18next'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { View } from 'react-native'
 
 import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
@@ -15,6 +15,8 @@ import { Linking } from 'react-native'
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Button } from '../generic/containers/Button'
+import { captureException } from '@sentry/react-native'
+import { useAuthContext } from '@/context/auth/Auth'
 
 export type RegistrationCountdownProps = {
   registrationUrl?: string
@@ -65,6 +67,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
   const iconColor = useThemeColorValue('important')
   const { data, isLoading, error } = useRegistrationDatesQuery()
   const { user } = useUserContext()
+  const { login } = useAuthContext()
 
   const { countdownText, showButton } = useRegistrationState(t, now, data?.startDate ?? null, data?.endDate ?? null, isLoading, error)
 
@@ -105,26 +108,37 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
       </View>
 
       <Label type="para" accessibilityLabel={tAccessibility('registration_status', { status: countdownText })}>
-        {countdownText}
+        {countdownText} {loggedIn || t('login_prompt')}
       </Label>
 
-      {showButton && registrationUrl && (
-        <Button
-          style={styles.registerButton}
-          icon="web"
-          onPress={handleRegisterPress}
-          accessibilityLabel={tAccessibility('register_now_button')}
-          accessibilityHint={tAccessibility('register_now_button_hint')}
-        >
-          {t('register_now')}
-        </Button>
+      {(showButton || !loggedIn) && (
+        <View className="flex flex-row mt-5 gap-2">
+          {showButton && registrationUrl && (
+            <Button
+              icon="web"
+              className="grow"
+              onPress={handleRegisterPress}
+              accessibilityLabel={tAccessibility('accessibility.register_now_button')}
+              accessibilityHint={tAccessibility('accessibility.register_now_button_hint')}
+            >
+              {t('register_now')}
+            </Button>
+          )}
+          {loggedIn || (
+            <Button
+              icon="login"
+              outline
+              className="grow"
+              onPress={() => login().catch(captureException)}
+              accessibilityRole="button"
+              accessibilityLabel={t('accessibility.login_button')}
+              accessibilityHint={t('accessibility.login_button_hint')}
+            >
+              {t('login')}
+            </Button>
+          )}
+        </View>
       )}
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  registerButton: {
-    marginTop: 20,
-  },
-})
