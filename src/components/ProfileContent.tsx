@@ -10,8 +10,8 @@ import { Button } from './generic/containers/Button'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAuthContext } from '@/context/auth/Auth'
 import { authSettingsUrl, conName } from '@/configuration'
-import { UserDetails } from '@/context/auth/User'
-import { Claims } from '@/context/auth/Auth'
+import { Claims } from '@/hooks/api/idp/useUserInfo'
+import { UserDetails } from '@/hooks/api/users/useUsersSelf'
 
 /**
  * User role pill.
@@ -92,7 +92,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
           contentFit="contain"
           placeholder={require('@/assets/static/ych.png')}
           transition={60}
-          cachePolicy="memory"
+          cachePolicy="memory-disk"
           priority="high"
           accessibilityLabel={a11y('accessibility.user_avatar', { name: claims.name as string })}
           accessibilityHint={a11y('accessibility.avatar_hint')}

@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
 
-import { Claims } from '@/context/auth/Auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
@@ -10,16 +9,17 @@ import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { Pressable } from '@/components/generic/Pressable'
+import { Claims } from '@/hooks/api/idp/useUserInfo'
 
 type PagerPrimaryLoginProps = {
   loggedIn: boolean
-  claim: Claims | null
+  claims: Claims | null
   onMessages?: () => void
   onLogin?: () => void
   onProfile?: () => void
 }
 
-export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProfile }: PagerPrimaryLoginProps) {
+export function PagerPrimaryLogin({ loggedIn, claims, onMessages, onLogin, onProfile }: PagerPrimaryLoginProps) {
   const { t } = useTranslation('Menu')
   const avatarBackground = useThemeBackground('primary')
 
@@ -29,26 +29,26 @@ export function PagerPrimaryLogin({ loggedIn, claim, onMessages, onLogin, onProf
         disabled={!loggedIn || !onProfile}
         onPress={() => onProfile?.()}
         accessibilityRole="button"
-        accessibilityLabel={loggedIn && claim?.name ? t('accessibility.profile_button_with_name', { name: claim.name }) : t('accessibility.profile_button')}
+        accessibilityLabel={loggedIn && claims?.name ? t('accessibility.profile_button_with_name', { name: claims.name }) : t('accessibility.profile_button')}
         accessibilityHint={loggedIn ? t('accessibility.profile_button_hint') : t('accessibility.profile_button_disabled_hint')}
         accessibilityState={{ disabled: !loggedIn || !onProfile }}
       >
         <Col type="center">
           <Image
             style={[avatarBackground, styles.avatarCircle]}
-            source={claim?.avatar ?? require('@/assets/static/ych.png')}
+            source={claims?.avatar ?? require('@/assets/static/ych.png')}
             contentFit="contain"
             cachePolicy="memory-disk"
             priority="high"
             accessibilityRole="image"
-            accessibilityLabel={claim?.name ? t('accessibility.avatar_with_name', { name: claim.name }) : t('accessibility.avatar_default')}
+            accessibilityLabel={claims?.name ? t('accessibility.avatar_with_name', { name: claims.name }) : t('accessibility.avatar_default')}
             accessibilityElementsHidden={true}
             importantForAccessibility="no"
           />
         </Col>
-        {!claim?.name ? null : (
+        {!claims?.name ? null : (
           <Label style={styles.name} type="minor" className="mt-1" ellipsizeMode="tail" numberOfLines={1} accessibilityElementsHidden={true} importantForAccessibility="no">
-            {claim.name}
+            {claims.name}
           </Label>
         )}
       </Pressable>

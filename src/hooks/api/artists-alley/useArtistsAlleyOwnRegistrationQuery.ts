@@ -26,9 +26,9 @@ export async function getArtistsAlleyOwnRegistration(accessToken: string | null,
  * Uses a query for `getArtistsAlleyOwnRegistration` with the app auth state.
  */
 export function useArtistsAlleyOwnRegistrationQuery(): UseQueryResult<TableRegistrationRecord | null> {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useQuery({
-    queryKey: [claims?.sub, 'artists-alley', 'own-registration'],
+    queryKey: [idData?.sub, 'artists-alley', 'own-registration'],
     queryFn: (context) => getArtistsAlleyOwnRegistration(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
   })

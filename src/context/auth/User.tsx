@@ -1,44 +1,35 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react'
-import { Claims, useAuthContext } from '@/context/auth/Auth'
-import { UserRecord } from '@/context/data/types.api'
-import { keepPreviousData, QueryFunctionContext, useQuery } from '@tanstack/react-query'
-import { apiBase } from '@/configuration'
-import axios, { GenericAbortSignal } from 'axios'
+import { useAuthContext } from '@/context/auth/Auth'
+import { Claims, useUserInfo } from '@/hooks/api/idp/useUserInfo'
+import { UserDetails, useUsersSelf } from '@/hooks/api/users/useUsersSelf'
+import { IdData } from '@/context/auth/Auth.idToken'
+import { avatarBase } from '@/configuration'
 
 /**
- * Extends user record with a role map.
+ * Converts ID data to a claims-compatible object.
+ * @param idData The ID data to convert.
  */
-export type UserDetails = UserRecord & {
-  RoleMap: Record<string, true | undefined>
-}
+function idToClaims(idData: IdData | null): Claims | null {
+  if (!idData) return null
+  const result: Claims = {}
 
-/**
- * Transform the user record and add a role map.
- * @param userRecord The record to transform.
- */
-function selectWithRoles(userRecord: UserRecord): UserDetails {
-  return {
-    ...userRecord,
-    RoleMap: Object.fromEntries(userRecord.Roles.map((role) => [role, true])),
+  // Try to transfer sub.
+  if (idData.sub) {
+    result.sub = idData.sub
   }
-}
 
-/**
- * Gets the user self-service data with the given access token and optionally an abort signal.
- * @param accessToken The access token.
- * @param signal An abort signal.
- */
-async function getUserSelf(accessToken: string | null, signal?: GenericAbortSignal) {
-  if (!accessToken) throw new Error('Unauthorized')
-  return await axios
-    .get(`${apiBase}/Users/:self`, {
-      signal: signal,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((res) => res.data as UserRecord)
-    .then(selectWithRoles)
+  // Try to transfer name.
+  if (idData.name) {
+    result.name = idData.name
+  }
+
+  // Try to transfer avatar. It might not be absolute.
+  if (idData.avatar) {
+    if (idData.avatar.startsWith('http://') || idData.avatar.startsWith('https://')) result.avatar = idData.avatar
+    else result.avatar = `${avatarBase}/${idData.avatar}`
+  }
+
+  return result
 }
 
 /**
@@ -46,7 +37,7 @@ async function getUserSelf(accessToken: string | null, signal?: GenericAbortSign
  */
 export type UserContextType = {
   /**
-   * Current claims.
+   * Current claims. Claims may have been converted from reduced ID token data.
    */
   claims: Claims | null
 
@@ -73,30 +64,23 @@ UserContext.displayName = 'UserContext'
  * @constructor
  */
 export const UserProvider = ({ children }: { children?: ReactNode | undefined }) => {
-  const { accessToken, claims, refreshToken, refreshClaims } = useAuthContext()
-  // Wrap self query. Add some options.
-  const { data: user, refetch } = useQuery({
-    queryKey: [claims?.sub, 'self'],
-    queryFn: (context: QueryFunctionContext) => getUserSelf(accessToken, context.signal),
-    placeholderData: (data) => keepPreviousData(data),
-    refetchInterval: 60_000,
-    retry: false,
-  })
+  const { idData, refreshToken } = useAuthContext()
+
+  const { data: claims, refetch: refetchClaims } = useUserInfo()
+  const { data: user, refetch: refetchSelf } = useUsersSelf()
 
   // Get value to provide to the children.
   const value = useMemo<UserContextType>(
     () => ({
-      claims: claims,
+      claims: claims ?? idToClaims(idData) ?? null,
       user: user ?? null,
       refresh: async () => {
         await refreshToken()
-        await refreshClaims()
-        await refetch({
-          throwOnError: true,
-        })
+        await refetchClaims()
+        await refetchSelf()
       },
     }),
-    [claims, user, refreshToken, refreshClaims, refetch]
+    [idData, claims, user, refreshToken, refetchClaims, refetchSelf]
   )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>

@@ -16,6 +16,7 @@ import { TimezoneWarning } from '@/components/home/TimezoneWarning'
 import { registrationUrl } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
@@ -31,6 +32,7 @@ export default function Index() {
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 5 : 'static')
   const { synchronize, isSynchronizing } = useCache()
+  const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
 
   const [filter, setFilter] = useState('')
@@ -104,6 +106,7 @@ export default function Index() {
         defaultValue: 'Failed to refresh content. Please try again.',
       })
       setErrorMessage(errorMsg)
+      toast('error', errorMsg)
     }
   }
 
@@ -142,7 +145,7 @@ export default function Index() {
       <StatusMessage
         message={errorMessage}
         type="assertive"
-        visible={true} // Visible and announced assertively
+        visible={false} // Hidden but announced to screen readers
       />
 
       <CountdownHeader />
@@ -152,7 +155,7 @@ export default function Index() {
         <Search filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
 
         {/* Visual search status for sighted users */}
-        {filter && (
+        {!filter ? null : (
           <View style={styles.searchStatus}>
             <Text style={styles.searchStatusText}>
               {results?.length === 0

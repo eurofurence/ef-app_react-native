@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    paddingBottom: 15,
   },
   logo: {
     height: 130,

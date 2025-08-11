@@ -26,9 +26,9 @@ export async function getCommunications(accessToken: string | null, signal?: Gen
  * Uses a query for `getCommunications` with the app auth state.
  */
 export function useCommunicationsQuery(): UseQueryResult<CommunicationRecord[] | null> {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useQuery({
-    queryKey: [claims?.sub, 'communications'],
+    queryKey: [idData?.sub, 'communications'],
     queryFn: (context) => getCommunications(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
   })
@@ -40,7 +40,7 @@ export function useCommunicationsQuery(): UseQueryResult<CommunicationRecord[] |
  * @remarks Uses the same query as getting all records.
  */
 export function useCommunicationsItemQuery(id: unknown): UseQueryResult<CommunicationRecord | null> {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
 
   const findEntry = useCallback(
     (data: CommunicationRecord[] | null) => {
@@ -50,7 +50,7 @@ export function useCommunicationsItemQuery(id: unknown): UseQueryResult<Communic
   )
 
   return useQuery({
-    queryKey: [claims?.sub, 'communications'],
+    queryKey: [idData?.sub, 'communications'],
     queryFn: (context) => getCommunications(accessToken, context.signal),
     select: findEntry,
     placeholderData: (data) => keepPreviousData(data),

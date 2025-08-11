@@ -10,7 +10,7 @@ import { useUserContext } from '@/context/auth/User'
 
 export function DevValues() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_values' })
-  const { tokenResponse, claims } = useAuthContext()
+  const { tokenResponse, idData } = useAuthContext()
   const { user } = useUserContext()
   const { getValue } = useCache()
   const notifications = getValue('notifications')
@@ -30,7 +30,7 @@ export function DevValues() {
       <Label className="mt-5" type="h3">
         {t('claims')}
       </Label>
-      <Label className="ml-2">{claims ? JSON.stringify(claims, null, 2) : 'None'}</Label>
+      <Label className="ml-2">{idData ? JSON.stringify(idData, null, 2) : 'None'}</Label>
       <Label className="mt-5" type="h3">
         {t('user')}
       </Label>

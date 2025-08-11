@@ -34,9 +34,9 @@ export async function putArtistsAlleyItemStatus(accessToken: string | null, data
  * Uses a mutation for `putArtistsAlleyItemStatus` with the app auth state.
  */
 export function useArtistsAlleyItemStatusMutation() {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useMutation({
     mutationFn: (data: ArtistsAlleyItemStatusData) => putArtistsAlleyItemStatus(accessToken, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [claims?.sub, 'artists-alley'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'artists-alley'] }),
   })
 }

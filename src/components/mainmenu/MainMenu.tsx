@@ -11,6 +11,7 @@ import { openBrowserAsync } from 'expo-web-browser'
 import { RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking } from 'react-native'
+import { useUserContext } from '@/context/auth/User'
 
 export type MainMenuProps = {
   tabs: RefObject<TabsRef | null>
@@ -18,7 +19,8 @@ export type MainMenuProps = {
 
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
-  const { loggedIn, claims, login } = useAuthContext()
+  const { loggedIn, login } = useAuthContext()
+  const { claims } = useUserContext()
 
   const handleLogin = useCallback(() => {
     login().catch(captureException)
@@ -36,7 +38,13 @@ export function MainMenu({ tabs }: MainMenuProps) {
   return (
     <Col type="stretch">
       {showLogin && (
-        <PagerPrimaryLogin loggedIn={loggedIn} claim={claims} onMessages={() => router.navigate('/messages')} onLogin={handleLogin} onProfile={() => router.navigate('/profile')} />
+        <PagerPrimaryLogin
+          loggedIn={loggedIn}
+          claims={claims}
+          onMessages={() => router.navigate('/messages')}
+          onLogin={handleLogin}
+          onProfile={() => router.navigate('/profile')}
+        />
       )}
 
       <Grid cols={menuColumns}>

@@ -41,9 +41,9 @@ export async function postCommunicationsSend(accessToken: string | null, data: C
  * Uses a mutation for `postCommunicationsSend` with the app auth state.
  */
 export function useCommunicationsSendMutation() {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useMutation({
     mutationFn: (data: CommunicationsSendData) => postCommunicationsSend(accessToken, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [claims?.sub, 'communications'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'communications'] }),
   })
 }

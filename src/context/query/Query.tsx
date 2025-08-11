@@ -1,10 +1,31 @@
 import { ReactNode } from 'react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClient, onlineManager } from '@tanstack/react-query'
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
+import NetInfo from '@react-native-community/netinfo'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
+// Connect online state.
+onlineManager.setEventListener((setOnline) => {
+  return NetInfo.addEventListener((state) => {
+    setOnline(!!state.isConnected)
+  })
+})
 
 /**
  * The query client instance. Can be used to externally trigger fetches or invalidate queries.
  */
-export const queryClient = new QueryClient()
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      gcTime: 1000 * 60 * 60 * 24 * 7,
+    },
+  },
+})
+
+const persister = createAsyncStoragePersister({
+  storage: AsyncStorage,
+})
 
 /**
  * Provides the TanStack query client.
@@ -12,5 +33,9 @@ export const queryClient = new QueryClient()
  * @constructor
  */
 export const QueryProvider = ({ children }: { children?: ReactNode | undefined }) => {
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  return (
+    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
+      {children}
+    </PersistQueryClientProvider>
+  )
 }

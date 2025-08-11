@@ -76,6 +76,7 @@ export const artistAlleyUrl = conventionConfig.convention.artistAlleyUrl
  */
 export const registrationDatesUrl = conventionConfig.convention.registrationDatesUrl
 export const registrationUrl = conventionConfig.convention.registrationUrl
+export const avatarBase = conventionConfig.convention.avatarBase
 
 /**
  * The cache version for this convention.

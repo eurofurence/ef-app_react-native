@@ -24,9 +24,9 @@ export async function deleteArtistsAlleyItem(accessToken: string | null, id: unk
  * Uses a mutation for `putArtistsAlleyItemStatus` with the app auth state.
  */
 export function useArtistsAlleyItemDeleteMutation() {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useMutation({
     mutationFn: (id: unknown) => deleteArtistsAlleyItem(accessToken, id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [claims?.sub, 'artists-alley'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'artists-alley'] }),
   })
 }
