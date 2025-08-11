@@ -84,8 +84,8 @@ export default function ScheduleLayout() {
         tabBar={(props) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
-            <View style={styles.searchRow}>
-              <Search style={styles.search} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+            <View className="flex-row items-center pr-2.5">
+              <Search className={'flex-1 my-2.5 ml-2.5 mr-0'} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
               {isStaff && (
                 <Pressable
                   onPress={() => setValue('settings', { ...getValue('settings'), showInternalEvents: !showInternal })}
@@ -124,17 +124,6 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     backgroundColor: 'transparent',
-  },
-  search: {
-    flexGrow: 1,
-    marginVertical: 10,
-    marginLeft: 10,
-    marginRight: 0,
-  },
-  searchRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingRight: 10,
   },
   toggle: {
     height: 44,
