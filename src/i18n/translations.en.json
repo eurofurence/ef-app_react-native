@@ -759,7 +759,7 @@
     "login": "Login",
     "login_prompt": "Already have a Eurofurence account? Then log in to unlock all features!",
     "register_now": "Register Now",
-    "registration_closed": "Registration has closed",
+    "registration_closed": "Registration is closed.",
     "registration_open": "Registration is now open!",
     "registration_opens_in": "Registration opens in {{diff}}",
     "registration_title": "Registration",
