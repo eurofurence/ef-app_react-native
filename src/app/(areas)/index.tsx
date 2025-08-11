@@ -152,7 +152,7 @@ export default function Index() {
         <Search filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
 
         {/* Visual search status for sighted users */}
-        {filter && (
+        {!filter ? null : (
           <View style={styles.searchStatus}>
             <Text style={styles.searchStatusText}>
               {results?.length === 0

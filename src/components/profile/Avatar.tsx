@@ -1,10 +1,10 @@
-import { useAuthContext } from '@/context/auth/Auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image } from '@/components/generic/atoms/Image'
 import { useTranslation } from 'react-i18next'
+import { useUserContext } from '@/context/auth/User'
 
 export const Avatar = ({ size = 32 }: { size?: number }) => {
-  const { claims } = useAuthContext()
+  const { claims } = useUserContext()
   const avatarBackground = useThemeBackground('primary')
   const { t } = useTranslation('Profile')
 
@@ -18,7 +18,7 @@ export const Avatar = ({ size = 32 }: { size?: number }) => {
       contentFit="contain"
       placeholder={require('@/assets/static/ych.png')}
       transition={60}
-      cachePolicy="memory"
+      cachePolicy="memory-disk"
       priority="high"
       accessibilityRole="image"
       accessibilityLabel={hasCustomAvatar ? t('accessibility.user_avatar', { name: userName }) : t('accessibility.default_avatar')}

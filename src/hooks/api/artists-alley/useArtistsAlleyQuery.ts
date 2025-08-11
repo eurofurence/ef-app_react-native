@@ -37,9 +37,9 @@ export async function getArtistsAlley(accessToken: string | null, signal?: Gener
  * Uses a query for `getArtistsAlleyAll` with the app auth state.
  */
 export function useArtistsAlleyQuery(usePrivileged: boolean): UseQueryResult<ArtistAlleyRecord[] | null> {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useQuery({
-    queryKey: [claims?.sub, 'artists-alley'],
+    queryKey: [idData?.sub, 'artists-alley'],
     queryFn: (context) => (usePrivileged ? getArtistsAlleyAll(accessToken, context.signal) : getArtistsAlley(accessToken, context.signal)),
     placeholderData: (data) => keepPreviousData(data),
   })

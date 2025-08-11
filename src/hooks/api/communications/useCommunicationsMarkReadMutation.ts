@@ -28,9 +28,9 @@ export async function postCommunicationsMarkRead(accessToken: string | null, id:
  * Uses a mutation for `postCommunicationsMarkRead` with the app auth state.
  */
 export function useCommunicationsMarkReadMutation() {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useMutation({
     mutationFn: (id: unknown) => postCommunicationsMarkRead(accessToken, id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [claims?.sub, 'communications'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'communications'] }),
   })
 }

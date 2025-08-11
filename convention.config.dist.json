@@ -16,7 +16,8 @@
     "cacheVersion": 6,
     "efnavMapUrl": "https://nav.eurofurence.org",
     "registrationDatesUrl": "https://www.eurofurence.org/data/dates.json",
-    "registrationUrl": "https://identity.eurofurence.org"
+    "registrationUrl": "https://identity.eurofurence.org",
+    "avatarBase": "https://s3.eurofurence.org/identity-avatars"
   },
   "auth": {
     "issuer": "https://identity.eurofurence.org",

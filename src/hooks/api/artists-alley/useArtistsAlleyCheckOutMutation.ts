@@ -24,9 +24,9 @@ export async function deleteArtistsAlleyOwnRegistration(accessToken: string | nu
  * Uses a mutation for `deleteArtistsAlleyOwnRegistration` with the app auth state.
  */
 export function useArtistsAlleyCheckOutMutation() {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useMutation({
     mutationFn: () => deleteArtistsAlleyOwnRegistration(accessToken),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [claims?.sub, 'artists-alley'] }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'artists-alley'] }),
   })
 }

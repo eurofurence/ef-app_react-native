@@ -9,23 +9,8 @@ import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
 import * as SecureStore from '@/util/secureStorage'
 import { captureException } from '@sentry/react-native'
 import axios from 'axios'
-
-function isAuthError(error: unknown): error is Error {
-  return Boolean(
-    error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && error.response.status === 401
-  )
-}
-
-function isTokenError(error: unknown): error is Error {
-  return (
-    error instanceof Error &&
-    (error.message.includes('Token is inactive') ||
-      error.message.includes('malformed') ||
-      error.message.includes('expired') ||
-      error.message.includes('invalid') ||
-      error.message.includes('Token validation failed'))
-  )
-}
+import { IdData, parseIdToken } from '@/context/auth/Auth.idToken'
+import { isTokenError } from '@/context/auth/Auth.errors'
 
 /**
  * Discovery entries.
@@ -36,11 +21,6 @@ const discovery = {
   userInfoEndpoint: `${authIssuer}/api/v1/userinfo`,
   revocationEndpoint: `${authIssuer}/oauth2/revoke`,
 }
-
-/**
- * User claims record.
- */
-export type Claims = Record<string, string | string[]>
 
 /**
  * Auth context type.
@@ -57,14 +37,14 @@ export type AuthContextType = {
   accessToken: string | null
 
   /**
+   * Shorthand for parsing the `tokenResponse` ID token.
+   */
+  idData: IdData | null
+
+  /**
    * Shorthand for checking if `accessToken` is not null.
    */
   loggedIn: boolean
-
-  /**
-   * Current claims. May be `null` even if access token is present.
-   */
-  claims: Claims | null
 
   /**
    * Loads the token response, validates it and refreshes it if it's within the refresh margin.
@@ -78,11 +58,6 @@ export type AuthContextType = {
   login(): Promise<void>
 
   /**
-   * Refreshes the claims. Returns false if not actionable.
-   */
-  refreshClaims(): Promise<void>
-
-  /**
    * Refreshes the token. Returns false if not actionable.
    */
   refreshToken(force?: boolean): Promise<void>
@@ -94,7 +69,6 @@ export type AuthContextType = {
 }
 
 export const storageKeyTokenResponse = 'tokenResponseConfig'
-export const storageKeyClaims = 'claims'
 
 /**
  * Gets the last stored token response.
@@ -124,8 +98,7 @@ export function finishLoginRedirect() {
  */
 export const AuthProvider = ({ children }: { children?: ReactNode | undefined }) => {
   const [tokenResponse, setTokenResponse] = useState<TokenResponse | null>(undefined as any)
-  const [claims, setClaims] = useState<Claims | null>(undefined as any)
-  const initialized = tokenResponse !== undefined && claims !== undefined
+  const initialized = tokenResponse !== undefined
 
   // Auth request and login prompt.
   const [request, , promptAsync] = useAuthRequest(
@@ -171,8 +144,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
           setTokenResponse(loadResponse)
         }
       } catch (error) {
-        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
-        setTokenResponse(null)
+        // If the error indicates an invalid token, clear the token data.
+        if (isTokenError(error)) {
+          await SecureStore.deleteItemAsync(storageKeyTokenResponse)
+          setTokenResponse(null)
+        }
         throw error
       }
     }, [])
@@ -203,8 +179,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(response.getRequestConfig()))
         setTokenResponse(response)
       } catch (error) {
-        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
-        setTokenResponse(null)
+        // If the error indicates an invalid token, clear the token data.
+        if (isTokenError(error)) {
+          await SecureStore.deleteItemAsync(storageKeyTokenResponse)
+          setTokenResponse(null)
+        }
         throw error
       }
     }, [promptAsync, request])
@@ -241,41 +220,11 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
         setTokenResponse(refreshResponse)
       } catch (error) {
-        // Clear the token on any error
-        await SecureStore.deleteItemAsync(storageKeyTokenResponse)
-        setTokenResponse(null)
-
-        // If the error indicates an invalid token, log it for debugging
-        if (isTokenError(error)) console.warn('Token refresh failed due to invalid token:', error.message)
-        throw error
-      }
-    }, [])
-  )
-
-  const refreshClaims = useAsyncCallbackOnce(
-    useCallback(async () => {
-      try {
-        // Get from secure store.
-        const tokenResponse = await getLastTokenResponse()
-
-        // Must have an access token.
-        if (!tokenResponse?.accessToken) {
-          // No token available, just set claims to null and return early
-          await SecureStore.deleteItemAsync(storageKeyClaims)
-          setClaims(null)
-          return
+        // If the error indicates an invalid token, clear the token data.
+        if (isTokenError(error)) {
+          await SecureStore.deleteItemAsync(storageKeyTokenResponse)
+          setTokenResponse(null)
         }
-
-        // Get claims, save and set in state.
-        const claimsResponse = await axios.get(discovery.userInfoEndpoint, { headers: { Authorization: `Bearer ${tokenResponse.accessToken}` } })
-        const claims = claimsResponse.data
-        await SecureStore.setItemAsync(storageKeyClaims, JSON.stringify(claims))
-        setClaims(claims)
-      } catch (error) {
-        await SecureStore.deleteItemAsync(storageKeyClaims)
-        setClaims(null)
-
-        if (isAuthError(error) || isTokenError(error)) console.warn('Claims not refreshed due to token error:', error.message)
         throw error
       }
     }, [])
@@ -327,7 +276,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
       })
     }
 
-    // Fire off loading the state. Loading the token or setting it to null will then trigger claims fetching.
+    // Fire off loading the state.
     ;(async () => {
       const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
       if (tokenData) {
@@ -346,19 +295,6 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
       }
     }
   }, [load])
-
-  // On token change, refresh claims.
-  useEffect(() => {
-    // Refresh claims, capture exceptions.
-    refreshClaims().catch((error) => {
-      // Don't capture token validation errors to Sentry as they're expected
-      if (isTokenError(error)) {
-        console.warn('Claims refresh failed due to token validation:', error.message)
-      } else {
-        captureException(error)
-      }
-    })
-  }, [tokenResponse, refreshClaims])
 
   // Try refreshing the access token every ten minutes. Token expiry will be around an hour, so
   // this gives us ample time between expiry and the 'fresh' margin.
@@ -380,20 +316,27 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
 
   // Get value to provide to the children.
   const value = useMemo<AuthContextType>(() => {
+    // Access token is raw opaque token string.
     const accessToken = tokenResponse ? tokenResponse.accessToken : null
+
+    // Try parsing ID token if present, otherwise use null.
+    const idData = tokenResponse?.idToken ? parseIdToken(tokenResponse.idToken) : null
+
+    // Is logged in if the access token is not null.
     const loggedIn = accessToken !== null
+
+    // Compose value.
     return {
       tokenResponse,
       accessToken,
+      idData,
       loggedIn,
-      claims,
       load,
       login,
-      refreshClaims,
       refreshToken,
       logout,
     }
-  }, [claims, load, login, logout, refreshClaims, refreshToken, tokenResponse])
+  }, [load, login, logout, refreshToken, tokenResponse])
 
   if (!initialized) return null
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

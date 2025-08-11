@@ -26,9 +26,9 @@ export async function getLostAndFound(accessToken: string | null, signal?: Gener
  * Uses a query for `getLostAndFound` with the app auth state.
  */
 export function useLostAndFoundQuery(): UseQueryResult<LostAndFoundRecord[] | null> {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useQuery({
-    queryKey: [claims?.sub, 'lost-and-found'],
+    queryKey: [idData?.sub, 'lost-and-found'],
     queryFn: (context) => getLostAndFound(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
   })
@@ -40,7 +40,7 @@ export function useLostAndFoundQuery(): UseQueryResult<LostAndFoundRecord[] | nu
  * @remarks Uses the same query as getting all records.
  */
 export function useLostAndFoundItemQuery(id: unknown): UseQueryResult<LostAndFoundRecord | null> {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
 
   const findEntry = useCallback(
     (data: LostAndFoundRecord[] | null) => {
@@ -50,7 +50,7 @@ export function useLostAndFoundItemQuery(id: unknown): UseQueryResult<LostAndFou
   )
 
   return useQuery({
-    queryKey: [claims?.sub, 'lost-and-found'],
+    queryKey: [idData?.sub, 'lost-and-found'],
     queryFn: (context) => getLostAndFound(accessToken, context.signal),
     select: findEntry,
     placeholderData: (data) => keepPreviousData(data),

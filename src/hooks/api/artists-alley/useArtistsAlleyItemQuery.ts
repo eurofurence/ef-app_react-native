@@ -27,9 +27,9 @@ export async function getArtistsAlleyItem(accessToken: string | null, id: unknow
  * @param id The ID of the item.
  */
 export function useArtistsAlleyItemQuery(id: unknown): UseQueryResult<TableRegistrationRecord | null> {
-  const { accessToken, claims } = useAuthContext()
+  const { accessToken, idData } = useAuthContext()
   return useQuery({
-    queryKey: [claims?.sub, 'artists-alley', id],
+    queryKey: [idData?.sub, 'artists-alley', id],
     queryFn: (context) => getArtistsAlleyItem(accessToken, id, context.signal),
     placeholderData: (data) => keepPreviousData(data),
   })
