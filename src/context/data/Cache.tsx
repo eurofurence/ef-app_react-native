@@ -1,11 +1,9 @@
-import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
-import { Vibration } from 'react-native'
 import { apiBase, conId, eurofurenceCacheVersion } from '@/configuration'
 import * as Storage from '@/util/asyncStorage'
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import { Vibration } from 'react-native'
 
-import { CacheExtensions, useCacheExtensions } from '@/context/data/useCacheExtensions'
 import { schema, Schema, SchemaEntities, schemaEntities, SchemaValues } from '@/context/data/CacheSchema'
-import { SchemaField } from '@/context/data/CacheTools'
 import {
   actionEntitiesChange,
   actionInternalsSet,
@@ -17,6 +15,8 @@ import {
   storeReducer,
   usePersistor,
 } from '@/context/data/CacheStore'
+import { SchemaField } from '@/context/data/CacheTools'
+import { CacheExtensions, useCacheExtensions } from '@/context/data/useCacheExtensions'
 import axios from 'axios'
 import { useAuthContext } from '../auth/Auth'
 
@@ -57,7 +57,7 @@ export type CacheContextType = {
   /**
    * Synchronize now.
    */
-  synchronize(): Promise<void>
+  synchronize(options?: { full?: boolean }): Promise<void>
 
   /**
    * Resets the data.
@@ -169,55 +169,58 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
   const { accessToken } = useAuthContext()
 
   // Synchronization function.
-  const synchronize = useCallback(async () => {
-    const ownInvocation = new AbortController()
-    invocation.current?.abort()
-    invocation.current = ownInvocation
-    setIsSynchronizing(true)
+  const synchronize = useCallback(
+    async (options?: { full?: boolean }) => {
+      const ownInvocation = new AbortController()
+      invocation.current?.abort()
+      invocation.current = ownInvocation
+      setIsSynchronizing(true)
 
-    // Get states to determine delta based sync or full sync.
-    const { lastSynchronised, cid, cacheVersion, lastSyncAuthorized } = dataRef.current
-    const isWithBaseline = Boolean(lastSynchronised)
-    const isSameCon = cid === conId
-    const isSameVersion = cacheVersion === eurofurenceCacheVersion
-    const isSameAuthState = Boolean(accessToken) === lastSyncAuthorized
-    const deltaBased = isWithBaseline && isSameCon && isSameVersion && isSameAuthState
+      // Get states to determine delta based sync or full sync.
+      const { lastSynchronised, cid, cacheVersion, lastSyncAuthorized } = dataRef.current
+      const isWithBaseline = Boolean(lastSynchronised)
+      const isSameCon = cid === conId
+      const isSameVersion = cacheVersion === eurofurenceCacheVersion
+      const isSameAuthState = Boolean(accessToken) === lastSyncAuthorized
+      const deltaBased = !options?.full && isWithBaseline && isSameCon && isSameVersion && isSameAuthState
 
-    // Sync fully if state is for a different convention.
-    const path = deltaBased ? `Sync?since=${lastSynchronised}` : `Sync`
+      // Sync fully if state is for a different convention.
+      const path = deltaBased ? `Sync?since=${lastSynchronised}` : `Sync`
 
-    try {
-      const data = await axios
-        .get(`${apiBase}/${path}`, {
-          signal: ownInvocation.signal,
-          headers: accessToken
-            ? {
-                Authorization: `Bearer ${accessToken}`,
-              }
-            : {},
-        })
-        .then((res) => res.data)
+      try {
+        const data = await axios
+          .get(`${apiBase}/${path}`, {
+            signal: ownInvocation.signal,
+            headers: accessToken
+              ? {
+                  Authorization: `Bearer ${accessToken}`,
+                }
+              : {},
+          })
+          .then((res) => res.data)
 
-      // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
-      if (data.ConventionIdentifier !== conId || cacheVersion !== eurofurenceCacheVersion) {
-        dispatch(actionReset(initialState, 'CID or format change'))
-        dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, lastSynchronised, Boolean(accessToken)))
+        // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
+        if (data.ConventionIdentifier !== conId || cacheVersion !== eurofurenceCacheVersion) {
+          dispatch(actionReset(initialState, 'CID or format change'))
+          dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, lastSynchronised, Boolean(accessToken)))
+        }
+
+        // Dispatch all received changes to the reducer.
+        for (const key in schemaEntities) {
+          const store = key as keyof SchemaEntities
+          const change = data[schemaEntities[store].syncResponseField]
+          dispatch(actionEntitiesChange(store, change.RemoveAllBeforeInsert, change.DeletedEntities, change.ChangedEntities))
+        }
+
+        dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, data.CurrentDateTimeUtc, Boolean(accessToken)))
+      } finally {
+        if (invocation.current === ownInvocation) {
+          setIsSynchronizing(false)
+        }
       }
-
-      // Dispatch all received changes to the reducer.
-      for (const key in schemaEntities) {
-        const store = key as keyof SchemaEntities
-        const change = data[schemaEntities[store].syncResponseField]
-        dispatch(actionEntitiesChange(store, change.RemoveAllBeforeInsert, change.DeletedEntities, change.ChangedEntities))
-      }
-
-      dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, data.CurrentDateTimeUtc, Boolean(accessToken)))
-    } finally {
-      if (invocation.current === ownInvocation) {
-        setIsSynchronizing(false)
-      }
-    }
-  }, [accessToken])
+    },
+    [accessToken]
+  )
 
   // Run synchronize initially.
   useEffect(() => {

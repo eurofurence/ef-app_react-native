@@ -121,6 +121,10 @@ export function DevButtons() {
         {t('sync')}
       </Button>
 
+      <Button onPress={() => vibrateAfter(synchronize({ full: true }))} icon="refresh">
+        {t('sync_full', 'Force full sync')}
+      </Button>
+
       <Button onPress={() => vibrateAfter(clear())} icon="refresh">
         {t('clear')}
       </Button>

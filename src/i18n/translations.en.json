@@ -858,6 +858,7 @@
       "title": "Change the application theme"
     },
     "timeTravel": "Show time travel settings.",
+    "sync_full": "Force full sync",
     "accessibility": {
       "settings_page_loaded": "Settings page loaded",
       "settings_scroll": "Settings page scroll view",

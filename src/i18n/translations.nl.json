@@ -691,6 +691,7 @@
     },
     "settingsSection": "Instellingen",
     "timeTravel": "Toon tijdreisinstellingen.",
+    "sync_full": "Forceer volledige synchronisatie",
     "accessibility": {
       "settings_page_loaded": "Instellingenpagina geladen",
       "settings_scroll": "Instellingenpagina scrollweergave",

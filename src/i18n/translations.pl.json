@@ -663,6 +663,7 @@
     },
     "settingsSection": "Ustawienia aplikacji",
     "timeTravel": "Pokaż ustawienia podróży w czasie.",
+    "sync_full": "Wymuś pełną synchronizację",
     "accessibility": {
       "settings_page_loaded": "Strona ustawień załadowana",
       "settings_scroll": "Widok przewijania strony ustawień",
