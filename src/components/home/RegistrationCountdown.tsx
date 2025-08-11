@@ -29,7 +29,7 @@ const useRegistrationState = (t: TFunction, now: Date, startDate: Date | null, e
   const { eventDays } = useCache()
 
   if (isLoading || error || !startDate || !endDate) {
-    return { countdownText: null, isRegOpen: false }
+    return { countdownText: null, isRegistrationOpen: false }
   }
 
   // Check if we're after the current convention but before next registration opens
@@ -38,23 +38,23 @@ const useRegistrationState = (t: TFunction, now: Date, startDate: Date | null, e
     const lastDate = new Date(lastDay.Date)
 
     if (isAfter(now, lastDate) && isBefore(now, startDate)) {
-      return { countdownText: t('thank_you_see_you_next_year'), isRegOpen: false }
+      return { countdownText: t('thank_you_see_you_next_year'), isRegistrationOpen: false }
     }
   }
 
   // If registration hasn't opened yet
   if (isBefore(now, startDate)) {
     const diff = formatDistance(startDate, now)
-    return { countdownText: t('registration_opens_in', { diff }), isRegOpen: false }
+    return { countdownText: t('registration_opens_in', { diff }), isRegistrationOpen: false }
   }
 
   // If registration is open
   if (isBefore(now, endDate)) {
-    return { countdownText: t('registration_open'), isRegOpen: true }
+    return { countdownText: t('registration_open'), isRegistrationOpen: true }
   }
 
   // If registration has closed
-  return { countdownText: t('registration_closed'), isRegOpen: false }
+  return { countdownText: t('registration_closed'), isRegistrationOpen: false }
 }
 
 export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registrationUrl }) => {
@@ -69,21 +69,21 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
   const { user } = useUserContext()
   const { login } = useAuthContext()
 
-  const { countdownText, isRegOpen } = useRegistrationState(t, now, data?.startDate ?? null, data?.endDate ?? null, isLoading, error)
+  const { countdownText, isRegistrationOpen } = useRegistrationState(t, now, data?.startDate ?? null, data?.endDate ?? null, isLoading, error)
 
   const handleRegisterPress = useMemo(() => {
-    if (!isRegOpen || !registrationUrl) return undefined
+    if (!isRegistrationOpen || !registrationUrl) return undefined
 
     return () => {
       Linking.openURL(registrationUrl).catch(console.error)
     }
-  }, [isRegOpen, registrationUrl])
+  }, [isRegistrationOpen, registrationUrl])
 
   // Don't show if dismissed, if loading, if there's an error, or if user is logged in AND is an attendee
   const isAttendee = Boolean(user?.RoleMap?.Attendee)
   const loggedIn = Boolean(user)
-  if (isHidden || isLoading || error || (loggedIn && isAttendee)) return null
-  const showRegistrationButton = isRegOpen && registrationUrl
+  if (isHidden || isLoading || error || (loggedIn && isAttendee && isRegistrationOpen)) return null
+  const showRegistrationButton = isRegistrationOpen && registrationUrl
   const showLoginButton = !loggedIn
   const showButtons = showLoginButton || showRegistrationButton
 
