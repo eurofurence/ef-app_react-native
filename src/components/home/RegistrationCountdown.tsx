@@ -121,8 +121,8 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
               icon="web"
               className="grow"
               onPress={handleRegisterPress}
-              accessibilityLabel={tAccessibility('accessibility.register_now_button')}
-              accessibilityHint={tAccessibility('accessibility.register_now_button_hint')}
+              accessibilityLabel={t('accessibility.register_now_button')}
+              accessibilityHint={t('accessibility.register_now_button_hint')}
             >
               {t('register_now')}
             </Button>
