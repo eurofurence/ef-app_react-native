@@ -763,6 +763,7 @@
       "title": "Appaussehen ändern"
     },
     "timeTravel": "Zeitreise-Einstellungen anzeigen.",
+    "sync_full": "Volle Synchronisierung erzwingen",
     "accessibility": {
       "settings_page_loaded": "Einstellungsseite geladen",
       "settings_scroll": "Einstellungsseite Scroll-Ansicht",

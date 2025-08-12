@@ -624,6 +624,7 @@
     },
     "header": "Impostazioni",
     "settingsSection": "Impostazioni",
+    "sync_full": "Forza sincronizzazione completa",
     "accessibility": {
       "settings_page_loaded": "Pagina impostazioni caricata",
       "settings_scroll": "Vista scroll pagina impostazioni",
