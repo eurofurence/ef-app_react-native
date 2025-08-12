@@ -48,13 +48,15 @@ jest.mock('react-i18next', () => ({
   useTranslation: (namespace: string) => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
-        registration_title: 'Registration',
-        register_now: 'Register Now',
-        thank_you_see_you_next_year: 'Thank you! See you next year!',
-        registration_opens_in: 'Registration opens in {diff}',
-        registration_open: 'Registration is now open!',
-        registration_closed: 'Registration has closed',
         hide: 'Hide',
+        login_prompt: 'Log in to get more features!',
+        login: 'Login',
+        register_now: 'Register Now',
+        registration_closed: 'Registration has closed',
+        registration_open: 'Registration is now open!',
+        registration_opens_in: 'Registration opens in {diff}',
+        registration_title: 'Registration',
+        thank_you_see_you_next_year: 'Thank you! See you next year!',
       }
       return translations[key] || key
     },
@@ -168,14 +170,14 @@ describe('RegistrationCountdown', () => {
     it('should show registration open message and button', () => {
       render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
 
-      expect(screen.getByText('Registration is now open!')).toBeTruthy()
+      expect(screen.getByText(/Registration is now open!/)).toBeTruthy()
       expect(screen.getByText('Register Now')).toBeTruthy()
     })
 
     it('should not show button when no registration URL is provided', () => {
       render(<RegistrationCountdown />)
 
-      expect(screen.getByText('Registration is now open!')).toBeTruthy()
+      expect(screen.getByText(/Registration is now open!/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeNull()
     })
 
@@ -204,7 +206,7 @@ describe('RegistrationCountdown', () => {
 
       render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
 
-      expect(screen.getByText('Registration is now open!')).toBeTruthy()
+      expect(screen.getByText(/Registration is now open!/)).toBeTruthy()
       expect(screen.getByText('Register Now')).toBeTruthy()
     })
 
@@ -268,7 +270,7 @@ describe('RegistrationCountdown', () => {
     it('should show closed message and no button', () => {
       render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
 
-      expect(screen.getByText('Registration has closed')).toBeTruthy()
+      expect(screen.getByText(/Registration has closed/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeNull()
     })
   })
@@ -291,11 +293,112 @@ describe('RegistrationCountdown', () => {
       )
     })
 
-    it('should show thank you message and no button', () => {
+    it('should show thank you message and no registration button if user is logged in and is an attendee', () => {
+      mockUseAuthContext.mockReturnValue({
+        loggedIn: true,
+        accessToken: 'token',
+        tokenResponse: {} as any,
+        idData: { sub: '0' },
+        load: jest.fn(),
+        login: jest.fn(),
+        refreshToken: jest.fn(),
+        logout: jest.fn(),
+      })
+      mockUseUserContext.mockReturnValue({
+        claims: { sub: '0' },
+        user: { RoleMap: { Attendee: true } },
+        refresh: jest.fn(() => Promise.resolve()),
+      } as any)
+
       render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
 
-      expect(screen.getByText('Thank you! See you next year!')).toBeTruthy()
-      expect(screen.queryByText('Register Now')).toBeNull()
+      expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
+      expect(screen.queryByText('Register Now')).toBeFalsy()
+    })
+
+    it('should show thank you message and no registration button if user is logged in and is not an attendee', () => {
+      mockUseAuthContext.mockReturnValue({
+        loggedIn: true,
+        accessToken: 'token',
+        tokenResponse: {} as any,
+        idData: { sub: '0' },
+        load: jest.fn(),
+        login: jest.fn(),
+        refreshToken: jest.fn(),
+        logout: jest.fn(),
+      })
+      mockUseUserContext.mockReturnValue({
+        claims: { sub: '0' },
+        user: { RoleMap: { Attendee: false } },
+        refresh: jest.fn(() => Promise.resolve()),
+      } as any)
+
+      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+
+      expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
+      expect(screen.queryByText('Register Now')).toBeFalsy()
+    })
+
+    it('should show thank you message and no registration button if user is not logged in', () => {
+      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+
+      expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
+      expect(screen.queryByText('Register Now')).toBeFalsy()
+    })
+  })
+
+  describe('when prompting user to log in', () => {
+    it('should not show login prompt if user is logged in and is not an attendee', () => {
+      mockUseAuthContext.mockReturnValue({
+        loggedIn: true,
+        accessToken: 'token',
+        tokenResponse: {} as any,
+        idData: { sub: '0' },
+        load: jest.fn(),
+        login: jest.fn(),
+        refreshToken: jest.fn(),
+        logout: jest.fn(),
+      })
+      mockUseUserContext.mockReturnValue({
+        claims: { sub: '0' },
+        user: { RoleMap: { Attendee: false } },
+        refresh: jest.fn(() => Promise.resolve()),
+      } as any)
+
+      render(<RegistrationCountdown />)
+
+      expect(screen.queryByText(/Log in to get more features!/)).toBeFalsy()
+      expect(screen.queryByText('Login')).toBeFalsy()
+    })
+
+    it('should not show login prompt if user is logged in and is an attendee', () => {
+      mockUseAuthContext.mockReturnValue({
+        loggedIn: true,
+        accessToken: 'token',
+        tokenResponse: {} as any,
+        idData: { sub: '0' },
+        load: jest.fn(),
+        login: jest.fn(),
+        refreshToken: jest.fn(),
+        logout: jest.fn(),
+      })
+      mockUseUserContext.mockReturnValue({
+        claims: { sub: '0' },
+        user: { RoleMap: { Attendee: true } },
+        refresh: jest.fn(() => Promise.resolve()),
+      } as any)
+
+      render(<RegistrationCountdown />)
+
+      expect(screen.queryByText(/Log in to get more features!/)).toBeFalsy()
+      expect(screen.queryByText('Login')).toBeFalsy()
+    })
+
+    it('should show login prompt if user is not logged in', () => {
+      render(<RegistrationCountdown />)
+
+      expect(screen.getByText(/Log in to get more features!/)).toBeTruthy()
+      expect(screen.queryByText('Login')).toBeTruthy()
     })
   })
 

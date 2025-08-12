@@ -18,6 +18,8 @@ import { useTranslation } from 'react-i18next'
 import { Linking, RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { confirmPrompt } from '@/util/confirmPrompt'
+import { captureException } from '@sentry/react-native'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -49,17 +51,45 @@ export default function Register() {
   const mainContentRef = useAccessibilityFocus<View>(200)
 
   const onEdit = useCallback(() => setShow(false), [])
-  const onCancel = useCallback(() => {
-    checkOut(undefined, {
-      onSuccess: () => toast('info', t('cancel_request_success')),
-      onError: () => toast('error', t('cancel_request_error')),
-    })
+  const onCancel = useCallback(async () => {
+    try {
+      if (
+        (await confirmPrompt({
+          title: t('cancel_request_confirm'),
+          body: t('cancel_request_choice'),
+          deleteText: t('cancel_request'),
+          cancelText: t('cancel_request_cancel'),
+        })) !== true
+      )
+        return
+      toast('notice', t('cancel_request_in_progress'), 2000)
+      checkOut(undefined, {
+        onSuccess: () => toast('info', t('cancel_request_success')),
+        onError: () => toast('error', t('cancel_request_error')),
+      })
+    } catch (error) {
+      captureException(error)
+    }
   }, [checkOut, toast, t])
-  const onCheckOut = useCallback(() => {
-    checkOut(undefined, {
-      onSuccess: () => toast('info', t('check_out_success')),
-      onError: () => toast('error', t('check_out_error')),
-    })
+  const onCheckOut = useCallback(async () => {
+    try {
+      if (
+        (await confirmPrompt({
+          title: t('check_out_confirm'),
+          body: t('check_out_choice'),
+          deleteText: t('check_out'),
+          cancelText: t('check_out_cancel'),
+        })) !== true
+      )
+        return
+      toast('notice', t('check_out_in_progress'), 2000)
+      checkOut(undefined, {
+        onSuccess: () => toast('info', t('check_out_success')),
+        onError: () => toast('error', t('check_out_error')),
+      })
+    } catch (error) {
+      captureException(error)
+    }
   }, [checkOut, toast, t])
 
   useEffect(() => {
