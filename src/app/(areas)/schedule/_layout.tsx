@@ -1,11 +1,9 @@
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
-import { Pressable } from '@/components/generic/Pressable'
-import { useCurrentUser } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
 import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
@@ -16,6 +14,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 
 export const unstable_settings = {
   initialRouteName: 'day-1',
@@ -52,14 +51,9 @@ export default function ScheduleLayout() {
   const insets = useSafeAreaInsets()
   const now = useNow('static')
   const backgroundSurface = useThemeBackground('surface')
-  const { eventDays, getValue, setValue } = useCache()
+  const { eventDays } = useCache()
   const initialRouteName = getInitialRoute(eventDays, now)
   const [filter, setFilter] = useState('')
-  const showInternal = getValue('settings').showInternalEvents ?? true
-  const iconColor = useThemeColorValue('staff')
-  const toggleBackground = useThemeBackground('inverted')
-  const user = useCurrentUser()
-  const isStaff = Boolean(user?.RoleMap?.Staff)
 
   const options = useMemo(() => {
     return {
@@ -85,20 +79,8 @@ export default function ScheduleLayout() {
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
             <View className="flex-row items-center pr-2.5">
-              <Search className={'flex-1 my-2.5 ml-2.5 mr-0'} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
-              {isStaff && (
-                <Pressable
-                  onPress={() => setValue('settings', { ...getValue('settings'), showInternalEvents: !showInternal })}
-                  accessibilityRole="button"
-                  accessibilityLabel={
-                    showInternal ? t('hide_internal_events', { defaultValue: 'Hide internal events' }) : t('show_internal_events', { defaultValue: 'Show internal events' })
-                  }
-                  accessibilityHint={t('toggle_internal_events', { defaultValue: 'Toggle internal events filter' })}
-                  style={[styles.toggle, toggleBackground]}
-                >
-                  <Icon name={showInternal ? 'briefcase-variant-outline' : 'briefcase-variant-off-outline'} size={22} color={iconColor} />
-                </Pressable>
-              )}
+              <Search className="flex-1 my-2.5 ml-2.5 mr-0" filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+              <ShowInternalEventsToggle />
             </View>
           </View>
         )}

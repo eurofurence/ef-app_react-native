@@ -18,15 +18,16 @@ const filterCurrentEvents = (events: readonly EventDetails[], now: Date): EventD
  * @param now The current time.
  */
 export function useCurrentEvents(now: Date) {
-  const { events } = useCache()
+  const { events, getValue } = useCache()
 
+  const showInternal = getValue('settings').showInternalEvents ?? true
   return useMemo(
     () =>
       chain(filterCurrentEvents(events, now))
-        .filter((item) => !item.Hidden)
+        .filter((item) => !item.Hidden && (showInternal || !item.IsInternal))
         .map((details) => eventInstanceForAny(details, now))
         .orderBy('progress', 'asc')
         .value(),
-    [events, now]
+    [events, now, showInternal]
   )
 }

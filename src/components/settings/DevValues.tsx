@@ -7,6 +7,7 @@ import { Label } from '@/components/generic/atoms/Label'
 import { useCache } from '@/context/data/Cache'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
 import { useUserContext } from '@/context/auth/User'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export function DevValues() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_values' })
@@ -16,6 +17,8 @@ export function DevValues() {
   const notifications = getValue('notifications')
 
   const [devicePushToken, setDevicePushToken] = useState<any | null>(null)
+
+  const insets = useSafeAreaInsets()
 
   useEffect(() => {
     getDevicePushToken().then((value) => setDevicePushToken(value))
@@ -64,6 +67,11 @@ export function DevValues() {
         {t('device_push_token')}
       </Label>
       <Label className="ml-2">{devicePushToken ? JSON.stringify(devicePushToken, null, 2) : 'None'}</Label>
+
+      <Label className="mt-5" type="h3">
+        {t('safe_area_insets')}
+      </Label>
+      <Label className="ml-2">{JSON.stringify(insets, null, 2)}</Label>
 
       <Label className="mt-5" type="h3">
         {t('cache_values')}

@@ -99,7 +99,7 @@ export function MainLayout() {
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
       <BottomSheetModalProvider>
         <ThemeProvider value={themeNavigation}>
-          <StatusBar backgroundColor={theme.background} style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
+          <StatusBar style={isHomeView ? 'light' : themeType === 'light' || themeType === 'medium' ? 'dark' : 'light'} />
           <Stack initialRouteName="(areas)">
             {screensData.map((screen) => (
               <Stack.Screen

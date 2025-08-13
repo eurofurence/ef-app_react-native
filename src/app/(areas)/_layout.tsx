@@ -10,6 +10,7 @@ import { Tabs as CustomTabs, TabsRef } from '@/components/generic/containers/Tab
 import { MainMenu } from '@/components/mainmenu/MainMenu'
 import { useCache } from '@/context/data/Cache'
 import { useToastMessages } from '@/context/ui/ToastContext'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export const unstable_settings = {
   initialRouteName: 'index',
@@ -38,6 +39,7 @@ function AreasTabBar(props: BottomTabBarProps) {
   const { t } = useTranslation('Menu')
   const toastMessages = useToastMessages(5)
   const { isSynchronizing } = useCache()
+  const { bottom } = useSafeAreaInsets()
 
   const tabEntries = useMemo(
     () =>
@@ -71,6 +73,7 @@ function AreasTabBar(props: BottomTabBarProps) {
 
   return (
     <CustomTabs
+      padding={bottom}
       ref={tabs}
       tabs={tabEntries}
       textMore={t('more')}

@@ -17,13 +17,14 @@ export type TodayScheduleListProps = {
 
 export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const { eventsFavorite } = useCache()
+  const { eventsFavorite, getValue } = useCache()
 
+  const showInternal = getValue('settings').showInternalEvents ?? true
   const today = useMemo(() => {
-    const favorites = eventsFavorite.filter((item) => !item.Hidden)
+    const favorites = eventsFavorite.filter((item) => !item.Hidden && (showInternal || !item.IsInternal))
 
     return filterHappeningTodayEvents(favorites, now).map((details) => eventInstanceForAny(details, now))
-  }, [eventsFavorite, now])
+  }, [eventsFavorite, now, showInternal])
 
   const { onPress, onLongPress } = useEventCardInteractions()
 

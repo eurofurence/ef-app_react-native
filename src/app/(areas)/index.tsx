@@ -25,13 +25,14 @@ import { useIsFocused } from '@react-navigation/core'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 
 export default function Index() {
   const { t } = useTranslation('Home')
   const { t: a11y } = useTranslation('Accessibility')
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 5 : 'static')
-  const { synchronize, isSynchronizing } = useCache()
+  const { synchronize, isSynchronizing, getValue } = useCache()
   const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
 
@@ -40,9 +41,13 @@ export default function Index() {
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
+  const showInternal = getValue('settings').showInternalEvents ?? true
+
   // Search integration.
   const globalIndex = useCache().searchGlobal
-  const results = useFuseResults(globalIndex, filter, 15)
+  const results = useFuseResults(globalIndex, filter, 15)?.filter((item) => {
+    return item.type !== 'event' || (!item.Hidden && (showInternal || !item.IsInternal))
+  })
 
   // Focus management for search results
   const searchResultsRef = useAccessibilityFocus<View>(300)
@@ -151,8 +156,11 @@ export default function Index() {
       <CountdownHeader />
 
       {/* Enhanced search with accessibility improvements */}
-      <View style={styles.searchContainer}>
-        <Search filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+      <View className="px-1">
+        <View className="flex-row items-center pr-2.5">
+          <Search className="flex-1 my-2.5 ml-2.5 mr-0" filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+          <ShowInternalEventsToggle />
+        </View>
 
         {/* Visual search status for sighted users */}
         {!filter ? null : (
@@ -195,9 +203,6 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    paddingHorizontal: 5,
-  },
   searchStatus: {
     paddingHorizontal: 15,
     paddingBottom: 10,

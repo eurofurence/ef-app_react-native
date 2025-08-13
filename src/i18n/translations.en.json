@@ -822,6 +822,7 @@
       "device_push_token": "Device push token",
       "noScheduledNotifications": "No notifications currently scheduled.",
       "notifications": "Scheduled notifications",
+      "safe_area_insets": "Safe-area insets",
       "subtitle": "Operational data in the app.",
       "title": "Dev values",
       "token_data": "Full token response data",

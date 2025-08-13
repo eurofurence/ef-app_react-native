@@ -20,6 +20,11 @@ export type TabsProps = {
   style?: StyleProp<ViewStyle>
 
   /**
+   * Safe area padding if applicable.
+   */
+  padding?: number
+
+  /**
    * If given, tabs that are laid out before the more/less button.
    */
   tabs: {
@@ -136,11 +141,16 @@ const springConfig = {
  * or dragging, translates it into view and overlays the containing view with
  * a semi-opaque layer.
  */
-export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'More', textLess = 'Less', indicateMore, activity, notice, children }, ref) => {
+export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, padding = 0, tabs, textMore = 'More', textLess = 'Less', indicateMore, activity, notice, children }, ref) => {
   // Computed styles.
   const styleDismiss = useThemeBackground('darken')
   const fillBackground = useThemeBackground('background')
   const bordersDarken = useThemeBorder('darken')
+
+  // Get safe area paddings.
+  const padMenu = useMemo((): ViewStyle => {
+    return { height: padding }
+  }, [padding])
 
   // Animation values
   const height = useSharedValue<number>(300)
@@ -285,11 +295,13 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, tabs, textMore = 'M
             <Continuous style={styles.activity} active={activity} />
           </View>
 
-          <View style={[styles.content, fillBackground]} onLayout={(e) => height.set((current) => e.nativeEvent.layout.height ?? current)}>
+          <View style={[styles.content, bordersDarken, fillBackground]} onLayout={(e) => height.set((current) => e.nativeEvent.layout.height ?? current)}>
             {children}
           </View>
         </Animated.View>
       </GestureDetector>
+
+      <View style={[padMenu, fillBackground]}></View>
     </>
   )
 })
@@ -328,7 +340,6 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     borderTopWidth: 1,
-    borderBottomWidth: 1,
   },
   activity: {
     position: 'absolute',
@@ -340,7 +351,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: '100%',
-    paddingBottom: 20,
     right: 0,
+    borderTopWidth: 1,
   },
 })
