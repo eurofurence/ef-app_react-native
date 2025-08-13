@@ -11,6 +11,7 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { OssLicenses } from '@/components/settings/OssLicenses'
+import { appStyles } from '@/components/AppStyles'
 
 export default function SettingsPage() {
   const { getValue } = useCache()
@@ -36,7 +37,7 @@ export default function SettingsPage() {
         accessibilityHint={t('accessibility.settings_scroll_hint')}
       >
         <Header>{t('header')}</Header>
-        <Floater contentStyle={styles.content}>
+        <Floater contentStyle={appStyles.trailer}>
           <View ref={mainContentRef} accessibilityLabel={t('accessibility.settings_content')} accessibilityRole="text">
             <UserSettings />
             <OssLicenses />
@@ -54,9 +55,3 @@ export default function SettingsPage() {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  content: {
-    marginBottom: 16, // Equivalent to appStyles.trailer
-  },
-})
