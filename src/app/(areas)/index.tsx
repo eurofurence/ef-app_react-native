@@ -25,6 +25,7 @@ import { useIsFocused } from '@react-navigation/core'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 
 export default function Index() {
   const { t } = useTranslation('Home')
@@ -151,8 +152,11 @@ export default function Index() {
       <CountdownHeader />
 
       {/* Enhanced search with accessibility improvements */}
-      <View style={styles.searchContainer}>
-        <Search filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+      <View className="px-1">
+        <View className="flex-row items-center pr-2.5">
+          <Search className="flex-1 my-2.5 ml-2.5 mr-0" filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+          <ShowInternalEventsToggle />
+        </View>
 
         {/* Visual search status for sighted users */}
         {!filter ? null : (
@@ -195,9 +199,6 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    paddingHorizontal: 5,
-  },
   searchStatus: {
     paddingHorizontal: 15,
     paddingBottom: 10,

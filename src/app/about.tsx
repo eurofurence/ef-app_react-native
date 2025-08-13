@@ -235,14 +235,15 @@ export default function AboutScreen() {
         </Row>
 
         <Section title={t('developed_by')} icon="code-json" />
-        <Credit url="https://avatars.githubusercontent.com/u/3359222" name="Fenrikur" role="App Team Director and getting us to move our butts in gear" />
-        <Credit url="https://avatars.githubusercontent.com/u/30414906" name="Faye" role="React Development" />
-        <Credit url="https://avatars.githubusercontent.com/u/5929561" name="Pazuzu" role="React Development" onEasterEgg={pazuzuEgg} />
-        <Credit url="https://avatars.githubusercontent.com/u/5537850" name="Requinard" role="React Development support" onEasterEgg={requinardEgg} />
-        <Credit url="https://avatars.githubusercontent.com/u/16690224" name="Gendo Doggo" role="Backend Development" />
-        <Credit url="https://avatars.githubusercontent.com/u/29598855" name="Maakinoh" role="Backend Development" />
-        <Credit url="https://avatars.githubusercontent.com/u/76539710" name="Meta" role="Backend Development" />
-        <Credit url="https://avatars.githubusercontent.com/u/1616683" name="Rain" role="Backend Development" />
+        <Credit name="Faye" url="https://avatars.githubusercontent.com/u/30414906" role="React Development" />
+        <Credit name="Fenrikur" url="https://avatars.githubusercontent.com/u/3359222" role="App Team Director and getting us to move our butts in gear" />
+        <Credit name="Gendo Doggo" url="https://avatars.githubusercontent.com/u/16690224" role="Backend Development" />
+        <Credit name="Kalynx" url="https://avatars.githubusercontent.com/u/226289443" role="Accessibility and Inclusion" />
+        <Credit name="Maakinoh" url="https://avatars.githubusercontent.com/u/29598855" role="Backend Development" />
+        <Credit name="Meta" url="https://avatars.githubusercontent.com/u/76539710" role="Backend Development" />
+        <Credit name="Pazuzu" url="https://avatars.githubusercontent.com/u/5929561" role="React Development" onEasterEgg={pazuzuEgg} />
+        <Credit name="Rain" url="https://avatars.githubusercontent.com/u/1616683" role="Backend Development" />
+        <Credit name="Requinard" url="https://avatars.githubusercontent.com/u/5537850" role="React Development support" onEasterEgg={requinardEgg} />
         <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
       </Floater>
     </ScrollView>
