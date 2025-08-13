@@ -321,25 +321,19 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
     return filterEntityStore(dealers, (item) => !item.IsAfterDark)
   }, [dealers])
 
-  const searchableEvents = useMemo(() => {
-    const showInternal = data.settings?.showInternalEvents ?? true
-    if (showInternal) return events
-    return filterEntityStore(events, (item) => !item.IsInternal)
-  }, [events, data.settings])
-
   // Global entity wrapper, used in searching across multiple entity stores.
   // The results are tagged with their source type.
   const global = useMemo((): GlobalSearchResult[] => {
-    const result: GlobalSearchResult[] = new Array<GlobalSearchResult>(searchableEvents.length + dealers.length + knowledgeEntries.length)
-    for (const item of searchableEvents) result.push({ ...item, type: 'event' as const })
+    const result: GlobalSearchResult[] = new Array<GlobalSearchResult>(events.length + dealers.length + knowledgeEntries.length)
+    for (const item of events) result.push({ ...item, type: 'event' as const })
     for (const item of dealers) result.push({ ...item, type: 'dealer' as const })
     for (const item of knowledgeEntries) result.push({ ...item, type: 'knowledgeEntry' as const })
     return result
-  }, [searchableEvents, dealers, knowledgeEntries])
+  }, [events, dealers, knowledgeEntries])
 
   // Search instances, i.e., all memoized Fuse instances for searching
   // entities by the defined properties.
-  const searchEvents = useFuseMemo(searchableEvents, searchOptions, eventsSearchProperties)
+  const searchEvents = useFuseMemo(events, searchOptions, eventsSearchProperties)
   const searchEventsFavorite = useFuseMemo(eventsFavorite, searchOptions, eventsSearchProperties)
   const searchEventsByDay = useFuseRecordMemo(eventsByDay, searchOptions, eventsSearchProperties)
   const searchDealers = useFuseMemo(dealers, searchOptions, dealersSearchProperties)

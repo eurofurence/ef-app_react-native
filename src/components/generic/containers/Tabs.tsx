@@ -148,8 +148,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, padding = 0, tabs, 
   const bordersDarken = useThemeBorder('darken')
 
   // Get safe area paddings.
-  const [padMenu] = useMemo((): [ViewStyle] => {
-    return [{ paddingBottom: padding }]
+  const padMenu = useMemo((): ViewStyle => {
+    return { height: padding }
   }, [padding])
 
   // Animation values
@@ -300,6 +300,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, padding = 0, tabs, 
           </View>
         </Animated.View>
       </GestureDetector>
+
       <View style={[padMenu, fillBackground]}></View>
     </>
   )
