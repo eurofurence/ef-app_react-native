@@ -861,6 +861,7 @@
       "title": "Notifications"
     },
     "oss_licenses": {
+      "list_title": "Open Source Licenses",
       "show_licenses": "Show all licenses",
       "subtitle": "Check out all the awesome Open Source projects that make this app possible!",
       "title": "Open Source Licenses"
