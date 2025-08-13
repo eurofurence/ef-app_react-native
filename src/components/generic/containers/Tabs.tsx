@@ -148,8 +148,8 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, padding = 0, tabs, 
   const bordersDarken = useThemeBorder('darken')
 
   // Get safe area paddings.
-  const [padTabs, padMenu] = useMemo((): [ViewStyle, ViewStyle] => {
-    return [{ paddingBottom: padding }, { paddingBottom: Math.max(20, padding + 10) }]
+  const [padMenu] = useMemo((): [ViewStyle] => {
+    return [{ paddingBottom: padding }]
   }, [padding])
 
   // Animation values
@@ -285,7 +285,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, padding = 0, tabs, 
             </View>
           )}
 
-          <View style={[styles.tabs, bordersDarken, fillBackground, padTabs, style]} pointerEvents={isAnimating ? 'none' : 'auto'}>
+          <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating ? 'none' : 'auto'}>
             {tabs?.map((tab, i) => (
               <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />
             ))}
@@ -295,11 +295,12 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, padding = 0, tabs, 
             <Continuous style={styles.activity} active={activity} />
           </View>
 
-          <View style={[styles.content, fillBackground, padMenu]} onLayout={(e) => height.set((current) => e.nativeEvent.layout.height ?? current)}>
+          <View style={[styles.content, bordersDarken, fillBackground]} onLayout={(e) => height.set((current) => e.nativeEvent.layout.height ?? current)}>
             {children}
           </View>
         </Animated.View>
       </GestureDetector>
+      <View style={[padMenu, fillBackground]}></View>
     </>
   )
 })
@@ -338,7 +339,6 @@ const styles = StyleSheet.create({
   tabs: {
     flexDirection: 'row',
     borderTopWidth: 1,
-    borderBottomWidth: 1,
   },
   activity: {
     position: 'absolute',
@@ -351,5 +351,6 @@ const styles = StyleSheet.create({
     left: 0,
     top: '100%',
     right: 0,
+    borderTopWidth: 1,
   },
 })
