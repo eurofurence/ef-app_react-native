@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { OssLicenses } from '@/components/settings/OssLicenses'
 
 export default function SettingsPage() {
   const { getValue } = useCache()
@@ -38,6 +39,7 @@ export default function SettingsPage() {
         <Floater contentStyle={styles.content}>
           <View ref={mainContentRef} accessibilityLabel={t('accessibility.settings_content')} accessibilityRole="text">
             <UserSettings />
+            <OssLicenses />
 
             {showDevMenu && (
               <>

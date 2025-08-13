@@ -860,6 +860,11 @@
       "subtitle": "All scheduled notifications on this device",
       "title": "Notifications"
     },
+    "oss_licenses": {
+      "show_licenses": "Show all licenses",
+      "subtitle": "Check out all the awesome Open Source projects that make this app possible!",
+      "title": "Open Source Licenses"
+    },
     "remote_messages": {
       "no_messages": "We have not received any messages from FCM",
       "subtitle": "Messages that we got from FCM",

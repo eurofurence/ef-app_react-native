@@ -148,6 +148,7 @@ module.exports = {
       'expo-secure-store',
       'expo-router',
       'expo-web-browser',
+      'react-native-legal',
     ].filter(Boolean),
     extra: {
       eas: {
