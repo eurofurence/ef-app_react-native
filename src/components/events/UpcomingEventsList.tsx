@@ -22,14 +22,15 @@ export type UpcomingEventsListProps = {
 }
 export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const { events } = useCache()
+  const { events, getValue } = useCache()
 
+  const showInternal = getValue('settings').showInternalEvents ?? true
   const upcoming = useMemo(
     () =>
       filterUpcomingEvents(events, now)
-        .filter((item) => !item.Hidden)
+        .filter((item) => !item.Hidden && (showInternal || !item.IsInternal))
         .map((details) => eventInstanceForAny(details, now)),
-    [events, now]
+    [events, now, showInternal]
   )
 
   const { onPress, onLongPress } = useEventCardInteractions()
