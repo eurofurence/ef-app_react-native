@@ -14,7 +14,7 @@ pkgs.stdenv.mkDerivation {
     [
       pkgs.pnpm
       pkgs.nodejs
-      pkgs.nodePackages.expo-cli
+      pkgs.nodePackages.eas-cli
       pkgs.android-tools
     ];
 
