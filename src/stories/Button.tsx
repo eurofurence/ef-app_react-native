@@ -1,5 +1,6 @@
-import type { StyleProp, ViewStyle } from 'react-native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+
+import type { StyleProp, ViewStyle } from 'react-native'
 
 export interface ButtonProps {
   /** Is this the principal call to action on the page? */

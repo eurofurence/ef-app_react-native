@@ -1,9 +1,11 @@
+import { mapValues } from 'lodash'
 import { FC, useMemo } from 'react'
 import { View, ViewStyle } from 'react-native'
 import Markdown, { MarkdownProps } from 'react-native-markdown-display'
-import { LabelProps } from './Label'
-import { mapValues } from 'lodash'
+
 import { useTheme } from '@/hooks/themes/useThemeHooks'
+
+import { LabelProps } from './Label'
 
 /**
  * Assigns line heights by factor for styles that have font size but no line height.

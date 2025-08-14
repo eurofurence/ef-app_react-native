@@ -1,12 +1,14 @@
+import { isBefore, isSameDay } from 'date-fns'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { isBefore, isSameDay } from 'date-fns'
-import { EventCard, eventInstanceForAny } from './EventCard'
+
+import { useEventCardInteractions } from '@/components/events/Events.common'
 import { Section } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
-import { useEventCardInteractions } from '@/components/events/Events.common'
+
+import { EventCard, eventInstanceForAny } from './EventCard'
 
 const filterHappeningTodayEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
   events.filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc))).filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)))

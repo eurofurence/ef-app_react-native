@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
-import { View } from 'react-native'
 import { useState } from 'react'
+import { View } from 'react-native'
 
 import { Progress } from '@/components/generic/atoms/Progress'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/Progress',

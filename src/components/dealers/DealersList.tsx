@@ -1,13 +1,14 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
+
+import { useDealerCardInteractions } from '@/components/dealers/Dealers.common'
+import { useCache } from '@/context/data/Cache'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 import { DealerCard, DealerDetailsInstance } from './DealerCard'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/Cache'
-import { vibrateAfter } from '@/util/vibrateAfter'
-import { useDealerCardInteractions } from '@/components/dealers/Dealers.common'
 
 /**
  * The properties to the component.

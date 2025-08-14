@@ -1,3 +1,8 @@
+import { router } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { View } from 'react-native'
+
 import { useEventDayGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
@@ -6,10 +11,6 @@ import { EventDayDetails, EventDetails } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
-import { router } from 'expo-router'
-import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })

@@ -1,8 +1,8 @@
 import { differenceInMilliseconds } from 'date-fns'
-import { format, toZonedTime } from 'date-fns-tz'
 import { de } from 'date-fns/locale/de'
-import { conTimeZone } from '@/configuration'
+import { format, toZonedTime } from 'date-fns-tz'
 
+import { conTimeZone } from '@/configuration'
 import { EventDetails } from '@/context/data/types.details'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 

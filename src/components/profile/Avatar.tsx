@@ -1,7 +1,8 @@
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { Image } from '@/components/generic/atoms/Image'
 import { useTranslation } from 'react-i18next'
+
+import { Image } from '@/components/generic/atoms/Image'
 import { useUserContext } from '@/context/auth/User'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export const Avatar = ({ size = 32 }: { size?: number }) => {
   const { claims } = useUserContext()

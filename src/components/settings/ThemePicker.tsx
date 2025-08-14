@@ -1,11 +1,13 @@
-import { StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { SettingContainer } from './SettingContainer'
+import { StyleSheet } from 'react-native'
+
+import { ChoiceButtons } from '@/components/generic/atoms/ChoiceButtons'
+import { Label } from '@/components/generic/atoms/Label'
+import { Col } from '@/components/generic/containers/Col'
 import { ThemeName } from '@/context/Theme'
 import { useTheme } from '@/hooks/themes/useTheme'
-import { ChoiceButtons } from '@/components/generic/atoms/ChoiceButtons'
-import { Col } from '@/components/generic/containers/Col'
-import { Label } from '@/components/generic/atoms/Label'
+
+import { SettingContainer } from './SettingContainer'
 
 type ThemeChoice = ThemeName | 'system'
 

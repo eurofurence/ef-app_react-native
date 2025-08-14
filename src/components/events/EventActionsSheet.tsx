@@ -3,10 +3,11 @@ import { debounce } from 'lodash'
 import { FC, useEffect, useMemo, useRef } from 'react'
 import { Platform, StyleSheet, ScrollView } from 'react-native'
 
-import { useThemeBackground } from '../../hooks/themes/useThemeHooks'
-import { EventContent } from './EventContent'
-
 import { EventDetails } from '@/context/data/types.details'
+
+import { useThemeBackground } from '../../hooks/themes/useThemeHooks'
+
+import { EventContent } from './EventContent'
 
 type EventActionsSheetProps = {
   event: EventDetails | null | undefined

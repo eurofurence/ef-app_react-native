@@ -1,8 +1,7 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { StyleSheet } from 'react-native'
 
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
@@ -10,6 +9,7 @@ import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { Pressable } from '@/components/generic/Pressable'
 import { Claims } from '@/hooks/api/idp/useUserInfo'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 type PagerPrimaryLoginProps = {
   loggedIn: boolean

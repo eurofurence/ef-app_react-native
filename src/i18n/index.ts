@@ -1,21 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { format, Locale } from 'date-fns'
+import { de, enGB, it, nl, pl } from 'date-fns/locale'
 import * as Localization from 'expo-localization'
 import i18next from 'i18next'
 import { noop, partial } from 'lodash'
 import { initReactI18next } from 'react-i18next'
-import { format, Locale } from 'date-fns'
-import { de, enGB, it, nl, pl } from 'date-fns/locale'
 
 // Polyfill for Plural Rules
 import 'intl-pluralrules'
 
 // Translation files
+import { i18nDebug } from '@/configuration'
+
 import deTranslations from './translations.de.json'
 import enTranslations from './translations.en.json'
 import itTranslations from './translations.it.json'
 import nlTranslations from './translations.nl.json'
 import plTranslations from './translations.pl.json'
-import { i18nDebug } from '@/configuration'
 
 /**
  * List of supported locales.

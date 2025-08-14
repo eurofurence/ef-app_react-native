@@ -1,10 +1,12 @@
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { View } from 'react-native'
+
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { useCache } from '@/context/data/Cache'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import React from 'react'
-import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
+
 import { AnalyticsOptIns } from './AnalyticsOptIns'
 import { HiddenEvents } from './HiddenEvents'
 import { LanguagePicker } from './LanguagePicker'

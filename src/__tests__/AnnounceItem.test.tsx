@@ -1,6 +1,7 @@
-import AnnounceItem from '@/app/announcements/[id]'
 import { render, waitFor } from '@testing-library/react-native'
 import React from 'react'
+
+import AnnounceItem from '@/app/announcements/[id]'
 import { useCache } from '@/context/data/Cache'
 
 // Mock expo-router

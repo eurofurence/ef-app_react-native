@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View, Text } from 'react-native'
 import { fn } from 'storybook/test'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const TestComponent = ({ title, onPress }: { title: string; onPress: () => void }) => (
   <View style={{ padding: 20, backgroundColor: '#f0f0f0', borderRadius: 8 }}>

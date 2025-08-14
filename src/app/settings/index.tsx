@@ -1,17 +1,18 @@
+import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, View } from 'react-native'
+
+import { appStyles } from '@/components/AppStyles'
+import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { DevButtons } from '@/components/settings/DevButtons'
 import { DevValues } from '@/components/settings/DevValues'
+import { OssLicenses } from '@/components/settings/OssLicenses'
 import { TimeTravel } from '@/components/settings/TimeTravel'
 import { UserSettings } from '@/components/settings/UserSettings'
 import { useCache } from '@/context/data/Cache'
-import React, { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View } from 'react-native'
-import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { OssLicenses } from '@/components/settings/OssLicenses'
-import { appStyles } from '@/components/AppStyles'
 
 export default function SettingsPage() {
   const { getValue } = useCache()

@@ -3,11 +3,12 @@ import React, { FC, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, View, ViewStyle } from 'react-native'
 
-import { withAlpha } from '@/context/Theme'
-import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { labelTypeStyles } from './Label'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
+import { withAlpha } from '@/context/Theme'
+import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+
+import { labelTypeStyles } from './Label'
 
 export type SearchProps = {
   className?: string

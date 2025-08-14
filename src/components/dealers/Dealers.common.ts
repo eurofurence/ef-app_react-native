@@ -1,17 +1,17 @@
 import { captureException } from '@sentry/react-native'
+import { format, setDay } from 'date-fns'
+import { router } from 'expo-router'
 import { TFunction } from 'i18next'
 import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Share } from 'react-native'
-import { format, setDay } from 'date-fns'
+
 import { DealerDetailsInstance, dealerInstanceForAny } from '@/components/dealers/DealerCard'
 import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation, DealerSectionProps } from '@/components/dealers/DealerSection'
 import { appBase, conAbbr } from '@/configuration'
-
-import { DealerDetails } from '@/context/data/types.details'
-import { router } from 'expo-router'
 import { useCache } from '@/context/data/Cache'
+import { DealerDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
-import { useTranslation } from 'react-i18next'
 
 /**
  * Compares category, checks if the categories are adult labeled.

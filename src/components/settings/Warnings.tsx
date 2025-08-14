@@ -1,10 +1,12 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
-import { SettingContainer } from './SettingContainer'
+
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { useWarningState } from '@/hooks/data/useWarningState'
+
+import { SettingContainer } from './SettingContainer'
 
 export const Warnings = () => {
   const { t } = useTranslation('Settings', { keyPrefix: 'device_warnings' })

@@ -1,12 +1,13 @@
-import * as Notifications from 'expo-notifications'
-import { Platform } from 'react-native'
 import { captureException } from '@sentry/react-native'
 import { isBefore, subMilliseconds, subMinutes } from 'date-fns'
-import { conId } from '@/configuration'
-import { Notification } from '@/store/background/slice'
-import { EventRecord } from '@/context/data/types.api'
-import { parseDefaultISO } from '@/util/parseDefaultISO'
+import * as Notifications from 'expo-notifications'
 import { SchedulableTriggerInputTypes } from 'expo-notifications'
+import { Platform } from 'react-native'
+
+import { conId } from '@/configuration'
+import { EventRecord } from '@/context/data/types.api'
+import { Notification } from '@/store/background/slice'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export async function scheduleEventReminder(event: EventRecord, timeTravel: number): Promise<Notification> {
   // Get relevant UTC times.

@@ -1,4 +1,5 @@
 import FontAwesome5Icon from '@expo/vector-icons/FontAwesome5'
+
 import type { ComponentProps } from 'react'
 
 export type FaIconNames = keyof typeof FontAwesome5Icon.glyphMap

@@ -1,6 +1,7 @@
 import MaterialCommunityIcon from '@expo/vector-icons/MaterialCommunityIcons'
-import type { ComponentProps } from 'react'
 import { Platform } from 'react-native'
+
+import type { ComponentProps } from 'react'
 
 export type IconNames = keyof typeof MaterialCommunityIcon.glyphMap
 export type IconProps = ComponentProps<typeof MaterialCommunityIcon> & {

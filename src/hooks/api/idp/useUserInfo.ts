@@ -1,7 +1,8 @@
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import { useAuthContext } from '@/context/auth/Auth'
-import { authIssuer } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
+
+import { authIssuer } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
 
 /**
  * User claims record.

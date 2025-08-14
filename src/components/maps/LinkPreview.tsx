@@ -1,12 +1,13 @@
-import { extractOgMeta } from '@/util/extractOgMeta'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import React from 'react'
-import { ActivityIndicator, StyleProp, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import axios from 'axios'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
+import { ActivityIndicator, StyleProp, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native'
+
 import { Image } from '@/components/generic/atoms/Image'
-import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 import { Label } from '@/components/generic/atoms/Label'
+import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import { extractOgMeta } from '@/util/extractOgMeta'
 
 type LinkPreviewProps = {
   url: string

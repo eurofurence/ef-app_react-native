@@ -1,8 +1,9 @@
-import { TableRegistrationRecord } from '@/context/data/types.api'
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import { useAuthContext } from '@/context/auth/Auth'
-import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
+
+import { apiBase } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
+import { TableRegistrationRecord } from '@/context/data/types.api'
 
 /**
  * Gets the caller's table registration record with the given access token and optionally an abort signal.

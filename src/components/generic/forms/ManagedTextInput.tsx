@@ -1,9 +1,10 @@
-import { StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native'
+import { useMemo } from 'react'
 import { useController, Path } from 'react-hook-form'
+import { StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native'
+
+import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 import { Label } from '../atoms/Label'
-import { useTheme } from '@/hooks/themes/useThemeHooks'
-import { useMemo } from 'react'
 
 export type ManagedTextInputProps<T> = TextInputProps & {
   name: Path<T>

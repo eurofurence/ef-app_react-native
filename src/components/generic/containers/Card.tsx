@@ -1,9 +1,9 @@
 import { FC, PropsWithChildren } from 'react'
 import { AccessibilityRole, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { appStyles } from '@/components/AppStyles'
 import { Pressable } from '@/components/generic/Pressable'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 type CardProps = PropsWithChildren<{
   onPress?: () => void

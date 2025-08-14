@@ -1,12 +1,12 @@
 import React, { FC } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { StyleSheet, View, ViewStyle } from 'react-native'
+
+import { KnowledgeEntryDetails } from '@/context/data/types.details'
 
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
 import { Card } from '../generic/containers/Card'
-
-import { KnowledgeEntryDetails } from '@/context/data/types.details'
 
 export type KbEntryCardProps = {
   containerStyle?: ViewStyle

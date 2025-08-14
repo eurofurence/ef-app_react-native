@@ -1,3 +1,8 @@
+import { router } from 'expo-router'
+import { useMemo, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+
 import { useEventOtherGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { ComboModal, ComboModalRef } from '@/components/generic/atoms/ComboModal'
@@ -10,10 +15,6 @@ import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
-import { router } from 'expo-router'
-import { useMemo, useRef, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })

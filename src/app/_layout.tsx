@@ -1,20 +1,23 @@
-import { AuthProvider } from '@/context/auth/Auth'
-import { CacheProvider } from '@/context/data/Cache'
-import { QueryProvider } from '@/context/query/Query'
-import { ToastProvider } from '@/context/ui/ToastContext'
-import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
-import { useStackScreensData } from '@/hooks/data/useStackScreensData'
-import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'
-import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
-import { useTokenManager } from '@/hooks/tokens/useTokenManager'
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { SplashScreen, Stack, useSegments } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import React, { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
-import 'react-native-reanimated'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+
+import { AuthProvider } from '@/context/auth/Auth'
+import { UserProvider } from '@/context/auth/User'
+import { CacheProvider } from '@/context/data/Cache'
+import { QueryProvider } from '@/context/query/Query'
+import { ToastProvider } from '@/context/ui/ToastContext'
+import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
+import { useStackScreensData } from '@/hooks/data/useStackScreensData'
+import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
+import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'
+import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
+import { useTokenManager } from '@/hooks/tokens/useTokenManager'
+import 'react-native-reanimated'
 
 // Import i18n configuration
 import '@/i18n'
@@ -28,8 +31,6 @@ import '@/init/splash'
 
 // Import global tailwind CSS.
 import '@/css/globals.css'
-import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
-import { UserProvider } from '@/context/auth/User'
 
 export const unstable_settings = {
   initialRouteName: '(areas)',

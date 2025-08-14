@@ -1,12 +1,13 @@
 import { Link, Stack, usePathname } from 'expo-router'
-import { StyleSheet, View } from 'react-native'
 import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+
+import { appStyles } from '@/components/AppStyles'
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { useTranslation } from 'react-i18next'
-import { appStyles } from '@/components/AppStyles'
 
 export default function NotFoundScreen() {
   const { t: a11y } = useTranslation('Accessibility')

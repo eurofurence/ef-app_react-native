@@ -1,14 +1,17 @@
-import { Label } from '@/components/generic/atoms/Label'
-import { useCache } from '@/context/data/Cache'
-import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { Translation } from '@/i18n'
 import { Picker } from '@react-native-picker/picker'
 import { captureException } from '@sentry/react-native'
 import { orderBy } from 'lodash'
 import React, { useState, useEffect, useRef } from 'react'
-import { Animated, Platform } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Animated, Platform } from 'react-native'
+
+import { Label } from '@/components/generic/atoms/Label'
+import { useCache } from '@/context/data/Cache'
+import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { Translation } from '@/i18n'
+
 import { Button } from '../generic/containers/Button'
+
 import { SettingContainer } from './SettingContainer'
 
 /**

@@ -1,9 +1,10 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react'
+
+import { avatarBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
+import { IdData } from '@/context/auth/Auth.idToken'
 import { Claims, useUserInfo } from '@/hooks/api/idp/useUserInfo'
 import { UserDetails, useUsersSelf } from '@/hooks/api/users/useUsersSelf'
-import { IdData } from '@/context/auth/Auth.idToken'
-import { avatarBase } from '@/configuration'
 
 /**
  * Converts ID data to a claims-compatible object.

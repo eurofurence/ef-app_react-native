@@ -1,16 +1,17 @@
 import { captureException } from '@sentry/react-native'
 import { Redirect } from 'expo-router'
 import React, { useCallback, useState } from 'react'
-import { ScrollView, StyleSheet, RefreshControl, View } from 'react-native'
-import { appStyles } from '@/components/AppStyles'
-import { ProfileContent } from '@/components/ProfileContent'
-import { Floater, padFloater } from '@/components/generic/containers/Floater'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useCache } from '@/context/data/Cache'
-import { Header } from '@/components/generic/containers/Header'
 import { useTranslation } from 'react-i18next'
-import { vibrateAfter } from '@/util/vibrateAfter'
+import { ScrollView, StyleSheet, RefreshControl, View } from 'react-native'
+
+import { appStyles } from '@/components/AppStyles'
+import { Floater, padFloater } from '@/components/generic/containers/Floater'
+import { Header } from '@/components/generic/containers/Header'
+import { ProfileContent } from '@/components/ProfileContent'
 import { useUserContext } from '@/context/auth/User'
+import { useCache } from '@/context/data/Cache'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Profile() {
   const { claims, user, refresh } = useUserContext()

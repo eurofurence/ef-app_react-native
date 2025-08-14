@@ -1,3 +1,9 @@
+import Fuse from 'fuse.js'
+import { chain } from 'lodash'
+import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+
 import { Search } from '@/components/generic/atoms/Search'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Header } from '@/components/generic/containers/Header'
@@ -5,11 +11,6 @@ import { KbSectionedList } from '@/components/kb/KbSectionedList'
 import { useCache } from '@/context/data/Cache'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import Fuse from 'fuse.js'
-import { chain } from 'lodash'
-import { useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
 
 export default function Knowledge() {
   const { t } = useTranslation('KnowledgeGroups')

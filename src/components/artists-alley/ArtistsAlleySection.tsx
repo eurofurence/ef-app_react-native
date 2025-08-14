@@ -1,9 +1,10 @@
 import { TFunction } from 'i18next'
 import { FC } from 'react'
-import { IconNames } from '../generic/atoms/Icon'
-import { Section, SectionProps } from '../generic/atoms/Section'
 
 import { TableRegistrationRecordStatus } from '@/context/data/types.api'
+
+import { IconNames } from '../generic/atoms/Icon'
+import { Section, SectionProps } from '../generic/atoms/Section'
 
 export type ArtistsAlleySectionProps = SectionProps
 

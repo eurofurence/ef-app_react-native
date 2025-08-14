@@ -1,14 +1,14 @@
+import * as Linking from 'expo-linking'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image } from '@/components/generic/atoms/Image'
+import { sourceFromImage } from '@/components/generic/atoms/Image.common'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
-import { sourceFromImage } from '@/components/generic/atoms/Image.common'
 import { TableRegistrationRecord } from '@/context/data/types.api'
-import * as Linking from 'expo-linking'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export type ArtistsAlleyStatusProps = {
   data: TableRegistrationRecord

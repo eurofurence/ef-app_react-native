@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
-import { View, Text } from 'react-native'
 import { useState } from 'react'
+import { View, Text } from 'react-native'
 
 import { ComboModal } from '@/components/generic/atoms/ComboModal'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 // Mock data for the stories
 type MockOption = {

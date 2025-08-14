@@ -1,9 +1,9 @@
-import { ReactNode } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import NetInfo from '@react-native-community/netinfo'
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
 import { QueryClient, onlineManager } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
-import NetInfo from '@react-native-community/netinfo'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ReactNode } from 'react'
 
 // Connect online state.
 onlineManager.setEventListener((setOnline) => {

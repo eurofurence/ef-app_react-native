@@ -1,14 +1,15 @@
 import { FlashList } from '@shopify/flash-list'
-import { FC, ReactElement, useCallback } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
-import { useTranslation } from 'react-i18next'
-
 import { router } from 'expo-router'
-import { LostAndFoundCard } from './LostAndFoundCard'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { FC, ReactElement, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
+
 import { useCache } from '@/context/data/Cache'
 import { LostAndFoundRecord } from '@/context/data/types.api'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
+
+import { LostAndFoundCard } from './LostAndFoundCard'
 
 /**
  * The properties to the component.

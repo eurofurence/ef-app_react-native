@@ -1,9 +1,10 @@
-import { CommunicationRecord } from '@/context/data/types.api'
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import { useAuthContext } from '@/context/auth/Auth'
-import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
 import { useCallback } from 'react'
+
+import { apiBase } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
+import { CommunicationRecord } from '@/context/data/types.api'
 
 /**
  * Gets the communication records with the given access token and optionally an abort signal.

@@ -1,9 +1,11 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { SettingContainer } from './SettingContainer'
+import { ReactNativeLegal } from 'react-native-legal'
+
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
-import { ReactNativeLegal } from 'react-native-legal'
+
+import { SettingContainer } from './SettingContainer'
 
 export const OssLicenses = () => {
   const { t } = useTranslation('Settings', { keyPrefix: 'oss_licenses' })

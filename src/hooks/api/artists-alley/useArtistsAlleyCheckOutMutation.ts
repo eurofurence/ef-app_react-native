@@ -1,8 +1,9 @@
-import { useAuthContext } from '@/context/auth/Auth'
 import { useMutation } from '@tanstack/react-query'
-import { queryClient } from '@/context/query/Query'
 import axios, { GenericAbortSignal } from 'axios'
+
 import { apiBase } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
+import { queryClient } from '@/context/query/Query'
 
 /**
  * Deletes own table registration, checking out.

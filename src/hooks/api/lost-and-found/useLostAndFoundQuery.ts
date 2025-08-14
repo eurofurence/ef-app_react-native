@@ -1,9 +1,10 @@
-import { LostAndFoundRecord } from '@/context/data/types.api'
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import { useAuthContext } from '@/context/auth/Auth'
-import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
 import { useCallback } from 'react'
+
+import { apiBase } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
+import { LostAndFoundRecord } from '@/context/data/types.api'
 
 /**
  * Gets the lost and found records with the given access token and optionally an abort signal.

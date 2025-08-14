@@ -2,15 +2,16 @@ import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
+import { useDealerCardInteractions, useDealerInstances } from '@/components/dealers/Dealers.common'
+import { useEventCardInteractions, useEventInstances } from '@/components/events/Events.common'
+import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
+import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
+import { GlobalSearchResult } from '@/context/data/types.own'
+
 import { DealerCard } from '../dealers/DealerCard'
 import { EventCard } from '../events/EventCard'
 import { Section } from '../generic/atoms/Section'
 import { KbEntryCard } from '../kb/KbEntryCard'
-import { useDealerCardInteractions, useDealerInstances } from '@/components/dealers/Dealers.common'
-import { useEventCardInteractions, useEventInstances } from '@/components/events/Events.common'
-import { GlobalSearchResult } from '@/context/data/types.own'
-import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
-import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
 
 export type GlobalSearchProps = {
   now: Date

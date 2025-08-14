@@ -1,3 +1,6 @@
+import * as React from 'react'
+import { useTranslation } from 'react-i18next'
+
 import { useDealerGroups } from '@/components/dealers/Dealers.common'
 import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
@@ -6,8 +9,6 @@ import { useCache } from '@/context/data/Cache'
 import { useDealersSearch } from '@/context/DealersSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
-import * as React from 'react'
-import { useTranslation } from 'react-i18next'
 
 export default function AdScreen() {
   const { query } = useDealersSearch()

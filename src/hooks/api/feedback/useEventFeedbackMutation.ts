@@ -1,7 +1,8 @@
+import { useMutation } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
+
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { useMutation } from '@tanstack/react-query'
 
 /**
  * Event feedback data.

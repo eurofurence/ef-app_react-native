@@ -1,5 +1,5 @@
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { useController, Path } from 'react-hook-form'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import StarRating from 'react-native-star-rating-widget'
 
 import { Label } from '../atoms/Label'

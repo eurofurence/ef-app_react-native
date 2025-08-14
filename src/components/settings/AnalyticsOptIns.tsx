@@ -1,11 +1,13 @@
-import React from 'react'
 import Checkbox from 'expo-checkbox'
+import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-import { SettingContainer } from './SettingContainer'
+
 import { Label } from '@/components/generic/atoms/Label'
-import { useCache } from '@/context/data/Cache'
 import { Pressable } from '@/components/generic/Pressable'
+import { useCache } from '@/context/data/Cache'
+
+import { SettingContainer } from './SettingContainer'
 
 /**
  * Analytics opt-in section with a checkbox to allow analytics.

@@ -1,14 +1,15 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
+
+import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
+import { ArtistsAlleySection, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
+import { SectionProps } from '@/components/generic/atoms/Section'
+import { TableRegistrationRecord } from '@/context/data/types.api'
+import { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
-import { SectionProps } from '@/components/generic/atoms/Section'
-import { ArtistsAlleySection, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
-import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
-import { ArtistAlleyDetails } from '@/context/data/types.details'
-import { TableRegistrationRecord } from '@/context/data/types.api'
 
 /**
  * The properties to the component.

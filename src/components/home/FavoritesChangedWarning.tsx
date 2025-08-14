@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Label } from '../generic/atoms/Label'
-import { useFavoritesUpdated } from '@/hooks/data/useFavoritesUpdated'
 import { View } from 'react-native'
+
 import { Icon } from '@/components/generic/atoms/Icon'
+import { useFavoritesUpdated } from '@/hooks/data/useFavoritesUpdated'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+
+import { Label } from '../generic/atoms/Label'
 
 export const FavoritesChangedWarning = () => {
   const { t: tMenu } = useTranslation('Menu')

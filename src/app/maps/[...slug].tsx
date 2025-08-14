@@ -1,12 +1,13 @@
 import { useLocalSearchParams } from 'expo-router'
 import * as React from 'react'
 import { useMemo } from 'react'
-import { StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+
 import { Header } from '@/components/generic/containers/Header'
 import { MapContent, MapContentProps } from '@/components/maps/MapContent'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useCache } from '@/context/data/Cache'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export default function MapItem() {
   const { t } = useTranslation('Maps')

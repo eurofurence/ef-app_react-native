@@ -1,18 +1,18 @@
 import { Redirect, router } from 'expo-router'
 import React, { useCallback, useMemo } from 'react'
-import { Linking, StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Linking, StyleSheet, View } from 'react-native'
 
 import { artistsAlleySectionForState, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
 import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAlleySectionedList'
 import { Label } from '@/components/generic/atoms/Label'
-import { Header } from '@/components/generic/containers/Header'
 import { Button } from '@/components/generic/containers/Button'
+import { Header } from '@/components/generic/containers/Header'
+import { artistAlleyUrl } from '@/configuration'
 import { useUserContext } from '@/context/auth/User'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useArtistsAlleyQuery } from '@/hooks/api/artists-alley/useArtistsAlleyQuery'
-import { artistAlleyUrl } from '@/configuration'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'list' })

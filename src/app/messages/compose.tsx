@@ -1,3 +1,11 @@
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Redirect } from 'expo-router'
+import React, { useCallback, useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, View } from 'react-native'
+import { z } from 'zod'
+
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Button } from '@/components/generic/containers/Button'
@@ -9,13 +17,6 @@ import { useUserContext } from '@/context/auth/User'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useCommunicationsSendMutation } from '@/hooks/api/communications/useCommunicationsSendMutation'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Redirect } from 'expo-router'
-import React, { useCallback, useEffect, useState } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View } from 'react-native'
-import { z } from 'zod'
 
 const messageSchema = z.object({
   type: z.literal('byRegistrationId').or(z.literal('byIdentityId')),

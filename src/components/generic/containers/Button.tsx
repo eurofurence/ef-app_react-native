@@ -2,10 +2,11 @@ import * as React from 'react'
 import { FC, ReactElement, ReactNode } from 'react'
 import { AccessibilityRole, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 
+import { Pressable } from '@/components/generic/Pressable'
+import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+
 import { Icon, IconNames } from '../atoms/Icon'
 import { Label, LabelProps } from '../atoms/Label'
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { Pressable } from '@/components/generic/Pressable'
 
 export const buttonIconSize = 20
 const pad = 8

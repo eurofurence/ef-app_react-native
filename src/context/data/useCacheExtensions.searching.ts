@@ -1,8 +1,9 @@
 import Fuse, { FuseOptionKey, IFuseOptions } from 'fuse.js'
 import { flatten } from 'lodash'
 import { useMemo } from 'react'
-import { GlobalSearchResult } from '@/context/data/types.own'
+
 import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails, ArtistAlleyDetails } from '@/context/data/types.details'
+import { GlobalSearchResult } from '@/context/data/types.own'
 
 /**
  * General search options.

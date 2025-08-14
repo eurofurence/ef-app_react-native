@@ -1,22 +1,22 @@
 import { useIsFocused } from '@react-navigation/core'
+import { captureException } from '@sentry/react-native'
 import { formatDistance, isAfter, isBefore } from 'date-fns'
 import { TFunction } from 'i18next'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View } from 'react-native'
+import { View, Linking } from 'react-native'
 
+import { useAuthContext } from '@/context/auth/Auth'
 import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
-import { Linking } from 'react-native'
+
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Button } from '../generic/containers/Button'
-import { captureException } from '@sentry/react-native'
-import { useAuthContext } from '@/context/auth/Auth'
 
 export type RegistrationCountdownProps = {
   registrationUrl?: string

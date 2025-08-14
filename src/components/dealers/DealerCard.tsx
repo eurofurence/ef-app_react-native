@@ -2,16 +2,17 @@ import React, { FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle } from 'react-native'
 
+import { Icon } from '@/components/generic/atoms/Icon'
+import { Pressable } from '@/components/generic/Pressable'
+import { DealerDetails } from '@/context/data/types.details'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+
 import { appStyles } from '../AppStyles'
 import { Image } from '../generic/atoms/Image'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { Label } from '../generic/atoms/Label'
-import { isPresent, joinOffDays } from './utils'
 
-import { DealerDetails } from '@/context/data/types.details'
-import { Icon } from '@/components/generic/atoms/Icon'
-import { Pressable } from '@/components/generic/Pressable'
+import { isPresent, joinOffDays } from './utils'
 
 export type DealerDetailsInstance = {
   details: DealerDetails

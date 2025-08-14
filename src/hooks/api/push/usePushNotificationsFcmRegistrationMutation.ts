@@ -1,8 +1,9 @@
-import { useAuthContext } from '@/context/auth/Auth'
 import { useMutation } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
-import { apiBase } from '@/configuration'
 import { PlatformOSType } from 'react-native'
+
+import { apiBase } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
 
 /**
  * Device registration.

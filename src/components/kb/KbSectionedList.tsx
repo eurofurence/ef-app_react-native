@@ -1,16 +1,17 @@
 import { FlashList } from '@shopify/flash-list'
 import React, { FC, ReactElement, useCallback, useMemo } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
 
+import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from '@/context/data/types.details'
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
+
 import { KbEntryCard } from './KbEntryCard'
 import { KbSection } from './KbSection'
-import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
 
 /**
  * The properties to the component.

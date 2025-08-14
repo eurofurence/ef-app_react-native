@@ -1,10 +1,13 @@
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-import { Section } from '../generic/atoms/Section'
-import { useCurrentEvents } from '@/hooks/data/useCurrentEvents'
-import { EventCard } from './EventCard'
+
 import { useEventCardInteractions } from '@/components/events/Events.common'
+import { useCurrentEvents } from '@/hooks/data/useCurrentEvents'
+
+import { Section } from '../generic/atoms/Section'
+
+import { EventCard } from './EventCard'
 
 export type CurrentEventListProps = {
   now: Date

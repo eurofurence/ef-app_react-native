@@ -1,3 +1,10 @@
+import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
+import { useAudioPlayer } from 'expo-audio'
+import { router } from 'expo-router'
+import React, { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Alert, Linking, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+
 import { appStyles } from '@/components/AppStyles'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
@@ -12,12 +19,6 @@ import { conName } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { useTheme } from '@/hooks/themes/useTheme'
 import { useMultiTap } from '@/hooks/util/useMultiTap'
-import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
-import { useAudioPlayer } from 'expo-audio'
-import { router } from 'expo-router'
-import React, { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Alert, Linking, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 
 const extraThanksMarkdown = `
 # Tooling

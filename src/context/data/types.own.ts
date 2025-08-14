@@ -1,5 +1,5 @@
-import { ThemeName } from '@/context/Theme'
 import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
+import { ThemeName } from '@/context/Theme'
 
 /**
  * Settings stored in the cache.

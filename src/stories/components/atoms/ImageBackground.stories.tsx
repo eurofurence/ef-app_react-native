@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View, Text } from 'react-native'
 
 import { ImageBackground } from '@/components/generic/atoms/ImageBackground'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/ImageBackground',

@@ -1,11 +1,13 @@
+import { router } from 'expo-router'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
-import { router } from 'expo-router'
-import { SettingContainer } from './SettingContainer'
+
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { useCache } from '@/context/data/Cache'
+
+import { SettingContainer } from './SettingContainer'
 
 export const HiddenEvents = () => {
   const { t } = useTranslation('Settings', { keyPrefix: 'hidden_events' })

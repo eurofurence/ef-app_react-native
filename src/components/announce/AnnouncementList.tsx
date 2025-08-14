@@ -1,13 +1,13 @@
 import { FlashList } from '@shopify/flash-list'
-import { FC, ReactElement, useCallback } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
-import { useTranslation } from 'react-i18next'
-
 import { router } from 'expo-router'
-import { AnnouncementCard, AnnouncementDetailsInstance } from './AnnouncementCard'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { FC, ReactElement, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
 
 import { AnnouncementDetails } from '@/context/data/types.details'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+
+import { AnnouncementCard, AnnouncementDetailsInstance } from './AnnouncementCard'
 
 export type AnnouncementListProps = {
   leader?: ReactElement

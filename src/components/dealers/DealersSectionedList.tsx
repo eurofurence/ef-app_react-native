@@ -1,16 +1,17 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
 
-import { DealerSection, DealerSectionProps } from './DealerSection'
-import { DealerCard, DealerDetailsInstance } from './DealerCard'
-import { useThemeName } from '@/hooks/themes/useThemeHooks'
-import { findIndices } from '@/util/findIndices'
+import { useDealerCardInteractions } from '@/components/dealers/Dealers.common'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
+import { useThemeName } from '@/hooks/themes/useThemeHooks'
+import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import { useDealerCardInteractions } from '@/components/dealers/Dealers.common'
+
+import { DealerCard, DealerDetailsInstance } from './DealerCard'
+import { DealerSection, DealerSectionProps } from './DealerSection'
 
 /**
  * The properties to the component.

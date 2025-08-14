@@ -1,3 +1,8 @@
+import { useLocalSearchParams } from 'expo-router'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, View } from 'react-native'
+
 import { Banner } from '@/components/generic/atoms/Banner'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
@@ -7,10 +12,6 @@ import { LinkItem } from '@/components/maps/LinkItem'
 import { useCache } from '@/context/data/Cache'
 import { LinkFragment } from '@/context/data/types.api'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { useLocalSearchParams } from 'expo-router'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View } from 'react-native'
 
 export default function KnowledgeItem() {
   const { t } = useTranslation('KnowledgeGroups')

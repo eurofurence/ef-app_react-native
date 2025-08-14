@@ -1,6 +1,7 @@
-import { sentryDsn, sentryEnvironment } from '@/configuration'
 import { reactNativeTracingIntegration, init as sentryInit } from '@sentry/react-native'
 import { isRunningInExpoGo } from 'expo'
+
+import { sentryDsn, sentryEnvironment } from '@/configuration'
 
 sentryInit({
   dsn: sentryDsn,

@@ -1,14 +1,15 @@
-import { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
+import { useIsFocused } from '@react-navigation/core'
+import React, { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
 import { BackHandler, Platform, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
 import Animated, { cancelAnimation, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
 
 import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
-import React from 'react'
+
 import { Continuous } from '../atoms/Continuous'
 import { IconNames } from '../atoms/Icon'
+
 import { Tab } from './Tab'
-import { useIsFocused } from '@react-navigation/core'
 
 /**
  * Arguments to the tabs.
