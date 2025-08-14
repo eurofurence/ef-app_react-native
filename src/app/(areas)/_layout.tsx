@@ -73,7 +73,7 @@ function AreasTabBar(props: BottomTabBarProps) {
 
   return (
     <CustomTabs
-      padding={bottom}
+      padding={bottom - 10}
       ref={tabs}
       tabs={tabEntries}
       textMore={t('more')}
