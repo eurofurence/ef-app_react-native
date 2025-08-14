@@ -1,6 +1,7 @@
+import axios from 'axios'
+
 import { apiBase } from '@/configuration'
 import { ArtistsAlleyPostTableRegistrationData } from '@/hooks/api/artists-alley/ArtistsAlleyPostTableRegistrationData'
-import axios from 'axios'
 
 /**
  * Posts a table registration via the API with the given access token and registration data.

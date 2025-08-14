@@ -1,10 +1,11 @@
-import { Pressable } from '@/components/generic/Pressable'
-import { Icon } from '@/components/generic/atoms/Icon'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, ViewProps } from 'react-native'
+
+import { Icon } from '@/components/generic/atoms/Icon'
+import { Pressable } from '@/components/generic/Pressable'
 import { useCurrentUser } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { useTranslation } from 'react-i18next'
 
 export function ShowInternalEventsToggle({ style, ...props }: ViewProps) {
   const { t } = useTranslation('Events')

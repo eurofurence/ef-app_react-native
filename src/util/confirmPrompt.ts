@@ -1,4 +1,5 @@
 import { Alert } from 'react-native'
+
 import { ConfirmPromptContent } from '@/util/ConfirmPromptContent'
 
 export function confirmPrompt(content: ConfirmPromptContent): Promise<boolean | null> {

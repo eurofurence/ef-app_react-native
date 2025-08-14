@@ -1,17 +1,17 @@
 import { captureException } from '@sentry/react-native'
-import { TFunction } from 'i18next'
 import { differenceInHours, isBefore } from 'date-fns'
+import { router } from 'expo-router'
+import { TFunction } from 'i18next'
 import { useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Share } from 'react-native'
+
 import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from '@/components/events/EventCard'
 import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from '@/components/events/EventSection'
 import { appBase, conAbbr } from '@/configuration'
-
 import { EventDetails } from '@/context/data/types.details'
-import { router } from 'expo-router'
-import { useEventReminder } from '@/hooks/data/useEventReminder'
 import { useToastContext } from '@/context/ui/ToastContext'
-import { useTranslation } from 'react-i18next'
+import { useEventReminder } from '@/hooks/data/useEventReminder'
 
 /**
  Returns a list of event instances according to conversion rules.

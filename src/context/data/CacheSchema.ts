@@ -1,3 +1,7 @@
+import { formatISO } from 'date-fns'
+
+import { eurofurenceCacheVersion, devMenu } from '@/configuration'
+import { defineEntity, defineField } from '@/context/data/CacheTools'
 import {
   AnnouncementRecord,
   ArtistAlleyRecord,
@@ -11,11 +15,8 @@ import {
   KnowledgeGroupRecord,
   MapRecord,
 } from '@/context/data/types.api'
-import { Notification } from '@/store/background/slice'
-import { defineEntity, defineField } from '@/context/data/CacheTools'
-import { eurofurenceCacheVersion, devMenu } from '@/configuration'
-import { formatISO } from 'date-fns'
 import { Settings } from '@/context/data/types.own'
+import { Notification } from '@/store/background/slice'
 
 /**
  * Storage schema for internal cache variables.

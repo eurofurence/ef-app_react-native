@@ -1,5 +1,5 @@
-import { AnnouncementDetails } from '@/context/data/types.details'
 import { ImageRecord } from '@/context/data/types.api'
+import { AnnouncementDetails } from '@/context/data/types.details'
 
 // Mock image record for testing
 const mockImageRecord: ImageRecord = {

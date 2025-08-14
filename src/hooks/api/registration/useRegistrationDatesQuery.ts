@@ -1,5 +1,6 @@
 import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
+
 import { registrationDatesUrl } from '@/configuration'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 

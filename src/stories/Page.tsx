@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import { Linking, StyleSheet, Text, View } from 'react-native'
 
 import { Header } from './Header'

@@ -2,15 +2,16 @@ import { format } from 'date-fns'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle } from 'react-native'
+
+import { Pressable } from '@/components/generic/Pressable'
+import { CommunicationRecord } from '@/context/data/types.api'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+
+import { appStyles } from '../AppStyles'
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Col } from '../generic/containers/Col'
 import { Row } from '../generic/containers/Row'
-import { appStyles } from '../AppStyles'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-
-import { CommunicationRecord } from '@/context/data/types.api'
-import { Pressable } from '@/components/generic/Pressable'
 
 export type PrivateMessageCardProps = {
   containerStyle?: ViewStyle

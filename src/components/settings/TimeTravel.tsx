@@ -1,16 +1,17 @@
-import React, { useMemo } from 'react'
-import { View, StyleSheet } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { format, addWeeks, subWeeks } from 'date-fns'
+import React, { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { View, StyleSheet } from 'react-native'
+
 import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
-import { useNow } from '@/hooks/time/useNow'
 import { conName } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { EventDayDetails } from '@/context/data/types.details'
+import { useNow } from '@/hooks/time/useNow'
 
 const ONE_HOUR = 60 * 60 * 1000
 const ONE_MINUTE = 60 * 1000

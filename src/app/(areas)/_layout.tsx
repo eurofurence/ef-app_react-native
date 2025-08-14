@@ -1,16 +1,17 @@
-import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 import { Tabs } from 'expo-router'
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { Toast } from '@/components/Toast'
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
 import { Tabs as CustomTabs, TabsRef } from '@/components/generic/containers/Tabs'
 import { MainMenu } from '@/components/mainmenu/MainMenu'
+import { Toast } from '@/components/Toast'
 import { useCache } from '@/context/data/Cache'
 import { useToastMessages } from '@/context/ui/ToastContext'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
 
 export const unstable_settings = {
   initialRouteName: 'index',
@@ -73,7 +74,7 @@ function AreasTabBar(props: BottomTabBarProps) {
 
   return (
     <CustomTabs
-      padding={bottom}
+      padding={bottom - 10}
       ref={tabs}
       tabs={tabEntries}
       textMore={t('more')}

@@ -1,3 +1,10 @@
+import { captureException } from '@sentry/react-native'
+import { router } from 'expo-router'
+import { openBrowserAsync } from 'expo-web-browser'
+import { RefObject, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Linking } from 'react-native'
+
 import { Col } from '@/components/generic/containers/Col'
 import { Grid } from '@/components/generic/containers/Grid'
 import { Tab } from '@/components/generic/containers/Tab'
@@ -5,12 +12,6 @@ import { TabsRef } from '@/components/generic/containers/Tabs'
 import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
 import { catchEmUrl, conWebsite, efnavMapUrl, menuColumns, showCatchEm, showLogin } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { captureException } from '@sentry/react-native'
-import { router } from 'expo-router'
-import { openBrowserAsync } from 'expo-web-browser'
-import { RefObject, useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { Linking } from 'react-native'
 import { useUserContext } from '@/context/auth/User'
 
 export type MainMenuProps = {

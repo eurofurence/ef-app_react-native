@@ -1,18 +1,20 @@
-import React, { FC, useCallback, useMemo } from 'react'
-import { Linking, StyleSheet } from 'react-native'
-import { useTranslation } from 'react-i18next'
-import { match } from 'ts-pattern'
 import { format, setDay } from 'date-fns'
 import { router } from 'expo-router'
+import React, { FC, useCallback, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Linking, StyleSheet } from 'react-native'
+import { match } from 'ts-pattern'
+
+import { useCache } from '@/context/data/Cache'
+import { LinkFragment } from '@/context/data/types.api'
+import { MapDetails, MapEntryDetails } from '@/context/data/types.details'
+
 import { DealerCard } from '../dealers/DealerCard'
 import { isPresent, joinOffDays } from '../dealers/utils'
 import { FaIcon } from '../generic/atoms/FaIcon'
 import { Icon } from '../generic/atoms/Icon'
 import { Image } from '../generic/atoms/Image'
 import { Button, ButtonProps } from '../generic/containers/Button'
-import { LinkFragment } from '@/context/data/types.api'
-import { useCache } from '@/context/data/Cache'
-import { MapDetails, MapEntryDetails } from '@/context/data/types.details'
 
 type LinkItemProps = {
   map?: MapDetails

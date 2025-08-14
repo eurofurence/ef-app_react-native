@@ -1,8 +1,9 @@
-import { useAuthContext } from '@/context/auth/Auth'
 import { keepPreviousData, QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
-import { UserRecord } from '@/context/data/types.api'
-import { apiBase } from '@/configuration'
 import axios, { GenericAbortSignal } from 'axios'
+
+import { apiBase } from '@/configuration'
+import { useAuthContext } from '@/context/auth/Auth'
+import { UserRecord } from '@/context/data/types.api'
 
 /**
  * Extends user record with a role map.

@@ -1,12 +1,12 @@
 import { FC } from 'react'
-import { StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
 
-import { Card } from '@/components/generic/containers/Card'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
-import { useTheme } from '@/hooks/themes/useThemeHooks'
+import { Card } from '@/components/generic/containers/Card'
 import { LostAndFoundRecord } from '@/context/data/types.api'
+import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export type LostAndFoundCardProps = {
   item: LostAndFoundRecord

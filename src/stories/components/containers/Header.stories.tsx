@@ -1,9 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
-import { View } from 'react-native'
 import React from 'react'
+import { View } from 'react-native'
 
-import { Header } from '@/components/generic/containers/Header'
 import { IconNames } from '@/components/generic/atoms/Icon'
+import { Header } from '@/components/generic/containers/Header'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 // Wrapper component to handle Header's union type
 const HeaderWrapper = ({

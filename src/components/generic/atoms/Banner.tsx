@@ -1,12 +1,12 @@
+import { router } from 'expo-router'
 import * as React from 'react'
 import { StyleSheet } from 'react-native'
 
-import { router } from 'expo-router'
-import { sourceFromImage } from './Image.common'
-import { Image, ImageProps } from './Image'
-
-import { ImageDetails } from '@/context/data/types.details'
 import { Pressable } from '@/components/generic/Pressable'
+import { ImageDetails } from '@/context/data/types.details'
+
+import { Image, ImageProps } from './Image'
+import { sourceFromImage } from './Image.common'
 
 export type BannerProps = {
   /**

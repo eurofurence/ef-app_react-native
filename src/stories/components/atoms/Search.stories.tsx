@@ -1,9 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { useState } from 'react'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
-import { useState } from 'react'
 
 import { Search } from '@/components/generic/atoms/Search'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/Search',

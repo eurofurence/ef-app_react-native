@@ -1,3 +1,7 @@
+import { router } from 'expo-router'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+
 import { useEventOtherGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
@@ -8,9 +12,6 @@ import { EventDetails } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
-import { router } from 'expo-router'
-import { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
 function selectEvent(event: EventDetails) {
   return router.setParams({ selected: event.Id })

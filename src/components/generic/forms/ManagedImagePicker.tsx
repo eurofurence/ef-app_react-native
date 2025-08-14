@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'
 
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image, ImageProps } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Col } from '@/components/generic/containers/Col'
 import { Pressable } from '@/components/generic/Pressable'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 type InnerManagedImagePickerProps<T extends object> = {
   /**

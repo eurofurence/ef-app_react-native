@@ -1,15 +1,15 @@
-import { FC } from 'react'
-import { StyleSheet, View, ScrollView } from 'react-native'
 import { useLocalSearchParams } from 'expo-router'
+import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { StyleSheet, View, ScrollView } from 'react-native'
 
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
-import { NoData } from '@/components/generic/containers/NoData'
-import { useTheme } from '@/hooks/themes/useThemeHooks'
-import { useLostAndFoundItemQuery } from '@/hooks/api/lost-and-found/useLostAndFoundQuery'
-import { Header } from '@/components/generic/containers/Header'
 import { Floater } from '@/components/generic/containers/Floater'
+import { Header } from '@/components/generic/containers/Header'
+import { NoData } from '@/components/generic/containers/NoData'
+import { useLostAndFoundItemQuery } from '@/hooks/api/lost-and-found/useLostAndFoundQuery'
+import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export default function LostAndFoundDetailPage() {
   return <LostAndFoundDetailContent />

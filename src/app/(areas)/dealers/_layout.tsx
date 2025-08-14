@@ -1,16 +1,18 @@
-import { Icon, IconNames } from '@/components/generic/atoms/Icon'
-import { Search } from '@/components/generic/atoms/Search'
-import { DealersSearchContext } from '@/context/DealersSearchContext'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
 import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
-import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 import { withLayoutContext } from 'expo-router'
 import * as React from 'react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { Icon, IconNames } from '@/components/generic/atoms/Icon'
+import { Search } from '@/components/generic/atoms/Search'
+import { DealersSearchContext } from '@/context/DealersSearchContext'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+
+import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
+import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 
 export const unstable_settings = {
   initialRouteName: 'all',

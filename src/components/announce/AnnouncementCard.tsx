@@ -1,15 +1,17 @@
 import { FC } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { appStyles } from '../AppStyles'
-import { Label } from '../generic/atoms/Label'
-import { ImageBackground } from '../generic/atoms/ImageBackground'
-import { sourceFromImage } from '../generic/atoms/Image.common'
-import { colorForArea } from './utils'
+import { StyleSheet, View, ViewStyle } from 'react-native'
+
+import { Pressable } from '@/components/generic/Pressable'
+import { AnnouncementDetails } from '@/context/data/types.details'
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 
-import { AnnouncementDetails } from '@/context/data/types.details'
-import { Pressable } from '@/components/generic/Pressable'
+import { appStyles } from '../AppStyles'
+import { sourceFromImage } from '../generic/atoms/Image.common'
+import { ImageBackground } from '../generic/atoms/ImageBackground'
+import { Label } from '../generic/atoms/Label'
+
+import { colorForArea } from './utils'
 
 export type AnnouncementDetailsInstance = {
   details: AnnouncementDetails

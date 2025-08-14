@@ -1,8 +1,9 @@
 import { Link } from 'expo-router'
 import { openBrowserAsync } from 'expo-web-browser'
 import { type ComponentProps } from 'react'
-import { Platform } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Platform } from 'react-native'
+
 import { appStyles } from '@/components/AppStyles'
 
 type Props = Omit<ComponentProps<typeof Link>, 'href'> & { href: string }

@@ -1,10 +1,11 @@
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import { router } from 'expo-router'
 import * as React from 'react'
-import { TouchableOpacity } from 'react-native'
-import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { TouchableOpacity } from 'react-native'
+
 import { Icon } from '@/components/generic/atoms/Icon'
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 
 export type StackScreenProps = NativeStackNavigationOptions & {
   location: string

@@ -1,16 +1,16 @@
+import { captureException } from '@sentry/react-native'
+import axios from 'axios'
 import { exchangeCodeAsync, refreshAsync, TokenResponse, TokenResponseConfig, useAuthRequest } from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
 import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { Platform } from 'react-native'
 
 import { authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
+import { isTokenError } from '@/context/auth/Auth.errors'
+import { IdData, parseIdToken } from '@/context/auth/Auth.idToken'
 import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
 import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
 import * as SecureStore from '@/util/secureStorage'
-import { captureException } from '@sentry/react-native'
-import axios from 'axios'
-import { IdData, parseIdToken } from '@/context/auth/Auth.idToken'
-import { isTokenError } from '@/context/auth/Auth.errors'
 
 /**
  * Discovery entries.

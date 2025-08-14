@@ -1,11 +1,13 @@
 import { getHours } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
 import { flatMap, maxBy, uniq } from 'lodash'
-import { DealerRecord } from './types.api'
+
 import { IconNames } from '@/components/generic/atoms/Icon'
 import { conTimeZone } from '@/configuration'
 import { AttendanceDay, EventDayDetails } from '@/context/data/types.details'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
+
+import { DealerRecord } from './types.api'
 
 export function deriveHosts(panelHosts: string | undefined) {
   return (

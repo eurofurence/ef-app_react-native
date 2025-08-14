@@ -1,14 +1,16 @@
+import { isWithinInterval, subMinutes } from 'date-fns'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { isWithinInterval, subMinutes } from 'date-fns'
-import { Section } from '../generic/atoms/Section'
-import { EventCard, eventInstanceForAny } from './EventCard'
+import { useEventCardInteractions } from '@/components/events/Events.common'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
-import { useEventCardInteractions } from '@/components/events/Events.common'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
+
+import { Section } from '../generic/atoms/Section'
+
+import { EventCard, eventInstanceForAny } from './EventCard'
 
 const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
   events.filter((it) => {

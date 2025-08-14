@@ -2,12 +2,13 @@ import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
 import { Dimensions, StyleSheet } from 'react-native'
 
+import { useEventCardInteractions } from '@/components/events/Events.common'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
+
 import { EventCard, EventDetailsInstance } from './EventCard'
-import { useEventCardInteractions } from '@/components/events/Events.common'
 
 /**
  * The properties to the component.

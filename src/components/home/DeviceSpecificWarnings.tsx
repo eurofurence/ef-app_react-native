@@ -2,10 +2,12 @@ import * as Device from 'expo-device'
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform, View } from 'react-native'
-import { Label } from '../generic/atoms/Label'
-import { useWarningState } from '@/hooks/data/useWarningState'
+
 import { Icon } from '@/components/generic/atoms/Icon'
+import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+
+import { Label } from '../generic/atoms/Label'
 
 // TODO: When showing warnings in Warnings.tsx, then going back to home, the warnings are not shown.
 export const DeviceSpecificWarnings = () => {

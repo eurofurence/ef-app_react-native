@@ -818,6 +818,12 @@
       "subtitle": "Geplante Benachrichtigungen für einen späteren Zeitpunkt",
       "title": "Benachrichtigungen"
     },
+    "oss_licenses": {
+      "list_title": "Open Source Lizenzen",
+      "show_licenses": "Alle Lizenzen anzeigen",
+      "subtitle": "Werft einen Blick auf all die großartigen Open-Source-Projekte, die diese App möglich machen!",
+      "title": "Open Source Lizenzen"
+    },
     "remote_messages": {
       "no_messages": "Wir haben keine Nachrichten von FCM empfangen",
       "subtitle": "Diese Nachrichten wurden empfangen",

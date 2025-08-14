@@ -1,4 +1,5 @@
 import { StyleProp, TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native'
+
 import { appStyles } from '@/components/AppStyles'
 
 export type PressableProps = TouchableOpacityProps & {

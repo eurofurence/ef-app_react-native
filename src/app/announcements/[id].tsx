@@ -1,8 +1,8 @@
 import { format } from 'date-fns'
 import { useLocalSearchParams } from 'expo-router'
 import React from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, View } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 import { Banner } from '@/components/generic/atoms/Banner'

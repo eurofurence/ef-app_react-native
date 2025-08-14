@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
+
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
 export type StatusMessageProps = {

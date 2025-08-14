@@ -1,3 +1,10 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { captureException } from '@sentry/react-native'
+import { setStringAsync } from 'expo-clipboard'
+import React, { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, TextInput, View } from 'react-native'
+
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { storageKeyTokenResponse, useAuthContext } from '@/context/auth/Auth'
@@ -8,12 +15,6 @@ import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
 import * as SecureStore from '@/util/secureStorage'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { captureException } from '@sentry/react-native'
-import { setStringAsync } from 'expo-clipboard'
-import React, { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { StyleSheet, TextInput, View } from 'react-native'
 
 export function DevButtons() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_buttons' })

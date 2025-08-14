@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/react-native'
 import { Redirect, router } from 'expo-router'
 import { chain, isEmpty, partition, startCase } from 'lodash'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -14,7 +15,6 @@ import { CommunicationRecord } from '@/context/data/types.api'
 import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { captureException } from '@sentry/react-native'
 
 type Section = {
   title: string

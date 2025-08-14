@@ -1,17 +1,30 @@
-import { RegistrationCountdown } from '@/components/home/RegistrationCountdown'
 import { render, screen, fireEvent } from '@testing-library/react-native'
 import React from 'react'
+
+import { RegistrationCountdown } from '@/components/home/RegistrationCountdown'
+import { useAuthContext } from '@/context/auth/Auth'
+import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useNow } from '@/hooks/time/useNow'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserContext } from '@/context/auth/User'
 
 // Mock expo-router
 jest.mock('@react-navigation/core', () => ({
   useIsFocused: jest.fn(() => true),
 }))
+
+// Mock @expo/vector-icons to prevent async state updates
+jest.mock('@expo/vector-icons/MaterialCommunityIcons', () => {
+  const MockIcon = ({ name, size, color, ...props }: any) => {
+    // Return null to avoid rendering issues, just for testing
+    return null
+  }
+  return {
+    __esModule: true,
+    default: MockIcon,
+  }
+})
 
 // Mock the cache context
 jest.mock('@/context/data/Cache', () => ({

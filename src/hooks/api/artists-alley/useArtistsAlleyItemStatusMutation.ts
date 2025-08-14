@@ -1,9 +1,10 @@
-import { useAuthContext } from '@/context/auth/Auth'
 import { useMutation } from '@tanstack/react-query'
 import axios, { GenericAbortSignal } from 'axios'
+
 import { apiBase } from '@/configuration'
-import { queryClient } from '@/context/query/Query'
+import { useAuthContext } from '@/context/auth/Auth'
 import { TableRegistrationRecordStatus } from '@/context/data/types.api'
+import { queryClient } from '@/context/query/Query'
 
 /**
  * ID/Status data.

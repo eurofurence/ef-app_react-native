@@ -1,9 +1,10 @@
 import { useLastNotificationResponse } from 'expo-notifications'
-import { useEffect } from 'react'
 import { router } from 'expo-router'
+import { useEffect } from 'react'
+
+import { conId } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
-import { conId } from '@/configuration'
 
 /**
  * Handles the last notification response.

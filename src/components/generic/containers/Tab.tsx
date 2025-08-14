@@ -1,11 +1,12 @@
 import { FC, ReactNode } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+
+import { Pressable } from '@/components/generic/Pressable'
+import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
 import { Icon, IconNames } from '../atoms/Icon'
 import { Label } from '../atoms/Label'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { Pressable } from '@/components/generic/Pressable'
 
 /**
  * Arguments to the tab.

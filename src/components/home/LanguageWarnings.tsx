@@ -1,10 +1,12 @@
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Label } from '../generic/atoms/Label'
-import { useWarningState } from '@/hooks/data/useWarningState'
 import { View } from 'react-native'
+
 import { Icon } from '@/components/generic/atoms/Icon'
+import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+
+import { Label } from '../generic/atoms/Label'
 
 export type LanguageWarningsProps = {
   /**

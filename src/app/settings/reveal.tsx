@@ -1,15 +1,16 @@
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { ScrollView, StyleSheet, View } from 'react-native'
+
 import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
 import { useEventCardInteractions } from '@/components/events/Events.common'
 import { Label } from '@/components/generic/atoms/Label'
+import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
 import { useNow } from '@/hooks/time/useNow'
-import React, { useCallback, useMemo, useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View } from 'react-native'
-import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function RevealHiddenPage() {

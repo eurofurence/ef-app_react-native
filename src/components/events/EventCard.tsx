@@ -1,8 +1,12 @@
 import React, { FC, useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, ViewStyle } from 'react-native'
 
+import { Pressable } from '@/components/generic/Pressable'
+import { EventDetails } from '@/context/data/types.details'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { calculateEventTiming } from '@/util/eventTiming'
+
 import { appStyles } from '../AppStyles'
 import { Icon, IconNames } from '../generic/atoms/Icon'
 import { sourceFromImage } from '../generic/atoms/Image.common'
@@ -10,11 +14,8 @@ import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label } from '../generic/atoms/Label'
 import { Progress } from '../generic/atoms/Progress'
 import { Row } from '../generic/containers/Row'
-import { EventCardTime } from './EventCardTime'
 
-import { EventDetails } from '@/context/data/types.details'
-import { Pressable } from '@/components/generic/Pressable'
-import { useTranslation } from 'react-i18next'
+import { EventCardTime } from './EventCardTime'
 
 const glyphIconSize = 90
 const badgeIconSize = 20

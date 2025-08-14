@@ -1,15 +1,17 @@
 import React, { FC } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
 import { useTranslation } from 'react-i18next'
-import { appStyles } from '../AppStyles'
-import { Label } from '../generic/atoms/Label'
-import { ImageBackground } from '../generic/atoms/ImageBackground'
-import { sourceFromImage } from '../generic/atoms/Image.common'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { TableRegistrationRecord, TableRegistrationRecordStatus } from '@/context/data/types.api'
+import { StyleSheet, View, ViewStyle } from 'react-native'
+
 import { stateToBackground } from '@/components/artists-alley/utils'
 import { Pressable } from '@/components/generic/Pressable'
+import { TableRegistrationRecord, TableRegistrationRecordStatus } from '@/context/data/types.api'
 import { ArtistAlleyDetails } from '@/context/data/types.details'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+
+import { appStyles } from '../AppStyles'
+import { sourceFromImage } from '../generic/atoms/Image.common'
+import { ImageBackground } from '../generic/atoms/ImageBackground'
+import { Label } from '../generic/atoms/Label'
 
 export type ArtistsAlleyCardProps = {
   containerStyle?: ViewStyle

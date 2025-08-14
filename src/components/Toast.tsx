@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 import Animated, { Easing, useSharedValue, withSequence, withTiming } from 'react-native-reanimated'
-import { useTranslation } from 'react-i18next'
+
+import { Pressable } from '@/components/generic/Pressable'
+import { ToastMessage, useToastContext } from '@/context/ui/ToastContext'
+import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 
 import { Icon } from './generic/atoms/Icon'
 import { Label } from './generic/atoms/Label'
 import { Row } from './generic/containers/Row'
-import { ToastMessage, useToastContext } from '@/context/ui/ToastContext'
-import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
-import { Pressable } from '@/components/generic/Pressable'
 
 const iconSize = 18 // Matches regular font size.
 

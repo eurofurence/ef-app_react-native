@@ -1,6 +1,7 @@
-import { useMemo } from 'react'
-import { chain } from 'lodash'
 import { isWithinInterval } from 'date-fns'
+import { chain } from 'lodash'
+import { useMemo } from 'react'
+
 import { eventInstanceForAny } from '@/components/events/EventCard'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'

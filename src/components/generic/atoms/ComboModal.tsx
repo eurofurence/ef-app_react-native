@@ -1,15 +1,16 @@
-import { Modal, StyleSheet, View, ScrollView } from 'react-native'
+import Fuse from 'fuse.js'
 import * as React from 'react'
 import { ForwardedRef, forwardRef, ReactNode, useImperativeHandle, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Fuse from 'fuse.js'
+import { Modal, StyleSheet, View, ScrollView } from 'react-native'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { Button } from '@/components/generic/containers/Button'
-import { Search } from '@/components/generic/atoms/Search'
+
 import { Label } from '@/components/generic/atoms/Label'
-import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import { Search } from '@/components/generic/atoms/Search'
+import { Button } from '@/components/generic/containers/Button'
 import { Row } from '@/components/generic/containers/Row'
+import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
 export type ComboModalProps<T> = {
   title?: string
   clear?: boolean

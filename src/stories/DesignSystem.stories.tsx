@@ -1,17 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View, ScrollView } from 'react-native'
 import { fn } from 'storybook/test'
 
-import { Label } from '@/components/generic/atoms/Label'
-import { Icon } from '@/components/generic/atoms/Icon'
-import { Button } from '@/components/generic/containers/Button'
-import { Card } from '@/components/generic/containers/Card'
-import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
 import { AnnouncementCard } from '@/components/announce/AnnouncementCard'
 import { DealerCard } from '@/components/dealers/DealerCard'
-import { mockEventDetails } from '@/stories/mocks/eventData'
+import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
+import { Icon } from '@/components/generic/atoms/Icon'
+import { Label } from '@/components/generic/atoms/Label'
+import { Button } from '@/components/generic/containers/Button'
+import { Card } from '@/components/generic/containers/Card'
 import { mockAnnouncementDetails, createAnnouncementInstance } from '@/stories/mocks/announcementData'
 import { mockDealerDetails, createDealerInstance } from '@/stories/mocks/dealerData'
+import { mockEventDetails } from '@/stories/mocks/eventData'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const DesignSystemOverview = () => (
   <ScrollView style={{ flex: 1, padding: 20, backgroundColor: '#f5f5f5' }}>

@@ -1,12 +1,13 @@
+import { formatInTimeZone } from 'date-fns-tz'
 import { useCalendars } from 'expo-localization'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { formatInTimeZone } from 'date-fns-tz'
+
+import { conName, conTimeZone } from '@/configuration'
+import { useWarningState } from '@/hooks/data/useWarningState'
 
 import { Label } from '../generic/atoms/Label'
 import { Badge } from '../generic/containers/Badge'
-import { conName, conTimeZone } from '@/configuration'
-import { useWarningState } from '@/hooks/data/useWarningState'
 
 export type TimezoneWarningProps = {
   /**

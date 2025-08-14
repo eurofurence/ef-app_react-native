@@ -1,20 +1,21 @@
 import { useIsFocused } from '@react-navigation/core'
+import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
+import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
 import { TFunction } from 'i18next'
 import React, { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from 'react-native'
 
-import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
-import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
+import { conId, conName, conTimeZone } from '@/configuration'
+import { useCache } from '@/context/data/Cache'
+import { EventDayRecord } from '@/context/data/types.api'
+import { useNow } from '@/hooks/time/useNow'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
+
 import { Image } from '../generic/atoms/Image'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label, labelTypeStyles } from '../generic/atoms/Label'
 import { Col } from '../generic/containers/Col'
-import { useNow } from '@/hooks/time/useNow'
-import { conId, conName, conTimeZone } from '@/configuration'
-import { EventDayRecord } from '@/context/data/types.api'
-import { useCache } from '@/context/data/Cache'
-import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export type CountdownHeaderProps = {
   style?: StyleProp<ViewStyle>

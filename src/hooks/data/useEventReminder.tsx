@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
-import { scheduleEventReminder, cancelEventReminder } from '@/util/eventReminders'
-import { EventRecord } from '@/context/data/types.api'
+
 import { useCache } from '@/context/data/Cache'
+import { EventRecord } from '@/context/data/types.api'
+import { scheduleEventReminder, cancelEventReminder } from '@/util/eventReminders'
 
 /**
  * Uses event reminder creation, removal, and toggle callbacks, as well as retrieving the

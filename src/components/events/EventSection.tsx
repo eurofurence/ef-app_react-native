@@ -1,10 +1,11 @@
 import { TFunction } from 'i18next'
 import { FC } from 'react'
-import { IconNames } from '../generic/atoms/Icon'
-import { Section, SectionProps } from '../generic/atoms/Section'
-import { formatWeekdayInConventionTimezone } from '../../util/eventTiming'
 
 import { PartOfDay } from '@/context/data/types.details'
+
+import { formatWeekdayInConventionTimezone } from '../../util/eventTiming'
+import { IconNames } from '../generic/atoms/Icon'
+import { Section, SectionProps } from '../generic/atoms/Section'
 
 export type EventSectionProps = SectionProps
 

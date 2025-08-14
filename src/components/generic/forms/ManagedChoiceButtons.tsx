@@ -1,8 +1,9 @@
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import { useController, Path, FieldValues } from 'react-hook-form'
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+
+import { ChoiceButtons, ChoiceButtonsProps } from '@/components/generic/atoms/ChoiceButtons'
 
 import { Label } from '../atoms/Label'
-import { ChoiceButtons, ChoiceButtonsProps } from '@/components/generic/atoms/ChoiceButtons'
 
 export type ManagedChoiceButtonsProps<T> = Omit<ChoiceButtonsProps, 'choice' | 'setChoice'> & {
   name: Path<T>

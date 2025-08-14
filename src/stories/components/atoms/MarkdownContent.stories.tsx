@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/MarkdownContent',

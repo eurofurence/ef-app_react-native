@@ -1,10 +1,11 @@
+import { captureException } from '@sentry/react-native'
 import { isAfter } from 'date-fns'
 import { useEffect, useRef } from 'react'
+
 import { useCache } from '@/context/data/Cache'
 import { Notification } from '@/store/background/slice'
 import { cancelEventReminder, scheduleEventReminder } from '@/util/eventReminders'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
-import { captureException } from '@sentry/react-native'
 
 /**
  * Synchronizes currently scheduled device notifications with incoming event

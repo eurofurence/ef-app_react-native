@@ -1,16 +1,17 @@
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { captureException } from '@sentry/react-native'
 import React, { useCallback } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useToastContext } from '@/context/ui/ToastContext'
-import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { ManagedImagePicker } from '@/components/generic/forms/ManagedImagePicker'
-import { Button } from '@/components/generic/containers/Button'
-import { Label } from '@/components/generic/atoms/Label'
-import { useArtistsAlleyTableRegistrationRequestMutation } from '@/hooks/api/artists-alley/useArtistsAlleyTableRegistrationRequestMutation'
-import { captureException } from '@sentry/react-native'
+import { z } from 'zod'
+
 import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
+import { Label } from '@/components/generic/atoms/Label'
+import { Button } from '@/components/generic/containers/Button'
+import { ManagedImagePicker } from '@/components/generic/forms/ManagedImagePicker'
+import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
+import { useToastContext } from '@/context/ui/ToastContext'
+import { useArtistsAlleyTableRegistrationRequestMutation } from '@/hooks/api/artists-alley/useArtistsAlleyTableRegistrationRequestMutation'
 
 const websiteUrlMatcher = /^\s*((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)\s*)?$/
 const telegramHandleMatcher = /^\s*(@?[a-zA-Z0-9_]{5,64}\s*)?$/

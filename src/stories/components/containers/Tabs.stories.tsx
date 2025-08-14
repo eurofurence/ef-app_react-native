@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import React, { useState } from 'react'
 import { View, Text } from 'react-native'
-import { useState } from 'react'
-import React from 'react'
 
 import { Tabs } from '@/components/generic/containers/Tabs'
+
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Containers/Tabs',

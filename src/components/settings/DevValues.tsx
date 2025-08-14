@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { View } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
 import { useAuthContext } from '@/context/auth/Auth'
-import { Label } from '@/components/generic/atoms/Label'
+import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
-import { useUserContext } from '@/context/auth/User'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 export function DevValues() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_values' })

@@ -2,9 +2,10 @@ import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
+
 import { useAuthContext } from '@/context/auth/Auth'
-import { captureNotificationException } from '@/sentryHelpers'
 import { postPushNotificationsFcmRegistration } from '@/hooks/api/push/usePushNotificationsFcmRegistrationMutation'
+import { captureNotificationException } from '@/sentryHelpers'
 
 /**
  * Makes sure we can request a token. We must be on a device and have permissions. If

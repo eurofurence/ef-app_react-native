@@ -1,14 +1,15 @@
-import { appStyles } from '@/components/AppStyles'
-import { ArtistsAlleyContent } from '@/components/artists-alley/ArtistsAlleyContent'
-import { Floater } from '@/components/generic/containers/Floater'
-import { Header } from '@/components/generic/containers/Header'
-import { useUserContext } from '@/context/auth/User'
-import { useCache } from '@/context/data/Cache'
 import { Redirect, useLocalSearchParams } from 'expo-router'
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
+
+import { appStyles } from '@/components/AppStyles'
+import { ArtistsAlleyContent } from '@/components/artists-alley/ArtistsAlleyContent'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
+import { Floater } from '@/components/generic/containers/Floater'
+import { Header } from '@/components/generic/containers/Header'
+import { useUserContext } from '@/context/auth/User'
+import { useCache } from '@/context/data/Cache'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function ArtistsAlleyDetail() {

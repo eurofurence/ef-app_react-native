@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
 import { StyleSheet, View } from 'react-native'
+
 import { Label } from '../generic/atoms/Label'
+
 import { EventDetailsInstance } from './EventCard'
 
 export type EventCardTimeProps = {

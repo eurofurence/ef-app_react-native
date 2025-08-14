@@ -1,17 +1,18 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
 import { useTranslation } from 'react-i18next'
+import { Dimensions, StyleSheet } from 'react-native'
 
+import { useEventCardInteractions } from '@/components/events/Events.common'
 import { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import { EventDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
+
 import { EventCard, EventDetailsInstance } from './EventCard'
 import { EventSection, EventSectionProps } from './EventSection'
-import { useEventCardInteractions } from '@/components/events/Events.common'
 
 /**
  * The properties to the component.

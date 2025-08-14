@@ -1,3 +1,12 @@
+import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
+import { isSameDay } from 'date-fns'
+import { withLayoutContext } from 'expo-router'
+import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+
+import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 import { Icon, IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
 import { useCache } from '@/context/data/Cache'
@@ -5,16 +14,9 @@ import { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
+
 import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
-import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
 import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
-import { isSameDay } from 'date-fns'
-import { withLayoutContext } from 'expo-router'
-import { useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 
 export const unstable_settings = {
   initialRouteName: 'day-1',
