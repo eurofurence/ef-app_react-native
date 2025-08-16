@@ -1,8 +1,16 @@
+import { useLocalSearchParams } from 'expo-router'
+
 import { DayView } from '@/app/(areas)/schedule/day-1'
 import { useCache } from '@/context/data/Cache'
 
-export default function Day1() {
+export default function Day3() {
   const { eventDays } = useCache()
-  const day = eventDays.length < 3 ? null : eventDays[2]
+  const params = useLocalSearchParams<{ day?: string }>()
+
+  // Use navigation state to determine which day to show
+  // This prevents race conditions during fast swiping
+  const dayIndex = params.day ? parseInt(params.day) - 1 : 2
+  const day = eventDays.length > dayIndex ? eventDays[dayIndex] : null
+
   return day ? <DayView day={day} /> : null
 }

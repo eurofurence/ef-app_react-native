@@ -1,4 +1,4 @@
-import { router } from 'expo-router'
+import { router, useLocalSearchParams } from 'expo-router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
@@ -43,6 +43,12 @@ export function DayView({ day }: { day: EventDayDetails }) {
 
 export default function Day1() {
   const { eventDays } = useCache()
-  const day = eventDays.length < 1 ? null : eventDays[0]
+  const params = useLocalSearchParams<{ day?: string }>()
+
+  // Use navigation state to determine which day to show
+  // This prevents race conditions during fast swiping
+  const dayIndex = params.day ? parseInt(params.day) - 1 : 0
+  const day = eventDays.length > dayIndex ? eventDays[dayIndex] : null
+
   return day ? <DayView day={day} /> : null
 }

@@ -58,16 +58,21 @@ export default function ScheduleLayout() {
   const [filter, setFilter] = useState('')
 
   const options = useMemo(() => {
+    // Calculate all day titles at once to ensure consistency
+    // This prevents race conditions during fast swiping by ensuring
+    // tab titles and content use the same data source
+    const dayTitles = eventDays.map((day) => dayTabTitle(day))
+
     return {
       filter: createOptions('Filter', 'filter-variant'),
       personal: createOptions('Personal', 'calendar-heart'),
-      'day-1': createOptions(dayTabTitle(eventDays[0])),
-      'day-2': createOptions(dayTabTitle(eventDays[1])),
-      'day-3': createOptions(dayTabTitle(eventDays[2])),
-      'day-4': createOptions(dayTabTitle(eventDays[3])),
-      'day-5': createOptions(dayTabTitle(eventDays[4])),
-      'day-6': createOptions(dayTabTitle(eventDays[5])),
-      'day-7': createOptions(dayTabTitle(eventDays[6])),
+      'day-1': createOptions(dayTitles[0]),
+      'day-2': createOptions(dayTitles[1]),
+      'day-3': createOptions(dayTitles[2]),
+      'day-4': createOptions(dayTitles[3]),
+      'day-5': createOptions(dayTitles[4]),
+      'day-6': createOptions(dayTitles[5]),
+      'day-7': createOptions(dayTitles[6]),
     }
   }, [eventDays])
 
