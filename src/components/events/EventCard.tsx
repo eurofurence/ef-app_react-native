@@ -96,7 +96,7 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
                 <View style={styles.tagAreaInner}>
                   <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
                     {IsInternal ? `${t('internal')} – ` : ''}
-                    {tag || `${title} ${subtitle}`}
+                    {`${title} ${subtitle}`}
                   </Label>
                   {tag && (
                     <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>

@@ -20,7 +20,10 @@ export const EventCardTime: FC<EventCardTimeProps> = ({ type, event, done }) => 
       {type === 'duration' ? (
         <>
           <Label type="h3" variant="middle" color={done ? 'important' : 'white'}>
-            {start} {end}
+            {start}
+          </Label>
+          <Label type="h3" variant="middle" color={done ? 'important' : 'white'}>
+            {end}
           </Label>
           <Label type="cap" color={done ? 'important' : 'white'}>
             {day}
