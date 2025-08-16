@@ -36,7 +36,7 @@ body:
     attributes:
       label: Version
       description: What version are you running?
-      placeholder: ex. 6.2.0
+      placeholder: ex. 6.2.1
     validations:
       required: true
   - type: dropdown
