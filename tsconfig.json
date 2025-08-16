@@ -3,19 +3,10 @@
     "rootDir": ".",
     "strict": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/assets/*": [
-        "./assets/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/assets/*": ["./assets/*"]
     }
   },
   "extends": "expo/tsconfig.base",
-  "include": [
-    "./src",
-    "./node_modules/moment/locale",
-    "./package.json",
-    "nativewind-env.d.ts"
-  ]
+  "include": ["./src", "./node_modules/moment/locale", "./package.json", "nativewind-env.d.ts"]
 }
