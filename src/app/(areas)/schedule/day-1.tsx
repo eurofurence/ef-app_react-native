@@ -33,6 +33,9 @@ export function DayView({ day }: { day: EventDayDetails }) {
         <Label type="lead" variant="middle">
           {day?.Name ?? ''}
         </Label>
+        <Label type="lead" variant="middle">
+          {day?.Date.split('T')[0] ?? ''}
+        </Label>
       </View>
     ),
     [day]
