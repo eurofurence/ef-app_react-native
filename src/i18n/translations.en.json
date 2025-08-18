@@ -699,6 +699,9 @@
   },
   "PrivateMessageList": {
     "accessibility": {
+      "message_card": "Private message",
+      "message_card_hint": "Message that can be opened for details",
+      "message_status_time": "Message is {{ status }} and has been sent on {{ time }}",
       "messages_list": "Messages list",
       "messages_list_hint": "List of private messages organized by sender and read status",
       "messages_loaded": "Loaded {{total}} messages, {{unread}} unread",
