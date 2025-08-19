@@ -64,8 +64,8 @@ export default function EventItem() {
           secondaryIcon={event ? platformShareIcon : undefined}
           secondaryPress={event ? () => shareEvent(event) : undefined}
           accessibilityLabel={t('accessibility.event_header')}
-          secondaryAccessibilityLabel={t('Event.share')}
-          secondaryAccessibilityHint={t('Event.accessibility.event_header_hint')}
+          secondaryAccessibilityLabel={t('share')}
+          secondaryAccessibilityHint={t('accessibility.event_header_hint')}
         >
           {event?.Title ?? t('viewing_event')}
         </Header>
