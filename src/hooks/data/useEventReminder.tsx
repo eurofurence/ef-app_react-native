@@ -9,10 +9,10 @@ import { scheduleEventReminder, cancelEventReminder } from '@/util/eventReminder
  * current event reminder state.
  */
 export const useEventReminder = () => {
-  const { getValue, setValue } = useCache()
+  const { data, setValue } = useCache()
 
   // Retrieve timeTravel value from cache, default to 0
-  const settings = getValue('settings')
+  const settings = data.settings
   const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
 
   /**
@@ -20,9 +20,9 @@ export const useEventReminder = () => {
    */
   const checkReminder = useCallback(
     (event: EventRecord) => {
-      return Boolean(getValue('notifications')?.find((item) => item.recordId === event.Id))
+      return Boolean(data.notifications?.find((item) => item.recordId === event.Id))
     },
-    [getValue]
+    [data.notifications]
   )
 
   /**
@@ -31,10 +31,9 @@ export const useEventReminder = () => {
   const createReminder = useCallback(
     async (event: EventRecord) => {
       const notification = await scheduleEventReminder(event, offset)
-      const current = getValue('notifications')
-      setValue('notifications', [...(current ?? []), notification])
+      setValue('notifications', (current) => [...(current ?? []), notification])
     },
-    [getValue, setValue, offset]
+    [setValue, offset]
   )
 
   /**
@@ -42,7 +41,7 @@ export const useEventReminder = () => {
    */
   const removeReminder = useCallback(
     async (event: EventRecord) => {
-      const current = getValue('notifications')
+      const current = data.notifications
       const notification = current?.find((item) => item.recordId === event.Id)
       if (!notification) return
       await cancelEventReminder(notification)
@@ -51,7 +50,7 @@ export const useEventReminder = () => {
         current?.filter((item) => item.recordId !== event.Id)
       )
     },
-    [getValue, setValue]
+    [data.notifications, setValue]
   )
 
   /**

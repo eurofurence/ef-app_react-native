@@ -6,18 +6,17 @@ import { ThemeName } from '@/context/Theme'
 
 export function useTheme() {
   const systemTheme = useColorScheme()
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
+  const { data, setValue } = useCache()
 
-  const theme = settings.theme
+  const theme = data.settings.theme
 
   const setTheme = useCallback(
     (newTheme: ThemeName | undefined) =>
-      setValue('settings', {
-        ...settings,
+      setValue('settings', (current) => ({
+        ...current,
         theme: newTheme,
-      }),
-    [settings, setValue]
+      })),
+    [setValue]
   )
 
   return {

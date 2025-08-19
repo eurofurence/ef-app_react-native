@@ -16,13 +16,13 @@ export function ShowInternalEventsToggle({ style, ...props }: ViewProps) {
   const user = useCurrentUser()
   const isStaff = Boolean(user?.RoleMap?.Staff)
 
-  const { getValue, setValue } = useCache()
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const { data, setValue } = useCache()
+  const showInternal = data.settings.showInternalEvents ?? true
 
   if (!isStaff) return null
   return (
     <Pressable
-      onPress={() => setValue('settings', { ...getValue('settings'), showInternalEvents: !showInternal })}
+      onPress={() => setValue('settings', { ...data.settings, showInternalEvents: !showInternal })}
       accessibilityRole="button"
       accessibilityLabel={showInternal ? t('hide_internal_events', { defaultValue: 'Hide internal events' }) : t('show_internal_events', { defaultValue: 'Show internal events' })}
       accessibilityHint={t('toggle_internal_events', { defaultValue: 'Toggle internal events filter' })}

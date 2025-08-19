@@ -15,12 +15,12 @@ import { useCache } from '@/context/data/Cache'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function SettingsPage() {
-  const { getValue } = useCache()
+  const { data } = useCache()
   const { t } = useTranslation('Settings')
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
 
-  const showDevMenu = getValue('settings').devMenu
+  const showDevMenu = data.settings.devMenu
 
   useEffect(() => {
     setAnnouncementMessage(t('accessibility.settings_page_loaded'))

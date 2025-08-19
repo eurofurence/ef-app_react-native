@@ -11,13 +11,13 @@ import { SettingContainer } from './SettingContainer'
 
 export const HiddenEvents = () => {
   const { t } = useTranslation('Settings', { keyPrefix: 'hidden_events' })
-  const { getValue, setValue } = useCache()
+  const { setValue } = useCache()
 
   const unhideAllEvents = () =>
-    setValue('settings', {
-      ...getValue('settings'),
+    setValue('settings', (current) => ({
+      ...current,
       hiddenEvents: [],
-    })
+    }))
 
   return (
     <SettingContainer>

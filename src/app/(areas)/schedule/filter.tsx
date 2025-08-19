@@ -23,7 +23,7 @@ function selectEvent(event: EventDetails) {
 export default function FilterScreen() {
   const { query } = useScheduleSearch()
   const { t } = useTranslation('Events')
-  const { events, eventDays, eventTracks, eventRooms, eventHosts, searchEvents, getValue } = useCache()
+  const { events, eventDays, eventTracks, eventRooms, eventHosts, searchEvents, data } = useCache()
 
   const activeStyle = useThemeBackground('secondary')
   const inactiveStyle = useThemeBackground('inverted')
@@ -46,7 +46,7 @@ export default function FilterScreen() {
     const tracksIds = filterTracks.map((item) => item.Id)
     const roomsIds = filterRooms.map((item) => item.Id)
     const hostNames = filterHosts
-    const showInternal = getValue('settings').showInternalEvents ?? true
+    const showInternal = data.settings.showInternalEvents ?? true
     return (search ?? events).filter((item) => {
       if (!showInternal && item.IsInternal) return false
       if (item.ConferenceDayId && daysIds.length && !daysIds.includes(item.ConferenceDayId)) return false
@@ -55,7 +55,7 @@ export default function FilterScreen() {
       if (item.Hosts && hostNames.length && !hostNames.some((name) => item.Hosts.includes(name))) return false
       return true
     })
-  }, [filterDays, filterTracks, filterRooms, filterHosts, search, events, getValue])
+  }, [filterDays, filterTracks, filterRooms, filterHosts, search, events, data.settings.showInternalEvents])
 
   const groups = useEventOtherGroups(t, now, filtered)
 

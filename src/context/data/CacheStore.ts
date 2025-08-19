@@ -45,15 +45,15 @@ export function actionInternalsSet(cid: string, cacheVersion: number, lastSynchr
 export type StoreActionValuesSet<T extends keyof SchemaValues> = {
   type: 'STORE_ACTION_VALUE_SET'
   key: T
-  value: StoreData[T]
+  value: StoreData[T] | ((current: StoreData[T]) => StoreData[T])
 }
 
 /**
  * Action creator to set a value.
  * @param key The key to set, one of the mutable values.
- * @param value The value to set to.
+ * @param value The value or change function
  */
-export function actionValuesSet<T extends keyof SchemaValues>(key: T, value: StoreData[T]): StoreActionValuesSet<T> {
+export function actionValuesSet<T extends keyof SchemaValues>(key: T, value: StoreData[T] | ((current: StoreData[T]) => StoreData[T])): StoreActionValuesSet<T> {
   return {
     type: 'STORE_ACTION_VALUE_SET',
     key,
@@ -160,7 +160,8 @@ export const storeReducer = (state: StoreData, action: StoreAction): StoreData =
       return { ...state, ...action.value }
     }
     case 'STORE_ACTION_VALUE_SET': {
-      return { ...state, [action.key]: action.value }
+      if (action.value instanceof Function) return { ...state, [action.key]: action.value(state[action.key]) }
+      else return { ...state, [action.key]: action.value }
     }
     case 'STORE_ACTION_VALUE_DELETE': {
       const copy = { ...state }

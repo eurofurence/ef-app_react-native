@@ -24,9 +24,9 @@ export type UpcomingEventsListProps = {
 }
 export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const { events, getValue } = useCache()
+  const { events, data } = useCache()
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const showInternal = data.settings.showInternalEvents ?? true
   const upcoming = useMemo(
     () =>
       filterUpcomingEvents(events, now)

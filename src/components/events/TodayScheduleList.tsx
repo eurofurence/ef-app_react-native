@@ -19,9 +19,9 @@ export type TodayScheduleListProps = {
 
 export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const { eventsFavorite, getValue } = useCache()
+  const { eventsFavorite, data } = useCache()
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const showInternal = data.settings.showInternalEvents ?? true
   const today = useMemo(() => {
     const favorites = eventsFavorite.filter((item) => !item.Hidden && (showInternal || !item.IsInternal))
 

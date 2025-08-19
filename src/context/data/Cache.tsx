@@ -31,18 +31,11 @@ export type CacheContextType = {
   data: StoreData
 
   /**
-   * Gets a "value type" store value.
-   * @param store The name of the store.
-   */
-  // todo: Implicit change semantics is not really optimal. do we need to have the data in there like we have extensions?
-  getValue<T extends keyof SchemaValues>(store: T): StoreData[T]
-
-  /**
    * Sets a "value type" store value.
    * @param store The name of the store.
-   * @param to The value to assign to.
+   * @param value The value change function.
    */
-  setValue<T extends keyof SchemaValues>(store: T, to: StoreData[T]): void
+  setValue<T extends keyof SchemaValues>(store: T, value: StoreData[T] | ((current: StoreData[T]) => StoreData[T])): void
 
   /**
    * Removes a "value type" store value.
@@ -146,8 +139,9 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     },
     [data]
   )
-  const setValue = useCallback(<T extends keyof SchemaValues>(store: T, to: StoreData[T]): void => {
-    dispatch(actionValuesSet(store, to))
+  const setValue = useCallback(<T extends keyof SchemaValues>(store: T, fn: (current: StoreData[T]) => StoreData[T]): void => {
+    // TODO: Type fix.
+    dispatch(actionValuesSet(store, fn) as any)
   }, [])
 
   const removeValue = useCallback(<T extends keyof SchemaValues>(store: T): void => {

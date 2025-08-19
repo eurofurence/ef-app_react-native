@@ -7,18 +7,17 @@ import { ArtistsAlleyLocal } from '@/context/data/types.own'
  * Uses locally stored artists alley registration info to be used for repeat registrations.
  */
 export function useArtistsAlleyLocalData() {
-  const { getValue, setValue } = useCache()
+  const { data, setValue } = useCache()
 
-  const localData = getValue('settings').artistsAlleyLocal
+  const localData = data.settings.artistsAlleyLocal
   const setLocalData = useCallback(
-    (data: ArtistsAlleyLocal) => {
-      const settings = getValue('settings')
-      setValue('settings', {
-        ...settings,
-        artistsAlleyLocal: data,
-      })
+    (value: ArtistsAlleyLocal) => {
+      setValue('settings', (current) => ({
+        ...current,
+        artistsAlleyLocal: value,
+      }))
     },
-    [getValue, setValue]
+    [setValue]
   )
 
   return { localData, setLocalData }

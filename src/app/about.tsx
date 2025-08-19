@@ -132,10 +132,10 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
 
 export default function AboutScreen() {
   const { t } = useTranslation('About')
-  const { getValue, setValue } = useCache()
+  const { data, setValue } = useCache()
   const { setTheme } = useTheme()
 
-  const settings = getValue('settings')
+  const settings = data.settings
 
   // Load static assets.
   const cheeseSound = useAudioPlayer(require('@/assets/runtime/cheese.webm'))
@@ -154,11 +154,7 @@ export default function AboutScreen() {
   const toggleDevMenu = useMultiTap(
     10,
     useCallback(() => {
-      const setDevMenu = (enabled: boolean) =>
-        setValue('settings', {
-          ...settings,
-          devMenu: enabled,
-        })
+      const setDevMenu = (enabled: boolean) => setValue('settings', (current) => ({ ...current, devMenu: enabled }))
 
       if (Platform.OS === 'web') {
         // On web, toggle with window confirm as we don't have Alert functionality.

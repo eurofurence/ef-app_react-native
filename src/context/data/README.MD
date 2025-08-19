@@ -82,10 +82,11 @@ const selectedMap = maps.dict[selectionId]
 ```
 
 Special "value stores" like settings can only be mutated with the appropriate
-cache methods (`setValue`, `getValue`, `removeValue`), as they update the
+cache methods (`setValue`, `removeValue`), as they update the
 reducer state.
 
 ```tsx
-const { getValue } = useCache()
-const settings = getValue('settings')
+const { data, setValue } = useCache()
+const settings = data.settings
+setValue('settings', { ...settings, changed: true })
 ```

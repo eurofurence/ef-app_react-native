@@ -51,8 +51,8 @@ const languages = orderBy(
 export const LanguagePicker = () => {
   const { t, i18n } = useTranslation('Settings')
   const textColor = useThemeColorValue('text')
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
+  const { data, setValue } = useCache()
+  const settings = data.settings
   const [showPicker, setShowPicker] = useState(false)
   const [renderPicker, setRenderPicker] = useState(false)
   const fadeAnim = useRef(new Animated.Value(0)).current
@@ -98,10 +98,10 @@ export const LanguagePicker = () => {
   const handleLanguageChange = async (language: string) => {
     try {
       await i18n.changeLanguage(language)
-      setValue('settings', {
-        ...settings,
+      setValue('settings', (current) => ({
+        ...current,
         language,
-      })
+      }))
     } catch (error) {
       captureException(error)
     }
