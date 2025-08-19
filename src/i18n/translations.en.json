@@ -287,6 +287,7 @@
       "dealer_content_area": "Dealer information content",
       "dealer_description": "Dealer description: {{description}}",
       "dealer_name_heading": "Dealer name: {{name}}",
+      "dealer_not_found": "The page for this dealer does not exist",
       "discord_button": "Copy Discord handle {{handle}}",
       "discord_button_hint": "Copies Discord handle to clipboard",
       "mastodon_button": "Visit {{handle}} on Mastodon",
@@ -310,6 +311,8 @@
     "attends_thu": "Thursday",
     "categories": "Categories",
     "copy_token": "Copy token",
+    "dealer_not_found_message": "Sorry, we were unable to find the dealer you were looking for.",
+    "dealer_not_found_title": "This dealer does not exist",
     "dealer_was_updated": "Dealer was updated since your last visit",
     "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
     "in_after_dark": "Located in the after dark section",
@@ -366,10 +369,13 @@
       "event_details_scroll": "Event details scroll view",
       "event_details_scroll_hint": "Scrollable view containing event details",
       "event_header": "Event header",
-      "event_header_hint": "Header containing event title and share button"
+      "event_header_hint": "Header containing event title and share button",
+      "event_not_found": "The page for this event does not exist"
     },
     "add_favorite": "Favorite",
     "event_was_updated": "Event was updated since your last visit",
+    "event_not_found_message": "Sorry, we were unable to find the event you were looking for.",
+    "event_not_found_title": "This event does not exist",
     "give_feedback": "Give Feedback",
     "hide": "Hide from overview",
     "label_event_description": "More about the event",
@@ -521,6 +527,7 @@
       "kb_entry_card_hint": "Tap to view full article details",
       "kb_entry_content": "Knowledge article content",
       "kb_entry_loaded": "Knowledge article loaded: {{title}}",
+      "kb_entry_not_found": "The page for this knowledge article does not exist",
       "kb_entry_scroll": "Knowledge article scroll view",
       "kb_entry_scroll_hint": "Scrollable view containing knowledge article content",
       "kb_section_header": "Section: {{title}} - {{subtitle}}",
@@ -530,9 +537,12 @@
       "search_results": "Found {{count}} knowledge article{{s}} for \"{{query}}\""
     },
     "header": "Info Articles",
+    "kb_entry_not_found_message": "Sorry, we were unable to find the article you were looking for.",
+    "kb_entry_not_found_title": "This article does not exist",
     "search": {
       "placeholder": "Search info articles…"
-    }
+    },
+    "viewing_entry": "Viewing article"
   },
   "LostAndFound": {
     "accessibility": {

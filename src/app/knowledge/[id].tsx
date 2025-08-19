@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -9,6 +9,7 @@ import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { LinkItem } from '@/components/maps/LinkItem'
+import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { LinkFragment } from '@/context/data/types.api'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
@@ -45,21 +46,25 @@ export default function KnowledgeItem() {
         accessibilityLabel={t('accessibility.kb_entry_scroll')}
         accessibilityHint={t('accessibility.kb_entry_scroll_hint')}
       >
-        <Header>{entry?.Title}</Header>
+        <Header>{entry?.Title ?? t('viewing_entry')}</Header>
         <Floater>
-          <View ref={mainContentRef} accessibilityLabel={t('accessibility.kb_entry_content')} accessibilityRole="text">
-            {entry?.Images?.map((image, i) => (
-              <View key={i} className="my-2.5">
-                <Banner image={image} viewable />
-              </View>
-            )) ?? null}
-            <MarkdownContent>{entry?.Text ?? ''}</MarkdownContent>
-            {entry?.Links?.map((link: LinkFragment) => (
-              <View className="mb-5" key={link.Target}>
-                <LinkItem link={link} />
-              </View>
-            ))}
-          </View>
+          {!entry ? (
+            <NotFoundContent accessibilityStatus={t('accessibility.kb_entry_not_found')} title={t('kb_entry_not_found_title')} message={t('kb_entry_not_found_message')} />
+          ) : (
+            <View ref={mainContentRef} accessibilityLabel={t('accessibility.kb_entry_content')} accessibilityRole="text">
+              {entry?.Images?.map((image, i) => (
+                <View key={i} className="my-2.5">
+                  <Banner image={image} viewable />
+                </View>
+              )) ?? null}
+              <MarkdownContent>{entry?.Text ?? ''}</MarkdownContent>
+              {entry?.Links?.map((link: LinkFragment) => (
+                <View className="mb-5" key={link.Target}>
+                  <LinkItem link={link} />
+                </View>
+              ))}
+            </View>
+          )}
         </Floater>
       </ScrollView>
     </>

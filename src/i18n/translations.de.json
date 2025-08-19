@@ -286,6 +286,7 @@
       "dealer_content_area": "Dealer-Informationsinhalt",
       "dealer_description": "Dealer-Beschreibung: {{description}}",
       "dealer_name_heading": "Dealer-Name: {{name}}",
+      "dealer_not_found": "Die Seite für diesen Dealer existiert nicht",
       "discord_button": "Discord-Handle {{handle}} kopieren",
       "discord_button_hint": "Kopiert Discord-Handle in die Zwischenablage",
       "mastodon_button": "{{handle}} auf Mastodon besuchen",
@@ -309,6 +310,8 @@
     "attends_thu": "Donnerstag",
     "categories": "Kategorien",
     "copy_token": "Token kopieren",
+    "dealer_not_found_message": "Entschuldigung, wir konnten den Dealer, nachdem du suchst, nicht finden.",
+    "dealer_not_found_title": "Dieser Dealer existiert nicht",
     "dealer_was_updated": "Dealer wurde seit deinem letzten Besuch aktualisiert",
     "discord_handle_copied": "Discord-Handle {{discordHandle}} wurde in die Zwischenablage kopiert!",
     "in_after_dark": "Im After Dark Bereich",
@@ -362,10 +365,13 @@
       "event_details_scroll": "Eventdetails Scroll-Ansicht",
       "event_details_scroll_hint": "Scrollbare Ansicht mit Eventdetails",
       "event_header": "Event-Header",
-      "event_header_hint": "Header mit Eventtitel und Teilen-Button"
+      "event_header_hint": "Header mit Eventtitel und Teilen-Button",
+      "event_not_found": "Die Seite für dieses Event existiert nicht"
     },
     "add_favorite": "Favorit hinzufügen",
     "event_was_updated": "Es gab Änderungen am Event, seitdem Du es das letzte Mal aufgerufen hast",
+    "event_not_found_message": "Entschuldigung, wir konnten das Event, nachdem du suchst, nicht finden.",
+    "event_not_found_title": "Dieses Event existiert nicht",
     "give_feedback": "Feedback geben",
     "hide": "Event verbergen",
     "label_event_description": "Mehr zu diesem Event",
@@ -515,6 +521,7 @@
       "kb_entry_card_hint": "Tippen um vollständige Artikeldetails anzuzeigen",
       "kb_entry_content": "Wissensartikel-Inhalt",
       "kb_entry_loaded": "Wissensartikel geladen: {{title}}",
+      "kb_entry_not_found": "Die Seite für diesen Artikel existiert nicht",
       "kb_entry_scroll": "Wissensartikel-Scroll-Ansicht",
       "kb_entry_scroll_hint": "Scrollbare Ansicht mit Wissensartikel-Inhalt",
       "kb_section_header": "Bereich: {{title}} - {{subtitle}}",
@@ -524,9 +531,12 @@
       "search_results": "{{count}} Wissensartikel gefunden für \"{{query}}\""
     },
     "header": "Wissenswertes",
+    "kb_entry_not_found_message": "Entschuldigung, wir konnten den Artikel, nachdem du suchst, nicht finden.",
+    "kb_entry_not_found_title": "Dieser Artikel existiert nicht",
     "search": {
       "placeholder": "Info-Artikel suchen…"
-    }
+    },
+    "viewing_entry": "Artikel ansehen"
   },
   "LostAndFound": {
     "accessibility": {
