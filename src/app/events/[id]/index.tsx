@@ -10,6 +10,7 @@ import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
@@ -60,8 +61,8 @@ export default function EventItem() {
         accessibilityHint={t('accessibility.event_details_scroll_hint')}
       >
         <Header
-          secondaryIcon={platformShareIcon}
-          secondaryPress={() => event && shareEvent(event)}
+          secondaryIcon={event ? platformShareIcon : undefined}
+          secondaryPress={event ? () => shareEvent(event) : undefined}
           accessibilityLabel={t('accessibility.event_header')}
           secondaryAccessibilityLabel={t('Event.share')}
           secondaryAccessibilityHint={t('Event.accessibility.event_header_hint')}
@@ -70,7 +71,11 @@ export default function EventItem() {
         </Header>
         <Floater contentStyle={appStyles.trailer}>
           <View ref={mainContentRef} accessibilityLabel={t('accessibility.event_content')} accessibilityRole="text">
-            {!event ? null : <EventContent event={event} parentPad={padFloater} updated={showUpdated} onToggleHidden={handleToggleHidden} />}
+            {!event ? (
+              <NotFoundContent accessibilityStatus={t('accessibility.event_not_found')} title={t('event_not_found_title')} message={t('event_not_found_message')} />
+            ) : (
+              <EventContent event={event} parentPad={padFloater} updated={showUpdated} onToggleHidden={handleToggleHidden} />
+            )}
           </View>
         </Floater>
       </ScrollView>

@@ -9,6 +9,7 @@ import { shareDealer } from '@/components/dealers/Dealers.common'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
 import { useLatchTrue } from '@/hooks/util/useLatchTrue'
@@ -33,10 +34,16 @@ export default function DealerItem() {
       accessibilityLabel={t('accessibility.page_description')}
       accessibilityHint={t('accessibility.scroll_view_hint')}
     >
-      <Header secondaryIcon={platformShareIcon} secondaryPress={() => dealer && shareDealer(dealer)}>
+      <Header secondaryIcon={dealer ? platformShareIcon : undefined} secondaryPress={dealer ? () => shareDealer(dealer) : undefined}>
         {dealerName}
       </Header>
-      <Floater contentStyle={appStyles.trailer}>{!dealer ? null : <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />}</Floater>
+      <Floater contentStyle={appStyles.trailer}>
+        {!dealer ? (
+          <NotFoundContent accessibilityStatus={t('accessibility.dealer_not_found')} title={t('dealer_not_found_title')} message={t('dealer_not_found_message')} />
+        ) : (
+          <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />
+        )}
+      </Floater>
     </ScrollView>
   )
 }
