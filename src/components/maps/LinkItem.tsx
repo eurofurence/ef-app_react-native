@@ -42,57 +42,41 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
   return <DealerCard dealer={{ details: dealer, present, offDays }} onPress={onPress} />
 }
 
-const hostName = (str: string) => {
-  const lower = str.toLowerCase()
-  const noScheme = lower.startsWith('https://') ? lower.substring(8) : lower.startsWith('http://') ? lower.substring(7) : lower
-  const pathIndex = noScheme.indexOf('/')
-  const noPath = pathIndex > 0 ? noScheme.substring(0, pathIndex) : noScheme
-  const segments = noPath.split('.')
-  return segments[segments.length - 2] + '.' + segments[segments.length - 1]
-}
-
-const sanitized = (str: string) => {
-  const lower = str.toLowerCase()
-  const noScheme = lower.startsWith('https://') ? lower.substring(8) : lower.startsWith('http://') ? lower.substring(7) : lower
-  const noWww = noScheme.startsWith('www.') ? noScheme.substring(4) : noScheme
-  return noWww.endsWith('/') ? noWww.substring(0, noWww.length - 2) : noWww
-}
-
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
   const { t } = useTranslation('Maps')
   const onPress = useCallback(() => {
     Linking.openURL(link.Target).catch()
   }, [link.Target])
 
+  const linkUrl = new URL(link.Target)
+  const displayText = link.Name || linkUrl.hostname.replace(/^www\./, '')
+  const hostTLD = linkUrl.hostname.match(/([^\.]+\.[^\.]+)$/)?.[0]
+
   const icon = useMemo<ButtonProps['icon']>(() => {
-    const host = hostName(link.Target)
     let icon: ButtonProps['icon']
 
-    if (host === 'etsy.com') {
+    if (hostTLD === 'etsy.com') {
       icon = (props) => <FaIcon name="etsy" {...props} />
-    } else if (host === 'tumblr.com') {
+    } else if (hostTLD === 'tumblr.com') {
       icon = (props) => <FaIcon name="tumblr" {...props} />
-    } else if (host === 'trello.com') {
+    } else if (hostTLD === 'trello.com') {
       icon = (props) => <FaIcon name="trello" {...props} />
-    } else if (host === 'furaffinity.net') {
+    } else if (hostTLD === 'furaffinity.net') {
       icon = ({ size }) => <Image style={{ width: size, height: size }} source="https://www.furaffinity.net/themes/beta/img/banners/fa_logo.png?v2" />
-    } else if (host === 'twitter.com') {
+    } else if (hostTLD === 'twitter.com') {
       icon = (props) => <Icon name="twitter" {...props} />
     } else {
       icon = 'web'
     }
     return icon
-  }, [link.Target])
-
-  const displayText = link.Name || sanitized(link.Target)
-  const host = hostName(link.Target)
+  }, [hostTLD])
 
   return (
     <Button
       containerStyle={styles.linkButton}
       onPress={onPress}
       icon={icon}
-      accessibilityLabel={t('accessibility.web_external_link', { name: displayText, host })}
+      accessibilityLabel={t('accessibility.web_external_link', { name: displayText, host: hostTLD })}
       accessibilityHint={t('accessibility.web_external_link_hint')}
       accessibilityRole="link"
     >
