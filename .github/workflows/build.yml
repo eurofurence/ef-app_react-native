@@ -28,6 +28,8 @@ on:
                 default: true
 jobs:
     build:
+        permissions:
+            contents: write
         runs-on: ${{ github.event.inputs.os }}
         strategy:
             matrix:
