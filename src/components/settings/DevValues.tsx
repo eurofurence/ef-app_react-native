@@ -14,8 +14,8 @@ export function DevValues() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_values' })
   const { tokenResponse, idData } = useAuthContext()
   const { user } = useUserContext()
-  const { getValue } = useCache()
-  const notifications = getValue('notifications')
+  const { data } = useCache()
+  const notifications = data.notifications
 
   const [devicePushToken, setDevicePushToken] = useState<any | null>(null)
 
@@ -24,8 +24,6 @@ export function DevValues() {
   useEffect(() => {
     getDevicePushToken().then((value) => setDevicePushToken(value))
   }, [])
-
-  const { data } = useCache()
 
   return (
     <View className="p-4">

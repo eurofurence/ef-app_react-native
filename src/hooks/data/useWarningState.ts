@@ -10,26 +10,25 @@ export type WarningKey = 'deviceWarningsHidden' | 'languageWarningsHidden' | 'ti
  * @param warningKey The warning key.
  */
 export function useWarningState(warningKey: WarningKey) {
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
-  const isHidden = settings.warnings?.[warningKey] === true
+  const { data, setValue } = useCache()
+  const isHidden = data.settings.warnings?.[warningKey] === true
 
   const hideWarning = () =>
-    setValue('settings', {
-      ...settings,
+    setValue('settings', (current) => ({
+      ...current,
       warnings: {
-        ...(settings.warnings ?? {}),
+        ...(current.warnings ?? {}),
         [warningKey]: true,
       },
-    })
+    }))
   const showWarning = () =>
-    setValue('settings', {
-      ...settings,
+    setValue('settings', (current) => ({
+      ...current,
       warnings: {
-        ...(settings.warnings ?? {}),
+        ...(current.warnings ?? {}),
         [warningKey]: false,
       },
-    })
+    }))
 
   return {
     isHidden,

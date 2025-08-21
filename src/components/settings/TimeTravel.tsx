@@ -18,10 +18,10 @@ const ONE_MINUTE = 60 * 1000
 
 export function TimeTravel() {
   const { t } = useTranslation('TimeTravel')
-  const { eventDays, getValue, setValue } = useCache()
+  const { eventDays, data, setValue } = useCache()
   const now = useNow()
 
-  const settings = getValue('settings')
+  const settings = data.settings
   const timeOffset = settings.timeTravelOffset ?? 0
   const enabled = settings.timeTravelEnabled ?? false
 
@@ -38,11 +38,11 @@ export function TimeTravel() {
     return addWeeks(lastDay, 1).toISOString()
   }, [eventDays])
 
-  const handleEnableTimeTravel = (value: boolean) => setValue('settings', { ...settings, timeTravelEnabled: value })
+  const handleEnableTimeTravel = (value: boolean) => setValue('settings', (current) => ({ ...current, timeTravelEnabled: value }))
 
-  const handleResetTravel = () => setValue('settings', { ...settings, timeTravelOffset: 0 })
+  const handleResetTravel = () => setValue('settings', (current) => ({ ...current, timeTravelOffset: 0 }))
 
-  const handleTravel = (amount: number) => setValue('settings', { ...settings, timeTravelOffset: (settings.timeTravelOffset ?? 0) + amount })
+  const handleTravel = (amount: number) => setValue('settings', (current) => ({ ...current, timeTravelOffset: (settings.timeTravelOffset ?? 0) + amount }))
 
   const handleTravelToDate = (date: string) => {
     const currentDate = new Date()
@@ -50,7 +50,7 @@ export function TimeTravel() {
     targetDate.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds(), currentDate.getMilliseconds())
 
     const offset = targetDate.getTime() - currentDate.getTime()
-    setValue('settings', { ...settings, timeTravelOffset: offset })
+    setValue('settings', (current) => ({ ...current, timeTravelOffset: offset }))
   }
 
   return (

@@ -19,7 +19,7 @@ import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 export default function EventItem() {
   const { t } = useTranslation('Event')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { events, getValue, setValue } = useCache()
+  const { events, setValue } = useCache()
 
   const event = events.dict[id]
   const [announcementMessage, setAnnouncementMessage] = useState('')
@@ -28,13 +28,11 @@ export default function EventItem() {
   const mainContentRef = useAccessibilityFocus<View>(200)
 
   const handleToggleHidden = useCallback(() => {
-    const settings = getValue('settings')
-    const newSettings = {
-      ...settings,
-      hiddenEvents: settings.hiddenEvents?.includes(id) ? settings.hiddenEvents.filter((item) => item !== id) : [...(settings.hiddenEvents ?? []), id],
-    }
-    setValue('settings', newSettings)
-  }, [id, getValue, setValue])
+    setValue('settings', (current) => ({
+      ...current,
+      hiddenEvents: current.hiddenEvents?.includes(id) ? current.hiddenEvents.filter((item) => item !== id) : [...(current.hiddenEvents ?? []), id],
+    }))
+  }, [id, setValue])
 
   // Get update note. Latch so it's displayed even if reset in background.
   const updated = useUpdateSinceNote(event)

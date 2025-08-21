@@ -21,9 +21,9 @@ export function DayView({ day }: { day: EventDayDetails }) {
   const { t } = useTranslation('Events')
   const now = useNow(5)
 
-  const { eventsByDay, searchEventsByDay, getValue } = useCache()
+  const { eventsByDay, searchEventsByDay, data } = useCache()
   const search = useFuseResults(searchEventsByDay[day.Id], query ?? '')
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const showInternal = data.settings.showInternalEvents ?? true
   const filtered = (search ?? eventsByDay[day.Id]).filter((e) => showInternal || !e.IsInternal)
   const groups = useEventDayGroups(t, now, filtered)
 

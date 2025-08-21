@@ -19,9 +19,9 @@ const filterCurrentEvents = (events: readonly EventDetails[], now: Date): EventD
  * @param now The current time.
  */
 export function useCurrentEvents(now: Date) {
-  const { events, getValue } = useCache()
+  const { events, data } = useCache()
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const showInternal = data.settings.showInternalEvents ?? true
   return useMemo(
     () =>
       chain(filterCurrentEvents(events, now))

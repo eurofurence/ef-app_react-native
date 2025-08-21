@@ -23,8 +23,8 @@ const sameInResolution = (a: number, b: number, resolution: number) => Math.floo
  * precision of the clock. Starts an interval, so use in central places only.
  */
 export const useNow = (resolution: 'static' | number = 'static'): Date => {
-  const { getValue } = useCache()
-  const settings = getValue('settings')
+  const { data } = useCache()
+  const settings = data.settings
   const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
 
   const [now, setNow] = useState(() => nowWithOffset(offset))

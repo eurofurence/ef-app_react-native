@@ -14,10 +14,9 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
  * @param delay The delay before setting as viewed.
  */
 export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 3_000) => {
-  const now = useNow()
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
-  const lastViewed = item ? (settings.lastViewTimes?.[item.Id] ?? null) : null
+  const now = useNow('static')
+  const { data, setValue } = useCache()
+  const lastViewed = item ? (data.settings.lastViewTimes?.[item.Id] ?? null) : null
 
   const updated = useMemo(() => Boolean(item && lastViewed && isAfter(parseDefaultISO(item.LastChangeDateTimeUtc), parseDefaultISO(lastViewed))), [item, lastViewed])
 
@@ -26,19 +25,19 @@ export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, dela
 
     const timeoutId = setTimeout(
       () =>
-        setValue('settings', {
-          ...settings,
+        setValue('settings', (current) => ({
+          ...current,
           lastViewTimes: {
-            ...(settings.lastViewTimes ?? {}),
+            ...(current.lastViewTimes ?? {}),
             [item.Id]: now.toISOString(),
           },
-        }),
+        })),
       delay
     )
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [item, delay, now, settings, setValue])
+  }, [item, delay, now, setValue])
 
   return updated
 }

@@ -33,7 +33,7 @@ export default function Index() {
   const { t: a11y } = useTranslation('Accessibility')
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 5 : 'static')
-  const { synchronize, isSynchronizing, getValue } = useCache()
+  const { synchronize, isSynchronizing, data } = useCache()
   const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
 
@@ -42,7 +42,7 @@ export default function Index() {
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const showInternal = data.settings.showInternalEvents ?? true
 
   // Search integration.
   const globalIndex = useCache().searchGlobal

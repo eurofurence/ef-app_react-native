@@ -15,7 +15,7 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function RevealHiddenPage() {
   const { t } = useTranslation('RevealHidden')
-  const { events, getValue, setValue } = useCache()
+  const { events, data, setValue } = useCache()
   const now = useNow(5000) // Update every 5 seconds when focused
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
@@ -35,14 +35,9 @@ export default function RevealHiddenPage() {
   // Handle unhiding an event
   const onPress = useCallback(
     (event: EventDetails) => {
-      const settings = getValue('settings')
-      const newSettings = {
-        ...settings,
-        hiddenEvents: settings.hiddenEvents?.filter((item) => item !== event.Id),
-      }
-      setValue('settings', newSettings)
+      setValue('settings', (current) => ({ ...current, hiddenEvents: current.hiddenEvents?.filter((item) => item !== event.Id) }))
     },
-    [getValue, setValue]
+    [setValue]
   )
   const { onLongPress } = useEventCardInteractions()
 

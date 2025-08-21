@@ -13,13 +13,13 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
  * notifications should be updated accordingly.
  */
 export function useEventReminderRescheduling() {
-  const { events, getValue, setValue } = useCache()
+  const { events, data, setValue } = useCache()
 
   // Retrieve timeTravel value from cache, default to 0
-  const settings = getValue('settings')
+  const settings = data.settings
   const offset = settings?.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
 
-  const notifications = getValue('notifications')
+  const notifications = data.notifications
 
   const lastPromise = useRef(Promise.resolve())
 

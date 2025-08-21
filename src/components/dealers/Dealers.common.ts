@@ -155,10 +155,10 @@ export const shareDealer = (dealer: DealerDetails) =>
  * Returns a function that toggles dealer favorite state.
  */
 export function useToggleFavorite() {
-  const { getValue, setValue } = useCache()
+  const { data, setValue } = useCache()
   return useCallback(
     (dealer: DealerDetails) => {
-      const settings = getValue('settings')
+      const settings = data.settings
       const remove = settings.favoriteDealers?.includes(dealer.Id)
       if (remove) {
         setValue('settings', {
@@ -174,7 +174,7 @@ export function useToggleFavorite() {
         return 'added'
       }
     },
-    [getValue, setValue]
+    [data.settings, setValue]
   )
 }
 

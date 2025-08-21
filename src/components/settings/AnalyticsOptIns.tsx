@@ -14,16 +14,16 @@ import { SettingContainer } from './SettingContainer'
  */
 export const AnalyticsOptIns = () => {
   const { t } = useTranslation('Settings')
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
+  const { data, setValue } = useCache()
+  const settings = data.settings
 
   const analyticsEnabled = settings.analyticsEnabled ?? false
 
   const setAnalytics = (enabled: boolean) =>
-    setValue('settings', {
-      ...settings,
+    setValue('settings', (current) => ({
+      ...current,
       analyticsEnabled: enabled,
-    })
+    }))
 
   return (
     <SettingContainer>
