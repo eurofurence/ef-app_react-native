@@ -13,7 +13,7 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
  * @param item The item or null or undefined if not yet loaded.
  * @param delay The delay before setting as viewed.
  */
-export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 3_000) => {
+export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 500) => {
   const now = useNow()
   const { getValue, setValue } = useCache()
   const settings = getValue('settings')
