@@ -191,7 +191,7 @@
   },
   "Countdown": {
     "after_event": "En dat was het weer! Tot volgend jaar!",
-    "before_event": "{{conName}} begint over {{diff}}"
+    "before_event": "{{conName}} begint {{diff}}"
   },
   "Dealer": {
     "accessibility": {

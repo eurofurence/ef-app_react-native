@@ -150,7 +150,7 @@
   },
   "Countdown": {
     "after_event": "I to na tyle! Do zobaczenia w przyszłym roku!",
-    "before_event": "{{conName}} zacznie się za {{diff}}"
+    "before_event": "{{conName}} zacznie się {{diff}}"
   },
   "Dealer": {
     "about": "Podsumowanie",

@@ -10,6 +10,7 @@ import { conId, conName, conTimeZone } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { EventDayRecord } from '@/context/data/types.api'
 import { useNow } from '@/hooks/time/useNow'
+import { dateFnsLocales } from '@/i18n'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 import { Image } from '../generic/atoms/Image'
@@ -36,7 +37,7 @@ const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
 /**
  * Calculates the countdown title based on current time and event days.
  */
-const useCountdownTitle = (t: TFunction, now: Date) => {
+const useCountdownTitle = (t: TFunction, now: Date, currentLanguage: string) => {
   const { eventDays } = useCache()
   const firstDay = eventDays[0]
   const lastDay = eventDays[eventDays.length - 1]
@@ -49,7 +50,8 @@ const useCountdownTitle = (t: TFunction, now: Date) => {
   if (firstDay) {
     const firstDate = new Date(firstDay.Date)
     if (now < firstDate) {
-      const diff = formatDistance(firstDate, now)
+      const locale = dateFnsLocales[currentLanguage as keyof typeof dateFnsLocales] || dateFnsLocales.en
+      const diff = formatDistance(firstDate, now, { locale, addSuffix: true })
       return t('before_event', { conName, diff })
     }
   }
@@ -66,13 +68,13 @@ const useCountdownTitle = (t: TFunction, now: Date) => {
 }
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
-  const { t } = useTranslation('Countdown')
+  const { t, i18n } = useTranslation('Countdown')
   const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 60 : 'static') // Convert to Date
 
   const { width } = useWindowDimensions()
-  const subtitle = useCountdownTitle(t, now)
+  const subtitle = useCountdownTitle(t, now, i18n.language)
 
   return (
     <View style={[styles.container, style]} role="banner" accessibilityLabel={tAccessibility('countdown_header')} accessibilityHint={tAccessibility('countdown_header_hint')}>

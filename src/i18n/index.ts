@@ -31,7 +31,7 @@ export type Translation = (typeof supportedTranslations)[number]
 /**
  * Map language codes to date-fns locales.
  */
-const dateFnsLocales: Record<string, Locale> = {
+export const dateFnsLocales: Record<string, Locale> = {
   en: enGB,
   nl: nl,
   pl: pl,

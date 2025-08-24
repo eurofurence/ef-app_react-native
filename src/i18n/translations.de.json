@@ -267,7 +267,7 @@
   },
   "Countdown": {
     "after_event": "Das war's! Wir hoffen wir sehen Dich nächstes Jahr wieder!",
-    "before_event": "{{conName}} beginnt in {{diff}}(n)"
+    "before_event": "{{conName}} beginnt {{diff}}"
   },
   "Dealer": {
     "about": "Infos",
