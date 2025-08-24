@@ -1,9 +1,9 @@
 import { isAfter } from 'date-fns'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useCache } from '@/context/data/Cache'
 import { RecordMetadata } from '@/context/data/types.api'
-import { useNow } from '@/hooks/time/useNow'
+import { useGetNow } from '@/hooks/time/useNow'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
@@ -14,31 +14,36 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
  * @param delay The delay before setting as viewed.
  */
 export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 500) => {
-  const now = useNow()
+  const [invoked, setInvoked] = useState(false)
+  const getNow = useGetNow()
   const { getValue, setValue } = useCache()
   const settings = getValue('settings')
   const lastViewed = item ? (settings.lastViewTimes?.[item.Id] ?? null) : null
 
   const updated = useMemo(() => Boolean(item && lastViewed && isAfter(parseDefaultISO(item.LastChangeDateTimeUtc), parseDefaultISO(lastViewed))), [item, lastViewed])
-
   useEffect(() => {
-    if (!item) return
+    // Item not given yet or already invoked: skip.
+    if (!item?.Id) return
+    if (invoked) return
 
-    const timeoutId = setTimeout(
-      () =>
-        setValue('settings', {
-          ...settings,
-          lastViewTimes: {
-            ...(settings.lastViewTimes ?? {}),
-            [item.Id]: now.toISOString(),
-          },
-        }),
-      delay
-    )
+    // Set after a timeout.
+    const timeoutId = setTimeout(() => {
+      // Mark as invoked and update the last viewed time to current time.
+      setInvoked(true)
+      setValue('settings', {
+        ...settings,
+        lastViewTimes: {
+          ...(settings.lastViewTimes ?? {}),
+          [item.Id]: getNow().toISOString(),
+        },
+      })
+    }, delay)
+
+    // If something has changed, clear the timeout. It might have already run, but then, invoked is also set.
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [item, delay, now, settings, setValue])
+  }, [item?.Id, invoked, setValue, settings, getNow, delay])
 
   return updated
 }
