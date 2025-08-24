@@ -1,3 +1,4 @@
+import { isAfter } from 'date-fns'
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
@@ -5,6 +6,7 @@ import { View } from 'react-native'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { useFavoritesUpdated } from '@/hooks/data/useFavoritesUpdated'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 import { Label } from '../generic/atoms/Label'
 
@@ -16,10 +18,12 @@ export const FavoritesChangedWarning = () => {
   const { favoriteEvents, favoriteDealers, lastViewTimes, clear } = useFavoritesUpdated()
 
   const { changedEventFavorite, changedDealerFavorite } = useMemo(() => {
-    const changedEvents = favoriteEvents.filter((event) => lastViewTimes && event.Id in lastViewTimes && new Date(event.LastChangeDateTimeUtc) > new Date(lastViewTimes[event.Id]))
+    const changedEvents = favoriteEvents.filter(
+      (event) => lastViewTimes && event.Id in lastViewTimes && isAfter(parseDefaultISO(event.LastChangeDateTimeUtc), parseDefaultISO(lastViewTimes[event.Id]))
+    )
 
     const changedDealers = favoriteDealers.filter(
-      (dealer) => lastViewTimes && dealer.Id in lastViewTimes && new Date(dealer.LastChangeDateTimeUtc) > new Date(lastViewTimes[dealer.Id])
+      (dealer) => lastViewTimes && dealer.Id in lastViewTimes && isAfter(parseDefaultISO(dealer.LastChangeDateTimeUtc), parseDefaultISO(lastViewTimes[dealer.Id]))
     )
 
     return { changedEventFavorite: changedEvents, changedDealerFavorite: changedDealers }

@@ -1,5 +1,5 @@
 import { addMilliseconds, getHours, getMinutes } from 'date-fns'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useCache } from '@/context/data/Cache'
 
@@ -46,4 +46,14 @@ export const useNow = (resolution: 'static' | number = 'static'): Date => {
   }, [offset, resolution])
 
   return now
+}
+
+/**
+ * Returns a function that gets the current date with optional time travel offset.
+ */
+export function useGetNow(): () => Date {
+  const { getValue } = useCache()
+  const settings = getValue('settings')
+  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
+  return useCallback(() => addMilliseconds(new Date(), offset), [offset])
 }
