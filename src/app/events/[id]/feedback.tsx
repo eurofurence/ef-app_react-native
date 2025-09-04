@@ -35,7 +35,7 @@ type FeedbackSchema = z.infer<typeof feedbackSchema>
 
 export default function EventFeedback() {
   const { t } = useTranslation('EventFeedback')
-  const { eventId } = useLocalSearchParams<{ eventId: string }>()
+  const { id: eventId } = useLocalSearchParams<{ id: string }>()
   const { toast } = useToastContext()
   const theme = useTheme()
   const { events } = useCache()
