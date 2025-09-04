@@ -111,7 +111,7 @@ export default function Moderate() {
     }
   }, [deleteRegistration, id, t, toast])
 
-  if (!isAdmin || !isPrivileged) return <Redirect href="/artists-alley" />
+  if (!(isAdmin || isPrivileged)) return <Redirect href="/artists-alley" />
 
   return (
     <>
