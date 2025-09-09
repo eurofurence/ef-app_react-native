@@ -1,4 +1,3 @@
-import * as Linking from 'expo-linking'
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -10,6 +9,8 @@ import { Button } from '@/components/generic/containers/Button'
 import { TableRegistrationRecord } from '@/context/data/types.api'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
+import { handleExternalLink } from '../ExternalLink'
+
 export type ArtistsAlleyStatusProps = {
   data: TableRegistrationRecord
   canDelete: boolean
@@ -20,6 +21,7 @@ export type ArtistsAlleyStatusProps = {
 
 export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDelete }: ArtistsAlleyStatusProps) => {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'review' })
+  const { t: a11y } = useTranslation('Accessibility')
   const { t: tAccessibility } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
   const backgroundStyle = useThemeBackground('background')
 
@@ -40,7 +42,14 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
       <Label
         type="h3"
         className="mb-5"
-        onPress={() => Linking.openURL(data.WebsiteUrl)}
+        onPress={() =>
+          handleExternalLink(data.WebsiteUrl, {
+            title: a11y('external_link_no_prompt'),
+            body: a11y('outside_link'),
+            confirmText: a11y('confirm'),
+            cancelText: a11y('cancel'),
+          })
+        }
         accessibilityRole="link"
         accessibilityLabel={tAccessibility('website_link', { url: data.WebsiteUrl })}
         accessibilityHint={tAccessibility('website_link_hint')}
@@ -59,7 +68,14 @@ export const ArtistsAlleyReview = ({ data, canDelete, onAccept, onReject, onDele
       <Label
         type="h3"
         className="mb-5"
-        onPress={() => Linking.openURL(`https://t.me/${data.TelegramHandle.replace('@', '')}`)}
+        onPress={() =>
+          handleExternalLink(`https://t.me/${data.TelegramHandle.replace('@', '')}`, {
+            title: a11y('external_link_no_prompt'),
+            body: a11y('outside_link'),
+            confirmText: a11y('confirm'),
+            cancelText: a11y('cancel'),
+          })
+        }
         accessibilityRole="link"
         accessibilityLabel={tAccessibility('telegram_link', { handle: data.TelegramHandle })}
         accessibilityHint={tAccessibility('telegram_link_hint')}
