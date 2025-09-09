@@ -180,5 +180,5 @@
     "storybook:dev": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
-  "version": "6.2.2"
+  "version": "6.2.3"
 }

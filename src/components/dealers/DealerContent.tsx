@@ -1,7 +1,6 @@
 import { format } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
 import { setStringAsync } from 'expo-clipboard'
-import * as Linking from 'expo-linking'
 import { openBrowserAsync } from 'expo-web-browser'
 import React, { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +15,7 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 
 import { appStyles } from '../AppStyles'
+import { handleExternalLink } from '../ExternalLink'
 import { Banner } from '../generic/atoms/Banner'
 import { FaIcon } from '../generic/atoms/FaIcon'
 import { Image } from '../generic/atoms/Image'
@@ -94,6 +94,7 @@ export type DealerContentProps = {
 
 export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, updated, shareButton }) => {
   const { t } = useTranslation('Dealer')
+  const { t: a11y } = useTranslation('Accessibility')
   const { toast } = useToastContext()
   const now = useNow()
 
@@ -223,7 +224,14 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
       {dealer.TelegramHandle && (
         <Button
           containerStyle={styles.marginAround}
-          onPress={() => Linking.openURL(`https://t.me/${dealer.TelegramHandle}`)}
+          onPress={() =>
+            handleExternalLink(`https://t.me/${dealer.TelegramHandle}`, {
+              title: a11y('external_link_no_prompt'),
+              body: a11y('outside_link'),
+              confirmText: a11y('confirm'),
+              cancelText: a11y('cancel'),
+            })
+          }
           icon={(props) => <FaIcon name="telegram-plane" {...props} />}
           accessibilityLabel={t('accessibility.telegram_button', { handle: dealer.TelegramHandle })}
           accessibilityHint={t('accessibility.telegram_button_hint')}
@@ -234,7 +242,14 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
       {dealer.TwitterHandle && (
         <Button
           containerStyle={styles.marginAround}
-          onPress={() => Linking.openURL(`https://twitter.com/${dealer.TwitterHandle}`)}
+          onPress={() =>
+            handleExternalLink(`https://twitter.com/${dealer.TwitterHandle}`, {
+              title: a11y('external_link_no_prompt'),
+              body: a11y('outside_link'),
+              confirmText: a11y('confirm'),
+              cancelText: a11y('cancel'),
+            })
+          }
           icon="twitter"
           accessibilityLabel={t('accessibility.twitter_button', { handle: dealer.TwitterHandle })}
           accessibilityHint={t('accessibility.twitter_button_hint')}
@@ -260,7 +275,16 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
       {dealer.MastodonHandle && (
         <Button
           containerStyle={styles.marginAround}
-          onPress={() => (dealer.MastodonUrl ? Linking.openURL(dealer.MastodonUrl) : null)}
+          onPress={() =>
+            dealer.MastodonUrl
+              ? handleExternalLink(dealer.MastodonUrl, {
+                  title: a11y('external_link_no_prompt'),
+                  body: a11y('outside_link'),
+                  confirmText: a11y('confirm'),
+                  cancelText: a11y('cancel'),
+                })
+              : null
+          }
           icon="mastodon"
           accessibilityLabel={t('accessibility.mastodon_button', { handle: dealer.MastodonHandle })}
           accessibilityHint={t('accessibility.mastodon_button_hint')}
@@ -271,7 +295,14 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
       {dealer.BlueskyHandle && (
         <Button
           containerStyle={styles.marginAround}
-          onPress={() => Linking.openURL(`https://bsky.app/profile/${dealer.BlueskyHandle}`)}
+          onPress={() =>
+            handleExternalLink(`https://bsky.app/profile/${dealer.BlueskyHandle}`, {
+              title: a11y('external_link_no_prompt'),
+              body: a11y('outside_link'),
+              confirmText: a11y('confirm'),
+              cancelText: a11y('cancel'),
+            })
+          }
           icon="cloud"
           accessibilityLabel={t('accessibility.bluesky_button', { handle: dealer.BlueskyHandle })}
           accessibilityHint={t('accessibility.bluesky_button_hint')}

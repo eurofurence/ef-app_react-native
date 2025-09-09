@@ -3,9 +3,10 @@ import { useAudioPlayer } from 'expo-audio'
 import { router } from 'expo-router'
 import React, { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Linking, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { Alert, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
+import { handleExternalLink } from '@/components/ExternalLink'
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
@@ -132,6 +133,7 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
 
 export default function AboutScreen() {
   const { t } = useTranslation('About')
+  const { t: a11y } = useTranslation('Accessibility')
   const { getValue, setValue } = useCache()
   const { setTheme } = useTheme()
 
@@ -215,7 +217,14 @@ export default function AboutScreen() {
         <Row style={styles.marginAround} gap={16}>
           <Button
             containerStyle={styles.flex}
-            onPress={() => Linking.openURL('https://t.me/+lAYTadnRKdY2NDBk')}
+            onPress={() =>
+              handleExternalLink('https://t.me/+lAYTadnRKdY2NDBk', {
+                title: a11y('external_link_no_prompt'),
+                body: a11y('outside_link'),
+                confirmText: a11y('confirm'),
+                cancelText: a11y('cancel'),
+              })
+            }
             icon="help"
             accessible
             accessibilityLabel={t('app_details.get_help')}
@@ -225,7 +234,14 @@ export default function AboutScreen() {
           </Button>
           <Button
             containerStyle={styles.flex}
-            onPress={() => Linking.openURL('https://github.com/eurofurence/ef-app_react-native/issues')}
+            onPress={() =>
+              handleExternalLink('https://github.com/eurofurence/ef-app_react-native/issues', {
+                title: a11y('external_link_no_prompt'),
+                body: a11y('outside_link'),
+                confirmText: a11y('confirm'),
+                cancelText: a11y('cancel'),
+              })
+            }
             icon="bug"
             accessible
             accessibilityLabel={t('app_details.report_bug')}

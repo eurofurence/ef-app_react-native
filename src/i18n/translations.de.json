@@ -17,6 +17,8 @@
     "header": "Über uns"
   },
   "Accessibility": {
+    "external_link_no_prompt": "Externer Link",
+    "outside_link": "Sie sind dabei, eine externe Website zu öffnen. Eurofurence ist nicht für den Inhalt dieser Website verantwortlich",
     "cancel": "Abbrechen",
     "cancel_hint": "Schließt den Dialog ohne Änderungen zu speichern",
     "clear_selection": "Alle Auswahlen löschen",

@@ -17,6 +17,8 @@
     "header": "About"
   },
   "Accessibility": {
+    "external_link_no_prompt": "External link",
+    "outside_link": "You are about to open an external website. Eurofurence is not responsible for the content there",
     "cancel": "Cancel",
     "cancel_hint": "Closes dialog without saving changes",
     "clear_selection": "Clear all selections",
