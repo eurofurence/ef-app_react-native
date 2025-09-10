@@ -1,10 +1,16 @@
-import { FC } from 'react'
+import { FC, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
+import { ComboModal, ComboModalRef } from '@/components/generic/atoms/ComboModal'
+import { Label } from '@/components/generic/atoms/Label'
+import { Search } from '@/components/generic/atoms/Search'
+import { Button } from '@/components/generic/containers/Button'
 import { Header } from '@/components/generic/containers/Header'
 import { NoData } from '@/components/generic/containers/NoData'
+import { Row } from '@/components/generic/containers/Row'
 import { LostAndFoundList } from '@/components/lost-and-found/LostAndFoundList'
+import { sortByDate } from '@/components/lost-and-found/utils'
 import { useLostAndFoundQuery } from '@/hooks/api/lost-and-found/useLostAndFoundQuery'
 
 export default function LostAndFoundPage() {
@@ -14,6 +20,21 @@ export default function LostAndFoundPage() {
 const LostAndFoundContent: FC = () => {
   const { t } = useTranslation('LostAndFound')
   const { data: items, isLoading, error } = useLostAndFoundQuery()
+
+  const [search, setSearch] = useState<string>('')
+  // empty array => all
+  const [selectedStatuses, setSelectedStatuses] = useState<readonly string[]>([])
+  const modalRef = useRef<ComboModalRef<string> | null>(null)
+
+  const filtered = useMemo(() => {
+    if (!items) return []
+    // Filter by status first
+    const byStatus = selectedStatuses.length === 0 ? items : items.filter((it) => selectedStatuses.includes(it.Status))
+    // Filter by search term (title or description)
+    const term = search.trim().toLowerCase()
+    const bySearch = term ? byStatus.filter((it) => (it.Title || '').toLowerCase().includes(term) || (it.Description || '').toLowerCase().includes(term)) : byStatus
+    return sortByDate(bySearch)
+  }, [items, search, selectedStatuses])
 
   if (isLoading) {
     return (
@@ -45,7 +66,27 @@ const LostAndFoundContent: FC = () => {
   return (
     <View style={StyleSheet.absoluteFill} accessibilityLabel={t('accessibility.main_container')}>
       <Header>{t('header')}</Header>
-      <LostAndFoundList items={items} />
+      <Search className="mx-2.5" filter={search} setFilter={setSearch} />
+
+      <Row variant="start" style={{ paddingHorizontal: 10, gap: 8, alignItems: 'center' }}>
+        <Button
+          onPress={async () => {
+            const options = ['Lost', 'Found']
+            const res = await modalRef.current?.pick(options, selectedStatuses ?? [])
+            setSelectedStatuses(res ?? [])
+          }}
+          containerStyle={{ flex: 0 }}
+          style={{ flex: 0 }}
+        >
+          Filters
+        </Button>
+      </Row>
+
+      <ComboModal<string> ref={modalRef} title="Filter statuses" getKey={(item) => item} getLabel={(item) => item}>
+        <Label type="para">Select one or more statuses to filter on.</Label>
+      </ComboModal>
+
+      <LostAndFoundList items={filtered} />
     </View>
   )
 }
