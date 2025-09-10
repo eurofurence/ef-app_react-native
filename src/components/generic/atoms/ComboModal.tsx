@@ -47,13 +47,6 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
   const clearSelected = () => setSelected([])
 
   const toggleSelected = (item: T) => (selected.includes(item) ? setSelected(selected.filter((other) => item !== other)) : setSelected([...selected, item]))
-
-  const toggleSelectedFirstResult = () => {
-    if (!filtered?.length) return
-    toggleSelected(filtered[0])
-    setFilter('')
-  }
-
   useImperativeHandle(
     ref,
     () => ({
@@ -108,7 +101,7 @@ export const ComboModal = forwardRef(<T,>({ title, clear, getKey, getLabel, canc
         >
           {!title ? null : <Label type="h3">{title}</Label>}
 
-          <Search filter={filter} setFilter={setFilter} submit={() => toggleSelectedFirstResult()} placeholder={a11y('filter_options', { defaultValue: 'Filter options' })} />
+          <Search filter={filter} setFilter={setFilter} placeholder={a11y('filter_options', { defaultValue: 'Filter options' })} />
 
           {children}
 
