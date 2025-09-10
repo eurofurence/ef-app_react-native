@@ -2,12 +2,13 @@ import { format, setDay } from 'date-fns'
 import { router } from 'expo-router'
 import React, { FC, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet } from 'react-native'
+import { Linking, Platform, StyleSheet } from 'react-native'
 import { match } from 'ts-pattern'
 
 import { useCache } from '@/context/data/Cache'
 import { LinkFragment } from '@/context/data/types.api'
 import { MapDetails, MapEntryDetails } from '@/context/data/types.details'
+import { confirmPrompt } from '@/util/confirmPrompt'
 
 import { DealerCard } from '../dealers/DealerCard'
 import { isPresent, joinOffDays } from '../dealers/utils'
@@ -44,9 +45,24 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
   const { t } = useTranslation('Maps')
-  const onPress = useCallback(() => {
-    Linking.openURL(link.Target).catch()
-  }, [link.Target])
+  const { t: a11y } = useTranslation('Accessibility')
+
+  const onPress = useCallback(async () => {
+    if (Platform.OS !== 'web') {
+      // Prompt user with a warning before leaving the app
+      const prompt = await confirmPrompt({
+        title: a11y('external_link_no_prompt'),
+        body: a11y('outside_link'),
+        confirmText: a11y('confirm'),
+        cancelText: a11y('cancel'),
+      })
+      if (prompt === true) {
+        Linking.openURL(link.Target).catch()
+      }
+    } else {
+      Linking.openURL(link.Target).catch()
+    }
+  }, [a11y, link.Target])
 
   const linkUrl = new URL(link.Target)
   const displayText = link.Name || linkUrl.hostname.replace(/^www\./, '')
