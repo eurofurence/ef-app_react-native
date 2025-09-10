@@ -502,3 +502,7 @@ _private
 
 *storybook.log
 storybook-static
+
+# output
+output_dir
+ef-app.apks
