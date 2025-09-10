@@ -471,7 +471,10 @@
       "Lost": "Verloren",
       "Returned": "Teruggegeven",
       "Unknown": "Onbekend"
-    }
+    },
+    "filters": "Filters",
+    "filter_statuses": "Filterstatusen",
+    "select_statuses": "Selecteer een of meer statussen om te filteren."
   },
   "Maps": {
     "preview_unavailable": "Kaartvoorbeeld niet beschikbaar",

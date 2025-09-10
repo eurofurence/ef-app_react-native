@@ -78,12 +78,12 @@ const LostAndFoundContent: FC = () => {
           containerStyle={{ flex: 0 }}
           style={{ flex: 0 }}
         >
-          Filters
+          {t('filters')}
         </Button>
       </Row>
 
-      <ComboModal<string> ref={modalRef} title="Filter statuses" getKey={(item) => item} getLabel={(item) => item}>
-        <Label type="para">Select one or more statuses to filter on.</Label>
+      <ComboModal<string> ref={modalRef} title={t('filter_statuses')} getKey={(item) => item} getLabel={(item) => item}>
+        <Label type="para">{t('select_statuses')}</Label>
       </ComboModal>
 
       <LostAndFoundList items={filtered} />
