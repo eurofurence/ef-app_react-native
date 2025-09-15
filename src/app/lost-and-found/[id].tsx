@@ -88,8 +88,13 @@ const LostAndFoundDetailContent: FC = () => {
         )}
 
         <View style={styles.section} accessibilityLabel={t('accessibility.date_section')}>
-          <Label style={styles.date} accessibilityLabel={t('accessibility.reported_date', { date: new Date(item.LastChangeDateTimeUtc).toLocaleString() })}>
-            {new Date(item.LastChangeDateTimeUtc).toLocaleString()}
+          <Label
+            style={styles.date}
+            accessibilityLabel={t('accessibility.reported_date', {
+              date: item.LostDateTimeUtc ? new Date(item.LostDateTimeUtc).toLocaleDateString() : new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
+            })}
+          >
+            {item.LostDateTimeUtc ? new Date(item.LostDateTimeUtc).toLocaleDateString() : new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
           </Label>
         </View>
       </Floater>
