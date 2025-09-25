@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import React, { FC, ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
 import { useCache } from '@/context/data/Cache'
@@ -68,8 +68,6 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
       keyExtractor={keyExtractor}
       getItemType={getItemType}
       renderItem={renderItem}
-      estimatedItemSize={59}
-      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
       accessibilityLabel={t('accessibility.kb_sectioned_list')}
       accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
