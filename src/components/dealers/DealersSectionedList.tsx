@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { useDealerCardInteractions } from '@/components/dealers/Dealers.common'
 import { SectionProps } from '@/components/generic/atoms/Section'
@@ -65,8 +65,6 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({ leader, de
       getItemType={getItemType}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      estimatedItemSize={110}
-      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
       accessibilityLabel={t('accessibility.dealers_sectioned_list')}
       accessibilityHint={t('accessibility.dealers_sectioned_list_hint')}

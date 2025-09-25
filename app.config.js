@@ -147,6 +147,7 @@ module.exports = {
       '@react-native-firebase/app',
       'expo-secure-store',
       'expo-router',
+      'expo-font',
       'expo-web-browser',
       'react-native-legal',
     ].filter(Boolean),

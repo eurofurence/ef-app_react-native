@@ -265,7 +265,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             await setStringAsync(dealer.DiscordHandle)
             toast('info', t('discord_handle_copied', { discordHandle: dealer.DiscordHandle }), 5000)
           }}
-          icon="discord"
+          icon={(props) => <FaIcon name="discord" {...props} />}
           accessibilityLabel={t('accessibility.discord_button', { handle: dealer.DiscordHandle })}
           accessibilityHint={t('accessibility.discord_button_hint')}
         >

@@ -2,7 +2,7 @@ import { FlashList } from '@shopify/flash-list'
 import { router } from 'expo-router'
 import { FC, ReactElement, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { useCache } from '@/context/data/Cache'
 import { LostAndFoundRecord } from '@/context/data/types.api'
@@ -57,8 +57,6 @@ export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, emp
       data={items}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      estimatedItemSize={120}
-      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
       accessibilityLabel={t('accessibility.lost_found_list')}
       accessibilityHint={t('accessibility.lost_found_list_hint')}

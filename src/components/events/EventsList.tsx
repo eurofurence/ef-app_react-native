@@ -1,6 +1,6 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback } from 'react'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { useEventCardInteractions } from '@/components/events/Events.common'
 import { useCache } from '@/context/data/Cache'
@@ -49,8 +49,6 @@ export const EventsList: FC<EventsListProps> = ({ leader, events, select, empty,
       data={events}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      estimatedItemSize={110}
-      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
     />
   )

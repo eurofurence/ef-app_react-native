@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { FC, ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { useEventCardInteractions } from '@/components/events/Events.common'
 import { SectionProps } from '@/components/generic/atoms/Section'
@@ -69,8 +69,6 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, even
       getItemType={getItemType}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      estimatedItemSize={110}
-      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
       accessibilityLabel={t('events_list', { defaultValue: 'Events list' })}
     />
