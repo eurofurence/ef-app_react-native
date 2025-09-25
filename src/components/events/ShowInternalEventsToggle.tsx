@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, ViewProps } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { Icon } from '@/components/generic/atoms/Icon'
-import { Pressable } from '@/components/generic/Pressable'
+import { Pressable, PressableProps } from '@/components/generic/Pressable'
 import { useCurrentUser } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
-export function ShowInternalEventsToggle({ style, ...props }: ViewProps) {
+export function ShowInternalEventsToggle({ style, ...props }: PressableProps) {
   const { t } = useTranslation('Events')
 
   const toggleBackground = useThemeBackground('inverted')
