@@ -48,6 +48,17 @@ const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
   const { t: a11y } = useTranslation('Accessibility')
 
   const onPress = useCallback(async () => {
+    // If the external link points to our lost-and-found page, navigate in-app instead
+    try {
+      const lower = link.Target.toLowerCase()
+      if (lower.includes('lost-and-found') || lower.includes('lost%20and%20found') || lower.includes('/lostandfound')) {
+        router.push('/lost-and-found')
+        return
+      }
+    } catch {
+      // ignore and fall back to opening externally
+    }
+
     if (Platform.OS !== 'web') {
       // Prompt user with a warning before leaving the app
       const prompt = await confirmPrompt({
