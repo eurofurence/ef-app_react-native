@@ -424,7 +424,10 @@
       "Lost": "Zaginiony",
       "Returned": "Zwrócony",
       "Unknown": "Nieznany"
-    }
+    },
+    "filters": "Filtry",
+    "filter_statuses": "Filtry statusów",
+    "select_statuses": "Wybierz jeden lub więcej statusów, aby filtrować."
   },
   "Maps": {
     "preview_unavailable": "Podgląd mapy niedostępny",

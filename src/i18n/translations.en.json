@@ -587,7 +587,10 @@
       "Lost": "Lost",
       "Returned": "Returned",
       "Unknown": "Unknown"
-    }
+    },
+    "filters": "Filters",
+    "filter_statuses": "Filter statuses",
+    "select_statuses": "Select one or more statuses to filter on."
   },
   "Maps": {
     "accessibility": {
