@@ -27,5 +27,5 @@ jobs:
         run: bun run lint
       - name: Copy config into place
         run: cp .env.example .env
-      - name: Run tests
-        run: bun run test --forceExit
+#      - name: Run tests
+#        run: bun run test

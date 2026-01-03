@@ -14,6 +14,14 @@
   },
   "linter": {
     "enabled": true,
+    "includes": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "src/**/*.js",
+      "src/**/*.jsx",
+      "src/**/*.json",
+      "src/**/*.css"
+    ],
     "rules": {
       "recommended": true,
       "complexity": {

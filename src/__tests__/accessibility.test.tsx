@@ -1,3 +1,4 @@
+import { describe, expect, mock, test } from 'bun:test'
 import { render } from '@testing-library/react-native'
 import { Text, TouchableOpacity, View } from 'react-native'
 
@@ -5,12 +6,11 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 
 // Mock the theme hooks to avoid cache dependencies
-jest.mock('@/hooks/themes/useThemeHooks', () => ({
+mock.module('@/hooks/themes/useThemeHooks', () => ({
   useThemeBackground: () => ({ backgroundColor: '#000000' }),
   useThemeBorder: () => ({ borderColor: '#000000' }),
   useThemeColorValue: () => '#000000',
 }))
-
 // Custom accessibility validation functions
 const validateAccessibility = {
   hasAccessibleName: (element: any) => {

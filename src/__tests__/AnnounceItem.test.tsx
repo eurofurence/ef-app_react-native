@@ -1,16 +1,17 @@
+import { beforeEach, describe, expect, mock, test } from 'bun:test'
 import { render, waitFor } from '@testing-library/react-native'
 
 import AnnounceItem from '@/app/announcements/[id]'
-import { useCache } from '@/context/data/Cache'
+import type { useCache } from '@/context/data/Cache'
 
 // Mock expo-router
-jest.mock('expo-router', () => ({
-  useLocalSearchParams: jest.fn(() => ({ id: 'test-announcement-id' })),
+mock.module('expo-router', () => ({
+  useLocalSearchParams: mock(() => ({ id: 'test-announcement-id' })),
 }))
 
 // Mock expo-router
-jest.mock('react-native-safe-area-context', () => ({
-  useSafeAreaInsets: jest.fn(() => ({
+mock.module('react-native-safe-area-context', () => ({
+  useSafeAreaInsets: mock(() => ({
     top: 0,
     right: 0,
     bottom: 0,
@@ -19,50 +20,50 @@ jest.mock('react-native-safe-area-context', () => ({
 }))
 
 // Mock the cache context
-jest.mock('@/context/data/Cache', () => ({
-  useCache: jest.fn(),
+mock.module('@/context/data/Cache', () => ({
+  useCache: mock(),
 }))
 
 // Mock translation
-jest.mock('react-i18next', () => ({
+mock.module('react-i18next', () => ({
   useTranslation: () => ({
     t: (key: string) => key,
   }),
 }))
 
 // Mock date-fns
-jest.mock('date-fns', () => ({
-  format: jest.fn(() => 'Jan 1, 2022, 12:00 AM'),
+mock.module('date-fns', () => ({
+  format: mock(() => 'Jan 1, 2022, 12:00 AM'),
 }))
 
 // Mock date-fns
-jest.mock('@/util/parseDefaultISO', () => ({
-  parseDefaultISO: jest.fn(() => new Date('2022-01-01T00:00:00Z')),
+mock.module('@/util/parseDefaultISO', () => ({
+  parseDefaultISO: mock(() => new Date('2022-01-01T00:00:00Z')),
 }))
 
 // Mock ToastContext
-jest.mock('@/context/ui/ToastContext', () => ({
+mock.module('@/context/ui/ToastContext', () => ({
   useToastContext: () => ({
-    showToast: jest.fn(),
-    hideToast: jest.fn(),
+    showToast: mock(),
+    hideToast: mock(),
   }),
   useToastMessages: () => [],
 }))
 
-const mockUseCache = useCache as jest.MockedFunction<typeof useCache>
+const mockUseCache = mock() as ReturnType<typeof mock> & typeof useCache
 
 // Helper function to create mock cache with announcements
 const createMockCache = (announcements: Record<string, any> = {}) =>
   ({
     data: {},
-    getValue: jest.fn((key: string) =>
+    getValue: mock((key: string) =>
       key === 'settings' ? { theme: 'light' } : {}
     ),
-    setValue: jest.fn(),
-    removeValue: jest.fn(),
-    clear: jest.fn(),
+    setValue: mock(),
+    removeValue: mock(),
+    clear: mock(),
     isSynchronizing: false,
-    synchronize: jest.fn(),
+    synchronize: mock(),
     announcements: { dict: announcements },
     dealers: { dict: {} },
     images: { dict: {} },
@@ -95,11 +96,11 @@ const createMockCache = (announcements: Record<string, any> = {}) =>
 
 describe('AnnounceItem', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
+    mockUseCache.mockClear()
     mockUseCache.mockReturnValue(createMockCache())
   })
 
-  it('should render announcement when it exists', async () => {
+  test('should render announcement when it exists', async () => {
     const mockAnnouncement = {
       Id: 'test-announcement-id',
       NormalizedTitle: 'Test Announcement',
@@ -124,7 +125,7 @@ describe('AnnounceItem', () => {
     })
   })
 
-  it('should render message when announcement does not exist', async () => {
+  test('should render message when announcement does not exist', async () => {
     const { getByText, queryByText } = render(<AnnounceItem />)
 
     await waitFor(() => {
@@ -133,7 +134,7 @@ describe('AnnounceItem', () => {
     })
   })
 
-  it('should handle announcements with images', async () => {
+  test('should handle announcements with images', async () => {
     const announcementWithImage = {
       Id: 'test-announcement-id',
       NormalizedTitle: 'Announcement with Image',
@@ -158,7 +159,7 @@ describe('AnnounceItem', () => {
     })
   })
 
-  it('should display formatted date and author information', async () => {
+  test('should display formatted date and author information', async () => {
     const mockAnnouncement = {
       Id: 'test-announcement-id',
       NormalizedTitle: 'Test Announcement',
