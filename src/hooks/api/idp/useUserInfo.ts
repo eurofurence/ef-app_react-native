@@ -1,5 +1,9 @@
-import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import {
+  keepPreviousData,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
+import axios, { type GenericAbortSignal } from 'axios'
 
 import { authIssuer } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
@@ -14,7 +18,10 @@ export type Claims = Record<string, string | string[] | number>
  * @param accessToken The access token.
  * @param signal An abort signal.
  */
-export async function getUserInfo(accessToken: string | null, signal?: GenericAbortSignal) {
+export async function getUserInfo(
+  accessToken: string | null,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
     .get(`${authIssuer}/api/v1/userinfo`, {

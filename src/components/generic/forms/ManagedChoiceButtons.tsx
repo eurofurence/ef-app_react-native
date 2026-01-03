@@ -1,17 +1,29 @@
-import { useController, Path, FieldValues } from 'react-hook-form'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { type FieldValues, type Path, useController } from 'react-hook-form'
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native'
 
-import { ChoiceButtons, ChoiceButtonsProps } from '@/components/generic/atoms/ChoiceButtons'
+import {
+  ChoiceButtons,
+  type ChoiceButtonsProps,
+} from '@/components/generic/atoms/ChoiceButtons'
 
 import { Label } from '../atoms/Label'
 
-export type ManagedChoiceButtonsProps<T> = Omit<ChoiceButtonsProps, 'choice' | 'setChoice'> & {
+export type ManagedChoiceButtonsProps<T> = Omit<
+  ChoiceButtonsProps,
+  'choice' | 'setChoice'
+> & {
   name: Path<T>
   label?: string
   containerStyle?: StyleProp<ViewStyle>
 }
 
-export const ManagedChoiceButtons = <T extends FieldValues = FieldValues>({ name, label, containerStyle, style, ...props }: ManagedChoiceButtonsProps<T>) => {
+export const ManagedChoiceButtons = <T extends FieldValues = FieldValues>({
+  name,
+  label,
+  containerStyle,
+  style,
+  ...props
+}: ManagedChoiceButtonsProps<T>) => {
   const {
     field: { value, onChange },
     fieldState: { error },
@@ -22,13 +34,18 @@ export const ManagedChoiceButtons = <T extends FieldValues = FieldValues>({ name
   return (
     <View style={[styles.container, containerStyle]}>
       {label && (
-        <Label type="caption" className="mb-2">
+        <Label type='caption' className='mb-2'>
           {label}
         </Label>
       )}
-      <ChoiceButtons choice={value} setChoice={onChange} style={[styles.input, style]} {...props} />
+      <ChoiceButtons
+        choice={value}
+        setChoice={onChange}
+        style={[styles.input, style]}
+        {...props}
+      />
       {error && (
-        <Label type="caption" color="important" className="mt-1">
+        <Label type='caption' color='important' className='mt-1'>
           {error.message}
         </Label>
       )}

@@ -1,17 +1,24 @@
 import { isBefore, isSameDay } from 'date-fns'
-import React, { FC, useMemo } from 'react'
+import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { useEventCardInteractions } from '@/components/events/Events.common'
 import { Section } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 
 import { EventCard, eventInstanceForAny } from './EventCard'
 
-const filterHappeningTodayEvents = <T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>>(events: readonly T[], now: Date): T[] =>
-  events.filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc))).filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)))
+const filterHappeningTodayEvents = <
+  T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>,
+>(
+  events: readonly T[],
+  now: Date
+): T[] =>
+  events
+    .filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc)))
+    .filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)))
 
 export type TodayScheduleListProps = {
   now: Date
@@ -23,9 +30,13 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
 
   const showInternal = getValue('settings').showInternalEvents ?? true
   const today = useMemo(() => {
-    const favorites = eventsFavorite.filter((item) => !item.Hidden && (showInternal || !item.IsInternal))
+    const favorites = eventsFavorite.filter(
+      (item) => !item.Hidden && (showInternal || !item.IsInternal)
+    )
 
-    return filterHappeningTodayEvents(favorites, now).map((details) => eventInstanceForAny(details, now))
+    return filterHappeningTodayEvents(favorites, now).map((details) =>
+      eventInstanceForAny(details, now)
+    )
   }, [eventsFavorite, now, showInternal])
 
   const { onPress, onLongPress } = useEventCardInteractions()
@@ -36,10 +47,20 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
 
   return (
     <>
-      <Section title={t('today_schedule_title')} subtitle={t('today_schedule_subtitle')} icon="book-marker" />
+      <Section
+        title={t('today_schedule_title')}
+        subtitle={t('today_schedule_subtitle')}
+        icon='book-marker'
+      />
       <View style={styles.condense}>
         {today.map((event) => (
-          <EventCard key={event.details.Id} event={event} type="time" onPress={onPress} onLongPress={onLongPress} />
+          <EventCard
+            key={event.details.Id}
+            event={event}
+            type='time'
+            onPress={onPress}
+            onLongPress={onLongPress}
+          />
         ))}
       </View>
     </>

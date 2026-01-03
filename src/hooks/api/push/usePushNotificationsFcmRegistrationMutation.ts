@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
-import { PlatformOSType } from 'react-native'
+import axios, { type GenericAbortSignal } from 'axios'
+import type { PlatformOSType } from 'react-native'
 
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
@@ -19,7 +19,11 @@ export type PushNotificationsFcmRegistrationData = {
  * @param data The registration data.
  * @param signal An abort signal.
  */
-export async function postPushNotificationsFcmRegistration(accessToken: string | null, data: PushNotificationsFcmRegistrationData, signal?: GenericAbortSignal) {
+export async function postPushNotificationsFcmRegistration(
+  accessToken: string | null,
+  data: PushNotificationsFcmRegistrationData,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
     .post(`${apiBase}/PushNotifications/FcmDeviceRegistration`, data, {
@@ -38,6 +42,7 @@ export async function postPushNotificationsFcmRegistration(accessToken: string |
 export function usePushNotificationsFcmRegistrationMutation() {
   const { accessToken } = useAuthContext()
   return useMutation({
-    mutationFn: (data: PushNotificationsFcmRegistrationData) => postPushNotificationsFcmRegistration(accessToken, data),
+    mutationFn: (data: PushNotificationsFcmRegistrationData) =>
+      postPushNotificationsFcmRegistration(accessToken, data),
   })
 }

@@ -2,14 +2,17 @@ import { format } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
 import { setStringAsync } from 'expo-clipboard'
 import { openBrowserAsync } from 'expo-web-browser'
-import React, { FC, useMemo } from 'react'
+import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { shareDealer, useToggleFavorite } from '@/components/dealers/Dealers.common'
+import {
+  shareDealer,
+  useToggleFavorite,
+} from '@/components/dealers/Dealers.common'
 import { Row } from '@/components/generic/containers/Row'
 import { conTimeZone } from '@/configuration'
-import { DealerDetails } from '@/context/data/types.details'
+import type { DealerDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
@@ -32,30 +35,28 @@ const DealerCategories = ({ dealer }: { dealer: DealerDetails }) => {
   if (!dealer.Categories?.length) return null
 
   return (
-    <>
-      <View style={dealerCategoriesStyles.container}>
-        {dealer.Categories.map((category: string) => {
-          const keywords = dealer.Keywords?.[category]
-          if (keywords?.length)
-            return (
-              <View style={dealerCategoriesStyles.category} key={category}>
-                <Label type="caption" variant="bold">
-                  {category}
-                </Label>
-                {keywords.map((keyword) => (
-                  <Label key={keyword}>{keyword}</Label>
-                ))}
-              </View>
-            )
-          else
-            return (
-              <Label key={category} type="caption" variant="bold">
+    <View style={dealerCategoriesStyles.container}>
+      {dealer.Categories.map((category: string) => {
+        const keywords = dealer.Keywords?.[category]
+        if (keywords?.length)
+          return (
+            <View style={dealerCategoriesStyles.category} key={category}>
+              <Label type='caption' variant='bold'>
                 {category}
               </Label>
-            )
-        })}
-      </View>
-    </>
+              {keywords.map((keyword) => (
+                <Label key={keyword}>{keyword}</Label>
+              ))}
+            </View>
+          )
+        else
+          return (
+            <Label key={category} type='caption' variant='bold'>
+              {category}
+            </Label>
+          )
+      })}
+    </View>
   )
 }
 
@@ -92,7 +93,12 @@ export type DealerContentProps = {
   shareButton?: boolean
 }
 
-export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, updated, shareButton }) => {
+export const DealerContent: FC<DealerContentProps> = ({
+  dealer,
+  parentPad = 0,
+  updated,
+  shareButton,
+}) => {
   const { t } = useTranslation('Dealer')
   const { t: a11y } = useTranslation('Accessibility')
   const { toast } = useToastContext()
@@ -123,13 +129,13 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
   return (
     <>
       {!updated ? null : (
-        <Badge unpad={parentPad} badgeColor="warning" textColor="white">
+        <Badge unpad={parentPad} badgeColor='warning' textColor='white'>
           {t('dealer_was_updated')}
         </Badge>
       )}
 
       {!markNotAttending ? null : (
-        <Badge unpad={parentPad} badgeColor="warning" textColor="invText">
+        <Badge unpad={parentPad} badgeColor='warning' textColor='invText'>
           {t('not_attending')}
         </Badge>
       )}
@@ -137,34 +143,48 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
       {!dealer.Artist ? null : (
         <View style={[appStyles.shadow, avatarBackground, styles.avatarCircle]}>
           <Image
-            contentFit="cover"
+            contentFit='cover'
             style={styles.avatarImage}
             source={sourceFromImage(dealer.ArtistThumbnail)}
-            accessibilityLabel={t('accessibility.dealer_avatar', { name: dealer.DisplayNameOrAttendeeNickname })}
-            accessibilityRole="image"
+            accessibilityLabel={t('accessibility.dealer_avatar', {
+              name: dealer.DisplayNameOrAttendeeNickname,
+            })}
+            accessibilityRole='image'
           />
         </View>
       )}
 
       {dealer.DisplayNameOrAttendeeNickname ? (
         <Label
-          type="h1"
-          variant="middle"
-          className="mb-3"
-          accessibilityRole="header"
-          accessibilityLabel={t('accessibility.dealer_name_heading', { name: dealer.DisplayNameOrAttendeeNickname })}
+          type='h1'
+          variant='middle'
+          className='mb-3'
+          accessibilityRole='header'
+          accessibilityLabel={t('accessibility.dealer_name_heading', {
+            name: dealer.DisplayNameOrAttendeeNickname,
+          })}
         >
           {dealer.DisplayNameOrAttendeeNickname}
         </Label>
       ) : null}
 
-      <Label style={styles.marginAround} type="para" accessibilityLabel={t('accessibility.dealer_description', { description: dealer.ShortDescriptionContent })}>
+      <Label
+        style={styles.marginAround}
+        type='para'
+        accessibilityLabel={t('accessibility.dealer_description', {
+          description: dealer.ShortDescriptionContent,
+        })}
+      >
         {dealer.ShortDescriptionContent}
       </Label>
 
-      <Row style={styles.marginAround} gap={5} accessibilityLabel={t('accessibility.dealer_attendance', { days })}>
-        <Label type="caption">{t('attends')}</Label>
-        <Label type="caption" color="important">
+      <Row
+        style={styles.marginAround}
+        gap={5}
+        accessibilityLabel={t('accessibility.dealer_attendance', { days })}
+      >
+        <Label type='caption'>{t('attends')}</Label>
+        <Label type='caption' color='important'>
           {days}
         </Label>
       </Row>
@@ -174,8 +194,16 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         outline={dealer.Favorite}
         icon={dealer.Favorite ? 'heart-minus' : 'heart-plus-outline'}
         onPress={() => toggleFavorite(dealer)}
-        accessibilityLabel={dealer.Favorite ? t('accessibility.remove_favorite_button') : t('accessibility.add_favorite_button')}
-        accessibilityHint={dealer.Favorite ? t('accessibility.remove_favorite_hint') : t('accessibility.add_favorite_hint')}
+        accessibilityLabel={
+          dealer.Favorite
+            ? t('accessibility.remove_favorite_button')
+            : t('accessibility.add_favorite_button')
+        }
+        accessibilityHint={
+          dealer.Favorite
+            ? t('accessibility.remove_favorite_hint')
+            : t('accessibility.add_favorite_hint')
+        }
       >
         {dealer.Favorite ? t('remove_favorite') : t('add_favorite')}
       </Button>
@@ -183,7 +211,7 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
       {!shareButton ? null : (
         <Button
           style={styles.marginAround}
-          icon="share"
+          icon='share'
           onPress={() => shareDealer(dealer)}
           accessibilityLabel={t('accessibility.share_dealer_button')}
           accessibilityHint={t('accessibility.share_dealer_hint')}
@@ -194,32 +222,37 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
       {dealer.ShortDescriptionTable ? (
         <Row style={styles.marginAround} gap={5}>
-          <Label type="h3" variant="receded">
+          <Label type='h3' variant='receded'>
             {t('table')}
           </Label>
           {dealer.ShortDescriptionTable ? (
-            <Label type="h3" color="important">
+            <Label type='h3' color='important'>
               {dealer.ShortDescriptionTable}
             </Label>
           ) : null}
           {dealer.IsAfterDark ? (
-            <Label type="h3" variant="receded">
+            <Label type='h3' variant='receded'>
               ({t('in_after_dark')})
             </Label>
           ) : null}
         </Row>
       ) : null}
 
-      {!dealer.MapLink ? null : <LinkPreview url={dealer.MapLink} onPress={() => openBrowserAsync(dealer.MapLink ?? '')} style={styles.fullWidth} />}
+      {!dealer.MapLink ? null : (
+        <LinkPreview
+          url={dealer.MapLink}
+          onPress={() => openBrowserAsync(dealer.MapLink ?? '')}
+          style={styles.fullWidth}
+        />
+      )}
 
       <DealerCategories dealer={dealer} />
 
-      {dealer.Links &&
-        dealer.Links.map((it) => (
-          <View style={styles.marginAround} key={it.Name}>
-            <LinkItem link={it} />
-          </View>
-        ))}
+      {dealer.Links?.map((it) => (
+        <View style={styles.marginAround} key={it.Name}>
+          <LinkItem link={it} />
+        </View>
+      ))}
 
       {dealer.TelegramHandle && (
         <Button
@@ -232,8 +265,10 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
               cancelText: a11y('cancel'),
             })
           }
-          icon={(props) => <FaIcon name="telegram-plane" {...props} />}
-          accessibilityLabel={t('accessibility.telegram_button', { handle: dealer.TelegramHandle })}
+          icon={(props) => <FaIcon name='telegram-plane' {...props} />}
+          accessibilityLabel={t('accessibility.telegram_button', {
+            handle: dealer.TelegramHandle,
+          })}
           accessibilityHint={t('accessibility.telegram_button_hint')}
         >
           Telegram: {dealer.TelegramHandle}
@@ -250,8 +285,10 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
               cancelText: a11y('cancel'),
             })
           }
-          icon="twitter"
-          accessibilityLabel={t('accessibility.twitter_button', { handle: dealer.TwitterHandle })}
+          icon='twitter'
+          accessibilityLabel={t('accessibility.twitter_button', {
+            handle: dealer.TwitterHandle,
+          })}
           accessibilityHint={t('accessibility.twitter_button_hint')}
         >
           Twitter: {dealer.TwitterHandle}
@@ -263,10 +300,18 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
           onPress={async () => {
             if (!dealer.DiscordHandle) return null
             await setStringAsync(dealer.DiscordHandle)
-            toast('info', t('discord_handle_copied', { discordHandle: dealer.DiscordHandle }), 5000)
+            toast(
+              'info',
+              t('discord_handle_copied', {
+                discordHandle: dealer.DiscordHandle,
+              }),
+              5000
+            )
           }}
-          icon="discord"
-          accessibilityLabel={t('accessibility.discord_button', { handle: dealer.DiscordHandle })}
+          icon='discord'
+          accessibilityLabel={t('accessibility.discord_button', {
+            handle: dealer.DiscordHandle,
+          })}
           accessibilityHint={t('accessibility.discord_button_hint')}
         >
           Discord: {dealer.DiscordHandle}
@@ -285,8 +330,10 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
                 })
               : null
           }
-          icon="mastodon"
-          accessibilityLabel={t('accessibility.mastodon_button', { handle: dealer.MastodonHandle })}
+          icon='mastodon'
+          accessibilityLabel={t('accessibility.mastodon_button', {
+            handle: dealer.MastodonHandle,
+          })}
           accessibilityHint={t('accessibility.mastodon_button_hint')}
         >
           Mastodon: {dealer.MastodonHandle}
@@ -296,15 +343,20 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
         <Button
           containerStyle={styles.marginAround}
           onPress={() =>
-            handleExternalLink(`https://bsky.app/profile/${dealer.BlueskyHandle}`, {
-              title: a11y('external_link_no_prompt'),
-              body: a11y('outside_link'),
-              confirmText: a11y('confirm'),
-              cancelText: a11y('cancel'),
-            })
+            handleExternalLink(
+              `https://bsky.app/profile/${dealer.BlueskyHandle}`,
+              {
+                title: a11y('external_link_no_prompt'),
+                body: a11y('outside_link'),
+                confirmText: a11y('confirm'),
+                cancelText: a11y('cancel'),
+              }
+            )
           }
-          icon="cloud"
-          accessibilityLabel={t('accessibility.bluesky_button', { handle: dealer.BlueskyHandle })}
+          icon='cloud'
+          accessibilityLabel={t('accessibility.bluesky_button', {
+            handle: dealer.BlueskyHandle,
+          })}
           accessibilityHint={t('accessibility.bluesky_button_hint')}
         >
           Bluesky: {dealer.BlueskyHandle}
@@ -313,25 +365,32 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
       {!dealer.AboutTheArtText && !dealer.ArtPreview ? null : (
         <>
-          <Section icon="film" title={t('about_the_art')} />
+          <Section icon='film' title={t('about_the_art')} />
 
           {!dealer.ArtPreview ? null : (
             <View style={styles.posterLine}>
               <Banner image={dealer.ArtPreview} viewable />
 
               <Label
-                className="mt-3"
-                type="caption"
+                className='mt-3'
+                type='caption'
                 numberOfLines={4}
-                ellipsizeMode="tail"
-                accessibilityLabel={t('accessibility.art_preview_caption', { caption: dealer.ArtPreviewCaption })}
+                ellipsizeMode='tail'
+                accessibilityLabel={t('accessibility.art_preview_caption', {
+                  caption: dealer.ArtPreviewCaption,
+                })}
               >
                 {dealer.ArtPreviewCaption}
               </Label>
             </View>
           )}
 
-          <Label type="para" accessibilityLabel={t('accessibility.about_art_text', { text: dealer.AboutTheArtText })}>
+          <Label
+            type='para'
+            accessibilityLabel={t('accessibility.about_art_text', {
+              text: dealer.AboutTheArtText,
+            })}
+          >
             {dealer.AboutTheArtText}
           </Label>
         </>
@@ -339,7 +398,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
 
       {!dealer.AboutTheArtistText && !dealer.ArtistImageId ? null : (
         <>
-          <Section icon="account-circle-outline" title={t('about_the_artist', { name: dealer.DisplayNameOrAttendeeNickname })} />
+          <Section
+            icon='account-circle-outline'
+            title={t('about_the_artist', {
+              name: dealer.DisplayNameOrAttendeeNickname,
+            })}
+          />
 
           {!dealer.Artist ? null : (
             <View style={styles.posterLine}>
@@ -347,7 +411,12 @@ export const DealerContent: FC<DealerContentProps> = ({ dealer, parentPad = 0, u
             </View>
           )}
 
-          <Label type="para" accessibilityLabel={t('accessibility.about_artist_text', { text: dealer.AboutTheArtistText })}>
+          <Label
+            type='para'
+            accessibilityLabel={t('accessibility.about_artist_text', {
+              text: dealer.AboutTheArtistText,
+            })}
+          >
             {dealer.AboutTheArtistText}
           </Label>
         </>

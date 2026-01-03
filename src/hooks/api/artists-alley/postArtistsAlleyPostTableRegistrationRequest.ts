@@ -2,18 +2,21 @@ import * as FileSystem from 'expo-file-system'
 import { FileSystemSessionType, FileSystemUploadType } from 'expo-file-system'
 
 import { apiBase } from '@/configuration'
-import { ArtistsAlleyPostTableRegistrationData } from '@/hooks/api/artists-alley/ArtistsAlleyPostTableRegistrationData'
+import type { ArtistsAlleyPostTableRegistrationData } from '@/hooks/api/artists-alley/ArtistsAlleyPostTableRegistrationData'
 
 /**
  * Posts a table registration via the API with the given access token and registration data.
  * @param accessToken The access token.
  * @param data The registration data.
  */
-export async function postArtistsAlleyPostTableRegistrationRequest(accessToken: string | null, data: ArtistsAlleyPostTableRegistrationData) {
+export async function postArtistsAlleyPostTableRegistrationRequest(
+  accessToken: string | null,
+  data: ArtistsAlleyPostTableRegistrationData
+) {
   if (!accessToken) throw new Error('Unauthorized')
 
   // Check if uploading a new image or an existing. If existing, download.
-  let downloadedUri
+  let downloadedUri: string | null = null
   if (data.imageUri.startsWith('file:')) {
     downloadedUri = null
   } else {
@@ -26,22 +29,26 @@ export async function postArtistsAlleyPostTableRegistrationRequest(accessToken: 
 
   try {
     // Upload to registration. Return true.
-    await FileSystem.uploadAsync(`${apiBase}/ArtistsAlley/TableRegistrationRequest`, downloadedUri ?? data.imageUri, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      httpMethod: 'POST',
-      sessionType: FileSystemSessionType.FOREGROUND,
-      uploadType: FileSystemUploadType.MULTIPART,
-      fieldName: 'requestImageFile',
-      parameters: {
-        DisplayName: data.displayName,
-        WebsiteUrl: data.websiteUrl,
-        ShortDescription: data.shortDescription,
-        Location: data.location,
-        TelegramHandle: data.telegramHandle,
-      },
-    }).then((res) => {
+    await FileSystem.uploadAsync(
+      `${apiBase}/ArtistsAlley/TableRegistrationRequest`,
+      downloadedUri ?? data.imageUri,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        httpMethod: 'POST',
+        sessionType: FileSystemSessionType.FOREGROUND,
+        uploadType: FileSystemUploadType.MULTIPART,
+        fieldName: 'requestImageFile',
+        parameters: {
+          DisplayName: data.displayName,
+          WebsiteUrl: data.websiteUrl,
+          ShortDescription: data.shortDescription,
+          Location: data.location,
+          TelegramHandle: data.telegramHandle,
+        },
+      }
+    ).then((res) => {
       // OK-ish status code, API will likely return 200 or 202.
       if (200 <= res.status && res.status < 300) return res.body
       else throw new Error(`Response ${res.status} with body: ${res.body}`)

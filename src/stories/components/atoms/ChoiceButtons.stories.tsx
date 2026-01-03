@@ -1,9 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { useState } from 'react'
 import { View } from 'react-native'
-
 import { ChoiceButtons } from '@/components/generic/atoms/ChoiceButtons'
-
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/ChoiceButtons',
@@ -43,7 +41,16 @@ const meta = {
     },
     labelVariant: {
       control: { type: 'select' },
-      options: ['regular', 'narrow', 'bold', 'lineThrough', 'underlined', 'middle', 'shadow', 'receded'],
+      options: [
+        'regular',
+        'narrow',
+        'bold',
+        'lineThrough',
+        'underlined',
+        'middle',
+        'shadow',
+        'receded',
+      ],
     },
   },
 } satisfies Meta<typeof ChoiceButtons>
@@ -53,7 +60,15 @@ type Story = StoryObj<typeof meta>
 
 const ChoiceButtonsWrapper = ({ choices, initialChoice, ...props }: any) => {
   const [choice, setChoice] = useState(initialChoice || choices[0])
-  return <ChoiceButtons choices={choices} choice={choice} setChoice={setChoice} getLabel={(item) => item} {...props} />
+  return (
+    <ChoiceButtons
+      choices={choices}
+      choice={choice}
+      setChoice={setChoice}
+      getLabel={(item) => item}
+      {...props}
+    />
+  )
 }
 
 export const Default: Story = {
@@ -63,7 +78,9 @@ export const Default: Story = {
     setChoice: () => {},
     getLabel: (item: unknown) => item as string,
   },
-  render: () => <ChoiceButtonsWrapper choices={['Option 1', 'Option 2', 'Option 3']} />,
+  render: () => (
+    <ChoiceButtonsWrapper choices={['Option 1', 'Option 2', 'Option 3']} />
+  ),
 }
 
 export const TwoOptions: Story = {
@@ -83,7 +100,11 @@ export const FourOptions: Story = {
     setChoice: () => {},
     getLabel: (item: unknown) => item as string,
   },
-  render: () => <ChoiceButtonsWrapper choices={['Small', 'Medium', 'Large', 'Extra Large']} />,
+  render: () => (
+    <ChoiceButtonsWrapper
+      choices={['Small', 'Medium', 'Large', 'Extra Large']}
+    />
+  ),
 }
 
 export const WithCustomLabels: Story = {
@@ -114,7 +135,13 @@ export const WithCustomStyling: Story = {
     labelType: 'h4',
     labelVariant: 'bold',
   },
-  render: () => <ChoiceButtonsWrapper choices={['Option A', 'Option B', 'Option C']} labelType="h4" labelVariant="bold" />,
+  render: () => (
+    <ChoiceButtonsWrapper
+      choices={['Option A', 'Option B', 'Option C']}
+      labelType='h4'
+      labelVariant='bold'
+    />
+  ),
 }
 
 export const Interactive: Story = {
@@ -128,9 +155,21 @@ export const Interactive: Story = {
     const [choice, setChoice] = useState('Option 1')
     return (
       <View style={{ gap: 20 }}>
-        <ChoiceButtons choices={['Option 1', 'Option 2', 'Option 3']} choice={choice} setChoice={setChoice} getLabel={(item: unknown) => item as string} />
-        <View style={{ padding: 10, backgroundColor: '#e0e0e0', borderRadius: 8 }}>
-          <ChoiceButtons choices={['Red', 'Green', 'Blue']} choice={choice} setChoice={setChoice} getLabel={(item: unknown) => item as string} />
+        <ChoiceButtons
+          choices={['Option 1', 'Option 2', 'Option 3']}
+          choice={choice}
+          setChoice={setChoice}
+          getLabel={(item: unknown) => item as string}
+        />
+        <View
+          style={{ padding: 10, backgroundColor: '#e0e0e0', borderRadius: 8 }}
+        >
+          <ChoiceButtons
+            choices={['Red', 'Green', 'Blue']}
+            choice={choice}
+            setChoice={setChoice}
+            getLabel={(item: unknown) => item as string}
+          />
         </View>
       </View>
     )

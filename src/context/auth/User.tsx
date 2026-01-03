@@ -1,10 +1,10 @@
-import { createContext, ReactNode, useContext, useMemo } from 'react'
+import { createContext, type ReactNode, useContext, useMemo } from 'react'
 
 import { avatarBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { IdData } from '@/context/auth/Auth.idToken'
-import { Claims, useUserInfo } from '@/hooks/api/idp/useUserInfo'
-import { UserDetails, useUsersSelf } from '@/hooks/api/users/useUsersSelf'
+import type { IdData } from '@/context/auth/Auth.idToken'
+import { type Claims, useUserInfo } from '@/hooks/api/idp/useUserInfo'
+import { type UserDetails, useUsersSelf } from '@/hooks/api/users/useUsersSelf'
 
 /**
  * Converts ID data to a claims-compatible object.
@@ -26,7 +26,11 @@ function idToClaims(idData: IdData | null): Claims | null {
 
   // Try to transfer avatar. It might not be absolute.
   if (idData.avatar) {
-    if (idData.avatar.startsWith('http://') || idData.avatar.startsWith('https://')) result.avatar = idData.avatar
+    if (
+      idData.avatar.startsWith('http://') ||
+      idData.avatar.startsWith('https://')
+    )
+      result.avatar = idData.avatar
     else result.avatar = `${avatarBase}/${idData.avatar}`
   }
 
@@ -64,7 +68,11 @@ UserContext.displayName = 'UserContext'
  * @param children The children to provide to.
  * @constructor
  */
-export const UserProvider = ({ children }: { children?: ReactNode | undefined }) => {
+export const UserProvider = ({
+  children,
+}: {
+  children?: ReactNode | undefined
+}) => {
   const { idData, refreshToken } = useAuthContext()
 
   const { data: claims, refetch: refetchClaims } = useUserInfo()
@@ -92,7 +100,8 @@ export const UserProvider = ({ children }: { children?: ReactNode | undefined })
  */
 export const useUserContext = () => {
   const context = useContext(UserContext)
-  if (!context) throw new Error('useUserContext must be used within a UserProvider')
+  if (!context)
+    throw new Error('useUserContext must be used within a UserProvider')
   return context
 }
 

@@ -1,13 +1,39 @@
 import { useIsFocused } from '@react-navigation/core'
-import React, { forwardRef, ReactNode, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
-import { BackHandler, Platform, StyleProp, StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
+import {
+  forwardRef,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useState,
+} from 'react'
+import {
+  BackHandler,
+  Platform,
+  type StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  type ViewStyle,
+} from 'react-native'
 import { Gesture, GestureDetector } from 'react-native-gesture-handler'
-import Animated, { cancelAnimation, runOnJS, useAnimatedReaction, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated'
+import Animated, {
+  cancelAnimation,
+  runOnJS,
+  useAnimatedReaction,
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+} from 'react-native-reanimated'
 
-import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeBorder,
+} from '@/hooks/themes/useThemeHooks'
 
 import { Continuous } from '../atoms/Continuous'
-import { IconNames } from '../atoms/Icon'
+import type { IconNames } from '../atoms/Icon'
 
 import { Tab } from './Tab'
 
@@ -142,170 +168,219 @@ const springConfig = {
  * or dragging, translates it into view and overlays the containing view with
  * a semi-opaque layer.
  */
-export const Tabs = forwardRef<TabsRef, TabsProps>(({ style, padding = 0, tabs, textMore = 'More', textLess = 'Less', indicateMore, activity, notice, children }, ref) => {
-  // Computed styles.
-  const styleDismiss = useThemeBackground('darken')
-  const fillBackground = useThemeBackground('background')
-  const bordersDarken = useThemeBorder('darken')
+export const Tabs = forwardRef<TabsRef, TabsProps>(
+  (
+    {
+      style,
+      padding = 0,
+      tabs,
+      textMore = 'More',
+      textLess = 'Less',
+      indicateMore,
+      activity,
+      notice,
+      children,
+    },
+    ref
+  ) => {
+    // Computed styles.
+    const styleDismiss = useThemeBackground('darken')
+    const fillBackground = useThemeBackground('background')
+    const bordersDarken = useThemeBorder('darken')
 
-  // Get safe area paddings.
-  const padMenu = useMemo((): ViewStyle => {
-    return { height: padding }
-  }, [padding])
+    // Get safe area paddings.
+    const padMenu = useMemo((): ViewStyle => {
+      return { height: padding }
+    }, [padding])
 
-  // Animation values
-  const height = useSharedValue<number>(300)
-  const offset = useSharedValue<number>(0)
-  const startOffset = useSharedValue<number>(0)
-  const animating = useSharedValue<boolean>(false)
+    // Animation values
+    const height = useSharedValue<number>(300)
+    const offset = useSharedValue<number>(0)
+    const startOffset = useSharedValue<number>(0)
+    const animating = useSharedValue<boolean>(false)
 
-  // Animation derived values.
-  const [isOpen, setIsOpen] = useState(false)
-  const [isAnimating, setIsAnimating] = useState(false)
-  useAnimatedReaction(
-    () => offset.value > openThreshold,
-    (currentValue, previousValue) => {
-      if (previousValue !== currentValue) {
-        runOnJS(setIsOpen)(currentValue)
+    // Animation derived values.
+    const [isOpen, setIsOpen] = useState(false)
+    const [isAnimating, setIsAnimating] = useState(false)
+    useAnimatedReaction(
+      () => offset.value > openThreshold,
+      (currentValue, previousValue) => {
+        if (previousValue !== currentValue) {
+          runOnJS(setIsOpen)(currentValue)
+        }
       }
-    }
-  )
-  useAnimatedReaction(
-    () => animating.value,
-    (currentValue, previousValue) => {
-      if (previousValue !== currentValue) {
-        runOnJS(setIsAnimating)(currentValue)
+    )
+    useAnimatedReaction(
+      () => animating.value,
+      (currentValue, previousValue) => {
+        if (previousValue !== currentValue) {
+          runOnJS(setIsAnimating)(currentValue)
+        }
       }
-    }
-  )
+    )
 
-  // Derive opa,city from offset
-  const dynamicDismiss = useAnimatedStyle(
-    () => ({
-      opacity: offset.value,
-      transform: [
-        {
-          translateY: offset.value === 0 ? 99999 : 0,
-        },
-      ],
-    }),
-    [offset]
-  )
+    // Derive opa,city from offset
+    const dynamicDismiss = useAnimatedStyle(
+      () => ({
+        opacity: offset.value,
+        transform: [
+          {
+            translateY: offset.value === 0 ? 99999 : 0,
+          },
+        ],
+      }),
+      [offset]
+    )
 
-  // Derive transformation from offset
-  const dynamicContainer = useAnimatedStyle(
-    () => ({
-      transform: [{ translateY: -offset.value * height.value }],
-    }),
-    [offset, height]
-  )
+    // Derive transformation from offset
+    const dynamicContainer = useAnimatedStyle(
+      () => ({
+        transform: [{ translateY: -offset.value * height.value }],
+      }),
+      [offset, height]
+    )
 
-  // State change handlers
-  const open = useCallback(() => {
-    if (isOpen) return false
-    animating.set(true)
-    offset.value = withSpring(1, springConfig, () => {
-      animating.set(false)
-    })
-    return true
-  }, [animating, isOpen, offset])
+    // State change handlers
+    const open = useCallback(() => {
+      if (isOpen) return false
+      animating.set(true)
+      offset.value = withSpring(1, springConfig, () => {
+        animating.set(false)
+      })
+      return true
+    }, [animating, isOpen, offset])
 
-  const close = useCallback(() => {
-    if (!isOpen) return false
-    animating.set(true)
-    offset.value = withSpring(0, springConfig, () => {
-      animating.set(false)
-    })
-    return true
-  }, [animating, isOpen, offset])
+    const close = useCallback(() => {
+      if (!isOpen) return false
+      animating.set(true)
+      offset.value = withSpring(0, springConfig, () => {
+        animating.set(false)
+      })
+      return true
+    }, [animating, isOpen, offset])
 
-  const closeImmediately = useCallback(() => {
-    if (!isOpen) return false
-    offset.value = 0
-    return true
-  }, [isOpen, offset])
+    const closeImmediately = useCallback(() => {
+      if (!isOpen) return false
+      offset.value = 0
+      return true
+    }, [isOpen, offset])
 
-  // Handle to invoke internal mutations from outside if needed.
-  useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [open, close, closeImmediately])
+    // Handle to invoke internal mutations from outside if needed.
+    useImperativeHandle(ref, () => ({ open, close, closeImmediately }), [
+      open,
+      close,
+      closeImmediately,
+    ])
 
-  // Gesture handling
-  const gesture = useMemo(
-    () =>
-      Gesture.Pan()
-        .onBegin(() => {
-          startOffset.value = offset.value
-          cancelAnimation(offset)
-        })
-        .onUpdate((e) => {
-          const newOffset = -e.translationY / height.value + startOffset.value
-          offset.value = Math.max(0, Math.min(newOffset, 1))
-        })
-        .onEnd((e) => {
-          // Get state and gesture properties (i.e., if criteria are matched.
-          const isOpen = offset.get() > openThreshold
-          const drawnClosed = e.translationY > closeDragThreshold
-          const drawnOpen = e.translationY < -openDragThreshold
-
-          // Target. If open and drawn closed, close. If closed and drawn open, open. Otherwise fall back to original state.
-          let target: 0 | 1
-          if (isOpen && drawnClosed) target = 0
-          else if (!isOpen && drawnOpen) target = 1
-          else target = isOpen ? 1 : 0
-
-          animating.set(true)
-          offset.value = withSpring(target, springConfig, () => {
-            animating.set(false)
+    // Gesture handling
+    const gesture = useMemo(
+      () =>
+        Gesture.Pan()
+          .onBegin(() => {
+            startOffset.value = offset.value
+            cancelAnimation(offset)
           })
-        }),
-    [animating, height, offset, startOffset]
-  )
+          .onUpdate((e) => {
+            const newOffset = -e.translationY / height.value + startOffset.value
+            offset.value = Math.max(0, Math.min(newOffset, 1))
+          })
+          .onEnd((e) => {
+            // Get state and gesture properties (i.e., if criteria are matched.
+            const isOpen = offset.get() > openThreshold
+            const drawnClosed = e.translationY > closeDragThreshold
+            const drawnOpen = e.translationY < -openDragThreshold
 
-  const isFocused = useIsFocused()
+            // Target. If open and drawn closed, close. If closed and drawn open, open. Otherwise fall back to original state.
+            let target: 0 | 1
+            if (isOpen && drawnClosed) target = 0
+            else if (!isOpen && drawnOpen) target = 1
+            else target = isOpen ? 1 : 0
 
-  // Connect to back handler
-  useEffect(() => {
-    if (Platform.OS === 'web') return
-    if (!isFocused) return
-    const subscription = BackHandler.addEventListener('hardwareBackPress', () => close() ?? false)
-    return () => subscription.remove()
-  }, [close, isFocused])
+            animating.set(true)
+            offset.value = withSpring(target, springConfig, () => {
+              animating.set(false)
+            })
+          }),
+      [animating, height, offset, startOffset]
+    )
 
-  return (
-    <>
-      <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
-        <TouchableOpacity style={StyleSheet.absoluteFill} onPress={close} accessibilityRole="button" accessibilityLabel="Close" activeOpacity={1}>
-          <View style={StyleSheet.absoluteFill} />
-        </TouchableOpacity>
-      </Animated.View>
+    const isFocused = useIsFocused()
 
-      <GestureDetector gesture={gesture}>
-        <Animated.View style={dynamicContainer}>
-          {notice && (
-            <View style={styles.zeroFromTop}>
-              <View style={styles.zeroFromBottom}>{notice}</View>
-            </View>
-          )}
+    // Connect to back handler
+    useEffect(() => {
+      if (Platform.OS === 'web') return
+      if (!isFocused) return
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => close() ?? false
+      )
+      return () => subscription.remove()
+    }, [close, isFocused])
 
-          <View style={[styles.tabs, bordersDarken, fillBackground, style]} pointerEvents={isAnimating ? 'none' : 'auto'}>
-            {tabs?.map((tab, i) => (
-              <Tab key={i} style={tab.style} icon={tab.icon} text={tab.text} active={tab.active} indicate={tab.indicate} onPress={tab.onPress} />
-            ))}
-
-            <Tab icon={isOpen ? 'arrow-down-circle' : 'menu'} text={isOpen ? textLess : textMore} onPress={isOpen ? close : open} indicate={indicateMore} />
-
-            <Continuous style={styles.activity} active={activity} />
-          </View>
-
-          <View style={[styles.content, bordersDarken, fillBackground]} onLayout={(e) => height.set((current) => e.nativeEvent.layout.height ?? current)}>
-            {children}
-          </View>
+    return (
+      <>
+        <Animated.View style={[styles.dismiss, styleDismiss, dynamicDismiss]}>
+          <TouchableOpacity
+            style={StyleSheet.absoluteFill}
+            onPress={close}
+            accessibilityRole='button'
+            accessibilityLabel='Close'
+            activeOpacity={1}
+          >
+            <View style={StyleSheet.absoluteFill} />
+          </TouchableOpacity>
         </Animated.View>
-      </GestureDetector>
 
-      <View style={[padMenu, fillBackground]}></View>
-    </>
-  )
-})
+        <GestureDetector gesture={gesture}>
+          <Animated.View style={dynamicContainer}>
+            {notice && (
+              <View style={styles.zeroFromTop}>
+                <View style={styles.zeroFromBottom}>{notice}</View>
+              </View>
+            )}
+
+            <View
+              style={[styles.tabs, bordersDarken, fillBackground, style]}
+              pointerEvents={isAnimating ? 'none' : 'auto'}
+            >
+              {tabs?.map((tab) => (
+                <Tab
+                  key={tab.text}
+                  style={tab.style}
+                  icon={tab.icon}
+                  text={tab.text}
+                  active={tab.active}
+                  indicate={tab.indicate}
+                  onPress={tab.onPress}
+                />
+              ))}
+
+              <Tab
+                icon={isOpen ? 'arrow-down-circle' : 'menu'}
+                text={isOpen ? textLess : textMore}
+                onPress={isOpen ? close : open}
+                indicate={indicateMore}
+              />
+
+              <Continuous style={styles.activity} active={activity} />
+            </View>
+
+            <View
+              style={[styles.content, bordersDarken, fillBackground]}
+              onLayout={(e) =>
+                height.set((current) => e.nativeEvent.layout.height ?? current)
+              }
+            >
+              {children}
+            </View>
+          </Animated.View>
+        </GestureDetector>
+
+        <View style={[padMenu, fillBackground]}></View>
+      </>
+    )
+  }
+)
 
 Tabs.displayName = 'Tabs'
 

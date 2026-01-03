@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useColorScheme } from 'react-native'
 
 import { useCache } from '@/context/data/Cache'
-import { ThemeName } from '@/context/Theme'
+import type { ThemeName } from '@/context/Theme'
 
 export function useTheme() {
   const systemTheme = useColorScheme()

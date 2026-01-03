@@ -1,9 +1,7 @@
-import { useState } from 'react'
-import { View, Text } from 'react-native'
-
-import { ComboModal } from '@/components/generic/atoms/ComboModal'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { useState } from 'react'
+import { Text, View } from 'react-native'
+import { ComboModal } from '@/components/generic/atoms/ComboModal'
 
 // Mock data for the stories
 type MockOption = {
@@ -50,7 +48,9 @@ const ComboModalWrapper = ({
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={{ marginBottom: 20, fontSize: 16 }}>Selected: {selectedItems.length > 0 ? selectedItems.join(', ') : 'None'}</Text>
+      <Text style={{ marginBottom: 20, fontSize: 16 }}>
+        Selected: {selectedItems.length > 0 ? selectedItems.join(', ') : 'None'}
+      </Text>
       <Text
         style={{
           padding: 10,
@@ -115,12 +115,12 @@ export const Default: Story = {
 
 export const WithTitle: Story = {
   args: { title: 'Select Options' },
-  render: () => <ComboModalWrapper title="Select Options" />,
+  render: () => <ComboModalWrapper title='Select Options' />,
 }
 
 export const WithoutClear: Story = {
   args: { title: 'Select Options', clear: false },
-  render: () => <ComboModalWrapper title="Select Options" clear={false} />,
+  render: () => <ComboModalWrapper title='Select Options' clear={false} />,
 }
 
 export const CustomText: Story = {
@@ -129,15 +129,30 @@ export const CustomText: Story = {
     cancelText: 'Go Back',
     confirmText: 'Save Selection',
   },
-  render: () => <ComboModalWrapper title="Custom Modal" cancelText="Go Back" confirmText="Save Selection" />,
+  render: () => (
+    <ComboModalWrapper
+      title='Custom Modal'
+      cancelText='Go Back'
+      confirmText='Save Selection'
+    />
+  ),
 }
 
 export const WithChildren: Story = {
   args: { title: 'Modal with Children' },
   render: () => (
-    <ComboModalWrapper title="Modal with Children">
-      <View style={{ padding: 10, backgroundColor: '#f0f0f0', borderRadius: 8, marginBottom: 10 }}>
-        <Text style={{ fontSize: 14, color: '#666' }}>This is additional content that can be displayed in the modal.</Text>
+    <ComboModalWrapper title='Modal with Children'>
+      <View
+        style={{
+          padding: 10,
+          backgroundColor: '#f0f0f0',
+          borderRadius: 8,
+          marginBottom: 10,
+        }}
+      >
+        <Text style={{ fontSize: 14, color: '#666' }}>
+          This is additional content that can be displayed in the modal.
+        </Text>
       </View>
     </ComboModalWrapper>
   ),

@@ -1,16 +1,24 @@
 import { captureException } from '@sentry/react-native'
 import { format, setDay } from 'date-fns'
 import { router } from 'expo-router'
-import { TFunction } from 'i18next'
+import type { TFunction } from 'i18next'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Share } from 'react-native'
 
-import { DealerDetailsInstance, dealerInstanceForAny } from '@/components/dealers/DealerCard'
-import { dealerSectionForCategory, dealerSectionForLetter, dealerSectionForLocation, DealerSectionProps } from '@/components/dealers/DealerSection'
+import {
+  type DealerDetailsInstance,
+  dealerInstanceForAny,
+} from '@/components/dealers/DealerCard'
+import {
+  type DealerSectionProps,
+  dealerSectionForCategory,
+  dealerSectionForLetter,
+  dealerSectionForLocation,
+} from '@/components/dealers/DealerSection'
 import { appBase, conAbbr } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
-import { DealerDetails } from '@/context/data/types.details'
+import type { DealerDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
 
 /**
@@ -35,13 +43,18 @@ const compareCategory = (left: string, right: string) => {
  * @param now The current date.
  * @param items The items to transform.
  */
-export const useDealerInstances = (now: Date, items: readonly DealerDetails[]) => {
+export const useDealerInstances = (
+  now: Date,
+  items: readonly DealerDetails[]
+) => {
   return useMemo(() => {
     // Using date-fns to compute day names for Monday, Tuesday, and Wednesday.
     const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
     const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
     const day3 = format(setDay(Date.now(), 3, { weekStartsOn: 0 }), 'EEEE')
-    return items.map((item) => dealerInstanceForAny(item, now, day1, day2, day3))
+    return items.map((item) =>
+      dealerInstanceForAny(item, now, day1, day2, day3)
+    )
   }, [now, items])
 }
 
@@ -63,7 +76,10 @@ export const useDealerGroups = (now: Date, items: readonly DealerDetails[]) => {
     // If results are provided (search mode), simply map items.
     for (const item of items) {
       const category = item.CategoryPrimary || 'No category'
-      ;(categoryMap[category] ??= []).push(dealerInstanceForAny(item, now, day1, day2, day3))
+      categoryMap[category] = categoryMap[category] ?? []
+      categoryMap[category].push(
+        dealerInstanceForAny(item, now, day1, day2, day3)
+      )
     }
 
     // Create sections for each category in sorted order.
@@ -82,7 +98,11 @@ export const useDealerGroups = (now: Date, items: readonly DealerDetails[]) => {
  * @param now The current date.
  * @param items General results.
  */
-export const useDealerLocationGroups = (t: TFunction, now: Date, items: readonly DealerDetails[]) => {
+export const useDealerLocationGroups = (
+  t: TFunction,
+  now: Date,
+  items: readonly DealerDetails[]
+) => {
   return useMemo(() => {
     const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
     const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
@@ -120,7 +140,10 @@ export const useDealerLocationGroups = (t: TFunction, now: Date, items: readonly
  * @param now The current date.
  * @param items General results.
  */
-export const useDealerAlphabeticalGroups = (now: Date, items: readonly DealerDetails[]) => {
+export const useDealerAlphabeticalGroups = (
+  now: Date,
+  items: readonly DealerDetails[]
+) => {
   return useMemo(() => {
     const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
     const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
@@ -129,7 +152,8 @@ export const useDealerAlphabeticalGroups = (now: Date, items: readonly DealerDet
     const sectionedLetters: Record<string, boolean> = {}
     const result: (DealerSectionProps | DealerDetailsInstance)[] = []
     for (const item of items) {
-      const displayName = item.DisplayNameOrAttendeeNickname || item.DisplayName || 'Unknown'
+      const displayName =
+        item.DisplayNameOrAttendeeNickname || item.DisplayName || 'Unknown'
       const firstLetter = displayName[0]?.toUpperCase() || '#'
       if (!(firstLetter in sectionedLetters)) {
         result.push(dealerSectionForLetter(firstLetter))
@@ -144,7 +168,10 @@ export const useDealerAlphabeticalGroups = (now: Date, items: readonly DealerDet
 export const shareDealer = (dealer: DealerDetails) =>
   Share.share(
     {
-      title: dealer.DisplayNameOrAttendeeNickname || dealer.DisplayName || 'Unknown Dealer',
+      title:
+        dealer.DisplayNameOrAttendeeNickname ||
+        dealer.DisplayName ||
+        'Unknown Dealer',
       url: `${appBase}/Web/Dealers/${dealer.Id}`,
       message: `Check out ${dealer.DisplayNameOrAttendeeNickname || dealer.DisplayName || 'Unknown Dealer'} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
     },
@@ -163,7 +190,9 @@ export function useToggleFavorite() {
       if (remove) {
         setValue('settings', {
           ...settings,
-          favoriteDealers: settings.favoriteDealers?.filter((item) => item !== dealer.Id),
+          favoriteDealers: settings.favoriteDealers?.filter(
+            (item) => item !== dealer.Id
+          ),
         })
         return 'removed'
       } else {

@@ -4,9 +4,12 @@ import { useMemo } from 'react'
 
 import { eventInstanceForAny } from '@/components/events/EventCard'
 import { useCache } from '@/context/data/Cache'
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 
-const filterCurrentEvents = (events: readonly EventDetails[], now: Date): EventDetails[] =>
+const filterCurrentEvents = (
+  events: readonly EventDetails[],
+  now: Date
+): EventDetails[] =>
   events.filter((it) =>
     isWithinInterval(now, {
       start: it.Start,

@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { ImageFill } from '@/components/generic/atoms/ImageFill'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { ImageFill } from '@/components/generic/atoms/ImageFill'
 
 const meta = {
   title: 'Components/Atoms/ImageFill',

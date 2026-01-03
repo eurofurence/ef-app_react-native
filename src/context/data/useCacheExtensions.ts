@@ -1,14 +1,24 @@
 import { toZonedTime } from 'date-fns-tz'
-import Fuse from 'fuse.js'
+import type Fuse from 'fuse.js'
 import { chain } from 'lodash'
 import { useMemo } from 'react'
 
 import { conTimeZone } from '@/configuration'
-import { StoreData } from '@/context/data/CacheStore'
-import { EntityStore, filterEntityStore, mapEntityStore } from '@/context/data/CacheTools'
-import { ArtistAlleyRecord, EventRecord, KnowledgeEntryRecord, MapRecord } from '@/context/data/types.api'
+import type { StoreData } from '@/context/data/CacheStore'
 import {
+  type EntityStore,
+  filterEntityStore,
+  mapEntityStore,
+} from '@/context/data/CacheTools'
+import type {
+  ArtistAlleyRecord,
+  EventRecord,
+  KnowledgeEntryRecord,
+  MapRecord,
+} from '@/context/data/types.api'
+import type {
   AnnouncementDetails,
+  ArtistAlleyDetails,
   DealerDetails,
   EventDayDetails,
   EventDetails,
@@ -18,9 +28,11 @@ import {
   KnowledgeEntryDetails,
   KnowledgeGroupDetails,
   MapDetails,
-  ArtistAlleyDetails,
 } from '@/context/data/types.details'
-import { GlobalSearchResult, ImageLocation } from '@/context/data/types.own'
+import type {
+  GlobalSearchResult,
+  ImageLocation,
+} from '@/context/data/types.own'
 import {
   createCategoryMapper,
   deriveAnnouncementTitle,
@@ -214,9 +226,15 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       ...item,
       NormalizedTitle: deriveAnnouncementTitle(item.Title, item.Content),
       Image: item.ImageId ? images?.dict?.[item.ImageId] : undefined,
-      ValidFrom: toZonedTime(parseDefaultISO(item.ValidFromDateTimeUtc), conTimeZone),
+      ValidFrom: toZonedTime(
+        parseDefaultISO(item.ValidFromDateTimeUtc),
+        conTimeZone
+      ),
       ValidFromLocal: parseDefaultISO(item.ValidFromDateTimeUtc),
-      ValidUntil: toZonedTime(parseDefaultISO(item.ValidUntilDateTimeUtc), conTimeZone),
+      ValidUntil: toZonedTime(
+        parseDefaultISO(item.ValidUntilDateTimeUtc),
+        conTimeZone
+      ),
       ValidUntilLocal: parseDefaultISO(item.ValidUntilDateTimeUtc),
     }))
   }, [images, data.announcements])
@@ -246,13 +264,21 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       CategoryPrimary: categoryMapper(item.Categories),
       AttendanceDayNames: deriveAttendanceNames(item),
       AttendanceDays: deriveAttendanceDays(eventDays, item),
-      Artist: item.ArtistImageId ? images?.dict?.[item.ArtistImageId] : undefined,
-      ArtistThumbnail: item.ArtistThumbnailImageId ? images?.dict?.[item.ArtistThumbnailImageId] : undefined,
-      ArtPreview: item.ArtPreviewImageId ? images?.dict?.[item.ArtPreviewImageId] : undefined,
+      Artist: item.ArtistImageId
+        ? images?.dict?.[item.ArtistImageId]
+        : undefined,
+      ArtistThumbnail: item.ArtistThumbnailImageId
+        ? images?.dict?.[item.ArtistThumbnailImageId]
+        : undefined,
+      ArtPreview: item.ArtPreviewImageId
+        ? images?.dict?.[item.ArtPreviewImageId]
+        : undefined,
       ShortDescriptionTable: deriveDealerTable(item),
       ShortDescriptionContent: deriveDealerDescription(item),
       Favorite: Boolean(data.settings.favoriteDealers?.includes(item.Id)),
-      MastodonUrl: !item.MastodonHandle ? undefined : deriveProfileUrlFromMastodonHandle(item.MastodonHandle),
+      MastodonUrl: !item.MastodonHandle
+        ? undefined
+        : deriveProfileUrlFromMastodonHandle(item.MastodonHandle),
     }))
   }, [eventDays, images, data.dealers, data.settings.favoriteDealers])
 
@@ -264,16 +290,26 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         ...item,
         Hosts: deriveHosts(item.PanelHosts),
         PartOfDay: deriveCategorizedTime(item.StartDateTimeUtc),
-        Poster: item.PosterImageId ? images?.dict?.[item.PosterImageId] : undefined,
-        Banner: item.BannerImageId ? images?.dict?.[item.BannerImageId] : undefined,
+        Poster: item.PosterImageId
+          ? images?.dict?.[item.PosterImageId]
+          : undefined,
+        Banner: item.BannerImageId
+          ? images?.dict?.[item.BannerImageId]
+          : undefined,
         Badges: deriveBadgesFromTags(item.Tags),
         Glyph: deriveIconFromTags(item.Tags),
         SuperSponsorOnly: deriveIsSuperSponsorsOnly(item.Tags),
         SponsorOnly: deriveIsSponsorsOnly(item.Tags),
         MaskRequired: deriveIsMaskRequired(item.Tags),
-        ConferenceRoom: item.ConferenceRoomId ? eventRooms?.dict?.[item.ConferenceRoomId] : undefined,
-        ConferenceDay: item.ConferenceDayId ? eventDays?.dict?.[item.ConferenceDayId] : undefined,
-        ConferenceTrack: item.ConferenceTrackId ? eventTracks?.dict?.[item.ConferenceTrackId] : undefined,
+        ConferenceRoom: item.ConferenceRoomId
+          ? eventRooms?.dict?.[item.ConferenceRoomId]
+          : undefined,
+        ConferenceDay: item.ConferenceDayId
+          ? eventDays?.dict?.[item.ConferenceDayId]
+          : undefined,
+        ConferenceTrack: item.ConferenceTrackId
+          ? eventTracks?.dict?.[item.ConferenceTrackId]
+          : undefined,
         Start: toZonedTime(parseDefaultISO(item.StartDateTimeUtc), conTimeZone),
         StartLocal: parseDefaultISO(item.StartDateTimeUtc),
         End: toZonedTime(parseDefaultISO(item.EndDateTimeUtc), conTimeZone),
@@ -282,7 +318,15 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         Hidden: Boolean(data.settings.hiddenEvents?.includes(item.Id)),
       })
     )
-  }, [eventDays, eventRooms, eventTracks, images, data.events, data.notifications, data.settings.hiddenEvents])
+  }, [
+    eventDays,
+    eventRooms,
+    eventTracks,
+    images,
+    data.events,
+    data.notifications,
+    data.settings.hiddenEvents,
+  ])
 
   const maps = useMemo((): EntityStore<MapDetails> => {
     return mapEntityStore(
@@ -299,14 +343,21 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
       data.knowledgeEntries,
       (item: KnowledgeEntryRecord): KnowledgeEntryDetails => ({
         ...item,
-        Images: item.ImageIds.map((item) => images?.dict?.[item]).filter(Boolean) as ImageDetails[],
+        Images: item.ImageIds.map((item) => images?.dict?.[item]).filter(
+          Boolean
+        ) as ImageDetails[],
       })
     )
   }, [images, data.knowledgeEntries])
 
   // Prefiltered values. These are entity stores for common filter cases.
   const eventsByDay = useMemo(() => {
-    return Object.fromEntries(eventDays.map((day) => [day.Id, filterEntityStore(events, (item) => item.ConferenceDayId === day.Id)]))
+    return Object.fromEntries(
+      eventDays.map((day) => [
+        day.Id,
+        filterEntityStore(events, (item) => item.ConferenceDayId === day.Id),
+      ])
+    )
   }, [eventDays, events])
   const eventsFavorite = useMemo(() => {
     return filterEntityStore(events, (item) => item.Favorite)
@@ -324,25 +375,69 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   // Global entity wrapper, used in searching across multiple entity stores.
   // The results are tagged with their source type.
   const global = useMemo((): GlobalSearchResult[] => {
-    const result: GlobalSearchResult[] = new Array<GlobalSearchResult>(events.length + dealers.length + knowledgeEntries.length)
+    const result: GlobalSearchResult[] = new Array<GlobalSearchResult>(
+      events.length + dealers.length + knowledgeEntries.length
+    )
     for (const item of events) result.push({ ...item, type: 'event' as const })
-    for (const item of dealers) result.push({ ...item, type: 'dealer' as const })
-    for (const item of knowledgeEntries) result.push({ ...item, type: 'knowledgeEntry' as const })
+    for (const item of dealers)
+      result.push({ ...item, type: 'dealer' as const })
+    for (const item of knowledgeEntries)
+      result.push({ ...item, type: 'knowledgeEntry' as const })
     return result
   }, [events, dealers, knowledgeEntries])
 
   // Search instances, i.e., all memoized Fuse instances for searching
   // entities by the defined properties.
-  const searchEvents = useFuseMemo(events, searchOptions, eventsSearchProperties)
-  const searchEventsFavorite = useFuseMemo(eventsFavorite, searchOptions, eventsSearchProperties)
-  const searchEventsByDay = useFuseRecordMemo(eventsByDay, searchOptions, eventsSearchProperties)
-  const searchDealers = useFuseMemo(dealers, searchOptions, dealersSearchProperties)
-  const searchDealersFavorite = useFuseMemo(dealersFavorite, searchOptions, dealersSearchProperties)
-  const searchDealersInAfterDark = useFuseMemo(dealersInAfterDark, searchOptions, dealersSearchProperties)
-  const searchDealersInRegular = useFuseMemo(dealersInRegular, searchOptions, dealersSearchProperties)
-  const searchKnowledgeEntries = useFuseMemo(knowledgeEntries, searchOptions, knowledgeEntriesSearchProperties)
-  const searchAnnouncements = useFuseMemo(announcements, searchOptions, announcementsSearchProperties)
-  const searchGlobal = useFuseMemo(global, searchOptionsGlobal, globalSearchProperties)
+  const searchEvents = useFuseMemo(
+    events,
+    searchOptions,
+    eventsSearchProperties
+  )
+  const searchEventsFavorite = useFuseMemo(
+    eventsFavorite,
+    searchOptions,
+    eventsSearchProperties
+  )
+  const searchEventsByDay = useFuseRecordMemo(
+    eventsByDay,
+    searchOptions,
+    eventsSearchProperties
+  )
+  const searchDealers = useFuseMemo(
+    dealers,
+    searchOptions,
+    dealersSearchProperties
+  )
+  const searchDealersFavorite = useFuseMemo(
+    dealersFavorite,
+    searchOptions,
+    dealersSearchProperties
+  )
+  const searchDealersInAfterDark = useFuseMemo(
+    dealersInAfterDark,
+    searchOptions,
+    dealersSearchProperties
+  )
+  const searchDealersInRegular = useFuseMemo(
+    dealersInRegular,
+    searchOptions,
+    dealersSearchProperties
+  )
+  const searchKnowledgeEntries = useFuseMemo(
+    knowledgeEntries,
+    searchOptions,
+    knowledgeEntriesSearchProperties
+  )
+  const searchAnnouncements = useFuseMemo(
+    announcements,
+    searchOptions,
+    announcementsSearchProperties
+  )
+  const searchGlobal = useFuseMemo(
+    global,
+    searchOptionsGlobal,
+    globalSearchProperties
+  )
 
   // Image backreferences. Derived from the base data.
   // As we don't need the extended data here, we can use the "more stable"
@@ -350,11 +445,26 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   const imageLocations = useMemo(() => {
     const result: Record<string, ImageLocation> = {}
     for (const event of data.events) {
-      if (event.PosterImageId) result[event.PosterImageId] = { type: 'Event', location: 'eventPoster', title: event.Title }
-      if (event.BannerImageId) result[event.BannerImageId] = { type: 'Event', location: 'eventBanner', title: event.Title }
+      if (event.PosterImageId)
+        result[event.PosterImageId] = {
+          type: 'Event',
+          location: 'eventPoster',
+          title: event.Title,
+        }
+      if (event.BannerImageId)
+        result[event.BannerImageId] = {
+          type: 'Event',
+          location: 'eventBanner',
+          title: event.Title,
+        }
     }
     for (const dealer of data.dealers) {
-      if (dealer.ArtistImageId) result[dealer.ArtistImageId] = { type: 'Dealer', location: 'artist', title: dealer.DisplayNameOrAttendeeNickname }
+      if (dealer.ArtistImageId)
+        result[dealer.ArtistImageId] = {
+          type: 'Dealer',
+          location: 'artist',
+          title: dealer.DisplayNameOrAttendeeNickname,
+        }
       if (dealer.ArtistThumbnailImageId)
         result[dealer.ArtistThumbnailImageId] = {
           type: 'Dealer',
@@ -369,11 +479,20 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         }
     }
     for (const announcement of data.announcements) {
-      if (announcement.ImageId) result[announcement.ImageId] = { type: 'Announcement', location: 'announcement', title: announcement.Title }
+      if (announcement.ImageId)
+        result[announcement.ImageId] = {
+          type: 'Announcement',
+          location: 'announcement',
+          title: announcement.Title,
+        }
     }
     for (const knowledgeEntry of data.knowledgeEntries) {
       for (const imageId of knowledgeEntry.ImageIds) {
-        result[imageId] = { type: 'KnowledgeEntry', location: 'knowledgeEntryBanner', title: knowledgeEntry.Title }
+        result[imageId] = {
+          type: 'KnowledgeEntry',
+          location: 'knowledgeEntryBanner',
+          title: knowledgeEntry.Title,
+        }
       }
     }
 
@@ -392,7 +511,12 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   )
 
   const eventsByHost = useMemo(() => {
-    return Object.fromEntries(eventHosts.map((host) => [host, filterEntityStore(events, (item) => item.Hosts.includes(host))]))
+    return Object.fromEntries(
+      eventHosts.map((host) => [
+        host,
+        filterEntityStore(events, (item) => item.Hosts.includes(host)),
+      ])
+    )
   }, [events, eventHosts])
 
   // Partial for the new entities to access them by their store name from the callbacks.

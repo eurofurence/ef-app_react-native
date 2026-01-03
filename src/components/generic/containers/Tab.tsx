@@ -1,11 +1,14 @@
-import { FC, ReactNode } from 'react'
+import type { FC, ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native'
 
 import { Pressable } from '@/components/generic/Pressable'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
-import { Icon, IconNames } from '../atoms/Icon'
+import { Icon, type IconNames } from '../atoms/Icon'
 import { Label } from '../atoms/Label'
 
 /**
@@ -67,23 +70,43 @@ export type TabProps = {
  * Tab is an icon/caption combo intended for use in the bottom-navigation control.
  * @constructor
  */
-export const Tab: FC<TabProps> = ({ style, disabled, icon, text, indicate, active = false, inverted = false, onPress, accessibilityLabel, accessibilityHint }) => {
+export const Tab: FC<TabProps> = ({
+  style,
+  disabled,
+  icon,
+  text,
+  indicate,
+  active = false,
+  inverted = false,
+  onPress,
+  accessibilityLabel,
+  accessibilityHint,
+}) => {
   const { t: a11y } = useTranslation('Accessibility')
-  const colorName = inverted ? (active ? 'invImportant' : 'invText') : active ? 'secondary' : 'text'
+  const colorName = inverted
+    ? active
+      ? 'invImportant'
+      : 'invText'
+    : active
+      ? 'secondary'
+      : 'text'
   const colorValue = useThemeColorValue(colorName)
   const styleBackground = useThemeBackground('notification')
 
   // Generate accessibility label if not provided
   const computedAccessibilityLabel = accessibilityLabel || text
   const computedAccessibilityHint =
-    accessibilityHint || (active ? a11y('tab_active_hint', { defaultValue: 'Currently selected tab' }) : a11y('tab_inactive_hint', { defaultValue: 'Tap to select this tab' }))
+    accessibilityHint ||
+    (active
+      ? a11y('tab_active_hint', { defaultValue: 'Currently selected tab' })
+      : a11y('tab_inactive_hint', { defaultValue: 'Tap to select this tab' }))
 
   return (
     <Pressable
       containerStyle={[styles.container, disabled && styles.disabled, style]}
       onPress={onPress}
       disabled={disabled}
-      accessibilityRole="tab"
+      accessibilityRole='tab'
       accessibilityLabel={computedAccessibilityLabel}
       accessibilityHint={computedAccessibilityHint}
       accessibilityState={{
@@ -92,12 +115,24 @@ export const Tab: FC<TabProps> = ({ style, disabled, icon, text, indicate, activ
       }}
     >
       <View style={styles.item}>
-        <Icon name={icon} size={24} color={colorValue} accessibilityElementsHidden={true} importantForAccessibility="no" />
+        <Icon
+          name={icon}
+          size={24}
+          color={colorValue}
+          accessibilityElementsHidden={true}
+          importantForAccessibility='no'
+        />
 
         {!indicate ? null : (
           <View style={styles.indicatorArea}>
             <View style={styles.indicatorLocator}>
-              <View style={[styles.indicatorContent, styleBackground]} accessibilityLabel={a11y('tab_indicator', { defaultValue: 'Has notifications' })} accessibilityRole="text">
+              <View
+                style={[styles.indicatorContent, styleBackground]}
+                accessibilityLabel={a11y('tab_indicator', {
+                  defaultValue: 'Has notifications',
+                })}
+                accessibilityRole='text'
+              >
                 {indicate === true ? null : indicate}
               </View>
             </View>
@@ -105,7 +140,12 @@ export const Tab: FC<TabProps> = ({ style, disabled, icon, text, indicate, activ
         )}
       </View>
       <View style={styles.item}>
-        <Label variant="middle" color={colorName} accessibilityElementsHidden={true} importantForAccessibility="no">
+        <Label
+          variant='middle'
+          color={colorName}
+          accessibilityElementsHidden={true}
+          importantForAccessibility='no'
+        >
           {text}
         </Label>
       </View>

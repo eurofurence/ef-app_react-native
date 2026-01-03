@@ -14,7 +14,8 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function Knowledge() {
   const { t } = useTranslation('KnowledgeGroups')
-  const { knowledgeGroups, knowledgeEntries, searchKnowledgeEntries } = useCache()
+  const { knowledgeGroups, knowledgeEntries, searchKnowledgeEntries } =
+    useCache()
   const [filter, setFilter] = useState('')
   const [searchMessage, setSearchMessage] = useState('')
 
@@ -27,7 +28,9 @@ export default function Knowledge() {
   // Prepare data for search and display
   const groups = useMemo(() => {
     // Group entries by their group ID
-    const groupedEntries = chain(knowledgeEntries).groupBy('KnowledgeGroupId').value()
+    const groupedEntries = chain(knowledgeEntries)
+      .groupBy('KnowledgeGroupId')
+      .value()
 
     // Combine groups with their entries
     return knowledgeGroups.map((group) => ({
@@ -41,7 +44,11 @@ export default function Knowledge() {
     if (results && filter.length > 0) {
       // When searching, maintain proper group structure
       const matchingEntries = results
-      const matchingGroupIds = new Set(matchingEntries.map((entry: any) => entry.KnowledgeGroupId))
+      const matchingGroupIds = new Set(
+        matchingEntries.map(
+          (entry: { KnowledgeGroupId: string }) => entry.KnowledgeGroupId
+        )
+      )
 
       // Also search in group names and descriptions with better settings
       const groupFuse = new Fuse(knowledgeGroups, {
@@ -54,21 +61,37 @@ export default function Knowledge() {
         includeScore: true,
       })
       const groupSearchResults = groupFuse.search(filter)
-      const matchingGroupsFromSearch = groupSearchResults.map((result) => result.item)
+      const matchingGroupsFromSearch = groupSearchResults.map(
+        (result) => result.item
+      )
 
       // Get all groups that either contain matching entries or match the search themselves
-      const allRelevantGroups = knowledgeGroups.filter((group) => matchingGroupIds.has(group.Id) || matchingGroupsFromSearch.includes(group))
+      const allRelevantGroups = knowledgeGroups.filter(
+        (group) =>
+          matchingGroupIds.has(group.Id) ||
+          matchingGroupsFromSearch.includes(group)
+      )
 
       // Build proper sectioned structure
-      const result: ((typeof knowledgeGroups)[0] | (typeof knowledgeEntries)[0])[] = []
+      const result: (
+        | (typeof knowledgeGroups)[0]
+        | (typeof knowledgeEntries)[0]
+      )[] = []
 
       for (const group of allRelevantGroups) {
         // Add matching entries for this group
-        const groupEntries = matchingEntries.filter((entry: any) => entry.KnowledgeGroupId === group.Id)
+        const groupEntries = matchingEntries.filter(
+          (entry: any) => entry.KnowledgeGroupId === group.Id
+        )
 
         // If group matched search but has no matching entries, show all entries from that group
-        if (matchingGroupsFromSearch.includes(group) && groupEntries.length === 0) {
-          const allGroupEntries = knowledgeEntries.filter((entry) => entry.KnowledgeGroupId === group.Id)
+        if (
+          matchingGroupsFromSearch.includes(group) &&
+          groupEntries.length === 0
+        ) {
+          const allGroupEntries = knowledgeEntries.filter(
+            (entry) => entry.KnowledgeGroupId === group.Id
+          )
           if (allGroupEntries.length > 0) {
             result.push(group)
             result.push(...allGroupEntries)
@@ -117,7 +140,7 @@ export default function Knowledge() {
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={searchMessage} type="polite" visible={false} />
+      <StatusMessage message={searchMessage} type='polite' visible={false} />
 
       <View
         style={StyleSheet.absoluteFill}
@@ -126,7 +149,17 @@ export default function Knowledge() {
         accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
       >
         <Header>{t('header')}</Header>
-        <KbSectionedList kbGroups={displayData} leader={<Search className="my-2.5 mx-2.5" filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />} />
+        <KbSectionedList
+          kbGroups={displayData}
+          leader={
+            <Search
+              className='my-2.5 mx-2.5'
+              filter={filter}
+              setFilter={setFilter}
+              placeholder={t('search.placeholder')}
+            />
+          }
+        />
       </View>
     </>
   )

@@ -1,17 +1,20 @@
 import { Redirect, router } from 'expo-router'
-import React, { useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, View } from 'react-native'
 
-import { artistsAlleySectionForState, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
+import {
+  type ArtistsAlleySectionProps,
+  artistsAlleySectionForState,
+} from '@/components/artists-alley/ArtistsAlleySection'
 import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAlleySectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Header } from '@/components/generic/containers/Header'
 import { artistAlleyUrl } from '@/configuration'
 import { useUserContext } from '@/context/auth/User'
-import { TableRegistrationRecord } from '@/context/data/types.api'
-import { ArtistAlleyDetails } from '@/context/data/types.details'
+import type { TableRegistrationRecord } from '@/context/data/types.api'
+import type { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useArtistsAlleyQuery } from '@/hooks/api/artists-alley/useArtistsAlleyQuery'
 
 export default function List() {
@@ -19,11 +22,22 @@ export default function List() {
   const { user } = useUserContext()
 
   // Get roles for preemptive RBAC.
-  const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
+  const isPrivileged =
+    Boolean(user?.RoleMap?.Admin) ||
+    Boolean(user?.RoleMap?.ArtistAlleyAdmin) ||
+    Boolean(user?.RoleMap?.ArtistAlleyModerator)
 
-  const { data: source, refetch, isFetching } = useArtistsAlleyQuery(isPrivileged)
+  const {
+    data: source,
+    refetch,
+    isFetching,
+  } = useArtistsAlleyQuery(isPrivileged)
 
-  const items = useMemo((): (ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord)[] => {
+  const items = useMemo((): (
+    | ArtistsAlleySectionProps
+    | ArtistAlleyDetails
+    | TableRegistrationRecord
+  )[] => {
     if (!source) return []
     const pending = []
     const accepted = []
@@ -60,33 +74,42 @@ export default function List() {
 
   const leader = useMemo(() => {
     return (
-      <View className="m-5 gap-4">
-        <Label type="h3" variant="middle">
+      <View className='m-5 gap-4'>
+        <Label type='h3' variant='middle'>
           {t('moderate')}
         </Label>
-        <Label type="compact" variant="middle">
+        <Label type='compact' variant='middle'>
           {t('moderate_intro')}
         </Label>
-        <Button icon="link" onPress={() => Linking.openURL(artistAlleyUrl)}>
+        <Button icon='link' onPress={() => Linking.openURL(artistAlleyUrl)}>
           {t('moderate_rules')}
         </Button>
       </View>
     )
   }, [t])
 
-  const onPress = useCallback((item: ArtistAlleyDetails | TableRegistrationRecord) => {
-    router.navigate({
-      pathname: '/artists-alley/moderate/[id]',
-      params: { id: item.Id },
-    })
-  }, [])
+  const onPress = useCallback(
+    (item: ArtistAlleyDetails | TableRegistrationRecord) => {
+      router.navigate({
+        pathname: '/artists-alley/moderate/[id]',
+        params: { id: item.Id },
+      })
+    },
+    []
+  )
 
-  if (!isPrivileged) return <Redirect href="/artists-alley" />
+  if (!isPrivileged) return <Redirect href='/artists-alley' />
 
   return (
     <View style={StyleSheet.absoluteFill}>
       <Header>{t('moderate_header')}</Header>
-      <ArtistsAlleySectionedList leader={leader} items={items} onPress={onPress} onRefresh={refetch} refreshing={isFetching} />
+      <ArtistsAlleySectionedList
+        leader={leader}
+        items={items}
+        onPress={onPress}
+        onRefresh={refetch}
+        refreshing={isFetching}
+      />
     </View>
   )
 }

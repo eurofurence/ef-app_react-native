@@ -1,4 +1,4 @@
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, type ViewStyle } from 'react-native'
 
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 

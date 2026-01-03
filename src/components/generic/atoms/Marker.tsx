@@ -1,11 +1,10 @@
-import * as React from 'react'
-import { FC } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import type { FC } from 'react'
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native'
 
-import { ThemeColor } from '@/context/Theme'
+import type { ThemeColor } from '@/context/Theme'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
-import { Icon, IconNames } from './Icon'
+import { Icon, type IconNames } from './Icon'
 
 export type MarkerProps = {
   style?: StyleProp<ViewStyle>
@@ -14,15 +13,30 @@ export type MarkerProps = {
   markerSize?: number
 }
 
-export const Marker: FC<MarkerProps> = ({ style, markerColor = 'marker', markerType = 'map-marker', markerSize = 40 }) => {
+export const Marker: FC<MarkerProps> = ({
+  style,
+  markerColor = 'marker',
+  markerType = 'map-marker',
+  markerSize = 40,
+}) => {
   const theme = useTheme()
   const color = markerColor in theme ? theme[markerColor] : markerColor
 
   return (
     <View style={[styles.container, style]}>
       <View style={styles.content}>
-        <Icon style={styles.shadow} name={markerType} color={theme.darken} size={markerSize} />
-        <Icon style={styles.marker} name={markerType} color={color} size={markerSize} />
+        <Icon
+          style={styles.shadow}
+          name={markerType}
+          color={theme.darken}
+          size={markerSize}
+        />
+        <Icon
+          style={styles.marker}
+          name={markerType}
+          color={color}
+          size={markerSize}
+        />
       </View>
     </View>
   )

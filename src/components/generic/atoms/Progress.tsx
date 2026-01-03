@@ -1,6 +1,12 @@
-import { DimensionValue, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import {
+  type DimensionValue,
+  type StyleProp,
+  StyleSheet,
+  View,
+  type ViewStyle,
+} from 'react-native'
 
-import { ThemeColor, withAlpha } from '@/context/Theme'
+import { type ThemeColor, withAlpha } from '@/context/Theme'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 /**
@@ -23,13 +29,29 @@ export type ProgressProps = {
   color?: ThemeColor
 }
 
-export const Progress = ({ style, value, color = 'secondary' }: ProgressProps) => {
+export const Progress = ({
+  style,
+  value,
+  color = 'secondary',
+}: ProgressProps) => {
   // Convert theme into style.
   const colorStyle = useThemeBackground(color)
 
   return (
-    <View style={[styles.container, { backgroundColor: withAlpha(colorStyle.backgroundColor, 0.25) }, style]}>
-      <View style={[styles.bar, colorStyle, { width: `${(value * 100).toFixed(0)}%` as DimensionValue }]} />
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: withAlpha(colorStyle.backgroundColor, 0.25) },
+        style,
+      ]}
+    >
+      <View
+        style={[
+          styles.bar,
+          colorStyle,
+          { width: `${(value * 100).toFixed(0)}%` as DimensionValue },
+        ]}
+      />
     </View>
   )
 }

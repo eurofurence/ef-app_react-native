@@ -1,22 +1,22 @@
-import { render, screen, fireEvent } from '@testing-library/react-native'
-import React from 'react'
+import { beforeEach, describe, expect, it, type Mock, mock } from 'bun:test'
+import { fireEvent, render, screen } from '@testing-library/react-native'
 
 import { RegistrationCountdown } from '@/components/home/RegistrationCountdown'
 import { useAuthContext } from '@/context/auth/Auth'
 import { useUserContext } from '@/context/auth/User'
-import { useCache } from '@/context/data/Cache'
+import type { useCache } from '@/context/data/Cache'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useNow } from '@/hooks/time/useNow'
 
 // Mock expo-router
-jest.mock('@react-navigation/core', () => ({
-  useIsFocused: jest.fn(() => true),
+mock.module('@react-navigation/core', () => ({
+  useIsFocused: mock(() => true),
 }))
 
 // Mock @expo/vector-icons to prevent async state updates
-jest.mock('@expo/vector-icons/MaterialCommunityIcons', () => {
-  const MockIcon = ({ name, size, color, ...props }: any) => {
+mock.module('@expo/vector-icons/MaterialCommunityIcons', () => {
+  const MockIcon = () => {
     // Return null to avoid rendering issues, just for testing
     return null
   }
@@ -27,38 +27,38 @@ jest.mock('@expo/vector-icons/MaterialCommunityIcons', () => {
 })
 
 // Mock the cache context
-jest.mock('@/context/data/Cache', () => ({
-  useCache: jest.fn(),
+mock.module('@/context/data/Cache', () => ({
+  useCache: mock(),
 }))
 
 // Mock the registration dates query
-jest.mock('@/hooks/api/registration/useRegistrationDatesQuery', () => ({
-  useRegistrationDatesQuery: jest.fn(),
+mock.module('@/hooks/api/registration/useRegistrationDatesQuery', () => ({
+  useRegistrationDatesQuery: mock(),
 }))
 
 // Mock warning state
-jest.mock('@/hooks/data/useWarningState', () => ({
-  useWarningState: jest.fn(),
+mock.module('@/hooks/data/useWarningState', () => ({
+  useWarningState: mock(),
 }))
 
 // Mock useNow
-jest.mock('@/hooks/time/useNow', () => ({
-  useNow: jest.fn(),
+mock.module('@/hooks/time/useNow', () => ({
+  useNow: mock(),
 }))
 
 // Mock auth context
-jest.mock('@/context/auth/Auth', () => ({
-  useAuthContext: jest.fn(),
+mock.module('@/context/auth/Auth', () => ({
+  useAuthContext: mock(),
 }))
 
 // Mock user context
-jest.mock('@/context/auth/User', () => ({
-  useUserContext: jest.fn(),
+mock.module('@/context/auth/User', () => ({
+  useUserContext: mock(),
 }))
 
 // Mock translation
-jest.mock('react-i18next', () => ({
-  useTranslation: (namespace: string) => ({
+mock.module('react-i18next', () => ({
+  useTranslation: () => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
         hide: 'Hide',
@@ -77,36 +77,38 @@ jest.mock('react-i18next', () => ({
 }))
 
 // Mock react-native Linking
-jest.mock('react-native/Libraries/Linking/Linking', () => ({
-  openURL: jest.fn(),
+mock.module('react-native/Libraries/Linking/Linking', () => ({
+  openURL: mock(),
 }))
 
 // Mock theme hooks
-jest.mock('@/hooks/themes/useThemeHooks', () => ({
-  useThemeColorValue: jest.fn(() => '#ff0000'),
-  useThemeColor: jest.fn(() => ({ color: '#000000' })),
-  useThemeBorder: jest.fn(() => ({ borderColor: '#cccccc' })),
-  useThemeBackground: jest.fn(() => ({ backgroundColor: '#ffffff' })),
+mock.module('@/hooks/themes/useThemeHooks', () => ({
+  useThemeColorValue: mock(() => '#ff0000'),
+  useThemeColor: mock(() => ({ color: '#000000' })),
+  useThemeBorder: mock(() => ({ borderColor: '#cccccc' })),
+  useThemeBackground: mock(() => ({ backgroundColor: '#ffffff' })),
 }))
 
-const mockUseCache = useCache as jest.MockedFunction<typeof useCache>
-const mockUseRegistrationDatesQuery = useRegistrationDatesQuery as jest.MockedFunction<typeof useRegistrationDatesQuery>
-const mockUseWarningState = useWarningState as jest.MockedFunction<typeof useWarningState>
-const mockUseNow = useNow as jest.MockedFunction<typeof useNow>
-const mockUseAuthContext = useAuthContext as jest.MockedFunction<typeof useAuthContext>
-const mockUseUserContext = useUserContext as jest.MockedFunction<typeof useUserContext>
+const mockUseCache = mock() as ReturnType<typeof mock> & typeof useCache
+const mockUseRegistrationDatesQuery = useRegistrationDatesQuery as Mock<
+  typeof useRegistrationDatesQuery
+>
+const mockUseWarningState = useWarningState as Mock<typeof useWarningState>
+const mockUseNow = useNow as Mock<typeof useNow>
+const mockUseAuthContext = useAuthContext as Mock<typeof useAuthContext>
+const mockUseUserContext = useUserContext as Mock<typeof useUserContext>
 
 // Helper function to create mock cache
 const createMockCache = (eventDays: any[] = []) =>
   ({
     eventDays,
     data: {},
-    getValue: jest.fn(),
-    setValue: jest.fn(),
-    removeValue: jest.fn(),
-    clear: jest.fn(),
+    getValue: mock(),
+    setValue: mock(),
+    removeValue: mock(),
+    clear: mock(),
     isSynchronizing: false,
-    synchronize: jest.fn(),
+    synchronize: mock(),
     announcements: { dict: {} },
     dealers: { dict: {} },
     images: { dict: {} },
@@ -142,12 +144,12 @@ describe('RegistrationCountdown', () => {
   const mockEndDate = new Date('2024-03-01T00:00:00Z')
 
   beforeEach(() => {
-    jest.clearAllMocks()
+    mock.clearAllMocks()
     mockUseNow.mockReturnValue(mockNow)
     mockUseWarningState.mockReturnValue({
       isHidden: false,
-      hideWarning: jest.fn(),
-      showWarning: jest.fn(),
+      hideWarning: mock(),
+      showWarning: mock(),
     })
     mockUseCache.mockReturnValue(createMockCache())
     mockUseAuthContext.mockReturnValue({
@@ -155,15 +157,15 @@ describe('RegistrationCountdown', () => {
       accessToken: null,
       tokenResponse: null,
       idData: null,
-      load: jest.fn(),
-      login: jest.fn(),
-      refreshToken: jest.fn(),
-      logout: jest.fn(),
+      load: mock(),
+      login: mock(),
+      refreshToken: mock(),
+      logout: mock(),
     })
     mockUseUserContext.mockReturnValue({
       claims: null,
       user: null,
-      refresh: jest.fn(() => Promise.resolve()),
+      refresh: mock(() => Promise.resolve()),
     } as any)
   })
 
@@ -181,7 +183,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show registration open message and button', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration is now open!/)).toBeTruthy()
       expect(screen.getByText('Register Now')).toBeTruthy()
@@ -195,7 +199,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show register button when registration URL is provided', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText('Register Now')).toBeTruthy()
     })
@@ -206,18 +212,20 @@ describe('RegistrationCountdown', () => {
         accessToken: 'token',
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: jest.fn(),
-        login: jest.fn(),
-        refreshToken: jest.fn(),
-        logout: jest.fn(),
+        load: mock(),
+        login: mock(),
+        refreshToken: mock(),
+        logout: mock(),
       })
       mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
         user: { RoleMap: { Attendee: false } },
-        refresh: jest.fn(() => Promise.resolve()),
+        refresh: mock(() => Promise.resolve()),
       } as any)
 
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration is now open!/)).toBeTruthy()
       expect(screen.getByText('Register Now')).toBeTruthy()
@@ -229,18 +237,20 @@ describe('RegistrationCountdown', () => {
         accessToken: 'token',
         tokenResponse: {} as any,
         idData: { sub: '0' } as any,
-        load: jest.fn(),
-        login: jest.fn(),
-        refreshToken: jest.fn(),
-        logout: jest.fn(),
+        load: mock(),
+        login: mock(),
+        refreshToken: mock(),
+        logout: mock(),
       })
       mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
         user: { RoleMap: { Attendee: true } },
-        refresh: jest.fn(() => Promise.resolve()),
+        refresh: mock(() => Promise.resolve()),
       } as any)
 
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(toJSON()).toBeNull()
     })
@@ -260,7 +270,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show countdown message and no button', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration opens in/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeNull()
@@ -281,7 +293,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show closed message and no button', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration has closed/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeNull()
@@ -312,18 +326,20 @@ describe('RegistrationCountdown', () => {
         accessToken: 'token',
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: jest.fn(),
-        login: jest.fn(),
-        refreshToken: jest.fn(),
-        logout: jest.fn(),
+        load: mock(),
+        login: mock(),
+        refreshToken: mock(),
+        logout: mock(),
       })
       mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
         user: { RoleMap: { Attendee: true } },
-        refresh: jest.fn(() => Promise.resolve()),
+        refresh: mock(() => Promise.resolve()),
       } as any)
 
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeFalsy()
@@ -335,25 +351,29 @@ describe('RegistrationCountdown', () => {
         accessToken: 'token',
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: jest.fn(),
-        login: jest.fn(),
-        refreshToken: jest.fn(),
-        logout: jest.fn(),
+        load: mock(),
+        login: mock(),
+        refreshToken: mock(),
+        logout: mock(),
       })
       mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
         user: { RoleMap: { Attendee: false } },
-        refresh: jest.fn(() => Promise.resolve()),
+        refresh: mock(() => Promise.resolve()),
       } as any)
 
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeFalsy()
     })
 
     it('should show thank you message and no registration button if user is not logged in', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeFalsy()
@@ -367,15 +387,15 @@ describe('RegistrationCountdown', () => {
         accessToken: 'token',
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: jest.fn(),
-        login: jest.fn(),
-        refreshToken: jest.fn(),
-        logout: jest.fn(),
+        load: mock(),
+        login: mock(),
+        refreshToken: mock(),
+        logout: mock(),
       })
       mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
         user: { RoleMap: { Attendee: false } },
-        refresh: jest.fn(() => Promise.resolve()),
+        refresh: mock(() => Promise.resolve()),
       } as any)
 
       render(<RegistrationCountdown />)
@@ -390,15 +410,15 @@ describe('RegistrationCountdown', () => {
         accessToken: 'token',
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: jest.fn(),
-        login: jest.fn(),
-        refreshToken: jest.fn(),
-        logout: jest.fn(),
+        load: mock(),
+        login: mock(),
+        refreshToken: mock(),
+        logout: mock(),
       })
       mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
         user: { RoleMap: { Attendee: true } },
-        refresh: jest.fn(() => Promise.resolve()),
+        refresh: mock(() => Promise.resolve()),
       } as any)
 
       render(<RegistrationCountdown />)
@@ -425,7 +445,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should not render anything', () => {
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
       expect(toJSON()).toBeNull()
     })
   })
@@ -440,7 +462,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should not render anything', () => {
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
       expect(toJSON()).toBeNull()
     })
   })
@@ -458,19 +482,21 @@ describe('RegistrationCountdown', () => {
       mockUseNow.mockReturnValue(new Date('2024-02-15T12:00:00Z'))
       mockUseWarningState.mockReturnValue({
         isHidden: true,
-        hideWarning: jest.fn(),
-        showWarning: jest.fn(),
+        hideWarning: mock(),
+        showWarning: mock(),
       })
     })
 
     it('should not render anything', () => {
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
       expect(toJSON()).toBeNull()
     })
   })
 
   describe('hide warning functionality', () => {
-    const mockHideWarning = jest.fn()
+    const mockHideWarning = mock()
 
     beforeEach(() => {
       mockUseRegistrationDatesQuery.mockReturnValue({
@@ -485,12 +511,14 @@ describe('RegistrationCountdown', () => {
       mockUseWarningState.mockReturnValue({
         isHidden: false,
         hideWarning: mockHideWarning,
-        showWarning: jest.fn(),
+        showWarning: mock(),
       })
     })
 
     it('should call hideWarning when hide button is pressed', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       const hideButton = screen.getByText('Hide')
       fireEvent.press(hideButton)

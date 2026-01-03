@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 import { ChoiceButtons } from '@/components/generic/atoms/ChoiceButtons'
 import { Label } from '@/components/generic/atoms/Label'
 import { Col } from '@/components/generic/containers/Col'
-import { ThemeName } from '@/context/Theme'
+import type { ThemeName } from '@/context/Theme'
 import { useTheme } from '@/hooks/themes/useTheme'
 
 import { SettingContainer } from './SettingContainer'
@@ -19,14 +19,16 @@ export const ThemePicker = () => {
 
   return (
     <SettingContainer>
-      <Col type="stretch">
-        <Label variant="bold">{t('title')}</Label>
-        <Label variant="narrow">{t('description')}</Label>
+      <Col type='stretch'>
+        <Label variant='bold'>{t('title')}</Label>
+        <Label variant='narrow'>{t('description')}</Label>
         <ChoiceButtons
           style={styles.selector}
           choices={usableThemes}
           choice={theme === undefined ? 'system' : theme}
-          setChoice={(choice) => setTheme(choice === 'system' ? undefined : choice)}
+          setChoice={(choice) =>
+            setTheme(choice === 'system' ? undefined : choice)
+          }
           getLabel={(choice) => t(choice)}
         />
       </Col>

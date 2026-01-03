@@ -1,9 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { useState } from 'react'
 import { View } from 'react-native'
-
 import { Progress } from '@/components/generic/atoms/Progress'
-
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/Progress',
@@ -79,11 +77,11 @@ export const DifferentValues: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Progress value={0.1} color="secondary" />
-      <Progress value={0.3} color="secondary" />
-      <Progress value={0.5} color="secondary" />
-      <Progress value={0.7} color="secondary" />
-      <Progress value={0.9} color="secondary" />
+      <Progress value={0.1} color='secondary' />
+      <Progress value={0.3} color='secondary' />
+      <Progress value={0.5} color='secondary' />
+      <Progress value={0.7} color='secondary' />
+      <Progress value={0.9} color='secondary' />
     </View>
   ),
 }
@@ -95,10 +93,10 @@ export const DifferentColors: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Progress value={0.6} color="primary" />
-      <Progress value={0.6} color="secondary" />
-      <Progress value={0.6} color="warning" />
-      <Progress value={0.6} color="notification" />
+      <Progress value={0.6} color='primary' />
+      <Progress value={0.6} color='secondary' />
+      <Progress value={0.6} color='warning' />
+      <Progress value={0.6} color='notification' />
     </View>
   ),
 }
@@ -112,12 +110,12 @@ export const Interactive: Story = {
     const [value] = useState(0.3)
     return (
       <View style={{ gap: 20 }}>
-        <Progress value={value} color="secondary" />
+        <Progress value={value} color='secondary' />
         <View style={{ flexDirection: 'row', gap: 10 }}>
-          <Progress value={0.2} color="primary" />
-          <Progress value={0.4} color="secondary" />
-          <Progress value={0.6} color="warning" />
-          <Progress value={0.8} color="notification" />
+          <Progress value={0.2} color='primary' />
+          <Progress value={0.4} color='secondary' />
+          <Progress value={0.6} color='warning' />
+          <Progress value={0.8} color='notification' />
         </View>
       </View>
     )

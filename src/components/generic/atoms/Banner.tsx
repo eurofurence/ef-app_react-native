@@ -1,11 +1,10 @@
 import { router } from 'expo-router'
-import * as React from 'react'
 import { StyleSheet } from 'react-native'
 
 import { Pressable } from '@/components/generic/Pressable'
-import { ImageDetails } from '@/context/data/types.details'
+import type { ImageDetails } from '@/context/data/types.details'
 
-import { Image, ImageProps } from './Image'
+import { Image, type ImageProps } from './Image'
 import { sourceFromImage } from './Image.common'
 
 export type BannerProps = {
@@ -35,7 +34,13 @@ export type BannerProps = {
   viewable?: boolean
 }
 
-export const Banner = ({ style, image, title, placeholder, viewable }: BannerProps) => {
+export const Banner = ({
+  style,
+  image,
+  title,
+  placeholder,
+  viewable,
+}: BannerProps) => {
   const aspect = !image ? {} : { aspectRatio: image.Width / image.Height }
   // Do not render if nothing given.
   if (!image) return null
@@ -51,7 +56,12 @@ export const Banner = ({ style, image, title, placeholder, viewable }: BannerPro
           })
       }}
     >
-      <Image style={[styles.image, aspect, style]} contentFit={undefined} source={sourceFromImage(image)} placeholder={placeholder} />
+      <Image
+        style={[styles.image, aspect, style]}
+        contentFit={undefined}
+        source={sourceFromImage(image)}
+        placeholder={placeholder}
+      />
     </Pressable>
   )
 }

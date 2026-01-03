@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native'
-
-import { ImageBackground } from '@/components/generic/atoms/ImageBackground'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { Text, View } from 'react-native'
+import { ImageBackground } from '@/components/generic/atoms/ImageBackground'
 
 const meta = {
   title: 'Components/Atoms/ImageBackground',
@@ -36,7 +34,17 @@ export const Default: Story = {
     style: { width: 400, height: 300 },
     children: (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold', textShadowColor: 'black', textShadowRadius: 2 }}>Content Overlay</Text>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 24,
+            fontWeight: 'bold',
+            textShadowColor: 'black',
+            textShadowRadius: 2,
+          }}
+        >
+          Content Overlay
+        </Text>
       </View>
     ),
   },
@@ -45,19 +53,67 @@ export const Default: Story = {
 export const DifferentContentFit: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
-      <ImageBackground source={{ uri: 'https://picsum.photos/400/200' }} style={{ width: 200, height: 100 }} contentFit="cover">
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', textShadowColor: 'black', textShadowRadius: 2 }}>Cover</Text>
+      <ImageBackground
+        source={{ uri: 'https://picsum.photos/400/200' }}
+        style={{ width: 200, height: 100 }}
+        contentFit='cover'
+      >
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 16,
+              fontWeight: 'bold',
+              textShadowColor: 'black',
+              textShadowRadius: 2,
+            }}
+          >
+            Cover
+          </Text>
         </View>
       </ImageBackground>
-      <ImageBackground source={{ uri: 'https://picsum.photos/400/200' }} style={{ width: 200, height: 100 }} contentFit="contain">
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', textShadowColor: 'black', textShadowRadius: 2 }}>Contain</Text>
+      <ImageBackground
+        source={{ uri: 'https://picsum.photos/400/200' }}
+        style={{ width: 200, height: 100 }}
+        contentFit='contain'
+      >
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 16,
+              fontWeight: 'bold',
+              textShadowColor: 'black',
+              textShadowRadius: 2,
+            }}
+          >
+            Contain
+          </Text>
         </View>
       </ImageBackground>
-      <ImageBackground source={{ uri: 'https://picsum.photos/400/200' }} style={{ width: 200, height: 100 }} contentFit="fill">
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold', textShadowColor: 'black', textShadowRadius: 2 }}>Fill</Text>
+      <ImageBackground
+        source={{ uri: 'https://picsum.photos/400/200' }}
+        style={{ width: 200, height: 100 }}
+        contentFit='fill'
+      >
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 16,
+              fontWeight: 'bold',
+              textShadowColor: 'black',
+              textShadowRadius: 2,
+            }}
+          >
+            Fill
+          </Text>
         </View>
       </ImageBackground>
     </View>
@@ -71,9 +127,27 @@ export const WithComplexContent: Story = {
     children: (
       <View style={{ flex: 1, padding: 20 }}>
         <View style={{ flex: 1, justifyContent: 'space-between' }}>
-          <Text style={{ color: 'white', fontSize: 28, fontWeight: 'bold', textShadowColor: 'black', textShadowRadius: 3 }}>Header</Text>
-          <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', padding: 15, borderRadius: 8 }}>
-            <Text style={{ color: 'white', fontSize: 16 }}>This is some content with a semi-transparent background</Text>
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 28,
+              fontWeight: 'bold',
+              textShadowColor: 'black',
+              textShadowRadius: 3,
+            }}
+          >
+            Header
+          </Text>
+          <View
+            style={{
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              padding: 15,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ color: 'white', fontSize: 16 }}>
+              This is some content with a semi-transparent background
+            </Text>
           </View>
         </View>
       </View>
@@ -84,14 +158,44 @@ export const WithComplexContent: Story = {
 export const DifferentSizes: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
-      <ImageBackground source={{ uri: 'https://picsum.photos/200/200' }} style={{ width: 200, height: 200 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold', textShadowColor: 'black', textShadowRadius: 2 }}>Square</Text>
+      <ImageBackground
+        source={{ uri: 'https://picsum.photos/200/200' }}
+        style={{ width: 200, height: 200 }}
+      >
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 18,
+              fontWeight: 'bold',
+              textShadowColor: 'black',
+              textShadowRadius: 2,
+            }}
+          >
+            Square
+          </Text>
         </View>
       </ImageBackground>
-      <ImageBackground source={{ uri: 'https://picsum.photos/400/200' }} style={{ width: 400, height: 200 }}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 18, fontWeight: 'bold', textShadowColor: 'black', textShadowRadius: 2 }}>Wide</Text>
+      <ImageBackground
+        source={{ uri: 'https://picsum.photos/400/200' }}
+        style={{ width: 400, height: 200 }}
+      >
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text
+            style={{
+              color: 'white',
+              fontSize: 18,
+              fontWeight: 'bold',
+              textShadowColor: 'black',
+              textShadowRadius: 2,
+            }}
+          >
+            Wide
+          </Text>
         </View>
       </ImageBackground>
     </View>

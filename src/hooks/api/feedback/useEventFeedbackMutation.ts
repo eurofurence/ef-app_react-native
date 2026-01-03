@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import axios, { type GenericAbortSignal } from 'axios'
 
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
@@ -19,7 +19,11 @@ export type EventFeedbackData = {
  * @param data The feedback data.
  * @param signal An abort signal.
  */
-export async function postEventFeedback(accessToken: string | null, data: EventFeedbackData, signal?: GenericAbortSignal) {
+export async function postEventFeedback(
+  accessToken: string | null,
+  data: EventFeedbackData,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
     .post(`${apiBase}/EventFeedback`, data, {
@@ -38,6 +42,7 @@ export async function postEventFeedback(accessToken: string | null, data: EventF
 export function useEventFeedbackMutation() {
   const { accessToken } = useAuthContext()
   return useMutation({
-    mutationFn: (data: EventFeedbackData) => postEventFeedback(accessToken, data),
+    mutationFn: (data: EventFeedbackData) =>
+      postEventFeedback(accessToken, data),
   })
 }

@@ -1,6 +1,12 @@
 export function isAuthError(error: unknown): error is Error {
   return Boolean(
-    error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && error.response.status === 401
+    error &&
+      typeof error === 'object' &&
+      'response' in error &&
+      error.response &&
+      typeof error.response === 'object' &&
+      'status' in error.response &&
+      error.response.status === 401
   )
 }
 

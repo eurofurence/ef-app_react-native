@@ -1,12 +1,10 @@
-import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-
 import { useDealerAlphabeticalGroups } from '@/components/dealers/Dealers.common'
 import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { conName } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
 import { useDealersSearch } from '@/context/DealersSearchContext'
+import { useCache } from '@/context/data/Cache'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
 
@@ -23,11 +21,9 @@ export default function AzScreen() {
     <DealersSectionedList
       dealersGroups={groups}
       leader={
-        <>
-          <Label type="lead" variant="middle" className="mt-8">
-            {t('dealers_at_convention', { convention: conName })}
-          </Label>
-        </>
+        <Label type='lead' variant='middle' className='mt-8'>
+          {t('dealers_at_convention', { convention: conName })}
+        </Label>
       }
     />
   )

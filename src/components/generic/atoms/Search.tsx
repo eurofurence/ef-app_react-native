@@ -1,12 +1,16 @@
 import SearchPlus from '@expo/vector-icons/FontAwesome5'
-import React, { FC, useRef } from 'react'
+import { type FC, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, TextInput, View, ViewStyle } from 'react-native'
+import { StyleSheet, TextInput, View, type ViewStyle } from 'react-native'
 
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
 import { withAlpha } from '@/context/Theme'
-import { useThemeBackground, useThemeColor, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeColor,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
 import { labelTypeStyles } from './Label'
 
@@ -19,7 +23,14 @@ export type SearchProps = {
   submit?: () => void
 }
 
-export const Search: FC<SearchProps> = ({ className, style, filter, setFilter, placeholder, submit }) => {
+export const Search: FC<SearchProps> = ({
+  className,
+  style,
+  filter,
+  setFilter,
+  placeholder,
+  submit,
+}) => {
   const { t } = useTranslation('Search')
   const styleLighten = useThemeBackground('inverted')
   const styleText = useThemeColor('invText')
@@ -32,12 +43,12 @@ export const Search: FC<SearchProps> = ({ className, style, filter, setFilter, p
   return (
     <View className={className} style={[styles.container, styleLighten, style]}>
       <SearchPlus
-        name="search"
+        name='search'
         size={18}
         color={colorText}
         className={'mr-2'}
         accessibilityElementsHidden={true} // Hide decorative icon from screen readers
-        importantForAccessibility="no"
+        importantForAccessibility='no'
       />
       <TextInput
         style={[styles.searchField, styleText, labelTypeStyles.regular]}
@@ -46,21 +57,29 @@ export const Search: FC<SearchProps> = ({ className, style, filter, setFilter, p
         onSubmitEditing={submit}
         placeholder={placeholder ?? t('placeholder')}
         placeholderTextColor={withAlpha(colorText, 0.6)}
-        accessibilityLabel={t('search_input_label', { defaultValue: 'Search input' })}
-        accessibilityHint={t('search_input_hint', { defaultValue: 'Enter text to search for events, dealers, and more' })}
-        accessibilityRole="search"
-        returnKeyType="search"
-        clearButtonMode="never" // We provide our own clear button with better accessibility
+        accessibilityLabel={t('search_input_label', {
+          defaultValue: 'Search input',
+        })}
+        accessibilityHint={t('search_input_hint', {
+          defaultValue: 'Enter text to search for events, dealers, and more',
+        })}
+        accessibilityRole='search'
+        returnKeyType='search'
+        clearButtonMode='never' // We provide our own clear button with better accessibility
       />
       {filter ? (
         <Pressable
           onPress={() => setFilter('')}
           style={styles.clearButtonContainer}
-          accessibilityRole="button"
-          accessibilityLabel={t('clear_search', { defaultValue: 'Clear search' })}
-          accessibilityHint={t('clear_search_hint', { defaultValue: 'Clears the current search text' })}
+          accessibilityRole='button'
+          accessibilityLabel={t('clear_search', {
+            defaultValue: 'Clear search',
+          })}
+          accessibilityHint={t('clear_search_hint', {
+            defaultValue: 'Clears the current search text',
+          })}
         >
-          <Icon name="close" size={18} color={colorText} className={'ml-2'} />
+          <Icon name='close' size={18} color={colorText} className={'ml-2'} />
         </Pressable>
       ) : (
         <View style={styles.clearButtonPlaceholder} />

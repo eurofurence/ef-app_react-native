@@ -1,11 +1,13 @@
-import { RecordMetadata } from '@/context/data/types.api'
+import type { RecordMetadata } from '@/context/data/types.api'
 import { parseJsonSafe, stringifyJsonSafe } from '@/util/json'
 
 /**
  * Entity store, contains a list of keys, list of sorted values, and associative
  * object from ID to value.
  */
-export type EntityStore<T> = readonly T[] & { dict: Readonly<Record<string, T>> }
+export type EntityStore<T> = readonly T[] & {
+  dict: Readonly<Record<string, T>>
+}
 /**
  * Empty store.
  */
@@ -20,9 +22,14 @@ export const emptyEntityStore: EntityStore<never> = Object.freeze(
  * @param store The store to map.
  * @param callbackFn The transformation.
  */
-export function mapEntityStore<T, TResult>(store: EntityStore<T>, callbackFn: (input: T) => TResult): EntityStore<TResult> {
+export function mapEntityStore<T, TResult>(
+  store: EntityStore<T>,
+  callbackFn: (input: T) => TResult
+): EntityStore<TResult> {
   return Object.assign(store.map(callbackFn), {
-    dict: Object.fromEntries(Object.entries(store.dict).map(([key, value]) => [key, callbackFn(value)])),
+    dict: Object.fromEntries(
+      Object.entries(store.dict).map(([key, value]) => [key, callbackFn(value)])
+    ),
   })
 }
 
@@ -31,9 +38,14 @@ export function mapEntityStore<T, TResult>(store: EntityStore<T>, callbackFn: (i
  * @param store The store to filter.
  * @param predicate The predicate.
  */
-export function filterEntityStore<T>(store: EntityStore<T>, predicate: (input: T) => unknown): EntityStore<T> {
+export function filterEntityStore<T>(
+  store: EntityStore<T>,
+  predicate: (input: T) => unknown
+): EntityStore<T> {
   return Object.assign(store.filter(predicate), {
-    dict: Object.fromEntries(Object.entries(store.dict).filter(([, value]) => predicate(value))),
+    dict: Object.fromEntries(
+      Object.entries(store.dict).filter(([, value]) => predicate(value))
+    ),
   })
 }
 
@@ -106,7 +118,9 @@ function entityStoreStringifyReplacer(key: string, value: any) {
  * @param value The value to serialize.
  */
 function stringifyEntityStore(value: any) {
-  return value === undefined ? 'undefined' : JSON.stringify(value, entityStoreStringifyReplacer)
+  return value === undefined
+    ? 'undefined'
+    : JSON.stringify(value, entityStoreStringifyReplacer)
 }
 
 /**
@@ -128,7 +142,11 @@ function compare<T>(a: T, b: T) {
  * @param orderBy The default order.
  * @param mode The order mode.
  */
-export function defineEntity<T extends RecordMetadata>(syncResponseField: string, orderBy: (item: T) => any, mode: 'asc' | 'desc' = 'asc'): SchemaEntities<T> {
+export function defineEntity<T extends RecordMetadata>(
+  syncResponseField: string,
+  orderBy: (item: T) => any,
+  mode: 'asc' | 'desc' = 'asc'
+): SchemaEntities<T> {
   const sign = mode === 'asc' ? 1 : -1
   return {
     defaultValue: emptyEntityStore,

@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
@@ -25,10 +25,20 @@ export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
 
   return (
     <>
-      <Section title={t('current_title')} subtitle={t('current_subtitle')} icon="clock" />
+      <Section
+        title={t('current_title')}
+        subtitle={t('current_subtitle')}
+        icon='clock'
+      />
       <View style={styles.condense}>
         {events.map((event) => (
-          <EventCard key={event.details.Id} event={event} type="duration" onPress={onPress} onLongPress={onLongPress} />
+          <EventCard
+            key={event.details.Id}
+            event={event}
+            type='duration'
+            onPress={onPress}
+            onLongPress={onLongPress}
+          />
         ))}
       </View>
     </>

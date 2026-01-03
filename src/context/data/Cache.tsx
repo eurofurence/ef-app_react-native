@@ -1,9 +1,25 @@
 import axios from 'axios'
-import React, { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react'
 import { Vibration } from 'react-native'
 
 import { apiBase, conId, eurofurenceCacheVersion } from '@/configuration'
-import { schema, Schema, SchemaEntities, schemaEntities, SchemaValues } from '@/context/data/CacheSchema'
+import {
+  type Schema,
+  type SchemaEntities,
+  type SchemaValues,
+  schema,
+  schemaEntities,
+} from '@/context/data/CacheSchema'
 import {
   actionEntitiesChange,
   actionInternalsSet,
@@ -11,12 +27,14 @@ import {
   actionValuesDelete,
   actionValuesSet,
   initialState,
-  StoreData,
+  type StoreData,
   storeReducer,
-  usePersistor,
 } from '@/context/data/CacheStore'
-import { SchemaField } from '@/context/data/CacheTools'
-import { CacheExtensions, useCacheExtensions } from '@/context/data/useCacheExtensions'
+import type { SchemaField } from '@/context/data/CacheTools'
+import {
+  type CacheExtensions,
+  useCacheExtensions,
+} from '@/context/data/useCacheExtensions'
 import * as Storage from '@/util/asyncStorage'
 
 import { useAuthContext } from '../auth/Auth'
@@ -78,7 +96,11 @@ CacheContext.displayName = 'CacheContext'
  * if the state is not available yet.
  * @constructor
  */
-export const CacheProvider = ({ children }: { children?: ReactNode | undefined }) => {
+export const CacheProvider = ({
+  children,
+}: {
+  children?: ReactNode | undefined
+}) => {
   // Internal state. Initialized is tracked to stop rendering if data is not
   // hydrated yet. Cache data is the full cache state.
   const [initialized, setInitialized] = useState(false)
@@ -117,7 +139,10 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
           Object.entries(schema).map(([key, field]) => {
             // Cast to unknown field. We know that the definition should match as it comes from the
             // schema itself.
-            return [key, (field as SchemaField<unknown>).serialize(field.defaultValue)]
+            return [
+              key,
+              (field as SchemaField<unknown>).serialize(field.defaultValue),
+            ]
           })
         ).catch()
 
@@ -133,11 +158,32 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     }
   }, [])
 
-  // All dehydrators for the state.
-  for (const key in schema) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    usePersistor(data, key as keyof Schema)
-  }
+  // All dehydrators for the state. Use a single effect to persist all schema keys.
+  useEffect(() => {
+    const timeouts: NodeJS.Timeout[] = []
+    const debounce = 100
+
+    for (const key in schema) {
+      const store = key as keyof Schema
+      const location = data[store]
+
+      // Set up debounced persistence
+      const timeout = setTimeout(() => {
+        Storage.set(
+          store,
+          (schema[store] as SchemaField<unknown>).serialize(location)
+        ).catch()
+      }, debounce)
+      timeouts.push(timeout)
+    }
+
+    return () => {
+      // Cleanup all timeouts
+      for (const timeout of timeouts) {
+        clearTimeout(timeout)
+      }
+    }
+  }, [data])
 
   // Direct cache access methods.
   const getValue = useCallback(
@@ -146,13 +192,19 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
     },
     [data]
   )
-  const setValue = useCallback(<T extends keyof SchemaValues>(store: T, to: StoreData[T]): void => {
-    dispatch(actionValuesSet(store, to))
-  }, [])
+  const setValue = useCallback(
+    <T extends keyof SchemaValues>(store: T, to: StoreData[T]): void => {
+      dispatch(actionValuesSet(store, to))
+    },
+    []
+  )
 
-  const removeValue = useCallback(<T extends keyof SchemaValues>(store: T): void => {
-    dispatch(actionValuesDelete(store))
-  }, [])
+  const removeValue = useCallback(
+    <T extends keyof SchemaValues>(store: T): void => {
+      dispatch(actionValuesDelete(store))
+    },
+    []
+  )
 
   // Clear dispatcher.
   const clear = useCallback(async () => {
@@ -178,12 +230,18 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
       setIsSynchronizing(true)
 
       // Get states to determine delta based sync or full sync.
-      const { lastSynchronised, cid, cacheVersion, lastSyncAuthorized } = dataRef.current
+      const { lastSynchronised, cid, cacheVersion, lastSyncAuthorized } =
+        dataRef.current
       const isWithBaseline = Boolean(lastSynchronised)
       const isSameCon = cid === conId
       const isSameVersion = cacheVersion === eurofurenceCacheVersion
       const isSameAuthState = Boolean(accessToken) === lastSyncAuthorized
-      const deltaBased = !options?.full && isWithBaseline && isSameCon && isSameVersion && isSameAuthState
+      const deltaBased =
+        !options?.full &&
+        isWithBaseline &&
+        isSameCon &&
+        isSameVersion &&
+        isSameAuthState
 
       // Sync fully if state is for a different convention.
       const path = deltaBased ? `Sync?since=${lastSynchronised}` : `Sync`
@@ -201,19 +259,43 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
           .then((res) => res.data)
 
         // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
-        if (data.ConventionIdentifier !== conId || cacheVersion !== eurofurenceCacheVersion) {
+        if (
+          data.ConventionIdentifier !== conId ||
+          cacheVersion !== eurofurenceCacheVersion
+        ) {
           dispatch(actionReset(initialState, 'CID or format change'))
-          dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, lastSynchronised, Boolean(accessToken)))
+          dispatch(
+            actionInternalsSet(
+              conId,
+              eurofurenceCacheVersion,
+              lastSynchronised,
+              Boolean(accessToken)
+            )
+          )
         }
 
         // Dispatch all received changes to the reducer.
         for (const key in schemaEntities) {
           const store = key as keyof SchemaEntities
           const change = data[schemaEntities[store].syncResponseField]
-          dispatch(actionEntitiesChange(store, change.RemoveAllBeforeInsert, change.DeletedEntities, change.ChangedEntities))
+          dispatch(
+            actionEntitiesChange(
+              store,
+              change.RemoveAllBeforeInsert,
+              change.DeletedEntities,
+              change.ChangedEntities
+            )
+          )
         }
 
-        dispatch(actionInternalsSet(conId, eurofurenceCacheVersion, data.CurrentDateTimeUtc, Boolean(accessToken)))
+        dispatch(
+          actionInternalsSet(
+            conId,
+            eurofurenceCacheVersion,
+            data.CurrentDateTimeUtc,
+            Boolean(accessToken)
+          )
+        )
       } finally {
         if (invocation.current === ownInvocation) {
           setIsSynchronizing(false)
@@ -242,9 +324,22 @@ export const CacheProvider = ({ children }: { children?: ReactNode | undefined }
       synchronize,
       ...extensions,
     }),
-    [data, getValue, setValue, removeValue, clear, isSynchronizing, synchronize, extensions]
+    [
+      data,
+      getValue,
+      setValue,
+      removeValue,
+      clear,
+      isSynchronizing,
+      synchronize,
+      extensions,
+    ]
   )
-  return <CacheContext.Provider value={value}>{initialized ? children : null}</CacheContext.Provider>
+  return (
+    <CacheContext.Provider value={value}>
+      {initialized ? children : null}
+    </CacheContext.Provider>
+  )
 }
 
 /**

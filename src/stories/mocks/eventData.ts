@@ -1,4 +1,4 @@
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 
 // Mock event data for Storybook stories
 export const mockEventDetails: EventDetails = {
@@ -41,7 +41,8 @@ export const mockEventDetailsWithBanner: EventDetails = {
   IsDeleted: 0,
   Title: 'Fursuit Parade',
   SubTitle: 'Show off your amazing fursuit!',
-  Description: 'A spectacular parade showcasing the best fursuits at the convention.',
+  Description:
+    'A spectacular parade showcasing the best fursuits at the convention.',
   Start: new Date('2024-08-15T14:00:00Z'),
   End: new Date('2024-08-15T16:00:00Z'),
   StartLocal: new Date('2024-08-15T16:00:00+02:00'),
@@ -152,9 +153,11 @@ export const mockEventDetailsLongTitle: EventDetails = {
   Id: 'event-5',
   LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
   IsDeleted: 0,
-  Title: 'This is a very long event title that might wrap to multiple lines and should be handled gracefully by the component',
+  Title:
+    'This is a very long event title that might wrap to multiple lines and should be handled gracefully by the component',
   SubTitle: 'With a subtitle that is also quite long and descriptive',
-  Description: 'A detailed description of this event that provides comprehensive information about what attendees can expect.',
+  Description:
+    'A detailed description of this event that provides comprehensive information about what attendees can expect.',
   Start: new Date('2024-08-15T19:00:00Z'),
   End: new Date('2024-08-15T21:00:00Z'),
   StartLocal: new Date('2024-08-15T21:00:00+02:00'),

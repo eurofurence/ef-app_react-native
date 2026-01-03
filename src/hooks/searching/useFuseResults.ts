@@ -1,4 +1,4 @@
-import Fuse from 'fuse.js'
+import type Fuse from 'fuse.js'
 import { useEffect, useMemo, useState } from 'react'
 
 /**
@@ -8,7 +8,11 @@ import { useEffect, useMemo, useState } from 'react'
  * @param filter The text to search.
  * @param limit The item limit.
  */
-export const useFuseResults = <T extends object>(fuse: Fuse<T>, filter: string, limit = 100): T[] | null => {
+export const useFuseResults = <T extends object>(
+  fuse: Fuse<T>,
+  filter: string,
+  limit = 100
+): T[] | null => {
   const [filterDebounce, setFilterDebounce] = useState(filter)
 
   useEffect(() => {
@@ -25,6 +29,7 @@ export const useFuseResults = <T extends object>(fuse: Fuse<T>, filter: string, 
 
   return useMemo(() => {
     if (!filterDebounce.length) return null
-    else return fuse.search(filterDebounce, { limit }).map((result) => result.item)
+    else
+      return fuse.search(filterDebounce, { limit }).map((result) => result.item)
   }, [fuse, filterDebounce, limit])
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -33,13 +33,17 @@ export default function SettingsPage() {
         style={StyleSheet.absoluteFill}
         stickyHeaderIndices={[0]}
         stickyHeaderHiddenOnScroll
-        className="flex-1"
+        className='flex-1'
         accessibilityLabel={t('accessibility.settings_scroll')}
         accessibilityHint={t('accessibility.settings_scroll_hint')}
       >
         <Header>{t('header')}</Header>
         <Floater contentStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={t('accessibility.settings_content')} accessibilityRole="text">
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={t('accessibility.settings_content')}
+            accessibilityRole='text'
+          >
             <UserSettings />
             <OssLicenses />
 

@@ -1,8 +1,8 @@
 import { captureException } from '@sentry/react-native'
 import { Redirect } from 'expo-router'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, RefreshControl, View } from 'react-native'
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
@@ -37,26 +37,42 @@ export default function Profile() {
   }, [refresh, isReloading])
 
   // Navigate back if not logged in.
-  if (!user) return <Redirect href="/" />
+  if (!user) return <Redirect href='/' />
 
   return (
     <ScrollView
       style={[StyleSheet.absoluteFill, backgroundStyle]}
-      refreshControl={<RefreshControl refreshing={isSynchronizing} onRefresh={() => vibrateAfter(synchronize())} accessibilityLabel={a11y('pull_to_refresh')} />}
+      refreshControl={
+        <RefreshControl
+          refreshing={isSynchronizing}
+          onRefresh={() => vibrateAfter(synchronize())}
+          accessibilityLabel={a11y('pull_to_refresh')}
+        />
+      }
       stickyHeaderIndices={[0]}
       stickyHeaderHiddenOnScroll
       accessibilityLabel={t('accessibility.profile_scroll_view')}
       accessibilityHint={t('accessibility.profile_scroll_view_hint')}
     >
-      <Header secondaryIcon="refresh" secondaryPress={isReloading ? () => undefined : doReload} loading={isReloading}>
+      <Header
+        secondaryIcon='refresh'
+        secondaryPress={isReloading ? () => undefined : doReload}
+        loading={isReloading}
+      >
         {t('header')}
       </Header>
       <Floater contentStyle={appStyles.trailer}>
         {!claims || !user ? (
-          <View accessibilityLabel={t('accessibility.loading_profile')}>{null}</View>
+          <View accessibilityLabel={t('accessibility.loading_profile')}>
+            {null}
+          </View>
         ) : (
           <View accessibilityLabel={t('accessibility.profile_content_area')}>
-            <ProfileContent claims={claims} user={user} parentPad={padFloater} />
+            <ProfileContent
+              claims={claims}
+              user={user}
+              parentPad={padFloater}
+            />
           </View>
         )}
       </Floater>

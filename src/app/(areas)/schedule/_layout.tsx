@@ -1,22 +1,29 @@
-import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
+import type {
+  MaterialTopTabNavigationEventMap,
+  MaterialTopTabNavigationOptions,
+} from '@react-navigation/material-top-tabs'
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBar,
+} from '@react-navigation/material-top-tabs'
+import type {
+  ParamListBase,
+  TabNavigationState,
+} from '@react-navigation/native'
 import { isSameDay } from 'date-fns'
 import { withLayoutContext } from 'expo-router'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
 import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
-import { Icon, IconNames } from '@/components/generic/atoms/Icon'
+import { Icon, type IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
 import { useCache } from '@/context/data/Cache'
-import { EventDayDetails } from '@/context/data/types.details'
+import type { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
-
-import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
-import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 
 export const unstable_settings = {
   initialRouteName: 'day-1',
@@ -24,9 +31,17 @@ export const unstable_settings = {
 
 const { Navigator } = createMaterialTopTabNavigator()
 
-const MaterialTopTabs = withLayoutContext<MaterialTopTabNavigationOptions, typeof Navigator, TabNavigationState<ParamListBase>, MaterialTopTabNavigationEventMap>(Navigator)
+const MaterialTopTabs = withLayoutContext<
+  MaterialTopTabNavigationOptions,
+  typeof Navigator,
+  TabNavigationState<ParamListBase>,
+  MaterialTopTabNavigationEventMap
+>(Navigator)
 
-function createOptions(title: string | undefined, icon: IconNames | undefined = undefined): MaterialTopTabNavigationOptions {
+function createOptions(
+  title: string | undefined,
+  icon: IconNames | undefined = undefined
+): MaterialTopTabNavigationOptions {
   if (icon === undefined) return { title: title }
   return {
     title: title,
@@ -72,30 +87,69 @@ export default function ScheduleLayout() {
   }, [eventDays])
 
   return (
-    <ScheduleSearchContext.Provider value={{ query: filter, setQuery: setFilter }}>
+    <ScheduleSearchContext.Provider
+      value={{ query: filter, setQuery: setFilter }}
+    >
       <MaterialTopTabs
         initialRouteName={initialRouteName}
         style={StyleSheet.absoluteFill}
-        screenOptions={{ tabBarStyle: { paddingTop: insets.top }, sceneStyle: backgroundSurface, tabBarItemStyle: styles.tabItem }}
+        screenOptions={{
+          tabBarStyle: { paddingTop: insets.top },
+          sceneStyle: backgroundSurface,
+          tabBarItemStyle: styles.tabItem,
+        }}
         tabBar={(props) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
-            <View className="flex-row items-center pr-2.5">
-              <Search className="flex-1 my-2.5 ml-2.5 mr-0" filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+            <View className='flex-row items-center pr-2.5'>
+              <Search
+                className='flex-1 my-2.5 ml-2.5 mr-0'
+                filter={filter}
+                setFilter={setFilter}
+                placeholder={t('search.placeholder')}
+              />
               <ShowInternalEventsToggle />
             </View>
           </View>
         )}
       >
-        <MaterialTopTabs.Screen name="filter" options={options.filter} />
-        <MaterialTopTabs.Screen name="personal" options={options.personal} />
-        <MaterialTopTabs.Screen name="day-1" options={options['day-1']} redirect={eventDays.length < 1} />
-        <MaterialTopTabs.Screen name="day-2" options={options['day-2']} redirect={eventDays.length < 2} />
-        <MaterialTopTabs.Screen name="day-3" options={options['day-3']} redirect={eventDays.length < 3} />
-        <MaterialTopTabs.Screen name="day-4" options={options['day-4']} redirect={eventDays.length < 4} />
-        <MaterialTopTabs.Screen name="day-5" options={options['day-5']} redirect={eventDays.length < 5} />
-        <MaterialTopTabs.Screen name="day-6" options={options['day-6']} redirect={eventDays.length < 6} />
-        <MaterialTopTabs.Screen name="day-7" options={options['day-7']} redirect={eventDays.length < 7} />
+        <MaterialTopTabs.Screen name='filter' options={options.filter} />
+        <MaterialTopTabs.Screen name='personal' options={options.personal} />
+        <MaterialTopTabs.Screen
+          name='day-1'
+          options={options['day-1']}
+          redirect={eventDays.length < 1}
+        />
+        <MaterialTopTabs.Screen
+          name='day-2'
+          options={options['day-2']}
+          redirect={eventDays.length < 2}
+        />
+        <MaterialTopTabs.Screen
+          name='day-3'
+          options={options['day-3']}
+          redirect={eventDays.length < 3}
+        />
+        <MaterialTopTabs.Screen
+          name='day-4'
+          options={options['day-4']}
+          redirect={eventDays.length < 4}
+        />
+        <MaterialTopTabs.Screen
+          name='day-5'
+          options={options['day-5']}
+          redirect={eventDays.length < 5}
+        />
+        <MaterialTopTabs.Screen
+          name='day-6'
+          options={options['day-6']}
+          redirect={eventDays.length < 6}
+        />
+        <MaterialTopTabs.Screen
+          name='day-7'
+          options={options['day-7']}
+          redirect={eventDays.length < 7}
+        />
       </MaterialTopTabs>
     </ScheduleSearchContext.Provider>
   )

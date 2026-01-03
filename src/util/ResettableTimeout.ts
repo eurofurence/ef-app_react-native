@@ -64,12 +64,12 @@ export class ResettableTimeout {
    */
   reset() {
     this._succeeded = false
-    this._listeners.forEach((fn) => fn(false))
+    this._listeners.forEach((fn) => void fn(false))
     if (this._handle) clearTimeout(this._handle)
     this._handle = setTimeout(() => {
       this._fn()
       this._succeeded = true
-      this._listeners.forEach((fn) => fn(true))
+      this._listeners.forEach((fn) => void fn(true))
     }, this.delay)
   }
 

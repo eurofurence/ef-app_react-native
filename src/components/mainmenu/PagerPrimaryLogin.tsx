@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 
@@ -8,7 +7,7 @@ import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { Pressable } from '@/components/generic/Pressable'
-import { Claims } from '@/hooks/api/idp/useUserInfo'
+import type { Claims } from '@/hooks/api/idp/useUserInfo'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 type PagerPrimaryLoginProps = {
@@ -19,35 +18,66 @@ type PagerPrimaryLoginProps = {
   onProfile?: () => void
 }
 
-export function PagerPrimaryLogin({ loggedIn, claims, onMessages, onLogin, onProfile }: PagerPrimaryLoginProps) {
+export function PagerPrimaryLogin({
+  loggedIn,
+  claims,
+  onMessages,
+  onLogin,
+  onProfile,
+}: PagerPrimaryLoginProps) {
   const { t } = useTranslation('Menu')
   const avatarBackground = useThemeBackground('primary')
 
   return (
-    <Row style={styles.padding} type="start" variant="center" accessibilityLabel={t('accessibility.login_section')}>
+    <Row
+      style={styles.padding}
+      type='start'
+      variant='center'
+      accessibilityLabel={t('accessibility.login_section')}
+    >
       <Pressable
         disabled={!loggedIn || !onProfile}
         onPress={() => onProfile?.()}
-        accessibilityRole="button"
-        accessibilityLabel={loggedIn && claims?.name ? t('accessibility.profile_button_with_name', { name: claims.name }) : t('accessibility.profile_button')}
-        accessibilityHint={loggedIn ? t('accessibility.profile_button_hint') : t('accessibility.profile_button_disabled_hint')}
+        accessibilityRole='button'
+        accessibilityLabel={
+          loggedIn && claims?.name
+            ? t('accessibility.profile_button_with_name', { name: claims.name })
+            : t('accessibility.profile_button')
+        }
+        accessibilityHint={
+          loggedIn
+            ? t('accessibility.profile_button_hint')
+            : t('accessibility.profile_button_disabled_hint')
+        }
         accessibilityState={{ disabled: !loggedIn || !onProfile }}
       >
-        <Col type="center">
+        <Col type='center'>
           <Image
             style={[avatarBackground, styles.avatarCircle]}
             source={claims?.avatar ?? require('@/assets/static/ych.png')}
-            contentFit="contain"
-            cachePolicy="memory-disk"
-            priority="high"
-            accessibilityRole="image"
-            accessibilityLabel={claims?.name ? t('accessibility.avatar_with_name', { name: claims.name }) : t('accessibility.avatar_default')}
+            contentFit='contain'
+            cachePolicy='memory-disk'
+            priority='high'
+            accessibilityRole='image'
+            accessibilityLabel={
+              claims?.name
+                ? t('accessibility.avatar_with_name', { name: claims.name })
+                : t('accessibility.avatar_default')
+            }
             accessibilityElementsHidden={true}
-            importantForAccessibility="no"
+            importantForAccessibility='no'
           />
         </Col>
         {!claims?.name ? null : (
-          <Label style={styles.name} type="minor" className="mt-1" ellipsizeMode="tail" numberOfLines={1} accessibilityElementsHidden={true} importantForAccessibility="no">
+          <Label
+            style={styles.name}
+            type='minor'
+            className='mt-1'
+            ellipsizeMode='tail'
+            numberOfLines={1}
+            accessibilityElementsHidden={true}
+            importantForAccessibility='no'
+          >
             {claims.name}
           </Label>
         )}
@@ -57,7 +87,7 @@ export function PagerPrimaryLogin({ loggedIn, claims, onMessages, onLogin, onPro
         <Button
           containerStyle={styles.buttonContainer}
           style={styles.button}
-          icon="message"
+          icon='message'
           onPress={onMessages}
           accessibilityLabel={t('accessibility.messages_button')}
           accessibilityHint={t('accessibility.messages_button_hint')}
@@ -68,7 +98,7 @@ export function PagerPrimaryLogin({ loggedIn, claims, onMessages, onLogin, onPro
         <Button
           containerStyle={styles.buttonContainer}
           style={styles.button}
-          icon="login"
+          icon='login'
           onPress={onLogin}
           accessibilityLabel={t('accessibility.login_button')}
           accessibilityHint={t('accessibility.login_button_hint')}

@@ -1,5 +1,4 @@
 import { router } from 'expo-router'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 
@@ -21,12 +20,20 @@ export const HiddenEvents = () => {
 
   return (
     <SettingContainer>
-      <Section title={t('title')} subtitle={t('subtitle')} icon="monitor-eye" />
+      <Section title={t('title')} subtitle={t('subtitle')} icon='monitor-eye' />
 
-      <Button containerStyle={styles.button} icon="folder-eye" onPress={unhideAllEvents}>
+      <Button
+        containerStyle={styles.button}
+        icon='folder-eye'
+        onPress={unhideAllEvents}
+      >
         {t('unhide_all')}
       </Button>
-      <Button containerStyle={styles.button} icon="eye" onPress={() => router.push('/settings/reveal')}>
+      <Button
+        containerStyle={styles.button}
+        icon='eye'
+        onPress={() => router.push('/settings/reveal')}
+      >
         {t('unhide_specific')}
       </Button>
     </SettingContainer>

@@ -1,11 +1,17 @@
-import { addMinutes, isAfter, isBefore, subMinutes, formatDistanceToNow } from 'date-fns'
+import {
+  addMinutes,
+  formatDistanceToNow,
+  isAfter,
+  isBefore,
+  subMinutes,
+} from 'date-fns'
 import { router } from 'expo-router'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { useCache } from '@/context/data/Cache'
-import { AnnouncementDetails } from '@/context/data/types.details'
+import type { AnnouncementDetails } from '@/context/data/types.details'
 
 import { Section } from '../generic/atoms/Section'
 import { Button } from '../generic/containers/Button'
@@ -19,18 +25,31 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
   const { t: tAnnouncements } = useTranslation('Announcements')
   const { announcements } = useCache()
 
-  const recent = useMemo(() => announcements.filter((item) => isAfter(now, subMinutes(item.ValidFrom, 5)) && isBefore(now, addMinutes(item.ValidUntil, 5))), [announcements, now])
+  const recent = useMemo(
+    () =>
+      announcements.filter(
+        (item) =>
+          isAfter(now, subMinutes(item.ValidFrom, 5)) &&
+          isBefore(now, addMinutes(item.ValidUntil, 5))
+      ),
+    [announcements, now]
+  )
 
   /**
    * Creates the announcement instance props for an upcoming or running announcement.
    * @param details The details to use.
    */
-  const announcementInstanceForAny = (details: AnnouncementDetails): AnnouncementDetailsInstance => {
+  const announcementInstanceForAny = (
+    details: AnnouncementDetails
+  ): AnnouncementDetailsInstance => {
     const time = formatDistanceToNow(details.ValidFrom, { addSuffix: true })
     return { details, time }
   }
 
-  const recentAnnouncements = useMemo(() => recent.slice(0, recentLimit).map(announcementInstanceForAny), [recent])
+  const recentAnnouncements = useMemo(
+    () => recent.slice(0, recentLimit).map(announcementInstanceForAny),
+    [recent]
+  )
 
   // if (recentAnnouncements.length === 0) {
   //   return null
@@ -38,8 +57,17 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
 
   return (
     <>
-      <Section title={t('recent_announcements')} subtitle={t('announcementsTitle', { count: recent.length })} icon="newspaper" />
-      <View style={styles.condense} accessibilityLabel={tAnnouncements('accessibility.recent_announcements_section')}>
+      <Section
+        title={t('recent_announcements')}
+        subtitle={t('announcementsTitle', { count: recent.length })}
+        icon='newspaper'
+      />
+      <View
+        style={styles.condense}
+        accessibilityLabel={tAnnouncements(
+          'accessibility.recent_announcements_section'
+        )}
+      >
         {recentAnnouncements.map((item) => (
           <AnnouncementCard
             key={item.details.Id}
@@ -59,7 +87,7 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
         outline
         accessibilityLabel={tAnnouncements('accessibility.view_all_button')}
         accessibilityHint={tAnnouncements('accessibility.view_all_button_hint')}
-        accessibilityRole="button"
+        accessibilityRole='button'
       >
         {t('view_all_announcements')}
       </Button>

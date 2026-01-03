@@ -1,13 +1,16 @@
 import { FlashList } from '@shopify/flash-list'
-import { FC, ReactElement, useCallback, useMemo } from 'react'
+import { type FC, type ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 
 import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
-import { ArtistsAlleySection, ArtistsAlleySectionProps } from '@/components/artists-alley/ArtistsAlleySection'
-import { SectionProps } from '@/components/generic/atoms/Section'
-import { TableRegistrationRecord } from '@/context/data/types.api'
-import { ArtistAlleyDetails } from '@/context/data/types.details'
+import {
+  ArtistsAlleySection,
+  type ArtistsAlleySectionProps,
+} from '@/components/artists-alley/ArtistsAlleySection'
+import type { SectionProps } from '@/components/generic/atoms/Section'
+import type { TableRegistrationRecord } from '@/context/data/types.api'
+import type { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 
@@ -16,7 +19,11 @@ import { findIndices } from '@/util/findIndices'
  */
 export type ArtistsAlleySectionedListProps = {
   leader?: ReactElement
-  items: (ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord)[]
+  items: (
+    | ArtistsAlleySectionProps
+    | ArtistAlleyDetails
+    | TableRegistrationRecord
+  )[]
   empty?: ReactElement
   trailer?: ReactElement
   sticky?: boolean
@@ -27,11 +34,15 @@ export type ArtistsAlleySectionedListProps = {
   refreshing?: boolean | null | undefined
 }
 
-function getItemType(item: SectionProps | ArtistAlleyDetails | TableRegistrationRecord) {
+function getItemType(
+  item: SectionProps | ArtistAlleyDetails | TableRegistrationRecord
+) {
   return 'details' in item ? 'row' : 'sectionHeader'
 }
 
-function keyExtractor(item: SectionProps | ArtistAlleyDetails | TableRegistrationRecord) {
+function keyExtractor(
+  item: SectionProps | ArtistAlleyDetails | TableRegistrationRecord
+) {
   return 'Id' in item ? item.Id : item.title
 }
 
@@ -48,17 +59,41 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({
   refreshing,
 }) => {
   const theme = useThemeName()
-  const stickyIndices = useMemo(() => (sticky ? findIndices(items, (item) => 'title' in item) : undefined), [items, sticky])
+  const stickyIndices = useMemo(
+    () => (sticky ? findIndices(items, (item) => 'title' in item) : undefined),
+    [items, sticky]
+  )
 
   // Get translation function for accessibility
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
 
   const renderItem = useCallback(
-    ({ item }: { item: ArtistsAlleySectionProps | ArtistAlleyDetails | TableRegistrationRecord }) => {
+    ({
+      item,
+    }: {
+      item:
+        | ArtistsAlleySectionProps
+        | ArtistAlleyDetails
+        | TableRegistrationRecord
+    }) => {
       if ('Id' in item) {
-        return <ArtistsAlleyCard containerStyle={styles.item} item={item} onPress={onPress} onLongPress={onLongPress} />
+        return (
+          <ArtistsAlleyCard
+            containerStyle={styles.item}
+            item={item}
+            onPress={onPress}
+            onLongPress={onLongPress}
+          />
+        )
       } else {
-        return <ArtistsAlleySection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
+        return (
+          <ArtistsAlleySection
+            style={styles.item}
+            title={item.title}
+            subtitle={item.subtitle}
+            icon={item.icon}
+          />
+        )
       }
     },
     [onLongPress, onPress]
@@ -81,7 +116,7 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
-      accessibilityRole="list"
+      accessibilityRole='list'
       accessibilityLabel={t('artists_alley_list')}
       accessibilityHint={t('refresh_list_hint')}
     />

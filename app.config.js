@@ -1,8 +1,9 @@
-/* eslint-disable-next-line import/no-unresolved -- convention.config.json isn't available on github */
 import { convention } from './convention.config.json'
 
 const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/
-const [, appBaseProtocol, appBaseHost, appBasePath] = [...convention.appBase.match(urlMatcher)]
+const [, appBaseProtocol, appBaseHost, appBasePath] = [
+  ...convention.appBase.match(urlMatcher),
+]
 
 module.exports = {
   expo: {
@@ -36,7 +37,10 @@ module.exports = {
         ITSAppUsesNonExemptEncryption: false,
         NSMicrophoneUsageDescription: false,
       },
-      associatedDomains: ['applinks:app.eurofurence.org', 'applinks:app.test.eurofurence.org'],
+      associatedDomains: [
+        'applinks:app.eurofurence.org',
+        'applinks:app.test.eurofurence.org',
+      ],
     },
     android: {
       package: 'org.eurofurence.connavigator',
@@ -82,7 +86,10 @@ module.exports = {
         },
       ],
       permissions: ['INTERNET', 'VIBRATE', 'WRITE_EXTERNAL_STORAGE'],
-      blockedPermissions: ['com.google.android.gms.permission.AD_ID', 'android.permission.RECORD_AUDIO'],
+      blockedPermissions: [
+        'com.google.android.gms.permission.AD_ID',
+        'android.permission.RECORD_AUDIO',
+      ],
     },
     web: {
       bundler: 'metro',
@@ -124,7 +131,8 @@ module.exports = {
       [
         'expo-image-picker',
         {
-          photosPermission: 'The app accesses your photos if you want to register for a table in the Artist Alley.',
+          photosPermission:
+            'The app accesses your photos if you want to register for a table in the Artist Alley.',
         },
       ],
       'expo-localization',

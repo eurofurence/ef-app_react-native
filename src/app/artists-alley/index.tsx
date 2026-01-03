@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/react-native'
 import { router } from 'expo-router'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, View } from 'react-native'
 
@@ -13,8 +13,8 @@ import { artistAlleyUrl } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
 import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
-import { TableRegistrationRecord } from '@/context/data/types.api'
-import { ArtistAlleyDetails } from '@/context/data/types.details'
+import type { TableRegistrationRecord } from '@/context/data/types.api'
+import type { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
@@ -30,7 +30,10 @@ export default function List() {
   const isLoggedIn = Boolean(user)
   const isAttending = Boolean(user?.RoleMap?.Attendee)
   const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
-  const isPrivileged = Boolean(user?.RoleMap?.Admin) || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
+  const isPrivileged =
+    Boolean(user?.RoleMap?.Admin) ||
+    Boolean(user?.RoleMap?.ArtistAlleyAdmin) ||
+    Boolean(user?.RoleMap?.ArtistAlleyModerator)
   const isAuthorized = isCheckedIn || isPrivileged
 
   useEffect(() => {
@@ -43,13 +46,13 @@ export default function List() {
 
   const leader = useMemo(() => {
     return (
-      <View className="m-5 gap-4">
-        <Label type="para">{t('intro')}</Label>
+      <View className='m-5 gap-4'>
+        <Label type='para'>{t('intro')}</Label>
         <Button
-          icon="link"
+          icon='link'
           outline
           onPress={() => Linking.openURL(artistAlleyUrl)}
-          accessibilityRole="button"
+          accessibilityRole='button'
           accessibilityLabel={t('accessibility.learn_more_button')}
           accessibilityHint={t('accessibility.learn_more_button_hint')}
         >
@@ -58,9 +61,9 @@ export default function List() {
 
         {!isCheckedIn ? null : (
           <Button
-            icon="application-edit-outline"
+            icon='application-edit-outline'
             onPress={() => router.navigate('/artists-alley/reg')}
-            accessibilityRole="button"
+            accessibilityRole='button'
             accessibilityLabel={t('accessibility.register_self_button')}
             accessibilityHint={t('accessibility.register_self_button_hint')}
           >
@@ -69,9 +72,9 @@ export default function List() {
         )}
         {!isPrivileged ? null : (
           <Button
-            icon="shield-plus-outline"
+            icon='shield-plus-outline'
             onPress={() => router.navigate('/artists-alley/moderate')}
-            accessibilityRole="button"
+            accessibilityRole='button'
             accessibilityLabel={t('accessibility.moderate_button')}
             accessibilityHint={t('accessibility.moderate_button_hint')}
           >
@@ -84,18 +87,21 @@ export default function List() {
 
   const empty = useMemo(
     () => (
-      <Label type="h3" className="mx-5" variant="middle">
+      <Label type='h3' className='mx-5' variant='middle'>
         {t('list.artists_alley_empty')}
       </Label>
     ),
     [t]
   )
-  const onPress = useCallback((item: ArtistAlleyDetails | TableRegistrationRecord) => {
-    router.navigate({
-      pathname: '/artists-alley/[id]',
-      params: { id: item.Id },
-    })
-  }, [])
+  const onPress = useCallback(
+    (item: ArtistAlleyDetails | TableRegistrationRecord) => {
+      router.navigate({
+        pathname: '/artists-alley/[id]',
+        params: { id: item.Id },
+      })
+    },
+    []
+  )
 
   if (!isAuthorized) {
     const disabledReason =
@@ -111,33 +117,40 @@ export default function List() {
         <StatusMessage message={announcementMessage} />
         <View style={StyleSheet.absoluteFill}>
           <Header>{t('list.header')}</Header>
-          <View className="m-5 pb-24" ref={mainContentRef} accessibilityLabel={t('accessibility.artists_alley_unauthorized_content')} accessibilityRole="text">
-            <Label type="para" className="mb-5">
+          <View
+            className='m-5 pb-24'
+            ref={mainContentRef}
+            accessibilityLabel={t(
+              'accessibility.artists_alley_unauthorized_content'
+            )}
+            accessibilityRole='text'
+          >
+            <Label type='para' className='mb-5'>
               {t('intro')}
             </Label>
             <Button
-              icon="link"
+              icon='link'
               onPress={() => Linking.openURL(artistAlleyUrl)}
-              accessibilityRole="button"
+              accessibilityRole='button'
               accessibilityLabel={t('accessibility.learn_more_button')}
               accessibilityHint={t('accessibility.learn_more_button_hint')}
             >
               {t('learn_more')}
             </Button>
-            <Label type="compact" className="my-5">
+            <Label type='compact' className='my-5'>
               {t('explanation_unauthorized')}
 
               {disabledReason && (
-                <Label color="important" variant="bold">
-                  {' ' + disabledReason}
+                <Label color='important' variant='bold'>
+                  {` ${disabledReason}`}
                 </Label>
               )}
             </Label>
             {isLoggedIn ? null : (
               <Button
-                iconRight="login"
+                iconRight='login'
                 onPress={() => login().catch(captureException)}
-                accessibilityRole="button"
+                accessibilityRole='button'
                 accessibilityLabel={t('accessibility.login_button')}
                 accessibilityHint={t('accessibility.login_button_hint')}
               >

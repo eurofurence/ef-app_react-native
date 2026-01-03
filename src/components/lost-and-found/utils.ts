@@ -1,9 +1,12 @@
-import { LostAndFoundRecord } from '@/context/data/types.api'
+import type { LostAndFoundRecord } from '@/context/data/types.api'
 
 /**
  * Filters Lost & Found items by status
  */
-export function filterByStatus(items: LostAndFoundRecord[], status: 'Unknown' | 'Lost' | 'Found' | 'Returned' | 'All'): LostAndFoundRecord[] {
+export function filterByStatus(
+  items: LostAndFoundRecord[],
+  status: 'Unknown' | 'Lost' | 'Found' | 'Returned' | 'All'
+): LostAndFoundRecord[] {
   if (status === 'All') {
     return items
   }
@@ -14,7 +17,11 @@ export function filterByStatus(items: LostAndFoundRecord[], status: 'Unknown' | 
  * Sorts Lost & Found items by creation date (newest first)
  */
 export function sortByDate(items: LostAndFoundRecord[]): LostAndFoundRecord[] {
-  return [...items].sort((a, b) => new Date(b.LastChangeDateTimeUtc).getTime() - new Date(a.LastChangeDateTimeUtc).getTime())
+  return [...items].sort(
+    (a, b) =>
+      new Date(b.LastChangeDateTimeUtc).getTime() -
+      new Date(a.LastChangeDateTimeUtc).getTime()
+  )
 }
 
 /**

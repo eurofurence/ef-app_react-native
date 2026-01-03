@@ -6,7 +6,9 @@ import { useCallback, useRef } from 'react'
  * returned.
  * @param fn The callback function.
  */
-export function useAsyncCallbackOnce<T extends (...args: any[]) => Promise<any>>(fn: T): (...args: Parameters<T>) => ReturnType<T> {
+export function useAsyncCallbackOnce<
+  T extends (...args: any[]) => Promise<any>,
+>(fn: T): (...args: Parameters<T>) => ReturnType<T> {
   const active = useRef<ReturnType<T> | null>(null)
   return useCallback(
     (...args: Parameters<T>) => {

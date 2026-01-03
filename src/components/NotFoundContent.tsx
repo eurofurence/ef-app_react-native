@@ -1,5 +1,4 @@
 import { Link } from 'expo-router'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
@@ -12,29 +11,37 @@ export type NotFoundContentProps = {
   title: string
   message: string
 }
-export function NotFoundContent({ accessibilityStatus, title, message }: NotFoundContentProps) {
+export function NotFoundContent({
+  accessibilityStatus,
+  title,
+  message,
+}: NotFoundContentProps) {
   const { t: a11y } = useTranslation('Accessibility')
 
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={accessibilityStatus} type="assertive" visible={false} />
+      <StatusMessage
+        message={accessibilityStatus}
+        type='assertive'
+        visible={false}
+      />
 
-      <View className="items-center pt-[20vh]">
-        <Label type="h1" accessibilityRole="header">
+      <View className='items-center pt-[20vh]'>
+        <Label type='h1' accessibilityRole='header'>
           {title}
         </Label>
-        <Label className="mt-5" type="regular" accessibilityRole="text">
+        <Label className='mt-5' type='regular' accessibilityRole='text'>
           {message}
         </Label>
 
         <Link
-          className="mt-4 py-4"
-          href="/"
+          className='mt-4 py-4'
+          href='/'
           style={appStyles.minTouchSize}
           accessibilityLabel={a11y('go_home')}
           accessibilityHint={a11y('go_home_hint')}
-          accessibilityRole="button"
+          accessibilityRole='button'
           replace
         >
           <Label type={'underlined'}>{a11y('go_home_text')}</Label>

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { captureException } from '@sentry/react-native'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
@@ -13,7 +13,8 @@ import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useArtistsAlleyTableRegistrationRequestMutation } from '@/hooks/api/artists-alley/useArtistsAlleyTableRegistrationRequestMutation'
 
-const websiteUrlMatcher = /^\s*((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)\s*)?$/
+const websiteUrlMatcher =
+  /^\s*((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)\s*)?$/
 const telegramHandleMatcher = /^\s*(@?[a-zA-Z0-9_]{5,64}\s*)?$/
 const tableNumberMatcher = /^\s*[0-9]+\s*$/
 
@@ -24,7 +25,8 @@ const artistsAlleySchema = z.object({
     .regex(websiteUrlMatcher)
     .transform((value) => {
       if (value.trim().length === 0) return ''
-      if (value.startsWith('http://') || value.startsWith('https://')) return value.trim()
+      if (value.startsWith('http://') || value.startsWith('https://'))
+        return value.trim()
       return `https://${value}`.trim()
     }),
   shortDescription: z.string().min(1).trim(),
@@ -42,9 +44,14 @@ export type ArtistsAlleyEditProps = {
 }
 
 // TODO: This is actually "table registration edit" but naming in this land is a nightmare :')
-export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditProps) => {
+export const ArtistsAlleyEdit = ({
+  prefill,
+  mode,
+  onDismiss,
+}: ArtistsAlleyEditProps) => {
   // Get current registration. Create submit mutation.
-  const { mutateAsync: submitRegistration, isPending } = useArtistsAlleyTableRegistrationRequestMutation()
+  const { mutateAsync: submitRegistration, isPending } =
+    useArtistsAlleyTableRegistrationRequestMutation()
   const { setLocalData } = useArtistsAlleyLocalData()
 
   // Use toast function.
@@ -105,21 +112,28 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
 
   return (
     <FormProvider {...form}>
-      <Label type="compact" className="mt-5 mb-10" accessibilityRole="text">
-        {t(mode === 'change' ? 'explanation_edit_change' : 'explanation_edit_new')}
+      <Label type='compact' className='mt-5 mb-10' accessibilityRole='text'>
+        {t(
+          mode === 'change' ? 'explanation_edit_change' : 'explanation_edit_new'
+        )}
       </Label>
 
-      <ManagedTextInput<ArtistsAlleySchema> name="displayName" label={t('display_name_label')} errorTranslator={errorTranslator} placeholder={t('display_name_placeholder')} />
       <ManagedTextInput<ArtistsAlleySchema>
-        name="websiteUrl"
+        name='displayName'
+        label={t('display_name_label')}
+        errorTranslator={errorTranslator}
+        placeholder={t('display_name_placeholder')}
+      />
+      <ManagedTextInput<ArtistsAlleySchema>
+        name='websiteUrl'
         label={t('website_url_label')}
         errorTranslator={errorTranslator}
         placeholder={t('website_url_placeholder')}
-        inputMode="url"
-        keyboardType="url"
+        inputMode='url'
+        keyboardType='url'
       />
       <ManagedTextInput<ArtistsAlleySchema>
-        name="shortDescription"
+        name='shortDescription'
         label={t('short_description_label')}
         errorTranslator={errorTranslator}
         placeholder={t('short_description_placeholder')}
@@ -127,22 +141,22 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
         numberOfLines={8}
       />
       <ManagedTextInput<ArtistsAlleySchema>
-        name="location"
+        name='location'
         label={t('location_label')}
         errorTranslator={errorTranslator}
         placeholder={t('location_placeholder')}
-        inputMode="numeric"
-        keyboardType="numeric"
+        inputMode='numeric'
+        keyboardType='numeric'
       />
       <ManagedTextInput<ArtistsAlleySchema>
-        name="telegramHandle"
+        name='telegramHandle'
         label={t('telegram_handle_label')}
         errorTranslator={errorTranslator}
         placeholder={t('telegram_handle_placeholder')}
       />
 
       <ManagedImagePicker<ArtistsAlleySchema>
-        name="imageUri"
+        name='imageUri'
         label={t('submission_image_label')}
         errorTranslator={errorTranslator}
         placeholder={t('submission_image_placeholder')}
@@ -157,13 +171,22 @@ export const ArtistsAlleyEdit = ({ prefill, mode, onDismiss }: ArtistsAlleyEditP
           }
         }}
         disabled={disabled}
-        accessibilityHint={mode === 'change' ? 'Updates your Artist Alley registration with the new information' : 'Submits your Artist Alley registration for review'}
+        accessibilityHint={
+          mode === 'change'
+            ? 'Updates your Artist Alley registration with the new information'
+            : 'Submits your Artist Alley registration for review'
+        }
       >
         {t(mode === 'change' ? 'update' : 'submit')}
       </Button>
 
       {mode === 'new' ? null : (
-        <Button onPress={onDismiss} className="mt-5" outline accessibilityHint="Cancels editing and returns to the previous screen without saving changes">
+        <Button
+          onPress={onDismiss}
+          className='mt-5'
+          outline
+          accessibilityHint='Cancels editing and returns to the previous screen without saving changes'
+        >
           {t('dismiss')}
         </Button>
       )}

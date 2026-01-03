@@ -1,14 +1,17 @@
-import React, { FC, useCallback } from 'react'
+import { type FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, type ViewStyle } from 'react-native'
 
 import { Pressable } from '@/components/generic/Pressable'
-import { EventDetails } from '@/context/data/types.details'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import type { EventDetails } from '@/context/data/types.details'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 import { calculateEventTiming } from '@/util/eventTiming'
 
 import { appStyles } from '../AppStyles'
-import { Icon, IconNames } from '../generic/atoms/Icon'
+import { Icon, type IconNames } from '../generic/atoms/Icon'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label } from '../generic/atoms/Label'
@@ -24,15 +27,23 @@ export type EventDetailsInstance = {
   details: EventDetails
 } & ReturnType<typeof calculateEventTiming>
 
-export function eventInstanceForAny(details: EventDetails, now: Date): EventDetailsInstance {
+export function eventInstanceForAny(
+  details: EventDetails,
+  now: Date
+): EventDetailsInstance {
   return { details, ...calculateEventTiming(details, now) }
 }
 
-export function eventInstanceForNotPassed(details: EventDetails, now: Date): EventDetailsInstance {
+export function eventInstanceForNotPassed(
+  details: EventDetails,
+  now: Date
+): EventDetailsInstance {
   return { details, ...calculateEventTiming(details, now) }
 }
 
-export function eventInstanceForPassed(details: EventDetails): EventDetailsInstance {
+export function eventInstanceForPassed(
+  details: EventDetails
+): EventDetailsInstance {
   return { details, ...calculateEventTiming(details, 'done') }
 }
 
@@ -45,11 +56,28 @@ export type EventCardProps = {
   onLongPress?: (event: EventDetails) => void
 }
 
-export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'duration', event, onPress, onLongPress }) => {
+export const EventCard: FC<EventCardProps> = ({
+  containerStyle,
+  style,
+  type = 'duration',
+  event,
+  onPress,
+  onLongPress,
+}) => {
   const { t } = useTranslation('Events')
 
   const {
-    details: { Badges: badges, IsInternal, Glyph, Title: title, SubTitle: subtitle, ConferenceRoom, Favorite: favorite, Banner, Id },
+    details: {
+      Badges: badges,
+      IsInternal,
+      Glyph,
+      Title: title,
+      SubTitle: subtitle,
+      ConferenceRoom,
+      Favorite: favorite,
+      Banner,
+      Id,
+    },
   } = event
 
   const tag = ConferenceRoom?.ShortName ?? ConferenceRoom?.Name
@@ -61,29 +89,54 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
 
   const stylePublicContainer = useThemeBackground('background')
   const styleInternalContainer = useThemeBackground('internal')
-  const styleContainer = IsInternal ? styleInternalContainer : stylePublicContainer
-  const stylePre = useThemeBackground(done ? 'darken' : favorite ? 'notification' : 'primary')
+  const styleContainer = IsInternal
+    ? styleInternalContainer
+    : stylePublicContainer
+  const stylePre = useThemeBackground(
+    done ? 'darken' : favorite ? 'notification' : 'primary'
+  )
   const styleBadgeFrame = useThemeBackground('secondary')
   const colorBadge = useThemeColorValue('white')
   const colorGlyph = useThemeColorValue('lighten')
   const colorHeart = useThemeColorValue(Banner ? 'white' : 'text')
 
-  const onPressBind = useCallback(() => onPress?.(event.details), [event.details, onPress])
-  const onLongPressBind = useCallback(() => onLongPress?.(event.details), [event.details, onLongPress])
+  const onPressBind = useCallback(
+    () => onPress?.(event.details),
+    [event.details, onPress]
+  )
+  const onLongPressBind = useCallback(
+    () => onLongPress?.(event.details),
+    [event.details, onLongPress]
+  )
 
   return (
     <View style={containerStyle}>
-      <Pressable style={[styles.container, appStyles.shadow, styleContainer, style]} onPress={onPressBind} onLongPress={onLongPressBind}>
+      <Pressable
+        style={[styles.container, appStyles.shadow, styleContainer, style]}
+        onPress={onPressBind}
+        onLongPress={onLongPressBind}
+      >
         <View style={[styles.pre, stylePre]}>
           {glyph && (
-            <View key="eventGlyph" style={styles.glyphContainer}>
-              <Icon style={styles.glyph} name={glyph} size={glyphIconSize} color={colorGlyph} />
+            <View key='eventGlyph' style={styles.glyphContainer}>
+              <Icon
+                style={styles.glyph}
+                name={glyph}
+                size={glyphIconSize}
+                color={colorGlyph}
+              />
             </View>
           )}
           <EventCardTime type={type} event={event} done={done} />
 
           {happening && (
-            <Label key="eventHappening" style={styles.happening} type="cap" color={done ? 'important' : 'white'} variant="receded">
+            <Label
+              key='eventHappening'
+              style={styles.happening}
+              type='cap'
+              color={done ? 'important' : 'white'}
+              variant='receded'
+            >
               LIVE
             </Label>
           )}
@@ -91,27 +144,52 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
 
         {Banner ? (
           <View style={styles.mainPoster}>
-            <ImageBackground key={Id} recyclingKey={Id} source={sourceFromImage(Banner)} contentFit="cover" style={StyleSheet.absoluteFill}>
+            <ImageBackground
+              key={Id}
+              recyclingKey={Id}
+              source={sourceFromImage(Banner)}
+              contentFit='cover'
+              style={StyleSheet.absoluteFill}
+            >
               <View style={styles.tagArea2}>
                 <View style={styles.tagAreaInner}>
-                  <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                  <Label
+                    style={styles.tag}
+                    type='regular'
+                    color='white'
+                    ellipsizeMode='head'
+                    numberOfLines={1}
+                  >
                     {IsInternal ? `${t('internal')} – ` : ''}
                     {`${title} ${subtitle}`}
                   </Label>
                   {tag && (
-                    <Label style={styles.tag} type="regular" color="white" ellipsizeMode="head" numberOfLines={1}>
+                    <Label
+                      style={styles.tag}
+                      type='regular'
+                      color='white'
+                      ellipsizeMode='head'
+                      numberOfLines={1}
+                    >
                       {tag}
                     </Label>
                   )}
                 </View>
               </View>
-              {happening && <Progress key="eventProgress" style={styles.progress} value={progress} color="white" />}
+              {happening && (
+                <Progress
+                  key='eventProgress'
+                  style={styles.progress}
+                  value={progress}
+                  color='white'
+                />
+              )}
             </ImageBackground>
           </View>
         ) : (
           <View style={styles.mainText}>
             <Row>
-              <Label style={styles.title} type="h3">
+              <Label style={styles.title} type='h3'>
                 {title}
               </Label>
               {badges?.map((icon) => (
@@ -120,21 +198,32 @@ export const EventCard: FC<EventCardProps> = ({ containerStyle, style, type = 'd
                 </View>
               ))}
             </Row>
-            <Label type="h4" variant="narrow">
+            <Label type='h4' variant='narrow'>
               {subtitle}
             </Label>
-            <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+            <Label
+              style={styles.tag}
+              type='regular'
+              ellipsizeMode='head'
+              numberOfLines={1}
+            >
               {IsInternal ? `${t('internal')} – ` : ''}
               {tag}
             </Label>
 
-            {happening && <Progress key="eventProgress" style={styles.progress} value={progress} />}
+            {happening && (
+              <Progress
+                key='eventProgress'
+                style={styles.progress}
+                value={progress}
+              />
+            )}
           </View>
         )}
 
         {favorite && (
-          <View key="eventFavorite" style={styles.favorite}>
-            <Icon name="heart" size={20} color={colorHeart} />
+          <View key='eventFavorite' style={styles.favorite}>
+            <Icon name='heart' size={20} color={colorHeart} />
           </View>
         )}
       </Pressable>

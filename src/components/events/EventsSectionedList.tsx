@@ -1,18 +1,18 @@
 import { FlashList } from '@shopify/flash-list'
-import { FC, ReactElement, useCallback, useMemo } from 'react'
+import { type FC, type ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 
 import { useEventCardInteractions } from '@/components/events/Events.common'
-import { SectionProps } from '@/components/generic/atoms/Section'
+import type { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
-import { EventCard, EventDetailsInstance } from './EventCard'
-import { EventSection, EventSectionProps } from './EventSection'
+import { EventCard, type EventDetailsInstance } from './EventCard'
+import { EventSection, type EventSectionProps } from './EventSection'
 
 /**
  * The properties to the component.
@@ -36,23 +36,53 @@ function keyExtractor(item: SectionProps | EventDetailsInstance) {
   return 'details' in item ? item.details.Id : item.title
 }
 
-export const EventsSectionedList: FC<EventsSectionedListProps> = ({ leader, eventsGroups, select, empty, trailer, cardType = 'duration', sticky = true, padEnd = true }) => {
+export const EventsSectionedList: FC<EventsSectionedListProps> = ({
+  leader,
+  eventsGroups,
+  select,
+  empty,
+  trailer,
+  cardType = 'duration',
+  sticky = true,
+  padEnd = true,
+}) => {
   const { t } = useTranslation('Events')
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
-  const stickyIndices = useMemo(() => (sticky ? findIndices(eventsGroups, (item) => !('details' in item)) : undefined), [eventsGroups, sticky])
+  const stickyIndices = useMemo(
+    () =>
+      sticky
+        ? findIndices(eventsGroups, (item) => !('details' in item))
+        : undefined,
+    [eventsGroups, sticky]
+  )
 
-  const { onPress, onLongPress } = useEventCardInteractions()
+  const { onPress: defaultOnPress, onLongPress } = useEventCardInteractions()
 
   const renderItem = useCallback(
     ({ item }: { item: SectionProps | EventDetailsInstance }) => {
       if ('details' in item) {
-        return <EventCard containerStyle={styles.item} event={item} type={cardType} onPress={onPress} onLongPress={onLongPress} />
+        return (
+          <EventCard
+            containerStyle={styles.item}
+            event={item}
+            type={cardType}
+            onPress={select ?? defaultOnPress}
+            onLongPress={onLongPress}
+          />
+        )
       } else {
-        return <EventSection style={styles.item} title={item.title} subtitle={item.subtitle} icon={item.icon} />
+        return (
+          <EventSection
+            style={styles.item}
+            title={item.title}
+            subtitle={item.subtitle}
+            icon={item.icon}
+          />
+        )
       }
     },
-    [cardType, onLongPress, onPress]
+    [cardType, onLongPress, select, defaultOnPress]
   )
 
   return (
