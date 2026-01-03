@@ -18,17 +18,28 @@ export default function ImageItem() {
   const { images, imageLocations } = useCache()
   const image = images.dict[id]
   const location = imageLocations[id]
-  const title = t(location?.location ?? 'unspecified', { name: location?.title })
+  const title = t(location?.location ?? 'unspecified', {
+    name: location?.title,
+  })
 
-  const styleContainer = image ? { width: image.Width, height: image.Height } : null
+  const styleContainer = image
+    ? { width: image.Width, height: image.Height }
+    : null
 
   // Determine zoom levels.
-  const minZoom = minZoomFor(image?.Width ?? 0, image?.Height ?? 0, viewerPadding)
+  const minZoom = minZoomFor(
+    image?.Width ?? 0,
+    image?.Height ?? 0,
+    viewerPadding
+  )
   const maxZoom = minZoom * 5
 
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Header secondaryIcon={platformShareIcon} secondaryPress={() => image && title && shareImage(image.Url, title)}>
+      <Header
+        secondaryIcon={platformShareIcon}
+        secondaryPress={() => image && title && shareImage(image.Url, title)}
+      >
         {title}
       </Header>
       {!image ? null : (
@@ -42,7 +53,13 @@ export default function ImageItem() {
           bindToBorders={true}
         >
           <View style={styleContainer}>
-            <Image style={styles.image} allowDownscaling={false} contentFit={undefined} source={sourceFromImage(image)} priority="high" />
+            <Image
+              style={styles.image}
+              allowDownscaling={false}
+              contentFit={undefined}
+              source={sourceFromImage(image)}
+              priority='high'
+            />
           </View>
         </ZoomableView>
       )}

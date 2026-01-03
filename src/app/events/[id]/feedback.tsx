@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { router, useLocalSearchParams } from 'expo-router'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
@@ -61,12 +61,16 @@ export default function EventFeedback() {
   const attending = Boolean(user?.RoleMap?.Attendee)
 
   const disabled = !loggedIn || !attending
-  const disabledReason = (!loggedIn && t('disabled_not_logged_in')) || (!attending && t('disabled_not_attending'))
+  const disabledReason =
+    (!loggedIn && t('disabled_not_logged_in')) ||
+    (!attending && t('disabled_not_attending'))
 
   // Announce the feedback form to screen readers
   useEffect(() => {
     if (event) {
-      const message = t('accessibility.feedback_form_loaded', { title: event.Title })
+      const message = t('accessibility.feedback_form_loaded', {
+        title: event.Title,
+      })
       setAnnouncementMessage(message)
     }
   }, [event, t])
@@ -87,7 +91,11 @@ export default function EventFeedback() {
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={announcementMessage} type="assertive" visible={false} />
+      <StatusMessage
+        message={announcementMessage}
+        type='assertive'
+        visible={false}
+      />
 
       <ScrollView
         style={StyleSheet.absoluteFill}
@@ -95,11 +103,20 @@ export default function EventFeedback() {
         accessibilityLabel={t('accessibility.feedback_form_scroll')}
         accessibilityHint={t('accessibility.feedback_form_scroll_hint')}
       >
-        <Header>{t('header', { eventTitle: event?.Title, interpolation: { escapeValue: false } })}</Header>
+        <Header>
+          {t('header', {
+            eventTitle: event?.Title,
+            interpolation: { escapeValue: false },
+          })}
+        </Header>
         <Floater>
-          <View ref={mainContentRef} accessibilityLabel={t('accessibility.feedback_form_content')} accessibilityRole="text">
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={t('accessibility.feedback_form_content')}
+            accessibilityRole='text'
+          >
             <FormProvider {...form}>
-              <Label variant="narrow">
+              <Label variant='narrow'>
                 {t('explanation', {
                   eventTitle: event?.Title,
                   interpolation: { escapeValue: false },
@@ -107,7 +124,7 @@ export default function EventFeedback() {
               </Label>
 
               <ManagedRating<FeedbackSchema>
-                name="rating"
+                name='rating'
                 label={t('rating_title')}
                 minRating={1}
                 enableHalfStar={false}
@@ -116,25 +133,38 @@ export default function EventFeedback() {
                 starSize={52}
               />
 
-              <ManagedTextInput<FeedbackSchema> name="message" label={t('message_title')} placeholder={t('message_placeholder')} numberOfLines={8} multiline />
+              <ManagedTextInput<FeedbackSchema>
+                name='message'
+                label={t('message_title')}
+                placeholder={t('message_placeholder')}
+                numberOfLines={8}
+                multiline
+              />
 
               <Button
                 onPress={form.handleSubmit(submit)}
                 disabled={isPending || disabled}
                 accessibilityLabel={t('accessibility.submit_feedback')}
                 accessibilityHint={t('accessibility.submit_feedback_hint')}
-                accessibilityRole="button"
+                accessibilityRole='button'
               >
                 {t('submit')}
               </Button>
 
               {disabledReason && (
-                <Label type="caption" color="important" variant="middle" className="mt-4">
+                <Label
+                  type='caption'
+                  color='important'
+                  variant='middle'
+                  className='mt-4'
+                >
                   {disabledReason}
                 </Label>
               )}
 
-              {isPending && <Label className="mt-4">{t('submit_in_progress')}</Label>}
+              {isPending && (
+                <Label className='mt-4'>{t('submit_in_progress')}</Label>
+              )}
             </FormProvider>
           </View>
         </Floater>

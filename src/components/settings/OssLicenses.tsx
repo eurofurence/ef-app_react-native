@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ReactNativeLegal } from 'react-native-legal'
 
@@ -16,9 +15,9 @@ export const OssLicenses = () => {
 
   return (
     <SettingContainer>
-      <Section title={t('title')} subtitle={t('subtitle')} icon="license" />
+      <Section title={t('title')} subtitle={t('subtitle')} icon='license' />
 
-      <Button className="my-1" onPress={launchNotice} icon="code-braces-box">
+      <Button className='my-1' onPress={launchNotice} icon='code-braces-box'>
         {t('show_licenses')}
       </Button>
     </SettingContainer>

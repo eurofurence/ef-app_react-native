@@ -1,10 +1,8 @@
-import React from 'react'
-import { View } from 'react-native'
-
-import { IconNames } from '@/components/generic/atoms/Icon'
-import { Header } from '@/components/generic/containers/Header'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import type React from 'react'
+import { View } from 'react-native'
+import type { IconNames } from '@/components/generic/atoms/Icon'
+import { Header } from '@/components/generic/containers/Header'
 
 // Wrapper component to handle Header's union type
 const HeaderWrapper = ({
@@ -21,7 +19,11 @@ const HeaderWrapper = ({
   // Handle the union type properly
   if (secondaryIcon && secondaryPress) {
     return (
-      <Header secondaryIcon={secondaryIcon} secondaryPress={secondaryPress} loading={loading}>
+      <Header
+        secondaryIcon={secondaryIcon}
+        secondaryPress={secondaryPress}
+        loading={loading}
+      >
         {children}
       </Header>
     )
@@ -88,7 +90,8 @@ export const NotLoading: Story = {
 
 export const LongTitle: Story = {
   args: {
-    children: 'This is a very long header title that should demonstrate how the component handles text overflow and wrapping in different scenarios',
+    children:
+      'This is a very long header title that should demonstrate how the component handles text overflow and wrapping in different scenarios',
   },
 }
 
@@ -96,19 +99,31 @@ export const WithDifferentIcons: Story = {
   args: {},
   render: () => (
     <View style={{ gap: 20 }}>
-      <HeaderWrapper secondaryIcon="home" secondaryPress={() => console.log('Home pressed')}>
+      <HeaderWrapper
+        secondaryIcon='home'
+        secondaryPress={() => console.log('Home pressed')}
+      >
         Home Header
       </HeaderWrapper>
 
-      <HeaderWrapper secondaryIcon="star" secondaryPress={() => console.log('Star pressed')}>
+      <HeaderWrapper
+        secondaryIcon='star'
+        secondaryPress={() => console.log('Star pressed')}
+      >
         Star Header
       </HeaderWrapper>
 
-      <HeaderWrapper secondaryIcon="cog" secondaryPress={() => console.log('Cog pressed')}>
+      <HeaderWrapper
+        secondaryIcon='cog'
+        secondaryPress={() => console.log('Cog pressed')}
+      >
         Settings Header
       </HeaderWrapper>
 
-      <HeaderWrapper secondaryIcon="plus" secondaryPress={() => console.log('Plus pressed')}>
+      <HeaderWrapper
+        secondaryIcon='plus'
+        secondaryPress={() => console.log('Plus pressed')}
+      >
         Add Header
       </HeaderWrapper>
     </View>

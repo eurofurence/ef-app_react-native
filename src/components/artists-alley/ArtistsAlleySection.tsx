@@ -1,10 +1,10 @@
-import { TFunction } from 'i18next'
-import { FC } from 'react'
+import type { TFunction } from 'i18next'
+import type { FC } from 'react'
 
-import { TableRegistrationRecordStatus } from '@/context/data/types.api'
+import type { TableRegistrationRecordStatus } from '@/context/data/types.api'
 
-import { IconNames } from '../generic/atoms/Icon'
-import { Section, SectionProps } from '../generic/atoms/Section'
+import type { IconNames } from '../generic/atoms/Icon'
+import { Section, type SectionProps } from '../generic/atoms/Section'
 
 export type ArtistsAlleySectionProps = SectionProps
 
@@ -13,7 +13,10 @@ export type ArtistsAlleySectionProps = SectionProps
  * @param t Translation function.
  * @param state Registration state.
  */
-export function artistsAlleySectionForState(t: TFunction, state: TableRegistrationRecordStatus): ArtistsAlleySectionProps {
+export function artistsAlleySectionForState(
+  t: TFunction,
+  state: TableRegistrationRecordStatus
+): ArtistsAlleySectionProps {
   return {
     title: t(state),
     icon: ((state === 'Pending' && 'notebook-edit') ||
@@ -24,6 +27,19 @@ export function artistsAlleySectionForState(t: TFunction, state: TableRegistrati
   }
 }
 
-export const ArtistsAlleySection: FC<ArtistsAlleySectionProps> = ({ style, title, subtitle, icon }) => {
-  return <Section style={style} title={title} subtitle={subtitle} backgroundColor="surface" icon={icon} />
+export const ArtistsAlleySection: FC<ArtistsAlleySectionProps> = ({
+  style,
+  title,
+  subtitle,
+  icon,
+}) => {
+  return (
+    <Section
+      style={style}
+      title={title}
+      subtitle={subtitle}
+      backgroundColor='surface'
+      icon={icon}
+    />
+  )
 }

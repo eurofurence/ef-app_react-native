@@ -1,9 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { useState } from 'react'
 import { View } from 'react-native'
-
 import { Continuous } from '@/components/generic/atoms/Continuous'
-
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/Continuous',
@@ -68,10 +66,10 @@ export const Inactive: Story = {
 export const DifferentColors: Story = {
   render: () => (
     <View style={{ gap: 20 }}>
-      <Continuous color="primary" active={true} />
-      <Continuous color="secondary" active={true} />
-      <Continuous color="warning" active={true} />
-      <Continuous color="notification" active={true} />
+      <Continuous color='primary' active={true} />
+      <Continuous color='secondary' active={true} />
+      <Continuous color='warning' active={true} />
+      <Continuous color='notification' active={true} />
     </View>
   ),
 }
@@ -79,9 +77,9 @@ export const DifferentColors: Story = {
 export const MultipleIndicators: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
-      <Continuous color="primary" active={true} />
-      <Continuous color="secondary" active={true} />
-      <Continuous color="warning" active={true} />
+      <Continuous color='primary' active={true} />
+      <Continuous color='secondary' active={true} />
+      <Continuous color='warning' active={true} />
     </View>
   ),
 }
@@ -91,8 +89,8 @@ export const Interactive: Story = {
     const [active] = useState(true)
     return (
       <View style={{ gap: 20 }}>
-        <Continuous color="secondary" active={active} />
-        <Continuous color="primary" active={!active} />
+        <Continuous color='secondary' active={active} />
+        <Continuous color='primary' active={!active} />
       </View>
     )
   },

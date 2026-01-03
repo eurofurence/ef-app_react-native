@@ -1,12 +1,12 @@
 import { captureException } from '@sentry/react-native'
-import React, { FC, useMemo } from 'react'
+import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, View } from 'react-native'
 
 import { authSettingsUrl, conName } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { Claims } from '@/hooks/api/idp/useUserInfo'
-import { UserDetails } from '@/hooks/api/users/useUsersSelf'
+import type { Claims } from '@/hooks/api/idp/useUserInfo'
+import type { UserDetails } from '@/hooks/api/users/useUsersSelf'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { Image } from './generic/atoms/Image'
@@ -23,12 +23,12 @@ import { Button } from './generic/containers/Button'
 const UserRole: FC<{ role: string }> = ({ role }) => {
   const bg = useThemeBackground('primary')
   const text = useMemo(() => {
-    return role.replaceAll(/[A-Z]/g, (s) => ' ' + s)
+    return role.replaceAll(/[A-Z]/g, (s) => ` ${s}`)
   }, [role])
 
   return (
     <View style={[bg, styles.pill]}>
-      <Label type="minor" variant="middle" color="white">
+      <Label type='minor' variant='middle' color='white'>
         {text}
       </Label>
     </View>
@@ -41,13 +41,18 @@ const UserRole: FC<{ role: string }> = ({ role }) => {
  * @param status The registration status, e.g., paid.
  * @constructor
  */
-const UserRegistration: FC<{ id: string; status: string }> = ({ id, status }) => {
+const UserRegistration: FC<{ id: string; status: string }> = ({
+  id,
+  status,
+}) => {
   const { t } = useTranslation('Profile')
-  const { t: tStatus } = useTranslation('Profile', { keyPrefix: 'status_names' })
+  const { t: tStatus } = useTranslation('Profile', {
+    keyPrefix: 'status_names',
+  })
   const bg = useThemeBackground('secondary')
   return (
     <View style={[bg, styles.pill]}>
-      <Label variant="bold" color="white">
+      <Label variant='bold' color='white'>
         {t('registration_nr')} {id} | {tStatus(status)}
       </Label>
     </View>
@@ -67,7 +72,11 @@ export type ProfileContentProps = {
  * @param parentPad The padding that the parent will apply.
  * @constructor
  */
-export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPad = 0 }) => {
+export const ProfileContent: FC<ProfileContentProps> = ({
+  claims,
+  user,
+  parentPad = 0,
+}) => {
   const { t } = useTranslation('Profile')
   const { t: a11y } = useTranslation('Profile')
   const avatarBackground = useThemeBackground('primary')
@@ -75,15 +84,19 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
 
   const isAttendee = user.RoleMap.Attendee
   const isCheckedIn = user.RoleMap.AttendeeCheckedIn
-  const roleComplex = Boolean(user.Roles.find((role) => role !== 'Attendee' && role !== 'AttendeeCheckedIn'))
+  const roleComplex = Boolean(
+    user.Roles.find(
+      (role) => role !== 'Attendee' && role !== 'AttendeeCheckedIn'
+    )
+  )
   return (
     <>
       {isCheckedIn ? (
-        <Badge unpad={parentPad} badgeColor="primary" textColor="invText">
+        <Badge unpad={parentPad} badgeColor='primary' textColor='invText'>
           {t('roles_simple_checked_in')}
         </Badge>
       ) : isAttendee ? (
-        <Badge unpad={parentPad} badgeColor="warning" textColor="invText">
+        <Badge unpad={parentPad} badgeColor='warning' textColor='invText'>
           {t('roles_simple_attendee')}
         </Badge>
       ) : null}
@@ -91,21 +104,23 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         <Image
           style={[avatarBackground, styles.avatarCircle]}
           source={claims.avatar ?? require('@/assets/static/ych.png')}
-          contentFit="contain"
+          contentFit='contain'
           placeholder={require('@/assets/static/ych.png')}
           transition={60}
-          cachePolicy="memory-disk"
-          priority="high"
-          accessibilityLabel={a11y('accessibility.user_avatar', { name: claims.name as string })}
+          cachePolicy='memory-disk'
+          priority='high'
+          accessibilityLabel={a11y('accessibility.user_avatar', {
+            name: claims.name as string,
+          })}
           accessibilityHint={a11y('accessibility.avatar_hint')}
         />
       </View>
 
-      <Label type="h1" variant="middle">
+      <Label type='h1' variant='middle'>
         {claims.name as string}
       </Label>
 
-      <Label type="caption" variant="middle" className="mb-5">
+      <Label type='caption' variant='middle' className='mb-5'>
         {claims.email as string}
       </Label>
 
@@ -115,27 +130,33 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
         ))}
       </View>
 
-      <Label className="mt-5" type="para">
+      <Label className='mt-5' type='para'>
         {t('login_description', { conName })}
       </Label>
 
       <Button
         style={styles.idpButton}
         outline
-        icon="web"
+        icon='web'
         onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}
         accessibilityLabel={a11y('accessibility.idp_settings_button')}
         accessibilityHint={a11y('accessibility.idp_settings_button_hint')}
-        accessibilityRole="button"
+        accessibilityRole='button'
       >
         {t('idp_settings')}
       </Button>
 
       {roleComplex && (
         <>
-          <Section icon="account-group" title={t('roles')} subtitle={t('roles_subtitle', { conName })} />
+          <Section
+            icon='account-group'
+            title={t('roles')}
+            subtitle={t('roles_subtitle', { conName })}
+          />
           <View style={styles.roles}>
-            {user.Roles.filter((value, index, array) => array.indexOf(value) === index).map((r) => (
+            {user.Roles.filter(
+              (value, index, array) => array.indexOf(value) === index
+            ).map((r) => (
               <UserRole key={r} role={r} />
             ))}
           </View>
@@ -144,11 +165,11 @@ export const ProfileContent: FC<ProfileContentProps> = ({ claims, user, parentPa
 
       <Button
         style={styles.logoutButton}
-        icon="logout"
+        icon='logout'
         onPress={() => logout().catch(captureException)}
         accessibilityLabel={a11y('accessibility.logout_button')}
         accessibilityHint={a11y('accessibility.logout_button_hint')}
-        accessibilityRole="button"
+        accessibilityRole='button'
       >
         {t('logout')}
       </Button>

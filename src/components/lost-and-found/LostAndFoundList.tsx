@@ -1,11 +1,11 @@
 import { FlashList } from '@shopify/flash-list'
 import { router } from 'expo-router'
-import { FC, ReactElement, useCallback } from 'react'
+import { type FC, type ReactElement, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 
 import { useCache } from '@/context/data/Cache'
-import { LostAndFoundRecord } from '@/context/data/types.api'
+import type { LostAndFoundRecord } from '@/context/data/types.api'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
@@ -26,7 +26,13 @@ function keyExtractor(item: LostAndFoundRecord) {
   return item.Id
 }
 
-export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, empty, trailer, padEnd = true }) => {
+export const LostAndFoundList: FC<LostAndFoundListProps> = ({
+  leader,
+  items,
+  empty,
+  trailer,
+  padEnd = true,
+}) => {
   const theme = useThemeName()
   const { t } = useTranslation('LostAndFound')
   const { isSynchronizing, synchronize } = useCache()
@@ -40,7 +46,13 @@ export const LostAndFoundList: FC<LostAndFoundListProps> = ({ leader, items, emp
 
   const renderItem = useCallback(
     ({ item }: { item: LostAndFoundRecord }) => {
-      return <LostAndFoundCard containerStyle={styles.item} item={item} onPress={() => onPress(item)} />
+      return (
+        <LostAndFoundCard
+          containerStyle={styles.item}
+          item={item}
+          onPress={() => onPress(item)}
+        />
+      )
     },
     [onPress]
   )

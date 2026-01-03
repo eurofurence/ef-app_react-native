@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { StyleSheet, View } from 'react-native'
 
 import { useThemeColor } from '@/hooks/themes/useThemeHooks'
@@ -12,13 +12,27 @@ export type NoDataProps = {
   accessibilityHint?: string
 }
 
-export const NoData = ({ text, accessibilityLabel, accessibilityHint }: NoDataProps) => {
+export const NoData = ({
+  text,
+  accessibilityLabel,
+  accessibilityHint,
+}: NoDataProps) => {
   const textStyle = useThemeColor('text')
 
   return (
-    <View style={[styles.container]} accessibilityLabel={accessibilityLabel} accessibilityHint={accessibilityHint} accessibilityRole="text">
-      <Icon name="calendar-alert" size={40} style={{ marginBottom: 20 }} color={textStyle?.color} />
-      <Label type="h3" variant="narrow" color="text">
+    <View
+      style={[styles.container]}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityHint={accessibilityHint}
+      accessibilityRole='text'
+    >
+      <Icon
+        name='calendar-alert'
+        size={40}
+        style={{ marginBottom: 20 }}
+        color={textStyle?.color}
+      />
+      <Label type='h3' variant='narrow' color='text'>
         {text}
       </Label>
     </View>

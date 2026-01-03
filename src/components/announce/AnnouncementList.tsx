@@ -1,13 +1,16 @@
 import { FlashList } from '@shopify/flash-list'
 import { router } from 'expo-router'
-import { FC, ReactElement, useCallback } from 'react'
+import { type FC, type ReactElement, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 
-import { AnnouncementDetails } from '@/context/data/types.details'
+import type { AnnouncementDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 
-import { AnnouncementCard, AnnouncementDetailsInstance } from './AnnouncementCard'
+import {
+  AnnouncementCard,
+  type AnnouncementDetailsInstance,
+} from './AnnouncementCard'
 
 export type AnnouncementListProps = {
   leader?: ReactElement
@@ -21,7 +24,13 @@ function keyExtractor(item: AnnouncementDetailsInstance) {
   return item.details.Id
 }
 
-export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announcements, empty, trailer, padEnd = true }) => {
+export const AnnouncementList: FC<AnnouncementListProps> = ({
+  leader,
+  announcements,
+  empty,
+  trailer,
+  padEnd = true,
+}) => {
   const { t } = useTranslation('Announcements')
   const theme = useThemeName()
 
@@ -36,7 +45,13 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
 
   const renderItem = useCallback(
     ({ item }: { item: AnnouncementDetailsInstance }) => {
-      return <AnnouncementCard containerStyle={styles.item} announcement={item} onPress={onPress} />
+      return (
+        <AnnouncementCard
+          containerStyle={styles.item}
+          announcement={item}
+          onPress={onPress}
+        />
+      )
     },
     [onPress]
   )
@@ -54,7 +69,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({ leader, announceme
       estimatedItemSize={110}
       estimatedListSize={Dimensions.get('window')}
       extraData={theme}
-      accessibilityRole="list"
+      accessibilityRole='list'
       accessibilityLabel={t('accessibility.announcements_list')}
       accessibilityHint={t('accessibility.announcements_list_hint')}
     />

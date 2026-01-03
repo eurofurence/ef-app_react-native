@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 
 const meta = {
   title: 'Components/Atoms/MarkdownContent',
@@ -48,7 +46,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    children: '# Welcome to Eurofurence\n\nThis is a **bold** event with *italic* text.',
+    children:
+      '# Welcome to Eurofurence\n\nThis is a **bold** event with *italic* text.',
   },
 }
 

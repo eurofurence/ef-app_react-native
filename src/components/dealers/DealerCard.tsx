@@ -1,11 +1,14 @@
-import React, { FC, useCallback } from 'react'
+import { type FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, type ViewStyle } from 'react-native'
 
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
-import { DealerDetails } from '@/context/data/types.details'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import type { DealerDetails } from '@/context/data/types.details'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
 import { appStyles } from '../AppStyles'
 import { Image } from '../generic/atoms/Image'
@@ -20,7 +23,13 @@ export type DealerDetailsInstance = {
   offDays: string
 }
 
-export function dealerInstanceForAny(details: DealerDetails, now: Date, day1: string, day2: string, day3: string): DealerDetailsInstance {
+export function dealerInstanceForAny(
+  details: DealerDetails,
+  now: Date,
+  day1: string,
+  day2: string,
+  day3: string
+): DealerDetailsInstance {
   return {
     details,
     present: isPresent(details, now),
@@ -36,27 +45,45 @@ export type DealerCardProps = {
   onLongPress?: (dealer: DealerDetails) => void
 }
 
-export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer, onPress, onLongPress }) => {
+export const DealerCard: FC<DealerCardProps> = ({
+  containerStyle,
+  style,
+  dealer,
+  onPress,
+  onLongPress,
+}) => {
   const name = dealer.details.DisplayNameOrAttendeeNickname
   const present = dealer.present
   const description = dealer.details.Categories?.join(', ')
   const offDays = dealer.offDays
   const favorite = dealer.details.Favorite
-  const avatar = sourceFromImage(dealer.details.ArtistThumbnail) ?? sourceFromImage(dealer.details.Artist) ?? require('@/assets/static/ych.png')
+  const avatar =
+    sourceFromImage(dealer.details.ArtistThumbnail) ??
+    sourceFromImage(dealer.details.Artist) ??
+    require('@/assets/static/ych.png')
 
   const { t } = useTranslation('Dealers')
 
   const styleBackground = useThemeBackground('background')
-  const stylePre = useThemeBackground(!present ? 'darken' : favorite ? 'notification' : 'primary')
+  const stylePre = useThemeBackground(
+    !present ? 'darken' : favorite ? 'notification' : 'primary'
+  )
   const avatarBackground = useThemeBackground('text')
   const colorHeart = useThemeColorValue('text')
 
-  const onPressBind = useCallback(() => onPress?.(dealer.details), [dealer.details, onPress])
-  const onLongPressBind = useCallback(() => onLongPress?.(dealer.details), [dealer.details, onLongPress])
+  const onPressBind = useCallback(
+    () => onPress?.(dealer.details),
+    [dealer.details, onPress]
+  )
+  const onLongPressBind = useCallback(
+    () => onLongPress?.(dealer.details),
+    [dealer.details, onLongPress]
+  )
 
   const accessibilityLabel = [
     t('accessibility.dealer_card', { name }),
-    description && t('accessibility.dealer_categories', { categories: description }),
+    description &&
+      t('accessibility.dealer_categories', { categories: description }),
     offDays && t('accessibility.dealer_off_days', { offDays }),
     favorite && t('accessibility.dealer_favorited'),
     !present && t('accessibility.dealer_not_present'),
@@ -70,7 +97,7 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
         style={[styles.container, appStyles.shadow, styleBackground, style]}
         onPress={onPressBind}
         onLongPress={onLongPressBind}
-        accessibilityRole="button"
+        accessibilityRole='button'
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={t('accessibility.dealer_card_hint')}
       >
@@ -80,26 +107,28 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
             recyclingKey={dealer.details.Id}
             style={[avatarBackground, styles.avatarCircle]}
             source={avatar}
-            contentFit="contain"
+            contentFit='contain'
             placeholder={require('@/assets/static/ych.png')}
             accessibilityLabel={t('accessibility.dealer_avatar', { name })}
-            accessibilityRole="image"
+            accessibilityRole='image'
           />
         </View>
 
         <View style={styles.main}>
-          <Label type="h3" accessibilityRole="header">
+          <Label type='h3' accessibilityRole='header'>
             {name}
           </Label>
 
           {!!description && (
             <Label
-              key="dealerDescription"
-              type="h4"
-              variant="narrow"
-              ellipsizeMode="tail"
+              key='dealerDescription'
+              type='h4'
+              variant='narrow'
+              ellipsizeMode='tail'
               numberOfLines={2}
-              accessibilityLabel={t('accessibility.dealer_categories', { categories: description })}
+              accessibilityLabel={t('accessibility.dealer_categories', {
+                categories: description,
+              })}
             >
               {description}
             </Label>
@@ -107,12 +136,14 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
 
           {!!offDays && (
             <Label
-              key="dealerOffDays"
+              key='dealerOffDays'
               style={styles.tag}
-              type="regular"
-              ellipsizeMode="head"
+              type='regular'
+              ellipsizeMode='head'
               numberOfLines={1}
-              accessibilityLabel={t('accessibility.dealer_off_days', { offDays })}
+              accessibilityLabel={t('accessibility.dealer_off_days', {
+                offDays,
+              })}
             >
               {t('not_attending_on', { offDays })}
             </Label>
@@ -120,8 +151,14 @@ export const DealerCard: FC<DealerCardProps> = ({ containerStyle, style, dealer,
         </View>
 
         {!!favorite && (
-          <View key="eventFavorite" style={styles.favorite}>
-            <Icon name="heart" size={20} color={colorHeart} accessibilityLabel={t('accessibility.dealer_favorite_icon')} accessibilityRole="image" />
+          <View key='eventFavorite' style={styles.favorite}>
+            <Icon
+              name='heart'
+              size={20}
+              color={colorHeart}
+              accessibilityLabel={t('accessibility.dealer_favorite_icon')}
+              accessibilityRole='image'
+            />
           </View>
         )}
       </Pressable>

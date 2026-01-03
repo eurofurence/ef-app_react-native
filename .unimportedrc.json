@@ -1,6 +1,11 @@
 {
   "entry": ["src/index.tsx"],
   "extensions": [".tsx", ".ts"],
-  "ignorePatterns": ["**/node_modules/**", "private/**", "**/*.spec.*", "**/*.d.ts"],
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "private/**",
+    "**/*.spec.*",
+    "**/*.d.ts"
+  ],
   "ignoreUnused": ["@sentry/react-native"]
 }

@@ -1,5 +1,4 @@
 import { render, waitFor } from '@testing-library/react-native'
-import React from 'react'
 
 import AnnounceItem from '@/app/announcements/[id]'
 import { useCache } from '@/context/data/Cache'
@@ -56,7 +55,9 @@ const mockUseCache = useCache as jest.MockedFunction<typeof useCache>
 const createMockCache = (announcements: Record<string, any> = {}) =>
   ({
     data: {},
-    getValue: jest.fn((key: string) => (key === 'settings' ? { theme: 'light' } : {})),
+    getValue: jest.fn((key: string) =>
+      key === 'settings' ? { theme: 'light' } : {}
+    ),
     setValue: jest.fn(),
     removeValue: jest.fn(),
     clear: jest.fn(),

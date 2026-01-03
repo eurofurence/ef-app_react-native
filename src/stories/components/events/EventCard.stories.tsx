@@ -1,10 +1,18 @@
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
-
-import { EventCard, eventInstanceForAny, eventInstanceForPassed } from '@/components/events/EventCard'
-import { mockEventDetails, mockEventDetailsWithBanner, mockEventDetailsPassed, mockEventDetailsSimple, mockEventDetailsLongTitle } from '@/stories/mocks/eventData'
-
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import {
+  EventCard,
+  eventInstanceForAny,
+  eventInstanceForPassed,
+} from '@/components/events/EventCard'
+import {
+  mockEventDetails,
+  mockEventDetailsLongTitle,
+  mockEventDetailsPassed,
+  mockEventDetailsSimple,
+  mockEventDetailsWithBanner,
+} from '@/stories/mocks/eventData'
 
 const meta = {
   title: 'Components/Events/EventCard',
@@ -102,9 +110,18 @@ export const MultipleEvents: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
       <EventCard event={createEventInstance(mockEventDetails)} onPress={fn()} />
-      <EventCard event={createEventInstance(mockEventDetailsWithBanner)} onPress={fn()} />
-      <EventCard event={eventInstanceForPassed(mockEventDetailsPassed)} onPress={fn()} />
-      <EventCard event={createEventInstance(mockEventDetailsSimple)} onPress={fn()} />
+      <EventCard
+        event={createEventInstance(mockEventDetailsWithBanner)}
+        onPress={fn()}
+      />
+      <EventCard
+        event={eventInstanceForPassed(mockEventDetailsPassed)}
+        onPress={fn()}
+      />
+      <EventCard
+        event={createEventInstance(mockEventDetailsSimple)}
+        onPress={fn()}
+      />
     </View>
   ),
 }
@@ -136,8 +153,14 @@ export const EventStates: Story = {
 
     return (
       <View style={{ gap: 15 }}>
-        <EventCard event={createEventInstance(upcomingEvent, now)} onPress={fn()} />
-        <EventCard event={createEventInstance(runningEvent, now)} onPress={fn()} />
+        <EventCard
+          event={createEventInstance(upcomingEvent, now)}
+          onPress={fn()}
+        />
+        <EventCard
+          event={createEventInstance(runningEvent, now)}
+          onPress={fn()}
+        />
         <EventCard event={eventInstanceForPassed(passedEvent)} onPress={fn()} />
       </View>
     )

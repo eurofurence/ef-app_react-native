@@ -1,9 +1,9 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, type ViewStyle } from 'react-native'
 
 import { Pressable } from '@/components/generic/Pressable'
-import { AnnouncementDetails } from '@/context/data/types.details'
+import type { AnnouncementDetails } from '@/context/data/types.details'
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 
 import { appStyles } from '../AppStyles'
@@ -26,14 +26,26 @@ export type AnnouncementCardProps = {
   onLongPress?: (announcement: AnnouncementDetails) => void
 }
 
-export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, style, announcement, onPress, onLongPress }) => {
+export const AnnouncementCard: FC<AnnouncementCardProps> = ({
+  containerStyle,
+  style,
+  announcement,
+  onPress,
+  onLongPress,
+}) => {
   const { t } = useTranslation('Announcements')
 
   // Dependent and independent styles.
   const styleContainer = useThemeBackground('background')
   const saturationValue = useThemeName() === 'dark' ? 0.5 : 0.7
   const stylePre = useThemeBackground('primary')
-  const styleAreaIndicator = { backgroundColor: colorForArea(announcement.details.Area, saturationValue, 0.76) }
+  const styleAreaIndicator = {
+    backgroundColor: colorForArea(
+      announcement.details.Area,
+      saturationValue,
+      0.76
+    ),
+  }
 
   // Create accessibility label with announcement details
   const accessibilityLabel = t('accessibility.announcement_card', {
@@ -48,19 +60,31 @@ export const AnnouncementCard: FC<AnnouncementCardProps> = ({ containerStyle, st
         style={[styles.container, appStyles.shadow, styleContainer, style]}
         onPress={() => onPress?.(announcement.details)}
         onLongPress={() => onLongPress?.(announcement.details)}
-        accessibilityRole="button"
+        accessibilityRole='button'
         accessibilityLabel={accessibilityLabel}
         accessibilityHint={t('accessibility.announcement_card_hint')}
       >
-        <ImageBackground style={[styles.pre, stylePre]} source={sourceFromImage(announcement.details.Image)}>
-          <View style={[styles.areaIndicator, styleAreaIndicator]} accessibilityElementsHidden={true} importantForAccessibility="no-hide-descendants" />
+        <ImageBackground
+          style={[styles.pre, stylePre]}
+          source={sourceFromImage(announcement.details.Image)}
+        >
+          <View
+            style={[styles.areaIndicator, styleAreaIndicator]}
+            accessibilityElementsHidden={true}
+            importantForAccessibility='no-hide-descendants'
+          />
         </ImageBackground>
 
         <View style={styles.main}>
-          <Label style={styles.title} type="h3">
+          <Label style={styles.title} type='h3'>
             {announcement.details.NormalizedTitle}
           </Label>
-          <Label style={styles.tag} type="regular" ellipsizeMode="head" numberOfLines={1}>
+          <Label
+            style={styles.tag}
+            type='regular'
+            ellipsizeMode='head'
+            numberOfLines={1}
+          >
             {announcement.time} - {announcement.details.Area}
           </Label>
         </View>

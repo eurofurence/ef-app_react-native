@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import NetInfo from '@react-native-community/netinfo'
 import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister'
-import { QueryClient, onlineManager } from '@tanstack/react-query'
+import { onlineManager, QueryClient } from '@tanstack/react-query'
 import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client'
-import { ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 // Connect online state.
 onlineManager.setEventListener((setOnline) => {
@@ -32,9 +32,16 @@ const persister = createAsyncStoragePersister({
  * @param children The children to provide to.
  * @constructor
  */
-export const QueryProvider = ({ children }: { children?: ReactNode | undefined }) => {
+export const QueryProvider = ({
+  children,
+}: {
+  children?: ReactNode | undefined
+}) => {
   return (
-    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
+    <PersistQueryClientProvider
+      client={queryClient}
+      persistOptions={{ persister }}
+    >
       {children}
     </PersistQueryClientProvider>
   )

@@ -13,18 +13,21 @@ jobs:
         node-version: [22]
     steps:
       - uses: actions/checkout@v4
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: "pnpm"
+      - name: Copy .env.example to .env
+        run: cp .env.example .env
       - name: Install dependencies
-        run: pnpm install
+        run: bun install
       - name: Run linter
-        run: pnpm run lint --max-warnings=20
+        run: bun run lint
       - name: Copy config into place
         run: cp convention.config.dist.json convention.config.json
       - name: Run tests
-        run: pnpm run test --forceExit
+        run: bun run test --forceExit

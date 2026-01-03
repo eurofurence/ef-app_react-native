@@ -1,9 +1,14 @@
-import { keepPreviousData, QueryFunctionContext, useQuery, UseQueryResult } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import {
+  keepPreviousData,
+  type QueryFunctionContext,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
+import axios, { type GenericAbortSignal } from 'axios'
 
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { UserRecord } from '@/context/data/types.api'
+import type { UserRecord } from '@/context/data/types.api'
 
 /**
  * Extends user record with a role map.
@@ -28,7 +33,10 @@ function selectWithRoles(userRecord: UserRecord): UserDetails {
  * @param accessToken The access token.
  * @param signal An abort signal.
  */
-async function getUserSelf(accessToken: string | null, signal?: GenericAbortSignal) {
+async function getUserSelf(
+  accessToken: string | null,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
     .get(`${apiBase}/Users/:self`, {
@@ -46,7 +54,8 @@ export function useUsersSelf(): UseQueryResult<UserDetails | null> {
   // Wrap self query. Add some options.
   return useQuery({
     queryKey: [idData?.sub, 'self'],
-    queryFn: (context: QueryFunctionContext) => getUserSelf(accessToken, context.signal),
+    queryFn: (context: QueryFunctionContext) =>
+      getUserSelf(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
     refetchInterval: 60_000,
     retry: false,

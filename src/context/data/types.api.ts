@@ -106,7 +106,12 @@ export type MapEntryRecord = RecordMetadata & {
 }
 export type LinkFragment = {
   // TODO: Verify nullability.
-  FragmentType: 'WebExternal' | 'MapExternal' | 'MapEntry' | 'DealerDetail' | 'EventConferenceRoom'
+  FragmentType:
+    | 'WebExternal'
+    | 'MapExternal'
+    | 'MapEntry'
+    | 'DealerDetail'
+    | 'EventConferenceRoom'
   Name: string
   Target: string
 }
@@ -162,7 +167,12 @@ export type ArtistAlleyRecord = RecordMetadata & {
   ImageId: string
 }
 
-export type TableRegistrationRecordStatus = 'Pending' | 'Accepted' | 'Published' | 'Rejected' | 'CheckedOut'
+export type TableRegistrationRecordStatus =
+  | 'Pending'
+  | 'Accepted'
+  | 'Published'
+  | 'Rejected'
+  | 'CheckedOut'
 
 export type TableRegistrationRecord = ArtistAlleyRecord & {
   OwnerUid?: string

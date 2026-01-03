@@ -1,5 +1,5 @@
 import { FlashList } from '@shopify/flash-list'
-import { FC, ReactElement, useCallback } from 'react'
+import { type FC, type ReactElement, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 
@@ -8,7 +8,7 @@ import { useCache } from '@/context/data/Cache'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
-import { DealerCard, DealerDetailsInstance } from './DealerCard'
+import { DealerCard, type DealerDetailsInstance } from './DealerCard'
 
 /**
  * The properties to the component.
@@ -25,7 +25,13 @@ function keyExtractor(item: DealerDetailsInstance) {
   return item.details.Id
 }
 
-export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trailer, padEnd = true }) => {
+export const DealersList: FC<DealersListProps> = ({
+  leader,
+  dealers,
+  empty,
+  trailer,
+  padEnd = true,
+}) => {
   const { t } = useTranslation('Dealers')
   const theme = useThemeName()
   const { isSynchronizing, synchronize } = useCache()
@@ -33,7 +39,14 @@ export const DealersList: FC<DealersListProps> = ({ leader, dealers, empty, trai
 
   const renderItem = useCallback(
     ({ item }: { item: DealerDetailsInstance }) => {
-      return <DealerCard containerStyle={styles.item} dealer={item} onPress={onPress} onLongPress={onLongPress} />
+      return (
+        <DealerCard
+          containerStyle={styles.item}
+          dealer={item}
+          onPress={onPress}
+          onLongPress={onLongPress}
+        />
+      )
     },
     [onLongPress, onPress]
   )

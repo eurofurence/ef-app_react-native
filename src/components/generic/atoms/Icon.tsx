@@ -1,7 +1,6 @@
 import MaterialCommunityIcon from '@expo/vector-icons/MaterialCommunityIcons'
-import { Platform } from 'react-native'
-
 import type { ComponentProps } from 'react'
+import { Platform } from 'react-native'
 
 export type IconNames = keyof typeof MaterialCommunityIcon.glyphMap
 export type IconProps = ComponentProps<typeof MaterialCommunityIcon> & {
@@ -12,14 +11,36 @@ export type IconProps = ComponentProps<typeof MaterialCommunityIcon> & {
   decorative?: boolean
 }
 
-export function Icon({ decorative, accessibilityLabel, accessibilityRole, accessible, ...rest }: IconProps) {
-  const isDecorative = decorative ?? (!accessible && !accessibilityLabel && !accessibilityRole)
+export function Icon({
+  decorative,
+  accessibilityLabel,
+  accessibilityRole,
+  accessible,
+  ...rest
+}: IconProps) {
+  const isDecorative =
+    decorative ?? (!accessible && !accessibilityLabel && !accessibilityRole)
 
   if (isDecorative) {
-    return <MaterialCommunityIcon {...rest} accessible={false} accessibilityElementsHidden={true} importantForAccessibility="no" />
+    return (
+      <MaterialCommunityIcon
+        {...rest}
+        accessible={false}
+        accessibilityElementsHidden={true}
+        importantForAccessibility='no'
+      />
+    )
   }
 
-  return <MaterialCommunityIcon {...rest} accessible={accessible ?? true} accessibilityLabel={accessibilityLabel} accessibilityRole={accessibilityRole} />
+  return (
+    <MaterialCommunityIcon
+      {...rest}
+      accessible={accessible ?? true}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={accessibilityRole}
+    />
+  )
 }
 
-export const platformShareIcon: IconNames = Platform.OS === 'ios' ? 'export-variant' : 'share'
+export const platformShareIcon: IconNames =
+  Platform.OS === 'ios' ? 'export-variant' : 'share'

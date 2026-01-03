@@ -1,7 +1,7 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { FaSection, FaSectionProps } from '../generic/atoms/FaSection'
+import { FaSection, type FaSectionProps } from '../generic/atoms/FaSection'
 
 export type KbSectionProps = FaSectionProps
 
@@ -16,7 +16,12 @@ export type KbSectionProps = FaSectionProps
 //     };
 // }
 
-export const KbSection: FC<KbSectionProps> = ({ style, title, subtitle, icon }) => {
+export const KbSection: FC<KbSectionProps> = ({
+  style,
+  title,
+  subtitle,
+  icon,
+}) => {
   const { t } = useTranslation('KnowledgeGroups')
 
   return (
@@ -25,8 +30,11 @@ export const KbSection: FC<KbSectionProps> = ({ style, title, subtitle, icon }) 
       title={title}
       subtitle={subtitle}
       icon={icon}
-      accessibilityRole="header"
-      accessibilityLabel={t('accessibility.kb_section_header', { title, subtitle })}
+      accessibilityRole='header'
+      accessibilityLabel={t('accessibility.kb_section_header', {
+        title,
+        subtitle,
+      })}
     />
   )
 }

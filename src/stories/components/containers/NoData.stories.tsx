@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { NoData } from '@/components/generic/containers/NoData'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { NoData } from '@/components/generic/containers/NoData'
 
 const meta = {
   title: 'Components/Containers/NoData',
@@ -61,10 +59,10 @@ export const DifferentMessages: Story = {
   },
   render: () => (
     <View style={{ gap: 20 }}>
-      <NoData text="No events found" />
-      <NoData text="No messages available" />
-      <NoData text="No results to display" />
-      <NoData text="Empty state" />
+      <NoData text='No events found' />
+      <NoData text='No messages available' />
+      <NoData text='No results to display' />
+      <NoData text='Empty state' />
     </View>
   ),
 }

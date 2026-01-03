@@ -1,12 +1,19 @@
-import { View, Text } from 'react-native'
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { Text, View } from 'react-native'
 import { fn } from 'storybook/test'
 
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
-
-const TestComponent = ({ title, onPress }: { title: string; onPress: () => void }) => (
+const TestComponent = ({
+  title,
+  onPress,
+}: {
+  title: string
+  onPress: () => void
+}) => (
   <View style={{ padding: 20, backgroundColor: '#f0f0f0', borderRadius: 8 }}>
     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{title}</Text>
-    <Text style={{ marginTop: 8 }}>This is a test component to verify Storybook setup.</Text>
+    <Text style={{ marginTop: 8 }} onPress={onPress}>
+      This is a test component to verify Storybook setup.
+    </Text>
   </View>
 )
 

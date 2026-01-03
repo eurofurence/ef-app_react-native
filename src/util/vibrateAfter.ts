@@ -5,7 +5,7 @@ import { Vibration } from 'react-native'
  * @param value The value to test.
  */
 function isPromise(value: any): value is Promise<any> {
-  return value && value.finally && typeof value.finally === 'function'
+  return value?.finally && typeof value.finally === 'function'
 }
 
 /**
@@ -17,11 +17,19 @@ export type VibrationPattern = number | number[]
  * Vibrate after a value was computed or an operation was completed.
  */
 export function vibrateAfter<T>(result: T, pattern?: VibrationPattern): T
-export function vibrateAfter<T>(result: Promise<T>, pattern?: VibrationPattern): Promise<T>
-export function vibrateAfter<T>(result: Promise<T> | T, pattern?: VibrationPattern): Promise<T> | T {
+export function vibrateAfter<T>(
+  result: Promise<T>,
+  pattern?: VibrationPattern
+): Promise<T>
+export function vibrateAfter<T>(
+  result: Promise<T> | T,
+  pattern?: VibrationPattern
+): Promise<T> | T {
   if (isPromise(result)) {
     // Wrap promise by attaching a "finally" block.
-    return (result as Promise<T>).finally(() => Vibration.vibrate(pattern ?? 100))
+    return (result as Promise<T>).finally(() =>
+      Vibration.vibrate(pattern ?? 100)
+    )
   } else {
     // The Result was "already awaited".
     Vibration.vibrate(pattern ?? 100)

@@ -1,5 +1,5 @@
-import { ImageRecord } from '@/context/data/types.api'
-import { AnnouncementDetails } from '@/context/data/types.details'
+import type { ImageRecord } from '@/context/data/types.api'
+import type { AnnouncementDetails } from '@/context/data/types.details'
 
 // Mock image record for testing
 const mockImageRecord: ImageRecord = {
@@ -65,10 +65,13 @@ export const mockAnnouncementDetailsLongTitle: AnnouncementDetails = {
   ExternalReference: undefined,
   Area: 'Information',
   Author: 'Info Desk',
-  Title: 'This is a very long announcement title that might wrap to multiple lines and should be handled gracefully by the component',
-  Content: 'A detailed announcement with a very long title to test how the component handles text overflow.',
+  Title:
+    'This is a very long announcement title that might wrap to multiple lines and should be handled gracefully by the component',
+  Content:
+    'A detailed announcement with a very long title to test how the component handles text overflow.',
   ImageId: undefined,
-  NormalizedTitle: 'This is a very long announcement title that might wrap to multiple lines and should be handled gracefully by the component',
+  NormalizedTitle:
+    'This is a very long announcement title that might wrap to multiple lines and should be handled gracefully by the component',
   ValidFrom: new Date('2024-08-15T16:00:00Z'),
   ValidFromLocal: new Date('2024-08-15T16:00:00Z'),
   ValidUntil: new Date('2024-08-15T17:00:00Z'),
@@ -156,7 +159,10 @@ export const mockAnnouncementDetailsDifferentAreas: AnnouncementDetails[] = [
 ]
 
 // Helper function to create announcement instances
-export const createAnnouncementInstance = (details: AnnouncementDetails, time: string = '2 hours ago') => {
+export const createAnnouncementInstance = (
+  details: AnnouncementDetails,
+  time: string = '2 hours ago'
+) => {
   return {
     details,
     time,

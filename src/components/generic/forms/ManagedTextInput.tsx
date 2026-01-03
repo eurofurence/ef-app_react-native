@@ -1,6 +1,13 @@
 import { useMemo } from 'react'
-import { useController, Path } from 'react-hook-form'
-import { StyleProp, StyleSheet, TextInput, TextInputProps, View, ViewStyle } from 'react-native'
+import { type Path, useController } from 'react-hook-form'
+import {
+  type StyleProp,
+  StyleSheet,
+  TextInput,
+  type TextInputProps,
+  View,
+  type ViewStyle,
+} from 'react-native'
 
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
@@ -13,7 +20,14 @@ export type ManagedTextInputProps<T> = TextInputProps & {
   errorTranslator?: (name: string, type: string) => string
 }
 
-export const ManagedTextInput = <T extends Record<string, any>>({ name, label, containerStyle, errorTranslator, style, ...props }: ManagedTextInputProps<T>) => {
+export const ManagedTextInput = <T extends Record<string, any>>({
+  name,
+  label,
+  containerStyle,
+  errorTranslator,
+  style,
+  ...props
+}: ManagedTextInputProps<T>) => {
   const {
     field: { name: fieldName, value, onChange, onBlur },
     fieldState: { error },
@@ -32,10 +46,21 @@ export const ManagedTextInput = <T extends Record<string, any>>({ name, label, c
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {!label ? null : <Label type="caption">{label}</Label>}
-      <TextInput value={value} onChangeText={onChange} onBlur={onBlur} style={[styles.input, inputStyle, style]} placeholderTextColor={theme.text + '80'} {...props} />
-      <Label type="caption" color="notification" className="mt-1 mb-4">
-        {!error ? ' ' : errorTranslator ? errorTranslator(fieldName, error.type) : error.message}
+      {!label ? null : <Label type='caption'>{label}</Label>}
+      <TextInput
+        value={value}
+        onChangeText={onChange}
+        onBlur={onBlur}
+        style={[styles.input, inputStyle, style]}
+        placeholderTextColor={`${theme.text}80`}
+        {...props}
+      />
+      <Label type='caption' color='notification' className='mt-1 mb-4'>
+        {!error
+          ? ' '
+          : errorTranslator
+            ? errorTranslator(fieldName, error.type)
+            : error.message}
       </Label>
     </View>
   )

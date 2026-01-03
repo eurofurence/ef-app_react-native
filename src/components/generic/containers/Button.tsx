@@ -1,12 +1,21 @@
-import * as React from 'react'
-import { FC, ReactElement, ReactNode } from 'react'
-import { AccessibilityRole, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import type { FC, ReactElement, ReactNode } from 'react'
+import {
+  type AccessibilityRole,
+  type StyleProp,
+  StyleSheet,
+  View,
+  type ViewStyle,
+} from 'react-native'
 
 import { Pressable } from '@/components/generic/Pressable'
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeBorder,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
-import { Icon, IconNames } from '../atoms/Icon'
-import { Label, LabelProps } from '../atoms/Label'
+import { Icon, type IconNames } from '../atoms/Icon'
+import { Label, type LabelProps } from '../atoms/Label'
 
 export const buttonIconSize = 20
 const pad = 8
@@ -30,12 +39,18 @@ export type ButtonProps = {
   /**
    * If given, displayed as the button's icon.
    */
-  icon?: IconNames | ReactElement | ((props: { size: number; color: string }) => ReactNode)
+  icon?:
+    | IconNames
+    | ReactElement
+    | ((props: { size: number; color: string }) => ReactNode)
 
   /**
    * If given, displayed as the button's icon, this is displayed on the right side.
    */
-  iconRight?: IconNames | ReactElement | ((props: { size: number; color: string }) => ReactNode)
+  iconRight?:
+    | IconNames
+    | ReactElement
+    | ((props: { size: number; color: string }) => ReactNode)
 
   /**
    * The text of the button.
@@ -104,24 +119,38 @@ export const Button: FC<ButtonProps> = ({
   const color = useThemeColorValue(outline ? 'important' : 'invImportant')
 
   // Auto-generate accessibility label if not provided
-  const computedAccessibilityLabel = accessibilityLabel || (typeof children === 'string' ? children : undefined)
+  const computedAccessibilityLabel =
+    accessibilityLabel || (typeof children === 'string' ? children : undefined)
 
   let iconComponent: ReactNode
   if (!icon) iconComponent = <View style={styles.placeholder} />
-  else if (typeof icon === 'string') iconComponent = <Icon name={icon} size={buttonIconSize} color={color} />
-  else if (icon instanceof Function) iconComponent = icon({ size: buttonIconSize, color })
+  else if (typeof icon === 'string')
+    iconComponent = <Icon name={icon} size={buttonIconSize} color={color} />
+  else if (icon instanceof Function)
+    iconComponent = icon({ size: buttonIconSize, color })
   else iconComponent = icon
 
-  let iconRightComponent
+  let iconRightComponent: ReactNode
   if (!iconRight) iconRightComponent = <View style={styles.placeholder} />
-  else if (typeof iconRight === 'string') iconRightComponent = <Icon name={iconRight} size={buttonIconSize} color={color} />
-  else if (iconRight instanceof Function) iconRightComponent = iconRight({ size: buttonIconSize, color })
+  else if (typeof iconRight === 'string')
+    iconRightComponent = (
+      <Icon name={iconRight} size={buttonIconSize} color={color} />
+    )
+  else if (iconRight instanceof Function)
+    iconRightComponent = iconRight({ size: buttonIconSize, color })
   else iconRightComponent = iconRight
 
   return (
     <Pressable
       containerStyle={containerStyle}
-      style={[styles.container, baseStyle, fillStyle, outline && borderStyle, disabledStyle, style]}
+      style={[
+        styles.container,
+        baseStyle,
+        fillStyle,
+        outline && borderStyle,
+        disabledStyle,
+        style,
+      ]}
       onPress={onPress}
       onLongPress={onLongPress}
       disabled={disabled}
@@ -134,7 +163,12 @@ export const Button: FC<ButtonProps> = ({
     >
       {iconComponent}
 
-      <Label type={labelType} variant={labelVariant} style={styles.text} color={outline ? 'important' : 'invImportant'}>
+      <Label
+        type={labelType}
+        variant={labelVariant}
+        style={styles.text}
+        color={outline ? 'important' : 'invImportant'}
+      >
         {children}
       </Label>
 

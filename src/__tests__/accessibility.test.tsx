@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react-native'
-import React from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 
 // Import our actual components for testing
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
@@ -15,7 +14,11 @@ jest.mock('@/hooks/themes/useThemeHooks', () => ({
 // Custom accessibility validation functions
 const validateAccessibility = {
   hasAccessibleName: (element: any) => {
-    return !!(element.props.accessibilityLabel || element.props.children || element.props.accessibilityHint)
+    return !!(
+      element.props.accessibilityLabel ||
+      element.props.children ||
+      element.props.accessibilityHint
+    )
   },
 
   hasProperRole: (element: any) => {
@@ -31,7 +34,13 @@ const validateAccessibility = {
     if (!state) return true
 
     // Validate state properties
-    const validStateKeys = ['disabled', 'selected', 'checked', 'busy', 'expanded']
+    const validStateKeys = [
+      'disabled',
+      'selected',
+      'checked',
+      'busy',
+      'expanded',
+    ]
     return Object.keys(state).every((key) => validStateKeys.includes(key))
   },
 }
@@ -39,7 +48,12 @@ const validateAccessibility = {
 describe('Accessibility Tests', () => {
   test('Button with proper accessibility should pass validation', () => {
     const { getByRole } = render(
-      <TouchableOpacity accessible={true} accessibilityRole="button" accessibilityLabel="Submit Form" onPress={() => {}}>
+      <TouchableOpacity
+        accessible={true}
+        accessibilityRole='button'
+        accessibilityLabel='Submit Form'
+        onPress={() => {}}
+      >
         <Text>Submit</Text>
       </TouchableOpacity>
     )
@@ -51,7 +65,9 @@ describe('Accessibility Tests', () => {
   })
 
   test('StatusMessage should have proper live region setup', () => {
-    const { getByText } = render(<StatusMessage message="Loading complete" type="polite" visible />)
+    const { getByText } = render(
+      <StatusMessage message='Loading complete' type='polite' visible />
+    )
 
     const message = getByText('Loading complete')
     expect(message).toBeDefined()
@@ -64,7 +80,12 @@ describe('Accessibility Tests', () => {
 
   test('Interactive elements should have minimum touch targets', () => {
     const { getByRole } = render(
-      <TouchableOpacity accessibilityRole="button" accessibilityLabel="Small Button" style={{ minHeight: 44, minWidth: 44 }} onPress={() => {}}>
+      <TouchableOpacity
+        accessibilityRole='button'
+        accessibilityLabel='Small Button'
+        style={{ minHeight: 44, minWidth: 44 }}
+        onPress={() => {}}
+      >
         <Text>Click</Text>
       </TouchableOpacity>
     )
@@ -81,7 +102,11 @@ describe('Accessibility Tests', () => {
     const { getByLabelText } = render(
       <View>
         <Text>Email Address</Text>
-        <View accessibilityRole="text" accessibilityLabel="Email Address Input" accessible={true}>
+        <View
+          accessibilityRole='text'
+          accessibilityLabel='Email Address Input'
+          accessible={true}
+        >
           <Text>user@example.com</Text>
         </View>
       </View>
@@ -94,7 +119,12 @@ describe('Accessibility Tests', () => {
 
   test('Switch components should have proper state', () => {
     const { getByRole } = render(
-      <TouchableOpacity accessibilityRole="switch" accessibilityLabel="Enable notifications" accessibilityState={{ checked: true }} onPress={() => {}}>
+      <TouchableOpacity
+        accessibilityRole='switch'
+        accessibilityLabel='Enable notifications'
+        accessibilityState={{ checked: true }}
+        onPress={() => {}}
+      >
         <Text>Notifications: On</Text>
       </TouchableOpacity>
     )
@@ -106,7 +136,13 @@ describe('Accessibility Tests', () => {
 
   test('Disabled elements should have proper state', () => {
     const { getByRole } = render(
-      <TouchableOpacity accessibilityRole="button" accessibilityLabel="Disabled Button" accessibilityState={{ disabled: true }} disabled={true} onPress={() => {}}>
+      <TouchableOpacity
+        accessibilityRole='button'
+        accessibilityLabel='Disabled Button'
+        accessibilityState={{ disabled: true }}
+        disabled={true}
+        onPress={() => {}}
+      >
         <Text>Can't Click</Text>
       </TouchableOpacity>
     )
@@ -120,8 +156,8 @@ describe('Accessibility Tests', () => {
   test('Headers should have proper hierarchy', () => {
     const { getAllByRole } = render(
       <View>
-        <Text accessibilityRole="header">Main Title</Text>
-        <Text accessibilityRole="header">Subtitle</Text>
+        <Text accessibilityRole='header'>Main Title</Text>
+        <Text accessibilityRole='header'>Subtitle</Text>
         <Text>Content goes here</Text>
       </View>
     )
@@ -134,14 +170,14 @@ describe('Accessibility Tests', () => {
   test('Complex component should pass all accessibility checks', () => {
     const { getByRole, getAllByRole } = render(
       <View>
-        <Text accessibilityRole="header">Settings</Text>
+        <Text accessibilityRole='header'>Settings</Text>
 
         <View accessible={true}>
           <Text>Notification Settings</Text>
 
           <TouchableOpacity
-            accessibilityRole="switch"
-            accessibilityLabel="Enable push notifications"
+            accessibilityRole='switch'
+            accessibilityLabel='Enable push notifications'
             accessibilityState={{ checked: true }}
             style={{ minHeight: 44, minWidth: 44 }}
             onPress={() => {}}
@@ -150,8 +186,8 @@ describe('Accessibility Tests', () => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            accessibilityRole="switch"
-            accessibilityLabel="Enable email notifications"
+            accessibilityRole='switch'
+            accessibilityLabel='Enable email notifications'
             accessibilityState={{ checked: false }}
             style={{ minHeight: 44, minWidth: 44 }}
             onPress={() => {}}
@@ -160,9 +196,14 @@ describe('Accessibility Tests', () => {
           </TouchableOpacity>
         </View>
 
-        <StatusMessage message="Settings saved" type="polite" visible />
+        <StatusMessage message='Settings saved' type='polite' visible />
 
-        <TouchableOpacity accessibilityRole="button" accessibilityLabel="Save settings" style={{ minHeight: 44, minWidth: 44 }} onPress={() => {}}>
+        <TouchableOpacity
+          accessibilityRole='button'
+          accessibilityLabel='Save settings'
+          style={{ minHeight: 44, minWidth: 44 }}
+          onPress={() => {}}
+        >
           <Text>Save</Text>
         </TouchableOpacity>
       </View>
@@ -189,19 +230,23 @@ describe('Accessibility Tests', () => {
   })
 
   test('Live regions should announce different types correctly', () => {
-    const { rerender, getByText } = render(<StatusMessage message="Loading..." type="polite" visible />)
+    const { rerender, getByText } = render(
+      <StatusMessage message='Loading...' type='polite' visible />
+    )
 
     let message = getByText('Loading...')
     expect(message).toBeDefined()
 
     // Test assertive announcement
-    rerender(<StatusMessage message="Error occurred!" type="assertive" visible />)
+    rerender(
+      <StatusMessage message='Error occurred!' type='assertive' visible />
+    )
 
     message = getByText('Error occurred!')
     expect(message).toBeDefined()
 
     // Test off announcement
-    rerender(<StatusMessage message="Silent update" type="off" visible />)
+    rerender(<StatusMessage message='Silent update' type='off' visible />)
 
     message = getByText('Silent update')
     expect(message).toBeDefined()

@@ -12,7 +12,10 @@ import { minZoomFor, shareImage } from '@/components/images/Images.common'
 const viewerPadding = 20
 
 export default function ImageWeb() {
-  const { url, title } = useLocalSearchParams<{ url?: string; title?: string }>()
+  const { url, title } = useLocalSearchParams<{
+    url?: string
+    title?: string
+  }>()
   const { t } = useTranslation('Viewer')
   const [width, setWidth] = useState(-1)
   const [height, setHeight] = useState(-1)
@@ -42,7 +45,10 @@ export default function ImageWeb() {
 
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Header secondaryIcon={platformShareIcon} secondaryPress={() => title && url && shareImage(url, title)}>
+      <Header
+        secondaryIcon={platformShareIcon}
+        secondaryPress={() => title && url && shareImage(url, title)}
+      >
         {title ?? t('unspecified')}
       </Header>
 
@@ -64,7 +70,7 @@ export default function ImageWeb() {
               allowDownscaling={false}
               contentFit={undefined}
               source={url}
-              priority="high"
+              priority='high'
               onLoad={(event) => {
                 setWidth(event.source.width)
                 setHeight(event.source.height)

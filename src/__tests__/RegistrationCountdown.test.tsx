@@ -1,5 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react-native'
-import React from 'react'
+import { fireEvent, render, screen } from '@testing-library/react-native'
 
 import { RegistrationCountdown } from '@/components/home/RegistrationCountdown'
 import { useAuthContext } from '@/context/auth/Auth'
@@ -16,7 +15,7 @@ jest.mock('@react-navigation/core', () => ({
 
 // Mock @expo/vector-icons to prevent async state updates
 jest.mock('@expo/vector-icons/MaterialCommunityIcons', () => {
-  const MockIcon = ({ name, size, color, ...props }: any) => {
+  const MockIcon = () => {
     // Return null to avoid rendering issues, just for testing
     return null
   }
@@ -58,7 +57,7 @@ jest.mock('@/context/auth/User', () => ({
 
 // Mock translation
 jest.mock('react-i18next', () => ({
-  useTranslation: (namespace: string) => ({
+  useTranslation: () => ({
     t: (key: string) => {
       const translations: Record<string, string> = {
         hide: 'Hide',
@@ -90,11 +89,20 @@ jest.mock('@/hooks/themes/useThemeHooks', () => ({
 }))
 
 const mockUseCache = useCache as jest.MockedFunction<typeof useCache>
-const mockUseRegistrationDatesQuery = useRegistrationDatesQuery as jest.MockedFunction<typeof useRegistrationDatesQuery>
-const mockUseWarningState = useWarningState as jest.MockedFunction<typeof useWarningState>
+const mockUseRegistrationDatesQuery =
+  useRegistrationDatesQuery as jest.MockedFunction<
+    typeof useRegistrationDatesQuery
+  >
+const mockUseWarningState = useWarningState as jest.MockedFunction<
+  typeof useWarningState
+>
 const mockUseNow = useNow as jest.MockedFunction<typeof useNow>
-const mockUseAuthContext = useAuthContext as jest.MockedFunction<typeof useAuthContext>
-const mockUseUserContext = useUserContext as jest.MockedFunction<typeof useUserContext>
+const mockUseAuthContext = useAuthContext as jest.MockedFunction<
+  typeof useAuthContext
+>
+const mockUseUserContext = useUserContext as jest.MockedFunction<
+  typeof useUserContext
+>
 
 // Helper function to create mock cache
 const createMockCache = (eventDays: any[] = []) =>
@@ -181,7 +189,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show registration open message and button', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration is now open!/)).toBeTruthy()
       expect(screen.getByText('Register Now')).toBeTruthy()
@@ -195,7 +205,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show register button when registration URL is provided', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText('Register Now')).toBeTruthy()
     })
@@ -217,7 +229,9 @@ describe('RegistrationCountdown', () => {
         refresh: jest.fn(() => Promise.resolve()),
       } as any)
 
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration is now open!/)).toBeTruthy()
       expect(screen.getByText('Register Now')).toBeTruthy()
@@ -240,7 +254,9 @@ describe('RegistrationCountdown', () => {
         refresh: jest.fn(() => Promise.resolve()),
       } as any)
 
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(toJSON()).toBeNull()
     })
@@ -260,7 +276,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show countdown message and no button', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration opens in/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeNull()
@@ -281,7 +299,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show closed message and no button', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Registration has closed/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeNull()
@@ -323,7 +343,9 @@ describe('RegistrationCountdown', () => {
         refresh: jest.fn(() => Promise.resolve()),
       } as any)
 
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeFalsy()
@@ -346,14 +368,18 @@ describe('RegistrationCountdown', () => {
         refresh: jest.fn(() => Promise.resolve()),
       } as any)
 
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeFalsy()
     })
 
     it('should show thank you message and no registration button if user is not logged in', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       expect(screen.getByText(/Thank you! See you next year!/)).toBeTruthy()
       expect(screen.queryByText('Register Now')).toBeFalsy()
@@ -425,7 +451,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should not render anything', () => {
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
       expect(toJSON()).toBeNull()
     })
   })
@@ -440,7 +468,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should not render anything', () => {
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
       expect(toJSON()).toBeNull()
     })
   })
@@ -464,7 +494,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should not render anything', () => {
-      const { toJSON } = render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      const { toJSON } = render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
       expect(toJSON()).toBeNull()
     })
   })
@@ -490,7 +522,9 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should call hideWarning when hide button is pressed', () => {
-      render(<RegistrationCountdown registrationUrl="https://example.com/register" />)
+      render(
+        <RegistrationCountdown registrationUrl='https://example.com/register' />
+      )
 
       const hideButton = screen.getByText('Hide')
       fireEvent.press(hideButton)

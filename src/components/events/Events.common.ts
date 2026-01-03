@@ -1,15 +1,26 @@
 import { captureException } from '@sentry/react-native'
 import { differenceInHours, isBefore } from 'date-fns'
 import { router } from 'expo-router'
-import { TFunction } from 'i18next'
+import type { TFunction } from 'i18next'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Share } from 'react-native'
 
-import { EventDetailsInstance, eventInstanceForAny, eventInstanceForNotPassed, eventInstanceForPassed } from '@/components/events/EventCard'
-import { eventSectionForDate, eventSectionForHidden, eventSectionForPartOfDay, eventSectionForPassed, EventSectionProps } from '@/components/events/EventSection'
+import {
+  type EventDetailsInstance,
+  eventInstanceForAny,
+  eventInstanceForNotPassed,
+  eventInstanceForPassed,
+} from '@/components/events/EventCard'
+import {
+  type EventSectionProps,
+  eventSectionForDate,
+  eventSectionForHidden,
+  eventSectionForPartOfDay,
+  eventSectionForPassed,
+} from '@/components/events/EventSection'
 import { appBase, conAbbr } from '@/configuration'
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useEventReminder } from '@/hooks/data/useEventReminder'
 
@@ -18,7 +29,10 @@ import { useEventReminder } from '@/hooks/data/useEventReminder'
  * @param now The current moment.
  * @param items The items to transform.
  */
-export const useEventInstances = (now: Date, items: readonly EventDetails[]) => {
+export const useEventInstances = (
+  now: Date,
+  items: readonly EventDetails[]
+) => {
   // Return direct mapping.
   return useMemo(() => {
     return items.map((item) => eventInstanceForAny(item, now))
@@ -32,7 +46,11 @@ export const useEventInstances = (now: Date, items: readonly EventDetails[]) => 
  * @param now The current moment.
  * @param items The events on that day.
  */
-export const useEventDayGroups = (t: TFunction, now: Date, items: readonly EventDetails[]) => {
+export const useEventDayGroups = (
+  t: TFunction,
+  now: Date,
+  items: readonly EventDetails[]
+) => {
   return useMemo(() => {
     let hidden = 0
 
@@ -120,7 +138,11 @@ export const useEventDayGroups = (t: TFunction, now: Date, items: readonly Event
  * @param now The current moment.
  * @param items The events.
  */
-export const useEventOtherGroups = (t: TFunction, now: Date, items: readonly EventDetails[]) => {
+export const useEventOtherGroups = (
+  t: TFunction,
+  now: Date,
+  items: readonly EventDetails[]
+) => {
   return useMemo(() => {
     let hidden = 0
 
@@ -139,7 +161,7 @@ export const useEventOtherGroups = (t: TFunction, now: Date, items: readonly Eve
         // Nothing, not applicable.
       } else if (isBefore(now, item.End)) {
         if (!(item.ConferenceDay.Date in sectionedDays)) {
-          result.push(eventSectionForDate(t, item.ConferenceDay.Date))
+          result.push(eventSectionForDate(item.ConferenceDay.Date))
           sectionedDays[item.ConferenceDay.Date] = true
         }
 

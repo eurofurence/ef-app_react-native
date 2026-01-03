@@ -1,4 +1,4 @@
-import { parseISO, ParseISOOptions } from 'date-fns/parseISO'
+import { type ParseISOOptions, parseISO } from 'date-fns/parseISO'
 
 /**
  * Checks if the argument specifies a timezone.
@@ -29,6 +29,11 @@ function hasTimeZoneSpecifier(argument: unknown) {
  * @param argument The argument to parse.
  * @param options Any options.
  */
-export function parseDefaultISO<DateType extends Date, ResultDate extends Date = DateType>(argument: string, options?: ParseISOOptions<ResultDate>): ResultDate {
-  return hasTimeZoneSpecifier(argument) ? parseISO(argument, options) : parseISO<DateType, ResultDate>(argument + 'Z', options)
+export function parseDefaultISO<
+  DateType extends Date,
+  ResultDate extends Date = DateType,
+>(argument: string, options?: ParseISOOptions<ResultDate>): ResultDate {
+  return hasTimeZoneSpecifier(argument)
+    ? parseISO(argument, options)
+    : parseISO<DateType, ResultDate>(`${argument}Z`, options)
 }

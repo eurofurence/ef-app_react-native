@@ -11,7 +11,7 @@ import { Header } from '@/components/generic/containers/Header'
 import { NoData } from '@/components/generic/containers/NoData'
 import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
 import { useUserContext } from '@/context/auth/User'
-import { CommunicationRecord } from '@/context/data/types.api'
+import type { CommunicationRecord } from '@/context/data/types.api'
 import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
@@ -55,11 +55,18 @@ export default function Messages() {
   const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
 
   const sectionedData = useMemo(() => {
-    const [unread, read] = partition(communications, (it: CommunicationRecord) => it.ReadDateTimeUtc === null)
+    const [unread, read] = partition(
+      communications,
+      (it: CommunicationRecord) => it.ReadDateTimeUtc === null
+    )
 
     const readSections = chain(read)
       .orderBy(['AuthorName', 'SentDateTimeUtc'], ['asc', 'desc'])
-      .groupBy((it: CommunicationRecord) => (it.AuthorName ? t('from', { author: it.AuthorName?.trim() }) : t('from_unknown')))
+      .groupBy((it: CommunicationRecord) =>
+        it.AuthorName
+          ? t('from', { author: it.AuthorName?.trim() })
+          : t('from_unknown')
+      )
       .map((messages, author) => ({
         title: author,
         data: messages,
@@ -82,7 +89,9 @@ export default function Messages() {
   useEffect(() => {
     if (communications) {
       const totalMessages = communications.length
-      const unreadCount = communications.filter((msg) => msg.ReadDateTimeUtc === null).length
+      const unreadCount = communications.filter(
+        (msg) => msg.ReadDateTimeUtc === null
+      ).length
 
       if (totalMessages === 0) {
         setAnnouncementMessage(a11y('accessibility.no_messages'))
@@ -102,7 +111,10 @@ export default function Messages() {
   const headerComponent = useMemo(() => {
     if (isAdmin || isPrivateMessageSender)
       return (
-        <Header secondaryIcon="message-plus" secondaryPress={() => router.push('messages/compose')}>
+        <Header
+          secondaryIcon='message-plus'
+          secondaryPress={() => router.push('messages/compose')}
+        >
           {t('header')}
         </Header>
       )
@@ -111,7 +123,7 @@ export default function Messages() {
 
   const renderSection = useCallback(
     ({ section }: { section: Section }) => (
-      <Label type="h2" style={[styles.section, sectionStyle]}>
+      <Label type='h2' style={[styles.section, sectionStyle]}>
         {startCase(section.title)}
       </Label>
     ),
@@ -119,12 +131,16 @@ export default function Messages() {
   )
 
   // Eject if not logged in.
-  if (!user) return <Redirect href="/" />
+  if (!user) return <Redirect href='/' />
 
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={announcementMessage} type="polite" visible={false} />
+      <StatusMessage
+        message={announcementMessage}
+        type='polite'
+        visible={false}
+      />
 
       <View
         style={StyleSheet.absoluteFill}

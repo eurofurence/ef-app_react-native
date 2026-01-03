@@ -1,10 +1,15 @@
 import { useIsFocused } from '@react-navigation/core'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
-
-import { RecentAnnouncements } from '@/components/announce/RecentAnnouncements'
+import {
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native'
 import { appStyles } from '@/components/AppStyles'
+import { RecentAnnouncements } from '@/components/announce/RecentAnnouncements'
 import { CurrentEventList } from '@/components/events/CurrentEventsList'
 import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 import { TodayScheduleList } from '@/components/events/TodayScheduleList'
@@ -47,7 +52,10 @@ export default function Index() {
   // Search integration.
   const globalIndex = useCache().searchGlobal
   const results = useFuseResults(globalIndex, filter, 15)?.filter((item) => {
-    return item.type !== 'event' || (!item.Hidden && (showInternal || !item.IsInternal))
+    return (
+      item.type !== 'event' ||
+      (!item.Hidden && (showInternal || !item.IsInternal))
+    )
   })
 
   // Focus management for search results
@@ -125,7 +133,7 @@ export default function Index() {
           onRefresh={handleRefresh}
           accessibilityLabel={a11y('pull_to_refresh')}
           accessibilityHint={a11y('pull_to_refresh_hint')}
-          accessibilityRole="button"
+          accessibilityRole='button'
           accessibilityState={{
             busy: isSynchronizing,
             disabled: isSynchronizing,
@@ -137,29 +145,34 @@ export default function Index() {
       {/* Status messages for screen reader announcements */}
       <StatusMessage
         message={statusMessage}
-        type="polite"
+        type='polite'
         visible={false} // Hidden but announced to screen readers
       />
 
       <StatusMessage
         message={searchMessage}
-        type="polite"
+        type='polite'
         visible={false} // Hidden but announced to screen readers
       />
 
       {/* Error messages with assertive announcements */}
       <StatusMessage
         message={errorMessage}
-        type="assertive"
+        type='assertive'
         visible={false} // Hidden but announced to screen readers
       />
 
       <CountdownHeader />
 
       {/* Enhanced search with accessibility improvements */}
-      <View className="px-1">
-        <View className="flex-row items-center pr-2.5">
-          <Search className="flex-1 my-2.5 ml-2.5 mr-0" filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+      <View className='px-1'>
+        <View className='flex-row items-center pr-2.5'>
+          <Search
+            className='flex-1 my-2.5 ml-2.5 mr-0'
+            filter={filter}
+            setFilter={setFilter}
+            placeholder={t('search.placeholder')}
+          />
           <ShowInternalEventsToggle />
         </View>
 
@@ -184,10 +197,15 @@ export default function Index() {
         <TimezoneWarning parentPad={padFloater} />
         <DeviceSpecificWarnings />
         <FavoritesChangedWarning />
-        {results ? null : <RegistrationCountdown registrationUrl={registrationUrl} />}
+        {results ? null : (
+          <RegistrationCountdown registrationUrl={registrationUrl} />
+        )}
 
         {results ? (
-          <View ref={searchResultsRef} accessibilityLabel={t('accessibility.search_results')}>
+          <View
+            ref={searchResultsRef}
+            accessibilityLabel={t('accessibility.search_results')}
+          >
             <GlobalSearch now={now} results={results} />
           </View>
         ) : (

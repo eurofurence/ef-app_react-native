@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native'
-
-import { Tab } from '@/components/generic/containers/Tab'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { Text, View } from 'react-native'
+import { Tab } from '@/components/generic/containers/Tab'
 
 const meta = {
   title: 'Components/Containers/Tab',
@@ -96,11 +94,11 @@ export const DifferentIcons: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Tab icon="home" text="Home" />
-      <Tab icon="star" text="Starred" />
-      <Tab icon="cog" text="Settings" />
-      <Tab icon="plus" text="Add" />
-      <Tab icon="minus" text="Remove" />
+      <Tab icon='home' text='Home' />
+      <Tab icon='star' text='Starred' />
+      <Tab icon='cog' text='Settings' />
+      <Tab icon='plus' text='Add' />
+      <Tab icon='minus' text='Remove' />
     </View>
   ),
 }
@@ -112,9 +110,9 @@ export const ActiveStates: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Tab icon="home" text="Inactive Tab" />
-      <Tab icon="star" text="Active Tab" active={true} />
-      <Tab icon="cog" text="Disabled Tab" disabled={true} />
+      <Tab icon='home' text='Inactive Tab' />
+      <Tab icon='star' text='Active Tab' active={true} />
+      <Tab icon='cog' text='Disabled Tab' disabled={true} />
     </View>
   ),
 }
@@ -126,9 +124,13 @@ export const WithIndicators: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Tab icon="home" text="No Indicator" />
-      <Tab icon="star" text="With Indicator" indicate={true} />
-      <Tab icon="cog" text="Custom Indicator" indicate={<Text style={{ color: 'white', fontSize: 10 }}>3</Text>} />
+      <Tab icon='home' text='No Indicator' />
+      <Tab icon='star' text='With Indicator' indicate={true} />
+      <Tab
+        icon='cog'
+        text='Custom Indicator'
+        indicate={<Text style={{ color: 'white', fontSize: 10 }}>3</Text>}
+      />
     </View>
   ),
 }
@@ -139,10 +141,17 @@ export const InvertedStates: Story = {
     text: 'Sample Tab',
   },
   render: () => (
-    <View style={{ gap: 15, backgroundColor: '#333', padding: 15, borderRadius: 8 }}>
-      <Tab icon="home" text="Normal Inverted" inverted={true} />
-      <Tab icon="star" text="Active Inverted" active={true} inverted={true} />
-      <Tab icon="cog" text="Disabled Inverted" disabled={true} inverted={true} />
+    <View
+      style={{ gap: 15, backgroundColor: '#333', padding: 15, borderRadius: 8 }}
+    >
+      <Tab icon='home' text='Normal Inverted' inverted={true} />
+      <Tab icon='star' text='Active Inverted' active={true} inverted={true} />
+      <Tab
+        icon='cog'
+        text='Disabled Inverted'
+        disabled={true}
+        inverted={true}
+      />
     </View>
   ),
 }

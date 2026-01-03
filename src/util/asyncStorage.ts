@@ -4,7 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
  * Gets many keys from the storage.
  * @param keys The keys to get from the storage.
  */
-export async function multiGet(keys: readonly string[]): Promise<readonly [string, string | null][]> {
+export async function multiGet(
+  keys: readonly string[]
+): Promise<readonly [string, string | null][]> {
   return await AsyncStorage.multiGet(keys)
 }
 

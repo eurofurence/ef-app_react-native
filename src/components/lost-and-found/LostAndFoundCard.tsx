@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Card } from '@/components/generic/containers/Card'
-import { LostAndFoundRecord } from '@/context/data/types.api'
+import type { LostAndFoundRecord } from '@/context/data/types.api'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export type LostAndFoundCardProps = {
@@ -14,17 +14,26 @@ export type LostAndFoundCardProps = {
   containerStyle?: any
 }
 
-export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, containerStyle }) => {
+export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
+  item,
+  onPress,
+  containerStyle,
+}) => {
   const theme = useTheme()
   const { t } = useTranslation('LostAndFound')
 
-  const statusColor = item.Status === 'Found' ? theme.primary : item.Status === 'Returned' ? theme.warning : theme.notification
+  const statusColor =
+    item.Status === 'Found'
+      ? theme.primary
+      : item.Status === 'Returned'
+        ? theme.warning
+        : theme.notification
 
   return (
     <View style={containerStyle}>
       <Card
         onPress={onPress}
-        accessibilityRole="button"
+        accessibilityRole='button'
         accessibilityLabel={t('accessibility.lost_found_card', {
           title: item.Title,
           status: t(`status.${item.Status}`),
@@ -35,12 +44,22 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
         <View style={styles.container}>
           {item.ImageUrl && (
             <View style={styles.imageContainer}>
-              <Image source={{ uri: item.ImageUrl }} style={styles.image} accessibilityLabel={t('accessibility.item_image', { title: item.Title })} />
+              <Image
+                source={{ uri: item.ImageUrl }}
+                style={styles.image}
+                accessibilityLabel={t('accessibility.item_image', {
+                  title: item.Title,
+                })}
+              />
             </View>
           )}
           <View style={styles.content}>
             <View style={styles.header}>
-              <Label style={styles.title} numberOfLines={2} accessibilityRole="header">
+              <Label
+                style={styles.title}
+                numberOfLines={2}
+                accessibilityRole='header'
+              >
                 {item.Title}
               </Label>
               <View
@@ -48,9 +67,11 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
                 accessibilityLabel={t('accessibility.status_badge', {
                   status: t(`status.${item.Status}`),
                 })}
-                accessibilityRole="text"
+                accessibilityRole='text'
               >
-                <Label style={styles.statusText}>{t(`status.${item.Status}`)}</Label>
+                <Label style={styles.statusText}>
+                  {t(`status.${item.Status}`)}
+                </Label>
               </View>
             </View>
             {!!item.Description && (
@@ -70,7 +91,8 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({ item, onPress, con
                 date: new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
               })}
             >
-              {t('reported')}: {new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
+              {t('reported')}:{' '}
+              {new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
             </Label>
           </View>
         </View>

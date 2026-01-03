@@ -1,5 +1,5 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import type React from 'react'
+import { Text, View } from 'react-native'
 
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
@@ -27,7 +27,11 @@ export type StatusMessageProps = {
  * Component for announcing dynamic content changes to screen readers
  * Uses accessibilityLiveRegion to announce messages to users
  */
-export const StatusMessage: React.FC<StatusMessageProps> = ({ message, type = 'polite', visible = false }) => {
+export const StatusMessage: React.FC<StatusMessageProps> = ({
+  message,
+  type = 'polite',
+  visible = false,
+}) => {
   const textColor = useThemeColorValue('text')
 
   if (!message) {
@@ -38,8 +42,14 @@ export const StatusMessage: React.FC<StatusMessageProps> = ({ message, type = 'p
   const liveRegion = type === 'off' ? undefined : type
 
   return (
-    <View accessibilityLiveRegion={liveRegion} importantForAccessibility={type !== 'off' ? 'yes' : 'no'} accessible={type !== 'off'}>
-      {visible && <Text style={{ color: textColor, fontSize: 14 }}>{message}</Text>}
+    <View
+      accessibilityLiveRegion={liveRegion}
+      importantForAccessibility={type !== 'off' ? 'yes' : 'no'}
+      accessible={type !== 'off'}
+    >
+      {visible && (
+        <Text style={{ color: textColor, fontSize: 14 }}>{message}</Text>
+      )}
     </View>
   )
 }

@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import { View, Text } from 'react-native'
-
-import { Tabs } from '@/components/generic/containers/Tabs'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import type React from 'react'
+import { useState } from 'react'
+import { Text, View } from 'react-native'
+import { Tabs } from '@/components/generic/containers/Tabs'
 
 const meta = {
   title: 'Components/Containers/Tabs',
@@ -40,13 +39,11 @@ const SimpleTabs = ({
   tabs,
   textMore,
   textLess,
-  activity,
   notice,
 }: {
   tabs: any[]
   textMore?: string
   textLess?: string
-  activity?: boolean
   notice?: string | React.ReactNode
 }) => {
   const [activeTab, setActiveTab] = useState(0)
@@ -70,23 +67,35 @@ const SimpleTabs = ({
         </View>
       )}
 
-      <View style={{ flexDirection: 'row', borderTopWidth: 1, borderColor: '#ccc' }}>
-        {tabItems.map((tab, index) => (
-          <View key={index} style={{ flex: 1, padding: 10, alignItems: 'center' }}>
-            <Text style={{ color: tab.active ? '#007AFF' : '#666' }}>{tab.text}</Text>
+      <View
+        style={{ flexDirection: 'row', borderTopWidth: 1, borderColor: '#ccc' }}
+      >
+        {tabItems.map((tab) => (
+          <View
+            key={tab.text}
+            style={{ flex: 1, padding: 10, alignItems: 'center' }}
+          >
+            <Text style={{ color: tab.active ? '#007AFF' : '#666' }}>
+              {tab.text}
+            </Text>
           </View>
         ))}
 
         <View style={{ flex: 1, padding: 10, alignItems: 'center' }}>
-          <Text onPress={() => setIsOpen(!isOpen)}>{isOpen ? textLess || 'Less' : textMore || 'More'}</Text>
+          <Text onPress={() => setIsOpen(!isOpen)}>
+            {isOpen ? textLess || 'Less' : textMore || 'More'}
+          </Text>
         </View>
       </View>
 
       {isOpen && (
         <View style={{ padding: 20, backgroundColor: '#f9f9f9' }}>
-          <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Content for {tabs[activeTab]?.text || 'Unknown'} Tab</Text>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>
+            Content for {tabs[activeTab]?.text || 'Unknown'} Tab
+          </Text>
           <Text style={{ fontSize: 14, color: '#666' }}>
-            This is the content area that appears when the more button is pressed. It can contain any content you want to display.
+            This is the content area that appears when the more button is
+            pressed. It can contain any content you want to display.
           </Text>
         </View>
       )}
@@ -151,7 +160,11 @@ export const WithIndicators: Story = {
     tabs: [
       { icon: 'home', text: 'Home' },
       { icon: 'star', text: 'Starred', indicate: true },
-      { icon: 'cog', text: 'Settings', indicate: <Text style={{ color: 'white', fontSize: 10 }}>5</Text> },
+      {
+        icon: 'cog',
+        text: 'Settings',
+        indicate: <Text style={{ color: 'white', fontSize: 10 }}>5</Text>,
+      },
       { icon: 'plus', text: 'Add' },
     ],
   },
@@ -179,7 +192,11 @@ export const ComplexExample: Story = {
     tabs: [
       { icon: 'home', text: 'Home' },
       { icon: 'star', text: 'Starred', indicate: true },
-      { icon: 'cog', text: 'Settings', indicate: <Text style={{ color: 'white', fontSize: 10 }}>12</Text> },
+      {
+        icon: 'cog',
+        text: 'Settings',
+        indicate: <Text style={{ color: 'white', fontSize: 10 }}>12</Text>,
+      },
       { icon: 'plus', text: 'Add' },
       { icon: 'minus', text: 'Remove' },
     ],

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
-import { TextStyle, ViewStyle } from 'react-native'
+import type { TextStyle, ViewStyle } from 'react-native'
 
-import { ThemeColor, ThemeName, themes } from '@/context/Theme'
+import { type ThemeColor, type ThemeName, themes } from '@/context/Theme'
 
 import { useTheme as useThemeHook } from './useTheme'
 
@@ -20,7 +20,9 @@ export const useTheme = () => {
  * the theme color.
  * @param callback The color transformation.
  */
-function createThemeDerivedValues<T>(callback: (color: string) => T): Record<ThemeName, Record<ThemeColor, T>> {
+function createThemeDerivedValues<T>(
+  callback: (color: string) => T
+): Record<ThemeName, Record<ThemeColor, T>> {
   return Object.fromEntries(
     Object.entries(themes).map(([themeName, theme]) => {
       return [
@@ -37,11 +39,17 @@ function createThemeDerivedValues<T>(callback: (color: string) => T): Record<The
 
 export const useThemeColorValue = (color: ThemeColor) => useTheme()[color]
 
-const colorStyles = createThemeDerivedValues<TextStyle>((color) => ({ color: color }))
+const colorStyles = createThemeDerivedValues<TextStyle>((color) => ({
+  color: color,
+}))
 const colorTransparent: TextStyle = { color: 'transparent' }
-export function useThemeColor(color: ThemeColor | 'transparent'): Pick<TextStyle, 'color'> & { color: string }
+export function useThemeColor(
+  color: ThemeColor | 'transparent'
+): Pick<TextStyle, 'color'> & { color: string }
 export function useThemeColor(color: null): null
-export function useThemeColor(color: ThemeColor | 'transparent' | null): (Pick<TextStyle, 'color'> & { color: string }) | null
+export function useThemeColor(
+  color: ThemeColor | 'transparent' | null
+): (Pick<TextStyle, 'color'> & { color: string }) | null
 export function useThemeColor(color: ThemeColor | 'transparent' | null) {
   const theme = useThemeName()
   if (color === null) return null
@@ -49,11 +57,17 @@ export function useThemeColor(color: ThemeColor | 'transparent' | null) {
   return colorStyles[theme][color]
 }
 
-const borderColorStyles = createThemeDerivedValues<ViewStyle>((color) => ({ borderColor: color }))
+const borderColorStyles = createThemeDerivedValues<ViewStyle>((color) => ({
+  borderColor: color,
+}))
 const borderTransparent: ViewStyle = { borderColor: 'transparent' }
-export function useThemeBorder(color: ThemeColor | 'transparent'): Pick<ViewStyle, 'borderColor'> & { borderColor: string }
+export function useThemeBorder(
+  color: ThemeColor | 'transparent'
+): Pick<ViewStyle, 'borderColor'> & { borderColor: string }
 export function useThemeBorder(color: null): null
-export function useThemeBorder(color: ThemeColor | 'transparent' | null): (Pick<ViewStyle, 'borderColor'> & { borderColor: string }) | null
+export function useThemeBorder(
+  color: ThemeColor | 'transparent' | null
+): (Pick<ViewStyle, 'borderColor'> & { borderColor: string }) | null
 export function useThemeBorder(color: ThemeColor | 'transparent' | null) {
   const theme = useThemeName()
   if (color === null) return null
@@ -61,11 +75,17 @@ export function useThemeBorder(color: ThemeColor | 'transparent' | null) {
   return borderColorStyles[theme][color]
 }
 
-const backgroundColorStyles = createThemeDerivedValues<ViewStyle>((color) => ({ backgroundColor: color }))
+const backgroundColorStyles = createThemeDerivedValues<ViewStyle>((color) => ({
+  backgroundColor: color,
+}))
 const backgroundColorTransparent: ViewStyle = { backgroundColor: 'transparent' }
-export function useThemeBackground(color: ThemeColor | 'transparent'): Pick<ViewStyle, 'backgroundColor'> & { backgroundColor: string }
+export function useThemeBackground(
+  color: ThemeColor | 'transparent'
+): Pick<ViewStyle, 'backgroundColor'> & { backgroundColor: string }
 export function useThemeBackground(color: null): null
-export function useThemeBackground(color: ThemeColor | 'transparent' | null): (Pick<ViewStyle, 'backgroundColor'> & { backgroundColor: string }) | null
+export function useThemeBackground(
+  color: ThemeColor | 'transparent' | null
+): (Pick<ViewStyle, 'backgroundColor'> & { backgroundColor: string }) | null
 export function useThemeBackground(color: ThemeColor | 'transparent' | null) {
   const theme = useThemeName()
   if (color === null) return null

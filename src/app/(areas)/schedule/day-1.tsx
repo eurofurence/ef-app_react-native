@@ -7,7 +7,10 @@ import { useEventDayGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { useCache } from '@/context/data/Cache'
-import { EventDayDetails, EventDetails } from '@/context/data/types.details'
+import type {
+  EventDayDetails,
+  EventDetails,
+} from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
@@ -24,16 +27,18 @@ export function DayView({ day }: { day: EventDayDetails }) {
   const { eventsByDay, searchEventsByDay, getValue } = useCache()
   const search = useFuseResults(searchEventsByDay[day.Id], query ?? '')
   const showInternal = getValue('settings').showInternalEvents ?? true
-  const filtered = (search ?? eventsByDay[day.Id]).filter((e) => showInternal || !e.IsInternal)
+  const filtered = (search ?? eventsByDay[day.Id]).filter(
+    (e) => showInternal || !e.IsInternal
+  )
   const groups = useEventDayGroups(t, now, filtered)
 
   const leader = useMemo(
     () => (
       <View>
-        <Label type="lead" variant="middle">
+        <Label type='lead' variant='middle'>
           {day?.Name ?? ''}
         </Label>
-        <Label type="lead" variant="middle">
+        <Label type='lead' variant='middle'>
           {day?.Date.split('T')[0] ?? ''}
         </Label>
       </View>
@@ -41,7 +46,13 @@ export function DayView({ day }: { day: EventDayDetails }) {
     [day]
   )
 
-  return <EventsSectionedList eventsGroups={groups} select={selectEvent} leader={leader} />
+  return (
+    <EventsSectionedList
+      eventsGroups={groups}
+      select={selectEvent}
+      leader={leader}
+    />
+  )
 }
 
 export default function Day1() {

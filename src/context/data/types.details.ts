@@ -1,5 +1,5 @@
-import { IconNames } from '@/components/generic/atoms/Icon'
-import {
+import type { IconNames } from '@/components/generic/atoms/Icon'
+import type {
   AnnouncementRecord,
   ArtistAlleyRecord,
   CommunicationRecord,
@@ -26,7 +26,12 @@ export type AnnouncementDetails = AnnouncementRecord & {
 /**
  * Time categorized in part of day.
  */
-export type PartOfDay = 'morning' | 'afternoon' | 'evening' | 'night' | 'long_running'
+export type PartOfDay =
+  | 'morning'
+  | 'afternoon'
+  | 'evening'
+  | 'night'
+  | 'long_running'
 /**
  * Attendance day for dealers.
  */
