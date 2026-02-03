@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { Badge } from '@/components/generic/containers/Badge'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { Badge } from '@/components/generic/containers/Badge'
 
 const meta = {
   title: 'Components/Containers/Badge',
@@ -21,7 +19,14 @@ const meta = {
     },
     badgeColor: {
       control: { type: 'select' },
-      options: ['background', 'darken', 'inverted', 'secondary', 'notification', 'transparent'],
+      options: [
+        'background',
+        'darken',
+        'inverted',
+        'secondary',
+        'notification',
+        'transparent',
+      ],
     },
     textColor: {
       control: { type: 'select' },
@@ -53,7 +58,16 @@ const meta = {
     },
     textVariant: {
       control: { type: 'select' },
-      options: ['regular', 'narrow', 'bold', 'lineThrough', 'underlined', 'middle', 'shadow', 'receded'],
+      options: [
+        'regular',
+        'narrow',
+        'bold',
+        'lineThrough',
+        'underlined',
+        'middle',
+        'shadow',
+        'receded',
+      ],
     },
     icon: {
       control: { type: 'select' },
@@ -90,9 +104,24 @@ export const DifferentColors: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Badge unpad={10} badgeColor="secondary" textColor="important" children="Secondary Badge" />
-      <Badge unpad={10} badgeColor="notification" textColor="important" children="Notification Badge" />
-      <Badge unpad={10} badgeColor="inverted" textColor="invImportant" children="Inverted Badge" />
+      <Badge
+        unpad={10}
+        badgeColor='secondary'
+        textColor='important'
+        children='Secondary Badge'
+      />
+      <Badge
+        unpad={10}
+        badgeColor='notification'
+        textColor='important'
+        children='Notification Badge'
+      />
+      <Badge
+        unpad={10}
+        badgeColor='inverted'
+        textColor='invImportant'
+        children='Inverted Badge'
+      />
     </View>
   ),
 }
@@ -105,9 +134,9 @@ export const DifferentPadding: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Badge unpad={5} textColor="important" children="Small Padding" />
-      <Badge unpad={10} textColor="important" children="Medium Padding" />
-      <Badge unpad={15} textColor="important" children="Large Padding" />
+      <Badge unpad={5} textColor='important' children='Small Padding' />
+      <Badge unpad={10} textColor='important' children='Medium Padding' />
+      <Badge unpad={15} textColor='important' children='Large Padding' />
     </View>
   ),
 }
@@ -120,10 +149,30 @@ export const DifferentTextTypes: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Badge unpad={10} textColor="important" textType="h1" children="H1 Text" />
-      <Badge unpad={10} textColor="important" textType="h3" children="H3 Text" />
-      <Badge unpad={10} textColor="important" textType="caption" children="Caption Text" />
-      <Badge unpad={10} textColor="important" textType="compact" children="Compact Text" />
+      <Badge
+        unpad={10}
+        textColor='important'
+        textType='h1'
+        children='H1 Text'
+      />
+      <Badge
+        unpad={10}
+        textColor='important'
+        textType='h3'
+        children='H3 Text'
+      />
+      <Badge
+        unpad={10}
+        textColor='important'
+        textType='caption'
+        children='Caption Text'
+      />
+      <Badge
+        unpad={10}
+        textColor='important'
+        textType='compact'
+        children='Compact Text'
+      />
     </View>
   ),
 }
@@ -136,10 +185,30 @@ export const WithIcons: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <Badge unpad={10} textColor="important" icon="home" children="Home Badge" />
-      <Badge unpad={10} textColor="important" icon="star" children="Star Badge" />
-      <Badge unpad={10} textColor="important" icon="cog" children="Settings Badge" />
-      <Badge unpad={10} textColor="important" icon="plus" children="Add Badge" />
+      <Badge
+        unpad={10}
+        textColor='important'
+        icon='home'
+        children='Home Badge'
+      />
+      <Badge
+        unpad={10}
+        textColor='important'
+        icon='star'
+        children='Star Badge'
+      />
+      <Badge
+        unpad={10}
+        textColor='important'
+        icon='cog'
+        children='Settings Badge'
+      />
+      <Badge
+        unpad={10}
+        textColor='important'
+        icon='plus'
+        children='Add Badge'
+      />
     </View>
   ),
 }

@@ -1,15 +1,19 @@
 import { router } from 'expo-router'
-import React, { FC, PropsWithChildren } from 'react'
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import type { FC, PropsWithChildren } from 'react'
+import { StyleSheet, View, type ViewStyle } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
-import { Pressable, PressableProps } from '@/components/generic/Pressable'
+import { Pressable, type PressableProps } from '@/components/generic/Pressable'
 import { Toast } from '@/components/Toast'
 import { useToastMessages } from '@/context/ui/ToastContext'
-import { useThemeBackground, useThemeBorder, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeBorder,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
 import { Continuous } from '../atoms/Continuous'
-import { Icon, IconNames } from '../atoms/Icon'
+import { Icon, type IconNames } from '../atoms/Icon'
 import { Label } from '../atoms/Label'
 
 import { Row } from './Row'
@@ -65,18 +69,37 @@ export const Header: FC<HeaderProps> = (props) => {
   const styleBorder = useThemeBorder('darken')
   const toastMessages = useToastMessages(5)
   return (
-    <Row style={[styles.container, styleBackground, styleBorder, props.style, { paddingTop: styles.container.paddingTop + insets.top }]} type="center" variant="spaced">
-      <Pressable hitSlop={backHitSlop} style={styles.back} onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="Back">
-        <Icon name="chevron-left" size={iconSize} color={colorValue} />
+    <Row
+      style={[
+        styles.container,
+        styleBackground,
+        styleBorder,
+        props.style,
+        { paddingTop: styles.container.paddingTop + insets.top },
+      ]}
+      type='center'
+      variant='spaced'
+    >
+      <Pressable
+        hitSlop={backHitSlop}
+        style={styles.back}
+        onPress={() => router.back()}
+        accessibilityRole='button'
+        accessibilityLabel='Back'
+      >
+        <Icon name='chevron-left' size={iconSize} color={colorValue} />
       </Pressable>
 
       <Label
         style={styles.text}
-        type="lead"
-        ellipsizeMode="tail"
+        type='lead'
+        ellipsizeMode='tail'
         numberOfLines={1}
-        accessibilityRole="header"
-        accessibilityLabel={('accessibilityLabel' in props && props.accessibilityLabel) || undefined}
+        accessibilityRole='header'
+        accessibilityLabel={
+          ('accessibilityLabel' in props && props.accessibilityLabel) ||
+          undefined
+        }
       >
         {props.children}
       </Label>
@@ -87,7 +110,7 @@ export const Header: FC<HeaderProps> = (props) => {
           hitSlop={secondaryHitSlop}
           style={styles.secondary}
           onPress={() => props.secondaryPress()}
-          accessibilityRole="button"
+          accessibilityRole='button'
           accessibilityLabel={props.secondaryAccessibilityLabel}
           accessibilityHint={props.secondaryAccessibilityHint}
         >

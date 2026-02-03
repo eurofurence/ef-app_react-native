@@ -1,7 +1,7 @@
 import { router } from 'expo-router'
 import { useCallback } from 'react'
 
-import { KnowledgeEntryDetails } from '@/context/data/types.details'
+import type { KnowledgeEntryDetails } from '@/context/data/types.details'
 
 /**
  * Uses default handlers for KB card interaction, i.e., opening the KB card.

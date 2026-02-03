@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { FaSection } from '@/components/generic/atoms/FaSection'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { FaSection } from '@/components/generic/atoms/FaSection'
 
 const meta = {
   title: 'Components/Atoms/FaSection',
@@ -18,7 +16,18 @@ const meta = {
   argTypes: {
     icon: {
       control: { type: 'select' },
-      options: ['home', 'user', 'heart', 'star', 'cog', 'search', 'plus', 'minus', 'check', 'times'],
+      options: [
+        'home',
+        'user',
+        'heart',
+        'star',
+        'cog',
+        'search',
+        'plus',
+        'minus',
+        'check',
+        'times',
+      ],
     },
     title: {
       control: { type: 'text' },
@@ -28,7 +37,13 @@ const meta = {
     },
     backgroundColor: {
       control: { type: 'select' },
-      options: ['background', 'darken', 'inverted', 'secondary', 'notification'],
+      options: [
+        'background',
+        'darken',
+        'inverted',
+        'secondary',
+        'notification',
+      ],
     },
     titleColor: {
       control: { type: 'select' },
@@ -74,8 +89,22 @@ export const DifferentColors: Story = {
   },
   render: () => (
     <View style={{ gap: 20 }}>
-      <FaSection icon="heart" title="Red Heart Section" subtitle="With custom colors" backgroundColor="notification" titleColor="important" subtitleColor="text" />
-      <FaSection icon="star" title="Blue Star Section" subtitle="Another color combination" backgroundColor="secondary" titleColor="text" subtitleColor="important" />
+      <FaSection
+        icon='heart'
+        title='Red Heart Section'
+        subtitle='With custom colors'
+        backgroundColor='notification'
+        titleColor='important'
+        subtitleColor='text'
+      />
+      <FaSection
+        icon='star'
+        title='Blue Star Section'
+        subtitle='Another color combination'
+        backgroundColor='secondary'
+        titleColor='text'
+        subtitleColor='important'
+      />
     </View>
   ),
 }
@@ -83,7 +112,8 @@ export const DifferentColors: Story = {
 export const LongText: Story = {
   args: {
     icon: 'user',
-    title: 'This is a very long title that should demonstrate how the component handles text overflow and wrapping in different scenarios',
+    title:
+      'This is a very long title that should demonstrate how the component handles text overflow and wrapping in different scenarios',
     subtitle:
       'This is also a very long subtitle that should demonstrate how the component handles text overflow and wrapping in different scenarios with even more text to make it really long',
   },

@@ -1,9 +1,9 @@
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { debounce } from 'lodash'
-import { FC, useEffect, useMemo, useRef } from 'react'
-import { Platform, StyleSheet, ScrollView } from 'react-native'
+import { type FC, useEffect, useMemo, useRef } from 'react'
+import { Platform, ScrollView, StyleSheet } from 'react-native'
 
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 
 import { useThemeBackground } from '../../hooks/themes/useThemeHooks'
 
@@ -17,14 +17,21 @@ type EventActionsSheetProps = {
 /**
  * Returns a normal scroll view on web for compatibility.
  */
-const EventActionsSheetScrollView = Platform.OS === 'web' ? ScrollView : BottomSheetScrollView
+const EventActionsSheetScrollView =
+  Platform.OS === 'web' ? ScrollView : BottomSheetScrollView
 
-export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }) => {
+export const EventActionsSheet: FC<EventActionsSheetProps> = ({
+  event,
+  onClose,
+}) => {
   const sheetRef = useRef<BottomSheet>(null)
   const styleBackground = useThemeBackground('background')
   const styleHandle = useThemeBackground('inverted')
 
-  const close = useMemo(() => (onClose ? debounce(onClose, 100) : undefined), [onClose])
+  const close = useMemo(
+    () => (onClose ? debounce(onClose, 100) : undefined),
+    [onClose]
+  )
 
   useEffect(() => {
     if (event) {
@@ -46,7 +53,9 @@ export const EventActionsSheet: FC<EventActionsSheetProps> = ({ event, onClose }
       onClose={close}
     >
       {/* TODO: Update note? */}
-      <EventActionsSheetScrollView style={styles.content}>{!event ? null : <EventContent event={event} shareButton />}</EventActionsSheetScrollView>
+      <EventActionsSheetScrollView style={styles.content}>
+        {!event ? null : <EventContent event={event} shareButton />}
+      </EventActionsSheetScrollView>
     </BottomSheet>
   )
 }

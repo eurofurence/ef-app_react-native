@@ -18,7 +18,7 @@ Simply put - We got tired of maintaining the mess that is the android ecosystem.
 
 When building the app, you will get .aab, this file is needed for Google Play. Then you can create an .apk for either direct app installation on Android, or for (how we use it) GitHub Releases for others to use.
 
-# How to Build, Package & Submit
+## How to Build, Package & Submit
 
 I welcome you fellow Developer. Here you can find the Installation Manual!
 
@@ -47,11 +47,11 @@ Please keep the password somewhere safe. This will be required for each .apk cre
 
 Run the following:
 
-`pnpm local:ios:production`
+`bun local:ios:production`
 
 And in a new terminal, you can also run for Android
 
-`pnpm local:android:production`
+`bun local:android:production`
 
 And now we wait...
 

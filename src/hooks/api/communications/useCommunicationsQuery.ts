@@ -1,17 +1,24 @@
-import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import {
+  keepPreviousData,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
+import axios, { type GenericAbortSignal } from 'axios'
 import { useCallback } from 'react'
 
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { CommunicationRecord } from '@/context/data/types.api'
+import type { CommunicationRecord } from '@/context/data/types.api'
 
 /**
  * Gets the communication records with the given access token and optionally an abort signal.
  * @param accessToken The access token.
  * @param signal An abort signal.
  */
-export async function getCommunications(accessToken: string | null, signal?: GenericAbortSignal) {
+export async function getCommunications(
+  accessToken: string | null,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
     .get(`${apiBase}/Communication/PrivateMessages`, {
@@ -26,7 +33,9 @@ export async function getCommunications(accessToken: string | null, signal?: Gen
 /**
  * Uses a query for `getCommunications` with the app auth state.
  */
-export function useCommunicationsQuery(): UseQueryResult<CommunicationRecord[] | null> {
+export function useCommunicationsQuery(): UseQueryResult<
+  CommunicationRecord[] | null
+> {
   const { accessToken, idData } = useAuthContext()
   return useQuery({
     queryKey: [idData?.sub, 'communications'],
@@ -40,7 +49,9 @@ export function useCommunicationsQuery(): UseQueryResult<CommunicationRecord[] |
  * @param id The ID of the record, preferably a string.
  * @remarks Uses the same query as getting all records.
  */
-export function useCommunicationsItemQuery(id: unknown): UseQueryResult<CommunicationRecord | null> {
+export function useCommunicationsItemQuery(
+  id: unknown
+): UseQueryResult<CommunicationRecord | null> {
   const { accessToken, idData } = useAuthContext()
 
   const findEntry = useCallback(

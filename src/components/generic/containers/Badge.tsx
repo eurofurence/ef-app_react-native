@@ -1,11 +1,14 @@
-import React, { FC } from 'react'
-import { StyleSheet, TextProps, View, ViewProps } from 'react-native'
+import type { FC } from 'react'
+import { StyleSheet, type TextProps, View, type ViewProps } from 'react-native'
 
-import { ThemeColor } from '@/context/Theme'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import type { ThemeColor } from '@/context/Theme'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
-import { Icon, IconNames } from '../atoms/Icon'
-import { Label, LabelProps } from '../atoms/Label'
+import { Icon, type IconNames } from '../atoms/Icon'
+import { Label, type LabelProps } from '../atoms/Label'
 
 import { Row } from './Row'
 
@@ -21,7 +24,15 @@ export type BadgeProps = ViewProps & {
   children: TextProps['children']
 }
 
-export const Badge: FC<BadgeProps> = ({ unpad, badgeColor, textColor, textType = 'h3', textVariant = 'middle', icon, children }) => {
+export const Badge: FC<BadgeProps> = ({
+  unpad,
+  badgeColor,
+  textColor,
+  textType = 'h3',
+  textVariant = 'middle',
+  icon,
+  children,
+}) => {
   const styleBadgeColor = useThemeBackground(badgeColor ?? 'transparent')
   const styleContainer = { marginHorizontal: -unpad }
   const styleContent = { paddingVertical: 10, paddingHorizontal: unpad }
@@ -31,7 +42,13 @@ export const Badge: FC<BadgeProps> = ({ unpad, badgeColor, textColor, textType =
     <View style={[styleContainer, styleBadgeColor]}>
       <Row style={[styles.content, styleContent]}>
         {!icon ? null : <Icon name={icon} size={iconSize} color={iconColor} />}
-        <Label style={styles.text} color={textColor} className="ml-3" type={textType} variant={textVariant}>
+        <Label
+          style={styles.text}
+          color={textColor}
+          className='ml-3'
+          type={textType}
+          variant={textVariant}
+        >
           {children}
         </Label>
       </Row>

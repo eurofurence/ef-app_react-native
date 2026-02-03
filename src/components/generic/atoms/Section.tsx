@@ -1,14 +1,17 @@
-import React, { FC } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import type { FC } from 'react'
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native'
 
-import { ThemeColor } from '@/context/Theme'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import type { ThemeColor } from '@/context/Theme'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
 import { Col } from '../containers/Col'
 import { Row } from '../containers/Row'
 
-import { Icon, IconNames } from './Icon'
-import { Label, LabelProps } from './Label'
+import { Icon, type IconNames } from './Icon'
+import { Label, type LabelProps } from './Label'
 
 const iconSize = 24 // Matches H1 font size.
 
@@ -43,22 +46,53 @@ export type SectionProps = {
   subtitleVariant?: LabelProps['variant']
 }
 
-export const Section: FC<SectionProps> = ({ style, icon = 'bookmark', title, subtitle, backgroundColor, titleColor, subtitleColor, titleVariant, subtitleVariant }) => {
+export const Section: FC<SectionProps> = ({
+  style,
+  icon = 'bookmark',
+  title,
+  subtitle,
+  backgroundColor,
+  titleColor,
+  subtitleColor,
+  titleVariant,
+  subtitleVariant,
+}) => {
   const styleBackground = useThemeBackground(backgroundColor ?? null)
   const iconColor = useThemeColorValue(titleColor ?? 'important')
   return (
     <Col style={[styles.container, styleBackground, style]}>
-      <Row type="center">
-        {!icon ? <View style={styles.placeholder} /> : <Icon color={iconColor} style={styles.icon} name={icon} size={iconSize} />}
-        <Label style={styles.containerFill} type="h2" variant={titleVariant} color={titleColor ?? 'important'} ellipsizeMode="tail">
+      <Row type='center'>
+        {!icon ? (
+          <View style={styles.placeholder} />
+        ) : (
+          <Icon
+            color={iconColor}
+            style={styles.icon}
+            name={icon}
+            size={iconSize}
+          />
+        )}
+        <Label
+          style={styles.containerFill}
+          type='h2'
+          variant={titleVariant}
+          color={titleColor ?? 'important'}
+          ellipsizeMode='tail'
+        >
           {title}
         </Label>
       </Row>
 
       {!subtitle ? null : (
-        <Row type="center">
+        <Row type='center'>
           <View style={styles.placeholder} />
-          <Label style={styles.containerFill} type="compact" variant={subtitleVariant} color={subtitleColor ?? 'text'} ellipsizeMode="tail">
+          <Label
+            style={styles.containerFill}
+            type='compact'
+            variant={subtitleVariant}
+            color={subtitleColor ?? 'text'}
+            ellipsizeMode='tail'
+          >
             {subtitle}
           </Label>
         </Row>

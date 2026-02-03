@@ -1,6 +1,6 @@
 import { isSameDay } from 'date-fns'
 
-import { DealerDetails } from '@/context/data/types.details'
+import type { DealerDetails } from '@/context/data/types.details'
 
 /**
  * True if for the given date the dealer is attending.
@@ -30,6 +30,17 @@ export const isPresent = (dealer: DealerDetails, now: Date) => {
  * @param day2 The day to use for "Friday".
  * @param day3 The day to use for "Saturday".
  */
-export const joinOffDays = (dealer: DealerDetails, day1: string, day2: string, day3: string) => {
-  return [!dealer.AttendsOnThursday && day1, !dealer.AttendsOnFriday && day2, !dealer.AttendsOnSaturday && day3].filter(Boolean).join(', ')
+export const joinOffDays = (
+  dealer: DealerDetails,
+  day1: string,
+  day2: string,
+  day3: string
+) => {
+  return [
+    !dealer.AttendsOnThursday && day1,
+    !dealer.AttendsOnFriday && day2,
+    !dealer.AttendsOnSaturday && day3,
+  ]
+    .filter(Boolean)
+    .join(', ')
 }

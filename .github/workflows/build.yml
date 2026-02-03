@@ -38,13 +38,15 @@ jobs:
             - name: 🏗 Setup repo
               uses: actions/checkout@v4
 
-            - uses: pnpm/action-setup@v4
+            - name: 🏗 Setup Bun
+              uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: latest
 
             - name: 🏗 Setup Node
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ matrix.node }}
-                  cache: pnpm
 
             - name: 🏗 Setup Java
               if: ${{ github.event.inputs.platform == 'android' }}
@@ -59,8 +61,11 @@ jobs:
                   token: ${{ secrets.EXPO_TOKEN }}
                   eas-version: latest
 
+            - name: Copy .env.example to .env
+              run: cp .env.example .env
+
             - name: 📦 Install dependencies
-              run: pnpm install
+              run: bun install
 
             - name: 👷 Build app
               run: |

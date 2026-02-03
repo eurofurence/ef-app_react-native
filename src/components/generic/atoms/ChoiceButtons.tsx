@@ -1,7 +1,6 @@
-import React from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native'
 
-import { LabelProps } from '@/components/generic/atoms/Label'
+import type { LabelProps } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Row } from '@/components/generic/containers/Row'
 
@@ -15,9 +14,17 @@ export type ChoiceButtonsProps<T = string> = {
   getLabel: (choice: T) => string
 }
 
-export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, choice, setChoice, getLabel }: ChoiceButtonsProps<T>) => {
+export const ChoiceButtons = <T,>({
+  style,
+  labelType,
+  labelVariant,
+  choices,
+  choice,
+  setChoice,
+  getLabel,
+}: ChoiceButtonsProps<T>) => {
   return (
-    <Row type="stretch" variant="center" style={style}>
+    <Row type='stretch' variant='center' style={style}>
       {choices.map((item, i) => (
         <Button
           key={typeof item === 'string' ? item : i}
@@ -26,7 +33,13 @@ export const ChoiceButtons = <T,>({ style, labelType, labelVariant, choices, cho
           labelVariant={labelVariant}
           icon={<View />}
           iconRight={<View />}
-          style={i === 0 ? styles.left : i === choices.length - 1 ? styles.right : styles.center}
+          style={
+            i === 0
+              ? styles.left
+              : i === choices.length - 1
+                ? styles.right
+                : styles.center
+          }
           outline={item === choice}
           onPress={() => setChoice(item)}
         >

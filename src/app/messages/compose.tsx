@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Redirect } from 'expo-router'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
@@ -71,12 +71,16 @@ export default function ComposeMessage() {
     },
     [mutate, toast]
   )
-  if (!isAdmin && !isPrivateMessageSender) return <Redirect href="/messages" />
+  if (!isAdmin && !isPrivateMessageSender) return <Redirect href='/messages' />
 
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={announcementMessage} type="polite" visible={false} />
+      <StatusMessage
+        message={announcementMessage}
+        type='polite'
+        visible={false}
+      />
 
       <ScrollView
         style={StyleSheet.absoluteFill}
@@ -86,24 +90,60 @@ export default function ComposeMessage() {
       >
         <Header>Compose message</Header>
         <Floater>
-          <View ref={mainContentRef} accessibilityLabel={t('accessibility.compose_form_content')} accessibilityRole="text" style={{ marginVertical: 30, gap: 20 }}>
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={t('accessibility.compose_form_content')}
+            accessibilityRole='text'
+            style={{ marginVertical: 30, gap: 20 }}
+          >
             <FormProvider {...form}>
-              <ManagedChoiceButtons<MessageSchema> name="type" label="Send by" choices={typeChoices} getLabel={typeChoiceLabel} />
-              <ManagedTextInput<MessageSchema> name="recipientUid" label="Recipient" placeholder="Recipient's ID" />
-              <ManagedTextInput<MessageSchema> name="authorName" label="Author name" placeholder="John Doe" />
-              <ManagedTextInput<MessageSchema> name="toastTitle" label="Toast title" placeholder="Shown in toast" />
-              <ManagedTextInput<MessageSchema> name="toastMessage" label="Toast message" placeholder="Shown as toast content" />
-              <ManagedTextInput<MessageSchema> name="subject" label="subject" placeholder="Subject" />
-              <ManagedTextInput<MessageSchema> name="message" label="message" placeholder="Body of the message" numberOfLines={8} multiline />
+              <ManagedChoiceButtons<MessageSchema>
+                name='type'
+                label='Send by'
+                choices={typeChoices}
+                getLabel={typeChoiceLabel}
+              />
+              <ManagedTextInput<MessageSchema>
+                name='recipientUid'
+                label='Recipient'
+                placeholder="Recipient's ID"
+              />
+              <ManagedTextInput<MessageSchema>
+                name='authorName'
+                label='Author name'
+                placeholder='John Doe'
+              />
+              <ManagedTextInput<MessageSchema>
+                name='toastTitle'
+                label='Toast title'
+                placeholder='Shown in toast'
+              />
+              <ManagedTextInput<MessageSchema>
+                name='toastMessage'
+                label='Toast message'
+                placeholder='Shown as toast content'
+              />
+              <ManagedTextInput<MessageSchema>
+                name='subject'
+                label='subject'
+                placeholder='Subject'
+              />
+              <ManagedTextInput<MessageSchema>
+                name='message'
+                label='message'
+                placeholder='Body of the message'
+                numberOfLines={8}
+                multiline
+              />
 
-              {isPending && <Label className="mt-4">Submitting</Label>}
+              {isPending && <Label className='mt-4'>Submitting</Label>}
             </FormProvider>
           </View>
           <Button
             onPress={form.handleSubmit(onSend)}
             accessibilityLabel={t('accessibility.submit_message')}
             accessibilityHint={t('accessibility.submit_message_hint')}
-            accessibilityRole="button"
+            accessibilityRole='button'
           >
             Submit
           </Button>

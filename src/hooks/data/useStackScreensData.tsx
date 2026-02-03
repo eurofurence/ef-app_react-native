@@ -1,6 +1,5 @@
-import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
+import type { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import { router } from 'expo-router'
-import * as React from 'react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity } from 'react-native'
@@ -15,7 +14,7 @@ export type StackScreenProps = NativeStackNavigationOptions & {
 const CustomBack = () => {
   return (
     <TouchableOpacity onPress={router.back}>
-      <Icon name="arrow-left" size={24} color="black" />
+      <Icon name='arrow-left' size={24} color='black' />
     </TouchableOpacity>
   )
 }

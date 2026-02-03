@@ -1,18 +1,24 @@
-import { createMaterialTopTabNavigator, MaterialTopTabBar } from '@react-navigation/material-top-tabs'
+import type {
+  MaterialTopTabNavigationEventMap,
+  MaterialTopTabNavigationOptions,
+} from '@react-navigation/material-top-tabs'
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBar,
+} from '@react-navigation/material-top-tabs'
+import type {
+  ParamListBase,
+  TabNavigationState,
+} from '@react-navigation/native'
 import { withLayoutContext } from 'expo-router'
-import * as React from 'react'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
-import { Icon, IconNames } from '@/components/generic/atoms/Icon'
+import { Icon, type IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
 import { DealersSearchContext } from '@/context/DealersSearchContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-
-import type { MaterialTopTabNavigationEventMap, MaterialTopTabNavigationOptions } from '@react-navigation/material-top-tabs'
-import type { ParamListBase, TabNavigationState } from '@react-navigation/native'
 
 export const unstable_settings = {
   initialRouteName: 'all',
@@ -23,9 +29,17 @@ const { Navigator } = createMaterialTopTabNavigator()
 /**
  * Customized tab view for this layout.
  */
-const MaterialTopTabs = withLayoutContext<MaterialTopTabNavigationOptions, typeof Navigator, TabNavigationState<ParamListBase>, MaterialTopTabNavigationEventMap>(Navigator)
+const MaterialTopTabs = withLayoutContext<
+  MaterialTopTabNavigationOptions,
+  typeof Navigator,
+  TabNavigationState<ParamListBase>,
+  MaterialTopTabNavigationEventMap
+>(Navigator)
 
-function createOptions(title: string | undefined, icon: IconNames | undefined = undefined): MaterialTopTabNavigationOptions {
+function createOptions(
+  title: string | undefined,
+  icon: IconNames | undefined = undefined
+): MaterialTopTabNavigationOptions {
   if (icon === undefined) return { title: title }
   return {
     title: title,
@@ -52,23 +66,34 @@ export default function DealersLayout() {
   }, [])
 
   return (
-    <DealersSearchContext.Provider value={{ query: filter, setQuery: setFilter }}>
+    <DealersSearchContext.Provider
+      value={{ query: filter, setQuery: setFilter }}
+    >
       <MaterialTopTabs
-        initialRouteName="all"
+        initialRouteName='all'
         style={StyleSheet.absoluteFill}
-        screenOptions={{ tabBarStyle: { paddingTop: insets.top }, sceneStyle: backgroundSurface, tabBarLabelStyle: styles.tabLabel }}
+        screenOptions={{
+          tabBarStyle: { paddingTop: insets.top },
+          sceneStyle: backgroundSurface,
+          tabBarLabelStyle: styles.tabLabel,
+        }}
         tabBar={(props) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
-            <Search className={'my-2.5 mx-2.5'} filter={filter} setFilter={setFilter} placeholder={t('search.placeholder')} />
+            <Search
+              className={'my-2.5 mx-2.5'}
+              filter={filter}
+              setFilter={setFilter}
+              placeholder={t('search.placeholder')}
+            />
           </View>
         )}
       >
-        <MaterialTopTabs.Screen name="personal" options={options.personal} />
-        <MaterialTopTabs.Screen name="all" options={options.all} />
-        <MaterialTopTabs.Screen name="regular" options={options.regular} />
-        <MaterialTopTabs.Screen name="ad" options={options.ad} />
-        <MaterialTopTabs.Screen name="az" options={options.az} />
+        <MaterialTopTabs.Screen name='personal' options={options.personal} />
+        <MaterialTopTabs.Screen name='all' options={options.all} />
+        <MaterialTopTabs.Screen name='regular' options={options.regular} />
+        <MaterialTopTabs.Screen name='ad' options={options.ad} />
+        <MaterialTopTabs.Screen name='az' options={options.az} />
       </MaterialTopTabs>
     </DealersSearchContext.Provider>
   )

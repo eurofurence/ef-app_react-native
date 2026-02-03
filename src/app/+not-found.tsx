@@ -1,5 +1,5 @@
 import { Link, Stack, usePathname } from 'expo-router'
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
@@ -31,16 +31,25 @@ export default function NotFoundScreen() {
       <Stack.Screen options={{ title: 'Oops!' }} />
 
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={announcementMessage} type="assertive" visible={false} />
+      <StatusMessage
+        message={announcementMessage}
+        type='assertive'
+        visible={false}
+      />
 
-      <View style={[styles.container, backgroundStyle]} ref={mainContentRef} accessibilityLabel={a11y('not_found_content')} accessibilityRole="text">
-        <Label type="h1" accessibilityRole="header">
+      <View
+        style={[styles.container, backgroundStyle]}
+        ref={mainContentRef}
+        accessibilityLabel={a11y('not_found_content')}
+        accessibilityRole='text'
+      >
+        <Label type='h1' accessibilityRole='header'>
           {a11y('page_not_found_title')}
         </Label>
 
         <Label
-          type="regular"
-          color="invText"
+          type='regular'
+          color='invText'
           style={[backgroundPathStyle, styles.path]}
           accessibilityLabel={a11y('requested_path')}
           accessibilityHint={a11y('requested_path_hint')}
@@ -49,11 +58,11 @@ export default function NotFoundScreen() {
         </Label>
 
         <Link
-          href="/"
+          href='/'
           style={[styles.link, appStyles.minTouchSize]}
           accessibilityLabel={a11y('go_home')}
           accessibilityHint={a11y('go_home_hint')}
-          accessibilityRole="button"
+          accessibilityRole='button'
           replace
         >
           <Label type={'underlined'}>{a11y('go_home_text')}</Label>

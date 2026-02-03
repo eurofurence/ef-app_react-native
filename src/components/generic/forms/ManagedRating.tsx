@@ -1,5 +1,5 @@
-import { useController, Path } from 'react-hook-form'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { type Path, useController } from 'react-hook-form'
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native'
 import StarRating from 'react-native-star-rating-widget'
 
 import { Label } from '../atoms/Label'
@@ -12,9 +12,18 @@ export type ManagedRatingProps<T> = {
   color?: string
   style?: StyleProp<ViewStyle>
   starSize?: number
+  step?: 'half' | 'quarter' | 'full'
 }
 
-export const ManagedRating = <T extends Record<string, any>>({ name, label, enableHalfStar = false, color = '#FFD700', style, starSize = 32 }: ManagedRatingProps<T>) => {
+export const ManagedRating = <T extends Record<string, any>>({
+  name,
+  label,
+  enableHalfStar = false,
+  color = '#FFD700',
+  style,
+  starSize = 32,
+  step,
+}: ManagedRatingProps<T>) => {
   const {
     field: { value, onChange },
     fieldState: { error },
@@ -25,13 +34,19 @@ export const ManagedRating = <T extends Record<string, any>>({ name, label, enab
   return (
     <View style={[styles.container, style]}>
       {label && (
-        <Label type="caption" className="mb-2">
+        <Label type='caption' className='mb-2'>
           {label}
         </Label>
       )}
-      <StarRating rating={value ?? 0} onChange={onChange} enableHalfStar={enableHalfStar} starSize={starSize} color={color} />
+      <StarRating
+        rating={value ?? 0}
+        onChange={onChange}
+        step={step ?? (enableHalfStar ? 'half' : 'full')}
+        starSize={starSize}
+        color={color}
+      />
       {error && (
-        <Label type="caption" color="important" className="mt-1">
+        <Label type='caption' color='important' className='mt-1'>
           {error.message}
         </Label>
       )}

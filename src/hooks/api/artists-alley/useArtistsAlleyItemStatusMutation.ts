@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import axios, { type GenericAbortSignal } from 'axios'
 
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
-import { TableRegistrationRecordStatus } from '@/context/data/types.api'
+import type { TableRegistrationRecordStatus } from '@/context/data/types.api'
 import { queryClient } from '@/context/query/Query'
 
 /**
@@ -20,15 +20,23 @@ export type ArtistsAlleyItemStatusData = {
  * @param data The ID/status data.
  * @param signal An abort signal.
  */
-export async function putArtistsAlleyItemStatus(accessToken: string | null, data: ArtistsAlleyItemStatusData, signal?: GenericAbortSignal) {
+export async function putArtistsAlleyItemStatus(
+  accessToken: string | null,
+  data: ArtistsAlleyItemStatusData,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
-  return await axios.put(`${apiBase}/ArtistsAlley/${data.id}/:status`, data.status, {
-    signal: signal,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    },
-  })
+  return await axios.put(
+    `${apiBase}/ArtistsAlley/${data.id}/:status`,
+    data.status,
+    {
+      signal: signal,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    }
+  )
 }
 
 /**
@@ -37,7 +45,11 @@ export async function putArtistsAlleyItemStatus(accessToken: string | null, data
 export function useArtistsAlleyItemStatusMutation() {
   const { accessToken, idData } = useAuthContext()
   return useMutation({
-    mutationFn: (data: ArtistsAlleyItemStatusData) => putArtistsAlleyItemStatus(accessToken, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'artists-alley'] }),
+    mutationFn: (data: ArtistsAlleyItemStatusData) =>
+      putArtistsAlleyItemStatus(accessToken, data),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [idData?.sub, 'artists-alley'],
+      }),
   })
 }

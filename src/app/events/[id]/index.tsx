@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router'
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -31,7 +31,9 @@ export default function EventItem() {
     const settings = getValue('settings')
     const newSettings = {
       ...settings,
-      hiddenEvents: settings.hiddenEvents?.includes(id) ? settings.hiddenEvents.filter((item) => item !== id) : [...(settings.hiddenEvents ?? []), id],
+      hiddenEvents: settings.hiddenEvents?.includes(id)
+        ? settings.hiddenEvents.filter((item) => item !== id)
+        : [...(settings.hiddenEvents ?? []), id],
     }
     setValue('settings', newSettings)
   }, [id, getValue, setValue])
@@ -43,7 +45,9 @@ export default function EventItem() {
   // Announce the event details to screen readers
   useEffect(() => {
     if (event) {
-      const message = t('accessibility.event_details_loaded', { title: event.Title })
+      const message = t('accessibility.event_details_loaded', {
+        title: event.Title,
+      })
       setAnnouncementMessage(message)
     }
   }, [event, t])
@@ -51,7 +55,11 @@ export default function EventItem() {
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={announcementMessage} type="assertive" visible={false} />
+      <StatusMessage
+        message={announcementMessage}
+        type='assertive'
+        visible={false}
+      />
 
       <ScrollView
         style={StyleSheet.absoluteFill}
@@ -70,11 +78,24 @@ export default function EventItem() {
           {event?.Title ?? t('viewing_event')}
         </Header>
         <Floater contentStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={t('accessibility.event_content')} accessibilityRole="text">
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={t('accessibility.event_content')}
+            accessibilityRole='text'
+          >
             {!event ? (
-              <NotFoundContent accessibilityStatus={t('accessibility.event_not_found')} title={t('event_not_found_title')} message={t('event_not_found_message')} />
+              <NotFoundContent
+                accessibilityStatus={t('accessibility.event_not_found')}
+                title={t('event_not_found_title')}
+                message={t('event_not_found_message')}
+              />
             ) : (
-              <EventContent event={event} parentPad={padFloater} updated={showUpdated} onToggleHidden={handleToggleHidden} />
+              <EventContent
+                event={event}
+                parentPad={padFloater}
+                updated={showUpdated}
+                onToggleHidden={handleToggleHidden}
+              />
             )}
           </View>
         </Floater>

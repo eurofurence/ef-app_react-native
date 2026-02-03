@@ -1,5 +1,12 @@
 import { randomUUID } from 'expo-crypto'
-import { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react'
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 
 /**
  * A toast message entry.
@@ -52,7 +59,12 @@ export type ToastContextType = {
    * @param lifetime The lifetime.
    * @param group A group key, freely pickable if multiple consumers render toasts.
    */
-  toast(type: 'notice' | 'info' | 'warning' | 'error', content: ReactNode | string, lifetime?: number, group?: any): void
+  toast(
+    type: 'notice' | 'info' | 'warning' | 'error',
+    content: ReactNode | string,
+    lifetime?: number,
+    group?: any
+  ): void
 
   /**
    * Dismisses a toast.
@@ -64,7 +76,9 @@ export type ToastContextType = {
 /**
  * Toast context object.
  */
-export const ToastContext = createContext<ToastContextType | undefined>(undefined)
+export const ToastContext = createContext<ToastContextType | undefined>(
+  undefined
+)
 ToastContext.displayName = 'ToastContext'
 
 /**
@@ -84,18 +98,35 @@ export type ToastContextProviderProps = {
  */
 export const ToastProvider = ({ children }: ToastContextProviderProps) => {
   const [messages, setMessages] = useState<ToastMessage[]>([])
-  const toast = useCallback((type: 'notice' | 'info' | 'warning' | 'error', content: ReactNode | string, lifetime = 5000, group?: any) => {
-    const queued = Date.now()
-    const message = { id: randomUUID(), type, content, queued, lifetime, group }
+  const toast = useCallback(
+    (
+      type: 'notice' | 'info' | 'warning' | 'error',
+      content: ReactNode | string,
+      lifetime = 5000,
+      group?: any
+    ) => {
+      const queued = Date.now()
+      const message = {
+        id: randomUUID(),
+        type,
+        content,
+        queued,
+        lifetime,
+        group,
+      }
 
-    setMessages((current) => [...current, message])
-    setTimeout(() => {
-      setMessages((current) => {
-        const i = current.indexOf(message)
-        return i < 0 ? current : current.slice(0, i).concat(current.slice(i + 1))
-      })
-    }, lifetime)
-  }, [])
+      setMessages((current) => [...current, message])
+      setTimeout(() => {
+        setMessages((current) => {
+          const i = current.indexOf(message)
+          return i < 0
+            ? current
+            : current.slice(0, i).concat(current.slice(i + 1))
+        })
+      }, lifetime)
+    },
+    []
+  )
 
   const dismiss = useCallback((id: string) => {
     setMessages((current) => {
@@ -104,7 +135,10 @@ export const ToastProvider = ({ children }: ToastContextProviderProps) => {
     })
   }, [])
 
-  const value = useMemo(() => ({ messages, toast, dismiss }), [messages, toast, dismiss])
+  const value = useMemo(
+    () => ({ messages, toast, dismiss }),
+    [messages, toast, dismiss]
+  )
   return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>
 }
 
@@ -113,7 +147,8 @@ export const ToastProvider = ({ children }: ToastContextProviderProps) => {
  */
 export const useToastContext = () => {
   const context = useContext(ToastContext)
-  if (!context) throw new Error('useToastContext must be used within a ToastProvider')
+  if (!context)
+    throw new Error('useToastContext must be used within a ToastProvider')
   return context
 }
 

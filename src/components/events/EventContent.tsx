@@ -6,19 +6,19 @@ import { format } from 'date-fns-tz'
 import { useCalendars } from 'expo-localization'
 import { router } from 'expo-router'
 import { openBrowserAsync } from 'expo-web-browser'
-import React, { FC, useMemo } from 'react'
+import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { shareEvent } from '@/components/events/Events.common'
 import { conTimeZone } from '@/configuration'
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 import { useEventReminder } from '@/hooks/data/useEventReminder'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 
 import { Banner } from '../generic/atoms/Banner'
-import { Icon, IconNames, platformShareIcon } from '../generic/atoms/Icon'
+import { Icon, type IconNames, platformShareIcon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { MarkdownContent } from '../generic/atoms/MarkdownContent'
 import { Progress } from '../generic/atoms/Progress'
@@ -62,7 +62,13 @@ export type EventContentProps = {
  */
 const placeholder = { blurhash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667' }
 
-export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, updated, shareButton, onToggleHidden }) => {
+export const EventContent: FC<EventContentProps> = ({
+  event,
+  parentPad = 0,
+  updated,
+  shareButton,
+  onToggleHidden,
+}) => {
   const { t } = useTranslation('Event')
   const { checkReminder, toggleReminder } = useEventReminder()
   const isFavorite = checkReminder(event)
@@ -71,48 +77,64 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
   const colorGlyph = useThemeColorValue('darken')
 
-  const progress = differenceInMilliseconds(now, new Date(event.StartDateTimeUtc)) / differenceInMilliseconds(new Date(event.EndDateTimeUtc), new Date(event.StartDateTimeUtc))
+  const progress =
+    differenceInMilliseconds(now, new Date(event.StartDateTimeUtc)) /
+    differenceInMilliseconds(
+      new Date(event.EndDateTimeUtc),
+      new Date(event.StartDateTimeUtc)
+    )
   const happening = progress >= 0.0 && progress <= 1.0
   const feedbackDisabled = progress < 0.0
 
   const calendar = useCalendars()
-  const { zone, start, end, day, startLocal, endLocal, dayLocal, date } = useMemo(() => {
-    const timeZone = calendar[0]?.timeZone ?? conTimeZone
-    const zone = new Intl.DateTimeFormat('en-US', { timeZone, timeZoneName: 'short' }).format(new Date()).split(' ').pop()
-    const start = format(event.Start, 'p', { timeZone, locale: de })
-    const end = format(event.End, 'p', { timeZone, locale: de })
-    const day = format(event.Start, 'EEE', { timeZone })
-    const date = format(event.Start, 'yyyy-MM-dd', { timeZone })
-    const startLocal = format(event.StartLocal, 'p', { locale: de })
-    const endLocal = format(event.EndLocal, 'p', { locale: de })
-    const dayLocal = format(event.StartLocal, 'EEE')
-    return { zone, start, end, day, startLocal, endLocal, dayLocal, date }
-  }, [calendar, event.End, event.EndLocal, event.Start, event.StartLocal])
+  const { zone, start, end, day, startLocal, endLocal, dayLocal, date } =
+    useMemo(() => {
+      const timeZone = calendar[0]?.timeZone ?? conTimeZone
+      const zone = new Intl.DateTimeFormat('en-US', {
+        timeZone,
+        timeZoneName: 'short',
+      })
+        .format(new Date())
+        .split(' ')
+        .pop()
+      const start = format(event.Start, 'p', { timeZone, locale: de })
+      const end = format(event.End, 'p', { timeZone, locale: de })
+      const day = format(event.Start, 'EEE', { timeZone })
+      const date = format(event.Start, 'yyyy-MM-dd', { timeZone })
+      const startLocal = format(event.StartLocal, 'p', { locale: de })
+      const endLocal = format(event.EndLocal, 'p', { locale: de })
+      const dayLocal = format(event.StartLocal, 'EEE')
+      return { zone, start, end, day, startLocal, endLocal, dayLocal, date }
+    }, [calendar, event.End, event.EndLocal, event.Start, event.StartLocal])
 
   const mapLink = event.MapLink ?? event.ConferenceRoom?.MapLink
 
   return (
     <>
       {!updated ? null : (
-        <Badge unpad={parentPad} badgeColor="warning" textColor="white">
+        <Badge unpad={parentPad} badgeColor='warning' textColor='white'>
           {t('event_was_updated')}
         </Badge>
       )}
 
       {!event.SuperSponsorOnly ? null : (
-        <Badge unpad={parentPad} badgeColor="superSponsor" textColor="superSponsorText">
+        <Badge
+          unpad={parentPad}
+          badgeColor='superSponsor'
+          textColor='superSponsorText'
+        >
           {t('supersponsor_event')}
         </Badge>
       )}
 
       {!event.SponsorOnly ? null : (
-        <Badge unpad={parentPad} badgeColor="sponsor" textColor="sponsorText">
+        <Badge unpad={parentPad} badgeColor='sponsor' textColor='sponsorText'>
           {t('sponsor_event')}
         </Badge>
       )}
 
       {!event.IsInternal ? null : (
-        <Badge unpad={parentPad} badgeColor="staff" textColor="staffText">
+        <Badge unpad={parentPad} badgeColor='staff' textColor='staffText'>
           {t('internal_event')}
         </Badge>
       )}
@@ -126,31 +148,41 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         <View style={styles.glyphArranger}>
           <View style={styles.glyphContainer}>
             {(() => {
-              const iconName: IconNames = (isFavorite ? 'heart' : (event.Glyph as IconNames)) ?? 'blank'
-              return <Icon style={styles.glyph} color={colorGlyph} name={iconName} size={200} />
+              const iconName: IconNames =
+                (isFavorite ? 'heart' : (event.Glyph as IconNames)) ?? 'blank'
+              return (
+                <Icon
+                  style={styles.glyph}
+                  color={colorGlyph}
+                  name={iconName}
+                  size={200}
+                />
+              )
             })()}
           </View>
         </View>
       ) : null}
 
       {event.Title ? (
-        <Label type="h1" className="mt-5">
+        <Label type='h1' className='mt-5'>
           {event.Title}
         </Label>
       ) : null}
-      {event.SubTitle ? <Label type="compact">{event.SubTitle}</Label> : null}
+      {event.SubTitle ? <Label type='compact'>{event.SubTitle}</Label> : null}
       {event.ConferenceTrack?.Name ? (
         <Row style={styles.marginAround} gap={5}>
-          <Label type="caption">{t('label_event_track')}</Label>
-          <Label type="caption" color="important">
+          <Label type='caption'>{t('label_event_track')}</Label>
+          <Label type='caption' color='important'>
             {event.ConferenceTrack?.Name}
           </Label>
         </Row>
       ) : null}
 
-      {!happening ? null : <Progress style={styles.marginBefore} value={progress} />}
+      {!happening ? null : (
+        <Progress style={styles.marginBefore} value={progress} />
+      )}
 
-      <Label style={styles.marginAround} type="h3">
+      <Label style={styles.marginAround} type='h3'>
         {t('when', {
           day: day,
           date: date,
@@ -159,7 +191,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
           zone: zone,
         })}
         {start === startLocal ? null : (
-          <Label type="h3" variant="receded">
+          <Label type='h3' variant='receded'>
             {' ' +
               t('when_local', {
                 day: dayLocal,
@@ -172,21 +204,27 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         )}
       </Label>
 
-      <MarkdownContent style={styles.marginAround} defaultType="para">
+      <MarkdownContent style={styles.marginAround} defaultType='para'>
         {event.Abstract}
       </MarkdownContent>
 
       {event.PanelHosts ? (
         <Row style={styles.marginAround} gap={5}>
-          <Label type="caption">{t('label_event_panelhosts')}</Label>
-          <Label type="caption" color="important">
+          <Label type='caption'>{t('label_event_panelhosts')}</Label>
+          <Label type='caption' color='important'>
             {event.PanelHosts}
           </Label>
         </Row>
       ) : null}
 
       {!event.MaskRequired ? null : (
-        <Badge unpad={parentPad} icon="face-mask" textColor="secondary" textType="regular" textVariant="regular">
+        <Badge
+          unpad={parentPad}
+          icon='face-mask'
+          textColor='secondary'
+          textType='regular'
+          textVariant='regular'
+        >
           {t('mask_required')}
         </Badge>
       )}
@@ -197,7 +235,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         </Button>
       )}
 
-      <Row type="stretch" style={styles.marginAround} gap={16}>
+      <Row type='stretch' style={styles.marginAround} gap={16}>
         <Button
           containerStyle={styles.flex}
           outline={isFavorite}
@@ -206,7 +244,12 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         >
           {isFavorite ? t('remove_favorite') : t('add_favorite')}
         </Button>
-        <Button containerStyle={styles.flex} icon={event.Hidden ? 'eye' : 'eye-off'} onPress={() => onToggleHidden?.(event)} outline>
+        <Button
+          containerStyle={styles.flex}
+          icon={event.Hidden ? 'eye' : 'eye-off'}
+          onPress={() => onToggleHidden?.(event)}
+          outline
+        >
           {event.Hidden ? t('reveal') : t('hide')}
         </Button>
       </Row>
@@ -215,7 +258,7 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
         <Button
           disabled={feedbackDisabled}
           containerStyle={styles.marginAround}
-          icon="pencil"
+          icon='pencil'
           onPress={() =>
             router.navigate({
               pathname: '/events/[id]/feedback',
@@ -229,19 +272,25 @@ export const EventContent: FC<EventContentProps> = ({ event, parentPad = 0, upda
 
       {event.ConferenceRoom?.Name ? (
         <Row style={styles.marginAround} gap={5}>
-          <Label type="h3" variant="receded">
+          <Label type='h3' variant='receded'>
             {t('label_event_room')}
           </Label>
-          <Label type="h3" color="important">
+          <Label type='h3' color='important'>
             {event.ConferenceRoom.Name}
           </Label>
         </Row>
       ) : null}
 
-      {!mapLink ? null : <LinkPreview url={mapLink} onPress={() => openBrowserAsync(mapLink)} style={styles.fullWidth} />}
+      {!mapLink ? null : (
+        <LinkPreview
+          url={mapLink}
+          onPress={() => openBrowserAsync(mapLink)}
+          style={styles.fullWidth}
+        />
+      )}
 
-      <Section icon="information" title={t('label_event_description')} />
-      <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
+      <Section icon='information' title={t('label_event_description')} />
+      <MarkdownContent defaultType='para'>{event.Description}</MarkdownContent>
     </>
   )
 }

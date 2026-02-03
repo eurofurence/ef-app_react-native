@@ -1,18 +1,16 @@
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
-
 import { DealerCard } from '@/components/dealers/DealerCard'
 import {
-  mockDealerDetails,
-  mockDealerDetailsWithOffDays,
-  mockDealerDetailsLongName,
-  mockDealerDetailsSimple,
-  mockDealerDetailsNoCategories,
-  mockDealerDetailsDifferentCategories,
   createDealerInstance,
+  mockDealerDetails,
+  mockDealerDetailsDifferentCategories,
+  mockDealerDetailsLongName,
+  mockDealerDetailsNoCategories,
+  mockDealerDetailsSimple,
+  mockDealerDetailsWithOffDays,
 } from '@/stories/mocks/dealerData'
-
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Dealers/DealerCard',
@@ -43,7 +41,11 @@ export const Default: Story = {
 
 export const WithOffDays: Story = {
   args: {
-    dealer: createDealerInstance(mockDealerDetailsWithOffDays, false, 'Day 1, Day 2'),
+    dealer: createDealerInstance(
+      mockDealerDetailsWithOffDays,
+      false,
+      'Day 1, Day 2'
+    ),
     onPress: fn(),
   },
 }
@@ -84,8 +86,12 @@ export const DifferentCategories: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      {mockDealerDetailsDifferentCategories.map((details, index) => (
-        <DealerCard key={details.Id} dealer={createDealerInstance(details)} onPress={fn()} />
+      {mockDealerDetailsDifferentCategories.map((details) => (
+        <DealerCard
+          key={details.Id}
+          dealer={createDealerInstance(details)}
+          onPress={fn()}
+        />
       ))}
     </View>
   ),
@@ -98,10 +104,26 @@ export const MultipleDealers: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <DealerCard dealer={createDealerInstance(mockDealerDetails)} onPress={fn()} />
-      <DealerCard dealer={createDealerInstance(mockDealerDetailsWithOffDays, false, 'Day 1, Day 2')} onPress={fn()} />
-      <DealerCard dealer={createDealerInstance(mockDealerDetailsLongName)} onPress={fn()} />
-      <DealerCard dealer={createDealerInstance(mockDealerDetailsSimple)} onPress={fn()} />
+      <DealerCard
+        dealer={createDealerInstance(mockDealerDetails)}
+        onPress={fn()}
+      />
+      <DealerCard
+        dealer={createDealerInstance(
+          mockDealerDetailsWithOffDays,
+          false,
+          'Day 1, Day 2'
+        )}
+        onPress={fn()}
+      />
+      <DealerCard
+        dealer={createDealerInstance(mockDealerDetailsLongName)}
+        onPress={fn()}
+      />
+      <DealerCard
+        dealer={createDealerInstance(mockDealerDetailsSimple)}
+        onPress={fn()}
+      />
     </View>
   ),
 }
@@ -113,8 +135,18 @@ export const PresentVsAbsent: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <DealerCard dealer={createDealerInstance(mockDealerDetails, true)} onPress={fn()} />
-      <DealerCard dealer={createDealerInstance(mockDealerDetailsWithOffDays, false, 'Day 1, Day 2')} onPress={fn()} />
+      <DealerCard
+        dealer={createDealerInstance(mockDealerDetails, true)}
+        onPress={fn()}
+      />
+      <DealerCard
+        dealer={createDealerInstance(
+          mockDealerDetailsWithOffDays,
+          false,
+          'Day 1, Day 2'
+        )}
+        onPress={fn()}
+      />
     </View>
   ),
 }
@@ -126,8 +158,14 @@ export const FavoriteVsNotFavorite: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <DealerCard dealer={createDealerInstance(mockDealerDetails)} onPress={fn()} />
-      <DealerCard dealer={createDealerInstance(mockDealerDetailsSimple)} onPress={fn()} />
+      <DealerCard
+        dealer={createDealerInstance(mockDealerDetails)}
+        onPress={fn()}
+      />
+      <DealerCard
+        dealer={createDealerInstance(mockDealerDetailsSimple)}
+        onPress={fn()}
+      />
     </View>
   ),
 }

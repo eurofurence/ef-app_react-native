@@ -20,7 +20,10 @@ export function useNotificationResponseManager() {
     if (!response) return
 
     // Get data. Skip if content is not present.
-    const data = response.notification.request.content.data as Record<string, any>
+    const data = response.notification.request.content.data as Record<
+      string,
+      any
+    >
     if (!data) return
 
     // Get parts and validate. Skip if not for this convention or if required parts are not present.

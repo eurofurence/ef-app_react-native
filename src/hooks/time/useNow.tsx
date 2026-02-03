@@ -15,7 +15,8 @@ const nowWithOffset = (amount: number) => addMilliseconds(new Date(), amount)
  * @param b The second value.
  * @param resolution The resolution.
  */
-const sameInResolution = (a: number, b: number, resolution: number) => Math.floor(a / resolution) === Math.floor(b / resolution)
+const sameInResolution = (a: number, b: number, resolution: number) =>
+  Math.floor(a / resolution) === Math.floor(b / resolution)
 
 /**
  * Get the current date, which includes time travelling.
@@ -25,7 +26,9 @@ const sameInResolution = (a: number, b: number, resolution: number) => Math.floo
 export const useNow = (resolution: 'static' | number = 'static'): Date => {
   const { getValue } = useCache()
   const settings = getValue('settings')
-  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
+  const offset = settings.timeTravelEnabled
+    ? (settings.timeTravelOffset ?? 0)
+    : 0
 
   const [now, setNow] = useState(() => nowWithOffset(offset))
 
@@ -38,7 +41,9 @@ export const useNow = (resolution: 'static' | number = 'static'): Date => {
         const next = nowWithOffset(offset)
         const currentMinutes = getHours(current) * 60 + getMinutes(current)
         const nextMinutes = getHours(next) * 60 + getMinutes(next)
-        return sameInResolution(currentMinutes, nextMinutes, resolution) ? current : next
+        return sameInResolution(currentMinutes, nextMinutes, resolution)
+          ? current
+          : next
       })
     }, 500)
 
@@ -54,6 +59,8 @@ export const useNow = (resolution: 'static' | number = 'static'): Date => {
 export function useGetNow(): () => Date {
   const { getValue } = useCache()
   const settings = getValue('settings')
-  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
+  const offset = settings.timeTravelEnabled
+    ? (settings.timeTravelOffset ?? 0)
+    : 0
   return useCallback(() => addMilliseconds(new Date(), offset), [offset])
 }

@@ -1,7 +1,7 @@
-import { FC } from 'react'
-import { StyleSheet, Text, TextProps } from 'react-native'
+import type { FC } from 'react'
+import { StyleSheet, Text, type TextProps } from 'react-native'
 
-import { ThemeColor } from '@/context/Theme'
+import type { ThemeColor } from '@/context/Theme'
 import { useThemeColor } from '@/hooks/themes/useThemeHooks'
 
 /**
@@ -34,10 +34,19 @@ export type LabelProps = TextProps & {
  * @param props Additional props passed to the root text element.
  * @constructor
  */
-export const Label: FC<LabelProps> = ({ style, type, variant, color, children, ...props }) => {
+export const Label: FC<LabelProps> = ({
+  style,
+  type,
+  variant,
+  color,
+  children,
+  ...props
+}) => {
   // Value reads for named parameters.
   const styleType = type ? labelTypeStyles[type] : labelTypeStyles.regular
-  const styleVariant = variant ? labelVariantStyles[variant] : labelVariantStyles.regular
+  const styleVariant = variant
+    ? labelVariantStyles[variant]
+    : labelVariantStyles.regular
   const styleColor = useThemeColor(color ?? 'text')
 
   return (

@@ -1,9 +1,15 @@
-import Fuse, { FuseOptionKey, IFuseOptions } from 'fuse.js'
+import Fuse, { type FuseOptionKey, type IFuseOptions } from 'fuse.js'
 import { flatten } from 'lodash'
 import { useMemo } from 'react'
 
-import { AnnouncementDetails, DealerDetails, EventDetails, KnowledgeEntryDetails, ArtistAlleyDetails } from '@/context/data/types.details'
-import { GlobalSearchResult } from '@/context/data/types.own'
+import type {
+  AnnouncementDetails,
+  ArtistAlleyDetails,
+  DealerDetails,
+  EventDetails,
+  KnowledgeEntryDetails,
+} from '@/context/data/types.details'
+import type { GlobalSearchResult } from '@/context/data/types.own'
 
 /**
  * General search options.
@@ -34,7 +40,8 @@ export const dealersSearchProperties: FuseOptionKey<DealerDetails>[] = [
   { name: 'Categories', weight: 1 },
   {
     name: 'Keywords',
-    getFn: (details) => (details.Keywords ? flatten(Object.values(details.Keywords)) : []),
+    getFn: (details) =>
+      details.Keywords ? flatten(Object.values(details.Keywords)) : [],
     weight: 1,
   },
   { name: 'ShortDescription', weight: 1 },
@@ -58,28 +65,31 @@ export const eventsSearchProperties: FuseOptionKey<EventDetails>[] = [
 /**
  * Knowledge base entry properties to include in the search.
  */
-export const knowledgeEntriesSearchProperties: FuseOptionKey<KnowledgeEntryDetails>[] = [
-  { name: 'Title', weight: 2 }, // Increased weight for titles
-  { name: 'Text', weight: 1 }, // Full text content
-]
+export const knowledgeEntriesSearchProperties: FuseOptionKey<KnowledgeEntryDetails>[] =
+  [
+    { name: 'Title', weight: 2 }, // Increased weight for titles
+    { name: 'Text', weight: 1 }, // Full text content
+  ]
 
 /**
  * Announcement properties to include in the search.
  */
-export const announcementsSearchProperties: FuseOptionKey<AnnouncementDetails>[] = [
-  { name: 'NormalizedTitle', weight: 1.5 },
-  { name: 'Content', weight: 1 },
-  { name: 'Author', weight: 0.5 },
-  { name: 'Area', weight: 0.5 },
-]
+export const announcementsSearchProperties: FuseOptionKey<AnnouncementDetails>[] =
+  [
+    { name: 'NormalizedTitle', weight: 1.5 },
+    { name: 'Content', weight: 1 },
+    { name: 'Author', weight: 0.5 },
+    { name: 'Area', weight: 0.5 },
+  ]
 
 /**
  * Artist Alley properties to include in the search.
  */
-export const artistAlleySearchProperties: FuseOptionKey<ArtistAlleyDetails>[] = [
-  { name: 'DisplayName', weight: 2 },
-  { name: 'ShortDescription', weight: 1 },
-]
+export const artistAlleySearchProperties: FuseOptionKey<ArtistAlleyDetails>[] =
+  [
+    { name: 'DisplayName', weight: 2 },
+    { name: 'ShortDescription', weight: 1 },
+  ]
 
 /**
  * Properties for global search to include in the search, combined from dealers,
@@ -98,8 +108,15 @@ export const globalSearchProperties: FuseOptionKey<GlobalSearchResult>[] = [
  * @param options The search options.
  * @param properties The indexing properties.
  */
-export function useFuseMemo<T>(data: readonly T[], options: IFuseOptions<any>, properties: FuseOptionKey<T>[]) {
-  return useMemo(() => new Fuse(data, options, Fuse.createIndex(properties, data)), [data, options, properties])
+export function useFuseMemo<T>(
+  data: readonly T[],
+  options: IFuseOptions<any>,
+  properties: FuseOptionKey<T>[]
+) {
+  return useMemo(
+    () => new Fuse(data, options, Fuse.createIndex(properties, data)),
+    [data, options, properties]
+  )
 }
 
 /**
@@ -108,9 +125,19 @@ export function useFuseMemo<T>(data: readonly T[], options: IFuseOptions<any>, p
  * @param options The search options.
  * @param properties The indexing properties.
  */
-export function useFuseRecordMemo<T>(data: Readonly<Record<string, readonly T[]>>, options: IFuseOptions<any>, properties: FuseOptionKey<T>[]) {
+export function useFuseRecordMemo<T>(
+  data: Readonly<Record<string, readonly T[]>>,
+  options: IFuseOptions<any>,
+  properties: FuseOptionKey<T>[]
+) {
   return useMemo(
-    () => Object.fromEntries(Object.entries(data).map(([key, value]) => [key, new Fuse(value, options, Fuse.createIndex(properties, value))])),
+    () =>
+      Object.fromEntries(
+        Object.entries(data).map(([key, value]) => [
+          key,
+          new Fuse(value, options, Fuse.createIndex(properties, value)),
+        ])
+      ),
     [data, options, properties]
   )
 }

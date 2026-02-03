@@ -1,13 +1,32 @@
 import { captureException } from '@sentry/react-native'
 import axios from 'axios'
-import { exchangeCodeAsync, refreshAsync, TokenResponse, TokenResponseConfig, useAuthRequest } from 'expo-auth-session'
+import {
+  exchangeCodeAsync,
+  refreshAsync,
+  TokenResponse,
+  type TokenResponseConfig,
+  useAuthRequest,
+} from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
-import { createContext, ReactNode, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import {
+  createContext,
+  type ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 import { Platform } from 'react-native'
 
-import { authClientId, authIssuer, authRedirect, authScopes } from '@/configuration'
+import {
+  authClientId,
+  authIssuer,
+  authRedirect,
+  authScopes,
+} from '@/configuration'
 import { isTokenError } from '@/context/auth/Auth.errors'
-import { IdData, parseIdToken } from '@/context/auth/Auth.idToken'
+import { type IdData, parseIdToken } from '@/context/auth/Auth.idToken'
 import { useAsyncCallbackOnce } from '@/hooks/util/useAsyncCallbackOnce'
 import { useAsyncInterval } from '@/hooks/util/useAsyncInterval'
 import * as SecureStore from '@/util/secureStorage'
@@ -96,8 +115,14 @@ export function finishLoginRedirect() {
  * @param children The children to provide to.
  * @constructor
  */
-export const AuthProvider = ({ children }: { children?: ReactNode | undefined }) => {
-  const [tokenResponse, setTokenResponse] = useState<TokenResponse | null>(undefined as any)
+export const AuthProvider = ({
+  children,
+}: {
+  children?: ReactNode | undefined
+}) => {
+  const [tokenResponse, setTokenResponse] = useState<TokenResponse | null>(
+    undefined as any
+  )
   const initialized = tokenResponse !== undefined
 
   // Auth request and login prompt.
@@ -131,16 +156,25 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
             )
 
             // Set the refreshed token instead.
-            await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
+            await SecureStore.setItemAsync(
+              storageKeyTokenResponse,
+              JSON.stringify(refreshResponse.getRequestConfig())
+            )
             setTokenResponse(refreshResponse)
           } else {
             // Set expiring token, cannot refresh, but it's still valid for a bit.
-            await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(loadResponse.getRequestConfig()))
+            await SecureStore.setItemAsync(
+              storageKeyTokenResponse,
+              JSON.stringify(loadResponse.getRequestConfig())
+            )
             setTokenResponse(loadResponse)
           }
         } else {
           // Set loaded token, it's OK.
-          await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(loadResponse.getRequestConfig()))
+          await SecureStore.setItemAsync(
+            storageKeyTokenResponse,
+            JSON.stringify(loadResponse.getRequestConfig())
+          )
           setTokenResponse(loadResponse)
         }
       } catch (error) {
@@ -169,14 +203,19 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
           {
             clientId: authClientId,
             code: codeResponse.params.code,
-            extraParams: request.codeVerifier ? { code_verifier: request.codeVerifier } : undefined,
+            extraParams: request.codeVerifier
+              ? { code_verifier: request.codeVerifier }
+              : undefined,
             redirectUri: authRedirect,
           },
           discovery
         )
 
         // Save token data and set in state.
-        await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(response.getRequestConfig()))
+        await SecureStore.setItemAsync(
+          storageKeyTokenResponse,
+          JSON.stringify(response.getRequestConfig())
+        )
         setTokenResponse(response)
       } catch (error) {
         // If the error indicates an invalid token, clear the token data.
@@ -217,7 +256,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         )
 
         // Set the refreshed token.
-        await SecureStore.setItemAsync(storageKeyTokenResponse, JSON.stringify(refreshResponse.getRequestConfig()))
+        await SecureStore.setItemAsync(
+          storageKeyTokenResponse,
+          JSON.stringify(refreshResponse.getRequestConfig())
+        )
         setTokenResponse(refreshResponse)
       } catch (error) {
         // If the error indicates an invalid token, clear the token data.
@@ -275,7 +317,6 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         return
       })
     }
-
     // Fire off loading the state.
     ;(async () => {
       const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
@@ -304,7 +345,10 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
         refreshToken().catch((error) => {
           // Don't capture token validation errors to Sentry as they're expected
           if (isTokenError(error)) {
-            console.warn('Token refresh failed due to token validation:', error.message)
+            console.warn(
+              'Token refresh failed due to token validation:',
+              error.message
+            )
           } else {
             captureException(error)
           }
@@ -320,7 +364,9 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
     const accessToken = tokenResponse ? tokenResponse.accessToken : null
 
     // Try parsing ID token if present, otherwise use null.
-    const idData = tokenResponse?.idToken ? parseIdToken(tokenResponse.idToken) : null
+    const idData = tokenResponse?.idToken
+      ? parseIdToken(tokenResponse.idToken)
+      : null
 
     // Is logged in if the access token is not null.
     const loggedIn = accessToken !== null
@@ -347,6 +393,7 @@ export const AuthProvider = ({ children }: { children?: ReactNode | undefined })
  */
 export const useAuthContext = () => {
   const context = useContext(AuthContext)
-  if (!context) throw new Error('useAuthContext must be used within a AuthProvider')
+  if (!context)
+    throw new Error('useAuthContext must be used within a AuthProvider')
   return context
 }

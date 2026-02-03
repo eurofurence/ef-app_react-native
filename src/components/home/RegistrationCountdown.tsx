@@ -1,10 +1,10 @@
 import { useIsFocused } from '@react-navigation/core'
 import { captureException } from '@sentry/react-native'
 import { formatDistance, isAfter, isBefore } from 'date-fns'
-import { TFunction } from 'i18next'
-import React, { FC, useMemo } from 'react'
+import type { TFunction } from 'i18next'
+import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { View, Linking } from 'react-native'
+import { Linking, View } from 'react-native'
 
 import { useAuthContext } from '@/context/auth/Auth'
 import { useUserContext } from '@/context/auth/User'
@@ -25,7 +25,14 @@ export type RegistrationCountdownProps = {
 /**
  * Calculates the countdown text and button visibility based on registration dates
  */
-const useRegistrationState = (t: TFunction, now: Date, startDate: Date | null, endDate: Date | null, isLoading: boolean, error: Error | null) => {
+const useRegistrationState = (
+  t: TFunction,
+  now: Date,
+  startDate: Date | null,
+  endDate: Date | null,
+  isLoading: boolean,
+  error: Error | null
+) => {
   const { eventDays } = useCache()
 
   if (isLoading || error || !startDate || !endDate) {
@@ -38,14 +45,20 @@ const useRegistrationState = (t: TFunction, now: Date, startDate: Date | null, e
     const lastDate = new Date(lastDay.Date)
 
     if (isAfter(now, lastDate) && isBefore(now, startDate)) {
-      return { countdownText: t('thank_you_see_you_next_year'), isRegistrationOpen: false }
+      return {
+        countdownText: t('thank_you_see_you_next_year'),
+        isRegistrationOpen: false,
+      }
     }
   }
 
   // If registration hasn't opened yet
   if (isBefore(now, startDate)) {
     const diff = formatDistance(startDate, now)
-    return { countdownText: t('registration_opens_in', { diff }), isRegistrationOpen: false }
+    return {
+      countdownText: t('registration_opens_in', { diff }),
+      isRegistrationOpen: false,
+    }
   }
 
   // If registration is open
@@ -57,19 +70,32 @@ const useRegistrationState = (t: TFunction, now: Date, startDate: Date | null, e
   return { countdownText: t('registration_closed'), isRegistrationOpen: false }
 }
 
-export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registrationUrl }) => {
+export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({
+  registrationUrl,
+}) => {
   const { t } = useTranslation('Registration')
   const { t: tWarnings } = useTranslation('Home', { keyPrefix: 'warnings' })
-  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
+  const { t: tAccessibility } = useTranslation('Home', {
+    keyPrefix: 'accessibility',
+  })
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 60 : 'static')
-  const { isHidden, hideWarning } = useWarningState('registrationCountdownHidden')
+  const { isHidden, hideWarning } = useWarningState(
+    'registrationCountdownHidden'
+  )
   const iconColor = useThemeColorValue('important')
   const { data, isLoading, error } = useRegistrationDatesQuery()
   const { user } = useUserContext()
   const { login } = useAuthContext()
 
-  const { countdownText, isRegistrationOpen } = useRegistrationState(t, now, data?.startDate ?? null, data?.endDate ?? null, isLoading, error)
+  const { countdownText, isRegistrationOpen } = useRegistrationState(
+    t,
+    now,
+    data?.startDate ?? null,
+    data?.endDate ?? null,
+    isLoading,
+    error
+  )
 
   const handleRegisterPress = useMemo(() => {
     if (!isRegistrationOpen || !registrationUrl) return undefined
@@ -82,26 +108,48 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
   // Don't show if dismissed, if loading, if there's an error, or if user is logged in AND is an attendee
   const isAttendee = Boolean(user?.RoleMap?.Attendee)
   const loggedIn = Boolean(user)
-  if (isHidden || isLoading || error || (loggedIn && isAttendee && isRegistrationOpen)) return null
+  if (
+    isHidden ||
+    isLoading ||
+    error ||
+    (loggedIn && isAttendee && isRegistrationOpen)
+  )
+    return null
   const showRegistrationButton = isRegistrationOpen && registrationUrl
   const showLoginButton = !loggedIn
   const showButtons = showLoginButton || showRegistrationButton
 
   return (
     <>
-      <View className="pt-8 pb-4 self-stretch" role="alert" accessibilityLabel={tAccessibility('registration_warning_container')}>
-        <View className="self-stretch flex-row items-center">
-          <Icon color={iconColor} name="account-plus" size={24} accessibilityLabel={tAccessibility('registration_icon')} accessibilityRole="image" />
-          <Label className="ml-2 flex-1" type="h2" color="important" ellipsizeMode="tail" accessibilityRole="header">
+      <View
+        className='pt-8 pb-4 self-stretch'
+        role='alert'
+        accessibilityLabel={tAccessibility('registration_warning_container')}
+      >
+        <View className='self-stretch flex-row items-center'>
+          <Icon
+            color={iconColor}
+            name='account-plus'
+            size={24}
+            accessibilityLabel={tAccessibility('registration_icon')}
+            accessibilityRole='image'
+          />
+          <Label
+            className='ml-2 flex-1'
+            type='h2'
+            color='important'
+            ellipsizeMode='tail'
+            accessibilityRole='header'
+          >
             {t('registration_title')}
           </Label>
           <Label
-            className="leading-8"
-            type="compact"
-            variant="bold"
-            color="secondary"
+            className='leading-8'
+            type='compact'
+            variant='bold'
+            color='secondary'
             onPress={hideWarning}
-            accessibilityRole="button"
+            accessibilityRole='button'
             accessibilityLabel={tAccessibility('hide_registration_warning')}
             accessibilityHint={tAccessibility('hide_registration_warning_hint')}
           >
@@ -110,16 +158,21 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
         </View>
       </View>
 
-      <Label type="para" accessibilityLabel={tAccessibility('registration_status', { status: countdownText })}>
+      <Label
+        type='para'
+        accessibilityLabel={tAccessibility('registration_status', {
+          status: countdownText,
+        })}
+      >
         {countdownText} {loggedIn || t('login_prompt')}
       </Label>
 
       {showButtons && (
-        <View className="flex flex-row mt-5 gap-2">
+        <View className='flex flex-row mt-5 gap-2'>
           {showRegistrationButton && (
             <Button
-              icon="web"
-              className="grow"
+              icon='web'
+              className='grow'
               onPress={handleRegisterPress}
               accessibilityLabel={t('accessibility.register_now_button')}
               accessibilityHint={t('accessibility.register_now_button_hint')}
@@ -129,11 +182,11 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({ registra
           )}
           {showLoginButton && (
             <Button
-              icon="login"
+              icon='login'
               outline
-              className="grow"
+              className='grow'
               onPress={() => login().catch(captureException)}
-              accessibilityRole="button"
+              accessibilityRole='button'
               accessibilityLabel={t('accessibility.login_button')}
               accessibilityHint={t('accessibility.login_button_hint')}
             >

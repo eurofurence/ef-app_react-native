@@ -65,7 +65,9 @@ export const useTokenManager = () => {
 
       // Return actionable true.
       return true
-    })().catch((e) => captureNotificationException('Could not register and subscribe', e))
+    })().catch((e) =>
+      captureNotificationException('Could not register and subscribe', e)
+    )
   }, [accessToken])
 
   return null

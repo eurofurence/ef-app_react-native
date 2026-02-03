@@ -1,11 +1,10 @@
 import { useLocalSearchParams } from 'expo-router'
-import * as React from 'react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { Header } from '@/components/generic/containers/Header'
-import { MapContent, MapContentProps } from '@/components/maps/MapContent'
+import { MapContent, type MapContentProps } from '@/components/maps/MapContent'
 import { useCache } from '@/context/data/Cache'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
@@ -36,7 +35,7 @@ export default function MapItem() {
     if (!entry) return
     if (typeof linkId !== 'string') return
     const linkIndex = parseInt(linkId, 10)
-    if (isNaN(linkIndex)) return
+    if (Number.isNaN(linkIndex)) return
     return entry.Links[linkIndex]
   }, [entry, linkId])
 
@@ -51,9 +50,19 @@ export default function MapItem() {
   }, [mapCache, link])
 
   return (
-    <View style={[StyleSheet.absoluteFill, backgroundStyle]} accessibilityLabel={t('accessibility.map_page')} accessibilityHint={t('accessibility.map_page_hint')}>
+    <View
+      style={[StyleSheet.absoluteFill, backgroundStyle]}
+      accessibilityLabel={t('accessibility.map_page')}
+      accessibilityHint={t('accessibility.map_page_hint')}
+    >
       <Header>{titleText}</Header>
-      {!mapCache?.Image || (entryId && !entry) || (linkId && !link) ? null : <MapContent map={mapCache as MapContentProps['map']} entry={entry} link={link} />}
+      {!mapCache?.Image || (entryId && !entry) || (linkId && !link) ? null : (
+        <MapContent
+          map={mapCache as MapContentProps['map']}
+          entry={entry}
+          link={link}
+        />
+      )}
     </View>
   )
 }

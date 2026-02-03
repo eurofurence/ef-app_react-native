@@ -1,5 +1,11 @@
-import { FC, PropsWithChildren } from 'react'
-import { AccessibilityRole, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import type { FC, PropsWithChildren } from 'react'
+import {
+  type AccessibilityRole,
+  type StyleProp,
+  StyleSheet,
+  View,
+  type ViewStyle,
+} from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 import { Pressable } from '@/components/generic/Pressable'
@@ -15,7 +21,16 @@ type CardProps = PropsWithChildren<{
   accessibilityHint?: string
 }>
 
-export const Card: FC<CardProps> = ({ children, onPress, onLongPress, containerStyle, style, accessibilityRole, accessibilityLabel, accessibilityHint }) => {
+export const Card: FC<CardProps> = ({
+  children,
+  onPress,
+  onLongPress,
+  containerStyle,
+  style,
+  accessibilityRole,
+  accessibilityLabel,
+  accessibilityHint,
+}) => {
   const cardStyle = useThemeBackground('background')
   return (
     <Pressable

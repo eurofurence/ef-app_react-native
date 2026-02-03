@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { format, Locale } from 'date-fns'
+import { format, type Locale } from 'date-fns'
 import { de, enGB, it, nl, pl } from 'date-fns/locale'
 import * as Localization from 'expo-localization'
 import i18next from 'i18next'
@@ -42,7 +42,10 @@ export const dateFnsLocales: Record<string, Locale> = {
 /**
  * Finds the first user-selected supported locale, returns the language code.
  */
-const firstSupportedLocale = () => Localization.getLocales().find(({ languageTag }) => supportedTranslations.includes(languageTag as Translation))?.languageCode ?? 'en'
+const firstSupportedLocale = () =>
+  Localization.getLocales().find(({ languageTag }) =>
+    supportedTranslations.includes(languageTag as Translation)
+  )?.languageCode ?? 'en'
 
 const logger = partial(console.log, 'i18next')
 
@@ -69,7 +72,11 @@ export const i18t = i18next
     },
     cacheUserLanguage: async (lng: string) =>
       AsyncStorage.setItem(I18NEXT_LANGUAGE_KEY, lng)
-        .then(i18nDebug ? () => logger('Saving language for next time', lng) : undefined)
+        .then(
+          i18nDebug === 'true'
+            ? () => logger('Saving language for next time', lng)
+            : undefined
+        )
         .catch((e) => logger('Failed to save language', lng, e)),
   })
   .init({
@@ -100,8 +107,14 @@ export const i18t = i18next
 /**
  * Helper function to format dates using date-fns with locale support.
  */
-export const formatDate = (date: Date | string, formatStr: string, language: Translation) => {
-  return format(new Date(date), formatStr, { locale: dateFnsLocales[language] })
+export const formatDate = (
+  date: Date | string,
+  formatStr: string,
+  language: Translation
+) => {
+  return format(new Date(date), formatStr, {
+    locale: dateFnsLocales[language],
+  })
 }
 
 /**

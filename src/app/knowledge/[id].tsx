@@ -1,5 +1,5 @@
 import { useLocalSearchParams } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -11,7 +11,7 @@ import { Header } from '@/components/generic/containers/Header'
 import { LinkItem } from '@/components/maps/LinkItem'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
-import { LinkFragment } from '@/context/data/types.api'
+import type { LinkFragment } from '@/context/data/types.api'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function KnowledgeItem() {
@@ -37,7 +37,11 @@ export default function KnowledgeItem() {
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={announcementMessage} type="assertive" visible={false} />
+      <StatusMessage
+        message={announcementMessage}
+        type='assertive'
+        visible={false}
+      />
 
       <ScrollView
         style={StyleSheet.absoluteFill}
@@ -49,17 +53,25 @@ export default function KnowledgeItem() {
         <Header>{entry?.Title ?? t('viewing_entry')}</Header>
         <Floater>
           {!entry ? (
-            <NotFoundContent accessibilityStatus={t('accessibility.kb_entry_not_found')} title={t('kb_entry_not_found_title')} message={t('kb_entry_not_found_message')} />
+            <NotFoundContent
+              accessibilityStatus={t('accessibility.kb_entry_not_found')}
+              title={t('kb_entry_not_found_title')}
+              message={t('kb_entry_not_found_message')}
+            />
           ) : (
-            <View ref={mainContentRef} accessibilityLabel={t('accessibility.kb_entry_content')} accessibilityRole="text">
-              {entry?.Images?.map((image, i) => (
-                <View key={i} className="my-2.5">
+            <View
+              ref={mainContentRef}
+              accessibilityLabel={t('accessibility.kb_entry_content')}
+              accessibilityRole='text'
+            >
+              {entry?.Images?.map((image) => (
+                <View key={image.Id} className='my-2.5'>
                   <Banner image={image} viewable />
                 </View>
               )) ?? null}
               <MarkdownContent>{entry?.Text ?? ''}</MarkdownContent>
               {entry?.Links?.map((link: LinkFragment) => (
-                <View className="mb-5" key={link.Target}>
+                <View className='mb-5' key={link.Target}>
                   <LinkItem link={link} />
                 </View>
               ))}

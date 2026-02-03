@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
 import { useCache } from '@/context/data/Cache'
-import { ArtistsAlleyLocal } from '@/context/data/types.own'
+import type { ArtistsAlleyLocal } from '@/context/data/types.own'
 
 /**
  * Uses locally stored artists alley registration info to be used for repeat registrations.

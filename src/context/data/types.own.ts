@@ -1,5 +1,9 @@
-import { DealerDetails, EventDetails, KnowledgeEntryDetails } from '@/context/data/types.details'
-import { ThemeName } from '@/context/Theme'
+import type {
+  DealerDetails,
+  EventDetails,
+  KnowledgeEntryDetails,
+} from '@/context/data/types.details'
+import type { ThemeName } from '@/context/Theme'
 
 /**
  * Settings stored in the cache.
@@ -36,7 +40,10 @@ export type ArtistsAlleyLocal = {
 /**
  * Tagged union for dealers, event,s and knowledge base entries.
  */
-export type GlobalSearchResult = (DealerDetails & { type: 'dealer' }) | (EventDetails & { type: 'event' }) | (KnowledgeEntryDetails & { type: 'knowledgeEntry' })
+export type GlobalSearchResult =
+  | (DealerDetails & { type: 'dealer' })
+  | (EventDetails & { type: 'event' })
+  | (KnowledgeEntryDetails & { type: 'knowledgeEntry' })
 /**
  * Image usage location.
  */

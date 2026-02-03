@@ -1,9 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
-
 import { Button } from '@/components/generic/containers/Button'
-
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Containers/Button',
@@ -25,11 +23,45 @@ const meta = {
     },
     icon: {
       control: { type: 'select' },
-      options: ['heart', 'star', 'home', 'account', 'cog', 'bell', 'calendar', 'map-marker', 'share', 'download', 'search', 'menu', 'close', 'check', 'plus', 'minus'],
+      options: [
+        'heart',
+        'star',
+        'home',
+        'account',
+        'cog',
+        'bell',
+        'calendar',
+        'map-marker',
+        'share',
+        'download',
+        'search',
+        'menu',
+        'close',
+        'check',
+        'plus',
+        'minus',
+      ],
     },
     iconRight: {
       control: { type: 'select' },
-      options: ['heart', 'star', 'home', 'account', 'cog', 'bell', 'calendar', 'map-marker', 'share', 'download', 'search', 'menu', 'close', 'check', 'plus', 'minus'],
+      options: [
+        'heart',
+        'star',
+        'home',
+        'account',
+        'cog',
+        'bell',
+        'calendar',
+        'map-marker',
+        'share',
+        'download',
+        'search',
+        'menu',
+        'close',
+        'check',
+        'plus',
+        'minus',
+      ],
     },
     labelType: {
       control: { type: 'select' },
@@ -57,7 +89,16 @@ const meta = {
     },
     labelVariant: {
       control: { type: 'select' },
-      options: ['regular', 'narrow', 'bold', 'lineThrough', 'underlined', 'middle', 'shadow', 'receded'],
+      options: [
+        'regular',
+        'narrow',
+        'bold',
+        'lineThrough',
+        'underlined',
+        'middle',
+        'shadow',
+        'receded',
+      ],
     },
   },
 } satisfies Meta<typeof Button>
@@ -136,13 +177,13 @@ export const ButtonVariants: Story = {
       <Button outline onPress={fn()}>
         Outline Button
       </Button>
-      <Button icon="heart" onPress={fn()}>
+      <Button icon='heart' onPress={fn()}>
         With Left Icon
       </Button>
-      <Button iconRight="arrow-right" onPress={fn()}>
+      <Button iconRight='arrow-right' onPress={fn()}>
         With Right Icon
       </Button>
-      <Button icon="heart" iconRight="arrow-right" onPress={fn()}>
+      <Button icon='heart' iconRight='arrow-right' onPress={fn()}>
         With Both Icons
       </Button>
       <Button disabled onPress={fn()}>
@@ -158,22 +199,22 @@ export const ButtonVariants: Story = {
 export const LabelTypes: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
-      <Button labelType="h1" onPress={fn()}>
+      <Button labelType='h1' onPress={fn()}>
         Heading 1 Button
       </Button>
-      <Button labelType="h2" onPress={fn()}>
+      <Button labelType='h2' onPress={fn()}>
         Heading 2 Button
       </Button>
-      <Button labelType="h3" onPress={fn()}>
+      <Button labelType='h3' onPress={fn()}>
         Heading 3 Button
       </Button>
-      <Button labelType="regular" onPress={fn()}>
+      <Button labelType='regular' onPress={fn()}>
         Regular Button
       </Button>
-      <Button labelType="minor" onPress={fn()}>
+      <Button labelType='minor' onPress={fn()}>
         Minor Button
       </Button>
-      <Button labelType="caption" onPress={fn()}>
+      <Button labelType='caption' onPress={fn()}>
         Caption Button
       </Button>
     </View>
@@ -183,19 +224,19 @@ export const LabelTypes: Story = {
 export const LabelVariants: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
-      <Button labelVariant="regular" onPress={fn()}>
+      <Button labelVariant='regular' onPress={fn()}>
         Regular Variant
       </Button>
-      <Button labelVariant="bold" onPress={fn()}>
+      <Button labelVariant='bold' onPress={fn()}>
         Bold Variant
       </Button>
-      <Button labelVariant="lineThrough" onPress={fn()}>
+      <Button labelVariant='lineThrough' onPress={fn()}>
         Line Through Variant
       </Button>
-      <Button labelVariant="underlined" onPress={fn()}>
+      <Button labelVariant='underlined' onPress={fn()}>
         Underlined Variant
       </Button>
-      <Button labelVariant="receded" onPress={fn()}>
+      <Button labelVariant='receded' onPress={fn()}>
         Receded Variant
       </Button>
     </View>

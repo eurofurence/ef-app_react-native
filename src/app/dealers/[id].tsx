@@ -1,5 +1,4 @@
 import { useLocalSearchParams } from 'expo-router'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet } from 'react-native'
 
@@ -24,7 +23,8 @@ export default function DealerItem() {
   const updated = useUpdateSinceNote(dealer)
   const showUpdated = useLatchTrue(updated)
 
-  const dealerName = dealer?.DisplayNameOrAttendeeNickname ?? t('viewing_dealer')
+  const dealerName =
+    dealer?.DisplayNameOrAttendeeNickname ?? t('viewing_dealer')
 
   return (
     <ScrollView
@@ -34,14 +34,25 @@ export default function DealerItem() {
       accessibilityLabel={t('accessibility.page_description')}
       accessibilityHint={t('accessibility.scroll_view_hint')}
     >
-      <Header secondaryIcon={dealer ? platformShareIcon : undefined} secondaryPress={dealer ? () => shareDealer(dealer) : undefined}>
+      <Header
+        secondaryIcon={dealer ? platformShareIcon : undefined}
+        secondaryPress={dealer ? () => shareDealer(dealer) : undefined}
+      >
         {dealerName}
       </Header>
       <Floater contentStyle={appStyles.trailer}>
         {!dealer ? (
-          <NotFoundContent accessibilityStatus={t('accessibility.dealer_not_found')} title={t('dealer_not_found_title')} message={t('dealer_not_found_message')} />
+          <NotFoundContent
+            accessibilityStatus={t('accessibility.dealer_not_found')}
+            title={t('dealer_not_found_title')}
+            message={t('dealer_not_found_message')}
+          />
         ) : (
-          <DealerContent dealer={dealer} parentPad={padFloater} updated={showUpdated} />
+          <DealerContent
+            dealer={dealer}
+            parentPad={padFloater}
+            updated={showUpdated}
+          />
         )}
       </Floater>
     </ScrollView>

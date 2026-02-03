@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Controller } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'
 
-import { Image, ImageProps } from '@/components/generic/atoms/Image'
+import { Image, type ImageProps } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Col } from '@/components/generic/containers/Col'
 import { Pressable } from '@/components/generic/Pressable'
@@ -44,14 +44,20 @@ type InnerManagedImagePickerProps<T extends object> = {
 
 type ManagedImagePickerProps<T extends object> = InnerManagedImagePickerProps<T>
 
-export const ManagedImagePicker = <T extends object>({ style, name, label, errorTranslator, placeholder }: ManagedImagePickerProps<T>) => {
+export const ManagedImagePicker = <T extends object>({
+  style,
+  name,
+  label,
+  errorTranslator,
+  placeholder,
+}: ManagedImagePickerProps<T>) => {
   const backgroundStyle = useThemeBackground('background')
   const [aspectRatio, setAspectRatio] = useState<undefined | number>()
   return (
     <Controller
       render={({ field, fieldState }) => (
-        <Col type="stretch">
-          <Label type="caption">{label}</Label>
+        <Col type='stretch'>
+          <Label type='caption'>{label}</Label>
           <Pressable
             containerStyle={[styles.container, backgroundStyle]}
             disabled={field.disabled}
@@ -67,11 +73,19 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
             }}
           >
             <Image
-              style={[field.disabled && styles.disabled, { aspectRatio: aspectRatio ?? 16 / 9 }, style]}
+              style={[
+                field.disabled && styles.disabled,
+                { aspectRatio: aspectRatio ?? 16 / 9 },
+                style,
+              ]}
               contentFit={undefined}
               source={field.value}
               placeholder={null}
-              onLoad={(e) => setAspectRatio(e.source ? e.source.width / e.source.height : undefined)}
+              onLoad={(e) =>
+                setAspectRatio(
+                  e.source ? e.source.width / e.source.height : undefined
+                )
+              }
             />
             {field.value ? null : (
               <View style={[StyleSheet.absoluteFill, styles.labelContainer]}>
@@ -79,8 +93,12 @@ export const ManagedImagePicker = <T extends object>({ style, name, label, error
               </View>
             )}
           </Pressable>
-          <Label type="caption" color="notification" className="mt-1 mb-3">
-            {!fieldState.error ? ' ' : errorTranslator ? errorTranslator(field.name, fieldState.error.type) : fieldState.error.message}
+          <Label type='caption' color='notification' className='mt-1 mb-3'>
+            {!fieldState.error
+              ? ' '
+              : errorTranslator
+                ? errorTranslator(field.name, fieldState.error.type)
+                : fieldState.error.message}
           </Label>
         </Col>
       )}

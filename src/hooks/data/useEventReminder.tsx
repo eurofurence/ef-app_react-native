@@ -1,8 +1,11 @@
 import { useCallback } from 'react'
 
 import { useCache } from '@/context/data/Cache'
-import { EventRecord } from '@/context/data/types.api'
-import { scheduleEventReminder, cancelEventReminder } from '@/util/eventReminders'
+import type { EventRecord } from '@/context/data/types.api'
+import {
+  cancelEventReminder,
+  scheduleEventReminder,
+} from '@/util/eventReminders'
 
 /**
  * Uses event reminder creation, removal, and toggle callbacks, as well as retrieving the
@@ -13,14 +16,18 @@ export const useEventReminder = () => {
 
   // Retrieve timeTravel value from cache, default to 0
   const settings = getValue('settings')
-  const offset = settings.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
+  const offset = settings.timeTravelEnabled
+    ? (settings.timeTravelOffset ?? 0)
+    : 0
 
   /**
    * Returns true if a notification on the event's record ID is present.
    */
   const checkReminder = useCallback(
     (event: EventRecord) => {
-      return Boolean(getValue('notifications')?.find((item) => item.recordId === event.Id))
+      return Boolean(
+        getValue('notifications')?.find((item) => item.recordId === event.Id)
+      )
     },
     [getValue]
   )

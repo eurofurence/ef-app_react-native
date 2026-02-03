@@ -1,11 +1,11 @@
-import { TFunction } from 'i18next'
-import { FC } from 'react'
+import type { TFunction } from 'i18next'
+import type { FC } from 'react'
 
-import { PartOfDay } from '@/context/data/types.details'
+import type { PartOfDay } from '@/context/data/types.details'
 
 import { formatWeekdayInConventionTimezone } from '../../util/eventTiming'
-import { IconNames } from '../generic/atoms/Icon'
-import { Section, SectionProps } from '../generic/atoms/Section'
+import type { IconNames } from '../generic/atoms/Icon'
+import { Section, type SectionProps } from '../generic/atoms/Section'
 
 export type EventSectionProps = SectionProps
 
@@ -14,7 +14,10 @@ export type EventSectionProps = SectionProps
  * @param t Translation function.
  * @param partOfDay Part of day.
  */
-export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay): EventSectionProps {
+export function eventSectionForPartOfDay(
+  t: TFunction,
+  partOfDay: PartOfDay
+): EventSectionProps {
   return {
     title: t(partOfDay as PartOfDay),
     icon: ((partOfDay === 'morning' && 'weather-sunset-up') ||
@@ -31,7 +34,10 @@ export function eventSectionForPartOfDay(t: TFunction, partOfDay: PartOfDay): Ev
  * @param t Translation function.
  * @param count Number of events.
  */
-export function eventSectionForHidden(t: TFunction, count: number): EventSectionProps {
+export function eventSectionForHidden(
+  t: TFunction,
+  count: number
+): EventSectionProps {
   return {
     title: t('events_hidden'),
     icon: 'eye-off' as IconNames,
@@ -55,13 +61,26 @@ export function eventSectionForPassed(t: TFunction): EventSectionProps {
  * @param t Translation function.
  * @param date Date of the event, in con time zone.
  */
-export function eventSectionForDate(t: TFunction, date: string): EventSectionProps {
+export function eventSectionForDate(date: string): EventSectionProps {
   return {
     title: formatWeekdayInConventionTimezone(date),
     icon: 'calendar-outline' as IconNames,
   }
 }
 
-export const EventSection: FC<EventSectionProps> = ({ style, title, subtitle, icon }) => {
-  return <Section style={style} title={title} subtitle={subtitle} backgroundColor="surface" icon={icon} />
+export const EventSection: FC<EventSectionProps> = ({
+  style,
+  title,
+  subtitle,
+  icon,
+}) => {
+  return (
+    <Section
+      style={style}
+      title={title}
+      subtitle={subtitle}
+      backgroundColor='surface'
+      icon={icon}
+    />
+  )
 }

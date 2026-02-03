@@ -1,5 +1,9 @@
-import { keepPreviousData, useQuery, UseQueryResult } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import {
+  keepPreviousData,
+  type UseQueryResult,
+  useQuery,
+} from '@tanstack/react-query'
+import axios, { type GenericAbortSignal } from 'axios'
 
 import { registrationDatesUrl } from '@/configuration'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
@@ -20,7 +24,9 @@ interface ParsedRegistrationDates {
  * Gets the registration dates from the public dates endpoint.
  * @param signal An abort signal.
  */
-export async function getRegistrationDates(signal?: GenericAbortSignal): Promise<ParsedRegistrationDates> {
+export async function getRegistrationDates(
+  signal?: GenericAbortSignal
+): Promise<ParsedRegistrationDates> {
   const response = await axios.get(registrationDatesUrl, {
     signal: signal,
   })
@@ -30,11 +36,11 @@ export async function getRegistrationDates(signal?: GenericAbortSignal): Promise
   const parsedStartDate = parseDefaultISO(data['reg-start'])
   const parsedEndDate = parseDefaultISO(data['reg-end'])
 
-  if (isNaN(parsedStartDate.getTime())) {
+  if (Number.isNaN(parsedStartDate.getTime())) {
     throw new Error('Invalid start date format received from server')
   }
 
-  if (isNaN(parsedEndDate.getTime())) {
+  if (Number.isNaN(parsedEndDate.getTime())) {
     throw new Error('Invalid end date format received from server')
   }
 
