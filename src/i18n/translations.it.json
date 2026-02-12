@@ -411,7 +411,10 @@
       "Lost": "Perso",
       "Returned": "Ritornato",
       "Unknown": "Sconosciuto"
-    }
+    },
+    "filters": "Filtri",
+    "filter_statuses": "Filtri stato",
+    "select_statuses": "Seleziona uno o più stati per filtrare."
   },
   "Maps": {
     "preview_unavailable": "Anteprima mappa non disponibile",

@@ -581,7 +581,10 @@
       "Lost": "Verloren",
       "Returned": "Zurückgegeben",
       "Unknown": "Unbekannt"
-    }
+    },
+    "filters": "Filter",
+    "filter_statuses": "Filterstatusen",
+    "select_statuses": "Wähle eine oder mehrere Statuses um zu filtern."
   },
   "Maps": {
     "accessibility": {
