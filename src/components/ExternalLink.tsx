@@ -1,12 +1,12 @@
 import { Link } from 'expo-router'
 import { openBrowserAsync } from 'expo-web-browser'
-import { type ComponentProps } from 'react'
+import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Platform } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
+import type { ConfirmPromptContent } from '@/util/ConfirmPromptContent'
 import { confirmPrompt } from '@/util/confirmPrompt'
-import { ConfirmPromptContent } from '@/util/ConfirmPromptContent'
 
 type Props = Omit<ComponentProps<typeof Link>, 'href'> & { href: string }
 
@@ -33,19 +33,22 @@ export function ExternalLink({ href, ...rest }: Props) {
 
   return (
     <Link
-      target="_blank"
+      target='_blank'
       {...rest}
       href={href}
       style={[rest.style, appStyles.minTouchSize]}
       accessibilityLabel={a11y('external_link', { url: href })}
       accessibilityHint={a11y('external_link_hint')}
-      accessibilityRole="link"
+      accessibilityRole='link'
       onPress={handleExternalPress}
     />
   )
 }
 
-export async function handleExternalLink(href: string, content: ConfirmPromptContent) {
+export async function handleExternalLink(
+  href: string,
+  content: ConfirmPromptContent
+) {
   if (Platform.OS !== 'web') {
     // Prompt user with a warning before leaving the app
     const prompt = await confirmPrompt({

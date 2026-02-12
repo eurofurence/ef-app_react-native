@@ -1,8 +1,15 @@
 import { useEffect } from 'react'
 
 import { cacheDebug } from '@/configuration'
-import { Schema, schema, schemaEntities, SchemaEntities, SchemaInternal, SchemaValues } from '@/context/data/CacheSchema'
-import { SchemaField } from '@/context/data/CacheTools'
+import {
+  type Schema,
+  type SchemaEntities,
+  type SchemaInternal,
+  type SchemaValues,
+  schema,
+  schemaEntities,
+} from '@/context/data/CacheSchema'
+import type { SchemaField } from '@/context/data/CacheTools'
 import * as Storage from '@/util/asyncStorage'
 
 /**
@@ -27,7 +34,12 @@ export type StoreActionInternalsSet = {
  * @param lastSynchronised The last synchronized timestamp as an ISO string.
  * @param lastSyncAuthorized True if the sync was authorized.
  */
-export function actionInternalsSet(cid: string, cacheVersion: number, lastSynchronised: string, lastSyncAuthorized: boolean): StoreActionInternalsSet {
+export function actionInternalsSet(
+  cid: string,
+  cacheVersion: number,
+  lastSynchronised: string,
+  lastSyncAuthorized: boolean
+): StoreActionInternalsSet {
   return {
     type: 'STORE_ACTION_INTERNALS_SET',
     value: {
@@ -53,7 +65,10 @@ export type StoreActionValuesSet<T extends keyof SchemaValues> = {
  * @param key The key to set, one of the mutable values.
  * @param value The value to set to.
  */
-export function actionValuesSet<T extends keyof SchemaValues>(key: T, value: StoreData[T]): StoreActionValuesSet<T> {
+export function actionValuesSet<T extends keyof SchemaValues>(
+  key: T,
+  value: StoreData[T]
+): StoreActionValuesSet<T> {
   return {
     type: 'STORE_ACTION_VALUE_SET',
     key,
@@ -73,7 +88,9 @@ export type StoreActionValuesDelete<T extends keyof SchemaValues> = {
  * Action creator to delete a value.
  * @param key The key to delete, one of the mutable values.
  */
-export function actionValuesDelete<T extends keyof SchemaValues>(key: T): StoreActionValuesDelete<T> {
+export function actionValuesDelete<T extends keyof SchemaValues>(
+  key: T
+): StoreActionValuesDelete<T> {
   return {
     type: 'STORE_ACTION_VALUE_DELETE',
     key,
@@ -98,7 +115,12 @@ export type StoreActionEntitiesChange<T extends keyof SchemaEntities> = {
  * @param remove The keys to remove.
  * @param add The values to add.
  */
-export function actionEntitiesChange<T extends keyof SchemaEntities>(key: T, removeAll?: boolean, remove?: string[], add?: StoreData[T][number][]): StoreActionEntitiesChange<T> {
+export function actionEntitiesChange<T extends keyof SchemaEntities>(
+  key: T,
+  removeAll?: boolean,
+  remove?: string[],
+  add?: StoreData[T][number][]
+): StoreActionEntitiesChange<T> {
   return {
     type: 'STORE_ACTION_ENTITIES_CHANGE',
     key,
@@ -144,15 +166,20 @@ export type StoreAction =
  * Initial state mapped from schema bei the part's default values. Cast from
  * object because `entries`/`fromEntries` will not retain type info.
  */
-export const initialState: StoreData = Object.fromEntries(Object.entries(schema).map(([key, value]) => [key, value.defaultValue])) as StoreData
+export const initialState: StoreData = Object.fromEntries(
+  Object.entries(schema).map(([key, value]) => [key, value.defaultValue])
+) as StoreData
 
 /**
  * Reducer for store state and cache related actions.
  * @param state Current state.
  * @param action Action to apply.
  */
-export const storeReducer = (state: StoreData, action: StoreAction): StoreData => {
-  if (cacheDebug) {
+export const storeReducer = (
+  state: StoreData,
+  action: StoreAction
+): StoreData => {
+  if (cacheDebug === 'true') {
     console.log(action.type, state, action)
   }
   switch (action.type) {
@@ -168,7 +195,8 @@ export const storeReducer = (state: StoreData, action: StoreAction): StoreData =
       return copy
     }
     case 'STORE_ACTION_ENTITIES_CHANGE': {
-      if (!action.removeAll && !action.remove?.length && !action.add?.length) return state
+      if (!action.removeAll && !action.remove?.length && !action.add?.length)
+        return state
 
       const currentOrDefault = state[action.key]
 
@@ -197,7 +225,9 @@ export const storeReducer = (state: StoreData, action: StoreAction): StoreData =
 
         // Remove the "removed" values and those that will be added again as changed entities.
         const sorter = schemaEntities[action.key].compare
-        const values = currentOrDefault.filter((item) => !deleteKeys.has(item.Id))
+        const values = currentOrDefault.filter(
+          (item) => !deleteKeys.has(item.Id)
+        )
         if (action.add) {
           values.push(...action.add)
           values.sort(sorter as (left: unknown, right: unknown) => number)
@@ -226,11 +256,18 @@ export const storeReducer = (state: StoreData, action: StoreAction): StoreData =
  * @param store The store name.
  * @param debounce Delay before serializing. If data is updated within the given interval, only the last value is saved.
  */
-export function usePersistor<T extends keyof Schema>(data: StoreData, store: T, debounce = 100) {
+export function usePersistor<T extends keyof Schema>(
+  data: StoreData,
+  store: T,
+  debounce = 100
+) {
   const location = data[store]
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      Storage.set(store, (schema[store] as SchemaField<unknown>).serialize(location)).catch()
+      Storage.set(
+        store,
+        (schema[store] as SchemaField<unknown>).serialize(location)
+      ).catch()
     }, debounce)
     return () => {
       clearTimeout(timeoutId)

@@ -1,8 +1,6 @@
-import { View, Text } from 'react-native'
-
-import { Col } from '@/components/generic/containers/Col'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { Text, View } from 'react-native'
+import { Col } from '@/components/generic/containers/Col'
 
 const meta = {
   title: 'Components/Containers/Col',
@@ -33,8 +31,22 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const SampleItem = ({ text, color = '#333' }: { text: string; color?: string }) => (
-  <View style={{ padding: 10, backgroundColor: color, borderRadius: 8, minHeight: 40, justifyContent: 'center' }}>
+const SampleItem = ({
+  text,
+  color = '#333',
+}: {
+  text: string
+  color?: string
+}) => (
+  <View
+    style={{
+      padding: 10,
+      backgroundColor: color,
+      borderRadius: 8,
+      minHeight: 40,
+      justifyContent: 'center',
+    }}
+  >
     <Text style={{ color: 'white', textAlign: 'center' }}>{text}</Text>
   </View>
 )
@@ -43,9 +55,9 @@ export const Default: Story = {
   args: {
     children: (
       <>
-        <SampleItem text="Item 1" />
-        <SampleItem text="Item 2" />
-        <SampleItem text="Item 3" />
+        <SampleItem text='Item 1' />
+        <SampleItem text='Item 2' />
+        <SampleItem text='Item 3' />
       </>
     ),
   },
@@ -56,9 +68,9 @@ export const WithGap: Story = {
     gap: 15,
     children: (
       <>
-        <SampleItem text="Item 1" />
-        <SampleItem text="Item 2" />
-        <SampleItem text="Item 3" />
+        <SampleItem text='Item 1' />
+        <SampleItem text='Item 2' />
+        <SampleItem text='Item 3' />
       </>
     ),
   },
@@ -69,9 +81,9 @@ export const CenterType: Story = {
     type: 'center',
     children: (
       <>
-        <SampleItem text="Centered Item 1" />
-        <SampleItem text="Centered Item 2" />
-        <SampleItem text="Centered Item 3" />
+        <SampleItem text='Centered Item 1' />
+        <SampleItem text='Centered Item 2' />
+        <SampleItem text='Centered Item 3' />
       </>
     ),
   },
@@ -82,9 +94,9 @@ export const StretchType: Story = {
     type: 'stretch',
     children: (
       <>
-        <SampleItem text="Stretched Item 1" />
-        <SampleItem text="Stretched Item 2" />
-        <SampleItem text="Stretched Item 3" />
+        <SampleItem text='Stretched Item 1' />
+        <SampleItem text='Stretched Item 2' />
+        <SampleItem text='Stretched Item 3' />
       </>
     ),
   },
@@ -94,29 +106,44 @@ export const DifferentVariants: Story = {
   render: () => (
     <View style={{ gap: 20 }}>
       <View>
-        <Text style={{ marginBottom: 10, fontWeight: 'bold' }}>Start Variant</Text>
-        <Col variant="start" style={{ height: 200, backgroundColor: '#f0f0f0', padding: 10 }}>
-          <SampleItem text="Item 1" />
-          <SampleItem text="Item 2" />
-          <SampleItem text="Item 3" />
+        <Text style={{ marginBottom: 10, fontWeight: 'bold' }}>
+          Start Variant
+        </Text>
+        <Col
+          variant='start'
+          style={{ height: 200, backgroundColor: '#f0f0f0', padding: 10 }}
+        >
+          <SampleItem text='Item 1' />
+          <SampleItem text='Item 2' />
+          <SampleItem text='Item 3' />
         </Col>
       </View>
 
       <View>
-        <Text style={{ marginBottom: 10, fontWeight: 'bold' }}>End Variant</Text>
-        <Col variant="end" style={{ height: 200, backgroundColor: '#f0f0f0', padding: 10 }}>
-          <SampleItem text="Item 1" />
-          <SampleItem text="Item 2" />
-          <SampleItem text="Item 3" />
+        <Text style={{ marginBottom: 10, fontWeight: 'bold' }}>
+          End Variant
+        </Text>
+        <Col
+          variant='end'
+          style={{ height: 200, backgroundColor: '#f0f0f0', padding: 10 }}
+        >
+          <SampleItem text='Item 1' />
+          <SampleItem text='Item 2' />
+          <SampleItem text='Item 3' />
         </Col>
       </View>
 
       <View>
-        <Text style={{ marginBottom: 10, fontWeight: 'bold' }}>Spaced Variant</Text>
-        <Col variant="spaced" style={{ height: 200, backgroundColor: '#f0f0f0', padding: 10 }}>
-          <SampleItem text="Item 1" />
-          <SampleItem text="Item 2" />
-          <SampleItem text="Item 3" />
+        <Text style={{ marginBottom: 10, fontWeight: 'bold' }}>
+          Spaced Variant
+        </Text>
+        <Col
+          variant='spaced'
+          style={{ height: 200, backgroundColor: '#f0f0f0', padding: 10 }}
+        >
+          <SampleItem text='Item 1' />
+          <SampleItem text='Item 2' />
+          <SampleItem text='Item 3' />
         </Col>
       </View>
     </View>
@@ -130,10 +157,10 @@ export const ComplexLayout: Story = {
     style: { padding: 15, backgroundColor: '#f0f0f0', borderRadius: 8 },
     children: (
       <>
-        <SampleItem text="Header Item" color="#007AFF" />
-        <SampleItem text="Content Item 1" color="#34C759" />
-        <SampleItem text="Content Item 2" color="#FF9500" />
-        <SampleItem text="Footer Item" color="#FF3B30" />
+        <SampleItem text='Header Item' color='#007AFF' />
+        <SampleItem text='Content Item 1' color='#34C759' />
+        <SampleItem text='Content Item 2' color='#FF9500' />
+        <SampleItem text='Footer Item' color='#FF3B30' />
       </>
     ),
   },

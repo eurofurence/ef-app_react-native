@@ -31,7 +31,7 @@ export class Observable<T> {
   set value(to: T) {
     if (to !== this._value) {
       this._value = to
-      this._listeners.forEach((fn) => fn(to))
+      this._listeners.forEach((fn) => void fn(to))
     }
   }
 

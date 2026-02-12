@@ -1,4 +1,4 @@
-import { DealerDetails } from '@/context/data/types.details'
+import type { DealerDetails } from '@/context/data/types.details'
 
 // Mock dealer data for Storybook stories
 export const mockDealerDetails: DealerDetails = {
@@ -81,8 +81,10 @@ export const mockDealerDetailsWithOffDays: DealerDetails = {
 
 export const mockDealerDetailsLongName: DealerDetails = {
   Id: 'dealer-3',
-  DisplayNameOrAttendeeNickname: 'This is a very long dealer name that might wrap to multiple lines and should be handled gracefully by the component',
-  DisplayName: 'This is a very long dealer name that might wrap to multiple lines and should be handled gracefully by the component',
+  DisplayNameOrAttendeeNickname:
+    'This is a very long dealer name that might wrap to multiple lines and should be handled gracefully by the component',
+  DisplayName:
+    'This is a very long dealer name that might wrap to multiple lines and should be handled gracefully by the component',
   Merchandise: 'Digital Art, Commissions, Prints, and Stickers',
   Categories: ['Digital Art', 'Commissions', 'Prints', 'Stickers'],
   Artist: {
@@ -330,7 +332,11 @@ export const mockDealerDetailsDifferentCategories: DealerDetails[] = [
 ]
 
 // Helper function to create dealer instances
-export const createDealerInstance = (details: DealerDetails, present: boolean = true, offDays: string = '') => {
+export const createDealerInstance = (
+  details: DealerDetails,
+  present: boolean = true,
+  offDays: string = ''
+) => {
   return {
     details,
     present,

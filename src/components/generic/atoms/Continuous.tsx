@@ -1,8 +1,14 @@
-import { FC, useEffect } from 'react'
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue, withDelay, withRepeat, withTiming } from 'react-native-reanimated'
+import { type FC, useEffect } from 'react'
+import { type StyleProp, StyleSheet, View, type ViewStyle } from 'react-native'
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withDelay,
+  withRepeat,
+  withTiming,
+} from 'react-native-reanimated'
 
-import { ThemeColor } from '@/context/Theme'
+import type { ThemeColor } from '@/context/Theme'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 /**
@@ -25,7 +31,11 @@ export type ContinuousProps = {
   active?: boolean
 }
 
-export const Continuous: FC<ContinuousProps> = ({ style, color, active = true }) => {
+export const Continuous: FC<ContinuousProps> = ({
+  style,
+  color,
+  active = true,
+}) => {
   // Shared at value.
   const at = useSharedValue(0)
 
@@ -34,7 +44,10 @@ export const Continuous: FC<ContinuousProps> = ({ style, color, active = true })
     if (active) {
       // Active, set to zero and animate.
       at.value = 0
-      at.value = withRepeat(withDelay(600, withTiming(1, { duration: 900 })), -1)
+      at.value = withRepeat(
+        withDelay(600, withTiming(1, { duration: 900 })),
+        -1
+      )
     } else {
       // Inactive set to out of bounds.
       at.value = -1

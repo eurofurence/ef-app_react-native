@@ -1,14 +1,14 @@
 import { Picker } from '@react-native-picker/picker'
 import { captureException } from '@sentry/react-native'
 import { orderBy } from 'lodash'
-import React, { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Animated, Platform } from 'react-native'
 
 import { Label } from '@/components/generic/atoms/Label'
 import { useCache } from '@/context/data/Cache'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { Translation } from '@/i18n'
+import type { Translation } from '@/i18n'
 
 import { Button } from '../generic/containers/Button'
 
@@ -59,7 +59,8 @@ export const LanguagePicker = () => {
   const slideAnim = useRef(new Animated.Value(0)).current
 
   const currentLanguage = settings.language ?? i18n.language
-  const currentLanguageData = languages.find((lang) => lang.code === currentLanguage) || languages[0]
+  const currentLanguageData =
+    languages.find((lang) => lang.code === currentLanguage) || languages[0]
 
   // Animation for the picker for opening and closing.
   useEffect(() => {
@@ -109,13 +110,15 @@ export const LanguagePicker = () => {
 
   return (
     <SettingContainer>
-      <Label variant="bold">{t('changeLanguage')}</Label>
-      <Label variant="narrow" className="mb-2">
+      <Label variant='bold'>{t('changeLanguage')}</Label>
+      <Label variant='narrow' className='mb-2'>
         {t('currentLanguage')}
       </Label>
 
       {!showPicker ? (
-        <Button onPress={() => setShowPicker(true)}>{currentLanguageData.name}</Button>
+        <Button onPress={() => setShowPicker(true)}>
+          {currentLanguageData.name}
+        </Button>
       ) : (
         renderPicker && (
           <Animated.View
@@ -139,7 +142,12 @@ export const LanguagePicker = () => {
               onValueChange={handleLanguageChange}
             >
               {languages.map((it) => (
-                <Picker.Item label={it.name} value={it.code} key={it.code} color={textColor} />
+                <Picker.Item
+                  label={it.name}
+                  value={it.code}
+                  key={it.code}
+                  color={textColor}
+                />
               ))}
             </Picker>
             <Button onPress={() => setShowPicker(false)}>Close</Button>

@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { Marker } from '@/components/generic/atoms/Marker'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { Marker } from '@/components/generic/atoms/Marker'
 
 const meta = {
   title: 'Components/Atoms/Marker',
@@ -18,7 +16,24 @@ const meta = {
   argTypes: {
     markerType: {
       control: { type: 'select' },
-      options: ['map-marker', 'heart', 'star', 'home', 'account', 'cog', 'bell', 'calendar', 'share', 'download', 'search', 'menu', 'close', 'check', 'plus', 'minus'],
+      options: [
+        'map-marker',
+        'heart',
+        'star',
+        'home',
+        'account',
+        'cog',
+        'bell',
+        'calendar',
+        'share',
+        'download',
+        'search',
+        'menu',
+        'close',
+        'check',
+        'plus',
+        'minus',
+      ],
     },
     markerColor: {
       control: { type: 'select' },
@@ -70,10 +85,10 @@ export const DifferentTypes: Story = {
   },
   render: () => (
     <View style={{ gap: 20 }}>
-      <Marker markerType="map-marker" markerColor="marker" markerSize={40} />
-      <Marker markerType="heart" markerColor="marker" markerSize={40} />
-      <Marker markerType="star" markerColor="marker" markerSize={40} />
-      <Marker markerType="home" markerColor="marker" markerSize={40} />
+      <Marker markerType='map-marker' markerColor='marker' markerSize={40} />
+      <Marker markerType='heart' markerColor='marker' markerSize={40} />
+      <Marker markerType='star' markerColor='marker' markerSize={40} />
+      <Marker markerType='home' markerColor='marker' markerSize={40} />
     </View>
   ),
 }
@@ -86,10 +101,10 @@ export const DifferentSizes: Story = {
   },
   render: () => (
     <View style={{ gap: 20 }}>
-      <Marker markerType="map-marker" markerColor="marker" markerSize={24} />
-      <Marker markerType="map-marker" markerColor="marker" markerSize={32} />
-      <Marker markerType="map-marker" markerColor="marker" markerSize={40} />
-      <Marker markerType="map-marker" markerColor="marker" markerSize={48} />
+      <Marker markerType='map-marker' markerColor='marker' markerSize={24} />
+      <Marker markerType='map-marker' markerColor='marker' markerSize={32} />
+      <Marker markerType='map-marker' markerColor='marker' markerSize={40} />
+      <Marker markerType='map-marker' markerColor='marker' markerSize={48} />
     </View>
   ),
 }
@@ -102,10 +117,14 @@ export const DifferentColors: Story = {
   },
   render: () => (
     <View style={{ gap: 20 }}>
-      <Marker markerType="map-marker" markerColor="primary" markerSize={40} />
-      <Marker markerType="map-marker" markerColor="secondary" markerSize={40} />
-      <Marker markerType="map-marker" markerColor="warning" markerSize={40} />
-      <Marker markerType="map-marker" markerColor="notification" markerSize={40} />
+      <Marker markerType='map-marker' markerColor='primary' markerSize={40} />
+      <Marker markerType='map-marker' markerColor='secondary' markerSize={40} />
+      <Marker markerType='map-marker' markerColor='warning' markerSize={40} />
+      <Marker
+        markerType='map-marker'
+        markerColor='notification'
+        markerSize={40}
+      />
     </View>
   ),
 }

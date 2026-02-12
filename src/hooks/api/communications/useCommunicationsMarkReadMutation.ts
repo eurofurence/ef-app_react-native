@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import axios, { type GenericAbortSignal } from 'axios'
 
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
@@ -12,7 +12,11 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
  * @param id The ID of the message.
  * @param signal An abort signal.
  */
-export async function postCommunicationsMarkRead(accessToken: string | null, id: unknown, signal?: GenericAbortSignal) {
+export async function postCommunicationsMarkRead(
+  accessToken: string | null,
+  id: unknown,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
     .post(`${apiBase}/Communication/PrivateMessages/${id}/Read`, true, {
@@ -32,6 +36,9 @@ export function useCommunicationsMarkReadMutation() {
   const { accessToken, idData } = useAuthContext()
   return useMutation({
     mutationFn: (id: unknown) => postCommunicationsMarkRead(accessToken, id),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'communications'] }),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [idData?.sub, 'communications'],
+      }),
   })
 }

@@ -1,8 +1,14 @@
 import { captureException } from '@sentry/react-native'
 import { Redirect } from 'expo-router'
-import { useCallback, useState, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
+import {
+  Linking,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
@@ -32,7 +38,9 @@ const stateToBackground = {
 export default function Register() {
   const { t } = useTranslation('ArtistsAlley')
   const { t: tStatus } = useTranslation('ArtistsAlley', { keyPrefix: 'status' })
-  const { t: a11y } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
+  const { t: a11y } = useTranslation('ArtistsAlley', {
+    keyPrefix: 'accessibility',
+  })
 
   // Get user data for RBAC checks and pre-filling.
   const { claims, user } = useUserContext()
@@ -95,7 +103,9 @@ export default function Register() {
 
   useEffect(() => {
     if (data) {
-      setAnnouncementMessage(a11y('registration_form_loaded', { status: data.State }))
+      setAnnouncementMessage(
+        a11y('registration_form_loaded', { status: data.State })
+      )
     } else {
       setAnnouncementMessage(a11y('registration_form_new'))
     }
@@ -104,10 +114,15 @@ export default function Register() {
   // Compose prefill data.
   const prefill = {
     // Prefilled from current registration, then local data, then reasonable default.
-    displayName: data?.DisplayName ?? localData?.displayName ?? (claims?.name as string) ?? '',
+    displayName:
+      data?.DisplayName ??
+      localData?.displayName ??
+      (claims?.name as string) ??
+      '',
     // Prefilled from current registration, then local data.
     websiteUrl: data?.WebsiteUrl ?? localData?.websiteUrl ?? '',
-    shortDescription: data?.ShortDescription ?? localData?.shortDescription ?? '',
+    shortDescription:
+      data?.ShortDescription ?? localData?.shortDescription ?? '',
     telegramHandle: data?.TelegramHandle ?? localData?.telegramHandle ?? '',
     // Prefilled from current registration only.
     imageUri: data?.Image?.Url ?? '',
@@ -115,36 +130,50 @@ export default function Register() {
     location: '',
   }
 
-  if (!isCheckedIn) return <Redirect href="/artists-alley" />
+  if (!isCheckedIn) return <Redirect href='/artists-alley' />
 
   return (
     <>
       <StatusMessage message={announcementMessage} />
       <ScrollView
         style={StyleSheet.absoluteFill}
-        refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
+        refreshControl={
+          <RefreshControl refreshing={isPending} onRefresh={refetch} />
+        }
         stickyHeaderIndices={[0]}
         accessibilityLabel={a11y('registration_form_scroll')}
         accessibilityHint={a11y('registration_form_scroll_hint')}
       >
         <Header>{t('title')}</Header>
         <Floater containerStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={a11y('registration_form_content')} accessibilityRole="text">
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={a11y('registration_form_content')}
+            accessibilityRole='text'
+          >
             {!data?.State ? null : (
-              <Badge unpad={padFloater} badgeColor={stateToBackground[data.State as keyof typeof stateToBackground]} textColor="white">
+              <Badge
+                unpad={padFloater}
+                badgeColor={
+                  stateToBackground[
+                    data.State as keyof typeof stateToBackground
+                  ]
+                }
+                textColor='white'
+              >
                 {tStatus(data.State)}
               </Badge>
             )}
 
-            <Label type="para" className="my-5">
+            <Label type='para' className='my-5'>
               {t('intro')}
             </Label>
 
             <Button
-              icon="link"
+              icon='link'
               outline
               onPress={() => Linking.openURL(artistAlleyUrl)}
-              accessibilityRole="button"
+              accessibilityRole='button'
               accessibilityLabel={a11y('learn_more_button')}
               accessibilityHint={a11y('learn_more_button_hint')}
             >
@@ -153,9 +182,18 @@ export default function Register() {
 
             {!isPending ? (
               show && data ? (
-                <ArtistsAlleyStatus data={data} onEdit={onEdit} onCheckOut={onCheckOut} onCancel={onCancel} />
+                <ArtistsAlleyStatus
+                  data={data}
+                  onEdit={onEdit}
+                  onCheckOut={onCheckOut}
+                  onCancel={onCancel}
+                />
               ) : (
-                <ArtistsAlleyEdit prefill={prefill} onDismiss={() => setShow(true)} mode={data ? 'change' : 'new'} />
+                <ArtistsAlleyEdit
+                  prefill={prefill}
+                  onDismiss={() => setShow(true)}
+                  mode={data ? 'change' : 'new'}
+                />
               )
             ) : null}
           </View>

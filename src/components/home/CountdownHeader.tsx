@@ -1,14 +1,20 @@
 import { useIsFocused } from '@react-navigation/core'
 import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
 import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
-import { TFunction } from 'i18next'
-import React, { FC } from 'react'
+import type { TFunction } from 'i18next'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleProp, StyleSheet, useWindowDimensions, View, ViewStyle } from 'react-native'
+import {
+  type StyleProp,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  type ViewStyle,
+} from 'react-native'
 
 import { conId, conName, conTimeZone } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
-import { EventDayRecord } from '@/context/data/types.api'
+import type { EventDayRecord } from '@/context/data/types.api'
 import { useNow } from '@/hooks/time/useNow'
 import { dateFnsLocales } from '@/i18n'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
@@ -37,20 +43,28 @@ const isSameDayInTimezone = (date1: Date, date2: string, timezone: string) => {
 /**
  * Calculates the countdown title based on current time and event days.
  */
-const useCountdownTitle = (t: TFunction, now: Date, currentLanguage: string) => {
+const useCountdownTitle = (
+  t: TFunction,
+  now: Date,
+  currentLanguage: string
+) => {
   const { eventDays } = useCache()
   const firstDay = eventDays[0]
   const lastDay = eventDays[eventDays.length - 1]
 
   // Try finding current day.
-  const currentDay = eventDays.find((it: EventDayRecord) => isSameDayInTimezone(now, it.Date, conTimeZone))
+  const currentDay = eventDays.find((it: EventDayRecord) =>
+    isSameDayInTimezone(now, it.Date, conTimeZone)
+  )
   if (currentDay) return currentDay.Name
 
   // Check if before first day.
   if (firstDay) {
     const firstDate = new Date(firstDay.Date)
     if (now < firstDate) {
-      const locale = dateFnsLocales[currentLanguage as keyof typeof dateFnsLocales] || dateFnsLocales.en
+      const locale =
+        dateFnsLocales[currentLanguage as keyof typeof dateFnsLocales] ||
+        dateFnsLocales.en
       const diff = formatDistance(firstDate, now, { locale, addSuffix: true })
       return t('before_event', { conName, diff })
     }
@@ -69,7 +83,9 @@ const useCountdownTitle = (t: TFunction, now: Date, currentLanguage: string) => 
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
   const { t, i18n } = useTranslation('Countdown')
-  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
+  const { t: tAccessibility } = useTranslation('Home', {
+    keyPrefix: 'accessibility',
+  })
   const isFocused = useIsFocused()
   const now = useNow(isFocused ? 60 : 'static') // Convert to Date
 
@@ -77,38 +93,60 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
   const subtitle = useCountdownTitle(t, now, i18n.language)
 
   return (
-    <View style={[styles.container, style]} role="banner" accessibilityLabel={tAccessibility('countdown_header')} accessibilityHint={tAccessibility('countdown_header_hint')}>
+    <View
+      style={[styles.container, style]}
+      role='banner'
+      accessibilityLabel={tAccessibility('countdown_header')}
+      accessibilityHint={tAccessibility('countdown_header_hint')}
+    >
       <ImageBackground
-        key="banner"
+        key='banner'
         style={StyleSheet.absoluteFill}
-        source={width < bannerBreakpoint ? require('@/assets/static/banner_narrow.png') : require('@/assets/static/banner_wide.png')}
-        contentFit="cover"
-        priority="high"
+        source={
+          width < bannerBreakpoint
+            ? require('@/assets/static/banner_narrow.png')
+            : require('@/assets/static/banner_wide.png')
+        }
+        contentFit='cover'
+        priority='high'
         accessibilityLabel={tAccessibility('banner_image')}
-        accessibilityRole="image"
+        accessibilityRole='image'
       />
       <View style={[StyleSheet.absoluteFill, styles.cover]} />
       <Image
         style={styles.logo}
         source={require('@/assets/static/banner_logo.png')}
-        priority="high"
+        priority='high'
         accessibilityLabel={tAccessibility('convention_logo')}
-        accessibilityRole="image"
+        accessibilityRole='image'
       />
-      <Col variant="end" style={styles.textContainer}>
-        <Label type="xl" variant="shadow" color="white" ellipsizeMode="tail" accessibilityRole="header" accessibilityLabel={tAccessibility('convention_name', { name: conId })}>
+      <Col variant='end' style={styles.textContainer}>
+        <Label
+          type='xl'
+          variant='shadow'
+          color='white'
+          ellipsizeMode='tail'
+          accessibilityRole='header'
+          accessibilityLabel={tAccessibility('convention_name', {
+            name: conId,
+          })}
+        >
           {conId}
         </Label>
         <Label
           style={{
             marginLeft: 2,
-            marginBottom: labelTypeStyles.compact.fontSize - labelTypeStyles.compact.lineHeight,
+            marginBottom:
+              labelTypeStyles.compact.fontSize -
+              labelTypeStyles.compact.lineHeight,
           }}
-          type="compact"
-          variant="shadow"
-          color="white"
-          ellipsizeMode="tail"
-          accessibilityLabel={tAccessibility('countdown_status', { status: subtitle })}
+          type='compact'
+          variant='shadow'
+          color='white'
+          ellipsizeMode='tail'
+          accessibilityLabel={tAccessibility('countdown_status', {
+            status: subtitle,
+          })}
         >
           {subtitle}
         </Label>

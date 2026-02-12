@@ -1,5 +1,5 @@
-import { FC } from 'react'
-import { StyleSheet, View, ViewProps } from 'react-native'
+import type { FC } from 'react'
+import { StyleSheet, View, type ViewProps } from 'react-native'
 
 /**
  * Arguments to the row.
@@ -21,12 +21,22 @@ export type RowProps = ViewProps & {
   gap?: number
 }
 
-export const Row: FC<RowProps> = ({ style, type, variant, gap, children, ...rest }) => {
+export const Row: FC<RowProps> = ({
+  style,
+  type,
+  variant,
+  gap,
+  children,
+  ...rest
+}) => {
   // Resolve styles.
   const resType = type ? types[type] : types.regular
   const resVariant = variant ? variants[variant] : variants.start
   return (
-    <View style={[resType, resVariant, typeof gap === 'number' && { gap }, style]} {...rest}>
+    <View
+      style={[resType, resVariant, typeof gap === 'number' && { gap }, style]}
+      {...rest}
+    >
       {children}
     </View>
   )

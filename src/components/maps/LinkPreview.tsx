@@ -1,12 +1,21 @@
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import axios from 'axios'
-import React from 'react'
+import type React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ActivityIndicator, StyleProp, StyleSheet, ViewStyle, TouchableOpacity } from 'react-native'
+import {
+  ActivityIndicator,
+  type StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  type ViewStyle,
+} from 'react-native'
 
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
-import { useThemeBackground, useThemeBorder } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeBorder,
+} from '@/hooks/themes/useThemeHooks'
 import { extractOgMeta } from '@/util/extractOgMeta'
 
 type LinkPreviewProps = {
@@ -32,7 +41,11 @@ function useOgMeta(url: string) {
   })
 }
 
-export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style }) => {
+export const LinkPreview: React.FC<LinkPreviewProps> = ({
+  url,
+  onPress,
+  style,
+}) => {
   const { t } = useTranslation('Maps')
   const { data: ogMeta, isLoading } = useOgMeta(url)
   const styleBackground = useThemeBackground('background')
@@ -48,18 +61,29 @@ export const LinkPreview: React.FC<LinkPreviewProps> = ({ url, onPress, style })
     <TouchableOpacity
       onPress={onPress}
       style={[styles.cardContainer, styleBackground, styleBorder, style]}
-      accessibilityRole="button"
+      accessibilityRole='button'
       accessibilityLabel={getAccessibilityLabel()}
       accessibilityHint={t('accessibility.link_preview_hint')}
     >
       {isLoading ? (
-        <ActivityIndicator accessibilityLabel={t('accessibility.loading_preview')} importantForAccessibility="no" />
+        <ActivityIndicator
+          accessibilityLabel={t('accessibility.loading_preview')}
+          importantForAccessibility='no'
+        />
       ) : !ogMeta?.image ? (
-        <Label accessibilityLabel={t('accessibility.no_preview_available')} importantForAccessibility="no">
+        <Label
+          accessibilityLabel={t('accessibility.no_preview_available')}
+          importantForAccessibility='no'
+        >
           {t('preview_unavailable')}
         </Label>
       ) : (
-        <Image source={{ uri: ogMeta.image }} style={styles.image} accessibilityRole="image" importantForAccessibility="no" />
+        <Image
+          source={{ uri: ogMeta.image }}
+          style={styles.image}
+          accessibilityRole='image'
+          importantForAccessibility='no'
+        />
       )}
     </TouchableOpacity>
   )

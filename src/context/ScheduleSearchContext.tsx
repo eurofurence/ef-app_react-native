@@ -12,7 +12,9 @@ export const ScheduleSearchContext = createContext<{
 export const useScheduleSearch = () => {
   const context = useContext(ScheduleSearchContext)
   if (!context) {
-    throw new Error('useScheduleSearch must be used within a ScheduleSearchContext.Provider')
+    throw new Error(
+      'useScheduleSearch must be used within a ScheduleSearchContext.Provider'
+    )
   }
   return context
 }

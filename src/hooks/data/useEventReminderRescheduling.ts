@@ -3,8 +3,11 @@ import { isAfter } from 'date-fns'
 import { useEffect, useRef } from 'react'
 
 import { useCache } from '@/context/data/Cache'
-import { Notification } from '@/store/background/slice'
-import { cancelEventReminder, scheduleEventReminder } from '@/util/eventReminders'
+import type { Notification } from '@/store/background/slice'
+import {
+  cancelEventReminder,
+  scheduleEventReminder,
+} from '@/util/eventReminders'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
@@ -17,7 +20,9 @@ export function useEventReminderRescheduling() {
 
   // Retrieve timeTravel value from cache, default to 0
   const settings = getValue('settings')
-  const offset = settings?.timeTravelEnabled ? (settings.timeTravelOffset ?? 0) : 0
+  const offset = settings?.timeTravelEnabled
+    ? (settings.timeTravelOffset ?? 0)
+    : 0
 
   const notifications = getValue('notifications')
 
@@ -39,7 +44,12 @@ export function useEventReminderRescheduling() {
 
         if (event) {
           // Check if event changed since notification was created
-          if (isAfter(parseDefaultISO(event.LastChangeDateTimeUtc), parseDefaultISO(notification.dateCreatedUtc))) {
+          if (
+            isAfter(
+              parseDefaultISO(event.LastChangeDateTimeUtc),
+              parseDefaultISO(notification.dateCreatedUtc)
+            )
+          ) {
             try {
               await cancelEventReminder(notification)
               const newNotification = await scheduleEventReminder(event, offset)

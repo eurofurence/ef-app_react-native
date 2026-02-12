@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/react-native'
 import { Redirect, router, useLocalSearchParams } from 'expo-router'
-import React, { useCallback, useState, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 
@@ -23,12 +23,17 @@ export default function Moderate() {
   const { id } = useLocalSearchParams<{ id: string }>()
 
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'review' })
-  const { t: tStatus } = useTranslation('ArtistsAlley', { keyPrefix: 'review.status' })
-  const { t: a11y } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
+  const { t: tStatus } = useTranslation('ArtistsAlley', {
+    keyPrefix: 'review.status',
+  })
+  const { t: a11y } = useTranslation('ArtistsAlley', {
+    keyPrefix: 'accessibility',
+  })
   const { user } = useUserContext()
 
   const { mutateAsync: changeStatus } = useArtistsAlleyItemStatusMutation()
-  const { mutateAsync: deleteRegistration } = useArtistsAlleyItemDeleteMutation()
+  const { mutateAsync: deleteRegistration } =
+    useArtistsAlleyItemDeleteMutation()
 
   // Use toast function.
   const { toast } = useToastContext()
@@ -38,11 +43,19 @@ export default function Moderate() {
   const mainContentRef = useAccessibilityFocus<View>(200)
 
   const isAdmin = Boolean(user?.RoleMap?.Admin)
-  const isPrivileged = isAdmin || Boolean(user?.RoleMap?.ArtistAlleyAdmin) || Boolean(user?.RoleMap?.ArtistAlleyModerator)
+  const isPrivileged =
+    isAdmin ||
+    Boolean(user?.RoleMap?.ArtistAlleyAdmin) ||
+    Boolean(user?.RoleMap?.ArtistAlleyModerator)
 
   useEffect(() => {
     if (data) {
-      setAnnouncementMessage(a11y('moderation_entry_loaded', { name: data.DisplayName, status: data.State }))
+      setAnnouncementMessage(
+        a11y('moderation_entry_loaded', {
+          name: data.DisplayName,
+          status: data.State,
+        })
+      )
     } else {
       setAnnouncementMessage(a11y('moderation_entry_not_found'))
     }
@@ -111,27 +124,49 @@ export default function Moderate() {
     }
   }, [deleteRegistration, id, t, toast])
 
-  if (!(isAdmin || isPrivileged)) return <Redirect href="/artists-alley" />
+  if (!(isAdmin || isPrivileged)) return <Redirect href='/artists-alley' />
 
   return (
     <>
       <StatusMessage message={announcementMessage} />
       <ScrollView
         style={StyleSheet.absoluteFill}
-        refreshControl={<RefreshControl refreshing={isPending} onRefresh={refetch} />}
+        refreshControl={
+          <RefreshControl refreshing={isPending} onRefresh={refetch} />
+        }
         stickyHeaderIndices={[0]}
         accessibilityLabel={a11y('moderation_entry_scroll')}
         accessibilityHint={a11y('moderation_entry_scroll_hint')}
       >
         <Header>{t('title')}</Header>
         <Floater containerStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={a11y('moderation_entry_content')} accessibilityRole="text">
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={a11y('moderation_entry_content')}
+            accessibilityRole='text'
+          >
             {!data?.State ? null : (
-              <Badge unpad={padFloater} badgeColor={stateToBackground[data.State as keyof typeof stateToBackground]} textColor="white">
+              <Badge
+                unpad={padFloater}
+                badgeColor={
+                  stateToBackground[
+                    data.State as keyof typeof stateToBackground
+                  ]
+                }
+                textColor='white'
+              >
                 {tStatus(data.State)}
               </Badge>
             )}
-            {data ? <ArtistsAlleyReview data={data} canDelete={isAdmin} onAccept={doAccept} onReject={doReject} onDelete={doDelete} /> : null}
+            {data ? (
+              <ArtistsAlleyReview
+                data={data}
+                canDelete={isAdmin}
+                onAccept={doAccept}
+                onReject={doReject}
+                onDelete={doDelete}
+              />
+            ) : null}
           </View>
         </Floater>
       </ScrollView>

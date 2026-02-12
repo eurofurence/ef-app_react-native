@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { captureException } from '@sentry/react-native'
 import { setStringAsync } from 'expo-clipboard'
-import React, { useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, View } from 'react-native'
 
@@ -106,39 +106,46 @@ export function DevButtons() {
         placeholderTextColor={withAlpha(styleText.color, 0.6)}
       />
 
-      <Button onPress={loginWithTokenData} icon="key-variant">
+      <Button onPress={loginWithTokenData} icon='key-variant'>
         {t('set_token_data')}
       </Button>
 
-      <Button disabled={!accessToken} onPress={refreshLoginToken} icon="refresh-circle">
+      <Button
+        disabled={!accessToken}
+        onPress={refreshLoginToken}
+        icon='refresh-circle'
+      >
         {t('refresh_login_tokens_and_claims')}
       </Button>
 
-      <Button disabled={!accessToken} onPress={copyTokenData} icon="file-key">
+      <Button disabled={!accessToken} onPress={copyTokenData} icon='file-key'>
         {t('copy_token_data')}
       </Button>
 
-      <Button onPress={() => vibrateAfter(synchronize())} icon="refresh">
+      <Button onPress={() => vibrateAfter(synchronize())} icon='refresh'>
         {t('sync')}
       </Button>
 
-      <Button onPress={() => vibrateAfter(synchronize({ full: true }))} icon="refresh">
+      <Button
+        onPress={() => vibrateAfter(synchronize({ full: true }))}
+        icon='refresh'
+      >
         {t('sync_full', 'Force full sync')}
       </Button>
 
-      <Button onPress={() => vibrateAfter(clear())} icon="refresh">
+      <Button onPress={() => vibrateAfter(clear())} icon='refresh'>
         {t('clear')}
       </Button>
 
-      <Button onPress={copyDevicePushToken} icon="file-key">
+      <Button onPress={copyDevicePushToken} icon='file-key'>
         {t('copy_device_push_token')}
       </Button>
 
-      <Button onPress={clearAsyncStorage} icon="delete">
+      <Button onPress={clearAsyncStorage} icon='delete'>
         {t('clear_async_storage')}
       </Button>
 
-      <Button onPress={forceLogout} icon="logout">
+      <Button onPress={forceLogout} icon='logout'>
         {t('force_logout')}
       </Button>
     </View>

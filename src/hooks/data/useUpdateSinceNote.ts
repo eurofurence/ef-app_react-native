@@ -2,7 +2,7 @@ import { isAfter } from 'date-fns'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useCache } from '@/context/data/Cache'
-import { RecordMetadata } from '@/context/data/types.api'
+import type { RecordMetadata } from '@/context/data/types.api'
 import { useGetNow } from '@/hooks/time/useNow'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
@@ -13,14 +13,28 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
  * @param item The item or null or undefined if not yet loaded.
  * @param delay The delay before setting as viewed.
  */
-export const useUpdateSinceNote = (item: RecordMetadata | null | undefined, delay = 500) => {
+export const useUpdateSinceNote = (
+  item: RecordMetadata | null | undefined,
+  delay = 500
+) => {
   const [invoked, setInvoked] = useState(false)
   const getNow = useGetNow()
   const { getValue, setValue } = useCache()
   const settings = getValue('settings')
   const lastViewed = item ? (settings.lastViewTimes?.[item.Id] ?? null) : null
 
-  const updated = useMemo(() => Boolean(item && lastViewed && isAfter(parseDefaultISO(item.LastChangeDateTimeUtc), parseDefaultISO(lastViewed))), [item, lastViewed])
+  const updated = useMemo(
+    () =>
+      Boolean(
+        item &&
+          lastViewed &&
+          isAfter(
+            parseDefaultISO(item.LastChangeDateTimeUtc),
+            parseDefaultISO(lastViewed)
+          )
+      ),
+    [item, lastViewed]
+  )
   useEffect(() => {
     // Item not given yet or already invoked: skip.
     if (!item?.Id) return

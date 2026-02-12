@@ -1,11 +1,11 @@
 import { mapValues } from 'lodash'
-import { FC, useMemo } from 'react'
-import { View, ViewStyle } from 'react-native'
-import Markdown, { MarkdownProps } from 'react-native-markdown-display'
+import { type FC, useMemo } from 'react'
+import { View, type ViewStyle } from 'react-native'
+import Markdown, { type MarkdownProps } from 'react-native-markdown-display'
 
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
-import { LabelProps } from './Label'
+import type { LabelProps } from './Label'
 
 /**
  * Assigns line heights by factor for styles that have font size but no line height.
@@ -22,7 +22,8 @@ const deriveLineHeights = <
   factor = 1.25
 ) =>
   mapValues(styles, (style) => {
-    if (style.fontSize === undefined || style.lineHeight !== undefined) return style
+    if (style.fontSize === undefined || style.lineHeight !== undefined)
+      return style
     return { ...style, lineHeight: Math.ceil(style.fontSize * factor) }
   })
 
@@ -135,7 +136,8 @@ const useMarkdownTheme = () => {
   )
 }
 
-const MarkdownComponent: FC<MarkdownProps & { children?: string }> = Markdown as any
+const MarkdownComponent: FC<MarkdownProps & { children?: string }> =
+  Markdown as any
 
 /**
  * Matches newlines with carriage return or carriage return and newline, for normalization.
@@ -150,7 +152,8 @@ const paraspace = /(?<!\s)\n(?!\n|\s*\*|\s*-|\s*\+|\s*\d|#)/gm
 /**
  * Matches links, checking if they were not in a markdown link segment.
  */
-const links = /(]\(|\[)?https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*/gi
+const links =
+  /(]\(|\[)?https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*/gi
 
 export type MarkdownContentProps = {
   defaultType?: LabelProps['type']
@@ -160,7 +163,10 @@ export type MarkdownContentProps = {
   children?: string
 }
 
-export const MarkdownContent: FC<MarkdownContentProps> = ({ style, children }) => {
+export const MarkdownContent: FC<MarkdownContentProps> = ({
+  style,
+  children,
+}) => {
   const fixed = useMemo(
     () =>
       children
@@ -178,7 +184,9 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({ style, children }) =
 
   return (
     <View style={style}>
-      <MarkdownComponent style={markdownStyles as any}>{fixed}</MarkdownComponent>
+      <MarkdownComponent style={markdownStyles as any}>
+        {fixed}
+      </MarkdownComponent>
     </View>
   )
 }

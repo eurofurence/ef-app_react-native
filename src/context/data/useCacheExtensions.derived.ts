@@ -2,12 +2,15 @@ import { getHours } from 'date-fns'
 import { toZonedTime } from 'date-fns-tz'
 import { flatMap, maxBy, uniq } from 'lodash'
 
-import { IconNames } from '@/components/generic/atoms/Icon'
+import type { IconNames } from '@/components/generic/atoms/Icon'
 import { conTimeZone } from '@/configuration'
-import { AttendanceDay, EventDayDetails } from '@/context/data/types.details'
+import type {
+  AttendanceDay,
+  EventDayDetails,
+} from '@/context/data/types.details'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
-import { DealerRecord } from './types.api'
+import type { DealerRecord } from './types.api'
 
 export function deriveHosts(panelHosts: string | undefined) {
   return (
@@ -27,7 +30,9 @@ export function deriveCategorizedTime(dateStr: string) {
   return 'night'
 }
 
-export function deriveIconFromTags(tags: string[] | null | undefined): IconNames | undefined {
+export function deriveIconFromTags(
+  tags: string[] | null | undefined
+): IconNames | undefined {
   if (!tags) return
   if (tags.includes('supersponsors_only')) return 'star-circle'
   if (tags.includes('sponsors_only')) return 'star'
@@ -39,7 +44,9 @@ export function deriveIconFromTags(tags: string[] | null | undefined): IconNames
   if (tags.includes('photoshoot')) return 'camera'
 }
 
-export function deriveBadgesFromTags(tags: string[] | null | undefined): IconNames[] | undefined {
+export function deriveBadgesFromTags(
+  tags: string[] | null | undefined
+): IconNames[] | undefined {
   if (!tags) return []
 
   const badges: IconNames[] = []
@@ -47,11 +54,14 @@ export function deriveBadgesFromTags(tags: string[] | null | undefined): IconNam
   return badges
 }
 
-export const deriveIsSuperSponsorsOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('supersponsors_only'))
+export const deriveIsSuperSponsorsOnly = (tags: string[] | null | undefined) =>
+  Boolean(tags?.includes('supersponsors_only'))
 
-export const deriveIsSponsorsOnly = (tags: string[] | null | undefined) => Boolean(tags?.includes('sponsors_only'))
+export const deriveIsSponsorsOnly = (tags: string[] | null | undefined) =>
+  Boolean(tags?.includes('sponsors_only'))
 
-export const deriveIsMaskRequired = (tags: string[] | null | undefined) => Boolean(tags?.includes('mask_required'))
+export const deriveIsMaskRequired = (tags: string[] | null | undefined) =>
+  Boolean(tags?.includes('mask_required'))
 
 export function deriveAttendanceNames(dealer: DealerRecord) {
   const result: AttendanceDay[] = []
@@ -61,7 +71,10 @@ export function deriveAttendanceNames(dealer: DealerRecord) {
   return result
 }
 
-export function deriveAttendanceDays(days: readonly EventDayDetails[], dealer: DealerRecord) {
+export function deriveAttendanceDays(
+  days: readonly EventDayDetails[],
+  dealer: DealerRecord
+) {
   const result: EventDayDetails[] = []
   for (const day of days) {
     // Sun:0, Mon:1 , Tue:2, Wed:3, Thu:4, Fri:5, Sat:6.
@@ -76,12 +89,15 @@ export function deriveDealerTable(dealer: DealerRecord) {
   if (!dealer.ShortDescription) return undefined
   if (!dealer.ShortDescription?.startsWith('Table')) return undefined
 
-  return dealer.ShortDescription.split(/\r?\n/, 1)[0].substring('Table'.length).trim()
+  return dealer.ShortDescription.split(/\r?\n/, 1)[0]
+    .substring('Table'.length)
+    .trim()
 }
 
 export function deriveDealerDescription(dealer: DealerRecord) {
   if (!dealer.ShortDescription) return dealer.ShortDescription
-  if (!dealer.ShortDescription?.startsWith('Table')) return dealer.ShortDescription
+  if (!dealer.ShortDescription?.startsWith('Table'))
+    return dealer.ShortDescription
 
   return dealer.ShortDescription.split(/\r?\n/).slice(1).join('\n').trimStart()
 }
@@ -96,7 +112,12 @@ export function deriveAnnouncementTitle(title: string, content: string) {
   if (!content.startsWith(init)) return title
 
   // Check the longest full sentence to be extracted. Use if present.
-  const index = Math.max(init.indexOf('.'), init.indexOf('!'), init.indexOf('?'), init.indexOf('\n'))
+  const index = Math.max(
+    init.indexOf('.'),
+    init.indexOf('!'),
+    init.indexOf('?'),
+    init.indexOf('\n')
+  )
   if (index < 0) return init
   return init.substring(0, index + 1)
 }
@@ -141,8 +162,18 @@ export function createCategoryMapper(dealers: readonly DealerRecord[]) {
     return Math.log(dealers.length / (n + 1)) + 1
   }
 
-  const allCategories = uniq(flatMap(dealers, (dealer) => dealer.Categories ?? []))
-  const allIdf = Object.fromEntries(allCategories.map((category) => [category, idf(category)]))
+  const allCategories = uniq(
+    flatMap(dealers, (dealer) => dealer.Categories ?? [])
+  )
+  const allIdf = Object.fromEntries(
+    allCategories.map((category) => [category, idf(category)])
+  )
 
-  return (categories: string[] | undefined) => (categories ? (maxBy(categories, (category) => tf(category, categories) * allIdf[category]!) ?? null) : null)
+  return (categories: string[] | undefined) =>
+    categories
+      ? (maxBy(
+          categories,
+          (category) => tf(category, categories) * allIdf[category]!
+        ) ?? null)
+      : null
 }

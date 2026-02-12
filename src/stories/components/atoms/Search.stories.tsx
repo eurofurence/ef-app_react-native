@@ -1,10 +1,8 @@
+import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { useState } from 'react'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
-
 import { Search } from '@/components/generic/atoms/Search'
-
-import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 
 const meta = {
   title: 'Components/Atoms/Search',
@@ -46,7 +44,7 @@ export const WithPlaceholder: Story = {
     setFilter: fn(),
     placeholder: 'Search events...',
   },
-  render: () => <SearchWrapper placeholder="Search events..." />,
+  render: () => <SearchWrapper placeholder='Search events...' />,
 }
 
 export const WithInitialValue: Story = {
@@ -54,7 +52,7 @@ export const WithInitialValue: Story = {
     filter: 'convention',
     setFilter: fn(),
   },
-  render: () => <SearchWrapper initialFilter="convention" />,
+  render: () => <SearchWrapper initialFilter='convention' />,
 }
 
 export const WithSubmit: Story = {
@@ -64,7 +62,9 @@ export const WithSubmit: Story = {
     placeholder: 'Search and press enter...',
     submit: fn(),
   },
-  render: () => <SearchWrapper placeholder="Search and press enter..." submit={fn()} />,
+  render: () => (
+    <SearchWrapper placeholder='Search and press enter...' submit={fn()} />
+  ),
 }
 
 export const MultipleSearchBoxes: Story = {
@@ -74,9 +74,9 @@ export const MultipleSearchBoxes: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <SearchWrapper placeholder="Search events..." />
-      <SearchWrapper placeholder="Search dealers..." />
-      <SearchWrapper placeholder="Search announcements..." />
+      <SearchWrapper placeholder='Search events...' />
+      <SearchWrapper placeholder='Search dealers...' />
+      <SearchWrapper placeholder='Search announcements...' />
     </View>
   ),
 }
@@ -92,8 +92,18 @@ export const Interactive: Story = {
 
     return (
       <View style={{ gap: 20 }}>
-        <Search filter={filter1} setFilter={setFilter1} placeholder="Search events..." submit={fn()} />
-        <Search filter={filter2} setFilter={setFilter2} placeholder="Search dealers..." submit={fn()} />
+        <Search
+          filter={filter1}
+          setFilter={setFilter1}
+          placeholder='Search events...'
+          submit={fn()}
+        />
+        <Search
+          filter={filter2}
+          setFilter={setFilter2}
+          placeholder='Search dealers...'
+          submit={fn()}
+        />
       </View>
     )
   },

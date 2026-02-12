@@ -1,10 +1,10 @@
 import { format } from 'date-fns'
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View, ViewStyle } from 'react-native'
+import { StyleSheet, View, type ViewStyle } from 'react-native'
 
 import { Pressable } from '@/components/generic/Pressable'
-import { CommunicationRecord } from '@/context/data/types.api'
+import type { CommunicationRecord } from '@/context/data/types.api'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { appStyles } from '../AppStyles'
@@ -20,7 +20,12 @@ export type PrivateMessageCardProps = {
   onPress: (item: CommunicationRecord) => void
 }
 
-export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle, style, item, onPress }) => {
+export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({
+  containerStyle,
+  style,
+  item,
+  onPress,
+}) => {
   const { t } = useTranslation('PrivateMessageList')
   const styleContainer = useThemeBackground('background')
 
@@ -32,7 +37,7 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle
       <Pressable
         style={[styles.container, appStyles.shadow, styleContainer, style]}
         onPress={() => onPress?.(item)}
-        accessibilityRole="button"
+        accessibilityRole='button'
         accessibilityLabel={t('accessibility.message_card', {
           subject: item.Subject,
           status: readStatus,
@@ -47,11 +52,11 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle
         <Row style={styles.main}>
           <Col style={styles.title}>
             <Label
-              type="h4"
-              className="mb-3"
+              type='h4'
+              className='mb-3'
               variant={item.ReadDateTimeUtc === null ? 'bold' : 'regular'}
               color={item.ReadDateTimeUtc === null ? 'important' : 'soften'}
-              ellipsizeMode="tail"
+              ellipsizeMode='tail'
             >
               {item.Subject}
             </Label>
@@ -68,8 +73,12 @@ export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({ containerStyle
               })}
             </Label>
           </Col>
-          <View style={styles.itemChevron} accessibilityElementsHidden={true} importantForAccessibility="no">
-            <Icon name="chevron-right" size={30} />
+          <View
+            style={styles.itemChevron}
+            accessibilityElementsHidden={true}
+            importantForAccessibility='no'
+          >
+            <Icon name='chevron-right' size={30} />
           </View>
         </Row>
       </Pressable>

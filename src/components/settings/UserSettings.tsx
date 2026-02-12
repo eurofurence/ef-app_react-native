@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
@@ -20,7 +19,7 @@ export function UserSettings() {
   return (
     <View>
       {/* User visible settings, title */}
-      <Section title={t('settingsSection')} icon="cog" />
+      <Section title={t('settingsSection')} icon='cog' />
 
       {/* Allow choosing theme */}
       <ThemePicker />
@@ -38,7 +37,11 @@ export function UserSettings() {
       <Warnings />
 
       {/* Force full sync (fetch all data) */}
-      <Button disabled={isSynchronizing} onPress={() => vibrateAfter(synchronize({ full: true }))} icon="refresh">
+      <Button
+        disabled={isSynchronizing}
+        onPress={() => vibrateAfter(synchronize({ full: true }))}
+        icon='refresh'
+      >
         {t('sync_full')}
       </Button>
     </View>

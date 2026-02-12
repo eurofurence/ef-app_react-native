@@ -5,7 +5,9 @@ import { AccessibilityInfo, findNodeHandle, Platform } from 'react-native'
  * Hook to automatically focus an element for screen readers when it mounts
  * @param delay Optional delay in milliseconds before focusing
  */
-export const useAccessibilityFocus = <T extends React.Component>(delay?: number) => {
+export const useAccessibilityFocus = <T extends React.Component>(
+  delay?: number
+) => {
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -30,9 +32,19 @@ export const useAccessibilityFocus = <T extends React.Component>(delay?: number)
  * @param message The message to announce
  * @param interrupt Whether to interrupt current announcements (assertive) or wait (polite)
  */
-export const announceForAccessibility = (message: string, interrupt: boolean = false) => {
+export const announceForAccessibility = (
+  message: string,
+  interrupt: boolean = false
+) => {
   if (message) {
-    AccessibilityInfo.announceForAccessibility(message)
+    if (interrupt) {
+      // Use announceForAccessibilityWithOptions with queue: false to interrupt
+      AccessibilityInfo.announceForAccessibilityWithOptions?.(message, {
+        queue: false,
+      }) ?? AccessibilityInfo.announceForAccessibility(message)
+    } else {
+      AccessibilityInfo.announceForAccessibility(message)
+    }
   }
 }
 
@@ -42,7 +54,11 @@ export const announceForAccessibility = (message: string, interrupt: boolean = f
  * @param condition The condition to watch for changes
  * @param interrupt Whether to interrupt current announcements (assertive) or wait (polite)
  */
-export const useAccessibilityAnnouncement = (message: string, condition: any, interrupt: boolean = false) => {
+export const useAccessibilityAnnouncement = (
+  message: string,
+  condition: any,
+  interrupt: boolean = false
+) => {
   useEffect(() => {
     if (message) {
       announceForAccessibility(message, interrupt)

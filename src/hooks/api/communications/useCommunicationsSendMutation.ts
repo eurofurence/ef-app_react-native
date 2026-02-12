@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { GenericAbortSignal } from 'axios'
+import axios, { type GenericAbortSignal } from 'axios'
 
 import { apiBase } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
@@ -24,17 +24,25 @@ export type CommunicationsSendData = {
  * @param data The message data.
  * @param signal An abort signal.
  */
-export async function postCommunicationsSend(accessToken: string | null, data: CommunicationsSendData, signal?: GenericAbortSignal) {
+export async function postCommunicationsSend(
+  accessToken: string | null,
+  data: CommunicationsSendData,
+  signal?: GenericAbortSignal
+) {
   if (!accessToken) throw new Error('Unauthorized')
   const { type, ...message } = data
   return await axios
-    .post(`${apiBase}/Communication/PrivateMessages/:${type ?? 'byRegistrationId'}`, message, {
-      signal: signal,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    .post(
+      `${apiBase}/Communication/PrivateMessages/:${type ?? 'byRegistrationId'}`,
+      message,
+      {
+        signal: signal,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+      }
+    )
     .then((res) => res.data)
 }
 
@@ -44,7 +52,11 @@ export async function postCommunicationsSend(accessToken: string | null, data: C
 export function useCommunicationsSendMutation() {
   const { accessToken, idData } = useAuthContext()
   return useMutation({
-    mutationFn: (data: CommunicationsSendData) => postCommunicationsSend(accessToken, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: [idData?.sub, 'communications'] }),
+    mutationFn: (data: CommunicationsSendData) =>
+      postCommunicationsSend(accessToken, data),
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [idData?.sub, 'communications'],
+      }),
   })
 }

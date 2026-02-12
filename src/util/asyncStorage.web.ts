@@ -1,6 +1,8 @@
 // Platform web overrides.
 
-export async function multiGet(keys: readonly string[]): Promise<readonly [string, string | null][]> {
+export async function multiGet(
+  keys: readonly string[]
+): Promise<readonly [string, string | null][]> {
   return keys.map((key) => [key, localStorage.getItem(key)])
 }
 

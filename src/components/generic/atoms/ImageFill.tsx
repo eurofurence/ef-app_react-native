@@ -1,10 +1,15 @@
-import * as React from 'react'
-import { FC, useMemo, useState } from 'react'
-import { Dimensions, StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
+import { type FC, useMemo, useState } from 'react'
+import {
+  Dimensions,
+  type StyleProp,
+  StyleSheet,
+  View,
+  type ViewStyle,
+} from 'react-native'
 
-import { ImageDetails } from '@/context/data/types.details'
+import type { ImageDetails } from '@/context/data/types.details'
 
-import { Image, ImageProps } from './Image'
+import { Image, type ImageProps } from './Image'
 import { sourceFromImage } from './Image.common'
 
 const initialSize = { width: Dimensions.get('window').width - 40, height: 160 }
@@ -33,7 +38,9 @@ export type ImageFillProps = {
 }
 
 export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
-  const [size, setSize] = useState<{ width: number; height: number }>(initialSize)
+  const [size, setSize] = useState<{ width: number; height: number }>(
+    initialSize
+  )
 
   const arrangerStyle = useMemo<ViewStyle | null>(() => {
     if (!target) return null
@@ -60,15 +67,33 @@ export const ImageFill: FC<ImageFillProps> = ({ style, image, target }) => {
       top: 0,
       width: image.Width,
       height: image.Height,
-      transform: [{ translateX: size.width / 2 - target.x }, { translateY: size.height / 2 - target.y }],
+      transform: [
+        { translateX: size.width / 2 - target.x },
+        { translateY: size.height / 2 - target.y },
+      ],
     }
   }, [size.width, size.height, target, image])
 
   return (
-    <View style={[StyleSheet.absoluteFill, style]} onLayout={(e) => setSize(e.nativeEvent.layout)}>
-      <Image style={StyleSheet.absoluteFill} contentFit="cover" blurRadius={20} source={sourceFromImage(image)} priority="normal" />
+    <View
+      style={[StyleSheet.absoluteFill, style]}
+      onLayout={(e) => setSize(e.nativeEvent.layout)}
+    >
+      <Image
+        style={StyleSheet.absoluteFill}
+        contentFit='cover'
+        blurRadius={20}
+        source={sourceFromImage(image)}
+        priority='normal'
+      />
       <View style={arrangerStyle}>
-        <Image style={imageStyle} contentFit="fill" contentPosition="top left" source={sourceFromImage(image)} priority="normal" />
+        <Image
+          style={imageStyle}
+          contentFit='fill'
+          contentPosition='top left'
+          source={sourceFromImage(image)}
+          priority='normal'
+        />
       </View>
     </View>
   )

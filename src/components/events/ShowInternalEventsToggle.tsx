@@ -1,11 +1,14 @@
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, ViewProps } from 'react-native'
+import { StyleSheet, type ViewProps } from 'react-native'
 
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable } from '@/components/generic/Pressable'
 import { useCurrentUser } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
-import { useThemeBackground, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
 export function ShowInternalEventsToggle({ style, ...props }: ViewProps) {
   const { t } = useTranslation('Events')
@@ -22,14 +25,33 @@ export function ShowInternalEventsToggle({ style, ...props }: ViewProps) {
   if (!isStaff) return null
   return (
     <Pressable
-      onPress={() => setValue('settings', { ...getValue('settings'), showInternalEvents: !showInternal })}
-      accessibilityRole="button"
-      accessibilityLabel={showInternal ? t('hide_internal_events', { defaultValue: 'Hide internal events' }) : t('show_internal_events', { defaultValue: 'Show internal events' })}
-      accessibilityHint={t('toggle_internal_events', { defaultValue: 'Toggle internal events filter' })}
+      onPress={() =>
+        setValue('settings', {
+          ...getValue('settings'),
+          showInternalEvents: !showInternal,
+        })
+      }
+      accessibilityRole='button'
+      accessibilityLabel={
+        showInternal
+          ? t('hide_internal_events', { defaultValue: 'Hide internal events' })
+          : t('show_internal_events', { defaultValue: 'Show internal events' })
+      }
+      accessibilityHint={t('toggle_internal_events', {
+        defaultValue: 'Toggle internal events filter',
+      })}
       style={[styles.toggle, toggleBackground, style]}
       {...props}
     >
-      <Icon name={showInternal ? 'briefcase-variant-outline' : 'briefcase-variant-off-outline'} size={22} color={iconColor} />
+      <Icon
+        name={
+          showInternal
+            ? 'briefcase-variant-outline'
+            : 'briefcase-variant-off-outline'
+        }
+        size={22}
+        color={iconColor}
+      />
     </Pressable>
   )
 }

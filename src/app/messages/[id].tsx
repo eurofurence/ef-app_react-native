@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { Redirect, router, useLocalSearchParams } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -61,14 +61,20 @@ export default function MessageItem() {
     }
   }, [message, a11y])
 
-  if (!message) return <Redirect href="/messages" />
+  if (!message) return <Redirect href='/messages' />
 
-  const formattedDate = message.ReceivedDateTimeUtc ? format(parseDefaultISO(message.ReceivedDateTimeUtc), 'PPpp') : ''
+  const formattedDate = message.ReceivedDateTimeUtc
+    ? format(parseDefaultISO(message.ReceivedDateTimeUtc), 'PPpp')
+    : ''
 
   return (
     <>
       {/* Status message for screen reader announcement */}
-      <StatusMessage message={announcementMessage} type="assertive" visible={false} />
+      <StatusMessage
+        message={announcementMessage}
+        type='assertive'
+        visible={false}
+      />
 
       <ScrollView
         style={[StyleSheet.absoluteFill, backgroundStyle]}
@@ -79,14 +85,18 @@ export default function MessageItem() {
       >
         <Header>{message.AuthorName}</Header>
         <Floater contentStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={a11y('accessibility.message_content')} accessibilityRole="text">
-            <Label type="h1" className="mt-8 mb-3">
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={a11y('accessibility.message_content')}
+            accessibilityRole='text'
+          >
+            <Label type='h1' className='mt-8 mb-3'>
               {message.Subject}
             </Label>
 
-            <Row style={styles.byline} variant="spaced">
+            <Row style={styles.byline} variant='spaced'>
               <Label>{formattedDate}</Label>
-              <Label style={styles.tag} ellipsizeMode="head" numberOfLines={1}>
+              <Label style={styles.tag} ellipsizeMode='head' numberOfLines={1}>
                 {t('from', { authorName: message.AuthorName })}
               </Label>
             </Row>

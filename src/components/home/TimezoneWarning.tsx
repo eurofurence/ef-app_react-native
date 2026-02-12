@@ -1,6 +1,6 @@
 import { formatInTimeZone } from 'date-fns-tz'
 import { useCalendars } from 'expo-localization'
-import React, { FC } from 'react'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { conName, conTimeZone } from '@/configuration'
@@ -24,9 +24,13 @@ const getUtcOffset = (date: Date, timeZone: string): number => {
   return sign * (hours * 60 + minutes)
 }
 
-export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => {
+export const TimezoneWarning: FC<TimezoneWarningProps> = ({
+  parentPad = 0,
+}) => {
   const { t } = useTranslation('Home')
-  const { t: tAccessibility } = useTranslation('Home', { keyPrefix: 'accessibility' })
+  const { t: tAccessibility } = useTranslation('Home', {
+    keyPrefix: 'accessibility',
+  })
   const { timeZone } = useCalendars()[0]
   const { isHidden, hideWarning } = useWarningState('timeZoneWarningsHidden')
 
@@ -43,7 +47,15 @@ export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => 
   }
 
   return (
-    <Badge unpad={parentPad} badgeColor="background" textColor="text" textType="para" icon="clock" role="alert" accessibilityLabel={tAccessibility('timezone_warning_container')}>
+    <Badge
+      unpad={parentPad}
+      badgeColor='background'
+      textColor='text'
+      textType='para'
+      icon='clock'
+      role='alert'
+      accessibilityLabel={tAccessibility('timezone_warning_container')}
+    >
       <Label
         accessibilityLabel={tAccessibility('timezone_warning_content', {
           convention: conName,
@@ -51,17 +63,21 @@ export const TimezoneWarning: FC<TimezoneWarningProps> = ({ parentPad = 0 }) => 
           deviceTimeZone: timeZone,
         })}
       >
-        {t('different_timezone', { convention: conName, conTimeZone, deviceTimeZone: timeZone })}
+        {t('different_timezone', {
+          convention: conName,
+          conTimeZone,
+          deviceTimeZone: timeZone,
+        })}
       </Label>
       <Label
-        variant="bold"
-        color="secondary"
+        variant='bold'
+        color='secondary'
         onPress={hideWarning}
-        accessibilityRole="button"
+        accessibilityRole='button'
         accessibilityLabel={tAccessibility('hide_timezone_warning')}
         accessibilityHint={tAccessibility('hide_timezone_warning_hint')}
       >
-        {' ' + t('warnings.hide')}
+        {` ${t('warnings.hide')}`}
       </Label>
     </Badge>
   )

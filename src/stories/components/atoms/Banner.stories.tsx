@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { Banner } from '@/components/generic/atoms/Banner'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { Banner } from '@/components/generic/atoms/Banner'
 
 const meta = {
   title: 'Components/Atoms/Banner',
@@ -90,7 +88,7 @@ export const DifferentAspectRatios: Story = {
           LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
           IsDeleted: 0,
         }}
-        title="Wide Banner"
+        title='Wide Banner'
         viewable={true}
       />
       <Banner
@@ -106,7 +104,7 @@ export const DifferentAspectRatios: Story = {
           LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
           IsDeleted: 0,
         }}
-        title="Square Banner"
+        title='Square Banner'
         viewable={true}
       />
       <Banner
@@ -122,7 +120,7 @@ export const DifferentAspectRatios: Story = {
           LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
           IsDeleted: 0,
         }}
-        title="Tall Banner"
+        title='Tall Banner'
         viewable={true}
       />
     </View>

@@ -1,11 +1,11 @@
 import { isWithinInterval, subMinutes } from 'date-fns'
-import React, { FC, useMemo } from 'react'
+import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { useEventCardInteractions } from '@/components/events/Events.common'
 import { useCache } from '@/context/data/Cache'
-import { EventDetails } from '@/context/data/types.details'
+import type { EventDetails } from '@/context/data/types.details'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 import { Section } from '../generic/atoms/Section'
@@ -43,10 +43,20 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
 
   return (
     <>
-      <Section title={t('upcoming_title')} subtitle={t('upcoming_subtitle')} icon="clock" />
+      <Section
+        title={t('upcoming_title')}
+        subtitle={t('upcoming_subtitle')}
+        icon='clock'
+      />
       <View style={styles.condense}>
         {upcoming.map((event) => (
-          <EventCard key={event.details.Id} event={event} type="duration" onPress={onPress} onLongPress={onLongPress} />
+          <EventCard
+            key={event.details.Id}
+            event={event}
+            type='duration'
+            onPress={onPress}
+            onLongPress={onLongPress}
+          />
         ))}
       </View>
     </>

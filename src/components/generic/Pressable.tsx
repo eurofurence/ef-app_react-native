@@ -1,4 +1,9 @@
-import { StyleProp, TouchableOpacity, TouchableOpacityProps, ViewStyle } from 'react-native'
+import {
+  type StyleProp,
+  TouchableOpacity,
+  type TouchableOpacityProps,
+  type ViewStyle,
+} from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 

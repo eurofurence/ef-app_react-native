@@ -1,5 +1,5 @@
 import { Redirect, useLocalSearchParams } from 'expo-router'
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -14,7 +14,9 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function ArtistsAlleyDetail() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'view' })
-  const { t: a11y } = useTranslation('ArtistsAlley', { keyPrefix: 'accessibility' })
+  const { t: a11y } = useTranslation('ArtistsAlley', {
+    keyPrefix: 'accessibility',
+  })
   const { id } = useLocalSearchParams<{ id: string }>()
   const { user } = useUserContext()
   const { artistAlley } = useCache()
@@ -24,14 +26,18 @@ export default function ArtistsAlleyDetail() {
 
   useEffect(() => {
     if (artistAlleyEntry) {
-      setAnnouncementMessage(a11y('artists_alley_entry_loaded', { name: artistAlleyEntry.DisplayName }))
+      setAnnouncementMessage(
+        a11y('artists_alley_entry_loaded', {
+          name: artistAlleyEntry.DisplayName,
+        })
+      )
     } else {
       setAnnouncementMessage(a11y('artists_alley_entry_not_found'))
     }
   }, [artistAlleyEntry, a11y])
 
   const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
-  if (!user || !isCheckedIn) return <Redirect href="/artists-alley" />
+  if (!user || !isCheckedIn) return <Redirect href='/artists-alley' />
 
   return (
     <>
@@ -46,8 +52,14 @@ export default function ArtistsAlleyDetail() {
           {t('title')} – {artistAlleyEntry?.DisplayName ?? ''}
         </Header>
         <Floater containerStyle={appStyles.trailer}>
-          <View ref={mainContentRef} accessibilityLabel={a11y('artists_alley_entry_content')} accessibilityRole="text">
-            {artistAlleyEntry ? <ArtistsAlleyContent data={artistAlleyEntry} /> : null}
+          <View
+            ref={mainContentRef}
+            accessibilityLabel={a11y('artists_alley_entry_content')}
+            accessibilityRole='text'
+          >
+            {artistAlleyEntry ? (
+              <ArtistsAlleyContent data={artistAlleyEntry} />
+            ) : null}
           </View>
         </Floater>
       </ScrollView>

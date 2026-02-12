@@ -1,8 +1,6 @@
-import { View } from 'react-native'
-
-import { Image } from '@/components/generic/atoms/Image'
-
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { View } from 'react-native'
+import { Image } from '@/components/generic/atoms/Image'
 
 const meta = {
   title: 'Components/Atoms/Image',
@@ -40,9 +38,18 @@ export const Default: Story = {
 export const DifferentSizes: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
-      <Image source={{ uri: 'https://picsum.photos/100/100' }} style={{ width: 100, height: 100 }} />
-      <Image source={{ uri: 'https://picsum.photos/200/200' }} style={{ width: 200, height: 200 }} />
-      <Image source={{ uri: 'https://picsum.photos/300/300' }} style={{ width: 300, height: 300 }} />
+      <Image
+        source={{ uri: 'https://picsum.photos/100/100' }}
+        style={{ width: 100, height: 100 }}
+      />
+      <Image
+        source={{ uri: 'https://picsum.photos/200/200' }}
+        style={{ width: 200, height: 200 }}
+      />
+      <Image
+        source={{ uri: 'https://picsum.photos/300/300' }}
+        style={{ width: 300, height: 300 }}
+      />
     </View>
   ),
 }
@@ -50,9 +57,21 @@ export const DifferentSizes: Story = {
 export const DifferentContentFit: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
-      <Image source={{ uri: 'https://picsum.photos/400/200' }} style={{ width: 200, height: 100 }} contentFit="cover" />
-      <Image source={{ uri: 'https://picsum.photos/400/200' }} style={{ width: 200, height: 100 }} contentFit="contain" />
-      <Image source={{ uri: 'https://picsum.photos/400/200' }} style={{ width: 200, height: 100 }} contentFit="fill" />
+      <Image
+        source={{ uri: 'https://picsum.photos/400/200' }}
+        style={{ width: 200, height: 100 }}
+        contentFit='cover'
+      />
+      <Image
+        source={{ uri: 'https://picsum.photos/400/200' }}
+        style={{ width: 200, height: 100 }}
+        contentFit='contain'
+      />
+      <Image
+        source={{ uri: 'https://picsum.photos/400/200' }}
+        style={{ width: 200, height: 100 }}
+        contentFit='fill'
+      />
     </View>
   ),
 }

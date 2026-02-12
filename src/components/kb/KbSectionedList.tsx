@@ -1,11 +1,14 @@
 import { FlashList } from '@shopify/flash-list'
-import React, { FC, ReactElement, useCallback, useMemo } from 'react'
+import { type FC, type ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Dimensions, StyleSheet } from 'react-native'
 
 import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
 import { useCache } from '@/context/data/Cache'
-import { EventDetails, KnowledgeEntryDetails, KnowledgeGroupDetails } from '@/context/data/types.details'
+import type {
+  KnowledgeEntryDetails,
+  KnowledgeGroupDetails,
+} from '@/context/data/types.details'
 import { useThemeBackground, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
@@ -19,7 +22,6 @@ import { KbSection } from './KbSection'
 export type KbSectionedListProps = {
   leader?: ReactElement
   kbGroups: (KnowledgeGroupDetails | KnowledgeEntryDetails)[]
-  select?: (event: EventDetails) => void
   empty?: ReactElement
   trailer?: ReactElement
   sticky?: boolean
@@ -34,11 +36,24 @@ function keyExtractor(item: KnowledgeGroupDetails | KnowledgeEntryDetails) {
   return 'KnowledgeGroupId' in item ? item.Id : item.Id
 }
 
-export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, empty, trailer, sticky = true, padEnd = true }) => {
+export const KbSectionedList: FC<KbSectionedListProps> = ({
+  leader,
+  kbGroups,
+  empty,
+  trailer,
+  sticky = true,
+  padEnd = true,
+}) => {
   const theme = useThemeName()
   const { t } = useTranslation('KnowledgeGroups')
   const { isSynchronizing, synchronize } = useCache()
-  const stickyIndices = useMemo(() => (sticky ? findIndices(kbGroups, (item) => !('KnowledgeGroupId' in item)) : undefined), [kbGroups, sticky])
+  const stickyIndices = useMemo(
+    () =>
+      sticky
+        ? findIndices(kbGroups, (item) => !('KnowledgeGroupId' in item))
+        : undefined,
+    [kbGroups, sticky]
+  )
   const sectionStyle = useThemeBackground('surface')
 
   const { onPress } = useKbEntryCardInteractions()
@@ -46,9 +61,22 @@ export const KbSectionedList: FC<KbSectionedListProps> = ({ leader, kbGroups, em
   const renderItem = useCallback(
     ({ item }: { item: KnowledgeGroupDetails | KnowledgeEntryDetails }) => {
       if ('KnowledgeGroupId' in item) {
-        return <KbEntryCard containerStyle={styles.item} entry={item} onPress={onPress} />
+        return (
+          <KbEntryCard
+            containerStyle={styles.item}
+            entry={item}
+            onPress={onPress}
+          />
+        )
       } else {
-        return <KbSection style={[styles.item, sectionStyle]} title={item.Name} subtitle={item.Description} icon={item.FontAwesomeIconName ?? 'bookmark'} />
+        return (
+          <KbSection
+            style={[styles.item, sectionStyle]}
+            title={item.Name}
+            subtitle={item.Description}
+            icon={item.FontAwesomeIconName ?? 'bookmark'}
+          />
+        )
       }
     },
     [onPress, sectionStyle]

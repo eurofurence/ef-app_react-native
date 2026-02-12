@@ -1,9 +1,15 @@
 import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
 import { useAudioPlayer } from 'expo-audio'
 import { router } from 'expo-router'
-import React, { useCallback } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Platform, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import {
+  Alert,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 import { handleExternalLink } from '@/components/ExternalLink'
@@ -93,11 +99,11 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 type CreditProps = {
   url: string
   name: string
-  role: string
+  jobTitle: string
   onEasterEgg?: () => void
 }
 
-const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
+const Credit = ({ url, name, jobTitle, onEasterEgg }: CreditProps) => {
   return (
     <TouchableOpacity
       onPress={() =>
@@ -108,10 +114,10 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
       }
       onLongPress={onEasterEgg}
       delayLongPress={2000}
-      accessibilityRole="button"
-      accessibilityLabel={`${name} - ${role}`}
+      accessibilityRole='button'
+      accessibilityLabel={`${name} - ${jobTitle}`}
     >
-      <Row type="center" style={{ marginVertical: 5 }}>
+      <Row type='center' style={{ marginVertical: 5 }}>
         <Image
           source={url}
           style={{
@@ -119,12 +125,12 @@ const Credit = ({ url, name, role, onEasterEgg }: CreditProps) => {
             width: 60,
             height: 60,
           }}
-          cachePolicy="memory-disk"
+          cachePolicy='memory-disk'
         />
 
         <Col style={{ flex: 1, marginLeft: 10 }}>
-          <Label type="h2">{name}</Label>
-          <Label>{role}</Label>
+          <Label type='h2'>{name}</Label>
+          <Label>{jobTitle}</Label>
         </Col>
       </Row>
     </TouchableOpacity>
@@ -164,50 +170,67 @@ export default function AboutScreen() {
 
       if (Platform.OS === 'web') {
         // On web, toggle with window confirm as we don't have Alert functionality.
-        if (window.confirm(settings.devMenu ? 'Turn dev menu off?' : 'Turn dev menu on?')) {
+        if (
+          window.confirm(
+            settings.devMenu ? 'Turn dev menu off?' : 'Turn dev menu on?'
+          )
+        ) {
           setDevMenu(!settings.devMenu)
         }
       } else {
         // Show alert for toggling.
-        Alert.alert(t('developer_settings_alert.title'), t('developer_settings_alert.body'), [
-          {
-            text: t('developer_settings_alert.cancel'),
-            onPress: () => undefined,
-            style: 'cancel',
-          },
-          {
-            text: t('developer_settings_alert.disable'),
-            onPress: () => setDevMenu(false),
-            style: 'default',
-          },
-          {
-            text: t('developer_settings_alert.enable'),
-            onPress: () => setDevMenu(true),
-            style: 'destructive',
-          },
-        ])
+        Alert.alert(
+          t('developer_settings_alert.title'),
+          t('developer_settings_alert.body'),
+          [
+            {
+              text: t('developer_settings_alert.cancel'),
+              onPress: () => undefined,
+              style: 'cancel',
+            },
+            {
+              text: t('developer_settings_alert.disable'),
+              onPress: () => setDevMenu(false),
+              style: 'default',
+            },
+            {
+              text: t('developer_settings_alert.enable'),
+              onPress: () => setDevMenu(true),
+              style: 'destructive',
+            },
+          ]
+        )
       }
     }, [setValue, settings, t])
   )
 
   return (
-    <ScrollView style={StyleSheet.absoluteFill} stickyHeaderIndices={[0]} stickyHeaderHiddenOnScroll>
+    <ScrollView
+      style={StyleSheet.absoluteFill}
+      stickyHeaderIndices={[0]}
+      stickyHeaderHiddenOnScroll
+    >
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        <TouchableOpacity style={{ cursor: 'auto' }} onPress={toggleDevMenu} accessibilityRole="button" accessibilityLabel="Toggle developer menu">
-          <Col style={styles.marginAround} type="center">
-            <Label type="h1" className="mb-3">
+        <TouchableOpacity
+          style={{ cursor: 'auto' }}
+          onPress={toggleDevMenu}
+          accessibilityRole='button'
+          accessibilityLabel='Toggle developer menu'
+        >
+          <Col style={styles.marginAround} type='center'>
+            <Label type='h1' className='mb-3'>
               {conName} App
             </Label>
             <Row gap={5}>
-              <Label type="caption">Version</Label>
-              <Label type="caption" color="important">
+              <Label type='caption'>Version</Label>
+              <Label type='caption' color='important'>
                 {nativeApplicationVersion || 'Not defined'}
               </Label>
             </Row>
             <Row gap={5}>
-              <Label type="caption">Build number</Label>
-              <Label type="caption" color="important">
+              <Label type='caption'>Build number</Label>
+              <Label type='caption' color='important'>
                 {nativeBuildVersion || 'Not defined'}
               </Label>
             </Row>
@@ -225,42 +248,83 @@ export default function AboutScreen() {
                 cancelText: a11y('cancel'),
               })
             }
-            icon="help"
+            icon='help'
             accessible
             accessibilityLabel={t('app_details.get_help')}
-            accessibilityRole="link"
+            accessibilityRole='link'
           >
             {t('app_details.get_help')}
           </Button>
           <Button
             containerStyle={styles.flex}
             onPress={() =>
-              handleExternalLink('https://github.com/eurofurence/ef-app_react-native/issues', {
-                title: a11y('external_link_no_prompt'),
-                body: a11y('outside_link'),
-                confirmText: a11y('confirm'),
-                cancelText: a11y('cancel'),
-              })
+              handleExternalLink(
+                'https://github.com/eurofurence/ef-app_react-native/issues',
+                {
+                  title: a11y('external_link_no_prompt'),
+                  body: a11y('outside_link'),
+                  confirmText: a11y('confirm'),
+                  cancelText: a11y('cancel'),
+                }
+              )
             }
-            icon="bug"
+            icon='bug'
             accessible
             accessibilityLabel={t('app_details.report_bug')}
-            accessibilityRole="link"
+            accessibilityRole='link'
           >
             {t('app_details.report_bug')}
           </Button>
         </Row>
 
-        <Section title={t('developed_by')} icon="code-json" />
-        <Credit name="Faye" url="https://avatars.githubusercontent.com/u/30414906" role="React Development" />
-        <Credit name="Fenrikur" url="https://avatars.githubusercontent.com/u/3359222" role="App Team Director and getting us to move our butts in gear" />
-        <Credit name="Gendo Doggo" url="https://avatars.githubusercontent.com/u/16690224" role="Backend Development" />
-        <Credit name="Kalynx" url="https://avatars.githubusercontent.com/u/226289443" role="Accessibility and Inclusion" />
-        <Credit name="Maakinoh" url="https://avatars.githubusercontent.com/u/29598855" role="Backend Development" />
-        <Credit name="Meta" url="https://avatars.githubusercontent.com/u/76539710" role="Backend Development" />
-        <Credit name="Pazuzu" url="https://avatars.githubusercontent.com/u/5929561" role="React Development" onEasterEgg={pazuzuEgg} />
-        <Credit name="Rain" url="https://avatars.githubusercontent.com/u/1616683" role="Backend Development" />
-        <Credit name="Requinard" url="https://avatars.githubusercontent.com/u/5537850" role="React Development support" onEasterEgg={requinardEgg} />
+        <Section title={t('developed_by')} icon='code-json' />
+        <Credit
+          name='Faye'
+          url='https://avatars.githubusercontent.com/u/30414906'
+          jobTitle='React Development'
+        />
+        <Credit
+          name='Fenrikur'
+          url='https://avatars.githubusercontent.com/u/3359222'
+          jobTitle='App Team Director and getting us to move our butts in gear'
+        />
+        <Credit
+          name='Gendo Doggo'
+          url='https://avatars.githubusercontent.com/u/16690224'
+          jobTitle='Backend Development'
+        />
+        <Credit
+          name='Kalynx'
+          url='https://avatars.githubusercontent.com/u/226289443'
+          jobTitle='Accessibility and Inclusion'
+        />
+        <Credit
+          name='Maakinoh'
+          url='https://avatars.githubusercontent.com/u/29598855'
+          jobTitle='Backend Development'
+        />
+        <Credit
+          name='Meta'
+          url='https://avatars.githubusercontent.com/u/76539710'
+          jobTitle='Backend Development'
+        />
+        <Credit
+          name='Pazuzu'
+          url='https://avatars.githubusercontent.com/u/5929561'
+          jobTitle='React Development'
+          onEasterEgg={pazuzuEgg}
+        />
+        <Credit
+          name='Rain'
+          url='https://avatars.githubusercontent.com/u/1616683'
+          jobTitle='Backend Development'
+        />
+        <Credit
+          name='Requinard'
+          url='https://avatars.githubusercontent.com/u/5537850'
+          jobTitle='React Development support'
+          onEasterEgg={requinardEgg}
+        />
         <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
       </Floater>
     </ScrollView>

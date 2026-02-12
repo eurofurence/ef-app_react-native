@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 import { useLocalSearchParams } from 'expo-router'
-import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -28,32 +27,52 @@ export default function AnnounceItem() {
       stickyHeaderHiddenOnScroll
       accessibilityLabel={t('accessibility.scroll_view')}
       accessibilityHint={t('accessibility.scroll_view_hint')}
-      accessibilityRole="scrollbar"
+      accessibilityRole='scrollbar'
     >
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
         {!announcement ? (
-          <Label type="h2" className="mt-8 mb-3" accessibilityLabel={t('accessibility.not_available_message')} accessibilityRole="alert">
+          <Label
+            type='h2'
+            className='mt-8 mb-3'
+            accessibilityLabel={t('accessibility.not_available_message')}
+            accessibilityRole='alert'
+          >
             {t('not_available')}
           </Label>
         ) : (
           <>
-            <Label type="h1" className="mt-8 mb-3" accessibilityLabel={t('accessibility.title_heading')} accessibilityRole="header">
+            <Label
+              type='h1'
+              className='mt-8 mb-3'
+              accessibilityLabel={t('accessibility.title_heading')}
+              accessibilityRole='header'
+            >
               {announcement.NormalizedTitle}
             </Label>
 
-            <Row style={styles.byline} variant="spaced" accessibilityLabel={t('accessibility.byline_info')}>
+            <Row
+              style={styles.byline}
+              variant='spaced'
+              accessibilityLabel={t('accessibility.byline_info')}
+            >
               <Label
                 accessibilityLabel={t('accessibility.date_info', {
-                  date: format(parseDefaultISO(announcement.ValidFromDateTimeUtc), 'PPpp'),
+                  date: format(
+                    parseDefaultISO(announcement.ValidFromDateTimeUtc),
+                    'PPpp'
+                  ),
                 })}
               >
-                {format(parseDefaultISO(announcement.ValidFromDateTimeUtc), 'PPpp')}
+                {format(
+                  parseDefaultISO(announcement.ValidFromDateTimeUtc),
+                  'PPpp'
+                )}
               </Label>
 
               <Label
                 style={styles.tag}
-                ellipsizeMode="head"
+                ellipsizeMode='head'
                 numberOfLines={1}
                 accessibilityLabel={t('accessibility.area_author_info', {
                   area: announcement.Area,
@@ -66,7 +85,10 @@ export default function AnnounceItem() {
             <Rule style={styles.rule} />
 
             {!!announcement.Image && (
-              <View style={styles.posterLine} accessibilityLabel={t('accessibility.banner_image')}>
+              <View
+                style={styles.posterLine}
+                accessibilityLabel={t('accessibility.banner_image')}
+              >
                 <Banner image={announcement.Image} viewable />
               </View>
             )}
