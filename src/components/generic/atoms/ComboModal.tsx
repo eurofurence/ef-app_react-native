@@ -83,12 +83,6 @@ export const ComboModal = forwardRef(
         ? setSelected(selected.filter((other) => item !== other))
         : setSelected([...selected, item])
 
-    const toggleSelectedFirstResult = () => {
-      if (!filtered?.length) return
-      toggleSelected(filtered[0])
-      setFilter('')
-    }
-
     useImperativeHandle(
       ref,
       () => ({
@@ -158,7 +152,6 @@ export const ComboModal = forwardRef(
             <Search
               filter={filter}
               setFilter={setFilter}
-              submit={() => toggleSelectedFirstResult()}
               placeholder={a11y('filter_options', {
                 defaultValue: 'Filter options',
               })}
