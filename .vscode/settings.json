@@ -1,0 +1,19 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.biome": "always",
+    "source.organizeImports.biome": "always",
+    "source.removeUnusedImports.biome": "always"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "files.exclude": {
+    "**/.expo": true,
+    "**/node_modules": true
+  },
+  "npm.packageManager": "bun",
+  "search.exclude": {
+    "**/.expo": true,
+    "**/node_modules": true
+  }
+}

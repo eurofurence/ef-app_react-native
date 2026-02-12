@@ -8,9 +8,6 @@ convention.config*.json
 
 web-build
 
-.vscode/
-package-lock.json
-
 # Yarn V2
 .pnp.*
 .yarn/*
@@ -246,9 +243,6 @@ dist
 # TernJS port file
 .tern-port
 
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
 # yarn v2
 .yarn/cache
 .yarn/unplugged
@@ -381,14 +375,6 @@ render.experimental.xml
 # Android Profiling
 *.hprof
 
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
-
 # Local History for Visual Studio Code
 .history/
 
@@ -399,9 +385,6 @@ render.experimental.xml
 # Ignore all local history of files
 .history
 .ionide
-
-# Support for Project snippet scope
-.vscode/*.code-snippets
 
 # Ignore code-workspaces
 *.code-workspace

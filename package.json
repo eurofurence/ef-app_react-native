@@ -167,5 +167,5 @@
     "test": "bun test",
     "web": "expo start --web"
   },
-  "version": "6.2.4"
+  "version": "6.3.0"
 }
