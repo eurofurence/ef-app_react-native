@@ -122,9 +122,9 @@ export default function FilterScreen() {
           icon='calendar-outline'
           text={t('filter_by_day')}
           onPress={() =>
-            daysRef.current
-              ?.pick(eventDays, filterDays)
-              ?.then((result) => setFilterDays(result ?? []))
+            daysRef.current?.pick(eventDays, filterDays, (result) =>
+              setFilterDays(result ?? [])
+            )
           }
         />
         <Tab
@@ -136,9 +136,9 @@ export default function FilterScreen() {
           icon='bus-stop'
           text={t('filter_by_track')}
           onPress={() =>
-            tracksRef.current
-              ?.pick(eventTracks, filterTracks)
-              ?.then((result) => setFilterTracks(result ?? []))
+            tracksRef.current?.pick(eventTracks, filterTracks, (result) =>
+              setFilterTracks(result ?? [])
+            )
           }
         />
         <Tab
@@ -150,9 +150,9 @@ export default function FilterScreen() {
           icon='office-building'
           text={t('filter_by_room')}
           onPress={() =>
-            roomsRef.current
-              ?.pick(eventRooms, filterRooms)
-              ?.then((result) => setFilterRooms(result ?? []))
+            roomsRef.current?.pick(eventRooms, filterRooms, (result) =>
+              setFilterRooms(result ?? [])
+            )
           }
         />
         <Tab
@@ -164,9 +164,9 @@ export default function FilterScreen() {
           icon='human-male-board'
           text={t('filter_by_host')}
           onPress={() =>
-            hostsRef.current
-              ?.pick(eventHosts, filterHosts)
-              ?.then((result) => setFilterHosts(result ?? []))
+            hostsRef.current?.pick(eventHosts, filterHosts, (result) =>
+              setFilterHosts(result ?? [])
+            )
           }
         />
       </Row>

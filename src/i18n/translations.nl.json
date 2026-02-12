@@ -10,7 +10,6 @@
   },
   "Accessibility": {
     "cancel": "Annuleren",
-    "cancel_hint": "Sluit het dialoogvenster zonder wijzigingen op te slaan",
     "clear_selection": "Alles wissen",
     "clear_selection_hint": "Verwijdert alle momenteel geselecteerde items",
     "confirm": "Bevestigen",

@@ -21,8 +21,6 @@ const mockOptions: MockOption[] = [
 const ComboModalWrapper = ({
   title,
   clear,
-  cancelText,
-  confirmText,
   children,
 }: {
   title?: string
@@ -67,8 +65,6 @@ const ComboModalWrapper = ({
         ref={setModalRef}
         title={title}
         clear={clear}
-        cancelText={cancelText}
-        confirmText={confirmText}
         getKey={(item: MockOption) => item.id}
         getLabel={(item: MockOption) => item.name}
       >

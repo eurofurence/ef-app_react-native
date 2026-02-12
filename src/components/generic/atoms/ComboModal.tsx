@@ -6,6 +6,7 @@ import {
   type ReactNode,
   useImperativeHandle,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -34,21 +35,14 @@ export type ComboModalProps<T> = {
 export type ComboModalRef<T> = {
   pick(
     options: readonly T[],
-    selected?: readonly T[]
+    selected?: readonly T[],
+    onChange?: (selected: readonly T[]) => void
   ): Promise<readonly T[] | null>
 }
 
 export const ComboModal = forwardRef(
   <T,>(
-    {
-      title,
-      clear,
-      getKey,
-      getLabel,
-      cancelText,
-      confirmText,
-      children,
-    }: ComboModalProps<T>,
+    { title, clear, getKey, getLabel, children }: ComboModalProps<T>,
     ref: ForwardedRef<ComboModalRef<T>>
   ) => {
     const { t: a11y } = useTranslation('Accessibility')
@@ -65,6 +59,10 @@ export const ComboModal = forwardRef(
     const [selected, setSelected] = useState<T[]>([])
     const [filter, setFilter] = useState<string>('')
 
+    const onChangeRef = useRef<((selected: readonly T[]) => void) | undefined>(
+      undefined
+    )
+
     const fuse = useMemo(
       () => new Fuse(options, { keys: [{ name: 'Label', getFn: getLabel }] }),
       [options]
@@ -76,22 +74,34 @@ export const ComboModal = forwardRef(
       [filter, fuse]
     )
 
-    const clearSelected = () => setSelected([])
+    const clearSelected = () => {
+      setSelected([])
+      onChangeRef.current?.([])
+    }
 
-    const toggleSelected = (item: T) =>
-      selected.includes(item)
-        ? setSelected(selected.filter((other) => item !== other))
-        : setSelected([...selected, item])
+    const toggleSelected = (item: T) => {
+      const newSelected = selected.includes(item)
+        ? selected.filter((other) => item !== other)
+        : [...selected, item]
+      setSelected(newSelected)
+      onChangeRef.current?.(newSelected)
+    }
 
     useImperativeHandle(
       ref,
       () => ({
-        pick(options: T[], selected?: T[]): Promise<T[] | null> {
+        pick(
+          options: T[],
+          selected?: T[],
+          onChange?: (selected: readonly T[]) => void
+        ): Promise<T[] | null> {
           if (visible) throw new Error('Already open')
 
           setOptions(options)
           setSelected(selected ?? [])
           setFilter('')
+
+          onChangeRef.current = onChange
 
           return new Promise<T[] | null>((resolve) => {
             setResolve(() => resolve)
@@ -102,12 +112,7 @@ export const ComboModal = forwardRef(
       [visible]
     )
 
-    const cancel = () => {
-      resolve?.(null)
-      setResolve(undefined)
-      setVisible(false)
-    }
-    const confirm = () => {
+    const close = () => {
       resolve?.(selected)
       setResolve(undefined)
       setVisible(false)
@@ -117,7 +122,7 @@ export const ComboModal = forwardRef(
       <Modal
         visible={visible}
         transparent={true}
-        onRequestClose={() => cancel()}
+        onRequestClose={() => close()}
         accessibilityViewIsModal={true}
       >
         <GestureHandlerRootView>
@@ -215,30 +220,15 @@ export const ComboModal = forwardRef(
 
             <Row>
               <Button
-                containerStyle={styles.rowLeft}
-                outline={true}
-                onPress={cancel}
-                accessibilityLabel={
-                  cancelText ?? a11y('cancel', { defaultValue: 'Cancel' })
-                }
-                accessibilityHint={a11y('cancel_hint', {
-                  defaultValue: 'Closes dialog without saving changes',
-                })}
-              >
-                {cancelText ?? 'Cancel'}
-              </Button>
-              <Button
-                containerStyle={styles.rowRight}
+                containerStyle={{ flex: 1 }}
                 outline={false}
-                onPress={confirm}
-                accessibilityLabel={
-                  confirmText ?? a11y('confirm', { defaultValue: 'Confirm' })
-                }
-                accessibilityHint={a11y('confirm_hint', {
-                  defaultValue: 'Saves selections and closes dialog',
+                onPress={close}
+                accessibilityLabel={a11y('close', { defaultValue: 'Close' })}
+                accessibilityHint={a11y('close_hint', {
+                  defaultValue: 'Closes dialog',
                 })}
               >
-                {confirmText ?? 'Confirm'}
+                {a11y('close', { defaultValue: 'Close' })}
               </Button>
             </Row>
           </View>
@@ -249,14 +239,3 @@ export const ComboModal = forwardRef(
 ) as <T>(
   props: ComboModalProps<T> & { ref: ForwardedRef<ComboModalRef<T>> }
 ) => React.JSX.Element
-
-const styles = StyleSheet.create({
-  rowLeft: {
-    flex: 1,
-    marginRight: 8,
-  },
-  rowRight: {
-    flex: 1,
-    marginLeft: 8,
-  },
-})

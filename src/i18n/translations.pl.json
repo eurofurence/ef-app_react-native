@@ -18,7 +18,6 @@
   },
   "Accessibility": {
     "cancel": "Anuluj",
-    "cancel_hint": "Zamyka dialog bez zapisywania zmian",
     "clear_selection": "Wyczyść wszystkie wybrane",
     "clear_selection_hint": "Usuwa wszystkie obecnie wybrane elementy",
     "confirm": "Potwierdź",
