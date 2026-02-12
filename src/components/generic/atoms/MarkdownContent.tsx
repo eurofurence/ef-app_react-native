@@ -160,12 +160,18 @@ export type MarkdownContentProps = {
 
   style?: ViewStyle
 
+  /**
+   * Allow native selection of rendered text. Defaults to true.
+   */
+  selectable?: boolean
+
   children?: string
 }
 
 export const MarkdownContent: FC<MarkdownContentProps> = ({
   style,
   children,
+  selectable = true,
 }) => {
   const fixed = useMemo(
     () =>

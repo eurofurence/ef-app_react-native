@@ -49,8 +49,10 @@ export const Label: FC<LabelProps> = ({
     : labelVariantStyles.regular
   const styleColor = useThemeColor(color ?? 'text')
 
+  const textProps = { ...(props as any), selectable: props.selectable ?? true }
+
   return (
-    <Text style={[styleType, styleVariant, styleColor, style]} {...props}>
+    <Text style={[styleType, styleVariant, styleColor, style]} {...textProps}>
       {children}
     </Text>
   )
