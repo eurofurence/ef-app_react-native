@@ -171,7 +171,6 @@ export type MarkdownContentProps = {
 export const MarkdownContent: FC<MarkdownContentProps> = ({
   style,
   children,
-  selectable = true,
 }) => {
   const fixed = useMemo(
     () =>
