@@ -37,7 +37,9 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
         accessibilityLabel={t('accessibility.lost_found_card', {
           title: item.Title,
           status: t(`status.${item.Status}`),
-          date: new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
+          date: item.LostDateTimeUtc
+            ? new Date(item.LostDateTimeUtc).toLocaleDateString()
+            : new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
         })}
         accessibilityHint={t('accessibility.lost_found_card_hint')}
       >
@@ -88,11 +90,15 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
             <Label
               style={styles.date}
               accessibilityLabel={t('accessibility.reported_date', {
-                date: new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
+                date: item.LostDateTimeUtc
+                  ? new Date(item.LostDateTimeUtc).toLocaleDateString()
+                  : new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
               })}
             >
               {t('reported')}:{' '}
-              {new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
+              {item.LostDateTimeUtc
+                ? new Date(item.LostDateTimeUtc).toLocaleDateString()
+                : new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
             </Label>
           </View>
         </View>

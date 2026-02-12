@@ -121,10 +121,14 @@ const LostAndFoundDetailContent: FC = () => {
           <Label
             style={styles.date}
             accessibilityLabel={t('accessibility.reported_date', {
-              date: new Date(item.LastChangeDateTimeUtc).toLocaleString(),
+              date: item.LostDateTimeUtc
+                ? new Date(item.LostDateTimeUtc).toLocaleDateString()
+                : new Date(item.LastChangeDateTimeUtc).toLocaleDateString(),
             })}
           >
-            {new Date(item.LastChangeDateTimeUtc).toLocaleString()}
+            {item.LostDateTimeUtc
+              ? new Date(item.LostDateTimeUtc).toLocaleDateString()
+              : new Date(item.LastChangeDateTimeUtc).toLocaleDateString()}
           </Label>
         </View>
       </Floater>
