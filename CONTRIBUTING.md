@@ -10,11 +10,12 @@ However, you're more than welcome to contribute! Here's a list of things you cou
 - Joining the testing group to test changes early
 
 ## Running and Contributing
+
 ### Running it locally
 
-You will need the Expo CLI installed globally to run any part of this project. You can do this with `pnpm install -g expo-cli`
+You will need the Expo CLI installed globally to run any part of this project. You can do this with `bun install -g expo-cli`
 
-After that you can run `pnpm i && pnpm start` to get started. A webpage will pop up that lets you interact with the app. The Metro bundler will point out what to do next.
+After that you can run `bun i && bun start` to get started. A webpage will pop up that lets you interact with the app. The Metro bundler will point out what to do next.
 
 To run this app on a device or emulator you will need the Expo GO app.
 
@@ -22,7 +23,7 @@ To run this app on a device or emulator you will need the Expo GO app.
 
 We're light on actual requirements but there are some guiding principles at work.
 
-- Make sure your code passes the lint check. `pnpm lint` to lint and `pnpm lint --fix` to automatically fix issues.
+- Make sure your code passes the lint check. `bun lint` to lint and `bun lint --fix` to automatically fix issues.
 - Try to write tests. We're not going to require code coverage but it would be nice to have some certainty. Generally, try to test logic and user interaction. Stay away from snapshot tests unless you want to test complex objects or idempotent UI elements
 - Use i18n wherever possible. There's a `useTranslation` hook for that!
 - Keep it civil, we're all volunteering for this after all
