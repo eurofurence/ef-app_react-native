@@ -101,3 +101,15 @@ export const sentryEnvironment = process.env.EXPO_PUBLIC_SENTRY_ENVIRONMENT
 export const cacheDebug = process.env.EXPO_PUBLIC_DEBUG_SHOWCACHE
 export const devMenu = process.env.EXPO_PUBLIC_DEBUG_DEVMENU
 export const i18nDebug = process.env.EXPO_PUBLIC_DEBUG_I18NDEBUG
+
+/**
+ * Firebase settings
+ */
+export const firebaseApiKey = process.env.EXPO_PUBLIC_FIREBASE_APIKEY
+export const firebaseAuthDomain = process.env.EXPO_PUBLIC_FIREBASE_AUTHDOMAIN
+export const firebaseDatabaseUrl = process.env.EXPO_PUBLIC_FIREBASE_DATABASEURL
+export const firebaseProjectId = process.env.EXPO_PUBLIC_FIREBASE_PROJECTID
+export const firebaseStorageBucket = process.env.EXPO_PUBLIC_FIREBASE_STORAGEBUCKET
+export const firebaseMessagingSenderId = process.env.EXPO_PUBLIC_FIREBASE_MESSAGINGSENDERID
+export const firebaseAppId = process.env.EXPO_PUBLIC_FIREBASE_APPID
+export const firebaseMeasurementId = process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENTID

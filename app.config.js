@@ -1,8 +1,10 @@
-import { convention } from './convention.config.json'
+import 'dotenv/config'
+
+const appBase = process.env.EXPO_PUBLIC_CONVENTION_APPBASE
 
 const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/
 const [, appBaseProtocol, appBaseHost, appBasePath] = [
-  ...convention.appBase.match(urlMatcher),
+  ...appBase.match(urlMatcher),
 ]
 
 module.exports = {

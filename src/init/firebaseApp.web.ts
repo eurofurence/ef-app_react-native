@@ -1,17 +1,26 @@
 import { initializeApp } from 'firebase/app'
 
-import conventionConfig from '../../convention.config.json'
+import {
+  firebaseApiKey,
+  firebaseAppId,
+  firebaseAuthDomain,
+  firebaseDatabaseUrl,
+  firebaseMeasurementId,
+  firebaseMessagingSenderId,
+  firebaseProjectId,
+  firebaseStorageBucket,
+} from '../configuration'
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: conventionConfig.firebase.apiKey,
-  authDomain: conventionConfig.firebase.authDomain,
-  databaseURL: conventionConfig.firebase.authDomain,
-  projectId: conventionConfig.firebase.projectId,
-  storageBucket: conventionConfig.firebase.storageBucket,
-  messagingSenderId: conventionConfig.firebase.messagingSenderId,
-  appId: conventionConfig.firebase.appId,
-  measurementId: conventionConfig.firebase.measurementId,
+  apiKey: firebaseApiKey,
+  authDomain: firebaseAuthDomain,
+  databaseURL: firebaseDatabaseUrl,
+  projectId: firebaseProjectId,
+  storageBucket: firebaseStorageBucket,
+  messagingSenderId: firebaseMessagingSenderId,
+  appId: firebaseAppId,
+  measurementId: firebaseMeasurementId,
 }
 
 /**
