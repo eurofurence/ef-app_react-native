@@ -8,7 +8,7 @@ All code contributions, including those of people having commit access, must go 
 
 If you wish to help, you can learn more about how you can contribute to this project in the [contribution guide](CONTRIBUTING.md).
 
-## F.A.Q.
+## F.A.Q
 
 ### Why not an actual native app?
 
@@ -24,7 +24,7 @@ I welcome you fellow Developer. Here you can find the Installation Manual!
 
 It is expected that you followed the [Contribution Manual](https://github.com/eurofurence/ef-app_react-native/blob/main/CONTRIBUTING.md) for installation.
 
-## First of all, create a .jks Keystore File (For GitHub Release):
+## First of all, create a .jks Keystore File (For GitHub Release)
 
 ```bash
 keytool -genkeypair \
@@ -85,9 +85,7 @@ bundletool build-apks \
   --output=ef-app.apks \
   --mode=universal \
   --ks='/File/Location/Here/ef-app.jks' \ # Keystore file location
-  --ks-key-alias=ef-app \ # Keystore name
-  --ks-pass=pass:PasswordHere \ # This is the same password as you put in above
-  --key-pass=pass:PasswordHere # This is the same password as you put in above
+  --ks-key-alias=ef-app
 
 unzip ef-app.apks -d output_dir
 ```
