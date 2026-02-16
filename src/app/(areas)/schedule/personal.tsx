@@ -1,4 +1,3 @@
-import { router } from 'expo-router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -8,14 +7,9 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Avatar } from '@/components/profile/Avatar'
 import { useCache } from '@/context/data/Cache'
-import type { EventDetails } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
-
-function selectEvent(event: EventDetails) {
-  return router.setParams({ selected: event.Id })
-}
 
 export default function Personal() {
   const { query } = useScheduleSearch()
@@ -54,7 +48,6 @@ export default function Personal() {
   return (
     <EventsSectionedList
       eventsGroups={groups}
-      select={selectEvent}
       cardType='duration'
       leader={leader}
       empty={empty}

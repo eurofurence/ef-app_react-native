@@ -39,18 +39,15 @@ module.exports = {
         ITSAppUsesNonExemptEncryption: false,
         NSMicrophoneUsageDescription: false,
       },
-      associatedDomains: [
-        'applinks:app.eurofurence.org',
-        'applinks:app.test.eurofurence.org',
-      ],
+      associatedDomains: ['applinks:app.eurofurence.org', 'applinks:app.test.eurofurence.org'],
     },
     android: {
       package: 'org.eurofurence.connavigator',
       icon: './assets/platform/appicon-android.png',
       googleServicesFile: './assets/platform/google-services.json',
-      targetSdkVersion: 35,
-      compileSdkVersion: 35,
-      edgeToEdgeEnabled: true,
+      targetSdkVersion: 36,
+      compileSdkVersion: 36,
+      newArchEnabled: true,
       splash: {
         resizeMode: 'native',
         image: './assets/platform/splash.png',
@@ -88,10 +85,7 @@ module.exports = {
         },
       ],
       permissions: ['INTERNET', 'VIBRATE', 'WRITE_EXTERNAL_STORAGE'],
-      blockedPermissions: [
-        'com.google.android.gms.permission.AD_ID',
-        'android.permission.RECORD_AUDIO',
-      ],
+      blockedPermissions: ['com.google.android.gms.permission.AD_ID', 'android.permission.RECORD_AUDIO'],
     },
     web: {
       bundler: 'metro',
@@ -100,12 +94,15 @@ module.exports = {
     plugins: [
       // Run sentry plugin only if auth token is given, otherwise the build crashes.
       Boolean(global.process.env.SENTRY_AUTH_TOKEN) && [
+        // "@sentry/react-native"
         '@sentry/react-native/expo',
         {
           project: 'ef-app_react-native',
           organization: 'eurofurence',
         },
       ],
+      // Font for vector icons.
+      'expo-font',
       // Import assets statically.
       [
         'expo-asset',
@@ -133,8 +130,7 @@ module.exports = {
       [
         'expo-image-picker',
         {
-          photosPermission:
-            'The app accesses your photos if you want to register for a table in the Artist Alley.',
+          photosPermission: 'The app accesses your photos if you want to register for a table in the Artist Alley.',
         },
       ],
       'expo-localization',

@@ -1,4 +1,3 @@
-import { router } from 'expo-router'
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -15,7 +14,6 @@ import { Tab } from '@/components/generic/containers/Tab'
 import { useCache } from '@/context/data/Cache'
 import type {
   EventDayDetails,
-  EventDetails,
   EventRoomDetails,
   EventTrackDetails,
 } from '@/context/data/types.details'
@@ -23,10 +21,6 @@ import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
-
-function selectEvent(event: EventDetails) {
-  return router.setParams({ selected: event.Id })
-}
 
 export default function FilterScreen() {
   const { query } = useScheduleSearch()
@@ -213,7 +207,6 @@ export default function FilterScreen() {
 
       <EventsSectionedList
         eventsGroups={groups}
-        select={selectEvent}
         cardType='duration'
         leader={leader}
       />

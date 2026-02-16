@@ -1,4 +1,3 @@
-import { router } from 'expo-router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
@@ -7,17 +6,10 @@ import { useEventDayGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { useCache } from '@/context/data/Cache'
-import type {
-  EventDayDetails,
-  EventDetails,
-} from '@/context/data/types.details'
+import type { EventDayDetails } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
-
-function selectEvent(event: EventDetails) {
-  return router.setParams({ selected: event.Id })
-}
 
 export function DayView({ day }: { day: EventDayDetails }) {
   const { query } = useScheduleSearch()
@@ -46,13 +38,7 @@ export function DayView({ day }: { day: EventDayDetails }) {
     [day]
   )
 
-  return (
-    <EventsSectionedList
-      eventsGroups={groups}
-      select={selectEvent}
-      leader={leader}
-    />
-  )
+  return <EventsSectionedList eventsGroups={groups} leader={leader} />
 }
 
 export default function Day1() {
