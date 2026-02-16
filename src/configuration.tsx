@@ -109,7 +109,10 @@ export const firebaseApiKey = process.env.EXPO_PUBLIC_FIREBASE_APIKEY
 export const firebaseAuthDomain = process.env.EXPO_PUBLIC_FIREBASE_AUTHDOMAIN
 export const firebaseDatabaseUrl = process.env.EXPO_PUBLIC_FIREBASE_DATABASEURL
 export const firebaseProjectId = process.env.EXPO_PUBLIC_FIREBASE_PROJECTID
-export const firebaseStorageBucket = process.env.EXPO_PUBLIC_FIREBASE_STORAGEBUCKET
-export const firebaseMessagingSenderId = process.env.EXPO_PUBLIC_FIREBASE_MESSAGINGSENDERID
+export const firebaseStorageBucket =
+  process.env.EXPO_PUBLIC_FIREBASE_STORAGEBUCKET
+export const firebaseMessagingSenderId =
+  process.env.EXPO_PUBLIC_FIREBASE_MESSAGINGSENDERID
 export const firebaseAppId = process.env.EXPO_PUBLIC_FIREBASE_APPID
-export const firebaseMeasurementId = process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENTID
+export const firebaseMeasurementId =
+  process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENTID

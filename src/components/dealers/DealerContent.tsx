@@ -308,7 +308,7 @@ export const DealerContent: FC<DealerContentProps> = ({
               5000
             )
           }}
-          icon='discord'
+          icon={'discord' as any /* TODO: This is not in the iconset */}
           accessibilityLabel={t('accessibility.discord_button', {
             handle: dealer.DiscordHandle,
           })}

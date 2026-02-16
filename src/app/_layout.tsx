@@ -32,8 +32,6 @@ import '@/init/sentryInit'
 import '@/init/setNotificationChannels'
 import '@/init/setNotificationHandler'
 import '@/init/splash'
-// For now for Markdown Content
-import '@/init/selectableText'
 
 // Import global tailwind CSS.
 import '@/css/globals.css'

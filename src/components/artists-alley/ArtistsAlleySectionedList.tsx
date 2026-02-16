@@ -1,7 +1,7 @@
 import { FlashList } from '@shopify/flash-list'
 import { type FC, type ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
 import {
@@ -113,8 +113,6 @@ export const ArtistsAlleySectionedList: FC<ArtistsAlleySectionedListProps> = ({
       getItemType={getItemType}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      estimatedItemSize={110}
-      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
       accessibilityRole='list'
       accessibilityLabel={t('artists_alley_list')}

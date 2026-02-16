@@ -4,7 +4,6 @@ import type { FC } from 'react'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform, StyleSheet } from 'react-native'
-import { match } from 'ts-pattern'
 
 import { useCache } from '@/context/data/Cache'
 import type { LinkFragment } from '@/context/data/types.api'
@@ -186,20 +185,18 @@ const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({
 }
 
 export const LinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
-  return match(link.FragmentType)
-    .with('DealerDetail', () => (
-      <DealerLinkItem map={map} entry={entry} link={link} />
-    ))
-    .with('WebExternal', () => (
-      <WebExternalLinkItem map={map} entry={entry} link={link} />
-    ))
-    .with('MapEntry', () => (
-      <MapEntryLinkItem map={map} entry={entry} link={link} />
-    ))
-    .with('EventConferenceRoom', () => (
-      <EventConferenceRoomLinkItem map={map} entry={entry} link={link} />
-    ))
-    .otherwise(() => null)
+  switch (link.FragmentType) {
+    case 'WebExternal':
+      return <WebExternalLinkItem map={map} entry={entry} link={link} />
+    case 'MapEntry':
+      return <MapEntryLinkItem map={map} entry={entry} link={link} />
+    case 'DealerDetail':
+      return <DealerLinkItem map={map} entry={entry} link={link} />
+    case 'EventConferenceRoom':
+      return <EventConferenceRoomLinkItem map={map} entry={entry} link={link} />
+    default:
+      return null
+  }
 }
 
 const styles = StyleSheet.create({

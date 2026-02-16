@@ -1,12 +1,11 @@
 import { FlashList } from '@shopify/flash-list'
 import { type FC, type ReactElement, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Dimensions, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { useEventCardInteractions } from '@/components/events/Events.common'
 import type { SectionProps } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
-import type { EventDetails } from '@/context/data/types.details'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
 import { findIndices } from '@/util/findIndices'
 import { vibrateAfter } from '@/util/vibrateAfter'
@@ -20,7 +19,6 @@ import { EventSection, type EventSectionProps } from './EventSection'
 export type EventsSectionedListProps = {
   leader?: ReactElement
   eventsGroups: (EventSectionProps | EventDetailsInstance)[]
-  select?: (event: EventDetails) => void
   empty?: ReactElement
   trailer?: ReactElement
   cardType?: 'duration' | 'time'
@@ -39,7 +37,6 @@ function keyExtractor(item: SectionProps | EventDetailsInstance) {
 export const EventsSectionedList: FC<EventsSectionedListProps> = ({
   leader,
   eventsGroups,
-  select,
   empty,
   trailer,
   cardType = 'duration',
@@ -57,7 +54,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
     [eventsGroups, sticky]
   )
 
-  const { onPress: defaultOnPress, onLongPress } = useEventCardInteractions()
+  const { onPress, onLongPress } = useEventCardInteractions()
 
   const renderItem = useCallback(
     ({ item }: { item: SectionProps | EventDetailsInstance }) => {
@@ -67,7 +64,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
             containerStyle={styles.item}
             event={item}
             type={cardType}
-            onPress={select ?? defaultOnPress}
+            onPress={onPress}
             onLongPress={onLongPress}
           />
         )
@@ -82,7 +79,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
         )
       }
     },
-    [cardType, onLongPress, select, defaultOnPress]
+    [cardType, onLongPress, onPress]
   )
 
   return (
@@ -99,8 +96,6 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
       getItemType={getItemType}
       keyExtractor={keyExtractor}
       renderItem={renderItem}
-      estimatedItemSize={110}
-      estimatedListSize={Dimensions.get('window')}
       extraData={theme}
       accessibilityLabel={t('events_list', { defaultValue: 'Events list' })}
     />

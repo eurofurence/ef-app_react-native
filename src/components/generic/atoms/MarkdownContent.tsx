@@ -1,10 +1,12 @@
 import { mapValues } from 'lodash'
 import { type FC, useMemo } from 'react'
-import { View, type ViewStyle } from 'react-native'
-import Markdown, { type MarkdownProps } from 'react-native-markdown-display'
-
-import { useTheme } from '@/hooks/themes/useThemeHooks'
-
+import { type StyleSheet, Text, View, type ViewStyle } from 'react-native'
+import Markdown, {
+  type MarkdownProps,
+  type RenderRules,
+} from 'react-native-markdown-display'
+import { withAlpha } from '@/context/Theme'
+import { useTheme, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import type { LabelProps } from './Label'
 
 /**
@@ -27,10 +29,39 @@ const deriveLineHeights = <
     return { ...style, lineHeight: Math.ceil(style.fontSize * factor) }
   })
 
-const useMarkdownTheme = () => {
+function useMarkdownRules() {
+  const theme = useThemeColorValue('primary')
+  return useMemo((): RenderRules => {
+    const selectionColor = withAlpha(theme, 0.35)
+    return {
+      text: (node, _children, _parent, styles, inheritedStyles = {}) => (
+        <Text
+          key={node.key}
+          style={[inheritedStyles, styles.text]}
+          selectable
+          selectionColor={selectionColor}
+        >
+          {node.content}
+        </Text>
+      ),
+      textgroup: (node, children, _parent, styles) => (
+        <Text
+          key={node.key}
+          style={styles.textgroup}
+          selectable
+          selectionColor='#5043E350'
+        >
+          {children}
+        </Text>
+      ),
+    }
+  }, [theme])
+}
+
+function useMarkdownTheme() {
   const theme = useTheme()
   return useMemo(
-    () =>
+    (): StyleSheet.NamedStyles<any> =>
       deriveLineHeights({
         blockquote: {
           borderLeftWidth: 5,
@@ -160,11 +191,6 @@ export type MarkdownContentProps = {
 
   style?: ViewStyle
 
-  /**
-   * Allow native selection of rendered text. Defaults to true.
-   */
-  selectable?: boolean
-
   children?: string
 }
 
@@ -185,11 +211,12 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({
   )
 
   // Get markdown style.
-  const markdownStyles = useMarkdownTheme()
+  const markdownRules = useMarkdownRules()
+  const markdownTheme = useMarkdownTheme()
 
   return (
     <View style={style}>
-      <MarkdownComponent style={markdownStyles as any}>
+      <MarkdownComponent rules={markdownRules} style={markdownTheme}>
         {fixed}
       </MarkdownComponent>
     </View>
