@@ -17,7 +17,7 @@ You will need the Expo CLI installed globally to run any part of this project. Y
 
 After that you can run `bun i && bun start` to get started. A webpage will pop up that lets you interact with the app. The Metro bundler will point out what to do next.
 
-To run this app on a device or emulator you will need the Expo GO app.
+To run this app on a device, you can use either `bun ios` for iOS, or `bun android` for android.
 
 ### Code Standards
 
