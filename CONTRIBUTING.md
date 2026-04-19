@@ -13,7 +13,7 @@ However, you're more than welcome to contribute! Here's a list of things you cou
 
 ### Running it locally
 
-You will need the Expo CLI installed globally to run any part of this project. You can do this with `bun install -g expo-cli`
+You will need the Expo CLI installed globally to run any part of this project. You can do this with `bun install -g eas-cli`
 
 After that you can run `bun i && bun start` to get started. A webpage will pop up that lets you interact with the app. The Metro bundler will point out what to do next.
 
