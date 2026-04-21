@@ -94,7 +94,7 @@ module.exports = {
     plugins: [
       // Run sentry plugin only if auth token is given, otherwise the build crashes.
       Boolean(global.process.env.SENTRY_AUTH_TOKEN) && [
-        // "@sentry/react-native"
+        '@sentry/react-native',
         '@sentry/react-native/expo',
         {
           project: 'ef-app_react-native',
@@ -154,6 +154,7 @@ module.exports = {
       'expo-secure-store',
       'expo-router',
       'expo-web-browser',
+      'expo-image',
       'react-native-legal',
     ].filter(Boolean),
     extra: {
