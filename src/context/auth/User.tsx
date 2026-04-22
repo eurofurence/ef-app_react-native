@@ -73,24 +73,26 @@ export const UserProvider = ({
 }: {
   children?: ReactNode | undefined
 }) => {
-  const { idData, refreshToken } = useAuthContext()
-
+  const { idData, loggedIn, refreshToken } = useAuthContext()
   const { data: claims, refetch: refetchClaims } = useUserInfo()
   const { data: user, refetch: refetchSelf } = useUsersSelf()
 
   // Get value to provide to the children.
-  const value = useMemo<UserContextType>(
-    () => ({
-      claims: claims ?? idToClaims(idData) ?? null,
+  const value = useMemo<UserContextType>(() => {
+    const refresh = async () => {
+      await refreshToken()
+      await refetchClaims()
+      await refetchSelf()
+    }
+
+    if (!loggedIn) return { claims: null, user: null, refresh }
+
+    return {
+      claims: claims ?? idToClaims(idData),
       user: user ?? null,
-      refresh: async () => {
-        await refreshToken()
-        await refetchClaims()
-        await refetchSelf()
-      },
-    }),
-    [idData, claims, user, refreshToken, refetchClaims, refetchSelf]
-  )
+      refresh,
+    }
+  }, [idData, loggedIn, claims, user, refreshToken, refetchClaims, refetchSelf])
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
