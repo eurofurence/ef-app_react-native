@@ -6,7 +6,7 @@ default:
 prebuild *ARGS:
 	npx expo prebuild {{ARGS}}
 
-// TODO: This needs to be changed. Since we now use .env
+# TODO: This needs to be changed. Since we now use .env
 switch-env NAME:
 	#!/bin/bash
 	if [ ! -f ./convention.config.{{NAME}}.json ]; then echo "Target environment '{{NAME}}' does not exist."; exit 1; fi
