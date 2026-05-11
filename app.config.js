@@ -22,8 +22,8 @@ module.exports = {
     scheme: 'eurofurence',
     splash: {
       image: './assets/platform/splash.png',
-      resizeMode: 'contain',
-      backgroundColor: '#1E303E',
+      resizeMode: 'native',
+      backgroundColor: '#005953',
     },
     updates: {
       fallbackToCacheTimeout: 0,
@@ -31,7 +31,7 @@ module.exports = {
     },
     ios: {
       bundleIdentifier: 'org.eurofurence',
-      icon: './assets/platform/appicon-ios.png',
+      icon: './assets/platform/appicon-ios.icon',
       googleServicesFile: './assets/platform/GoogleService-Info.plist',
       supportsTablet: true,
       infoPlist: {
@@ -43,17 +43,11 @@ module.exports = {
     },
     android: {
       package: 'org.eurofurence.connavigator',
-      icon: './assets/platform/appicon-android.png',
       googleServicesFile: './assets/platform/google-services.json',
       newArchEnabled: true,
-      splash: {
-        resizeMode: 'native',
-        image: './assets/platform/splash.png',
-        backgroundColor: '#1E303E',
-      },
       adaptiveIcon: {
         foregroundImage: './assets/platform/appicon-android.png',
-        backgroundColor: '#1E303E',
+        backgroundColor: '#005953',
         monochromeImage: './assets/platform/appicon-android-monochrome.png',
       },
       intentFilters: [
@@ -112,7 +106,7 @@ module.exports = {
         'expo-notifications',
         {
           icon: './assets/platform/notification.png',
-          color: '#006459',
+          color: '#005953',
         },
       ],
       // Used to render audio.
@@ -149,6 +143,14 @@ module.exports = {
       ],
       '@react-native-firebase/app',
       'expo-secure-store',
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#005953",
+          "image": "./assets/platform/splash.png",
+          "imageWidth": 200
+        }
+      ],
       'expo-router',
       'expo-web-browser',
       'expo-image',
