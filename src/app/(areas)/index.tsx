@@ -32,6 +32,8 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { vibrateAfter } from '@/util/vibrateAfter'
+import { useLiveQuery } from '@tanstack/react-db'
+import { announcementsFullCollection } from '@/data/collections/AnnouncementsFull'
 
 export default function Index() {
   const { t } = useTranslation('Home')
@@ -41,6 +43,8 @@ export default function Index() {
   const { synchronize, isSynchronizing, getValue } = useCache()
   const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
+  const q = useLiveQuery(announcementsFullCollection)
+  console.log(q)
 
   const [filter, setFilter] = useState('')
   const [searchMessage, setSearchMessage] = useState('')
