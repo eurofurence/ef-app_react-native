@@ -8,8 +8,8 @@ export const eventsCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['events'],
-        async queryFn() {
-            const response = await api.get<EfEvent[]>('/Events')
+        async queryFn({ signal }) {
+            const response = await api.get<EfEvent[]>("/Events", { signal });
             return response.data
         },
         getKey(item) {

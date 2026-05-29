@@ -8,8 +8,8 @@ export const imagesCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['images'],
-        async queryFn() {
-            const response = await api.get<EfImage[]>('/Images')
+        async queryFn({ signal }) {
+            const response = await api.get<EfImage[]>("/Images", { signal });
             return response.data
         },
         getKey(item) {

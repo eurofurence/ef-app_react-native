@@ -8,8 +8,8 @@ export const dealersCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['dealers'],
-        async queryFn() {
-            const response = await api.get<EfDealer[]>('/Dealers')
+        async queryFn({ signal }) {
+            const response = await api.get<EfDealer[]>("/Dealers", { signal });
             return response.data
         },
         getKey(item) {

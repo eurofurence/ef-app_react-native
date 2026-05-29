@@ -8,8 +8,8 @@ export const artistsAlleyCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['artists-alley'],
-        async queryFn() {
-            const response = await api.get<EfArtistsAlley[]>('/ArtistsAlley');
+        async queryFn({ signal }) {
+            const response = await api.get<EfArtistsAlley[]>("/ArtistsAlley", { signal });
             return response.data
         },
         getKey(item) {

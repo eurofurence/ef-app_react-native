@@ -8,8 +8,8 @@ export const kbEntriesCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['kb-entries'],
-        async queryFn() {
-            const response = await api.get<EfKbEntry[]>('/KnowledgeEntries');
+        async queryFn({ signal }) {
+            const response = await api.get<EfKbEntry[]>("/KnowledgeEntries", { signal });
             return response.data
         },
         getKey(item) {

@@ -8,8 +8,8 @@ export const mapsCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['maps'],
-        async queryFn() {
-            const response = await api.get<EfMap[]>('/Maps');
+        async queryFn({ signal }) {
+            const response = await api.get<EfMap[]>("/Maps", { signal });
             return response.data
         },
         getKey(item) {

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useAuthStore } from '@/data/clients/auth'
+import { authClient } from "@/data/clients/auth";
 
 const url = 'https://app.test.eurofurence.org/EF30-ve17v92UFFfJk/Api'
 //'https://app.eurofurence.org/EF29/Api'
@@ -13,8 +13,7 @@ export const api = axios.create({
 })
 
 api.interceptors.request.use(config => {
-  const { tokenResponse } = useAuthStore.getState()
-  if (tokenResponse?.accessToken)
-    config.headers.Authorization = `Bearer ${tokenResponse.accessToken}`
+  if (authClient.tokenResponse?.accessToken)
+    config.headers.Authorization = `Bearer ${authClient.tokenResponse.accessToken}`;
   return config
 })

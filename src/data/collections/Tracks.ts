@@ -8,8 +8,8 @@ export const tracksCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['tracks'],
-        async queryFn() {
-            const response = await api.get<EfTrack[]>('/EventConferenceTracks')
+        async queryFn({ signal }) {
+            const response = await api.get<EfTrack[]>("/EventConferenceTracks", { signal });
             return response.data
         },
         getKey(item) {

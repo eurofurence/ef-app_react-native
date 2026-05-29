@@ -8,8 +8,8 @@ export const roomsCollection = createCollection(
     queryCollectionOptions({
         queryClient,
         queryKey: ['rooms'],
-        async queryFn() {
-            const response = await api.get<EfRoom[]>('/EventConferenceRooms')
+        async queryFn({ signal }) {
+            const response = await api.get<EfRoom[]>("/EventConferenceRooms", { signal });
             return response.data
         },
         getKey(item) {
