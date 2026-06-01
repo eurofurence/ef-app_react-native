@@ -5,8 +5,8 @@ import { tracksCollection } from "@/data/collections/Tracks";
 import { roomsCollection } from "@/data/collections/Rooms";
 import { imagesCollection } from "@/data/collections/Images";
 import { favoriteEventsCollection } from "@/data/collections/FavoriteEvents";
-import { IFuseOptions } from "fuse.js";
-import { EfEvent } from "@/data/types/EfEvent";
+import { hiddenEventsCollection } from "@/data/collections/HiddenEvents";
+import { defineSearch } from "@/data/searching/useSearch";
 
 export const eventsFullCollection = createLiveQueryCollection({
   id: "eventsFullCollection",
@@ -19,6 +19,7 @@ export const eventsFullCollection = createLiveQueryCollection({
       .leftJoin({ banner: imagesCollection }, ({ event, banner }) => eq(event.BannerImageId, banner.Id))
       .leftJoin({ poster: imagesCollection }, ({ event, poster }) => eq(event.PosterImageId, poster.Id))
       .leftJoin({ favorite: favoriteEventsCollection }, ({ event, favorite }) => eq(event.Id, favorite.Id))
+      .leftJoin({ hidden: hiddenEventsCollection }, ({ event, hidden }) => eq(event.Id, hidden.Id))
       .select((result) => ({
         ...result.event,
         Day: result.day,
@@ -27,13 +28,13 @@ export const eventsFullCollection = createLiveQueryCollection({
         Banner: result.banner,
         Poster: result.poster,
         Favorite: result.favorite,
+        Hidden: result.hidden,
       })),
   getKey(item) {
     return item.Id;
-  },
-  utils: {
-    searchable: {
-      keys: ["Title", "SubTitle", "Abstract", "Description"],
-    } satisfies IFuseOptions<EfEvent>,
-  },
+  }
+});
+
+defineSearch(eventsFullCollection, {
+  keys: ["Title", "SubTitle", "Abstract", "Description"],
 });

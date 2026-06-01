@@ -3,12 +3,20 @@ import type { StandardSchemaV1 } from "@standard-schema/spec";
 import Fuse, { FuseResult, IFuseOptions } from "fuse.js";
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * Indices by collection.
+ */
 const indices = new WeakMap<WeakKey, Fuse<unknown>>();
+
+/**
+ * Search options by collection.
+ */
+const searchOptions = new WeakMap<WeakKey, IFuseOptions<any>>();
 
 function getOrInitialize<
   T extends object = Record<string, unknown>,
   TKey extends string | number = string | number,
-  TUtils extends UtilsRecord & { searchable: IFuseOptions<T> } = UtilsRecord & { searchable: IFuseOptions<T> },
+  TUtils extends UtilsRecord = UtilsRecord,
   TSchema extends StandardSchemaV1 = StandardSchemaV1,
   TInsertInput extends object = T,
 >(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>) {
@@ -16,7 +24,7 @@ function getOrInitialize<
   if (indices.has(collection)) indices.get(collection);
 
   // Make new, use config.
-  const fuse = new Fuse<WithVirtualProps<T, TKey>>([], collection.utils.searchable);
+  const fuse = new Fuse<WithVirtualProps<T, TKey>>([], searchOptions.get(collection));
 
   // Add current values.
   collection.forEach((value) => {
@@ -43,6 +51,36 @@ function getOrInitialize<
 }
 
 /**
+ * Defines how the collection is searched when using the `search` function or the `useSearch` hook.
+ * @param collection The collection.
+ * @param options The search definition.
+ */
+export function defineSearch<
+  T extends object = Record<string, unknown>,
+  TKey extends string | number = string | number,
+  TUtils extends UtilsRecord = UtilsRecord,
+  TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  TInsertInput extends object = T,
+>(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>, options: IFuseOptions<T>) {
+  searchOptions.set(collection, options);
+}
+
+/**
+ * Searches the collection. `defineSearch` should have been used on the collection along with the definition.
+ * @param collection The collection to search.
+ * @param term The term to search for.
+ */
+export function search<
+  T extends object = Record<string, unknown>,
+  TKey extends string | number = string | number,
+  TUtils extends UtilsRecord = UtilsRecord,
+  TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  TInsertInput extends object = T,
+>(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>, term: string) {
+  return getOrInitialize(collection).search(term);
+}
+
+/**
  * Uses search results of a collection that is searchable.
  * @param collection The collection.
  * @param term The term to search.
@@ -50,7 +88,7 @@ function getOrInitialize<
 export function useSearch<
   T extends object = Record<string, unknown>,
   TKey extends string | number = string | number,
-  TUtils extends UtilsRecord & { searchable: IFuseOptions<T> } = UtilsRecord & { searchable: IFuseOptions<T> },
+  TUtils extends UtilsRecord = UtilsRecord,
   TSchema extends StandardSchemaV1 = StandardSchemaV1,
   TInsertInput extends object = T,
 >(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>, term: string | null) {

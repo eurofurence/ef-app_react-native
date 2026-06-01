@@ -1,6 +1,7 @@
 import { createLiveQueryCollection, eq } from "@tanstack/react-db";
 import { imagesCollection } from "@/data/collections/Images";
 import { announcementsCollection } from "@/data/collections/Announcements";
+import { defineSearch } from "@/data/searching/useSearch";
 
 export const announcementsFullCollection = createLiveQueryCollection({
   id: "announcementsFullCollection",
@@ -15,4 +16,8 @@ export const announcementsFullCollection = createLiveQueryCollection({
   getKey(item) {
     return item.Id;
   },
+});
+
+defineSearch(announcementsFullCollection, {
+  keys: ["Author", "Title", "Content"],
 });

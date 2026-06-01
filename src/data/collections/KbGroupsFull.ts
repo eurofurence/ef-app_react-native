@@ -1,6 +1,7 @@
 import { createLiveQueryCollection, eq } from "@tanstack/react-db";
 import { kbGroupsCollection } from "@/data/collections/KbGroups";
 import { kbEntriesCollection } from "@/data/collections/KbEntries";
+import { defineSearch } from "@/data/searching/useSearch";
 
 export const kbGroupsFullCollection = createLiveQueryCollection({
   id: "kbGroupsFullCollection",
@@ -12,4 +13,8 @@ export const kbGroupsFullCollection = createLiveQueryCollection({
   getKey(item) {
     return item.Id;
   },
+});
+
+defineSearch(kbGroupsCollection, {
+  keys: ["Name", "Description"],
 });

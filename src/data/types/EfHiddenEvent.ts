@@ -1,5 +1,5 @@
 import { EfEvent } from "@/data/types/EfEvent";
 
-export type EfFavoriteEvent = {
+export type EfHiddenEvent = {
   Id: EfEvent["Id"];
 };

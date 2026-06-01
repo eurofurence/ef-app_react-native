@@ -3,6 +3,7 @@ import { queryCollectionOptions } from "@tanstack/query-db-collection";
 import { api } from "@/data/clients/api";
 import { queryClient } from "@/data/clients/query";
 import type { EfAnnouncement } from "@/data/types/EfAnnouncement";
+import { defineSearch } from "@/data/searching/useSearch";
 
 export const announcementsCollection = createCollection(
   queryCollectionOptions({
@@ -19,3 +20,7 @@ export const announcementsCollection = createCollection(
     defaultIndexType: BasicIndex,
   }),
 );
+
+defineSearch(announcementsCollection, {
+  keys: ["Author", "Title", "Content"],
+});
