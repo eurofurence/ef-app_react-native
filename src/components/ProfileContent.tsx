@@ -1,11 +1,13 @@
 import { captureException } from '@sentry/react-native'
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet, View } from 'react-native'
+import { Linking, StyleSheet, useWindowDimensions, View } from 'react-native'
+import { SvgXml } from 'react-native-svg'
 
 import { authSettingsUrl, conName } from '@/configuration'
 import { useAuthContext } from '@/context/auth/Auth'
 import type { Claims } from '@/hooks/api/idp/useUserInfo'
+import { useUserDatamatrix } from '@/hooks/api/users/useUserDatamatrix'
 import type { UserDetails } from '@/hooks/api/users/useUsersSelf'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
@@ -81,6 +83,9 @@ export const ProfileContent: FC<ProfileContentProps> = ({
   const { t: a11y } = useTranslation('Profile')
   const avatarBackground = useThemeBackground('primary')
   const { logout } = useAuthContext()
+  const { data: datamatrix } = useUserDatamatrix()
+  const { width: windowWidth } = useWindowDimensions()
+  const datamatrixSize = Math.min(windowWidth * 0.8, 300)
 
   const isAttendee = user.RoleMap.Attendee
   const isCheckedIn = user.RoleMap.AttendeeCheckedIn
@@ -146,6 +151,29 @@ export const ProfileContent: FC<ProfileContentProps> = ({
         {t('idp_settings')}
       </Button>
 
+      {datamatrix && (
+        <>
+          <Section
+            icon='barcode-scan'
+            title={t('badge_code')}
+            subtitle={t('badge_code_subtitle')}
+          />
+          <View
+            style={[
+              styles.datamatrixContainer,
+              { width: datamatrixSize, height: datamatrixSize },
+            ]}
+          >
+            <SvgXml
+              xml={datamatrix}
+              width='100%'
+              height='100%'
+              preserveAspectRatio='xMidYMid meet'
+            />
+          </View>
+        </>
+      )}
+
       {roleComplex && (
         <>
           <Section
@@ -201,6 +229,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
+  },
+  datamatrixContainer: {
+    alignSelf: 'center',
+    marginVertical: 20,
+    padding: 12,
+    backgroundColor: 'white',
+    borderRadius: 8,
   },
   logoutButton: {
     marginTop: 20,
