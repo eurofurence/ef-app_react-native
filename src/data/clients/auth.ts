@@ -72,7 +72,7 @@ export class AuthClient {
 
   constructor() {
     // Restore and notify. Then refresh initially and connect auto-refresh.
-    this.restoreState()
+    this._restoreState()
       .then(() => this.refresh().catch(captureException))
       .then(() => {
         // Finally, start timer. Lock once.
@@ -170,10 +170,10 @@ export class AuthClient {
       if (response.type === 'success') {
         this._tokenResponse = response.authentication
         this._idData = parseIdToken(response.authentication?.idToken)
-        this._userClaims = await this.fetchUserInfo()
-        this._userData = await this.fetchUserSelf()
-        await this.saveState()
-        this.notify()
+        this._userClaims = await this._fetchUserInfo()
+        this._userData = await this._fetchUserSelf()
+        await this._saveState()
+        this._notify()
       }
     } catch (error) {
       // Token has an error, reset state.
@@ -182,8 +182,8 @@ export class AuthClient {
         this._idData = null
         this._userClaims = null
         this._userData = null
-        await this.saveState()
-        this.notify()
+        await this._saveState()
+        this._notify()
       }
       throw error
     }
@@ -220,10 +220,10 @@ export class AuthClient {
       // Update response.
       this._tokenResponse = refreshResponse
       this._idData = parseIdToken(refreshResponse?.idToken)
-      this._userClaims = await this.fetchUserInfo()
-      this._userData = await this.fetchUserSelf()
-      await this.saveState()
-      this.notify()
+      this._userClaims = await this._fetchUserInfo()
+      this._userData = await this._fetchUserSelf()
+      await this._saveState()
+      this._notify()
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
@@ -231,8 +231,8 @@ export class AuthClient {
         this._idData = null
         this._userClaims = null
         this._userData = null
-        await this.saveState()
-        this.notify()
+        await this._saveState()
+        this._notify()
       }
       throw error
     }
@@ -278,8 +278,8 @@ export class AuthClient {
     this._idData = null
     this._userClaims = null
     this._userData = null
-    await this.saveState()
-    this.notify()
+    await this._saveState()
+    this._notify()
   }
 
   /**
@@ -287,14 +287,14 @@ export class AuthClient {
    * @throws never
    * @private
    */
-  private async restoreState() {
+  private async _restoreState() {
     const stored = await AsyncStorage.get('auth-client-persisted-state')
     if (stored === null) {
       this._tokenResponse = null
       this._idData = null
       this._userClaims = null
       this._userData = null
-      this.notify()
+      this._notify()
     } else {
       try {
         const data = JSON.parse(stored)
@@ -302,13 +302,13 @@ export class AuthClient {
         this._idData = data.idData
         this._userClaims = data.userClaims
         this._userData = data.userData
-        this.notify()
+        this._notify()
       } catch {
         this._tokenResponse = null
         this._idData = null
         this._userClaims = null
         this._userData = null
-        this.notify()
+        this._notify()
         await AsyncStorage.remove('auth-client-persisted-state')
       }
     }
@@ -319,7 +319,7 @@ export class AuthClient {
    * @throws never
    * @private
    */
-  private async saveState() {
+  private async _saveState() {
     try {
       await AsyncStorage.set(
         'auth-client-persisted-state',
@@ -340,7 +340,7 @@ export class AuthClient {
    * @throws never
    * @private
    */
-  private async fetchUserInfo() {
+  private async _fetchUserInfo() {
     if (!this._tokenResponse?.accessToken) return null
     return await axios
       .get(`${authIssuer}/api/v1/userinfo`, {
@@ -360,7 +360,7 @@ export class AuthClient {
    * @throws never
    * @private
    */
-  private async fetchUserSelf() {
+  private async _fetchUserSelf() {
     if (!this._tokenResponse?.accessToken) return null
     return await axios
       .get(`${apiBase}/Users/:self`, {
@@ -380,7 +380,7 @@ export class AuthClient {
    * @throws never
    * @private
    */
-  private notify() {
+  private _notify() {
     // Mark ready true, if not already set.
     this._isReady = true
 
