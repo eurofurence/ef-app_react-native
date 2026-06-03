@@ -32,5 +32,13 @@ export async function get(key: string) {
  * @param value The value to write.
  */
 export async function set(key: string, value: string) {
-  await AsyncStorage.setItem(key, value)
+  await AsyncStorage.setItem(key, value);
+}
+
+/**
+ * Removes an item from the storage
+ * @param key The key to remove from the storage.
+ */
+export async function remove(key: string) {
+  return await AsyncStorage.removeItem(key);
 }

@@ -1,9 +1,13 @@
 import axios from "axios";
-import { authClient } from "@/data/clients/auth";
+import { auth } from "@/data/clients/auth";
 
 const url = "https://app.test.eurofurence.org/EF30-ve17v92UFFfJk/Api";
 //'https://app.eurofurence.org/EF29/Api'
 
+/**
+ * App API client with base URL. Uses the global AuthClient's instance for access tokens, unless requests specify
+ * `Authorization: false` as a header.
+ */
 export const api = axios.create({
   baseURL: url,
 });
@@ -16,8 +20,8 @@ api.interceptors.request.use((config) => {
   }
 
   // If auth client has a response with a token, use that.
-  if (authClient.tokenResponse?.accessToken) {
-    config.headers.Authorization = `Bearer ${authClient.tokenResponse.accessToken}`;
+  if (auth.tokenResponse?.accessToken) {
+    config.headers.Authorization = `Bearer ${auth.tokenResponse.accessToken}`;
     return config;
   }
 

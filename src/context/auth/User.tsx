@@ -1,14 +1,15 @@
 import { createContext, type ReactNode, useContext, useMemo } from 'react'
 
 import { avatarBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
 import type { IdData } from '@/context/auth/Auth.idToken'
 import { type Claims, useUserInfo } from '@/hooks/api/idp/useUserInfo'
-import { type UserDetails, useUsersSelf } from '@/hooks/api/users/useUsersSelf'
+import { type UserDetails, useUsersSelf } from "@/hooks/api/users/useUsersSelf";
+import { auth, useAuthState } from "@/data/clients/auth";
 
 /**
  * Converts ID data to a claims-compatible object.
  * @param idData The ID data to convert.
+ * @deprecated
  */
 function idToClaims(idData: IdData | null): Claims | null {
   if (!idData) return null
@@ -39,26 +40,28 @@ function idToClaims(idData: IdData | null): Claims | null {
 
 /**
  * User context type.
+ * @deprecated
  */
 export type UserContextType = {
   /**
    * Current claims. Claims may have been converted from reduced ID token data.
    */
-  claims: Claims | null
+  claims: Claims | null;
 
   /**
    * The current user or null if not authorized.
    */
-  user: UserDetails | null
+  user: UserDetails | null;
 
   /**
    * Force refresh. Throws on failure.
    */
-  refresh(): Promise<void>
-}
+  refresh(): Promise<void>;
+};
 
 /**
  * User context.
+ * @deprecated
  */
 export const UserContext = createContext<UserContextType | undefined>(undefined)
 UserContext.displayName = 'UserContext'
@@ -67,13 +70,14 @@ UserContext.displayName = 'UserContext'
  * Provides the current user state.
  * @param children The children to provide to.
  * @constructor
+ * @deprecated
  */
 export const UserProvider = ({
   children,
 }: {
   children?: ReactNode | undefined
 }) => {
-  const { idData, refreshToken } = useAuthContext()
+  const { idData } = useAuthState()
 
   const { data: claims, refetch: refetchClaims } = useUserInfo()
   const { data: user, refetch: refetchSelf } = useUsersSelf()
@@ -84,19 +88,20 @@ export const UserProvider = ({
       claims: claims ?? idToClaims(idData) ?? null,
       user: user ?? null,
       refresh: async () => {
-        await refreshToken()
+        await auth.refresh()
         await refetchClaims()
         await refetchSelf()
       },
     }),
-    [idData, claims, user, refreshToken, refetchClaims, refetchSelf]
+    [idData, claims, user,  refetchClaims, refetchSelf]
   )
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
 
 /**
  * Uses the user context.
+ * @deprecated
  */
 export const useUserContext = () => {
   const context = useContext(UserContext)
@@ -107,5 +112,6 @@ export const useUserContext = () => {
 
 /**
  * Shorthand for using the `user` of the `UserContext`.
+ * @deprecated
  */
 export const useCurrentUser = () => useUserContext().user

@@ -1,13 +1,26 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthRequest, refreshAsync, TokenResponse } from "expo-auth-session";
-import { authClientId, authIssuer, authRedirect, authScopes } from "@/configuration";
+import { apiBase, authClientId, authIssuer, authRedirect, authScopes } from "@/configuration";
 import type { IdData } from "@/context/auth/Auth.idToken";
 import { parseIdToken } from "@/data/clients/auth.idToken";
 import axios from "axios";
 import { isTokenError } from "@/data/clients/auth.errors";
 import { captureException } from "@sentry/react-native";
 import { useSyncExternalStore } from "react";
+import { EfClaims } from "@/data/types/EfClaims";
+import { EfUser } from "@/data/types/EfUser";
+import * as AsyncStorage from "@/util/asyncStorage";
+import * as WebBrowser from "expo-web-browser";
 
+/**
+ * Finishes auth session completions for web.
+ */
+export function finishLoginRedirect() {
+  WebBrowser.maybeCompleteAuthSession();
+}
+
+/**
+ * Auth client.
+ */
 export class AuthClient {
   /**
    * Stored token response.
@@ -22,54 +35,43 @@ export class AuthClient {
   private _idData: IdData | null = null;
 
   /**
+   * Stored user claims.
+   * @private
+   */
+  private _userClaims: EfClaims | null = null;
+
+  /**
+   * Stored API user data.
+   * @private
+   */
+  private _userData: EfUser | null = null;
+
+  /**
    * Handle to the refresh interval.
    * @private
    */
-  private refresher: any = null;
+  private _refresher: any = null;
+
+  /**
+   * Set to true when ready.
+   * @private
+   */
+  private _isReady: boolean = false;
 
   /**
    * Set of listeners.
    * @private
    */
-  private listeners = new Set<() => void>();
+  private _listeners = new Set<() => void>();
 
   constructor() {
-    AsyncStorage.getItem("auth-client-persisted-state")
-      .then(
-        (state) => {
-          if (state === null) {
-            // State is null, transfer null and notify.
-            this._tokenResponse = null;
-            this._idData = null;
-            this.notify();
-          } else {
-            try {
-              // Try to parse and set and notify.
-              const { tokenResponse, idData } = JSON.parse(state);
-              this._tokenResponse = tokenResponse;
-              this._idData = idData;
-              this.notify();
-            } catch {
-              // Error occurred, set null and notify.
-              this._tokenResponse = null;
-              this._idData = null;
-              this.notify();
-            }
-          }
-        },
-        () => {
-          // Error occurred while reading, set null and notify.
-          this._tokenResponse = null;
-          this._idData = null;
-          this.notify();
-        },
-      )
-      .finally(() => {
+    // Restore and notify. Then refresh initially and connect auto-refresh.
+    this.restoreState()
+      .then(() => this.refresh().catch(captureException))
+      .then(() => {
         // Finally, start timer. Lock once.
         let running = false;
-
-        // Start refresh interval.
-        this.refresher = setInterval(() => {
+        this._refresher = setInterval(() => {
           // Already running, skip.
           if (running) return;
 
@@ -99,12 +101,33 @@ export class AuthClient {
   }
 
   /**
+   * Claims set.
+   */
+  get userClaims() {
+    return this._userClaims;
+  }
+
+  /**
+   * App API user data.
+   */
+  get userData() {
+    return this._userData;
+  }
+
+  /**
+   * True if auth state is ready.
+   */
+  get isReady() {
+    return this._isReady;
+  }
+
+  /**
    * Subscribe a listener to changes.
    * @param listener The listener to invoke.
    */
   public subscribe(listener: () => void): () => void {
-    this.listeners.add(listener);
-    return () => this.listeners.delete(listener);
+    this._listeners.add(listener);
+    return () => this._listeners.delete(listener);
   }
 
   /**
@@ -112,12 +135,13 @@ export class AuthClient {
    */
   public stop() {
     // Clear if not null, then reset.
-    if (this.refresher != null) clearInterval(this.refresher);
-    this.refresher = null;
+    if (this._refresher != null) clearInterval(this._refresher);
+    this._refresher = null;
   }
 
   /**
    * Prompts for login.
+   * @remarks Saves state and notifies.
    */
   public async login() {
     try {
@@ -136,10 +160,13 @@ export class AuthClient {
         { showInRecents: true },
       );
 
-      // If OK, parse response and saave state.
+      // If OK, parse response and save state.
       if (response.type === "success") {
         this._tokenResponse = response.authentication;
-        this._idData = response.authentication?.idToken ? parseIdToken(response.authentication.idToken) : null;
+        this._idData = parseIdToken(response.authentication?.idToken);
+        this._userClaims = await this.fetchUserInfo();
+        this._userData = await this.fetchUserSelf();
+        await this.saveState();
         this.notify();
       }
     } catch (error) {
@@ -147,6 +174,9 @@ export class AuthClient {
       if (isTokenError(error)) {
         this._tokenResponse = null;
         this._idData = null;
+        this._userClaims = null;
+        this._userData = null;
+        await this.saveState();
         this.notify();
       }
       throw error;
@@ -156,6 +186,7 @@ export class AuthClient {
   /**
    * Refreshes the current token.
    * @param force If true, does not check if the token is still considered fresh.
+   * @remarks Saves state and notifies.
    */
   public async refresh(force?: boolean) {
     try {
@@ -181,20 +212,29 @@ export class AuthClient {
 
       // Update response.
       this._tokenResponse = refreshResponse;
-      this._idData = refreshResponse?.idToken ? parseIdToken(refreshResponse.idToken) : null;
+      this._idData = parseIdToken(refreshResponse?.idToken);
+      this._userClaims = await this.fetchUserInfo();
+      this._userData = await this.fetchUserSelf();
+      await this.saveState();
       this.notify();
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
         this._tokenResponse = null;
         this._idData = null;
+        this._userClaims = null;
+        this._userData = null;
+        await this.saveState();
         this.notify();
       }
+      throw error;
     }
   }
 
   /**
    * Revokes tokens and resets state.
+   * @remarks Saves state and notifies.
+   * @throws never Upstream errors are consumed.
    */
   public async logout() {
     // Get token response. If nothing to revoke, skip.
@@ -229,22 +269,132 @@ export class AuthClient {
     // Clear data.
     this._tokenResponse = null;
     this._idData = null;
+    this._userClaims = null;
+    this._userData = null;
+    await this.saveState();
     this.notify();
   }
 
   /**
+   * Restores the saved state.
+   * @throws never
+   * @private
+   */
+  private async restoreState() {
+    const stored = await AsyncStorage.get("auth-client-persisted-state");
+    if (stored === null) {
+      this._tokenResponse = null;
+      this._idData = null;
+      this._userClaims = null;
+      this._userData = null;
+      this.notify();
+    } else {
+      try {
+        const data = JSON.parse(stored);
+        this._tokenResponse = data.tokenResponse;
+        this._idData = data.idData;
+        this._userClaims = data.userClaims;
+        this._userData = data.userData;
+        this.notify();
+      } catch (error) {
+        this._tokenResponse = null;
+        this._idData = null;
+        this._userClaims = null;
+        this._userData = null;
+        this.notify();
+        await AsyncStorage.remove("auth-client-persisted-state");
+      }
+    }
+  }
+
+  /**
+   * Saves the current state.
+   * @throws never
+   * @private
+   */
+  private async saveState() {
+    try {
+      await AsyncStorage.set(
+        "auth-client-persisted-state",
+        JSON.stringify({
+          tokenResponse: this._tokenResponse,
+          idData: this._idData,
+          userClaims: this._userClaims,
+          userData: this._userData,
+        }),
+      );
+    } catch (error) {
+      console.warn("Error saving auth client state", error);
+    }
+  }
+
+  /**
+   * Fetches user info, returns null if failed or no token.
+   * @throws never
+   * @private
+   */
+  private async fetchUserInfo() {
+    if (!this._tokenResponse?.accessToken) return null;
+    return await axios
+      .get(`${authIssuer}/api/v1/userinfo`, { headers: { Authorization: `Bearer ${this._tokenResponse?.accessToken}` } })
+      .then((res) => res.data as EfClaims)
+      .catch((error) => {
+        captureException(error);
+        return null;
+      });
+  }
+
+  /**
+   * Fetches user self data, returns null if failed or no token.
+   * @throws never
+   * @private
+   */
+  private async fetchUserSelf() {
+    if (!this._tokenResponse?.accessToken) return null;
+    return await axios
+      .get(`${apiBase}/Users/:self`, { headers: { Authorization: `Bearer ${this._tokenResponse?.accessToken}` } })
+      .then((res) => res.data as EfUser)
+      .catch((error) => {
+        captureException(error);
+        return null;
+      });
+  }
+
+  /**
    * Notify all listeners that the state has changed.
+   * @throws never
    * @private
    */
   private notify() {
-    for (const listener of this.listeners) {
-      listener();
+    // Mark ready true, if not already set.
+    this._isReady = true;
+
+    // Notify listeners.
+    for (const listener of this._listeners) {
+      try {
+        listener();
+      } catch (error) {
+        // Do not handle listener failures.
+        console.error("Unhandled AuthClient listener error", error);
+      }
     }
   }
 }
 
-export const authClient = new AuthClient();
+/**
+ * Global auth client instance.
+ */
+export const auth = new AuthClient();
 
+/**
+ * Uses the auth client state, i.e., the token and ID data, as well as claims and API user data.
+ */
 export function useAuthState() {
-  return useSyncExternalStore(authClient.subscribe, () => ({ tokenResponse: authClient.tokenResponse, idData: authClient.idData }));
+  return useSyncExternalStore(auth.subscribe, () => ({
+    isReady: auth.isReady,
+    tokenResponse: auth.tokenResponse,
+    idData: auth.idData,
+    userClaims: auth.userClaims,
+    userData: auth.userData,
+  }));
 }
