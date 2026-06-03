@@ -1,6 +1,6 @@
-import type {EfEntity} from "./EfEntity.ts";
+import type { EfEntity } from './EfEntity.ts'
 
 export type EfTrack = EfEntity & {
-    Name: string
-    IsInternal: boolean
+  Name: string
+  IsInternal: boolean
 }

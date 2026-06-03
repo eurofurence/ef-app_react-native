@@ -1,8 +1,8 @@
-import { EfId } from "@/data/types/EfId";
+import type { EfId } from '@/data/types/EfId'
 
 export type EfLocalNotification = {
-  Id: string;
-  TargetId: EfId;
-  ScheduledUtc: string;
-  CreatedUtc: string;
-};
+  Id: string
+  TargetId: EfId
+  ScheduledUtc: string
+  CreatedUtc: string
+}

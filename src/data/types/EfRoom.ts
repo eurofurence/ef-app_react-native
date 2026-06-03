@@ -1,7 +1,7 @@
-import type {EfEntity} from "./EfEntity.ts";
+import type { EfEntity } from './EfEntity.ts'
 
 export type EfRoom = EfEntity & {
-    Name: string
-    MapLink: string
-    IsInternal: boolean
+  Name: string
+  MapLink: string
+  IsInternal: boolean
 }

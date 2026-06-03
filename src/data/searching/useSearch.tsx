@@ -1,17 +1,21 @@
-import { Collection, UtilsRecord, WithVirtualProps } from "@tanstack/react-db";
-import type { StandardSchemaV1 } from "@standard-schema/spec";
-import Fuse, { FuseResult, IFuseOptions } from "fuse.js";
-import { useEffect, useRef, useState } from "react";
+import type { StandardSchemaV1 } from '@standard-schema/spec'
+import type {
+  Collection,
+  UtilsRecord,
+  WithVirtualProps,
+} from '@tanstack/react-db'
+import Fuse, { type FuseResult, type IFuseOptions } from 'fuse.js'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * Indices by collection.
  */
-const indices = new WeakMap<WeakKey, Fuse<unknown>>();
+const indices = new WeakMap<WeakKey, Fuse<unknown>>()
 
 /**
  * Search options by collection.
  */
-const searchOptions = new WeakMap<WeakKey, IFuseOptions<any>>();
+const searchOptions = new WeakMap<WeakKey, IFuseOptions<any>>()
 
 function getOrInitialize<
   T extends object = Record<string, unknown>,
@@ -21,33 +25,36 @@ function getOrInitialize<
   TInsertInput extends object = T,
 >(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>) {
   // Already initialized
-  if (indices.has(collection)) indices.get(collection);
+  if (indices.has(collection)) indices.get(collection)
 
   // Make new, use config.
-  const fuse = new Fuse<WithVirtualProps<T, TKey>>([], searchOptions.get(collection));
+  const fuse = new Fuse<WithVirtualProps<T, TKey>>(
+    [],
+    searchOptions.get(collection)
+  )
 
   // Add current values.
   collection.forEach((value) => {
-    fuse.add(value);
-  });
+    fuse.add(value)
+  })
 
   // Subscribe to changed values.
   collection.subscribeChanges((changes) => {
     for (const change of changes) {
-      if (change.type === "delete") {
-        fuse.remove((d) => d.$key === change.key);
-      } else if (change.type === "update") {
-        fuse.remove((d) => d.$key === change.key);
-        fuse.add(change.value);
+      if (change.type === 'delete') {
+        fuse.remove((d) => d.$key === change.key)
+      } else if (change.type === 'update') {
+        fuse.remove((d) => d.$key === change.key)
+        fuse.add(change.value)
       } else {
-        fuse.add(change.value);
+        fuse.add(change.value)
       }
     }
-  });
+  })
 
   // Update weak ref and return.
-  indices.set(collection, fuse);
-  return fuse;
+  indices.set(collection, fuse)
+  return fuse
 }
 
 /**
@@ -61,8 +68,11 @@ export function defineSearch<
   TUtils extends UtilsRecord = UtilsRecord,
   TSchema extends StandardSchemaV1 = StandardSchemaV1,
   TInsertInput extends object = T,
->(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>, options: IFuseOptions<T>) {
-  searchOptions.set(collection, options);
+>(
+  collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>,
+  options: IFuseOptions<T>
+) {
+  searchOptions.set(collection, options)
 }
 
 /**
@@ -76,8 +86,11 @@ export function search<
   TUtils extends UtilsRecord = UtilsRecord,
   TSchema extends StandardSchemaV1 = StandardSchemaV1,
   TInsertInput extends object = T,
->(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>, term: string) {
-  return getOrInitialize(collection).search(term);
+>(
+  collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>,
+  term: string
+) {
+  return getOrInitialize(collection).search(term)
 }
 
 /**
@@ -91,36 +104,41 @@ export function useSearch<
   TUtils extends UtilsRecord = UtilsRecord,
   TSchema extends StandardSchemaV1 = StandardSchemaV1,
   TInsertInput extends object = T,
->(collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>, term: string | null) {
+>(
+  collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>,
+  term: string | null
+) {
   // Initialize with current results.
-  const [results, setResults] = useState<FuseResult<WithVirtualProps<T, TKey>>[]>(() => {
-    if (term === null) return [];
-    const fuse = getOrInitialize(collection);
-    return fuse.search(term);
-  });
+  const [results, setResults] = useState<
+    FuseResult<WithVirtualProps<T, TKey>>[]
+  >(() => {
+    if (term === null) return []
+    const fuse = getOrInitialize(collection)
+    return fuse.search(term)
+  })
 
   // Subscribe to change of search term.
   useEffect(() => {
-    if (term === null) return;
-    const fuse = getOrInitialize(collection);
-    setResults(fuse.search(term));
-  }, [term]);
+    if (term === null) return
+    const fuse = getOrInitialize(collection)
+    setResults(fuse.search(term))
+  }, [term])
 
   // Reference for transfer of term to the subscription function.
-  const termRef = useRef<string | null>(term);
-  termRef.current = term;
+  const termRef = useRef<string | null>(term)
+  termRef.current = term
 
   // Subscribe to change of collection.
   useEffect(() => {
     const subscription = collection.subscribeChanges(() => {
-      if (termRef.current === null) return null;
-      const fuse = getOrInitialize(collection);
-      setResults(fuse.search(termRef.current));
-    });
+      if (termRef.current === null) return null
+      const fuse = getOrInitialize(collection)
+      setResults(fuse.search(termRef.current))
+    })
     return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
+      subscription.unsubscribe()
+    }
+  }, [])
 
-  return results;
+  return results
 }

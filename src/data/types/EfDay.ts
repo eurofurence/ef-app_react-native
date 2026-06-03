@@ -1,7 +1,7 @@
-import type {EfEntity} from "./EfEntity.ts";
+import type { EfEntity } from './EfEntity.ts'
 
 export type EfDay = EfEntity & {
-    Name: string
-    Date: string
-    IsInternal: boolean
+  Name: string
+  Date: string
+  IsInternal: boolean
 }

@@ -40,7 +40,7 @@ const discovery = {
   tokenEndpoint: `${authIssuer}/oauth2/token`,
   userInfoEndpoint: `${authIssuer}/api/v1/userinfo`,
   revocationEndpoint: `${authIssuer}/oauth2/revoke`,
-};
+}
 
 /**
  * Auth context type.
@@ -89,23 +89,23 @@ export type AuthContextType = {
   logout(): Promise<void>
 }
 
-export const storageKeyTokenResponse = "tokenResponseConfig";
+export const storageKeyTokenResponse = 'tokenResponseConfig'
 
 /**
  * Gets the last stored token response.
  * @deprecated
  */
 export async function getLastTokenResponse() {
-  const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse);
-  return tokenData ? new TokenResponse(JSON.parse(tokenData)) : null;
+  const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
+  return tokenData ? new TokenResponse(JSON.parse(tokenData)) : null
 }
 
 /**
  * Auth context.
  * @deprecated
  */
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
-AuthContext.displayName = "AuthContext";
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
+AuthContext.displayName = 'AuthContext'
 
 /**
  * Finishes auth session completions for web.7
@@ -367,13 +367,15 @@ export const AuthProvider = ({
   // Get value to provide to the children.
   const value = useMemo<AuthContextType>(() => {
     // Access token is raw opaque token string.
-    const accessToken = tokenResponse ? tokenResponse.accessToken : null;
+    const accessToken = tokenResponse ? tokenResponse.accessToken : null
 
     // Try parsing ID token if present, otherwise use null.
-    const idData = tokenResponse?.idToken ? parseIdToken(tokenResponse.idToken) : null;
+    const idData = tokenResponse?.idToken
+      ? parseIdToken(tokenResponse.idToken)
+      : null
 
     // Is logged in if the access token is not null.
-    const loggedIn = accessToken !== null;
+    const loggedIn = accessToken !== null
 
     // Compose value.
     return {
@@ -385,7 +387,7 @@ export const AuthProvider = ({
       login,
       refreshToken,
       logout,
-    };
+    }
   }, [load, login, logout, refreshToken, tokenResponse])
 
   if (!initialized) return null

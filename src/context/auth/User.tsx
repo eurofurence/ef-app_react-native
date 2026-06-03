@@ -2,9 +2,9 @@ import { createContext, type ReactNode, useContext, useMemo } from 'react'
 
 import { avatarBase } from '@/configuration'
 import type { IdData } from '@/context/auth/Auth.idToken'
+import { auth, useAuthState } from '@/data/clients/auth'
 import { type Claims, useUserInfo } from '@/hooks/api/idp/useUserInfo'
-import { type UserDetails, useUsersSelf } from "@/hooks/api/users/useUsersSelf";
-import { auth, useAuthState } from "@/data/clients/auth";
+import { type UserDetails, useUsersSelf } from '@/hooks/api/users/useUsersSelf'
 
 /**
  * Converts ID data to a claims-compatible object.
@@ -46,18 +46,18 @@ export type UserContextType = {
   /**
    * Current claims. Claims may have been converted from reduced ID token data.
    */
-  claims: Claims | null;
+  claims: Claims | null
 
   /**
    * The current user or null if not authorized.
    */
-  user: UserDetails | null;
+  user: UserDetails | null
 
   /**
    * Force refresh. Throws on failure.
    */
-  refresh(): Promise<void>;
-};
+  refresh(): Promise<void>
+}
 
 /**
  * User context.
@@ -93,10 +93,10 @@ export const UserProvider = ({
         await refetchSelf()
       },
     }),
-    [idData, claims, user,  refetchClaims, refetchSelf]
+    [idData, claims, user, refetchClaims, refetchSelf]
   )
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
 
 /**

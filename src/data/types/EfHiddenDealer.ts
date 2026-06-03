@@ -1,5 +1,5 @@
-import { EfDealer } from "@/data/types/EfDealer";
+import type { EfDealer } from '@/data/types/EfDealer'
 
 export type EfHiddenDealer = {
-  Id: EfDealer["Id"];
-};
+  Id: EfDealer['Id']
+}

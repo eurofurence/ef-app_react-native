@@ -1,14 +1,14 @@
-import { EfUser } from "@/data/types/EfUser";
+import type { EfUser } from '@/data/types/EfUser'
 
 /**
  * Role set was built for this array.
  */
-let inRoleSetFor: string[] | null = null;
+let inRoleSetFor: string[] | null = null
 
 /**
  * Role set.
  */
-let inRoleSet: Set<string> | null = null;
+let inRoleSet: Set<string> | null = null
 
 /**
  * Returns true if the given user is in the provided role.
@@ -18,10 +18,10 @@ let inRoleSet: Set<string> | null = null;
 export function inRole(user: EfUser, role: string) {
   // Rebuild if for different role array.
   if (inRoleSetFor !== user.Roles || inRoleSet === null) {
-    inRoleSetFor = user.Roles;
-    inRoleSet = new Set<string>(user.Roles);
+    inRoleSetFor = user.Roles
+    inRoleSet = new Set<string>(user.Roles)
   }
 
   // Check contained.
-  return inRoleSet.has(role);
+  return inRoleSet.has(role)
 }
