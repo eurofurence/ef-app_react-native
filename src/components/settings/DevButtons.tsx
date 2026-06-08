@@ -7,13 +7,12 @@ import { StyleSheet, TextInput, View } from 'react-native'
 
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
-import { storageKeyTokenResponse, useAuthContext } from '@/context/auth/Auth'
 import { useCache } from '@/context/data/Cache'
 import { withAlpha } from '@/context/Theme'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { auth, useAuthState } from '@/data/clients/auth'
 import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
-import * as SecureStore from '@/util/secureStorage'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 export function DevButtons() {
@@ -21,7 +20,7 @@ export function DevButtons() {
   const { synchronize, clear } = useCache()
   const { toast } = useToastContext()
   const [tokenData, setTokenData] = useState('')
-  const { load, accessToken, refreshToken, logout } = useAuthContext()
+  const { isLoggedIn, tokenResponse } = useAuthState()
 
   const styleLighten = useThemeBackground('inverted')
   const styleText = useThemeColor('invText')
@@ -42,27 +41,29 @@ export function DevButtons() {
   // Refreshes the current login state.
   const refreshLoginToken = useCallback(async () => {
     try {
-      await refreshToken(true)
+      await auth.refresh(true)
       toast('info', 'Login token data refreshed', 5000)
     } catch (error) {
       toast('warning', 'Failed to refresh login token data', 5000)
       captureException(error)
     }
-  }, [refreshToken, toast])
+  }, [toast])
 
   // Logs in with the token data from the text input.
   const loginWithTokenData = useCallback(async () => {
     try {
-      await load(JSON.parse(tokenData))
+      // @ts-expect-error Dev menu.
+      auth._tokenResponse = JSON.parse(tokenData)
+      await auth.refresh()
     } catch (error) {
       captureException(error)
     }
-  }, [load, tokenData])
+  }, [tokenData])
 
   // Copies the token data into the clipboard.
   const copyTokenData = useCallback(async () => {
     try {
-      const tokenData = await SecureStore.getItemAsync(storageKeyTokenResponse)
+      const tokenData = JSON.stringify(tokenResponse)
       await setStringAsync(tokenData ?? '')
       console.log(tokenData ?? '')
       toast('info', 'Token data copied to clipboard', 5000)
@@ -70,7 +71,7 @@ export function DevButtons() {
       toast('warning', 'Failed to copy token data', 5000)
       captureException(error)
     }
-  }, [toast])
+  }, [toast, tokenResponse])
 
   // Clears all AsyncStorage data
   const clearAsyncStorage = useCallback(async () => {
@@ -86,13 +87,13 @@ export function DevButtons() {
   // Forces logout and clears browser session
   const forceLogout = useCallback(async () => {
     try {
-      await logout()
+      await auth.logout()
       toast('info', 'Force logout completed', 5000)
     } catch (error) {
       toast('warning', 'Failed to force logout', 5000)
       captureException(error)
     }
-  }, [logout, toast])
+  }, [toast])
 
   return (
     <View style={styles.container}>
@@ -111,14 +112,14 @@ export function DevButtons() {
       </Button>
 
       <Button
-        disabled={!accessToken}
+        disabled={!isLoggedIn}
         onPress={refreshLoginToken}
         icon='refresh-circle'
       >
         {t('refresh_login_tokens_and_claims')}
       </Button>
 
-      <Button disabled={!accessToken} onPress={copyTokenData} icon='file-key'>
+      <Button disabled={!isLoggedIn} onPress={copyTokenData} icon='file-key'>
         {t('copy_token_data')}
       </Button>
 

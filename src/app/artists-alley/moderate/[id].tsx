@@ -11,8 +11,9 @@ import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Badge } from '@/components/generic/containers/Badge'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
-import { useUserContext } from '@/context/auth/User'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useArtistsAlleyItemDeleteMutation } from '@/hooks/api/artists-alley/useArtistsAlleyItemDeleteMutation'
 import { useArtistsAlleyItemQuery } from '@/hooks/api/artists-alley/useArtistsAlleyItemQuery'
 import { useArtistsAlleyItemStatusMutation } from '@/hooks/api/artists-alley/useArtistsAlleyItemStatusMutation'
@@ -29,7 +30,7 @@ export default function Moderate() {
   const { t: a11y } = useTranslation('ArtistsAlley', {
     keyPrefix: 'accessibility',
   })
-  const { user } = useUserContext()
+  const { user } = useAuthState()
 
   const { mutateAsync: changeStatus } = useArtistsAlleyItemStatusMutation()
   const { mutateAsync: deleteRegistration } =
@@ -42,11 +43,11 @@ export default function Moderate() {
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
 
-  const isAdmin = Boolean(user?.RoleMap?.Admin)
+  const isAdmin = inRole(user, 'Admin')
   const isPrivileged =
     isAdmin ||
-    Boolean(user?.RoleMap?.ArtistAlleyAdmin) ||
-    Boolean(user?.RoleMap?.ArtistAlleyModerator)
+    inRole(user, 'ArtistAlleyAdmin') ||
+    inRole(user, 'ArtistAlleyModerator')
 
   useEffect(() => {
     if (data) {

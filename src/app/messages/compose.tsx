@@ -13,8 +13,9 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedChoiceButtons } from '@/components/generic/forms/ManagedChoiceButtons'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { useUserContext } from '@/context/auth/User'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useCommunicationsSendMutation } from '@/hooks/api/communications/useCommunicationsSendMutation'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
@@ -37,15 +38,15 @@ function typeChoiceLabel(choice: string) {
 }
 
 export default function ComposeMessage() {
-  const { user } = useUserContext()
+  const { user } = useAuthState()
   const { t } = useTranslation('PrivateMessageCompose')
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
   const mainContentRef = useAccessibilityFocus<View>(200)
 
-  const isAdmin = Boolean(user?.RoleMap?.Admin)
-  const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
+  const isAdmin = inRole(user, 'Admin')
+  const isPrivateMessageSender = inRole(user, 'PrivateMessageSender')
 
   const form = useForm<MessageSchema>({
     resolver: zodResolver(messageSchema),

@@ -7,12 +7,12 @@ import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { Pressable } from '@/components/generic/Pressable'
-import type { Claims } from '@/hooks/api/idp/useUserInfo'
+import type { EfClaims } from '@/data/types/EfClaims'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 type PagerPrimaryLoginProps = {
   loggedIn: boolean
-  claims: Claims | null
+  claims: EfClaims | null
   onMessages?: () => void
   onLogin?: () => void
   onProfile?: () => void

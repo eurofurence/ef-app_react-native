@@ -12,20 +12,21 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Header } from '@/components/generic/containers/Header'
 import { artistAlleyUrl } from '@/configuration'
-import { useUserContext } from '@/context/auth/User'
 import type { TableRegistrationRecord } from '@/context/data/types.api'
 import type { ArtistAlleyDetails } from '@/context/data/types.details'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useArtistsAlleyQuery } from '@/hooks/api/artists-alley/useArtistsAlleyQuery'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'list' })
-  const { user } = useUserContext()
+  const { user } = useAuthState()
 
   // Get roles for preemptive RBAC.
   const isPrivileged =
-    Boolean(user?.RoleMap?.Admin) ||
-    Boolean(user?.RoleMap?.ArtistAlleyAdmin) ||
-    Boolean(user?.RoleMap?.ArtistAlleyModerator)
+    inRole(user, 'Admin') ||
+    inRole(user, 'ArtistAlleyAdmin') ||
+    inRole(user, 'ArtistAlleyModerator')
 
   const {
     data: source,

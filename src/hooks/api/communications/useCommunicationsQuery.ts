@@ -3,57 +3,37 @@ import {
   type UseQueryResult,
   useQuery,
 } from '@tanstack/react-query'
-import axios, { type GenericAbortSignal } from 'axios'
 import { useCallback } from 'react'
 
-import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
 import type { CommunicationRecord } from '@/context/data/types.api'
+import { api } from '@/data/clients/api'
 
 /**
- * Gets the communication records with the given access token and optionally an abort signal.
- * @param accessToken The access token.
- * @param signal An abort signal.
- */
-export async function getCommunications(
-  accessToken: string | null,
-  signal?: GenericAbortSignal
-) {
-  if (!accessToken) throw new Error('Unauthorized')
-  return await axios
-    .get(`${apiBase}/Communication/PrivateMessages`, {
-      signal: signal,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((res) => res.data as CommunicationRecord[])
-}
-
-/**
- * Uses a query for `getCommunications` with the app auth state.
+ * Returns a query on the communications items.
  */
 export function useCommunicationsQuery(): UseQueryResult<
   CommunicationRecord[] | null
 > {
-  const { accessToken, idData } = useAuthContext()
   return useQuery({
-    queryKey: [idData?.sub, 'communications'],
-    queryFn: (context) => getCommunications(accessToken, context.signal),
+    queryKey: ['communications'],
+    queryFn: ({ signal }) =>
+      api
+        .get(`/Communication/PrivateMessages`, {
+          signal: signal,
+        })
+        .then((res) => res.data as CommunicationRecord[]),
     placeholderData: (data) => keepPreviousData(data),
   })
 }
 
 /**
- * Uses a query for `getCommunications` with the app auth state. Applies an ID filter.
+ * Returns a query on the communications items and applies an ID filter.
  * @param id The ID of the record, preferably a string.
  * @remarks Uses the same query as getting all records.
  */
 export function useCommunicationsItemQuery(
   id: unknown
 ): UseQueryResult<CommunicationRecord | null> {
-  const { accessToken, idData } = useAuthContext()
-
   const findEntry = useCallback(
     (data: CommunicationRecord[] | null) => {
       return data?.find((item) => item.Id === id) ?? null
@@ -62,8 +42,13 @@ export function useCommunicationsItemQuery(
   )
 
   return useQuery({
-    queryKey: [idData?.sub, 'communications'],
-    queryFn: (context) => getCommunications(accessToken, context.signal),
+    queryKey: ['communications'],
+    queryFn: ({ signal }) =>
+      api
+        .get(`/Communication/PrivateMessages`, {
+          signal: signal,
+        })
+        .then((res) => res.data as CommunicationRecord[]),
     select: findEntry,
     placeholderData: (data) => keepPreviousData(data),
   })

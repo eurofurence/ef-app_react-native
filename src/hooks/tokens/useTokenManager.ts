@@ -2,8 +2,7 @@ import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
-
-import { useAuthContext } from '@/context/auth/Auth'
+import { useAuthState } from '@/data/clients/auth'
 import { postPushNotificationsFcmRegistration } from '@/hooks/api/push/usePushNotificationsFcmRegistrationMutation'
 import { captureNotificationException } from '@/sentryHelpers'
 
@@ -41,7 +40,8 @@ export const getDevicePushToken = async () => {
  */
 export const useTokenManager = () => {
   // Use login state to trigger.
-  const { accessToken } = useAuthContext()
+  const { tokenResponse } = useAuthState()
+  const accessToken = tokenResponse?.accessToken
 
   // Connect device itself via it's token to the backend and the topics. This
   // effect specifies token as a dependency, as a change of the token results

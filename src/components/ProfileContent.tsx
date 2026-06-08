@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, View } from 'react-native'
 
 import { authSettingsUrl, conName } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
-import type { Claims } from '@/hooks/api/idp/useUserInfo'
-import type { UserDetails } from '@/hooks/api/users/useUsersSelf'
+import { auth } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
+import type { EfClaims } from '@/data/types/EfClaims'
+import type { EfUser } from '@/data/types/EfUser'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-
 import { Image } from './generic/atoms/Image'
 import { Label } from './generic/atoms/Label'
 import { Section } from './generic/atoms/Section'
@@ -60,8 +60,8 @@ const UserRegistration: FC<{ id: string; status: string }> = ({
 }
 
 export type ProfileContentProps = {
-  claims: Claims
-  user: UserDetails
+  claims: EfClaims
+  user: EfUser
   parentPad?: number
 }
 
@@ -80,10 +80,9 @@ export const ProfileContent: FC<ProfileContentProps> = ({
   const { t } = useTranslation('Profile')
   const { t: a11y } = useTranslation('Profile')
   const avatarBackground = useThemeBackground('primary')
-  const { logout } = useAuthContext()
 
-  const isAttendee = user.RoleMap.Attendee
-  const isCheckedIn = user.RoleMap.AttendeeCheckedIn
+  const isAttendee = inRole(user, 'Attendee')
+  const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
   const roleComplex = Boolean(
     user.Roles.find(
       (role) => role !== 'Attendee' && role !== 'AttendeeCheckedIn'
@@ -166,7 +165,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({
       <Button
         style={styles.logoutButton}
         icon='logout'
-        onPress={() => logout().catch(captureException)}
+        onPress={() => auth.logout().catch(captureException)}
         accessibilityLabel={a11y('accessibility.logout_button')}
         accessibilityHint={a11y('accessibility.logout_button_hint')}
         accessibilityRole='button'

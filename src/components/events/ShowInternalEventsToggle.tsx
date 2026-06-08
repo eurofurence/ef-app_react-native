@@ -3,8 +3,9 @@ import { StyleSheet } from 'react-native'
 
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable, type PressableProps } from '@/components/generic/Pressable'
-import { useCurrentUser } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import {
   useThemeBackground,
   useThemeColorValue,
@@ -21,8 +22,8 @@ export function ShowInternalEventsToggle({
   const toggleBackground = useThemeBackground('inverted')
   const iconColor = useThemeColorValue('staff')
 
-  const user = useCurrentUser()
-  const isStaff = Boolean(user?.RoleMap?.Staff)
+  const { user } = useAuthState()
+  const isStaff = inRole(user, 'Staff')
 
   const { getValue, setValue } = useCache()
   const showInternal = getValue('settings').showInternalEvents ?? true

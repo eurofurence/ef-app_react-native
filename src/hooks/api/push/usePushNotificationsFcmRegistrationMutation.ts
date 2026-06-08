@@ -1,9 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { type GenericAbortSignal } from 'axios'
 import type { PlatformOSType } from 'react-native'
-
-import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
+import { api } from '@/data/clients/api'
 
 /**
  * Device registration.
@@ -14,35 +11,17 @@ export type PushNotificationsFcmRegistrationData = {
 }
 
 /**
- * Posts device registration data to the API with the given access token, registration data, and optionally an abort signal.
- * @param accessToken The access token.
- * @param data The registration data.
- * @param signal An abort signal.
- */
-export async function postPushNotificationsFcmRegistration(
-  accessToken: string | null,
-  data: PushNotificationsFcmRegistrationData,
-  signal?: GenericAbortSignal
-) {
-  if (!accessToken) throw new Error('Unauthorized')
-  return await axios
-    .post(`${apiBase}/PushNotifications/FcmDeviceRegistration`, data, {
-      signal: signal,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((res) => res.status === 204)
-}
-
-/**
- * Uses a mutation for `postPushNotificationsFcmRegistration` with the app auth state.
+ * Returns a mutation to register the device with push notifications.
  */
 export function usePushNotificationsFcmRegistrationMutation() {
-  const { accessToken } = useAuthContext()
   return useMutation({
     mutationFn: (data: PushNotificationsFcmRegistrationData) =>
-      postPushNotificationsFcmRegistration(accessToken, data),
+      api
+        .post(`/PushNotifications/FcmDeviceRegistration`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((res) => res.status === 204),
   })
 }

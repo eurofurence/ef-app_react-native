@@ -1,9 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { type GenericAbortSignal } from 'axios'
-
-import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
-import { queryClient } from '@/context/query/Query'
+import { api } from '@/data/clients/api'
 
 /**
  * Communication-send data.
@@ -19,44 +15,25 @@ export type CommunicationsSendData = {
 }
 
 /**
- * Sends a PM via the API with the given access token, message data, and optionally an abort signal.
- * @param accessToken The access token.
- * @param data The message data.
- * @param signal An abort signal.
- */
-export async function postCommunicationsSend(
-  accessToken: string | null,
-  data: CommunicationsSendData,
-  signal?: GenericAbortSignal
-) {
-  if (!accessToken) throw new Error('Unauthorized')
-  const { type, ...message } = data
-  return await axios
-    .post(
-      `${apiBase}/Communication/PrivateMessages/:${type ?? 'byRegistrationId'}`,
-      message,
-      {
-        signal: signal,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-    .then((res) => res.data)
-}
-
-/**
- * Uses a mutation for `postCommunicationsSend` with the app auth state.
+ * Returns a mutation to send a PM via the API.
  */
 export function useCommunicationsSendMutation() {
-  const { accessToken, idData } = useAuthContext()
   return useMutation({
-    mutationFn: (data: CommunicationsSendData) =>
-      postCommunicationsSend(accessToken, data),
-    onSuccess: () =>
-      queryClient.invalidateQueries({
-        queryKey: [idData?.sub, 'communications'],
+    mutationFn: ({ type, ...message }: CommunicationsSendData) =>
+      api
+        .post(
+          `/Communication/PrivateMessages/:${type ?? 'byRegistrationId'}`,
+          message,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+        .then((res) => res.data),
+    onSuccess: (_data, _variables, _onMutateResult, { client }) =>
+      client.invalidateQueries({
+        queryKey: ['communications'],
       }),
   })
 }

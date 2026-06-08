@@ -20,8 +20,8 @@ api.interceptors.request.use((config) => {
   }
 
   // If auth client has a response with a token, use that.
-  if (auth.tokenResponse?.accessToken) {
-    config.headers.Authorization = `Bearer ${auth.tokenResponse.accessToken}`
+  if (auth.state.tokenResponse?.accessToken) {
+    config.headers.Authorization = `Bearer ${auth.state.tokenResponse.accessToken}`
     return config
   }
 

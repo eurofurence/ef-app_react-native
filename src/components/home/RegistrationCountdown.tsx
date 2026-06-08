@@ -6,14 +6,13 @@ import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, View } from 'react-native'
 
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
-
 import { Icon } from '../generic/atoms/Icon'
 import { Label } from '../generic/atoms/Label'
 import { Button } from '../generic/containers/Button'
@@ -85,8 +84,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({
   )
   const iconColor = useThemeColorValue('important')
   const { data, isLoading, error } = useRegistrationDatesQuery()
-  const { user } = useUserContext()
-  const { login } = useAuthContext()
+  const { isLoggedIn, user } = useAuthState()
 
   const { countdownText, isRegistrationOpen } = useRegistrationState(
     t,
@@ -106,17 +104,17 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({
   }, [isRegistrationOpen, registrationUrl])
 
   // Don't show if dismissed, if loading, if there's an error, or if user is logged in AND is an attendee
-  const isAttendee = Boolean(user?.RoleMap?.Attendee)
-  const loggedIn = Boolean(user)
+  const isAttendee = inRole(user, 'Attendee')
+
   if (
     isHidden ||
     isLoading ||
     error ||
-    (loggedIn && isAttendee && isRegistrationOpen)
+    (isLoggedIn && isAttendee && isRegistrationOpen)
   )
     return null
   const showRegistrationButton = isRegistrationOpen && registrationUrl
-  const showLoginButton = !loggedIn
+  const showLoginButton = !isLoggedIn
   const showButtons = showLoginButton || showRegistrationButton
 
   return (
@@ -164,7 +162,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({
           status: countdownText,
         })}
       >
-        {countdownText} {loggedIn || t('login_prompt')}
+        {countdownText} {isLoggedIn || t('login_prompt')}
       </Label>
 
       {showButtons && (

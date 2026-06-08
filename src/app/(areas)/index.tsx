@@ -27,8 +27,6 @@ import { TimezoneWarning } from '@/components/home/TimezoneWarning'
 import { registrationUrl } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { useToastContext } from '@/context/ui/ToastContext'
-import { eventsFullCollection } from '@/data/collections/EventsFull'
-import { useSearch } from '@/data/searching/useSearch'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
@@ -43,9 +41,6 @@ export default function Index() {
   const { synchronize, isSynchronizing, getValue } = useCache()
   const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
-
-  const qr = useSearch(eventsFullCollection, 'summer')
-  console.log(qr)
 
   const [filter, setFilter] = useState('')
   const [searchMessage, setSearchMessage] = useState('')

@@ -3,45 +3,26 @@ import {
   type UseQueryResult,
   useQuery,
 } from '@tanstack/react-query'
-import axios, { type GenericAbortSignal } from 'axios'
 
-import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
 import type { TableRegistrationRecord } from '@/context/data/types.api'
-
-/**
- * Gets the caller's table registration record with the given access token and optionally an abort signal.
- * @param accessToken The access token.
- * @param signal An abort signal.
- */
-export async function getArtistsAlleyOwnRegistration(
-  accessToken: string | null,
-  signal?: GenericAbortSignal
-) {
-  if (!accessToken) throw new Error('Unauthorized')
-  return await axios
-    .get(`${apiBase}/ArtistsAlley/TableRegistration/:my-latest`, {
-      signal: signal,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      validateStatus: (status) =>
-        (status <= 200 && status < 300) || status === 404,
-    })
-    .then((res) =>
-      res.status === 404 ? null : (res.data as TableRegistrationRecord)
-    )
-}
+import { api } from '@/data/clients/api'
 
 /**
  * Uses a query for `getArtistsAlleyOwnRegistration` with the app auth state.
  */
 export function useArtistsAlleyOwnRegistrationQuery(): UseQueryResult<TableRegistrationRecord | null> {
-  const { accessToken, idData } = useAuthContext()
   return useQuery({
-    queryKey: [idData?.sub, 'artists-alley', 'own-registration'],
-    queryFn: (context) =>
-      getArtistsAlleyOwnRegistration(accessToken, context.signal),
+    queryKey: ['artists-alley', 'own-registration'],
+    queryFn: ({ signal }) =>
+      api
+        .get(`/ArtistsAlley/TableRegistration/:my-latest`, {
+          signal: signal,
+          validateStatus: (status) =>
+            (status <= 200 && status < 300) || status === 404,
+        })
+        .then((res) =>
+          res.status === 404 ? null : (res.data as TableRegistrationRecord)
+        ),
     placeholderData: (data) => keepPreviousData(data),
   })
 }

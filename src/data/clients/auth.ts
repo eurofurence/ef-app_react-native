@@ -10,8 +10,8 @@ import {
   authRedirect,
   authScopes,
 } from '@/configuration'
-import type { IdData } from '@/context/auth/Auth.idToken'
 import { isTokenError } from '@/data/clients/auth.errors'
+import type { IdData } from '@/data/clients/auth.idToken'
 import { parseIdToken } from '@/data/clients/auth.idToken'
 import type { EfClaims } from '@/data/types/EfClaims'
 import type { EfUser } from '@/data/types/EfUser'
@@ -24,33 +24,31 @@ export function finishLoginRedirect() {
   WebBrowser.maybeCompleteAuthSession()
 }
 
+export type AuthState = {
+  isReady: boolean
+  tokenResponse: TokenResponse | null
+  isLoggedIn: boolean
+  idData: IdData | null
+  claims: EfClaims | null
+  user: EfUser | null
+}
+
 /**
  * Auth client.
  */
 export class AuthClient {
   /**
-   * Stored token response.
+   * Auth state.
    * @private
    */
-  private _tokenResponse: TokenResponse | null = null
-
-  /**
-   * Stored ID data.
-   * @private
-   */
-  private _idData: IdData | null = null
-
-  /**
-   * Stored user claims.
-   * @private
-   */
-  private _userClaims: EfClaims | null = null
-
-  /**
-   * Stored API user data.
-   * @private
-   */
-  private _userData: EfUser | null = null
+  private _state: AuthState = {
+    isReady: false,
+    tokenResponse: null,
+    isLoggedIn: false,
+    idData: null,
+    claims: null,
+    user: null,
+  }
 
   /**
    * Handle to the refresh interval.
@@ -59,21 +57,41 @@ export class AuthClient {
   private _refresher: any = null
 
   /**
-   * Set to true when ready.
-   * @private
-   */
-  private _isReady: boolean = false
-
-  /**
    * Set of listeners.
    * @private
    */
   private _listeners = new Set<() => void>()
 
-  constructor() {
+  /**
+   * Gets the auth state.
+   */
+  get state(): Readonly<AuthState> {
+    return this._state
+  }
+
+  /**
+   * True if auth state is ready.
+   */
+  get isReady() {
+    return this._state.isReady
+  }
+
+  /**
+   * Subscribe a listener to changes.
+   * @param listener The listener to invoke.
+   */
+  public subscribe(listener: () => void): () => void {
+    this._listeners.add(listener)
+    return () => this._listeners.delete(listener)
+  }
+
+  /**
+   * Starts auth integration.
+   */
+  public start() {
     // Restore and notify. Then refresh initially and connect auto-refresh.
     this._restoreState()
-      .then(() => this.refresh().catch(captureException))
+      .then(() => this.refresh(true).catch(captureException))
       .then(() => {
         // Finally, start timer. Lock once.
         let running = false
@@ -90,50 +108,6 @@ export class AuthClient {
             })
         }, 600_000)
       })
-  }
-
-  /**
-   * Token data with access, refresh, ID tokens.
-   */
-  get tokenResponse() {
-    return this._tokenResponse
-  }
-
-  /**
-   * Parsed ID data.
-   */
-  get idData() {
-    return this._idData
-  }
-
-  /**
-   * Claims set.
-   */
-  get userClaims() {
-    return this._userClaims
-  }
-
-  /**
-   * App API user data.
-   */
-  get userData() {
-    return this._userData
-  }
-
-  /**
-   * True if auth state is ready.
-   */
-  get isReady() {
-    return this._isReady
-  }
-
-  /**
-   * Subscribe a listener to changes.
-   * @param listener The listener to invoke.
-   */
-  public subscribe(listener: () => void): () => void {
-    this._listeners.add(listener)
-    return () => this._listeners.delete(listener)
   }
 
   /**
@@ -168,20 +142,22 @@ export class AuthClient {
 
       // If OK, parse response and save state.
       if (response.type === 'success') {
-        this._tokenResponse = response.authentication
-        this._idData = parseIdToken(response.authentication?.idToken)
-        this._userClaims = await this._fetchUserInfo()
-        this._userData = await this._fetchUserSelf()
+        this._state.tokenResponse = response.authentication
+        this._state.isLoggedIn = Boolean(this._state.tokenResponse)
+        this._state.idData = parseIdToken(response.authentication?.idToken)
+        this._state.claims = await this._fetchUserInfo()
+        this._state.user = await this._fetchUserSelf()
         await this._saveState()
         this._notify()
       }
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
-        this._tokenResponse = null
-        this._idData = null
-        this._userClaims = null
-        this._userData = null
+        this._state.tokenResponse = null
+        this._state.isLoggedIn = false
+        this._state.idData = null
+        this._state.claims = null
+        this._state.user = null
         await this._saveState()
         this._notify()
       }
@@ -197,12 +173,14 @@ export class AuthClient {
   public async refresh(force?: boolean) {
     try {
       // Get token response. If nothing to revoke, skip.
-      if (!this._tokenResponse) return
+      if (!this._state.tokenResponse) return
 
       // Nothing to refresh.
-      if (!this._tokenResponse.refreshToken) return
+      if (!this._state.tokenResponse.refreshToken) return
       // Unforced and still fresh.
-      if (!(force || !TokenResponse.isTokenFresh(this._tokenResponse, 300)))
+      if (
+        !(force || !TokenResponse.isTokenFresh(this._state.tokenResponse, 300))
+      )
         return
 
       // Refresh with the current token.
@@ -210,7 +188,7 @@ export class AuthClient {
         {
           clientId: authClientId,
           scopes: authScopes,
-          refreshToken: this._tokenResponse.refreshToken,
+          refreshToken: this._state.tokenResponse.refreshToken,
         },
         {
           tokenEndpoint: `${authIssuer}/oauth2/token`,
@@ -218,19 +196,21 @@ export class AuthClient {
       )
 
       // Update response.
-      this._tokenResponse = refreshResponse
-      this._idData = parseIdToken(refreshResponse?.idToken)
-      this._userClaims = await this._fetchUserInfo()
-      this._userData = await this._fetchUserSelf()
+      this._state.tokenResponse = refreshResponse
+      this._state.isLoggedIn = Boolean(this._state.tokenResponse)
+      this._state.idData = parseIdToken(refreshResponse?.idToken)
+      this._state.claims = await this._fetchUserInfo()
+      this._state.user = await this._fetchUserSelf()
       await this._saveState()
       this._notify()
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
-        this._tokenResponse = null
-        this._idData = null
-        this._userClaims = null
-        this._userData = null
+        this._state.tokenResponse = null
+        this._state.isLoggedIn = false
+        this._state.idData = null
+        this._state.claims = null
+        this._state.user = null
         await this._saveState()
         this._notify()
       }
@@ -245,15 +225,15 @@ export class AuthClient {
    */
   public async logout() {
     // Get token response. If nothing to revoke, skip.
-    if (!this._tokenResponse) return
+    if (!this._state.tokenResponse) return
 
     // Revoke access token.
-    if (this._tokenResponse.accessToken)
+    if (this._state.tokenResponse.accessToken)
       await axios
         .post(
           `${authIssuer}/oauth2/revoke`,
           new URLSearchParams({
-            token: this._tokenResponse.accessToken,
+            token: this._state.tokenResponse.accessToken,
             client_id: authClientId,
             token_type_hint: 'access_token',
           })
@@ -261,12 +241,12 @@ export class AuthClient {
         .catch(captureException)
 
     // Revoke refresh token.
-    if (this._tokenResponse.refreshToken)
+    if (this._state.tokenResponse.refreshToken)
       await axios
         .post(
           `${authIssuer}/oauth2/revoke`,
           new URLSearchParams({
-            token: this._tokenResponse.refreshToken,
+            token: this._state.tokenResponse.refreshToken,
             client_id: authClientId,
             token_type_hint: 'refresh_token',
           })
@@ -274,10 +254,11 @@ export class AuthClient {
         .catch(captureException)
 
     // Clear data.
-    this._tokenResponse = null
-    this._idData = null
-    this._userClaims = null
-    this._userData = null
+    this._state.tokenResponse = null
+    this._state.isLoggedIn = false
+    this._state.idData = null
+    this._state.claims = null
+    this._state.user = null
     await this._saveState()
     this._notify()
   }
@@ -290,24 +271,27 @@ export class AuthClient {
   private async _restoreState() {
     const stored = await AsyncStorage.get('auth-client-persisted-state')
     if (stored === null) {
-      this._tokenResponse = null
-      this._idData = null
-      this._userClaims = null
-      this._userData = null
+      this._state.tokenResponse = null
+      this._state.isLoggedIn = false
+      this._state.idData = null
+      this._state.claims = null
+      this._state.user = null
       this._notify()
     } else {
       try {
         const data = JSON.parse(stored)
-        this._tokenResponse = data.tokenResponse
-        this._idData = data.idData
-        this._userClaims = data.userClaims
-        this._userData = data.userData
+        this._state.tokenResponse = data.tokenResponse
+        this._state.isLoggedIn = Boolean(this._state.tokenResponse)
+        this._state.idData = data.idData
+        this._state.claims = data.claims
+        this._state.user = data.user
         this._notify()
       } catch {
-        this._tokenResponse = null
-        this._idData = null
-        this._userClaims = null
-        this._userData = null
+        this._state.tokenResponse = null
+        this._state.isLoggedIn = false
+        this._state.idData = null
+        this._state.claims = null
+        this._state.user = null
         this._notify()
         await AsyncStorage.remove('auth-client-persisted-state')
       }
@@ -324,10 +308,10 @@ export class AuthClient {
       await AsyncStorage.set(
         'auth-client-persisted-state',
         JSON.stringify({
-          tokenResponse: this._tokenResponse,
-          idData: this._idData,
-          userClaims: this._userClaims,
-          userData: this._userData,
+          tokenResponse: this._state.tokenResponse,
+          idData: this._state.idData,
+          claims: this._state.claims,
+          user: this._state.user,
         })
       )
     } catch (error) {
@@ -341,11 +325,11 @@ export class AuthClient {
    * @private
    */
   private async _fetchUserInfo() {
-    if (!this._tokenResponse?.accessToken) return null
+    if (!this._state.tokenResponse?.accessToken) return null
     return await axios
       .get(`${authIssuer}/api/v1/userinfo`, {
         headers: {
-          Authorization: `Bearer ${this._tokenResponse?.accessToken}`,
+          Authorization: `Bearer ${this._state.tokenResponse.accessToken}`,
         },
       })
       .then((res) => res.data as EfClaims)
@@ -361,11 +345,11 @@ export class AuthClient {
    * @private
    */
   private async _fetchUserSelf() {
-    if (!this._tokenResponse?.accessToken) return null
+    if (!this._state.tokenResponse?.accessToken) return null
     return await axios
       .get(`${apiBase}/Users/:self`, {
         headers: {
-          Authorization: `Bearer ${this._tokenResponse?.accessToken}`,
+          Authorization: `Bearer ${this._state.tokenResponse.accessToken}`,
         },
       })
       .then((res) => res.data as EfUser)
@@ -382,7 +366,7 @@ export class AuthClient {
    */
   private _notify() {
     // Mark ready true, if not already set.
-    this._isReady = true
+    this._state.isReady = true
 
     // Notify listeners.
     for (const listener of this._listeners) {
@@ -401,15 +385,17 @@ export class AuthClient {
  */
 export const auth = new AuthClient()
 
+function authSubscribe(listener: () => void) {
+  return auth.subscribe(listener)
+}
+
+function authGetSnapshot() {
+  return auth.state
+}
+
 /**
  * Uses the auth client state, i.e., the token and ID data, as well as claims and API user data.
  */
 export function useAuthState() {
-  return useSyncExternalStore(auth.subscribe, () => ({
-    isReady: auth.isReady,
-    tokenResponse: auth.tokenResponse,
-    idData: auth.idData,
-    userClaims: auth.userClaims,
-    userData: auth.userData,
-  }))
+  return useSyncExternalStore(authSubscribe, authGetSnapshot)
 }

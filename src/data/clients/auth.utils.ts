@@ -15,7 +15,10 @@ let inRoleSet: Set<string> | null = null
  * @param user The user to check.
  * @param role The role to check for.
  */
-export function inRole(user: EfUser, role: string) {
+export function inRole(user: EfUser | null, role: string) {
+  // No check available.
+  if (user === null) return false
+
   // Rebuild if for different role array.
   if (inRoleSetFor !== user.Roles || inRoleSet === null) {
     inRoleSetFor = user.Roles

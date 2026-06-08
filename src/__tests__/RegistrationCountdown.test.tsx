@@ -2,12 +2,11 @@ import { beforeEach, describe, expect, it, type Mock, mock } from 'bun:test'
 import { fireEvent, render, screen } from '@testing-library/react-native'
 
 import { RegistrationCountdown } from '@/components/home/RegistrationCountdown'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserContext } from '@/context/auth/User'
 import type { useCache } from '@/context/data/Cache'
+import { useAuthState } from '@/data/clients/auth'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
-import { useNow } from '@/hooks/time/useNow'
+import { useNow } from '@/hooks/time/useNow' // Mock expo-router
 
 // Mock expo-router
 mock.module('@react-navigation/core', () => ({
@@ -46,14 +45,9 @@ mock.module('@/hooks/time/useNow', () => ({
   useNow: mock(),
 }))
 
-// Mock auth context
-mock.module('@/context/auth/Auth', () => ({
-  useAuthContext: mock(),
-}))
-
-// Mock user context
-mock.module('@/context/auth/User', () => ({
-  useUserContext: mock(),
+// Mock auth state
+mock.module('@/data/clients/auth', () => ({
+  useAuthState: mock(),
 }))
 
 // Mock translation
@@ -95,8 +89,7 @@ const mockUseRegistrationDatesQuery = useRegistrationDatesQuery as Mock<
 >
 const mockUseWarningState = useWarningState as Mock<typeof useWarningState>
 const mockUseNow = useNow as Mock<typeof useNow>
-const mockUseAuthContext = useAuthContext as Mock<typeof useAuthContext>
-const mockUseUserContext = useUserContext as Mock<typeof useUserContext>
+const mockUseAuthState = useAuthState as Mock<typeof useAuthState>
 
 // Helper function to create mock cache
 const createMockCache = (eventDays: any[] = []) =>
@@ -152,21 +145,14 @@ describe('RegistrationCountdown', () => {
       showWarning: mock(),
     })
     mockUseCache.mockReturnValue(createMockCache())
-    mockUseAuthContext.mockReturnValue({
-      loggedIn: false,
-      accessToken: null,
+    mockUseAuthState.mockReturnValue({
+      isReady: true,
+      isLoggedIn: false,
       tokenResponse: null,
       idData: null,
-      load: mock(),
-      login: mock(),
-      refreshToken: mock(),
-      logout: mock(),
-    })
-    mockUseUserContext.mockReturnValue({
       claims: null,
       user: null,
-      refresh: mock(() => Promise.resolve()),
-    } as any)
+    })
   })
 
   describe('when registration is open', () => {
@@ -207,21 +193,14 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show countdown when user is logged in but not an attendee', () => {
-      mockUseAuthContext.mockReturnValue({
-        loggedIn: true,
-        accessToken: 'token',
+      mockUseAuthState.mockReturnValue({
+        isReady: true,
+        isLoggedIn: true,
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: mock(),
-        login: mock(),
-        refreshToken: mock(),
-        logout: mock(),
-      })
-      mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
-        user: { RoleMap: { Attendee: false } },
-        refresh: mock(() => Promise.resolve()),
-      } as any)
+        user: { Roles: [], Registrations: [] },
+      })
 
       render(
         <RegistrationCountdown registrationUrl='https://example.com/register' />
@@ -232,21 +211,14 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should not show countdown when user is logged in and is an attendee', () => {
-      mockUseAuthContext.mockReturnValue({
-        loggedIn: true,
-        accessToken: 'token',
+      mockUseAuthState.mockReturnValue({
+        isReady: true,
+        isLoggedIn: true,
         tokenResponse: {} as any,
-        idData: { sub: '0' } as any,
-        load: mock(),
-        login: mock(),
-        refreshToken: mock(),
-        logout: mock(),
-      })
-      mockUseUserContext.mockReturnValue({
+        idData: { sub: '0' },
         claims: { sub: '0' },
-        user: { RoleMap: { Attendee: true } },
-        refresh: mock(() => Promise.resolve()),
-      } as any)
+        user: { Roles: ['Attendee'], Registrations: [] },
+      })
 
       const { toJSON } = render(
         <RegistrationCountdown registrationUrl='https://example.com/register' />
@@ -321,21 +293,14 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show thank you message and no registration button if user is logged in and is an attendee', () => {
-      mockUseAuthContext.mockReturnValue({
-        loggedIn: true,
-        accessToken: 'token',
+      mockUseAuthState.mockReturnValue({
+        isReady: true,
+        isLoggedIn: true,
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: mock(),
-        login: mock(),
-        refreshToken: mock(),
-        logout: mock(),
-      })
-      mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
-        user: { RoleMap: { Attendee: true } },
-        refresh: mock(() => Promise.resolve()),
-      } as any)
+        user: { Roles: ['Attendee'], Registrations: [] },
+      })
 
       render(
         <RegistrationCountdown registrationUrl='https://example.com/register' />
@@ -346,21 +311,14 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should show thank you message and no registration button if user is logged in and is not an attendee', () => {
-      mockUseAuthContext.mockReturnValue({
-        loggedIn: true,
-        accessToken: 'token',
+      mockUseAuthState.mockReturnValue({
+        isReady: true,
+        isLoggedIn: true,
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: mock(),
-        login: mock(),
-        refreshToken: mock(),
-        logout: mock(),
-      })
-      mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
-        user: { RoleMap: { Attendee: false } },
-        refresh: mock(() => Promise.resolve()),
-      } as any)
+        user: { Roles: [], Registrations: [] },
+      })
 
       render(
         <RegistrationCountdown registrationUrl='https://example.com/register' />
@@ -382,21 +340,14 @@ describe('RegistrationCountdown', () => {
 
   describe('when prompting user to log in', () => {
     it('should not show login prompt if user is logged in and is not an attendee', () => {
-      mockUseAuthContext.mockReturnValue({
-        loggedIn: true,
-        accessToken: 'token',
+      mockUseAuthState.mockReturnValue({
+        isReady: true,
+        isLoggedIn: true,
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: mock(),
-        login: mock(),
-        refreshToken: mock(),
-        logout: mock(),
-      })
-      mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
-        user: { RoleMap: { Attendee: false } },
-        refresh: mock(() => Promise.resolve()),
-      } as any)
+        user: { Roles: [], Registrations: [] },
+      })
 
       render(<RegistrationCountdown />)
 
@@ -405,21 +356,14 @@ describe('RegistrationCountdown', () => {
     })
 
     it('should not show login prompt if user is logged in and is an attendee', () => {
-      mockUseAuthContext.mockReturnValue({
-        loggedIn: true,
-        accessToken: 'token',
+      mockUseAuthState.mockReturnValue({
+        isReady: true,
+        isLoggedIn: true,
         tokenResponse: {} as any,
         idData: { sub: '0' },
-        load: mock(),
-        login: mock(),
-        refreshToken: mock(),
-        logout: mock(),
-      })
-      mockUseUserContext.mockReturnValue({
         claims: { sub: '0' },
-        user: { RoleMap: { Attendee: true } },
-        refresh: mock(() => Promise.resolve()),
-      } as any)
+        user: { Roles: ['Attendee'], Registrations: [] },
+      })
 
       render(<RegistrationCountdown />)
 

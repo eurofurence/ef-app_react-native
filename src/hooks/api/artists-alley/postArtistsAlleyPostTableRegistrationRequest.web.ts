@@ -1,17 +1,17 @@
 import axios from 'axios'
 
 import { apiBase } from '@/configuration'
+import { auth } from '@/data/clients/auth'
 import type { ArtistsAlleyPostTableRegistrationData } from '@/hooks/api/artists-alley/ArtistsAlleyPostTableRegistrationData'
 
 /**
  * Posts a table registration via the API with the given access token and registration data.
- * @param accessToken The access token.
  * @param data The registration data.
  */
 export async function postArtistsAlleyPostTableRegistrationRequest(
-  accessToken: string | null,
   data: ArtistsAlleyPostTableRegistrationData
 ) {
+  const accessToken = auth.state.tokenResponse?.accessToken
   if (!accessToken) throw new Error('Unauthorized')
 
   const requestImageFile = await fetch(data.imageUri).then(async (response) => {

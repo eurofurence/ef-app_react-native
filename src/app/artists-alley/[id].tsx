@@ -8,8 +8,9 @@ import { ArtistsAlleyContent } from '@/components/artists-alley/ArtistsAlleyCont
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
-import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function ArtistsAlleyDetail() {
@@ -18,7 +19,7 @@ export default function ArtistsAlleyDetail() {
     keyPrefix: 'accessibility',
   })
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { user } = useUserContext()
+  const { user } = useAuthState()
   const { artistAlley } = useCache()
   const artistAlleyEntry = artistAlley.dict[id]
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
@@ -36,7 +37,7 @@ export default function ArtistsAlleyDetail() {
     }
   }, [artistAlleyEntry, a11y])
 
-  const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
+  const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
   if (!user || !isCheckedIn) return <Redirect href='/artists-alley' />
 
   return (
