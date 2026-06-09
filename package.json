@@ -158,7 +158,7 @@
     "start:dev": "expo start --dev-client",
     "storybook:dev": "storybook dev -p 6006",
     "submit:android": "eas submit --platform android",
-    "submit:web": "gh-pages -d dist",
+    "submit:web": "touch dist/.nojekyll && cp dist/index.html dist/404.html && gh-pages -d dist -t",
     "test": "bun test",
     "web": "expo start --web"
   },

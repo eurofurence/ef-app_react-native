@@ -83,6 +83,9 @@ module.exports = {
       bundler: 'metro',
       favicon: './assets/platform/appicon-android.png',
     },
+    experiments: {
+      baseUrl: '/ef-app_react-native',
+    },
     plugins: [
       // Run sentry plugin only if auth token is given, otherwise the build crashes.
       Boolean(global.process.env.SENTRY_AUTH_TOKEN) && [
