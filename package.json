@@ -102,7 +102,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.0",
-    "@biomejs/biome": "2.3.10",
+    "@biomejs/biome": "2.4.16",
     "@storybook/addon-docs": "9.1.17",
     "@storybook/addon-onboarding": "9.1.17",
     "@storybook/react-native-web-vite": "9.1.17",
@@ -112,7 +112,6 @@
     "@types/react": "~19.2.10",
     "@types/react-dom": "~19.1.7",
     "gh-pages": "^6.3.0",
-    "prettier": "^3.6.2",
     "storybook": "9.1.17",
     "typescript": "^5.8.3",
     "vite": "7.1.11"
