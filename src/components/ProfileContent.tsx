@@ -87,6 +87,19 @@ export const ProfileContent: FC<ProfileContentProps> = ({
   const { width: windowWidth } = useWindowDimensions()
   const datamatrixSize = Math.min(windowWidth * 0.8, 300)
 
+  // The API returns an SVG with fixed pixel dimensions but no viewBox - do you like it?
+  const scalableDatamatrix = useMemo(() => {
+    if (!datamatrix) return null
+    if (/viewBox=/.test(datamatrix)) return datamatrix
+    const width = datamatrix.match(/width="(\d+(?:\.\d+)?)/)?.[1]
+    const height = datamatrix.match(/height="(\d+(?:\.\d+)?)/)?.[1]
+    if (!width || !height) return datamatrix
+    return datamatrix
+      .replace(/(\s)width="[^"]*"/, '$1')
+      .replace(/(\s)height="[^"]*"/, '$1')
+      .replace(/<svg/, `<svg viewBox="0 0 ${width} ${height}"`)
+  }, [datamatrix])
+
   const isAttendee = user.RoleMap.Attendee
   const isCheckedIn = user.RoleMap.AttendeeCheckedIn
   const roleComplex = Boolean(
@@ -165,7 +178,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({
             ]}
           >
             <SvgXml
-              xml={datamatrix}
+              xml={scalableDatamatrix}
               width='100%'
               height='100%'
               preserveAspectRatio='xMidYMid meet'

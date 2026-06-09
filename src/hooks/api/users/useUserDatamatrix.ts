@@ -20,13 +20,15 @@ async function getUserDatamatrix(
 ) {
   if (!accessToken) throw new Error('Unauthorized')
   return await axios
-    .get(`${apiBase}/Users/pass`, {
+    .get(`${apiBase}/Users/Pass`, {
       signal: signal,
       responseType: 'text',
       transformResponse: (data) => data,
+      params: {
+        imageType: 'image/svg+xml',
+      },
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        Accept: 'image/svg+xml',
       },
     })
     .then((res) => res.data)
