@@ -159,7 +159,7 @@
     "start:dev": "expo start --dev-client",
     "storybook:dev": "storybook dev -p 6006",
     "submit:android": "eas submit --platform android",
-    "submit:web": "gh-pages -d web-build",
+    "submit:web": "gh-pages -d dist",
     "test": "bun test",
     "web": "expo start --web"
   },
