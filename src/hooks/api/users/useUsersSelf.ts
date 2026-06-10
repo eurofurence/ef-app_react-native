@@ -50,7 +50,7 @@ async function getUserSelf(
 }
 
 export function useUsersSelf(): UseQueryResult<UserDetails | null> {
-  const { accessToken, idData } = useAuthContext()
+  const { accessToken, idData, loggedIn } = useAuthContext()
   // Wrap self query. Add some options.
   return useQuery({
     queryKey: [idData?.sub, 'self'],
@@ -59,5 +59,6 @@ export function useUsersSelf(): UseQueryResult<UserDetails | null> {
     placeholderData: (data) => keepPreviousData(data),
     refetchInterval: 60_000,
     retry: false,
+    enabled: loggedIn,
   })
 }

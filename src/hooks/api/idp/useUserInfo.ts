@@ -37,10 +37,11 @@ export async function getUserInfo(
  * Uses a query for `getUserInfo` with the app auth state.
  */
 export function useUserInfo(): UseQueryResult<Claims | null> {
-  const { accessToken, idData } = useAuthContext()
+  const { accessToken, idData, loggedIn } = useAuthContext()
   return useQuery({
     queryKey: [idData?.sub, 'user-info'],
     queryFn: (context) => getUserInfo(accessToken, context.signal),
     placeholderData: (data) => keepPreviousData(data),
+    enabled: loggedIn,
   })
 }
