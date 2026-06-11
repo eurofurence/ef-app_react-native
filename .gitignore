@@ -414,3 +414,5 @@ storybook-static
 # output
 output_dir
 ef-app.apks
+# EAS local credentials
+credentials.json
