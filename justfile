@@ -4,13 +4,12 @@ default:
 	just --list
 
 prebuild *ARGS:
-	npx expo prebuild {{ARGS}}
+	bunx expo prebuild {{ARGS}}
 
-# TODO: This needs to be changed. Since we now use .env
 switch-env NAME:
 	#!/bin/bash
-	if [ ! -f ./convention.config.{{NAME}}.json ]; then echo "Target environment '{{NAME}}' does not exist."; exit 1; fi
-	cp ./convention.config.{{NAME}}.json ./convention.config.json
+	if [ ! -f ./.env.{{NAME}} ]; then echo "Target environment '{{NAME}}' does not exist."; exit 1; fi
+	cp ./.env.{{NAME}} ./.env
 	echo "Switched to environment '{{NAME}}'."
 
 # Helpers for executing a command directly or via shell.
@@ -20,9 +19,9 @@ ASSERT_LINUX_END := if os_family() == "windows" { "'" } else { "" }
 platform := 'android'
 profile := 'preview'
 build PLATFORM=platform PROFILE=profile:
-    {{ASSERT_LINUX}} pnpm exec eas build --platform {{PLATFORM}} --profile {{PROFILE}} --local {{ASSERT_LINUX_END}}
+    {{ASSERT_LINUX}} bunx eas build --platform {{PLATFORM}} --profile {{PROFILE}} --local {{ASSERT_LINUX_END}}
 
 cloud-build PLATFORM=platform PROFILE=profile:
-    pnpm exec eas build --platform {{PLATFORM}} --profile {{PROFILE}}
+    bunx eas build --platform {{PLATFORM}} --profile {{PROFILE}} # IF BUNX DOES NOT WORK USE BUN X INSTEAD OF BUNX
 cloud-submit PLATFORM=platform:
-    pnpm exec eas submit --platform {{PLATFORM}}
+    bunx eas submit --platform {{PLATFORM}} # IF BUNX DOES NOT WORK USE BUN X INSTEAD OF BUNX
