@@ -1,3 +1,5 @@
+import { Platform } from 'react-native'
+
 /**
  * The name of the convention.
  */
@@ -82,7 +84,10 @@ export const eurofurenceCacheVersion =
  * Eurofurence Identity Provider Settings
  */
 export const authIssuer = process.env.EXPO_PUBLIC_AUTH_ISSUER
-export const authRedirect = process.env.EXPO_PUBLIC_AUTH_REDIRECT
+export const authRedirect =
+  Platform.OS === 'web'
+    ? `${window.location.origin}${__DEV__ ? '' : (process.env.EXPO_BASE_URL ?? '')}/auth/login`
+    : process.env.EXPO_PUBLIC_AUTH_REDIRECT
 export const authClientId = process.env.EXPO_PUBLIC_AUTH_CLIENTID
 export const authScopes = JSON.parse(
   process.env.EXPO_PUBLIC_AUTH_SCOPES || '[]'
