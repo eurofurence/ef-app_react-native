@@ -15,6 +15,7 @@ import {
 import { conId, conName, conTimeZone } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayRecord } from '@/context/data/types.api'
+import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useNow } from '@/hooks/time/useNow'
 import { dateFnsLocales } from '@/i18n'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
@@ -49,8 +50,7 @@ const useCountdownTitle = (
   currentLanguage: string
 ) => {
   const { eventDays } = useCache()
-  const firstDay = eventDays[0]
-  const lastDay = eventDays[eventDays.length - 1]
+  const { data: dates } = useRegistrationDatesQuery()
 
   // Try finding current day.
   const currentDay = eventDays.find((it: EventDayRecord) =>
@@ -58,27 +58,26 @@ const useCountdownTitle = (
   )
   if (currentDay) return currentDay.Name
 
-  // Check if before first day.
-  if (firstDay) {
-    const firstDate = new Date(firstDay.Date)
-    if (now < firstDate) {
+  if (dates) {
+    // Check if before the convention.
+    if (now < dates.conStart) {
       const locale =
         dateFnsLocales[currentLanguage as keyof typeof dateFnsLocales] ||
         dateFnsLocales.en
-      const diff = formatDistance(firstDate, now, { locale, addSuffix: true })
+      const diff = formatDistance(dates.conStart, now, {
+        locale,
+        addSuffix: true,
+      })
       return t('before_event', { conName, diff })
     }
-  }
 
-  // Check if after last day.
-  if (lastDay) {
-    const lastDate = new Date(lastDay.Date)
-    if (now > lastDate) {
+    // Check if after the convention.
+    if (now > dates.conEnd) {
       return t('after_event')
     }
   }
 
-  return conName // Fallback if no event days exist.
+  return conName // Fallback if no dates exist.
 }
 
 export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {

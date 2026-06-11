@@ -18,10 +18,20 @@ interface RegistrationDates {
 interface ParsedRegistrationDates {
   startDate: Date
   endDate: Date
+  conStart: Date
+  conEnd: Date
+}
+
+function parseDate(value: string, name: string): Date {
+  const parsed = parseDefaultISO(value)
+  if (Number.isNaN(parsed.getTime())) {
+    throw new Error(`Invalid ${name} date format received from server`)
+  }
+  return parsed
 }
 
 /**
- * Gets the registration dates from the public dates endpoint.
+ * Gets the registration and convention dates from the public dates endpoint.
  * @param signal An abort signal.
  */
 export async function getRegistrationDates(
@@ -33,20 +43,11 @@ export async function getRegistrationDates(
 
   const data: RegistrationDates = response.data
 
-  const parsedStartDate = parseDefaultISO(data['reg-start'])
-  const parsedEndDate = parseDefaultISO(data['reg-end'])
-
-  if (Number.isNaN(parsedStartDate.getTime())) {
-    throw new Error('Invalid start date format received from server')
-  }
-
-  if (Number.isNaN(parsedEndDate.getTime())) {
-    throw new Error('Invalid end date format received from server')
-  }
-
   return {
-    startDate: parsedStartDate,
-    endDate: parsedEndDate,
+    startDate: parseDate(data['reg-start'], 'reg-start'),
+    endDate: parseDate(data['reg-end'], 'reg-end'),
+    conStart: parseDate(data['con-start'], 'con-start'),
+    conEnd: parseDate(data['con-end'], 'con-end'),
   }
 }
 
