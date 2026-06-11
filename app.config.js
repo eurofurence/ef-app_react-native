@@ -48,7 +48,6 @@ module.exports = {
       adaptiveIcon: {
         foregroundImage: './assets/platform/appicon-android.png',
         backgroundColor: '#005953',
-        monochromeImage: './assets/platform/appicon-android-monochrome.png',
       },
       intentFilters: [
         {

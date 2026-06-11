@@ -1,0 +1,36 @@
+diff --git a/plugin/build/android/withAndroidLegal.js b/plugin/build/android/withAndroidLegal.js
+index a6c99823ff068ee903cb9e0848e72db7dddcaa59..303534fbeaa53dd57a66e7be72e22e8155409cbe 100644
+--- a/plugin/build/android/withAndroidLegal.js
++++ b/plugin/build/android/withAndroidLegal.js
+@@ -18,8 +18,11 @@ const declareAboutLibrariesPlugin_1 = require("./declareAboutLibrariesPlugin");
+  */
+ const withAndroidLegal = (config, { scanOptionsFactory }) => {
+     (0, config_plugins_1.withAndroidManifest)(config, async (exportedConfig) => {
+-        const licenses = (0, licenses_1.scanDependencies)(node_path_1.default.join(exportedConfig.modRequest.projectRoot, 'package.json'), scanOptionsFactory);
+-        (0, licenses_1.writeAboutLibrariesNPMOutput)(licenses, exportedConfig.modRequest.platformProjectRoot);
++        // Skip writing license files in introspection mode (no native project on disk).
++        if (!exportedConfig.modRequest.introspect) {
++            const licenses = (0, licenses_1.scanDependencies)(node_path_1.default.join(exportedConfig.modRequest.projectRoot, 'package.json'), scanOptionsFactory);
++            (0, licenses_1.writeAboutLibrariesNPMOutput)(licenses, exportedConfig.modRequest.platformProjectRoot);
++        }
+         return exportedConfig;
+     });
+     config = (0, declareAboutLibrariesPlugin_1.declareAboutLibrariesPlugin)(config);
+diff --git a/plugin/build/ios/withIosLegal.js b/plugin/build/ios/withIosLegal.js
+index 0086eec8df45866ca0fffc662feb5559735f4f4e..0bf5ad935bc7d4228e03ea2cce81b64581617ca2 100644
+--- a/plugin/build/ios/withIosLegal.js
++++ b/plugin/build/ios/withIosLegal.js
+@@ -17,8 +17,11 @@ const registerLicensePlistBuildPhase_1 = require("./registerLicensePlistBuildPha
+  */
+ const withIosLegal = (config, { scanOptionsFactory }) => {
+     (0, config_plugins_1.withXcodeProject)(config, async (exportedConfig) => {
+-        const licenses = (0, licenses_1.scanDependencies)(node_path_1.default.join(exportedConfig.modRequest.projectRoot, 'package.json'), scanOptionsFactory);
+-        (0, licenses_1.writeLicensePlistNPMOutput)(licenses, exportedConfig.modRequest.platformProjectRoot);
++        // Skip writing license files in introspection mode (no native project on disk).
++        if (!exportedConfig.modRequest.introspect) {
++            const licenses = (0, licenses_1.scanDependencies)(node_path_1.default.join(exportedConfig.modRequest.projectRoot, 'package.json'), scanOptionsFactory);
++            (0, licenses_1.writeLicensePlistNPMOutput)(licenses, exportedConfig.modRequest.platformProjectRoot);
++        }
+         return exportedConfig;
+     });
+     config = (0, addSettingsBundle_1.addSettingsBundle)(config);
