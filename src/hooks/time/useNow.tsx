@@ -1,9 +1,11 @@
-import { useCallback, useState } from 'react'
-
-import { appSettingsCollection, appSettingsDefaults } from '@/data/collections/AppSettings'
 import { subMilliseconds, subSeconds } from 'date-fns'
 import { addMilliseconds } from 'date-fns/addMilliseconds'
 import { useFocusEffect } from 'expo-router'
+import { useCallback, useState } from 'react'
+import {
+  appSettingsCollection,
+  appSettingsDefaults,
+} from '@/data/collections/AppSettings'
 
 /**
  * Offset provided by the app settings.
@@ -23,9 +25,11 @@ function floorToSeconds(now: Date) {
 }
 
 function floorToMinutes(now: Date) {
-  return subSeconds(subMilliseconds(now, now.getMilliseconds()), now.getSeconds())
+  return subSeconds(
+    subMilliseconds(now, now.getMilliseconds()),
+    now.getSeconds()
+  )
 }
-
 
 /**
  * All registered listeners for precise time hooks.
@@ -52,7 +56,9 @@ let minutesResult = floorToMinutes(new Date())
  */
 setInterval(() => {
   // Get current time and add the time travel offset.
-  const now = currentOffset ? addMilliseconds(new Date(), currentOffset) : new Date()
+  const now = currentOffset
+    ? addMilliseconds(new Date(), currentOffset)
+    : new Date()
 
   /**
    * If the "second-hand" changed, emit a new time, where the milliseconds are removed.
@@ -68,7 +74,10 @@ setInterval(() => {
    * If the "minute-hand" changed, emit a new time, where the milliseconds and seconds are removed.
    */
   if (minutesResult.getMinutes() !== now.getMinutes()) {
-    minutesResult = subSeconds(subMilliseconds(now, now.getMilliseconds()), now.getSeconds())
+    minutesResult = subSeconds(
+      subMilliseconds(now, now.getMilliseconds()),
+      now.getSeconds()
+    )
     for (const listener of minutesListeners) {
       listener()
     }
@@ -99,10 +108,12 @@ export function subscribeMinutes(listener: () => void) {
 export function useNow(_input?: number | 'static') {
   const [now, setNow] = useState(minutesResult)
 
-  useFocusEffect(useCallback(() => {
-    setNow(minutesResult)
-    return subscribeMinutes(() => setNow(minutesResult))
-  }, []))
+  useFocusEffect(
+    useCallback(() => {
+      setNow(minutesResult)
+      return subscribeMinutes(() => setNow(minutesResult))
+    }, [])
+  )
 
   return now
 }
@@ -114,10 +125,12 @@ export function useNow(_input?: number | 'static') {
 export function useNowPrecise() {
   const [now, setNow] = useState(secondsResult)
 
-  useFocusEffect(useCallback(() => {
-    setNow(secondsResult)
-    return subscribeSeconds(() => setNow(secondsResult))
-  }, []))
+  useFocusEffect(
+    useCallback(() => {
+      setNow(secondsResult)
+      return subscribeSeconds(() => setNow(secondsResult))
+    }, [])
+  )
 
   return now
 }
@@ -132,7 +145,6 @@ export function getNow() {
 // todo verify
 // if (import.meta.hot)
 //   import.meta.hot.dispose(() => clearInterval(handle))
-
 
 //
 // /**

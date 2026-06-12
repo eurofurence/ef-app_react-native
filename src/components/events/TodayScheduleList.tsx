@@ -7,9 +7,8 @@ import { useEventCardInteractions } from '@/components/events/Events.common'
 import { Section } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import type { EventDetails } from '@/context/data/types.details'
-
-import { EventCard, eventInstanceForAny } from './EventCard'
 import { useAppSetting } from '@/data/collections/AppSettings'
+import { EventCard, eventInstanceForAny } from './EventCard'
 
 const filterHappeningTodayEvents = <
   T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>,

@@ -11,8 +11,8 @@ import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
-import { useNow } from '@/hooks/time/useNow'
 import { useAppSetting } from '@/data/collections/AppSettings'
+import { useNow } from '@/hooks/time/useNow'
 
 const ONE_HOUR = 60 * 60 * 1000
 const ONE_MINUTE = 60 * 1000

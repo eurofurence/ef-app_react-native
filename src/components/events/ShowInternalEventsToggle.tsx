@@ -5,11 +5,11 @@ import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable, type PressableProps } from '@/components/generic/Pressable'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import {
   useThemeBackground,
   useThemeColorValue,
 } from '@/hooks/themes/useThemeHooks'
-import { useAppSetting } from '@/data/collections/AppSettings'
 
 export type ShowInternalEventsToggleProps = PressableProps
 

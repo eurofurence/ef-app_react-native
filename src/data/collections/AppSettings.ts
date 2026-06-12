@@ -5,8 +5,8 @@ import {
   useLiveQuery,
   type WritableDeep,
 } from '@tanstack/react-db'
-import type { EfAppSettings } from '@/data/types/EfAppSettings'
 import { useCallback } from 'react'
+import type { EfAppSettings } from '@/data/types/EfAppSettings'
 
 export const appSettingsDefaults: EfAppSettings = {
   Theme: null,
@@ -15,7 +15,7 @@ export const appSettingsDefaults: EfAppSettings = {
   DevMenuEnabled: false,
   TimeTravelEnabled: false,
   TimeTravelOffset: 0,
-  ShowInternalEvents: false
+  ShowInternalEvents: false,
 }
 
 export const appSettingsCollection = createCollection(
@@ -43,18 +43,23 @@ export function appSettingsUpdate(
 }
 
 export function useAppSettings() {
-  const values = useLiveQuery(appSettingsCollection).data[0] ?? appSettingsDefaults
+  const values =
+    useLiveQuery(appSettingsCollection).data[0] ?? appSettingsDefaults
   const update = appSettingsUpdate
   return [values, update] as const
 }
 
 export function useAppSetting<T extends keyof EfAppSettings>(key: T) {
-  const value = (useLiveQuery(appSettingsCollection).data[0] ?? appSettingsDefaults)[key]
-  const update = useCallback((value: EfAppSettings[T]) => {
-    appSettingsUpdate(draft => {
-      draft[key] = value
-    })
-  }, [key])
+  const value = (useLiveQuery(appSettingsCollection).data[0] ??
+    appSettingsDefaults)[key]
+  const update = useCallback(
+    (value: EfAppSettings[T]) => {
+      appSettingsUpdate((draft) => {
+        draft[key] = value
+      })
+    },
+    [key]
+  )
 
   return [value, update] as const
 }

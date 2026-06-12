@@ -8,9 +8,9 @@ import { Row } from '@/components/generic/containers/Row'
 import { Avatar } from '@/components/profile/Avatar'
 import { useCache } from '@/context/data/Cache'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
-import { useAppSetting } from '@/data/collections/AppSettings'
 
 export default function Personal() {
   const { query } = useScheduleSearch()

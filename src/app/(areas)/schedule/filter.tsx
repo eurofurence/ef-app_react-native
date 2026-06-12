@@ -18,10 +18,10 @@ import type {
   EventTrackDetails,
 } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
-import { useAppSetting } from '@/data/collections/AppSettings'
 
 export default function FilterScreen() {
   const { query } = useScheduleSearch()

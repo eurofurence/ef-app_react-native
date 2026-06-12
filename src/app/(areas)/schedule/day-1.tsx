@@ -8,9 +8,9 @@ import { Label } from '@/components/generic/atoms/Label'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
-import { useAppSetting } from '@/data/collections/AppSettings'
 
 export function DayView({ day }: { day: EventDayDetails }) {
   const { query } = useScheduleSearch()

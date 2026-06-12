@@ -26,12 +26,12 @@ import { TimezoneWarning } from '@/components/home/TimezoneWarning'
 import { registrationUrl } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { vibrateAfter } from '@/util/vibrateAfter'
-import { useAppSetting } from '@/data/collections/AppSettings'
 
 export default function Index() {
   const { t } = useTranslation('Home')

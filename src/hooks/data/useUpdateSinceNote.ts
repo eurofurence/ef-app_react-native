@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { useCache } from '@/context/data/Cache'
 import type { RecordMetadata } from '@/context/data/types.api'
-import { parseDefaultISO } from '@/util/parseDefaultISO'
 import { getNow } from '@/hooks/time/useNow'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
  * Gets the last viewed time of this record and if the record has changed

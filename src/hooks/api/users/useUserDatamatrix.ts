@@ -4,43 +4,27 @@ import {
   type UseQueryResult,
   useQuery,
 } from '@tanstack/react-query'
-import axios, { type GenericAbortSignal } from 'axios'
 
-import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
-
-/**
- * Gets the user's data matrix code as an SVG string.
- * @param accessToken The access token.
- * @param signal An abort signal.
- */
-async function getUserDatamatrix(
-  accessToken: string | null,
-  signal?: GenericAbortSignal
-) {
-  if (!accessToken) throw new Error('Unauthorized')
-  return await axios
-    .get(`${apiBase}/Users/Pass`, {
-      signal: signal,
-      responseType: 'text',
-      transformResponse: (data) => data,
-      params: {
-        imageType: 'image/svg+xml',
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-    .then((res) => res.data)
-}
+import { api } from '@/data/clients/api'
+import { useAuthState } from '@/data/clients/auth'
 
 export function useUserDatamatrix(): UseQueryResult<string | null> {
-  const { accessToken, idData } = useAuthContext()
+  const { isLoggedIn } = useAuthState()
   return useQuery({
-    queryKey: [idData?.sub, 'datamatrix'],
-    queryFn: (context: QueryFunctionContext) =>
-      getUserDatamatrix(accessToken, context.signal),
+    queryKey: ['datamatrix'],
+    queryFn: ({ signal }: QueryFunctionContext) =>
+      api
+        .get(`/Users/Pass`, {
+          signal: signal,
+          responseType: 'text',
+          transformResponse: (data) => data,
+          params: {
+            imageType: 'image/svg+xml',
+          },
+        })
+        .then((res) => res.data),
     placeholderData: (data) => keepPreviousData(data),
     retry: false,
+    enabled: isLoggedIn,
   })
 }
