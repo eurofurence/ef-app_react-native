@@ -737,6 +737,8 @@
       "user_avatar": "Benutzerprofilbild für {{name}}"
     },
     "header": "Profil",
+    "badge_code": "Badge-Code",
+    "badge_code_subtitle": "Scanne dies an den Check-in-Schaltern oder Personal-Terminals",
     "idp_settings": "Identity setting website",
     "logged_in_as": "Du bist angemeldet als {{username}}",
     "login_description": "Wenn Du angemeldet bist, kann {{conName}} dir Private Nachrichten in der App zusenden. Außerdem kannst Du bei den Fursuit-Spielen teilnehmen und Dir Tische in der Artist Alley registieren.",

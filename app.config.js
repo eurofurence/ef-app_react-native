@@ -1,5 +1,7 @@
 import 'dotenv/config'
 
+const { version } = require('./package.json')
+
 const appBase = process.env.EXPO_PUBLIC_CONVENTION_APPBASE
 
 const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/
@@ -16,7 +18,7 @@ module.exports = {
     slug: 'ef-app-react-native',
     description: 'Your one stop shop to the convention!',
     owner: 'eurofurence',
-    version: '6.3.0',
+    version,
     orientation: 'default',
     userInterfaceStyle: 'automatic',
     scheme: 'eurofurence',
@@ -48,7 +50,6 @@ module.exports = {
       adaptiveIcon: {
         foregroundImage: './assets/platform/appicon-android.png',
         backgroundColor: '#005953',
-        monochromeImage: './assets/platform/appicon-android-monochrome.png',
       },
       intentFilters: [
         {
@@ -82,6 +83,9 @@ module.exports = {
     web: {
       bundler: 'metro',
       favicon: './assets/platform/appicon-android.png',
+    },
+    experiments: {
+      baseUrl: '/ef-app_react-native',
     },
     plugins: [
       // Run sentry plugin only if auth token is given, otherwise the build crashes.

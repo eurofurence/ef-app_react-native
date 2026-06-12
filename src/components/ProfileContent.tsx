@@ -1,13 +1,16 @@
 import { captureException } from '@sentry/react-native'
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet, View } from 'react-native'
+import { Linking, StyleSheet, useWindowDimensions, View } from 'react-native'
+import { SvgXml } from 'react-native-svg'
 
 import { authSettingsUrl, conName } from '@/configuration'
 import { auth } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
 import type { EfClaims } from '@/data/types/EfClaims'
 import type { EfUser } from '@/data/types/EfUser'
+import { useUserDatamatrix } from '@/hooks/api/users/useUserDatamatrix'
+import type { UserDetails } from '@/hooks/api/users/useUsersSelf'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { Image } from './generic/atoms/Image'
 import { Label } from './generic/atoms/Label'
@@ -81,6 +84,23 @@ export const ProfileContent: FC<ProfileContentProps> = ({
   const { t: a11y } = useTranslation('Profile')
   const avatarBackground = useThemeBackground('primary')
 
+  const { data: datamatrix } = useUserDatamatrix()
+  const { width: windowWidth } = useWindowDimensions()
+  const datamatrixSize = Math.min(windowWidth * 0.8, 300)
+
+  // The API returns an SVG with fixed pixel dimensions but no viewBox - do you like it?
+  const scalableDatamatrix = useMemo(() => {
+    if (!datamatrix) return null
+    if (/viewBox=/.test(datamatrix)) return datamatrix
+    const width = datamatrix.match(/width="(\d+(?:\.\d+)?)/)?.[1]
+    const height = datamatrix.match(/height="(\d+(?:\.\d+)?)/)?.[1]
+    if (!width || !height) return datamatrix
+    return datamatrix
+      .replace(/(\s)width="[^"]*"/, '$1')
+      .replace(/(\s)height="[^"]*"/, '$1')
+      .replace(/<svg/, `<svg viewBox="0 0 ${width} ${height}"`)
+  }, [datamatrix])
+
   const isAttendee = inRole(user, 'Attendee')
   const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
   const roleComplex = Boolean(
@@ -145,6 +165,29 @@ export const ProfileContent: FC<ProfileContentProps> = ({
         {t('idp_settings')}
       </Button>
 
+      {datamatrix && (
+        <>
+          <Section
+            icon='barcode-scan'
+            title={t('badge_code')}
+            subtitle={t('badge_code_subtitle')}
+          />
+          <View
+            style={[
+              styles.datamatrixContainer,
+              { width: datamatrixSize, height: datamatrixSize },
+            ]}
+          >
+            <SvgXml
+              xml={scalableDatamatrix}
+              width='100%'
+              height='100%'
+              preserveAspectRatio='xMidYMid meet'
+            />
+          </View>
+        </>
+      )}
+
       {roleComplex && (
         <>
           <Section
@@ -200,6 +243,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
+  },
+  datamatrixContainer: {
+    alignSelf: 'center',
+    marginVertical: 20,
+    padding: 12,
+    backgroundColor: 'white',
+    borderRadius: 8,
   },
   logoutButton: {
     marginTop: 20,

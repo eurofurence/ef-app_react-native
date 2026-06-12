@@ -139,7 +139,6 @@ export default function Index() {
           onRefresh={handleRefresh}
           accessibilityLabel={a11y('pull_to_refresh')}
           accessibilityHint={a11y('pull_to_refresh_hint')}
-          accessibilityRole='button'
           accessibilityState={{
             busy: isSynchronizing,
             disabled: isSynchronizing,

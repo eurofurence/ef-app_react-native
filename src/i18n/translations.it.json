@@ -558,6 +558,8 @@
       "user_avatar": "Immagine profilo utente per {{name}}"
     },
     "header": "Profilo",
+    "badge_code": "Codice badge",
+    "badge_code_subtitle": "Scansiona questo ai banchi di check-in o ai terminali dello staff",
     "idp_settings": "Sito di impostazione identità",
     "logged_in_as": "Sei loggato come {{username}}",
     "login_description": "Sei loggato permette a {{conName}} di inviarti messaggi personalizzati. Ti permette anche di partecipare al gioco Fursuit Catch 'em All e di registrarti per tavoli nell'Artist Alley.",

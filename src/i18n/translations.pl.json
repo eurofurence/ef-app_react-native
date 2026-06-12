@@ -573,6 +573,8 @@
       "user_avatar": "Awatar profilu użytkownika dla {{name}}"
     },
     "header": "Profil",
+    "badge_code": "Kod identyfikatora",
+    "badge_code_subtitle": "Zeskanuj to przy stanowiskach rejestracji lub terminalach personelu",
     "idp_settings": "Strona ustawień tożsamości",
     "logged_in_as": "Jesteś zalogowany jako {{username}}",
     "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",

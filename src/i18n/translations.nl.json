@@ -603,6 +603,8 @@
       "user_avatar": "Profielavatar voor {{name}}"
     },
     "header": "Profiel",
+    "badge_code": "Badgecode",
+    "badge_code_subtitle": "Scan dit bij de check-in balies of medewerkersterminals",
     "idp_settings": "Identity setting website",
     "logged_in_as": "Je bent ingelogd als {{username}}",
     "login_description": "Als je ingelogd bent, kan {{conName}} je persoonlijke berichten sturen. Het stelt je ook in staat om de Fursuit Catch 'em All te spelen en je aan te melden bij tafels in de Artist Alley.",

@@ -745,6 +745,8 @@
       "user_avatar": "User profile image for {{name}}"
     },
     "header": "Profile",
+    "badge_code": "Badge code",
+    "badge_code_subtitle": "Scan this at check-in counters or staff terminals",
     "idp_settings": "Identity setting website",
     "logged_in_as": "You are logged in as {{username}}",
     "login_description": "Being logged in allows {{conName}} to send you personal messages. It also allows you to participate in the Fursuit Catch 'em All and check in at tables in the Artist Alley.",
