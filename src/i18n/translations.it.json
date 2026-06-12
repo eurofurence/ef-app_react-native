@@ -204,6 +204,8 @@
       "dealers_sectioned_list_hint": "Scorri per navigare tra i venditori raggruppati per categoria, trascina verso il basso per aggiornare"
     },
     "all": "Tutti",
+    "coming_soon_body": "La Dealers' Den di {{conName}} è ancora in preparazione. Torna più tardi per scoprire chi ci sarà!",
+    "coming_soon_title": "In arrivo!",
     "dealers_at_convention": "Venditori a {{convention}}",
     "not_attending_on": "Non disponibile il {{offDays}}",
     "search": {
@@ -263,6 +265,8 @@
   },
   "Events": {
     "afternoon": "Al pomeriggio",
+    "coming_soon_body": "Il programma di {{conName}} è ancora in preparazione. Torna più tardi per pianificare la tua visita!",
+    "coming_soon_title": "In arrivo!",
     "current_subtitle": "Questi eventi si stanno svolgendo ora",
     "current_title": "Eventi in corso",
     "evening": "Alla sera",
