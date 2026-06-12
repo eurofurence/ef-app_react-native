@@ -6,6 +6,7 @@ import {
   type WritableDeep,
 } from '@tanstack/react-db'
 import type { EfAppSettings } from '@/data/types/EfAppSettings'
+import { useCallback } from 'react'
 
 export const appSettingsDefaults: EfAppSettings = {
   Theme: null,
@@ -14,6 +15,7 @@ export const appSettingsDefaults: EfAppSettings = {
   DevMenuEnabled: false,
   TimeTravelEnabled: false,
   TimeTravelOffset: 0,
+  ShowInternalEvents: false
 }
 
 export const appSettingsCollection = createCollection(
@@ -26,11 +28,6 @@ export const appSettingsCollection = createCollection(
   })
 )
 
-export function appSettingsGet(): EfAppSettings {
-  // Get singleton or fallback.
-  return appSettingsCollection.get('singleton') ?? appSettingsDefaults
-}
-
 export function appSettingsUpdate(
   callback: (draft: WritableDeep<EfAppSettings>) => void
 ) {
@@ -40,16 +37,24 @@ export function appSettingsUpdate(
   }
 
   // Insert new.
-  const value = { ...appSettingsDefaults }
-  callback(value)
-  return appSettingsCollection.insert(value)
-}
-
-export function appSettingsReset() {
-  // Delete singleton.
-  return appSettingsCollection.delete('singleton')
+  const draft = { ...appSettingsDefaults }
+  callback(draft)
+  return appSettingsCollection.insert(draft)
 }
 
 export function useAppSettings() {
-  return useLiveQuery(appSettingsCollection).data[0] ?? appSettingsDefaults
+  const values = useLiveQuery(appSettingsCollection).data[0] ?? appSettingsDefaults
+  const update = appSettingsUpdate
+  return [values, update] as const
+}
+
+export function useAppSetting<T extends keyof EfAppSettings>(key: T) {
+  const value = (useLiveQuery(appSettingsCollection).data[0] ?? appSettingsDefaults)[key]
+  const update = useCallback((value: EfAppSettings[T]) => {
+    appSettingsUpdate(draft => {
+      draft[key] = value
+    })
+  }, [key])
+
+  return [value, update] as const
 }

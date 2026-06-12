@@ -11,6 +11,7 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
 import { Section } from '../generic/atoms/Section'
 
 import { EventCard, eventInstanceForAny } from './EventCard'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
   events.filter((it) => {
@@ -24,9 +25,9 @@ export type UpcomingEventsListProps = {
 }
 export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const { events, getValue } = useCache()
+  const { events } = useCache()
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
   const upcoming = useMemo(
     () =>
       filterUpcomingEvents(events, now)

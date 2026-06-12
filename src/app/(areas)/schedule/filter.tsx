@@ -21,6 +21,7 @@ import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 export default function FilterScreen() {
   const { query } = useScheduleSearch()
@@ -32,8 +33,9 @@ export default function FilterScreen() {
     eventRooms,
     eventHosts,
     searchEvents,
-    getValue,
   } = useCache()
+
+  const [showInternal] = useAppSetting('ShowInternalEvents')
 
   const activeStyle = useThemeBackground('secondary')
   const inactiveStyle = useThemeBackground('inverted')
@@ -60,7 +62,6 @@ export default function FilterScreen() {
     const tracksIds = filterTracks.map((item) => item.Id)
     const roomsIds = filterRooms.map((item) => item.Id)
     const hostNames = filterHosts
-    const showInternal = getValue('settings').showInternalEvents ?? true
     return (search ?? events).filter((item) => {
       if (!showInternal && item.IsInternal) return false
       if (
@@ -96,7 +97,7 @@ export default function FilterScreen() {
     filterHosts,
     search,
     events,
-    getValue,
+    showInternal,
   ])
 
   const groups = useEventOtherGroups(t, now, filtered)

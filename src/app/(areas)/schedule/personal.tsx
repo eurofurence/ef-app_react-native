@@ -10,15 +10,16 @@ import { useCache } from '@/context/data/Cache'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 export default function Personal() {
   const { query } = useScheduleSearch()
   const { t } = useTranslation('Events')
   const now = useNow()
 
-  const { eventsFavorite, searchEventsFavorite, getValue } = useCache()
+  const { eventsFavorite, searchEventsFavorite } = useCache()
   const search = useFuseResults(searchEventsFavorite, query ?? '')
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
   const filtered = (search ?? eventsFavorite).filter(
     (e) => showInternal || !e.IsInternal
   )

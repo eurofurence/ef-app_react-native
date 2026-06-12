@@ -1,4 +1,3 @@
-import { useIsFocused } from '@react-navigation/core'
 import { captureException } from '@sentry/react-native'
 import { formatDistance, isAfter, isBefore } from 'date-fns'
 import type { TFunction } from 'i18next'
@@ -7,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Linking, View } from 'react-native'
 
 import { useCache } from '@/context/data/Cache'
-import { useAuthState } from '@/data/clients/auth'
+import { auth, useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
 import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
@@ -77,8 +76,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({
   const { t: tAccessibility } = useTranslation('Home', {
     keyPrefix: 'accessibility',
   })
-  const isFocused = useIsFocused()
-  const now = useNow(isFocused ? 60 : 'static')
+  const now = useNow()
   const { isHidden, hideWarning } = useWarningState(
     'registrationCountdownHidden'
   )
@@ -183,7 +181,7 @@ export const RegistrationCountdown: FC<RegistrationCountdownProps> = ({
               icon='login'
               outline
               className='grow'
-              onPress={() => login().catch(captureException)}
+              onPress={() => auth.login().catch(captureException)}
               accessibilityRole='button'
               accessibilityLabel={t('accessibility.login_button')}
               accessibilityHint={t('accessibility.login_button_hint')}

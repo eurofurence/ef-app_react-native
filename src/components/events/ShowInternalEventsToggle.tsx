@@ -3,13 +3,13 @@ import { StyleSheet } from 'react-native'
 
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Pressable, type PressableProps } from '@/components/generic/Pressable'
-import { useCache } from '@/context/data/Cache'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
 import {
   useThemeBackground,
   useThemeColorValue,
 } from '@/hooks/themes/useThemeHooks'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 export type ShowInternalEventsToggleProps = PressableProps
 
@@ -25,18 +25,12 @@ export function ShowInternalEventsToggle({
   const { user } = useAuthState()
   const isStaff = inRole(user, 'Staff')
 
-  const { getValue, setValue } = useCache()
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal, setShowInternal] = useAppSetting('ShowInternalEvents')
 
   if (!isStaff) return null
   return (
     <Pressable
-      onPress={() =>
-        setValue('settings', {
-          ...getValue('settings'),
-          showInternalEvents: !showInternal,
-        })
-      }
+      onPress={() => setShowInternal(!showInternal)}
       accessibilityRole='button'
       accessibilityLabel={
         showInternal

@@ -4,29 +4,20 @@ import { View } from 'react-native'
 
 import { Label } from '@/components/generic/atoms/Label'
 import { Pressable } from '@/components/generic/Pressable'
-import { useCache } from '@/context/data/Cache'
 
 import { SettingContainer } from './SettingContainer'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 /**
  * Analytics opt-in section with a checkbox to allow analytics.
  */
 export const AnalyticsOptIns = () => {
   const { t } = useTranslation('Settings')
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
-
-  const analyticsEnabled = settings.analyticsEnabled ?? false
-
-  const setAnalytics = (enabled: boolean) =>
-    setValue('settings', {
-      ...settings,
-      analyticsEnabled: enabled,
-    })
+  const [analyticsEnabled, setAnalyticsEnabled] = useAppSetting('AnalyticsEnabled')
 
   return (
     <SettingContainer>
-      <Pressable onPress={() => setAnalytics(!analyticsEnabled)} hitSlop={16}>
+      <Pressable onPress={() => setAnalyticsEnabled(!analyticsEnabled)} hitSlop={16}>
         <View className='flex-row items-center'>
           <View className='flex-1 mr-2'>
             <Label variant='bold'>{t('allowAnalytics')}</Label>

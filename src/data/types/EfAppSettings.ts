@@ -7,4 +7,5 @@ export type EfAppSettings = {
   DevMenuEnabled: boolean
   TimeTravelEnabled: boolean
   TimeTravelOffset: number
+  ShowInternalEvents: boolean
 }

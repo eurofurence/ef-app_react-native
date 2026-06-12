@@ -1,4 +1,3 @@
-import { useIsFocused } from '@react-navigation/core'
 import { captureException } from '@sentry/react-native'
 import { differenceInMilliseconds } from 'date-fns'
 import { de } from 'date-fns/locale/de'
@@ -72,8 +71,7 @@ export const EventContent: FC<EventContentProps> = ({
   const { t } = useTranslation('Event')
   const { checkReminder, toggleReminder } = useEventReminder()
   const isFavorite = checkReminder(event)
-  const isFocused = useIsFocused()
-  const now = useNow(isFocused ? 5 : 'static')
+  const now = useNow()
 
   const colorGlyph = useThemeColorValue('darken')
 

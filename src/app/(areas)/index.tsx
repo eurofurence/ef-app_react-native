@@ -1,4 +1,3 @@
-import { useIsFocused } from '@react-navigation/core'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -32,13 +31,13 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { vibrateAfter } from '@/util/vibrateAfter'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 export default function Index() {
   const { t } = useTranslation('Home')
   const { t: a11y } = useTranslation('Accessibility')
-  const isFocused = useIsFocused()
-  const now = useNow(isFocused ? 5 : 'static')
-  const { synchronize, isSynchronizing, getValue } = useCache()
+  const now = useNow()
+  const { synchronize, isSynchronizing } = useCache()
   const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
 
@@ -47,7 +46,7 @@ export default function Index() {
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
 
   // Search integration.
   const globalIndex = useCache().searchGlobal
@@ -123,6 +122,13 @@ export default function Index() {
       toast('error', errorMsg)
     }
   }
+
+  useEffect(() => {
+    console.log('MOUNT')
+    return () => {
+      console.log('UNMOUNT')
+    }
+  }, [])
 
   return (
     <ScrollView

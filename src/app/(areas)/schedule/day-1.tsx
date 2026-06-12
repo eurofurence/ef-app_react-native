@@ -10,15 +10,16 @@ import type { EventDayDetails } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useNow } from '@/hooks/time/useNow'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 export function DayView({ day }: { day: EventDayDetails }) {
   const { query } = useScheduleSearch()
   const { t } = useTranslation('Events')
-  const now = useNow(5)
+  const now = useNow()
 
-  const { eventsByDay, searchEventsByDay, getValue } = useCache()
+  const { eventsByDay, searchEventsByDay } = useCache()
   const search = useFuseResults(searchEventsByDay[day.Id], query ?? '')
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
   const filtered = (search ?? eventsByDay[day.Id]).filter(
     (e) => showInternal || !e.IsInternal
   )

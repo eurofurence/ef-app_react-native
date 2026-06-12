@@ -23,7 +23,7 @@ import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useNow } from '@/hooks/time/useNow'
+import { getNow } from '@/hooks/time/useNow'
 
 export const unstable_settings = {
   initialRouteName: 'day-1',
@@ -66,10 +66,9 @@ function dayTabTitle(day: EventDayDetails | undefined) {
 export default function ScheduleLayout() {
   const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
-  const now = useNow('static')
   const backgroundSurface = useThemeBackground('surface')
   const { eventDays } = useCache()
-  const initialRouteName = getInitialRoute(eventDays, now)
+  const initialRouteName = getInitialRoute(eventDays, getNow())
   const [filter, setFilter] = useState('')
 
   const options = useMemo(() => {
