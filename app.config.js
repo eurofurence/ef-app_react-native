@@ -1,5 +1,7 @@
 import 'dotenv/config'
 
+const { version } = require('./package.json')
+
 const appBase = process.env.EXPO_PUBLIC_CONVENTION_APPBASE
 
 const urlMatcher = /^([^:]+):\/\/([^/]+)(\/.*)$/
@@ -16,7 +18,7 @@ module.exports = {
     slug: 'ef-app-react-native',
     description: 'Your one stop shop to the convention!',
     owner: 'eurofurence',
-    version: '6.3.0',
+    version,
     orientation: 'default',
     userInterfaceStyle: 'automatic',
     scheme: 'eurofurence',
