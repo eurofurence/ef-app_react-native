@@ -244,6 +244,8 @@
     "after_dark": "After dark",
     "all": "All",
     "alphabetical": "A-Z",
+    "coming_soon_body": "De Dealers' Den voor {{conName}} wordt nog voorbereid. Kom later terug om te zien wie erbij zal zijn!",
+    "coming_soon_title": "Binnenkort beschikbaar!",
     "dealers_at_convention": "Dealers op {{convention}}",
     "dealers_in_ad": "After dark dealers den",
     "dealers_in_regular": "Normale dealers",
@@ -314,6 +316,8 @@
   },
   "Events": {
     "afternoon": "In de middag",
+    "coming_soon_body": "Het programma voor {{conName}} is nog in de maak. Kom later terug om je bezoek te plannen!",
+    "coming_soon_title": "Binnenkort beschikbaar!",
     "current_subtitle": "Deze evenementen zijn momenteel aan het gebeuren",
     "current_title": "Huidige evenementen",
     "evening": "In de avond",

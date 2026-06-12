@@ -19,6 +19,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 import { Icon, type IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
+import { ComingSoon } from '@/components/generic/containers/ComingSoon'
+import { conName } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
@@ -68,7 +70,7 @@ export default function ScheduleLayout() {
   const insets = useSafeAreaInsets()
   const now = useNow('static')
   const backgroundSurface = useThemeBackground('surface')
-  const { eventDays } = useCache()
+  const { events, eventDays } = useCache()
   const initialRouteName = getInitialRoute(eventDays, now)
   const [filter, setFilter] = useState('')
 
@@ -85,6 +87,15 @@ export default function ScheduleLayout() {
       'day-7': createOptions(dayTabTitle(eventDays[6])),
     }
   }, [eventDays])
+
+  if (events.length === 0)
+    return (
+      <ComingSoon
+        image={require('@/assets/static/events-empty.png')}
+        title={t('coming_soon_title')}
+        text={t('coming_soon_body', { conName })}
+      />
+    )
 
   return (
     <ScheduleSearchContext.Provider

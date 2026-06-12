@@ -17,7 +17,10 @@ import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Icon, type IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
+import { ComingSoon } from '@/components/generic/containers/ComingSoon'
+import { conName } from '@/configuration'
 import { DealersSearchContext } from '@/context/DealersSearchContext'
+import { useCache } from '@/context/data/Cache'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export const unstable_settings = {
@@ -53,6 +56,7 @@ export default function DealersLayout() {
   const { t } = useTranslation('Dealers')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
+  const { dealers } = useCache()
   const [filter, setFilter] = useState('')
 
   const options = useMemo(() => {
@@ -64,6 +68,15 @@ export default function DealersLayout() {
       az: createOptions('A-Z', 'order-alphabetical-ascending'),
     }
   }, [])
+
+  if (dealers.length === 0)
+    return (
+      <ComingSoon
+        image={require('@/assets/static/dealers-empty.png')}
+        title={t('coming_soon_title')}
+        text={t('coming_soon_body', { conName })}
+      />
+    )
 
   return (
     <DealersSearchContext.Provider

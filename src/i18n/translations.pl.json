@@ -212,6 +212,8 @@
       "dealers_sectioned_list_hint": "Przeciągnij, aby nawigować przez wystawców pogrupowanych według kategorii, przeciągnij w dół, aby odświeżyć"
     },
     "all": "Wszyscy",
+    "coming_soon_body": "Dealers' Den na {{conName}} jest jeszcze w przygotowaniu. Zajrzyj później, aby zobaczyć, kto się pojawi!",
+    "coming_soon_title": "Już wkrótce!",
     "dealers_at_convention": "Wystawcy na {{convention}}",
     "not_attending_on": "Nie biorą udziału w {{offDays}}",
     "search": {
@@ -274,6 +276,8 @@
   },
   "Events": {
     "afternoon": "Po południu",
+    "coming_soon_body": "Program {{conName}} jest jeszcze w przygotowaniu. Zajrzyj później, aby zaplanować swoją wizytę!",
+    "coming_soon_title": "Już wkrótce!",
     "current_subtitle": "Te punkty programu odbywają się w tej chwili",
     "current_title": "Bieżące punkty programu",
     "evening": "Wieczorem",

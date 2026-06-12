@@ -345,6 +345,8 @@
     "after_dark": "After dark",
     "all": "All",
     "alphabetical": "A-Z",
+    "coming_soon_body": "The Dealers' Den for {{conName}} is still being prepared. Check back later to see who will be there!",
+    "coming_soon_title": "Coming soon!",
     "dealers_at_convention": "Dealers at {{convention}}",
     "dealers_in_ad": "After dark dealers den",
     "dealers_in_regular": "Regular dealers den",
@@ -419,6 +421,8 @@
   },
   "Events": {
     "afternoon": "In the afternoon",
+    "coming_soon_body": "The schedule for {{conName}} is still being worked on. Check back later to plan your visit!",
+    "coming_soon_title": "Coming soon!",
     "current_subtitle": "These events are currently happening",
     "current_title": "Current Events",
     "evening": "In the evening",
