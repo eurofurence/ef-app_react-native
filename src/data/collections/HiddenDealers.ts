@@ -1,12 +1,11 @@
-import {
-  BasicIndex,
-  createCollection,
-  localStorageCollectionOptions,
-} from '@tanstack/react-db'
+import { BasicIndex, createCollection } from '@tanstack/react-db'
+import { queryClient } from '@/data/clients/query'
+import { createAsyncStorageCollectionOptions } from '@/data/collections/createAsyncStorageCollectionOptions'
 import type { EfHiddenDealer } from '@/data/types/EfHiddenDealer'
 
 export const hiddenDealersCollection = createCollection(
-  localStorageCollectionOptions<EfHiddenDealer>({
+  createAsyncStorageCollectionOptions<EfHiddenDealer>({
+    queryClient,
     id: 'hidden-dealers',
     storageKey: 'hidden-dealers',
     getKey: (item) => item.Id,

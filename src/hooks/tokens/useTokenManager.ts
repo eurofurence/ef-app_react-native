@@ -3,7 +3,7 @@ import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
 import { Platform } from 'react-native'
 import { useAuthState } from '@/data/clients/auth'
-import { postPushNotificationsFcmRegistration } from '@/hooks/api/push/usePushNotificationsFcmRegistrationMutation'
+import { usePushNotificationsFcmRegistrationMutation } from '@/hooks/api/push/usePushNotificationsFcmRegistrationMutation'
 import { captureNotificationException } from '@/sentryHelpers'
 
 /**
@@ -43,6 +43,9 @@ export const useTokenManager = () => {
   const { tokenResponse } = useAuthState()
   const accessToken = tokenResponse?.accessToken
 
+  // TODO: Verify.
+  const { mutateAsync } = usePushNotificationsFcmRegistrationMutation()
+
   // Connect device itself via it's token to the backend and the topics. This
   // effect specifies token as a dependency, as a change of the token results
   // in different behavior of the remote method.
@@ -58,7 +61,7 @@ export const useTokenManager = () => {
       const token = await getDevicePushToken()
 
       // Register token as a device with all topics.
-      await postPushNotificationsFcmRegistration(accessToken, {
+      await mutateAsync({
         deviceId: token,
         deviceType: Platform.OS,
       })
@@ -68,7 +71,7 @@ export const useTokenManager = () => {
     })().catch((e) =>
       captureNotificationException('Could not register and subscribe', e)
     )
-  }, [accessToken])
+  }, [accessToken, mutateAsync])
 
   return null
 }

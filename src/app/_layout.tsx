@@ -28,6 +28,12 @@ import '@/init/setNotificationHandler'
 import '@/init/splash' // Import global tailwind CSS.
 import '@/css/globals.css'
 
+// Patches crypto globally.
+import * as expoCrypto from 'expo-crypto'
+
+// @ts-expect-error
+global.crypto = expoCrypto
+
 export const unstable_settings = {
   initialRouteName: '(areas)',
 }

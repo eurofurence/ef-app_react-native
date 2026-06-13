@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { auth } from '@/data/clients/auth'
 
-const url = 'https://app.test.eurofurence.org/EF30-ve17v92UFFfJk/Api'
-//'https://app.eurofurence.org/EF29/Api'
+const url = 'https://app.eurofurence.org/EF30/Api'
+//const url ='https://app.eurofurence.org/EF29/Api'
 
 /**
  * App API client with base URL. Uses the global AuthClient's instance for access tokens, unless requests specify

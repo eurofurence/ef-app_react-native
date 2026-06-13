@@ -1,11 +1,12 @@
 import {
   BasicIndex,
   createCollection,
-  localStorageCollectionOptions,
   useLiveQuery,
   type WritableDeep,
 } from '@tanstack/react-db'
 import { useCallback } from 'react'
+import { queryClient } from '@/data/clients/query'
+import { createAsyncStorageCollectionOptions } from '@/data/collections/createAsyncStorageCollectionOptions'
 import type { EfAppSettings } from '@/data/types/EfAppSettings'
 
 export const appSettingsDefaults: EfAppSettings = {
@@ -19,7 +20,8 @@ export const appSettingsDefaults: EfAppSettings = {
 }
 
 export const appSettingsCollection = createCollection(
-  localStorageCollectionOptions<EfAppSettings>({
+  createAsyncStorageCollectionOptions<EfAppSettings>({
+    queryClient,
     id: 'app-settings',
     storageKey: 'app-settings',
     getKey: () => 'singleton',
@@ -39,6 +41,7 @@ export function appSettingsUpdate(
   // Insert new.
   const draft = { ...appSettingsDefaults }
   callback(draft)
+  console.log('writing', draft)
   return appSettingsCollection.insert(draft)
 }
 

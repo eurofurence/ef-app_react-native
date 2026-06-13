@@ -123,13 +123,6 @@ export default function Index() {
     }
   }
 
-  useEffect(() => {
-    console.log('MOUNT')
-    return () => {
-      console.log('UNMOUNT')
-    }
-  }, [])
-
   return (
     <ScrollView
       style={[StyleSheet.absoluteFill, backgroundSurface]}

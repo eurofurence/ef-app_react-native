@@ -25,10 +25,8 @@ export const ThemePicker = () => {
         <ChoiceButtons
           style={styles.selector}
           choices={usableThemes}
-          choice={theme === undefined ? 'system' : theme}
-          setChoice={(choice) =>
-            setTheme(choice === 'system' ? undefined : choice)
-          }
+          choice={theme === null ? 'system' : theme}
+          setChoice={(choice) => setTheme(choice === 'system' ? null : choice)}
           getLabel={(choice) => t(choice)}
         />
       </Col>

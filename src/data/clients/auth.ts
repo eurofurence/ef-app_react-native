@@ -1,6 +1,11 @@
 import { captureException } from '@sentry/react-native'
 import axios from 'axios'
-import { AuthRequest, refreshAsync, TokenResponse } from 'expo-auth-session'
+import {
+  AuthRequest,
+  exchangeCodeAsync,
+  refreshAsync,
+  TokenResponse,
+} from 'expo-auth-session'
 import * as WebBrowser from 'expo-web-browser'
 import { useSyncExternalStore } from 'react'
 import {
@@ -132,39 +137,45 @@ export class AuthClient {
         redirectUri: authRedirect,
       })
 
-      // Prompt.
-      const response = await request.promptAsync(
+      // Prompt, result is code to exchange.
+      const codeResponse = await request.promptAsync(
         {
           authorizationEndpoint: `${authIssuer}/oauth2/auth`,
         },
         { showInRecents: true }
       )
 
-      // If OK, parse response and save state.
-      if (response.type === 'success') {
-        this._state.tokenResponse = response.authentication
-        this._state.isLoggedIn = Boolean(this._state.tokenResponse)
-        this._state.idData = parseIdToken(response.authentication?.idToken)
-        this._state.claims = await this._fetchUserInfo()
-        this._state.user = await this._fetchUserSelf()
-        await this._saveState()
-        this._notify()
+      // If code failed, reset and return.
+      if (codeResponse?.type !== 'success') {
+        await this._resetStateAndNotify()
+        return
       }
+
+      // Exchange.
+      const response = await exchangeCodeAsync(
+        {
+          clientId: authClientId,
+          code: codeResponse.params.code,
+          extraParams: request.codeVerifier
+            ? { code_verifier: request.codeVerifier }
+            : undefined,
+          redirectUri: authRedirect,
+        },
+        {
+          tokenEndpoint: `${authIssuer}/oauth2/token`,
+        }
+      )
+
+      // Store exchanged response.
+      await this._setStateAndNotify(response)
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
-        this._state.tokenResponse = null
-        this._state.isLoggedIn = false
-        this._state.idData = null
-        this._state.claims = null
-        this._state.user = null
-        await this._saveState()
-        this._notify()
+        await this._resetStateAndNotify()
       }
       throw error
     }
   }
-
   /**
    * Refreshes the current token.
    * @param force If true, does not check if the token is still considered fresh.
@@ -196,23 +207,11 @@ export class AuthClient {
       )
 
       // Update response.
-      this._state.tokenResponse = refreshResponse
-      this._state.isLoggedIn = Boolean(this._state.tokenResponse)
-      this._state.idData = parseIdToken(refreshResponse?.idToken)
-      this._state.claims = await this._fetchUserInfo()
-      this._state.user = await this._fetchUserSelf()
-      await this._saveState()
-      this._notify()
+      await this._setStateAndNotify(refreshResponse)
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
-        this._state.tokenResponse = null
-        this._state.isLoggedIn = false
-        this._state.idData = null
-        this._state.claims = null
-        this._state.user = null
-        await this._saveState()
-        this._notify()
+        await this._resetStateAndNotify()
       }
       throw error
     }
@@ -254,6 +253,20 @@ export class AuthClient {
         .catch(captureException)
 
     // Clear data.
+    await this._resetStateAndNotify()
+  }
+
+  private async _setStateAndNotify(response: TokenResponse) {
+    this._state.tokenResponse = response
+    this._state.isLoggedIn = Boolean(this._state.tokenResponse)
+    this._state.idData = parseIdToken(response.idToken)
+    this._state.claims = await this._fetchUserInfo()
+    this._state.user = await this._fetchUserSelf()
+    await this._saveState()
+    this._notify()
+  }
+
+  private async _resetStateAndNotify() {
     this._state.tokenResponse = null
     this._state.isLoggedIn = false
     this._state.idData = null

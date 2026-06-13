@@ -1,12 +1,11 @@
-import {
-  BasicIndex,
-  createCollection,
-  localStorageCollectionOptions,
-} from '@tanstack/react-db'
+import { BasicIndex, createCollection } from '@tanstack/react-db'
+import { queryClient } from '@/data/clients/query'
+import { createAsyncStorageCollectionOptions } from '@/data/collections/createAsyncStorageCollectionOptions'
 import type { EfHiddenEvent } from '@/data/types/EfHiddenEvent'
 
 export const hiddenEventsCollection = createCollection(
-  localStorageCollectionOptions<EfHiddenEvent>({
+  createAsyncStorageCollectionOptions<EfHiddenEvent>({
+    queryClient,
     id: 'hidden-events',
     storageKey: 'hidden-events',
     getKey: (item) => item.Id,

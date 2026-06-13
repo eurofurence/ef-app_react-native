@@ -1,12 +1,11 @@
-import {
-  BasicIndex,
-  createCollection,
-  localStorageCollectionOptions,
-} from '@tanstack/react-db'
+import { BasicIndex, createCollection } from '@tanstack/react-db'
+import { queryClient } from '@/data/clients/query'
+import { createAsyncStorageCollectionOptions } from '@/data/collections/createAsyncStorageCollectionOptions'
 import type { EfFavoriteEvent } from '@/data/types/EfFavoriteEvent'
 
 export const favoriteEventsCollection = createCollection(
-  localStorageCollectionOptions<EfFavoriteEvent>({
+  createAsyncStorageCollectionOptions<EfFavoriteEvent>({
+    queryClient,
     id: 'favorite-events',
     storageKey: 'favorite-events',
     getKey: (item) => item.Id,

@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 /**
+ * Gets all keys.
+ */
+export async function getAllKeys() {
+  return await AsyncStorage.getAllKeys()
+}
+
+/**
  * Gets many keys from the storage.
  * @param keys The keys to get from the storage.
  */

@@ -98,6 +98,8 @@ export const ProfileContent: FC<ProfileContentProps> = ({
       .replace(/(\s)width="[^"]*"/, '$1')
       .replace(/(\s)height="[^"]*"/, '$1')
       .replace(/<svg/, `<svg viewBox="0 0 ${width} ${height}"`)
+      .replace(/<symbol/, `<symbol viewBox="0 0 ${width} ${height}"`)
+      .replace(/<use/, `<use width="${width}" height="${height}"`)
   }, [datamatrix])
 
   const isAttendee = inRole(user, 'Attendee')
