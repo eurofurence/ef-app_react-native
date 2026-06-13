@@ -1,49 +1,87 @@
 import { Platform } from 'react-native'
 
 /**
+ * Asserts that a required environment variable is set.
+ */
+function required(value: string | undefined, name: string): string {
+  if (value === undefined)
+    throw new Error(`Missing environment variable: ${name}`)
+  return value
+}
+
+/**
  * The name of the convention.
  */
-export const conName = process.env.EXPO_PUBLIC_CONVENTION_NAME
+export const conName = required(
+  process.env.EXPO_PUBLIC_CONVENTION_NAME,
+  'EXPO_PUBLIC_CONVENTION_NAME'
+)
 
 /**
  * The abbreviation for the convention name.
  */
-export const conAbbr = process.env.EXPO_PUBLIC_CONVENTION_ABBREVIATION
+export const conAbbr = required(
+  process.env.EXPO_PUBLIC_CONVENTION_ABBREVIATION,
+  'EXPO_PUBLIC_CONVENTION_ABBREVIATION'
+)
 
 /**
  * Convention identifier.
  */
-export const conId = process.env.EXPO_PUBLIC_CONVENTION_IDENTIFIER
+export const conId = required(
+  process.env.EXPO_PUBLIC_CONVENTION_IDENTIFIER,
+  'EXPO_PUBLIC_CONVENTION_IDENTIFIER'
+)
 
 /**
  * Convention time zone.
  */
-export const conTimeZone = process.env.EXPO_PUBLIC_CONVENTION_TIMEZONE
+export const conTimeZone = required(
+  process.env.EXPO_PUBLIC_CONVENTION_TIMEZONE,
+  'EXPO_PUBLIC_CONVENTION_TIMEZONE'
+)
 
 /**
  * Convention website URL.
  */
-export const conWebsite = process.env.EXPO_PUBLIC_CONVENTION_WEBSITE
+export const conWebsite = required(
+  process.env.EXPO_PUBLIC_CONVENTION_WEBSITE,
+  'EXPO_PUBLIC_CONVENTION_WEBSITE'
+)
 
 /**
  * EFNav map URL
  */
-export const efnavMapUrl = process.env.EXPO_PUBLIC_CONVENTION_EFNAVMAPURL
+export const efnavMapUrl = required(
+  process.env.EXPO_PUBLIC_CONVENTION_EFNAVMAPURL,
+  'EXPO_PUBLIC_CONVENTION_EFNAVMAPURL'
+)
 
 /**
  * App base, non-API URLs are relative to this.
  */
-export const appBase = process.env.EXPO_PUBLIC_CONVENTION_APPBASE
+export const appBase = required(
+  process.env.EXPO_PUBLIC_CONVENTION_APPBASE,
+  'EXPO_PUBLIC_CONVENTION_APPBASE'
+)
 
 /**
  * API base, API methods are under this URL.
  */
-export const apiBase = process.env.EXPO_PUBLIC_CONVENTION_APIBASE
+export const apiBase = required(
+  process.env.EXPO_PUBLIC_CONVENTION_APIBASE,
+  'EXPO_PUBLIC_CONVENTION_APIBASE'
+)
 
 /**
  * Number of columns to use in main menu pager.
  */
-export const menuColumns = process.env.EXPO_PUBLIC_CONVENTION_MENUCOLUMNS
+export const menuColumns = Number(
+  required(
+    process.env.EXPO_PUBLIC_CONVENTION_MENUCOLUMNS,
+    'EXPO_PUBLIC_CONVENTION_MENUCOLUMNS'
+  )
+)
 
 /**
  * True if login is available for this convention.
@@ -58,41 +96,70 @@ export const showCatchEm = process.env.EXPO_PUBLIC_CONVENTION_SHOWCATCHEM
 /**
  * URL for accessing the Catch 'em All game for this convention.
  */
-export const catchEmUrl = process.env.EXPO_PUBLIC_CONVENTION_CATCHEMURL
+export const catchEmUrl = required(
+  process.env.EXPO_PUBLIC_CONVENTION_CATCHEMURL,
+  'EXPO_PUBLIC_CONVENTION_CATCHEMURL'
+)
 
 /**
  * URL leading to the Artist Alley detail page for this convention.
  */
-export const artistAlleyUrl = process.env.EXPO_PUBLIC_CONVENTION_ARTISTALLEYURL
+export const artistAlleyUrl = required(
+  process.env.EXPO_PUBLIC_CONVENTION_ARTISTALLEYURL,
+  'EXPO_PUBLIC_CONVENTION_ARTISTALLEYURL'
+)
 
 /**
  * Registration configuration for this convention.
  */
-export const registrationDatesUrl =
-  process.env.EXPO_PUBLIC_CONVENTION_REGISTRATIONDATESURL
-export const registrationUrl =
-  process.env.EXPO_PUBLIC_CONVENTION_REGISTRATIONURL
-export const avatarBase = process.env.EXPO_PUBLIC_CONVENTION_AVATARBASE
+export const registrationDatesUrl = required(
+  process.env.EXPO_PUBLIC_CONVENTION_REGISTRATIONDATESURL,
+  'EXPO_PUBLIC_CONVENTION_REGISTRATIONDATESURL'
+)
+export const registrationUrl = required(
+  process.env.EXPO_PUBLIC_CONVENTION_REGISTRATIONURL,
+  'EXPO_PUBLIC_CONVENTION_REGISTRATIONURL'
+)
+export const avatarBase = required(
+  process.env.EXPO_PUBLIC_CONVENTION_AVATARBASE,
+  'EXPO_PUBLIC_CONVENTION_AVATARBASE'
+)
 
 /**
  * The cache version for this convention.
  */
-export const eurofurenceCacheVersion =
-  process.env.EXPO_PUBLIC_CONVENTION_CACHEVERSION
+export const eurofurenceCacheVersion = Number(
+  required(
+    process.env.EXPO_PUBLIC_CONVENTION_CACHEVERSION,
+    'EXPO_PUBLIC_CONVENTION_CACHEVERSION'
+  )
+)
 
 /**
  * Eurofurence Identity Provider Settings
  */
-export const authIssuer = process.env.EXPO_PUBLIC_AUTH_ISSUER
+export const authIssuer = required(
+  process.env.EXPO_PUBLIC_AUTH_ISSUER,
+  'EXPO_PUBLIC_AUTH_ISSUER'
+)
 export const authRedirect =
   Platform.OS === 'web'
     ? `${window.location.origin}${__DEV__ ? '' : (process.env.EXPO_BASE_URL ?? '')}/auth/login`
-    : process.env.EXPO_PUBLIC_AUTH_REDIRECT
-export const authClientId = process.env.EXPO_PUBLIC_AUTH_CLIENTID
+    : required(
+        process.env.EXPO_PUBLIC_AUTH_REDIRECT,
+        'EXPO_PUBLIC_AUTH_REDIRECT'
+      )
+export const authClientId = required(
+  process.env.EXPO_PUBLIC_AUTH_CLIENTID,
+  'EXPO_PUBLIC_AUTH_CLIENTID'
+)
 export const authScopes = JSON.parse(
   process.env.EXPO_PUBLIC_AUTH_SCOPES || '[]'
 )
-export const authSettingsUrl = process.env.EXPO_PUBLIC_AUTH_SETTINGSURL
+export const authSettingsUrl = required(
+  process.env.EXPO_PUBLIC_AUTH_SETTINGSURL,
+  'EXPO_PUBLIC_AUTH_SETTINGSURL'
+)
 
 /**
  * Sentry settings

@@ -1,9 +1,14 @@
 FROM node:lts
 
-COPY package.json pnpm-lock.yaml* ./
+COPY --from=oven/bun:1.3 /usr/local/bin/bun /usr/local/bin/bun
 
-RUN pnpm install
+WORKDIR /app
 
-COPY src/ assets/ android/ ./
+COPY package.json bun.lock bunfig.toml ./
+COPY patches/ patches/
 
-RUN pnpm expo build:web
+RUN bun install --frozen-lockfile
+
+COPY . .
+
+RUN bun run bundle:web

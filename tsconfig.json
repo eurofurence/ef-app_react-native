@@ -2,9 +2,16 @@
   "compilerOptions": {
     "rootDir": ".",
     "strict": true,
+    "types": [
+      "bun"
+    ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@/assets/*": ["./assets/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "@/assets/*": [
+        "./assets/*"
+      ]
     }
   },
   "extends": "expo/tsconfig.base",
@@ -12,6 +19,8 @@
     "./src",
     "./node_modules/moment/locale",
     "./package.json",
-    "nativewind-env.d.ts"
+    "nativewind-env.d.ts",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
   ]
 }

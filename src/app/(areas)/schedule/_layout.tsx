@@ -1,17 +1,16 @@
-import type {
-  MaterialTopTabNavigationEventMap,
-  MaterialTopTabNavigationOptions,
-} from '@react-navigation/material-top-tabs'
+import { isSameDay } from 'date-fns'
+import { withLayoutContext } from 'expo-router'
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBar,
-} from '@react-navigation/material-top-tabs'
+  type MaterialTopTabBarProps,
+  type MaterialTopTabNavigationEventMap,
+  type MaterialTopTabNavigationOptions,
+} from 'expo-router/js-top-tabs'
 import type {
   ParamListBase,
   TabNavigationState,
-} from '@react-navigation/native'
-import { isSameDay } from 'date-fns'
-import { withLayoutContext } from 'expo-router'
+} from 'expo-router/react-navigation'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -109,7 +108,7 @@ export default function ScheduleLayout() {
           sceneStyle: backgroundSurface,
           tabBarItemStyle: styles.tabItem,
         }}
-        tabBar={(props) => (
+        tabBar={(props: MaterialTopTabBarProps) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
             <View className='flex-row items-center pr-2.5'>
