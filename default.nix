@@ -12,7 +12,7 @@ pkgs.stdenv.mkDerivation {
 
   buildInputs =
     [
-      pkgs.pnpm
+      pkgs.bun
       pkgs.nodejs
       pkgs.nodePackages.eas-cli
       pkgs.android-tools
