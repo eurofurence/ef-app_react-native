@@ -1,16 +1,15 @@
-import type {
-  MaterialTopTabNavigationEventMap,
-  MaterialTopTabNavigationOptions,
-} from '@react-navigation/material-top-tabs'
+import { withLayoutContext } from 'expo-router'
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBar,
-} from '@react-navigation/material-top-tabs'
+  type MaterialTopTabBarProps,
+  type MaterialTopTabNavigationEventMap,
+  type MaterialTopTabNavigationOptions,
+} from 'expo-router/js-top-tabs'
 import type {
   ParamListBase,
   TabNavigationState,
-} from '@react-navigation/native'
-import { withLayoutContext } from 'expo-router'
+} from 'expo-router/react-navigation'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -90,7 +89,7 @@ export default function DealersLayout() {
           sceneStyle: backgroundSurface,
           tabBarLabelStyle: styles.tabLabel,
         }}
-        tabBar={(props) => (
+        tabBar={(props: MaterialTopTabBarProps) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
             <Search

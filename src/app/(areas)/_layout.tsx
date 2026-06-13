@@ -1,8 +1,8 @@
-import type { BottomTabBarProps } from '@react-navigation/bottom-tabs'
-import { Tabs } from 'expo-router'
+import { type Href, Tabs } from 'expo-router'
+import type { BottomTabBarProps } from 'expo-router/js-tabs'
 import React, { useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { StyleSheet, View } from 'react-native'
+import { type ColorValue, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Icon, type IconNames } from '@/components/generic/atoms/Icon'
 import {
@@ -22,13 +22,13 @@ function getIconNameFromTabBarIcon(
   tabBarIcon:
     | ((props: {
         focused: boolean
-        color: string
+        color: ColorValue
         size: number
       }) => React.ReactNode)
     | undefined,
   isFocused: boolean,
-  activeTintColor?: string,
-  inactiveTintColor?: string
+  activeTintColor?: ColorValue,
+  inactiveTintColor?: ColorValue
 ): IconNames {
   if (!tabBarIcon) return 'home'
   const element = tabBarIcon({
@@ -142,7 +142,7 @@ export default function TabsLayout() {
             tabBarIcon: ({ color, size }) => (
               <Icon name='calendar' size={size} color={color} />
             ),
-            href: 'schedule',
+            href: '/schedule' as Href,
           }}
         />
         <Tabs.Screen
@@ -152,7 +152,7 @@ export default function TabsLayout() {
             tabBarIcon: ({ color, size }) => (
               <Icon name='cart-outline' size={size} color={color} />
             ),
-            href: 'dealers',
+            href: '/dealers' as Href,
           }}
         />
       </Tabs>

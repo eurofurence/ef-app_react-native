@@ -1,6 +1,6 @@
-import { useIsFocused } from '@react-navigation/core'
 import { captureException } from '@sentry/react-native'
 import { formatDistance, isAfter, isBefore } from 'date-fns'
+import { useIsFocused } from 'expo-router/react-navigation'
 import type { TFunction } from 'i18next'
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

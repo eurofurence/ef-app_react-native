@@ -113,7 +113,7 @@ export default function Messages() {
       return (
         <Header
           secondaryIcon='message-plus'
-          secondaryPress={() => router.push('messages/compose')}
+          secondaryPress={() => router.push('/messages/compose')}
         >
           {t('header')}
         </Header>

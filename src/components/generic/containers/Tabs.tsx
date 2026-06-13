@@ -1,4 +1,4 @@
-import { useIsFocused } from '@react-navigation/core'
+import { useIsFocused } from 'expo-router/react-navigation'
 import {
   forwardRef,
   type ReactNode,

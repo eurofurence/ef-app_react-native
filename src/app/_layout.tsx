@@ -1,10 +1,10 @@
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { SplashScreen, Stack, useSegments } from 'expo-router'
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
-} from '@react-navigation/native'
-import { SplashScreen, Stack, useSegments } from 'expo-router'
+} from 'expo-router/react-navigation'
 import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -101,7 +101,7 @@ export function MainLayout() {
   const isHomeView =
     !segments.length ||
     (segments[0] === '(areas)' &&
-      (segments.length === 1 || segments.at(1) === 'index'))
+      (segments.length === 1 || (segments as string[]).at(1) === 'index'))
 
   return (
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
