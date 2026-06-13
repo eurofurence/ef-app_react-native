@@ -22,17 +22,12 @@ import { useTokenManager } from '@/hooks/tokens/useTokenManager'
 import 'react-native-reanimated' // Import i18n configuration
 import '@/i18n' // Import initializer scripts
 import '@/init/firebaseApp'
+import '@/init/cryptoInit'
 import '@/init/sentryInit'
 import '@/init/setNotificationChannels'
 import '@/init/setNotificationHandler'
 import '@/init/splash' // Import global tailwind CSS.
 import '@/css/globals.css'
-
-// Patches crypto globally.
-import * as expoCrypto from 'expo-crypto'
-
-// @ts-expect-error
-global.crypto = expoCrypto
 
 export const unstable_settings = {
   initialRouteName: '(areas)',

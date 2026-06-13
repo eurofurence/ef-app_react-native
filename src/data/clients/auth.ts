@@ -256,22 +256,40 @@ export class AuthClient {
     await this._resetStateAndNotify()
   }
 
+  /**
+   * Sets the state and refreshes user info and user API data from the given
+   * response. Notifies the listeners.
+   * @param response The response to use for state and fetching additional data.
+   * @private
+   */
   private async _setStateAndNotify(response: TokenResponse) {
-    this._state.tokenResponse = response
-    this._state.isLoggedIn = Boolean(this._state.tokenResponse)
-    this._state.idData = parseIdToken(response.idToken)
-    this._state.claims = await this._fetchUserInfo()
-    this._state.user = await this._fetchUserSelf()
+    const fetchUserInfoPromise = AuthClient._fetchUserInfo(response.accessToken)
+    const fetchUserSelfPromise = AuthClient._fetchUserSelf(response.accessToken)
+    this._state = {
+      isReady: true,
+      tokenResponse: response,
+      isLoggedIn: Boolean(response),
+      idData: parseIdToken(response.idToken),
+      claims: await fetchUserInfoPromise,
+      user: await fetchUserSelfPromise,
+    }
     await this._saveState()
     this._notify()
   }
 
+  /**
+   * Sets the state to null and resets dependent data. Notifies the listeners.
+   * @private
+   */
   private async _resetStateAndNotify() {
-    this._state.tokenResponse = null
-    this._state.isLoggedIn = false
-    this._state.idData = null
-    this._state.claims = null
-    this._state.user = null
+    this._state = {
+      isReady: true,
+      tokenResponse: null,
+      isLoggedIn: false,
+      idData: null,
+      claims: null,
+      user: null,
+    }
     await this._saveState()
     this._notify()
   }
@@ -284,27 +302,36 @@ export class AuthClient {
   private async _restoreState() {
     const stored = await AsyncStorage.get('auth-client-persisted-state')
     if (stored === null) {
-      this._state.tokenResponse = null
-      this._state.isLoggedIn = false
-      this._state.idData = null
-      this._state.claims = null
-      this._state.user = null
+      this._state = {
+        isReady: true,
+        tokenResponse: null,
+        isLoggedIn: false,
+        idData: null,
+        claims: null,
+        user: null,
+      }
       this._notify()
     } else {
       try {
         const data = JSON.parse(stored)
-        this._state.tokenResponse = data.tokenResponse
-        this._state.isLoggedIn = Boolean(this._state.tokenResponse)
-        this._state.idData = data.idData
-        this._state.claims = data.claims
-        this._state.user = data.user
+        this._state = {
+          isReady: true,
+          tokenResponse: data.tokenResponse,
+          isLoggedIn: Boolean(data.tokenResponse),
+          idData: data.idData,
+          claims: data.claims,
+          user: data.user,
+        }
         this._notify()
       } catch {
-        this._state.tokenResponse = null
-        this._state.isLoggedIn = false
-        this._state.idData = null
-        this._state.claims = null
-        this._state.user = null
+        this._state = {
+          isReady: true,
+          tokenResponse: null,
+          isLoggedIn: false,
+          idData: null,
+          claims: null,
+          user: null,
+        }
         this._notify()
         await AsyncStorage.remove('auth-client-persisted-state')
       }
@@ -337,12 +364,12 @@ export class AuthClient {
    * @throws never
    * @private
    */
-  private async _fetchUserInfo() {
-    if (!this._state.tokenResponse?.accessToken) return null
+  private static async _fetchUserInfo(accessToken: string | null) {
+    if (!accessToken) return null
     return await axios
       .get(`${authIssuer}/api/v1/userinfo`, {
         headers: {
-          Authorization: `Bearer ${this._state.tokenResponse.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((res) => res.data as EfClaims)
@@ -357,12 +384,12 @@ export class AuthClient {
    * @throws never
    * @private
    */
-  private async _fetchUserSelf() {
-    if (!this._state.tokenResponse?.accessToken) return null
+  private static async _fetchUserSelf(accessToken: string | null) {
+    if (!accessToken) return null
     return await axios
       .get(`${apiBase}/Users/:self`, {
         headers: {
-          Authorization: `Bearer ${this._state.tokenResponse.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       })
       .then((res) => res.data as EfUser)
@@ -378,9 +405,6 @@ export class AuthClient {
    * @private
    */
   private _notify() {
-    // Mark ready true, if not already set.
-    this._state.isReady = true
-
     // Notify listeners.
     for (const listener of this._listeners) {
       try {
@@ -398,10 +422,17 @@ export class AuthClient {
  */
 export const auth = new AuthClient()
 
+/**
+ * Stable wrapper binding auth subscription.
+ * @param listener The listener to add. Returns unsubscription.
+ */
 function authSubscribe(listener: () => void) {
   return auth.subscribe(listener)
 }
 
+/**
+ * Stable wrapper binding auth state.
+ */
 function authGetSnapshot() {
   return auth.state
 }
@@ -410,5 +441,5 @@ function authGetSnapshot() {
  * Uses the auth client state, i.e., the token and ID data, as well as claims and API user data.
  */
 export function useAuthState() {
-  return useSyncExternalStore(authSubscribe, authGetSnapshot)
+  return useSyncExternalStore(authSubscribe, authGetSnapshot, authGetSnapshot)
 }
