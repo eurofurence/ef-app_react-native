@@ -162,5 +162,9 @@
   "version": "6.4.1",
   "patchedDependencies": {
     "react-native-legal@1.6.3": "patches/react-native-legal@1.6.3.patch"
+  },
+  "overrides": {
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
   }
 }
