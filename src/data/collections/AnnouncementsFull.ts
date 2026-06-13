@@ -20,6 +20,10 @@ export const announcementsFullCollection = createLiveQueryCollection({
   },
 })
 
+export type EfAnnouncementFull = ReturnType<
+  typeof announcementsFullCollection.get
+>
+
 defineSearch(announcementsFullCollection, {
   keys: ['Author', 'Title', 'Content'],
 })
