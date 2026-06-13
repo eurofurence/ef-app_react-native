@@ -1,4 +1,4 @@
-import { Link } from 'expo-router'
+import { type Href, Link } from 'expo-router'
 import { openBrowserAsync } from 'expo-web-browser'
 import type { ComponentProps } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -35,7 +35,7 @@ export function ExternalLink({ href, ...rest }: Props) {
     <Link
       target='_blank'
       {...rest}
-      href={href}
+      href={href as Href}
       style={[rest.style, appStyles.minTouchSize]}
       accessibilityLabel={a11y('external_link', { url: href })}
       accessibilityHint={a11y('external_link_hint')}

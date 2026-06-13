@@ -35,7 +35,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
   const offDays = dealer ? joinOffDays(dealer, day1, day2, day3) : ''
 
   const onPress = useCallback(
-    () => router.push(`/dealer/${link.Target}`),
+    () => router.push(`/dealers/${link.Target}`),
     [link.Target]
   )
 
@@ -136,9 +136,7 @@ const MapEntryLinkItem: FC<LinkItemProps> = ({ map, entry, link }) => {
   const { t } = useTranslation('Maps')
   const onPress = useCallback(() => {
     if (map && entry) {
-      router.push(
-        `/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`
-      )
+      router.push(`/maps/${map.Id}/${entry.Id}/${entry.Links.indexOf(link)}`)
     }
   }, [map, entry, link])
 
@@ -164,9 +162,7 @@ const EventConferenceRoomLinkItem: FC<LinkItemProps> = ({
   const { t } = useTranslation('Maps')
   const onPress = useCallback(() => {
     if (map && entry) {
-      router.push(
-        `/map/${map.Id}?entryId=${entry.Id}&linkId=${entry.Links.indexOf(link)}`
-      )
+      router.push(`/maps/${map.Id}/${entry.Id}/${entry.Links.indexOf(link)}`)
     }
   }, [map, entry, link])
 

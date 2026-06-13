@@ -1,17 +1,16 @@
-import type {
-  MaterialTopTabNavigationEventMap,
-  MaterialTopTabNavigationOptions,
-} from '@react-navigation/material-top-tabs'
+import { isSameDay } from 'date-fns'
+import { withLayoutContext } from 'expo-router'
 import {
   createMaterialTopTabNavigator,
   MaterialTopTabBar,
-} from '@react-navigation/material-top-tabs'
+  type MaterialTopTabBarProps,
+  type MaterialTopTabNavigationEventMap,
+  type MaterialTopTabNavigationOptions,
+} from 'expo-router/js-top-tabs'
 import type {
   ParamListBase,
   TabNavigationState,
-} from '@react-navigation/native'
-import { isSameDay } from 'date-fns'
-import { withLayoutContext } from 'expo-router'
+} from 'expo-router/react-navigation'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -19,6 +18,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { ShowInternalEventsToggle } from '@/components/events/ShowInternalEventsToggle'
 import { Icon, type IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
+import { ComingSoon } from '@/components/generic/containers/ComingSoon'
+import { conName } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
@@ -67,7 +68,7 @@ export default function ScheduleLayout() {
   const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
-  const { eventDays } = useCache()
+  const { events, eventDays } = useCache()
   const initialRouteName = getInitialRoute(eventDays, getNow())
   const [filter, setFilter] = useState('')
 
@@ -85,6 +86,15 @@ export default function ScheduleLayout() {
     }
   }, [eventDays])
 
+  if (events.length === 0)
+    return (
+      <ComingSoon
+        image={require('@/assets/static/events-empty.png')}
+        title={t('coming_soon_title')}
+        text={t('coming_soon_body', { conName })}
+      />
+    )
+
   return (
     <ScheduleSearchContext.Provider
       value={{ query: filter, setQuery: setFilter }}
@@ -97,7 +107,7 @@ export default function ScheduleLayout() {
           sceneStyle: backgroundSurface,
           tabBarItemStyle: styles.tabItem,
         }}
-        tabBar={(props) => (
+        tabBar={(props: MaterialTopTabBarProps) => (
           <View style={styles.tabBarContainer}>
             <MaterialTopTabBar {...props} />
             <View className='flex-row items-center pr-2.5'>

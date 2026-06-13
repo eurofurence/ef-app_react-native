@@ -9,7 +9,7 @@ import { useWarningState } from '@/hooks/data/useWarningState'
 import { useNow } from '@/hooks/time/useNow' // Mock expo-router
 
 // Mock expo-router
-mock.module('@react-navigation/core', () => ({
+mock.module('expo-router/react-navigation', () => ({
   useIsFocused: mock(() => true),
 }))
 

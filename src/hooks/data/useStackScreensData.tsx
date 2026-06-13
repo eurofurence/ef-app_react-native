@@ -1,5 +1,4 @@
-import type { NativeStackNavigationOptions } from '@react-navigation/native-stack'
-import { router } from 'expo-router'
+import { type NativeStackNavigationOptions, router } from 'expo-router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { TouchableOpacity } from 'react-native'

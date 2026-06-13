@@ -1,5 +1,6 @@
 import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
 import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
+import { useIsFocused } from 'expo-router/react-navigation'
 import type { TFunction } from 'i18next'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'

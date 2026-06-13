@@ -86,6 +86,8 @@ module.exports = {
     },
     experiments: {
       baseUrl: '/ef-app_react-native',
+      reactCompiler: true,
+      typedRoutes: true,
     },
     plugins: [
       // Run sentry plugin only if auth token is given, otherwise the build crashes.
@@ -133,7 +135,7 @@ module.exports = {
         'expo-build-properties',
         {
           ios: {
-            deploymentTarget: '15.1',
+            deploymentTarget: '16.4',
             useFrameworks: 'static',
             cacheEnabled: true,
             privacyManifestAggregationEnabled: true,
