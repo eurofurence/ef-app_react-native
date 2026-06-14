@@ -3,7 +3,7 @@ import { router } from 'expo-router'
 import { openBrowserAsync } from 'expo-web-browser'
 import { type RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking } from 'react-native'
+import { Linking, Platform } from 'react-native'
 
 import { Col } from '@/components/generic/containers/Col'
 import { Grid } from '@/components/generic/containers/Grid'
@@ -97,6 +97,15 @@ export function MainMenu({ tabs }: MainMenuProps) {
           accessibilityLabel={t('accessibility.settings_tab')}
           accessibilityHint={t('accessibility.settings_tab_hint')}
         />
+        {Platform.OS !== 'web' && (
+          <Tab
+            icon='wifi'
+            text={t('wifi')}
+            onPress={() => router.navigate('/wifi')}
+            accessibilityLabel={t('accessibility.wifi_tab')}
+            accessibilityHint={t('accessibility.wifi_tab_hint')}
+          />
+        )}
         <Tab
           icon='magnify'
           text={t('lost_and_found')}

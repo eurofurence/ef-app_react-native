@@ -1,5 +1,6 @@
 import { appBase } from '@/configuration'
 
+const wifiOnsiteHost = 'wifi.onsite.eurofurence.org'
 const matchArtistAlley = `${appBase}/Web/ArtistAlley`
 const matchArtistAlleyReg = `${appBase}/Web/ArtistAlleyReg`
 const matchKnowledgeGroups = `${appBase}/Web/KnowledgeGroups`
@@ -17,5 +18,10 @@ export function redirectSystemPath({ path }: { path: string }) {
   if (path === matchArtistAlley) return `/artists-alley`
   if (path === matchArtistAlleyReg) return `/artists-alley/reg`
   if (path === matchKnowledgeGroups) return `/knowledge`
+  // WiFi deeplinks: forward only the query (id/pw/profile); host/path are not trusted.
+  if (path.includes(wifiOnsiteHost) || path.startsWith('eventwifi:')) {
+    const q = path.indexOf('?')
+    return q >= 0 ? `/wifi${path.slice(q)}` : '/wifi'
+  }
   return path
 }

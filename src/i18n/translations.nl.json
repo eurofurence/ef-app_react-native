@@ -550,11 +550,14 @@
       "settings_tab": "Instellingen tabblad",
       "settings_tab_hint": "Configureer app-voorkeuren en instellingen",
       "website_tab": "Conventie website tabblad",
-      "website_tab_hint": "Opent conventie website in browser"
+      "website_tab_hint": "Opent conventie website in browser",
+      "wifi_tab": "WiFi setup",
+      "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Aankondigingen",
     "map": "Kaart",
-    "website": "Website"
+    "website": "Website",
+    "wifi": "WiFi"
   },
   "PrivateMessageCompose": {
     "accessibility": {
@@ -716,5 +719,32 @@
     "reset": "Reset",
     "subtitle": "Pas de tijd en datum aan voor het debuggen",
     "title": "Tijdreizen"
+  },
+  "WiFi": {
+    "title": "WiFi Setup",
+    "subtitle": "Connect to the Eurofurence network",
+    "intro": "Pick a connection profile, then confirm to set up the Eurofurence WiFi on your device.",
+    "profile_eurofurence_name": "Default",
+    "profile_eurofurence_desc": "Filtered connection with internet and internal network.",
+    "profile_public_name": "Public",
+    "profile_public_desc": "Full inbound/outbound internet access.",
+    "profile_event_name": "Event",
+    "profile_event_desc": "Internal event network only.",
+    "profile_custom_name": "I am special",
+    "profile_custom_desc": "Use credentials you were given.",
+    "identity_label": "Access ID",
+    "identity_placeholder": "Your access ID",
+    "password_label": "Password",
+    "password_placeholder": "Your password",
+    "scan_qr": "Scan QR code",
+    "apply": "Configure WiFi",
+    "confirm_title": "Set up WiFi?",
+    "confirm_body": "Configure the Eurofurence network using the {{profile}} profile?",
+    "confirm_apply": "Set up",
+    "confirm_cancel": "Cancel",
+    "invalid_credentials": "Please enter a valid access ID and password.",
+    "apply_failed": "Could not set up WiFi. Please try again.",
+    "camera_permission": "Allow camera access to scan a WiFi QR code.",
+    "grant_camera": "Allow camera"
   }
 }

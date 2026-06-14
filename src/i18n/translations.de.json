@@ -660,7 +660,9 @@
       "settings_tab": "Einstellungen Tab",
       "settings_tab_hint": "App-Einstellungen und Präferenzen konfigurieren",
       "website_tab": "Convention-Website Tab",
-      "website_tab_hint": "Öffnet Convention-Website im Browser"
+      "website_tab_hint": "Öffnet Convention-Website im Browser",
+      "wifi_tab": "WLAN-Einrichtung",
+      "wifi_tab_hint": "Öffnet die WLAN-Einrichtung"
     },
     "announcements": "Ankündigungen",
     "artist_alley": "Artist Alley",
@@ -680,7 +682,8 @@
     "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen",
-    "website": "Webseite"
+    "website": "Webseite",
+    "wifi": "WLAN"
   },
   "Notification": {
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",
@@ -883,6 +886,33 @@
     "week_before": "Eine Woche vor {{conName}}"
   },
   "Todo": {},
+  "WiFi": {
+    "title": "WLAN-Einrichtung",
+    "subtitle": "Mit dem Eurofurence-Netzwerk verbinden",
+    "intro": "Wähle ein Verbindungsprofil und bestätige, um das Eurofurence-WLAN auf deinem Gerät einzurichten.",
+    "profile_eurofurence_name": "Standard",
+    "profile_eurofurence_desc": "Gefilterte Verbindung mit Internet und internem Netzwerk.",
+    "profile_public_name": "Öffentlich",
+    "profile_public_desc": "Voller ein-/ausgehender Internetzugang.",
+    "profile_event_name": "Event",
+    "profile_event_desc": "Nur internes Event-Netzwerk.",
+    "profile_custom_name": "Ich bin besonders",
+    "profile_custom_desc": "Zugangsdaten verwenden, die du erhalten hast.",
+    "identity_label": "Zugangs-ID",
+    "identity_placeholder": "Deine Zugangs-ID",
+    "password_label": "Passwort",
+    "password_placeholder": "Dein Passwort",
+    "scan_qr": "QR-Code scannen",
+    "apply": "WLAN einrichten",
+    "confirm_title": "WLAN einrichten?",
+    "confirm_body": "Eurofurence-Netzwerk mit dem Profil {{profile}} einrichten?",
+    "confirm_apply": "Einrichten",
+    "confirm_cancel": "Abbrechen",
+    "invalid_credentials": "Bitte gültige Zugangs-ID und Passwort eingeben.",
+    "apply_failed": "WLAN konnte nicht eingerichtet werden. Bitte erneut versuchen.",
+    "camera_permission": "Kamerazugriff erlauben, um einen WLAN-QR-Code zu scannen.",
+    "grant_camera": "Kamera erlauben"
+  },
   "Viewer": {
     "announcement": "Ankündigung: {{name}}",
     "artist": "Dealer: {{name}}",

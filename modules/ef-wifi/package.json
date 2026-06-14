@@ -1,0 +1,6 @@
+{
+  "name": "ef-wifi",
+  "version": "0.1.0",
+  "description": "Eurofurence WiFi native module (Android enterprise network setup)",
+  "main": "index.ts"
+}
