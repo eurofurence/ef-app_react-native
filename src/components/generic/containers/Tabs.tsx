@@ -340,8 +340,13 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(
             )}
 
             <View
-              style={[styles.tabs, bordersDarken, fillBackground, style]}
-              pointerEvents={isAnimating ? 'none' : 'auto'}
+              style={[
+                styles.tabs,
+                bordersDarken,
+                fillBackground,
+                style,
+                { pointerEvents: isAnimating ? 'none' : 'auto' },
+              ]}
             >
               {tabs?.map((tab) => (
                 <Tab
