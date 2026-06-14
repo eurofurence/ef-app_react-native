@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { useCache } from '@/context/data/Cache'
 import type { RecordMetadata } from '@/context/data/types.api'
-import { useGetNow } from '@/hooks/time/useNow'
+import { getNow } from '@/hooks/time/useNow'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
@@ -18,7 +18,6 @@ export const useUpdateSinceNote = (
   delay = 500
 ) => {
   const [invoked, setInvoked] = useState(false)
-  const getNow = useGetNow()
   const { getValue, setValue } = useCache()
   const settings = getValue('settings')
   const lastViewed = item ? (settings.lastViewTimes?.[item.Id] ?? null) : null

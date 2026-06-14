@@ -5,12 +5,12 @@ import { Linking, StyleSheet, useWindowDimensions, View } from 'react-native'
 import { SvgXml } from 'react-native-svg'
 
 import { authSettingsUrl, conName } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
-import type { Claims } from '@/hooks/api/idp/useUserInfo'
+import { auth } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
+import type { EfClaims } from '@/data/types/EfClaims'
+import type { EfUser } from '@/data/types/EfUser'
 import { useUserDatamatrix } from '@/hooks/api/users/useUserDatamatrix'
-import type { UserDetails } from '@/hooks/api/users/useUsersSelf'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-
 import { Image } from './generic/atoms/Image'
 import { Label } from './generic/atoms/Label'
 import { Section } from './generic/atoms/Section'
@@ -62,8 +62,8 @@ const UserRegistration: FC<{ id: string; status: string }> = ({
 }
 
 export type ProfileContentProps = {
-  claims: Claims
-  user: UserDetails
+  claims: EfClaims
+  user: EfUser
   parentPad?: number
 }
 
@@ -82,7 +82,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({
   const { t } = useTranslation('Profile')
   const { t: a11y } = useTranslation('Profile')
   const avatarBackground = useThemeBackground('primary')
-  const { logout } = useAuthContext()
+
   const { data: datamatrix } = useUserDatamatrix()
   const { width: windowWidth } = useWindowDimensions()
   const datamatrixSize = Math.min(windowWidth * 0.8, 300)
@@ -98,10 +98,12 @@ export const ProfileContent: FC<ProfileContentProps> = ({
       .replace(/(\s)width="[^"]*"/, '$1')
       .replace(/(\s)height="[^"]*"/, '$1')
       .replace(/<svg/, `<svg viewBox="0 0 ${width} ${height}"`)
+      .replace(/<symbol/, `<symbol viewBox="0 0 ${width} ${height}"`)
+      .replace(/<use/, `<use width="${width}" height="${height}"`)
   }, [datamatrix])
 
-  const isAttendee = user.RoleMap.Attendee
-  const isCheckedIn = user.RoleMap.AttendeeCheckedIn
+  const isAttendee = inRole(user, 'Attendee')
+  const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
   const roleComplex = Boolean(
     user.Roles.find(
       (role) => role !== 'Attendee' && role !== 'AttendeeCheckedIn'
@@ -207,7 +209,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({
       <Button
         style={styles.logoutButton}
         icon='logout'
-        onPress={() => logout().catch(captureException)}
+        onPress={() => auth.logout().catch(captureException)}
         accessibilityLabel={a11y('accessibility.logout_button')}
         accessibilityHint={a11y('accessibility.logout_button_hint')}
         accessibilityRole='button'

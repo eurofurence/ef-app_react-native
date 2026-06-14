@@ -16,7 +16,7 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 export default function RevealHiddenPage() {
   const { t } = useTranslation('RevealHidden')
   const { events, getValue, setValue } = useCache()
-  const now = useNow(5000) // Update every 5 seconds when focused
+  const now = useNow()
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
 

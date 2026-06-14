@@ -10,8 +10,9 @@ import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Header } from '@/components/generic/containers/Header'
 import { NoData } from '@/components/generic/containers/NoData'
 import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
-import { useUserContext } from '@/context/auth/User'
 import type { CommunicationRecord } from '@/context/data/types.api'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
@@ -45,14 +46,14 @@ export default function Messages() {
   const { t } = useTranslation('PrivateMessageList')
   const { t: a11y } = useTranslation('PrivateMessageList')
   const { data: communications, refetch, isPending } = useCommunicationsQuery()
-  const { user } = useUserContext()
+  const { user } = useAuthState()
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
   const mainContentRef = useAccessibilityFocus<View>(200)
 
-  const isAdmin = Boolean(user?.RoleMap?.Admin)
-  const isPrivateMessageSender = Boolean(user?.RoleMap?.PrivateMessageSender)
+  const isAdmin = inRole(user, 'Admin')
+  const isPrivateMessageSender = inRole(user, 'PrivateMessageSender')
 
   const sectionedData = useMemo(() => {
     const [unread, read] = partition(

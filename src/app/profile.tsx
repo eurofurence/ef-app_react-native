@@ -8,13 +8,13 @@ import { appStyles } from '@/components/AppStyles'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ProfileContent } from '@/components/ProfileContent'
-import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
+import { auth, useAuthState } from '@/data/clients/auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Profile() {
-  const { claims, user, refresh } = useUserContext()
+  const { claims, user } = useAuthState()
   const [isReloading, setIsReloading] = useState(false)
   const { synchronize, isSynchronizing } = useCache()
   const backgroundStyle = useThemeBackground('background')
@@ -27,14 +27,14 @@ export default function Profile() {
     setIsReloading(true)
     ;(async () => {
       try {
-        await refresh()
+        await auth.refresh()
       } catch (error) {
         captureException(error)
       } finally {
         setIsReloading(false)
       }
     })()
-  }, [refresh, isReloading])
+  }, [isReloading])
 
   // Navigate back if not logged in.
   if (!user) return <Redirect href='/' />

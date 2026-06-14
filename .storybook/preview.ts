@@ -3,9 +3,8 @@ import type { Preview } from '@storybook/react-native-web-vite'
 import React from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { AuthProvider } from '../src/context/auth/Auth'
-import { CacheProvider } from '../src/context/data/Cache'
-import { QueryProvider } from '../src/context/query/Query'
+import { CacheProvider } from "../src/context/data/Cache";
+import { AppClients } from "../src/data/clients/AppClients";
 import { ToastProvider } from '../src/context/ui/ToastContext'
 
 // Import i18n configuration
@@ -32,22 +31,18 @@ const preview: Preview = {
           SafeAreaProvider,
           null,
           React.createElement(
-            QueryProvider,
+            AppClients,
             null,
             React.createElement(
               CacheProvider,
               null,
               React.createElement(
-                AuthProvider,
+                ToastProvider,
                 null,
                 React.createElement(
-                  ToastProvider,
+                  BottomSheetModalProvider,
                   null,
-                  React.createElement(
-                    BottomSheetModalProvider,
-                    null,
-                    React.createElement(Story, null)
-                  )
+                  React.createElement(Story, null)
                 )
               )
             )

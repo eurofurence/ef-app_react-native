@@ -11,6 +11,7 @@ import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useNow } from '@/hooks/time/useNow'
 
 const ONE_HOUR = 60 * 60 * 1000
@@ -18,12 +19,11 @@ const ONE_MINUTE = 60 * 1000
 
 export function TimeTravel() {
   const { t } = useTranslation('TimeTravel')
-  const { eventDays, getValue, setValue } = useCache()
+  const { eventDays } = useCache()
   const now = useNow()
 
-  const settings = getValue('settings')
-  const timeOffset = settings.timeTravelOffset ?? 0
-  const enabled = settings.timeTravelEnabled ?? false
+  const [enabled, setEnabled] = useAppSetting('TimeTravelEnabled')
+  const [offset, setOffset] = useAppSetting('TimeTravelOffset')
 
   // Calculate week before and after
   const weekBefore = useMemo(() => {
@@ -38,19 +38,7 @@ export function TimeTravel() {
     return addWeeks(lastDay, 1).toISOString()
   }, [eventDays])
 
-  const handleEnableTimeTravel = (value: boolean) =>
-    setValue('settings', { ...settings, timeTravelEnabled: value })
-
-  const handleResetTravel = () =>
-    setValue('settings', { ...settings, timeTravelOffset: 0 })
-
-  const handleTravel = (amount: number) =>
-    setValue('settings', {
-      ...settings,
-      timeTravelOffset: (settings.timeTravelOffset ?? 0) + amount,
-    })
-
-  const handleTravelToDate = (date: string) => {
+  const setOffsetFromDate = (date: string) => {
     const currentDate = new Date()
     const targetDate = new Date(date)
     targetDate.setHours(
@@ -61,7 +49,7 @@ export function TimeTravel() {
     )
 
     const offset = targetDate.getTime() - currentDate.getTime()
-    setValue('settings', { ...settings, timeTravelOffset: offset })
+    setOffset(offset)
   }
 
   return (
@@ -74,18 +62,18 @@ export function TimeTravel() {
         {t('currentTime', { time: format(now, 'yyyy-MM-dd HH:mm:ss') })}
       </Label>
       <Label className='mb-1'>
-        {t('difference', { diff: `${Math.round(timeOffset / 1000)} seconds` })}
+        {t('difference', { diff: `${Math.round(offset / 1000)} seconds` })}
       </Label>
 
       <Row style={styles.row}>
         <Button
           style={styles.button}
           outline={enabled}
-          onPress={() => handleEnableTimeTravel(!enabled)}
+          onPress={() => setEnabled(!enabled)}
         >
           {enabled ? t('disable') : t('enable')}
         </Button>
-        <Button style={styles.button} onPress={handleResetTravel}>
+        <Button style={styles.button} onPress={() => setOffset(0)}>
           {t('reset')}
         </Button>
       </Row>
@@ -95,7 +83,7 @@ export function TimeTravel() {
           containerStyle={styles.button}
           icon='chevron-left'
           iconRight={<View />}
-          onPress={() => handleTravel(-ONE_HOUR)}
+          onPress={() => setOffset(offset - ONE_HOUR)}
         >
           1h
         </Button>
@@ -103,7 +91,7 @@ export function TimeTravel() {
           containerStyle={styles.button}
           icon='chevron-left'
           iconRight={<View />}
-          onPress={() => handleTravel(-ONE_MINUTE)}
+          onPress={() => setOffset(offset - ONE_MINUTE)}
         >
           1m
         </Button>
@@ -111,7 +99,7 @@ export function TimeTravel() {
           containerStyle={styles.button}
           icon={<View />}
           iconRight='chevron-right'
-          onPress={() => handleTravel(ONE_MINUTE)}
+          onPress={() => setOffset(offset + ONE_MINUTE)}
         >
           1m
         </Button>
@@ -119,7 +107,7 @@ export function TimeTravel() {
           containerStyle={styles.button}
           icon={<View />}
           iconRight='chevron-right'
-          onPress={() => handleTravel(ONE_HOUR)}
+          onPress={() => setOffset(offset + ONE_HOUR)}
         >
           1h
         </Button>
@@ -130,7 +118,7 @@ export function TimeTravel() {
           <Button
             containerStyle={styles.button}
             icon='calendar-arrow-left'
-            onPress={() => handleTravelToDate(weekBefore)}
+            onPress={() => setOffsetFromDate(weekBefore)}
           >
             {t('week_before', { conName })}
           </Button>
@@ -141,7 +129,7 @@ export function TimeTravel() {
             key={day.Id}
             containerStyle={styles.button}
             icon='calendar-cursor'
-            onPress={() => handleTravelToDate(day.Date)}
+            onPress={() => setOffsetFromDate(day.Date)}
           >
             {day.Name}
           </Button>
@@ -151,7 +139,7 @@ export function TimeTravel() {
           <Button
             containerStyle={styles.button}
             icon='calendar-arrow-right'
-            onPress={() => handleTravelToDate(weekAfter)}
+            onPress={() => setOffsetFromDate(weekAfter)}
           >
             {t('week_after', { conName })}
           </Button>

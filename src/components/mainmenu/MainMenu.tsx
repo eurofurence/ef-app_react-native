@@ -18,8 +18,7 @@ import {
   showCatchEm,
   showLogin,
 } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserContext } from '@/context/auth/User'
+import { auth, useAuthState } from '@/data/clients/auth'
 
 export type MainMenuProps = {
   tabs: RefObject<TabsRef | null>
@@ -27,30 +26,25 @@ export type MainMenuProps = {
 
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
-  const { loggedIn, login } = useAuthContext()
-  const { claims } = useUserContext()
-
-  const handleLogin = useCallback(() => {
-    login().catch(captureException)
-  }, [login])
+  const { isLoggedIn, claims } = useAuthState()
 
   const handleCatchEmAll = useCallback(async () => {
-    if (!loggedIn) {
+    if (!isLoggedIn) {
       alert(t('not_logged_in'))
       return
     }
     await Linking.openURL(catchEmUrl).catch(console.error)
     tabs.current?.close()
-  }, [t, loggedIn, tabs])
+  }, [t, isLoggedIn, tabs])
 
   return (
     <Col type='stretch'>
       {showLogin === 'true' && (
         <PagerPrimaryLogin
-          loggedIn={loggedIn}
+          loggedIn={isLoggedIn}
           claims={claims}
           onMessages={() => router.navigate('/messages')}
-          onLogin={handleLogin}
+          onLogin={() => auth.login().catch(captureException)}
           onProfile={() => router.navigate('/profile')}
         />
       )}
@@ -68,10 +62,10 @@ export function MainMenu({ tabs }: MainMenuProps) {
             icon='paw'
             text={t('catch_em')}
             onPress={handleCatchEmAll}
-            disabled={!loggedIn}
+            disabled={!isLoggedIn}
             accessibilityLabel={t('accessibility.catch_em_tab')}
             accessibilityHint={
-              loggedIn
+              isLoggedIn
                 ? t('accessibility.catch_em_tab_hint')
                 : t('accessibility.catch_em_tab_disabled_hint')
             }
@@ -88,10 +82,10 @@ export function MainMenu({ tabs }: MainMenuProps) {
           icon='card-account-details-outline'
           text={t('profile')}
           onPress={() => router.navigate('/profile')}
-          disabled={!loggedIn}
+          disabled={!isLoggedIn}
           accessibilityLabel={t('accessibility.profile_tab')}
           accessibilityHint={
-            loggedIn
+            isLoggedIn
               ? t('accessibility.profile_tab_hint')
               : t('accessibility.profile_tab_disabled_hint')
           }
@@ -107,10 +101,10 @@ export function MainMenu({ tabs }: MainMenuProps) {
           icon='magnify'
           text={t('lost_and_found')}
           onPress={() => router.navigate('/lost-and-found')}
-          disabled={!loggedIn}
+          disabled={!isLoggedIn}
           accessibilityLabel={t('accessibility.lost_found_tab')}
           accessibilityHint={
-            loggedIn
+            isLoggedIn
               ? t('accessibility.lost_found_tab_hint')
               : t('accessibility.lost_found_tab_disabled_hint')
           }

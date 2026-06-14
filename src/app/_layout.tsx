@@ -10,30 +10,23 @@ import { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import { AuthProvider } from '@/context/auth/Auth'
-import { UserProvider } from '@/context/auth/User'
 import { CacheProvider } from '@/context/data/Cache'
-import { QueryProvider } from '@/context/query/Query'
 import { ToastProvider } from '@/context/ui/ToastContext'
+import { AppClients } from '@/data/clients/AppClients'
 import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
 import { useStackScreensData } from '@/hooks/data/useStackScreensData'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useTokenManager } from '@/hooks/tokens/useTokenManager'
-import 'react-native-reanimated'
-
-// Import i18n configuration
-import '@/i18n'
-
-// Import initializer scripts
+import 'react-native-reanimated' // Import i18n configuration
+import '@/i18n' // Import initializer scripts
 import '@/init/firebaseApp'
+import '@/init/cryptoInit'
 import '@/init/sentryInit'
 import '@/init/setNotificationChannels'
 import '@/init/setNotificationHandler'
-import '@/init/splash'
-
-// Import global tailwind CSS.
+import '@/init/splash' // Import global tailwind CSS.
 import '@/css/globals.css'
 
 export const unstable_settings = {
@@ -48,17 +41,13 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <GestureHandlerRootView>
-      <QueryProvider>
-        <AuthProvider>
-          <UserProvider>
-            <CacheProvider>
-              <ToastProvider>
-                <MainLayout />
-              </ToastProvider>
-            </CacheProvider>
-          </UserProvider>
-        </AuthProvider>
-      </QueryProvider>
+      <AppClients>
+        <CacheProvider>
+          <ToastProvider>
+            <MainLayout />
+          </ToastProvider>
+        </CacheProvider>
+      </AppClients>
     </GestureHandlerRootView>
   )
 }

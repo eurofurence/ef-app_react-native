@@ -1,6 +1,5 @@
 import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
 import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
-import { useIsFocused } from 'expo-router/react-navigation'
 import type { TFunction } from 'i18next'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -85,8 +84,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
   const { t: tAccessibility } = useTranslation('Home', {
     keyPrefix: 'accessibility',
   })
-  const isFocused = useIsFocused()
-  const now = useNow(isFocused ? 60 : 'static') // Convert to Date
+  const now = useNow() // Convert to Date
 
   const { width } = useWindowDimensions()
   const subtitle = useCountdownTitle(t, now, i18n.language)

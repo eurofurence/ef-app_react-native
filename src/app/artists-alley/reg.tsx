@@ -21,8 +21,9 @@ import { Button } from '@/components/generic/containers/Button'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { artistAlleyUrl } from '@/configuration'
-import { useUserContext } from '@/context/auth/User'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
 import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
@@ -43,10 +44,10 @@ export default function Register() {
   })
 
   // Get user data for RBAC checks and pre-filling.
-  const { claims, user } = useUserContext()
+  const { claims, user } = useAuthState()
 
   // Get roles for preemptive RBAC.
-  const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
+  const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
 
   // Get current registration if available. Only run when authorized.
   const { data, isPending, refetch } = useArtistsAlleyOwnRegistrationQuery()

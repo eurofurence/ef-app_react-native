@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import { eventInstanceForAny } from '@/components/events/EventCard'
 import { useCache } from '@/context/data/Cache'
 import type { EventDetails } from '@/context/data/types.details'
+import { useAppSetting } from '@/data/collections/AppSettings'
 
 const filterCurrentEvents = (
   events: readonly EventDetails[],
@@ -22,9 +23,9 @@ const filterCurrentEvents = (
  * @param now The current time.
  */
 export function useCurrentEvents(now: Date) {
-  const { events, getValue } = useCache()
+  const { events } = useCache()
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
   return useMemo(
     () =>
       chain(filterCurrentEvents(events, now))

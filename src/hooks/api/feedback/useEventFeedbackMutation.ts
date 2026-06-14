@@ -1,8 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
-import axios, { type GenericAbortSignal } from 'axios'
-
-import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
+import { api } from '@/data/clients/api'
 
 /**
  * Event feedback data.
@@ -11,38 +8,18 @@ export type EventFeedbackData = {
   eventId: string
   rating: number
   message?: string
-}
-
-/**
- * Posts event feedback to the API with the given access token, feedback data, and optionally an abort signal.
- * @param accessToken The access token.
- * @param data The feedback data.
- * @param signal An abort signal.
- */
-export async function postEventFeedback(
-  accessToken: string | null,
-  data: EventFeedbackData,
-  signal?: GenericAbortSignal
-) {
-  if (!accessToken) throw new Error('Unauthorized')
-  return await axios
-    .post(`${apiBase}/EventFeedback`, data, {
-      signal: signal,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((res) => res.status === 204)
-}
-
-/**
- * Uses a mutation for `postEventFeedback` with the app auth state.
+} /**
+ * Returns a mutation to send feedback.
  */
 export function useEventFeedbackMutation() {
-  const { accessToken } = useAuthContext()
   return useMutation({
     mutationFn: (data: EventFeedbackData) =>
-      postEventFeedback(accessToken, data),
+      api
+        .post(`/EventFeedback`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((res) => res.status === 204),
   })
 }

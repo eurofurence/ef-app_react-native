@@ -1,5 +1,17 @@
 // Platform web overrides.
 
+/**
+ * Gets all keys.
+ */
+export async function getAllKeys() {
+  const result: string[] = []
+  for (let i = 0; ; i++) {
+    const key = localStorage.key(i)
+    if (key === null) return result
+    result.push(key)
+  }
+}
+
 export async function multiGet(
   keys: readonly string[]
 ): Promise<readonly [string, string | null][]> {
@@ -16,4 +28,8 @@ export async function get(key: string) {
 
 export async function set(key: string, value: string) {
   localStorage.setItem(key, value)
+}
+
+export async function remove(key: string) {
+  return localStorage.removeItem(key)
 }

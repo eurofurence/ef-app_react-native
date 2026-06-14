@@ -4,7 +4,6 @@ import { de } from 'date-fns/locale/de'
 import { format } from 'date-fns-tz'
 import { useCalendars } from 'expo-localization'
 import { router } from 'expo-router'
-import { useIsFocused } from 'expo-router/react-navigation'
 import { openBrowserAsync } from 'expo-web-browser'
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -72,8 +71,7 @@ export const EventContent: FC<EventContentProps> = ({
   const { t } = useTranslation('Event')
   const { checkReminder, toggleReminder } = useEventReminder()
   const isFavorite = checkReminder(event)
-  const isFocused = useIsFocused()
-  const now = useNow(isFocused ? 5 : 'static')
+  const now = useNow()
 
   const colorGlyph = useThemeColorValue('darken')
 

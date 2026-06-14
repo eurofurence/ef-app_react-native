@@ -1,4 +1,3 @@
-import { useIsFocused } from 'expo-router/react-navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -27,6 +26,7 @@ import { TimezoneWarning } from '@/components/home/TimezoneWarning'
 import { registrationUrl } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useFuseResults } from '@/hooks/searching/useFuseResults'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
@@ -36,9 +36,8 @@ import { vibrateAfter } from '@/util/vibrateAfter'
 export default function Index() {
   const { t } = useTranslation('Home')
   const { t: a11y } = useTranslation('Accessibility')
-  const isFocused = useIsFocused()
-  const now = useNow(isFocused ? 5 : 'static')
-  const { synchronize, isSynchronizing, getValue } = useCache()
+  const now = useNow()
+  const { synchronize, isSynchronizing } = useCache()
   const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
 
@@ -47,7 +46,7 @@ export default function Index() {
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
 
   // Search integration.
   const globalIndex = useCache().searchGlobal

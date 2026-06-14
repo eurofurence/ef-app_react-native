@@ -35,9 +35,8 @@ import {
   type CacheExtensions,
   useCacheExtensions,
 } from '@/context/data/useCacheExtensions'
+import { useAuthState } from '@/data/clients/auth'
 import * as Storage from '@/util/asyncStorage'
-
-import { useAuthContext } from '../auth/Auth'
 
 /**
  * Cache context.
@@ -219,7 +218,8 @@ export const CacheProvider = ({
   const invocation = useRef<AbortController | null>(null)
 
   // Get authentication details if available
-  const { accessToken } = useAuthContext()
+  const { tokenResponse } = useAuthState()
+  const accessToken = tokenResponse?.accessToken
 
   // Synchronization function.
   const synchronize = useCallback(

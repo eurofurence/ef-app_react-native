@@ -23,7 +23,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useTheme } from '@/hooks/themes/useTheme'
 import { useMultiTap } from '@/hooks/util/useMultiTap'
 
@@ -140,10 +140,9 @@ const Credit = ({ url, name, jobTitle, onEasterEgg }: CreditProps) => {
 export default function AboutScreen() {
   const { t } = useTranslation('About')
   const { t: a11y } = useTranslation('Accessibility')
-  const { getValue, setValue } = useCache()
   const { setTheme } = useTheme()
 
-  const settings = getValue('settings')
+  const [devMenu, setDevMenu] = useAppSetting('DevMenuEnabled')
 
   // Load static assets.
   const cheeseSound = useAudioPlayer(require('@/assets/runtime/cheese.webm'))
@@ -162,20 +161,12 @@ export default function AboutScreen() {
   const toggleDevMenu = useMultiTap(
     10,
     useCallback(() => {
-      const setDevMenu = (enabled: boolean) =>
-        setValue('settings', {
-          ...settings,
-          devMenu: enabled,
-        })
-
       if (Platform.OS === 'web') {
         // On web, toggle with window confirm as we don't have Alert functionality.
         if (
-          window.confirm(
-            settings.devMenu ? 'Turn dev menu off?' : 'Turn dev menu on?'
-          )
+          window.confirm(devMenu ? 'Turn dev menu off?' : 'Turn dev menu on?')
         ) {
-          setDevMenu(!settings.devMenu)
+          setDevMenu(!devMenu)
         }
       } else {
         // Show alert for toggling.
@@ -201,7 +192,7 @@ export default function AboutScreen() {
           ]
         )
       }
-    }, [setValue, settings, t])
+    }, [devMenu, setDevMenu, t])
   )
 
   return (

@@ -6,12 +6,10 @@ import { useTranslation } from 'react-i18next'
 import { Animated, Platform } from 'react-native'
 
 import { Label } from '@/components/generic/atoms/Label'
-import { useCache } from '@/context/data/Cache'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import type { Translation } from '@/i18n'
-
 import { Button } from '../generic/containers/Button'
-
 import { SettingContainer } from './SettingContainer'
 
 /**
@@ -51,14 +49,13 @@ const languages = orderBy(
 export const LanguagePicker = () => {
   const { t, i18n } = useTranslation('Settings')
   const textColor = useThemeColorValue('text')
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
+  const [language, setLanguage] = useAppSetting('Language')
   const [showPicker, setShowPicker] = useState(false)
   const [renderPicker, setRenderPicker] = useState(false)
   const fadeAnim = useRef(new Animated.Value(0)).current
   const slideAnim = useRef(new Animated.Value(0)).current
 
-  const currentLanguage = settings.language ?? i18n.language
+  const currentLanguage = language ?? i18n.language
   const currentLanguageData =
     languages.find((lang) => lang.code === currentLanguage) || languages[0]
 
@@ -99,10 +96,7 @@ export const LanguagePicker = () => {
   const handleLanguageChange = async (language: string) => {
     try {
       await i18n.changeLanguage(language)
-      setValue('settings', {
-        ...settings,
-        language,
-      })
+      setLanguage(language)
     } catch (error) {
       captureException(error)
     }

@@ -34,7 +34,7 @@ function parseDate(value: string, name: string): Date {
  * Gets the registration and convention dates from the public dates endpoint.
  * @param signal An abort signal.
  */
-export async function getRegistrationDates(
+export async function fetchRegistrationDates(
   signal?: GenericAbortSignal
 ): Promise<ParsedRegistrationDates> {
   const response = await axios.get(registrationDatesUrl, {
@@ -57,7 +57,7 @@ export async function getRegistrationDates(
 export function useRegistrationDatesQuery(): UseQueryResult<ParsedRegistrationDates | null> {
   return useQuery({
     queryKey: ['registration-dates'],
-    queryFn: (context) => getRegistrationDates(context.signal),
+    queryFn: ({ signal }) => fetchRegistrationDates(signal),
     placeholderData: (data) => keepPreviousData(data),
   })
 }

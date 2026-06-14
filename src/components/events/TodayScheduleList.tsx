@@ -7,7 +7,7 @@ import { useEventCardInteractions } from '@/components/events/Events.common'
 import { Section } from '@/components/generic/atoms/Section'
 import { useCache } from '@/context/data/Cache'
 import type { EventDetails } from '@/context/data/types.details'
-
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { EventCard, eventInstanceForAny } from './EventCard'
 
 const filterHappeningTodayEvents = <
@@ -26,9 +26,9 @@ export type TodayScheduleListProps = {
 
 export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const { eventsFavorite, getValue } = useCache()
+  const { eventsFavorite } = useCache()
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
   const today = useMemo(() => {
     const favorites = eventsFavorite.filter(
       (item) => !item.Hidden && (showInternal || !item.IsInternal)

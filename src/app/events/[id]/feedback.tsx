@@ -13,10 +13,10 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedRating } from '@/components/generic/forms/ManagedRating'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
@@ -56,13 +56,12 @@ export default function EventFeedback() {
 
   const { mutate, isPending } = useEventFeedbackMutation()
 
-  const { loggedIn } = useAuthContext()
-  const { user } = useUserContext()
-  const attending = Boolean(user?.RoleMap?.Attendee)
+  const { isLoggedIn, user } = useAuthState()
+  const attending = inRole(user, 'Attendee')
 
-  const disabled = !loggedIn || !attending
+  const disabled = !isLoggedIn || !attending
   const disabledReason =
-    (!loggedIn && t('disabled_not_logged_in')) ||
+    (!isLoggedIn && t('disabled_not_logged_in')) ||
     (!attending && t('disabled_not_attending'))
 
   // Announce the feedback form to screen readers

@@ -22,7 +22,8 @@ export type IdData = Partial<{
  * Parses a JWT without validating it.
  * @param data The data to parse.
  */
-export function parseIdToken(data: string): IdData | null {
+export function parseIdToken(data: unknown): IdData | null {
+  if (typeof data !== 'string') return null
   const separatorStart = data.indexOf('.')
   if (separatorStart < 0) return null
   const separatorEnd = data.indexOf('.', separatorStart + 1)

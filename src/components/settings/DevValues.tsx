@@ -5,15 +5,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
+import { useAuthState } from '@/data/clients/auth'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
 
 export function DevValues() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_values' })
-  const { tokenResponse, idData } = useAuthContext()
-  const { user } = useUserContext()
+  const { tokenResponse, claims, user } = useAuthState()
   const { getValue } = useCache()
   const notifications = getValue('notifications')
 
@@ -35,7 +33,7 @@ export function DevValues() {
         {t('claims')}
       </Label>
       <Label className='ml-2'>
-        {idData ? JSON.stringify(idData, null, 2) : 'None'}
+        {claims ? JSON.stringify(claims, null, 2) : 'None'}
       </Label>
       <Label className='mt-5' type='h3'>
         {t('user')}

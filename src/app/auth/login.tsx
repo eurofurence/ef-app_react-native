@@ -1,6 +1,5 @@
 import { Redirect } from 'expo-router'
-
-import { finishLoginRedirect } from '@/context/auth/Auth'
+import { finishLoginRedirect } from '@/data/clients/auth'
 
 // Link browser closing.
 finishLoginRedirect()

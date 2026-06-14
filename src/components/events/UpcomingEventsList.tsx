@@ -6,10 +6,9 @@ import { StyleSheet, View } from 'react-native'
 import { useEventCardInteractions } from '@/components/events/Events.common'
 import { useCache } from '@/context/data/Cache'
 import type { EventDetails } from '@/context/data/types.details'
+import { useAppSetting } from '@/data/collections/AppSettings'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
-
 import { Section } from '../generic/atoms/Section'
-
 import { EventCard, eventInstanceForAny } from './EventCard'
 
 const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
@@ -24,9 +23,9 @@ export type UpcomingEventsListProps = {
 }
 export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
   const { t } = useTranslation('Events')
-  const { events, getValue } = useCache()
+  const { events } = useCache()
 
-  const showInternal = getValue('settings').showInternalEvents ?? true
+  const [showInternal] = useAppSetting('ShowInternalEvents')
   const upcoming = useMemo(
     () =>
       filterUpcomingEvents(events, now)

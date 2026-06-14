@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 /**
+ * Gets all keys.
+ */
+export async function getAllKeys() {
+  return await AsyncStorage.getAllKeys()
+}
+
+/**
  * Gets many keys from the storage.
  * @param keys The keys to get from the storage.
  */
@@ -33,4 +40,12 @@ export async function get(key: string) {
  */
 export async function set(key: string, value: string) {
   await AsyncStorage.setItem(key, value)
+}
+
+/**
+ * Removes an item from the storage
+ * @param key The key to remove from the storage.
+ */
+export async function remove(key: string) {
+  return await AsyncStorage.removeItem(key)
 }

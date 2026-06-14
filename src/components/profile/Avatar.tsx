@@ -1,11 +1,11 @@
 import { useTranslation } from 'react-i18next'
 
 import { Image } from '@/components/generic/atoms/Image'
-import { useUserContext } from '@/context/auth/User'
+import { useAuthState } from '@/data/clients/auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export const Avatar = ({ size = 32 }: { size?: number }) => {
-  const { claims } = useUserContext()
+  const { claims } = useAuthState()
   const avatarBackground = useThemeBackground('primary')
   const { t } = useTranslation('Profile')
 

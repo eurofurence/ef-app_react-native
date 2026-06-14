@@ -10,30 +10,29 @@ import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Button } from '@/components/generic/containers/Button'
 import { Header } from '@/components/generic/containers/Header'
 import { artistAlleyUrl } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
-import { useUserContext } from '@/context/auth/User'
 import { useCache } from '@/context/data/Cache'
 import type { TableRegistrationRecord } from '@/context/data/types.api'
 import type { ArtistAlleyDetails } from '@/context/data/types.details'
+import { auth, useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley')
-  const { user } = useUserContext()
-  const { login } = useAuthContext()
+  const { user } = useAuthState()
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
   const { artistAlley, synchronize, isSynchronizing } = useCache()
 
   // Get roles for preemptive RBAC.
   const isLoggedIn = Boolean(user)
-  const isAttending = Boolean(user?.RoleMap?.Attendee)
-  const isCheckedIn = Boolean(user?.RoleMap?.AttendeeCheckedIn)
+  const isAttending = inRole(user, 'Attendee')
+  const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
   const isPrivileged =
-    Boolean(user?.RoleMap?.Admin) ||
-    Boolean(user?.RoleMap?.ArtistAlleyAdmin) ||
-    Boolean(user?.RoleMap?.ArtistAlleyModerator)
+    inRole(user, 'Admin') ||
+    inRole(user, 'ArtistAlleyAdmin') ||
+    inRole(user, 'ArtistAlleyModerator')
   const isAuthorized = isCheckedIn || isPrivileged
 
   useEffect(() => {
@@ -149,7 +148,7 @@ export default function List() {
             {isLoggedIn ? null : (
               <Button
                 iconRight='login'
-                onPress={() => login().catch(captureException)}
+                onPress={() => auth.login().catch(captureException)}
                 accessibilityRole='button'
                 accessibilityLabel={t('accessibility.login_button')}
                 accessibilityHint={t('accessibility.login_button_hint')}
