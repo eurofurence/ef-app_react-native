@@ -22,6 +22,7 @@ export function SessionExpiredModal() {
   const [busy, setBusy] = useState(false)
 
   const onSignIn = async () => {
+    if (busy) return
     setBusy(true)
     try {
       await auth.login()
@@ -36,6 +37,7 @@ export function SessionExpiredModal() {
   }
 
   const onNotNow = async () => {
+    if (busy) return
     setBusy(true)
     try {
       await clearLocalFavorites()

@@ -216,7 +216,13 @@ export function useEventCardInteractions(notify = true) {
 
   const onLongPress = useCallback(
     async (event: EventDetails) => {
-      const mode = await toggleFavorite(event)
+      let mode: 'added' | 'removed'
+      try {
+        mode = await toggleFavorite(event)
+      } catch (error) {
+        captureException(error)
+        return
+      }
       if (!notify) return
       if (mode === 'added') toast('info', t('favorite_added'), 3000)
       else if (mode === 'removed') toast('info', t('favorite_removed'), 3000)

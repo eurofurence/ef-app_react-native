@@ -12,7 +12,7 @@ import { useEventReminder } from '@/hooks/data/useEventReminder'
 
 /**
  * Toggles an event favourite: updates the favourite collection, keeps the
- * reminder in lockstep (deduped), and pushes to the backend when signed in.
+ * reminder in lockstep (deduped), and syncs to the backend when signed in.
  */
 export function useToggleEventFavorite() {
   const { isLoggedIn } = useAuthState()
@@ -22,16 +22,14 @@ export function useToggleEventFavorite() {
     async (event: EventDetails): Promise<'added' | 'removed'> => {
       if (event.Favorite) {
         favoriteEventsCollection.delete(event.Id)
-        await removeReminder(event)
-        if (isLoggedIn) {
-          await removeFavoriteEvent(event.Id).catch(captureException)
-        }
+        if (isLoggedIn) removeFavoriteEvent(event.Id).catch(captureException)
+        await removeReminder(event).catch(captureException)
         return 'removed'
       }
       favoriteEventsCollection.insert({ Id: event.Id })
-      if (!checkReminder(event)) await createReminder(event)
-      if (isLoggedIn) {
-        await pushFavoriteEvent(event.Id).catch(captureException)
+      if (isLoggedIn) pushFavoriteEvent(event.Id).catch(captureException)
+      if (!checkReminder(event)) {
+        await createReminder(event).catch(captureException)
       }
       return 'added'
     },

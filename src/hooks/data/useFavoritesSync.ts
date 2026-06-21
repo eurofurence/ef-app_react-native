@@ -33,7 +33,7 @@ export function useFavoritesSync() {
   const clearLocalFavorites = useCallback(async () => {
     const notifications = cache.getValue('notifications') ?? []
     const reminders = notifications.filter((n) => n.type === 'EventReminder')
-    await Promise.all(reminders.map((n) => cancelEventReminder(n)))
+    await Promise.allSettled(reminders.map((n) => cancelEventReminder(n)))
     cache.setValue(
       'notifications',
       notifications.filter((n) => n.type !== 'EventReminder')
