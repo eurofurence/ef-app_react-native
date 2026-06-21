@@ -1,8 +1,8 @@
+import { useLiveQuery } from '@tanstack/react-db'
 import { toZonedTime } from 'date-fns-tz'
 import type Fuse from 'fuse.js'
 import { chain } from 'lodash'
 import { useMemo } from 'react'
-
 import { conTimeZone } from '@/configuration'
 import type { StoreData } from '@/context/data/CacheStore'
 import {
@@ -60,6 +60,7 @@ import {
   useFuseMemo,
   useFuseRecordMemo,
 } from '@/context/data/useCacheExtensions.searching'
+import { favoriteEventsCollection } from '@/data/collections/FavoriteEvents'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 /**
@@ -219,6 +220,12 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   const eventTracks = data.eventTracks
   const knowledgeGroups = data.knowledgeGroups
 
+  const favoriteEventRows = useLiveQuery(favoriteEventsCollection).data
+  const favoriteEventIds = useMemo(
+    () => new Set(favoriteEventRows.map((row) => row.Id)),
+    [favoriteEventRows]
+  )
+
   // Enhanced entity stores. These are extended records with the detail
   // information applied.
   const announcements = useMemo((): EntityStore<AnnouncementDetails> => {
@@ -283,7 +290,6 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
   }, [eventDays, images, data.dealers, data.settings.favoriteDealers])
 
   const events = useMemo((): EntityStore<EventDetails> => {
-    const favoriteIds = data.notifications?.map((item) => item.recordId)
     return mapEntityStore(
       data.events,
       (item: EventRecord): EventDetails => ({
@@ -314,7 +320,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
         StartLocal: parseDefaultISO(item.StartDateTimeUtc),
         End: toZonedTime(parseDefaultISO(item.EndDateTimeUtc), conTimeZone),
         EndLocal: parseDefaultISO(item.EndDateTimeUtc),
-        Favorite: Boolean(favoriteIds?.includes(item.Id)),
+        Favorite: favoriteEventIds.has(item.Id),
         Hidden: Boolean(data.settings.hiddenEvents?.includes(item.Id)),
       })
     )
@@ -324,7 +330,7 @@ export const useCacheExtensions = (data: StoreData): CacheExtensions => {
     eventTracks,
     images,
     data.events,
-    data.notifications,
+    favoriteEventIds,
     data.settings.hiddenEvents,
   ])
 

@@ -36,6 +36,7 @@ export type AuthState = {
   idData: IdData | null
   claims: EfClaims | null
   user: EfUser | null
+  sessionExpired: boolean
 }
 
 /**
@@ -53,6 +54,7 @@ export class AuthClient {
     idData: null,
     claims: null,
     user: null,
+    sessionExpired: false,
   }
 
   /**
@@ -171,7 +173,7 @@ export class AuthClient {
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
-        await this._resetStateAndNotify()
+        await this._resetStateAndNotify(false)
       }
       throw error
     }
@@ -211,7 +213,7 @@ export class AuthClient {
     } catch (error) {
       // Token has an error, reset state.
       if (isTokenError(error)) {
-        await this._resetStateAndNotify()
+        await this._resetStateAndNotify(true)
       }
       throw error
     }
@@ -253,7 +255,16 @@ export class AuthClient {
         .catch(captureException)
 
     // Clear data.
-    await this._resetStateAndNotify()
+    await this._resetStateAndNotify(false)
+  }
+
+  /**
+   * Clears the session-expired flag once the reauth prompt has been handled.
+   */
+  public acknowledgeSessionExpired() {
+    if (!this._state.sessionExpired) return
+    this._state = { ...this._state, sessionExpired: false }
+    this._notify()
   }
 
   /**
@@ -272,6 +283,7 @@ export class AuthClient {
       idData: parseIdToken(response.idToken),
       claims: await fetchUserInfoPromise,
       user: await fetchUserSelfPromise,
+      sessionExpired: false,
     }
     await this._saveState()
     this._notify()
@@ -281,7 +293,7 @@ export class AuthClient {
    * Sets the state to null and resets dependent data. Notifies the listeners.
    * @private
    */
-  private async _resetStateAndNotify() {
+  private async _resetStateAndNotify(sessionExpired = false) {
     this._state = {
       isReady: true,
       tokenResponse: null,
@@ -289,6 +301,7 @@ export class AuthClient {
       idData: null,
       claims: null,
       user: null,
+      sessionExpired,
     }
     await this._saveState()
     this._notify()
@@ -309,6 +322,7 @@ export class AuthClient {
         idData: null,
         claims: null,
         user: null,
+        sessionExpired: false,
       }
       this._notify()
     } else {
@@ -321,6 +335,7 @@ export class AuthClient {
           idData: data.idData,
           claims: data.claims,
           user: data.user,
+          sessionExpired: false,
         }
         this._notify()
       } catch {
@@ -331,6 +346,7 @@ export class AuthClient {
           idData: null,
           claims: null,
           user: null,
+          sessionExpired: false,
         }
         this._notify()
         await AsyncStorage.remove('auth-client-persisted-state')

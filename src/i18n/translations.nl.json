@@ -657,6 +657,12 @@
     "search_input_hint": "Voer tekst in om naar inhoud te zoeken",
     "search_input_label": "Zoekveld"
   },
+  "SessionExpired": {
+    "title": "Sessie verlopen",
+    "body": "Je bent uitgelogd. Log opnieuw in om je favorieten gesynchroniseerd te houden.",
+    "sign_in": "Inloggen",
+    "not_now": "Niet nu"
+  },
   "Settings": {
     "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
     "cache": {

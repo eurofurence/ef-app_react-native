@@ -791,6 +791,12 @@
     "search_input_hint": "Text eingeben um nach Inhalten zu suchen",
     "search_input_label": "Suchfeld"
   },
+  "SessionExpired": {
+    "title": "Sitzung abgelaufen",
+    "body": "Du wurdest abgemeldet. Melde dich erneut an, um deine Favoriten synchron zu halten.",
+    "sign_in": "Anmelden",
+    "not_now": "Nicht jetzt"
+  },
   "Settings": {
     "about": "Über uns",
     "allowAnalytics": "Erlaube uns, Fehler zu übermitteln",

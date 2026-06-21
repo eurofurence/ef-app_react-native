@@ -10,6 +10,8 @@ import { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
+import { AuthBridge } from '@/components/auth/AuthBridge'
+import { SessionExpiredModal } from '@/components/auth/SessionExpiredModal'
 import { CacheProvider } from '@/context/data/Cache'
 import { ToastProvider } from '@/context/ui/ToastContext'
 import { AppClients } from '@/data/clients/AppClients'
@@ -95,6 +97,8 @@ export function MainLayout() {
   return (
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
       <BottomSheetModalProvider>
+        <AuthBridge />
+        <SessionExpiredModal />
         <ThemeProvider value={themeNavigation}>
           <StatusBar
             style={

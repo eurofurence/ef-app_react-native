@@ -627,6 +627,12 @@
     "search_input_hint": "Wprowadź tekst, aby wyszukać treści",
     "search_input_label": "Pole wyszukiwania"
   },
+  "SessionExpired": {
+    "title": "Sesja wygasła",
+    "body": "Zostałeś wylogowany. Zaloguj się ponownie, aby zachować synchronizację ulubionych.",
+    "sign_in": "Zaloguj się",
+    "not_now": "Nie teraz"
+  },
   "Settings": {
     "about": "O aplikacji",
     "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
