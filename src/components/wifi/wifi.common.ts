@@ -5,8 +5,8 @@ export const WIFI_DOMAIN_SUFFIX_MATCH = 'radius.eurofurence.org'
 
 export const WIFI_PROFILE_IDS = [
   'eurofurence',
-  'public',
   'event',
+  'public',
   'custom',
 ] as const
 export type WifiProfileId = (typeof WIFI_PROFILE_IDS)[number]
@@ -105,5 +105,5 @@ export function buildOnsiteProfileUrl(
 export function buildOnsiteFileUrl(
   profile: (typeof WIFI_PUBLIC_PROFILE_IDS)[number]
 ): string {
-  return `${WIFI_ONSITE_URL}/profiles/${profile}.mobileconfig`
+  return `${WIFI_ONSITE_URL}/ios-profile-${profile}/`
 }

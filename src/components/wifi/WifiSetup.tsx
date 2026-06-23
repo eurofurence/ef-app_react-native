@@ -108,9 +108,21 @@ export function WifiSetup({
   return (
     <View>
       <Section icon='wifi' title={t('title')} subtitle={t('subtitle')} />
-      <Label type='para' className='mb-4'>
-        {t('intro')}
-      </Label>
+	  
+      <Button
+        icon='qrcode-scan'
+        outline
+        className='mt-2'
+        onPress={() => router.navigate('/wifi/scan')}
+      >
+        {t('scan_qr')}
+      </Button>
+
+      <Button icon='wifi' className='mt-4' disabled={busy} onPress={apply}>
+        {t('apply')}
+      </Button>
+	  
+	  <Section icon='cog' title={t('advanced_title')} subtitle={t('intro')}/>
 
       {WIFI_PROFILE_IDS.map((id) => (
         <Button
@@ -123,7 +135,11 @@ export function WifiSetup({
           accessibilityLabel={t(`profile_${id}_name`)}
           accessibilityHint={t(`profile_${id}_desc`)}
         >
-          {t(`profile_${id}_name`)}
+		{profile === id ? (
+          t(`profile_${id}_name`) + "\n\n" +  t(`profile_${id}_desc`)
+		  ) : (
+		  t(`profile_${id}_name`)
+		)}
         </Button>
       ))}
 
@@ -146,19 +162,6 @@ export function WifiSetup({
           />
         </FormProvider>
       ) : null}
-
-      <Button
-        icon='qrcode-scan'
-        outline
-        className='mt-2'
-        onPress={() => router.navigate('/wifi/scan')}
-      >
-        {t('scan_qr')}
-      </Button>
-
-      <Button icon='wifi' className='mt-4' disabled={busy} onPress={apply}>
-        {t('apply')}
-      </Button>
     </View>
   )
 }
