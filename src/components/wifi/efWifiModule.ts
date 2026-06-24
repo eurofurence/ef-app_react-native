@@ -1,20 +1,7 @@
-import { requireNativeModule } from 'expo-modules-core'
+import { NativeModule, requireNativeModule } from 'expo'
 
-export type WifiEnterpriseRequest = {
-  ssid: string
-  identity: string
-  password: string
-  anonymousIdentity: string
-  domainSuffixMatch: string
+declare class ExpoEfwifiModule extends NativeModule<{}> {
+  addEnterpriseNetwork(ssid: string, identity: string, password: string, anonymous_identity: string, subject_match: string): number;
 }
 
-/**
- * Android only: launch the system "add network" sheet for a WPA2-Enterprise (EAP-TTLS/PAP) network.
- * The native module is resolved lazily so importing this file never throws on iOS/JS.
- */
-export async function addEnterpriseNetwork(
-  request: WifiEnterpriseRequest
-): Promise<void> {
-  const EfWifi = requireNativeModule('EfWifi')
-  await EfWifi.addEnterpriseNetwork(request)
-}
+export default requireNativeModule<ExpoEfwifiModule>('EfWifi');

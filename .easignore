@@ -1,5 +1,6 @@
 # Expo prebuild folders
-android
+android/*
+!android/app/src/main/java/expo/modules/efwifi/ExpoEfwifiModule.java
 ios
 
 # Actual settings

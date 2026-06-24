@@ -1,9 +1,6 @@
-package org.eurofurence.connavigator;
-import com.facebook.react.bridge.NativeModule;
-import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ReactMethod;
+package expo.module.efwifi;
+import expo.modules.kotlin.modules.Module
+import expo.modules.kotlin.modules.ModuleDefinition
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Intent;
@@ -25,11 +22,17 @@ import java.security.cert.X509Certificate;
 import java.util.Arrays;
 import java.util.List;
 
-public class WifiSetupModule extends ReactContextBaseJavaModule {
-	@Override
-	public String getName() {
-		return "EfWifi";
-	}
+public class ExpoEfwifiModule extends Module {
+  @Override
+  public ModuleDefinition definition() {
+    return new ModuleDefinition() {{
+      Name("EfWifi");
+
+      Function("addEnterpriseNetwork", (String ssid, String identity, String password, String anonymous_identity, String subject_match) -> {
+        return INTaddEnterpriseNetwork(ssid, identity, password, anonymous_identity, subject_match);
+      });
+    }};
+  }
 
     // RETURNS:
     // 0 = OK
@@ -38,8 +41,7 @@ public class WifiSetupModule extends ReactContextBaseJavaModule {
 	// 3 = Failure to build WPA-Enterprise config
 	// 4 = Missing list networks permissions
 	// 5 = Failure at final apply step
-    @ReactMethod
-    public int addEnterpriseNetwork(String ssid, String identity, String password, String anonymous_identity, String subject_match) {
+    private int INTaddEnterpriseNetwork(String ssid, String identity, String password, String anonymous_identity, String subject_match) {
 		WifiManager wifiManager = (WifiManager) this.getApplicationContext().getSystemService(WIFI_SERVICE);
         if (wifiManager == null) {
             return 1;
