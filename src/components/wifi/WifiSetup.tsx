@@ -81,13 +81,7 @@ export function WifiSetup({
 
       setBusy(true)
       if (Platform.OS === 'android') {
-        addEnterpriseNetwork(
-          ssid: WIFI_SSID,
-          identity: creds.identity,
-          password: creds.password,
-          anonymous_identity: WIFI_ANONYMOUS_IDENTITY,
-          suffix_match: WIFI_DOMAIN_SUFFIX_MATCH,
-        )
+        addEnterpriseNetwork(WIFI_SSID, creds.identity, creds.password, WIFI_ANONYMOUS_IDENTITY, WIFI_DOMAIN_SUFFIX_MATCH)
       } else {
         // iOS: public profiles open a pre-filled static .mobileconfig directly (one-tap install);
         // custom creds can't be static, so they open the prefilled onsite page (tap Download there).
