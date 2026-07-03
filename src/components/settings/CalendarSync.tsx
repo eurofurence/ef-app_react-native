@@ -3,6 +3,7 @@ import { setStringAsync } from 'expo-clipboard'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet } from 'react-native'
 import { Icon } from '@/components/generic/atoms/Icon'
+import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button, buttonIconSize } from '@/components/generic/containers/Button'
 import { Row } from '@/components/generic/containers/Row'
@@ -32,9 +33,6 @@ export const CalendarSync = () => {
   // Match the outline button's look for the icon-only copy affordance.
   const copyBorder = useThemeBorder('inverted')
   const copyColor = useThemeColorValue('important')
-
-  // The feed is keyed to a per-user token, so it only exists when signed in.
-  if (!loggedIn) return null
 
   const feedUrl = token
     ? `${apiBase}/Events/Favorites/calendar.ics/?token=${encodeURIComponent(token)}`
@@ -73,7 +71,20 @@ export const CalendarSync = () => {
         icon='calendar-sync'
       />
 
-      {isError ? (
+      {!loggedIn ? (
+        <>
+          <Label variant='narrow' style={styles.hint}>
+            {t('login_required')}
+          </Label>
+          <Button
+            icon='calendar-export'
+            disabled
+            accessibilityHint={t('login_required')}
+          >
+            {t('subscribe')}
+          </Button>
+        </>
+      ) : isError ? (
         <Button icon='refresh' onPress={() => refetch()}>
           {t('retry')}
         </Button>
@@ -102,6 +113,9 @@ export const CalendarSync = () => {
 }
 
 const styles = StyleSheet.create({
+  hint: {
+    marginBottom: 10,
+  },
   subscribe: {
     flex: 1,
   },

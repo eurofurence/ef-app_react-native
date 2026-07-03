@@ -804,6 +804,7 @@
       "copy_link": "Kalenderlink kopieren",
       "error": "Kalender konnte nicht geöffnet werden. Kopiere stattdessen den Link.",
       "link_copied": "Kalenderlink in die Zwischenablage kopiert",
+      "login_required": "Melde Dich an, um Deine Favoriten zu synchronisieren.",
       "retry": "Erneut versuchen",
       "subscribe": "Favoriten zum Kalender hinzufügen",
       "subtitle": "Abonniere Deine Favoriten mit Deiner Kalender-App. Neue Favoriten und Änderungen werden automatisch synchronisiert.",

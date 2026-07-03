@@ -668,6 +668,7 @@
       "copy_link": "Kalenderlink kopiëren",
       "error": "Kan de kalender niet openen. Kopieer in plaats daarvan de link.",
       "link_copied": "Kalenderlink gekopieerd naar klembord",
+      "login_required": "Meld je aan om je favoriete evenementen te synchroniseren.",
       "retry": "Probeer opnieuw",
       "subscribe": "Favorieten aan kalender toevoegen",
       "subtitle": "Abonneer je kalender-app op je favoriete evenementen. Nieuwe favorieten en wijzigingen worden automatisch gesynchroniseerd.",

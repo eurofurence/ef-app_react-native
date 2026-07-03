@@ -821,6 +821,7 @@
       "copy_link": "Copy calendar link",
       "error": "Could not open your calendar. Try copying the link instead.",
       "link_copied": "Calendar link copied to clipboard",
+      "login_required": "Log in to sync your favorite events.",
       "retry": "Try again",
       "subscribe": "Add favorites to calendar",
       "subtitle": "Subscribe your calendar app to your favorite events. New favorites and changes sync automatically.",
