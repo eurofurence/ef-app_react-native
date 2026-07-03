@@ -664,6 +664,15 @@
       "synchronize": "Synchronizeer",
       "title": "Opslagstatus"
     },
+    "calendar": {
+      "copy_link": "Kalenderlink kopiëren",
+      "error": "Kan de kalender niet openen. Kopieer in plaats daarvan de link.",
+      "link_copied": "Kalenderlink gekopieerd naar klembord",
+      "retry": "Probeer opnieuw",
+      "subscribe": "Favorieten aan kalender toevoegen",
+      "subtitle": "Abonneer je kalender-app op je favoriete evenementen. Nieuwe favorieten en wijzigingen worden automatisch gesynchroniseerd.",
+      "title": "Kalendersynchronisatie"
+    },
     "changeLanguage": "Verander taal",
     "currentLanguage": "Jouw huidige taal is Nederlands!",
     "developer_settings": {
