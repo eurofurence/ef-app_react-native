@@ -17,11 +17,13 @@ export default function WifiScreen() {
   }>()
 
   // Reuse the same secure parser as deeplinks/QR for any inbound params.
+  // Params arrive percent-decoded, so re-encode instead of splicing them into a
+  // raw query string, which would corrupt credentials containing &, #, + or %
   const parsed =
     id != null && pw != null
-      ? parseWifiUrl(`x?id=${id}&pw=${pw}`)
+      ? parseWifiUrl(`x?${new URLSearchParams({ id, pw })}`)
       : profile
-        ? parseWifiUrl(`x?profile=${profile}`)
+        ? parseWifiUrl(`x?${new URLSearchParams({ profile })}`)
         : null
 
   return (

@@ -59,7 +59,10 @@ export function WifiSetup({
 
   const apply = useCallback(async () => {
     try {
-      const custom = profile === 'custom' ? form.getValues() : undefined
+      const values = profile === 'custom' ? form.getValues() : undefined
+      const custom = values
+        ? { identity: values.identity.trim(), password: values.password }
+        : undefined
       if (profile === 'custom' && !(await form.trigger())) {
         toast('error', t('invalid_credentials'), 3000)
         return
@@ -87,6 +90,7 @@ export function WifiSetup({
           WIFI_ANONYMOUS_IDENTITY,
           WIFI_DOMAIN_SUFFIX_MATCH
         )
+        toast('info', t('apply_success'), 4000)
       } else {
         // iOS: public profiles open a pre-filled static .mobileconfig directly (one-tap install);
         // custom creds can't be static, so they open the prefilled onsite page (tap Download there).

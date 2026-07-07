@@ -14,7 +14,7 @@ const efWifiModule = requireOptionalNativeModule<ExpoEfWifiModule>('EfWifi')
 
 // Native return codes, mirrored from ExpoEfWifiModule.kt:
 // 0 OK, 1 wifi service unavailable, 2 CA cert unreadable,
-// 3 enterprise config rejected, 4 missing location permission (pre-Android 10), 5 apply failed
+// 3 enterprise config rejected, 4 permission denied reading networks (pre-Android 10), 5 apply failed
 export function addEnterpriseNetwork(
   ssid: string,
   identity: string,

@@ -952,6 +952,7 @@
     "confirm_cancel": "Cancel",
     "invalid_credentials": "Please enter a valid access ID and password.",
     "apply_failed": "Could not set up WiFi. Please try again.",
+    "apply_success": "WiFi profile saved. Your device will connect automatically when the network is in range.",
     "camera_permission": "Allow camera access to scan a WiFi QR code.",
     "grant_camera": "Allow camera",
     "advanced_title": "Advanced settings"

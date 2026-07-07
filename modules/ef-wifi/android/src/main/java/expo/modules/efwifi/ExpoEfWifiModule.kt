@@ -1,8 +1,6 @@
 package expo.modules.efwifi
 
-import android.Manifest
 import android.content.Context
-import android.content.pm.PackageManager
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
@@ -25,7 +23,7 @@ class ExpoEfWifiModule : Module() {
 
   // Return codes, mirrored in src/components/wifi/efWifiModule.ts:
   // 0 OK, 1 wifi service unavailable, 2 CA cert unreadable,
-  // 3 enterprise config rejected, 4 missing location permission (pre-Android 10), 5 apply failed
+  // 3 enterprise config rejected, 4 permission denied reading networks (pre-Android 10), 5 apply failed
   private fun addEnterpriseNetwork(
     ssid: String,
     identity: String,
@@ -66,7 +64,7 @@ class ExpoEfWifiModule : Module() {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
       addViaSuggestion(wifiManager, ssid, enterpriseConfig)
     } else {
-      addViaLegacyConfiguration(context, wifiManager, ssid, enterpriseConfig)
+      addViaLegacyConfiguration(wifiManager, ssid, enterpriseConfig)
     }
   }
 
@@ -81,24 +79,23 @@ class ExpoEfWifiModule : Module() {
       return 3
     }
     return when (wifiManager.addNetworkSuggestions(listOf(suggestion))) {
-      WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS,
-      WifiManager.STATUS_NETWORK_SUGGESTIONS_ERROR_ADD_DUPLICATE,
-      -> 0
+      WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS -> 0
+      // Android 10 rejects re-adds without updating credentials (suggestion equality ignores
+      // the enterprise config); replace explicitly. Android 11+ updates in place and never lands here.
+      WifiManager.STATUS_NETWORK_SUGGESTIONS_ERROR_ADD_DUPLICATE -> {
+        wifiManager.removeNetworkSuggestions(listOf(suggestion))
+        if (wifiManager.addNetworkSuggestions(listOf(suggestion)) == WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS) 0 else 5
+      }
       else -> 5
     }
   }
 
   @Suppress("DEPRECATION")
   private fun addViaLegacyConfiguration(
-    context: Context,
     wifiManager: WifiManager,
     ssid: String,
     enterpriseConfig: WifiEnterpriseConfig,
   ): Int {
-    if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-      return 4
-    }
-
     val quotedSsid = "\"$ssid\""
     val existing = try {
       wifiManager.configuredNetworks?.firstOrNull { it.SSID == quotedSsid }
