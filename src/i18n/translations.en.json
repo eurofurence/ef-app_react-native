@@ -807,6 +807,12 @@
     "search_input_hint": "Enter text to search for content",
     "search_input_label": "Search input field"
   },
+  "SessionExpired": {
+    "title": "Session expired",
+    "body": "You've been signed out. Sign in again to keep your favourites synced.",
+    "sign_in": "Sign in",
+    "not_now": "Not now"
+  },
   "Settings": {
     "about": "About",
     "allowAnalytics": "Allow us to collect analytics events",

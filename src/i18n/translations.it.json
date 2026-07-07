@@ -612,6 +612,12 @@
     "search_input_hint": "Inserisci testo per cercare contenuti",
     "search_input_label": "Campo di ricerca"
   },
+  "SessionExpired": {
+    "title": "Sessione scaduta",
+    "body": "Sei stato disconnesso. Accedi di nuovo per mantenere sincronizzati i tuoi preferiti.",
+    "sign_in": "Accedi",
+    "not_now": "Non ora"
+  },
   "Settings": {
     "about": "Crediti",
     "allowAnalytics": "Permetti la raccolta di dati analitici",

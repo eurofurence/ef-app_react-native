@@ -12,7 +12,7 @@ import { StyleSheet, View } from 'react-native'
 import { shareEvent } from '@/components/events/Events.common'
 import { conTimeZone } from '@/configuration'
 import type { EventDetails } from '@/context/data/types.details'
-import { useEventReminder } from '@/hooks/data/useEventReminder'
+import { useToggleEventFavorite } from '@/hooks/data/useToggleEventFavorite'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 
@@ -69,8 +69,8 @@ export const EventContent: FC<EventContentProps> = ({
   onToggleHidden,
 }) => {
   const { t } = useTranslation('Event')
-  const { checkReminder, toggleReminder } = useEventReminder()
-  const isFavorite = checkReminder(event)
+  const toggleFavorite = useToggleEventFavorite()
+  const isFavorite = event.Favorite
   const now = useNow()
 
   const colorGlyph = useThemeColorValue('darken')
@@ -238,7 +238,7 @@ export const EventContent: FC<EventContentProps> = ({
           containerStyle={styles.flex}
           outline={isFavorite}
           icon={isFavorite ? 'heart-minus' : 'heart-plus-outline'}
-          onPress={() => toggleReminder(event).catch(captureException)}
+          onPress={() => toggleFavorite(event).catch(captureException)}
         >
           {isFavorite ? t('remove_favorite') : t('add_favorite')}
         </Button>

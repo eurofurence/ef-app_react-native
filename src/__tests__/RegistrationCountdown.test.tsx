@@ -152,6 +152,7 @@ describe('RegistrationCountdown', () => {
       idData: null,
       claims: null,
       user: null,
+      sessionExpired: false,
     })
   })
 
@@ -200,6 +201,7 @@ describe('RegistrationCountdown', () => {
         idData: { sub: '0' },
         claims: { sub: '0' },
         user: { Roles: [], Registrations: [] },
+        sessionExpired: false,
       })
 
       render(
@@ -218,6 +220,7 @@ describe('RegistrationCountdown', () => {
         idData: { sub: '0' },
         claims: { sub: '0' },
         user: { Roles: ['Attendee'], Registrations: [] },
+        sessionExpired: false,
       })
 
       const { toJSON } = render(
@@ -300,6 +303,7 @@ describe('RegistrationCountdown', () => {
         idData: { sub: '0' },
         claims: { sub: '0' },
         user: { Roles: ['Attendee'], Registrations: [] },
+        sessionExpired: false,
       })
 
       render(
@@ -318,6 +322,7 @@ describe('RegistrationCountdown', () => {
         idData: { sub: '0' },
         claims: { sub: '0' },
         user: { Roles: [], Registrations: [] },
+        sessionExpired: false,
       })
 
       render(
@@ -347,6 +352,7 @@ describe('RegistrationCountdown', () => {
         idData: { sub: '0' },
         claims: { sub: '0' },
         user: { Roles: [], Registrations: [] },
+        sessionExpired: false,
       })
 
       render(<RegistrationCountdown />)
@@ -363,6 +369,7 @@ describe('RegistrationCountdown', () => {
         idData: { sub: '0' },
         claims: { sub: '0' },
         user: { Roles: ['Attendee'], Registrations: [] },
+        sessionExpired: false,
       })
 
       render(<RegistrationCountdown />)
