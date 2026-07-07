@@ -101,8 +101,8 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
         style={StyleSheet.absoluteFill}
         source={
           width < bannerBreakpoint
-            ? require('@/assets/static/banner-narrow.png')
-            : require('@/assets/static/banner-wide.png')
+            ? require('@/assets/static/bannernarrow.png')
+            : require('@/assets/static/bannerwide.png')
         }
         contentFit='cover'
         priority='high'
@@ -112,7 +112,7 @@ export const CountdownHeader: FC<CountdownHeaderProps> = ({ style }) => {
       <View style={[StyleSheet.absoluteFill, styles.cover]} />
       <Image
         style={styles.logo}
-        source={require('@/assets/static/banner-logo.png')}
+        source={require('@/assets/static/bannerlogo.png')}
         priority='high'
         accessibilityLabel={tAccessibility('convention_logo')}
         accessibilityRole='image'
