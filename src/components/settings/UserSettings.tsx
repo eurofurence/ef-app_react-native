@@ -7,6 +7,7 @@ import { useCache } from '@/context/data/Cache'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 import { AnalyticsOptIns } from './AnalyticsOptIns'
+import { CalendarSync } from './CalendarSync'
 import { HiddenEvents } from './HiddenEvents'
 import { LanguagePicker } from './LanguagePicker'
 import { ThemePicker } from './ThemePicker'
@@ -35,6 +36,9 @@ export function UserSettings() {
 
       {/* Warning settings */}
       <Warnings />
+
+      {/* Subscribe favorite events to the device calendar */}
+      <CalendarSync />
 
       {/* Force full sync (fetch all data) */}
       <Button
