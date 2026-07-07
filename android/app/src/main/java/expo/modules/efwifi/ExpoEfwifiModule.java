@@ -1,4 +1,4 @@
-package expo.module.efwifi;
+package expo.modules.efwifi;
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 import android.Manifest;
