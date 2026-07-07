@@ -1,6 +1,7 @@
 import 'dotenv/config'
 
 import type { ExpoConfig } from 'expo/config'
+import { withGradleProperties } from 'expo/config-plugins'
 
 import { version } from './package.json'
 
@@ -180,4 +181,13 @@ const config: ExpoConfig & {
   },
 }
 
-export default config
+// Prebuild's default jvmargs (2g heap/512m metaspace) OOM the Gradle daemon during lintVitalAnalyzeRelease.
+export default withGradleProperties(config, (config) => {
+  config.modResults = config.modResults.filter((item) => !(item.type === 'property' && item.key === 'org.gradle.jvmargs'))
+  config.modResults.push({
+    type: 'property',
+    key: 'org.gradle.jvmargs',
+    value: '-Xmx4096m -XX:MaxMetaspaceSize=1024m',
+  })
+  return config
+})
