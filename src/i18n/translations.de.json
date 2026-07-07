@@ -912,7 +912,7 @@
     "apply_failed": "Could not set up WiFi. Please try again.",
     "camera_permission": "Allow camera access to scan a WiFi QR code.",
     "grant_camera": "Allow camera",
-	"advanced_title": "Advanced settings"
+    "advanced_title": "Advanced settings"
   },
   "Viewer": {
     "announcement": "Ankündigung: {{name}}",

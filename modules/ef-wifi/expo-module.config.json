@@ -1,5 +1,4 @@
 {
-  "platforms": ["apple", "android"],
-  "apple": { "modules": ["EfWifiModule"] },
+  "platforms": ["android"],
   "android": { "modules": ["expo.modules.efwifi.ExpoEfWifiModule"] }
 }

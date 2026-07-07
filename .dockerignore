@@ -1,8 +1,7 @@
 .git
 node_modules
 ios
-android/*
-!android/app/src/main/java/expo/modules/efwifi/ExpoEfwifiModule.java
+android
 dist
 .expo
 .cache

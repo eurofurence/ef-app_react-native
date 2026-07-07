@@ -1,7 +1,6 @@
-# Expo prebuild folders
-android/*
-!android/app/src/main/java/expo/modules/efwifi/ExpoEfwifiModule.java
-ios
+# Expo prebuild folders (modules/*/android must stay in the upload, so anchor to root)
+/android
+/ios
 
 # Actual settings
 convention.config*.json

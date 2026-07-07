@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next'
 import { Linking, Platform, View } from 'react-native'
 import { z } from 'zod'
 
-import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
@@ -81,7 +80,13 @@ export function WifiSetup({
 
       setBusy(true)
       if (Platform.OS === 'android') {
-        addEnterpriseNetwork(WIFI_SSID, creds.identity, creds.password, WIFI_ANONYMOUS_IDENTITY, WIFI_DOMAIN_SUFFIX_MATCH)
+        addEnterpriseNetwork(
+          WIFI_SSID,
+          creds.identity,
+          creds.password,
+          WIFI_ANONYMOUS_IDENTITY,
+          WIFI_DOMAIN_SUFFIX_MATCH
+        )
       } else {
         // iOS: public profiles open a pre-filled static .mobileconfig directly (one-tap install);
         // custom creds can't be static, so they open the prefilled onsite page (tap Download there).
@@ -102,7 +107,7 @@ export function WifiSetup({
   return (
     <View>
       <Section icon='wifi' title={t('title')} subtitle={t('subtitle')} />
-	  
+
       <Button
         icon='qrcode-scan'
         outline
@@ -115,8 +120,8 @@ export function WifiSetup({
       <Button icon='wifi' className='mt-4' disabled={busy} onPress={apply}>
         {t('apply')}
       </Button>
-	  
-	  <Section icon='cog' title={t('advanced_title')} subtitle={t('intro')}/>
+
+      <Section icon='cog' title={t('advanced_title')} subtitle={t('intro')} />
 
       {WIFI_PROFILE_IDS.map((id) => (
         <Button
@@ -129,11 +134,9 @@ export function WifiSetup({
           accessibilityLabel={t(`profile_${id}_name`)}
           accessibilityHint={t(`profile_${id}_desc`)}
         >
-		{profile === id ? (
-          t(`profile_${id}_name`) + "\n\n" +  t(`profile_${id}_desc`)
-		  ) : (
-		  t(`profile_${id}_name`)
-		)}
+          {profile === id
+            ? `${t(`profile_${id}_name`)}\n\n${t(`profile_${id}_desc`)}`
+            : t(`profile_${id}_name`)}
         </Button>
       ))}
 

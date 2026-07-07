@@ -17,8 +17,8 @@ describe('wifi constants', () => {
     expect(WIFI_DOMAIN_SUFFIX_MATCH).toBe('radius.eurofurence.org')
     expect(WIFI_PROFILE_IDS).toEqual([
       'eurofurence',
-      'public',
       'event',
+      'public',
       'custom',
     ])
     expect(WIFI_PUBLIC_PROFILE_IDS).toEqual(['eurofurence', 'public', 'event'])

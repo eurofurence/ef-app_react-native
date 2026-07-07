@@ -22,13 +22,13 @@ describe('buildOnsiteProfileUrl', () => {
 describe('buildOnsiteFileUrl', () => {
   it('builds a direct static .mobileconfig URL per public profile', () => {
     expect(buildOnsiteFileUrl('eurofurence')).toBe(
-      `${WIFI_ONSITE_URL}/profiles/eurofurence.mobileconfig`
+      `${WIFI_ONSITE_URL}/ios-profile-eurofurence/`
     )
     expect(buildOnsiteFileUrl('public')).toBe(
-      `${WIFI_ONSITE_URL}/profiles/public.mobileconfig`
+      `${WIFI_ONSITE_URL}/ios-profile-public/`
     )
     expect(buildOnsiteFileUrl('event')).toBe(
-      `${WIFI_ONSITE_URL}/profiles/event.mobileconfig`
+      `${WIFI_ONSITE_URL}/ios-profile-event/`
     )
   })
 })

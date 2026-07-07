@@ -1,7 +1,36 @@
 import { NativeModule, requireOptionalNativeModule } from 'expo'
 
-declare class ExpoEfwifiModule extends NativeModule<{}> {
-  addEnterpriseNetwork(ssid: string, identity: string, password: string, anonymous_identity: string, subject_match: string): number;
+declare class ExpoEfWifiModule extends NativeModule<{}> {
+  addEnterpriseNetwork(
+    ssid: string,
+    identity: string,
+    password: string,
+    anonymousIdentity: string,
+    subjectMatch: string
+  ): number
 }
 
-export default requireOptionalNativeModule<ExpoEfwifiModule>('EfWifi');
+const efWifiModule = requireOptionalNativeModule<ExpoEfWifiModule>('EfWifi')
+
+// Native return codes, mirrored from ExpoEfWifiModule.kt:
+// 0 OK, 1 wifi service unavailable, 2 CA cert unreadable,
+// 3 enterprise config rejected, 4 missing location permission (pre-Android 10), 5 apply failed
+export function addEnterpriseNetwork(
+  ssid: string,
+  identity: string,
+  password: string,
+  anonymousIdentity: string,
+  subjectMatch: string
+): void {
+  if (!efWifiModule)
+    throw new Error('EfWifi native module is not available in this build')
+  const code = efWifiModule.addEnterpriseNetwork(
+    ssid,
+    identity,
+    password,
+    anonymousIdentity,
+    subjectMatch
+  )
+  if (code !== 0)
+    throw new Error(`EfWifi.addEnterpriseNetwork failed with code ${code}`)
+}

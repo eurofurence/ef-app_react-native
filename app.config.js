@@ -1,6 +1,16 @@
 import 'dotenv/config'
 
 const { version } = require('./package.json')
+const { withGradleProperties } = require('expo/config-plugins')
+
+// Prebuild regenerates android/gradle.properties, so the daemon memory bump has to live here
+const withGradleJvmMemory = (config) =>
+  withGradleProperties(config, (config) => {
+    config.modResults = config.modResults.map((item) =>
+      item.type === 'property' && item.key === 'org.gradle.jvmargs' ? { ...item, value: '-Xmx4096m -XX:MaxMetaspaceSize=1024m' } : item
+    )
+    return config
+  })
 
 const appBase = process.env.EXPO_PUBLIC_CONVENTION_APPBASE
 
@@ -172,6 +182,7 @@ module.exports = {
       'expo-web-browser',
       'expo-image',
       'react-native-legal',
+      withGradleJvmMemory,
       [
         'expo-camera',
         {
