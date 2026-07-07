@@ -9,8 +9,8 @@ import { Button, buttonIconSize } from '@/components/generic/containers/Button'
 import { Row } from '@/components/generic/containers/Row'
 import { Pressable } from '@/components/generic/Pressable'
 import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAuthState } from '@/data/clients/auth'
 import { useFavoritesCalendarToken } from '@/hooks/api/events/useFavoritesCalendarToken'
 import {
   useThemeBorder,
@@ -21,7 +21,7 @@ import { SettingContainer } from './SettingContainer'
 
 export const CalendarSync = () => {
   const { t } = useTranslation('Settings', { keyPrefix: 'calendar' })
-  const { loggedIn } = useAuthContext()
+  const { isLoggedIn } = useAuthState()
   const { toast } = useToastContext()
   const {
     data: token,
@@ -71,7 +71,7 @@ export const CalendarSync = () => {
         icon='calendar-sync'
       />
 
-      {!loggedIn ? (
+      {!isLoggedIn ? (
         <>
           <Label variant='narrow' style={styles.hint}>
             {t('login_required')}

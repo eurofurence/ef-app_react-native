@@ -5,7 +5,7 @@ import {
 } from '@tanstack/react-query'
 import axios, { type GenericAbortSignal } from 'axios'
 import { apiBase } from '@/configuration'
-import { useAuthContext } from '@/context/auth/Auth'
+import { useAuthState } from '@/data/clients/auth'
 
 async function getFavoritesCalendarToken(
   accessToken: string | null,
@@ -24,13 +24,14 @@ async function getFavoritesCalendarToken(
 }
 
 export function useFavoritesCalendarToken(): UseQueryResult<string | null> {
-  const { accessToken, idData, loggedIn } = useAuthContext()
+  const { tokenResponse, idData, isLoggedIn } = useAuthState()
+  const accessToken = tokenResponse?.accessToken ?? null
 
   return useQuery({
     queryKey: [idData?.sub, 'favorites-calendar-token'],
     queryFn: (context: QueryFunctionContext) =>
       getFavoritesCalendarToken(accessToken, context.signal),
-    enabled: loggedIn,
+    enabled: isLoggedIn,
     retry: false,
   })
 }
