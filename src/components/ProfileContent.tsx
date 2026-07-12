@@ -120,7 +120,7 @@ export const ProfileContent: FC<ProfileContentProps> = ({
           {t('roles_simple_attendee')}
         </Badge>
       ) : null}
-      <View style={styles.avatarContainer}>
+      <View style={styles.profileRow}>
         <Image
           style={[avatarBackground, styles.avatarCircle]}
           source={claims.avatar ?? require('@/assets/static/ych.png')}
@@ -134,37 +134,15 @@ export const ProfileContent: FC<ProfileContentProps> = ({
           })}
           accessibilityHint={a11y('accessibility.avatar_hint')}
         />
+        <View style={styles.profileText}>
+          <Label type='h1' numberOfLines={1} ellipsizeMode='tail'>
+            {claims.name as string}
+          </Label>
+          <Label type='caption' numberOfLines={1} ellipsizeMode='tail'>
+            {claims.email as string}
+          </Label>
+        </View>
       </View>
-
-      <Label type='h1' variant='middle'>
-        {claims.name as string}
-      </Label>
-
-      <Label type='caption' variant='middle' className='mb-5'>
-        {claims.email as string}
-      </Label>
-
-      <View style={styles.registrations}>
-        {user.Registrations.map((r) => (
-          <UserRegistration key={r.Id} id={r.Id} status={r.Status} />
-        ))}
-      </View>
-
-      <Label className='mt-5' type='para'>
-        {t('login_description', { conName })}
-      </Label>
-
-      <Button
-        style={styles.idpButton}
-        outline
-        icon='web'
-        onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}
-        accessibilityLabel={a11y('accessibility.idp_settings_button')}
-        accessibilityHint={a11y('accessibility.idp_settings_button_hint')}
-        accessibilityRole='button'
-      >
-        {t('idp_settings')}
-      </Button>
 
       {datamatrix && (
         <>
@@ -188,6 +166,28 @@ export const ProfileContent: FC<ProfileContentProps> = ({
           </View>
         </>
       )}
+
+      <View style={styles.registrations}>
+        {user.Registrations.map((r) => (
+          <UserRegistration key={r.Id} id={r.Id} status={r.Status} />
+        ))}
+      </View>
+
+      <Label className='mt-5' type='para'>
+        {t('login_description', { conName })}
+      </Label>
+
+      <Button
+        style={styles.idpButton}
+        outline
+        icon='web'
+        onPress={() => Linking.openURL(authSettingsUrl).catch(captureException)}
+        accessibilityLabel={a11y('accessibility.idp_settings_button')}
+        accessibilityHint={a11y('accessibility.idp_settings_button_hint')}
+        accessibilityRole='button'
+      >
+        {t('idp_settings')}
+      </Button>
 
       {roleComplex && (
         <>
@@ -221,13 +221,16 @@ export const ProfileContent: FC<ProfileContentProps> = ({
 }
 
 const styles = StyleSheet.create({
-  avatarContainer: {
-    margin: 25,
-    alignSelf: 'center',
+  profileRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 15,
+    marginTop: 25,
+  },
+  profileText: {
+    flexShrink: 1,
   },
   avatarCircle: {
-    width: 200,
-    height: 200,
     aspectRatio: 1,
     borderRadius: 100,
   },
