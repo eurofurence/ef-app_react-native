@@ -9,6 +9,7 @@ export type WarningKey =
   | 'timeZoneWarningsHidden'
   | 'registrationCountdownHidden'
   | 'badgeAvailableHidden'
+  | 'calendarSyncHidden'
 
 /**
  * Provides state and mutation for device warnings.

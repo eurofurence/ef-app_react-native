@@ -460,6 +460,11 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Calendar sync notification",
+      "hide_calendar_warning": "Hide calendar sync notification",
+      "hide_calendar_warning_hint": "Dismisses this calendar sync notification",
+      "view_calendar_settings": "Open calendar sync settings",
+      "view_calendar_settings_hint": "Opens Settings to sync your favorites to your calendar",
       "badge_warning_container": "Badge available notification",
       "hide_badge_warning": "Hide badge notification",
       "hide_badge_warning_hint": "Dismisses this badge available notification",
@@ -520,6 +525,8 @@
     "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
+      "calendar_sync": "Sync your calendar",
+      "calendar_sync_subtitle": "Add your favorite events to your calendar app. Tap here to set it up in Settings.",
       "badge_available": "Your badge is ready",
       "badge_available_subtitle": "Your convention badge is available. Tap here to view your badge code.",
       "favorites_changed": "Favorites updated",

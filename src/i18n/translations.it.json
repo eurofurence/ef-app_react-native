@@ -294,6 +294,11 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Notifica sincronizzazione calendario",
+      "hide_calendar_warning": "Nascondi notifica sincronizzazione calendario",
+      "hide_calendar_warning_hint": "Ignora questa notifica di sincronizzazione del calendario",
+      "view_calendar_settings": "Apri impostazioni sincronizzazione calendario",
+      "view_calendar_settings_hint": "Apre le Impostazioni per sincronizzare i tuoi preferiti con il calendario",
       "badge_warning_container": "Notifica badge disponibile",
       "hide_badge_warning": "Nascondi notifica badge",
       "hide_badge_warning_hint": "Ignora questa notifica di badge disponibile",
@@ -348,6 +353,8 @@
       "placeholder": "Cerca eventi, venditori e articoli informativi…"
     },
     "warnings": {
+      "calendar_sync": "Sincronizza il calendario",
+      "calendar_sync_subtitle": "Aggiungi i tuoi eventi preferiti all’app calendario. Tocca qui per configurarlo nelle Impostazioni.",
       "badge_available": "Il tuo badge è pronto",
       "badge_available_subtitle": "Il tuo badge della convention è disponibile. Tocca qui per visualizzare il codice del badge.",
       "favorites_changed": "Preferiti aggiornati",
