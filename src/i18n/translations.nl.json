@@ -354,6 +354,11 @@
   },
   "Home": {
     "accessibility": {
+      "badge_warning_container": "Melding badge beschikbaar",
+      "hide_badge_warning": "Badgemelding verbergen",
+      "hide_badge_warning_hint": "Sluit deze melding over de beschikbare badge",
+      "view_badge": "Badge bekijken",
+      "view_badge_hint": "Opent je profiel om je badgecode te bekijken",
       "banner_image": "Conventie-banner achtergrondafbeelding",
       "changed_dealers_list": "{{count}} bijgewerkte dealers: {{dealers}}",
       "changed_events_list": "{{count}} bijgewerkte evenementen: {{events}}",
@@ -405,6 +410,8 @@
       "placeholder": "Zoek naar evenementen, dealers en informatie-artikelen…"
     },
     "warnings": {
+      "badge_available": "Je badge is klaar",
+      "badge_available_subtitle": "Je conventiebadge is beschikbaar. Tik hier om je badgecode te bekijken.",
       "favorites_changed": "Favorieten bijgewerkt",
       "favorites_changed_subtitle": "Sommige van je favorieten zijn bijgewerkt sinds je ze voor het laatst hebt bekeken",
       "hide": "Verbergen",

@@ -305,6 +305,11 @@
   },
   "Home": {
     "accessibility": {
+      "badge_warning_container": "Powiadomienie o dostępnym identyfikatorze",
+      "hide_badge_warning": "Ukryj powiadomienie o identyfikatorze",
+      "hide_badge_warning_hint": "Zamyka to powiadomienie o dostępnym identyfikatorze",
+      "view_badge": "Zobacz identyfikator",
+      "view_badge_hint": "Otwiera Twój profil, aby zobaczyć kod identyfikatora",
       "banner_image": "Obraz tła banera konwentu",
       "changed_dealers_list": "{{count}} zaktualizowanych wystawców: {{dealers}}",
       "changed_events_list": "{{count}} zaktualizowanych wydarzeń: {{events}}",
@@ -356,6 +361,8 @@
       "placeholder": "Szukaj wydarzeń, wystawców i artykułów informacyjnych…"
     },
     "warnings": {
+      "badge_available": "Twój identyfikator jest gotowy",
+      "badge_available_subtitle": "Twój identyfikator konwentu jest dostępny. Dotknij tutaj, aby zobaczyć kod identyfikatora.",
       "favorites_changed": "Ulubione zaktualizowane",
       "favorites_changed_subtitle": "Niektóre z twoich ulubionych zostały zaktualizowane od ostatniego wyświetlenia",
       "hide": "Ukryj",

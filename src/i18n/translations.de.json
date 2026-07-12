@@ -454,6 +454,11 @@
   },
   "Home": {
     "accessibility": {
+      "badge_warning_container": "Benachrichtigung: Badge verfügbar",
+      "hide_badge_warning": "Badge-Benachrichtigung ausblenden",
+      "hide_badge_warning_hint": "Blendet diese Benachrichtigung über das verfügbare Badge aus",
+      "view_badge": "Badge anzeigen",
+      "view_badge_hint": "Öffnet dein Profil, um deinen Badge-Code anzuzeigen",
       "banner_image": "Convention-Banner-Hintergrundbild",
       "changed_dealers_list": "{{count}} aktualisierte Dealer: {{dealers}}",
       "changed_events_list": "{{count}} aktualisierte Events: {{events}}",
@@ -509,6 +514,8 @@
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "view_all_announcements": "Alle Mitteilungen anzeigen",
     "warnings": {
+      "badge_available": "Dein Badge ist bereit",
+      "badge_available_subtitle": "Dein Convention-Badge ist verfügbar. Tippe hier, um deinen Badge-Code anzuzeigen.",
       "favorites_changed": "Favoriten geändert",
       "favorites_changed_subtitle": "Infos in Deinen Favoriten wurden geändert, seitdem Du diese das letzte mal angeschaut hast",
       "hide": "Verbergen",
