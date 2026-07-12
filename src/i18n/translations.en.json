@@ -920,6 +920,10 @@
       "title": "Change the application theme"
     },
     "timeTravel": "Show time travel settings.",
+    "sync": {
+      "title": "Force sync",
+      "subtitle": "Reloads all convention data and may use more data. Use it if content seems missing or out of date."
+    },
     "sync_full": "Force full sync",
     "accessibility": {
       "settings_page_loaded": "Settings page loaded",

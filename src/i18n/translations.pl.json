@@ -677,6 +677,10 @@
     },
     "settingsSection": "Ustawienia aplikacji",
     "timeTravel": "Pokaż ustawienia podróży w czasie.",
+    "sync": {
+      "title": "Wymuś synchronizację",
+      "subtitle": "Ponownie pobiera wszystkie dane i może zużyć więcej transferu. Przydatne, gdy treści wydają się nieaktualne lub ich brakuje."
+    },
     "sync_full": "Wymuś pełną synchronizację",
     "accessibility": {
       "settings_page_loaded": "Strona ustawień załadowana",

@@ -878,6 +878,10 @@
       "title": "Appaussehen ändern"
     },
     "timeTravel": "Zeitreise-Einstellungen anzeigen.",
+    "sync": {
+      "title": "Synchronisierung erzwingen",
+      "subtitle": "Lädt alle Daten neu und kann mehr Datenvolumen verbrauchen. Sinnvoll, wenn Inhalte fehlen oder veraltet wirken."
+    },
     "sync_full": "Volle Synchronisierung erzwingen",
     "accessibility": {
       "settings_page_loaded": "Einstellungsseite geladen",

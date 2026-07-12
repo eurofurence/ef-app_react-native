@@ -638,6 +638,10 @@
     },
     "header": "Impostazioni",
     "settingsSection": "Impostazioni",
+    "sync": {
+      "title": "Forza sincronizzazione",
+      "subtitle": "Ricarica tutti i dati e può consumare più dati. Utile se i contenuti sembrano mancanti o non aggiornati."
+    },
     "sync_full": "Forza sincronizzazione completa",
     "accessibility": {
       "settings_page_loaded": "Pagina impostazioni caricata",

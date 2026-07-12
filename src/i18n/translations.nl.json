@@ -715,6 +715,10 @@
     },
     "settingsSection": "Instellingen",
     "timeTravel": "Toon tijdreisinstellingen.",
+    "sync": {
+      "title": "Forceer synchronisatie",
+      "subtitle": "Laadt alle gegevens opnieuw en kan meer data verbruiken. Handig als inhoud lijkt te ontbreken of verouderd is."
+    },
     "sync_full": "Forceer volledige synchronisatie",
     "accessibility": {
       "settings_page_loaded": "Instellingenpagina geladen",
