@@ -460,6 +460,11 @@
   },
   "Home": {
     "accessibility": {
+      "badge_warning_container": "Badge available notification",
+      "hide_badge_warning": "Hide badge notification",
+      "hide_badge_warning_hint": "Dismisses this badge available notification",
+      "view_badge": "View badge",
+      "view_badge_hint": "Opens your profile to view your badge code",
       "banner_image": "Convention banner background image",
       "changed_dealers_list": "{{count}} updated dealers: {{dealers}}",
       "changed_events_list": "{{count}} updated events: {{events}}",
@@ -515,6 +520,8 @@
     "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
+      "badge_available": "Your badge is ready",
+      "badge_available_subtitle": "Your convention badge is available. Tap here to view your badge code.",
       "favorites_changed": "Favorites updated",
       "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
       "hide": "Hide",

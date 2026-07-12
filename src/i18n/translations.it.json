@@ -294,6 +294,11 @@
   },
   "Home": {
     "accessibility": {
+      "badge_warning_container": "Notifica badge disponibile",
+      "hide_badge_warning": "Nascondi notifica badge",
+      "hide_badge_warning_hint": "Ignora questa notifica di badge disponibile",
+      "view_badge": "Visualizza badge",
+      "view_badge_hint": "Apre il tuo profilo per visualizzare il codice del badge",
       "banner_image": "Immagine di sfondo banner convention",
       "changed_dealers_list": "{{count}} venditori aggiornati: {{dealers}}",
       "changed_events_list": "{{count}} eventi aggiornati: {{events}}",
@@ -343,6 +348,8 @@
       "placeholder": "Cerca eventi, venditori e articoli informativi…"
     },
     "warnings": {
+      "badge_available": "Il tuo badge è pronto",
+      "badge_available_subtitle": "Il tuo badge della convention è disponibile. Tocca qui per visualizzare il codice del badge.",
       "favorites_changed": "Preferiti aggiornati",
       "favorites_changed_subtitle": "Alcuni dei tuoi preferiti sono stati aggiornati dall'ultima volta che li hai visualizzati",
       "hide": "Nascondi",
