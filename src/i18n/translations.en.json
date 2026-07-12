@@ -259,7 +259,7 @@
     "title": "Artist Alley Registration",
     "unauthorized_not_attending": "Please ensure that you have a valid registration for this year's convention if you wish to register at a table in the Artist Alley.",
     "unauthorized_not_checked_in": "Please check in and pick up your convention badge at the Registration Desk before trying to register at an Artist Alley table.",
-    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist alley.",
+    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist Alley.",
     "update": "Update your request",
     "view": {
       "title": "Artist Alley Table"
@@ -669,7 +669,7 @@
       "website_tab_hint": "Opens convention website in browser"
     },
     "announcements": "Announcements",
-    "artist_alley": "Artist alley",
+    "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
