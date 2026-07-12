@@ -10,6 +10,6 @@ export const SettingContainer: FC<PropsWithChildren> = ({ children }) => (
 
 const styles = StyleSheet.create({
   margin: {
-    marginVertical: 20,
+    marginVertical: 10,
   },
 })
