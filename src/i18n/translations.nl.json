@@ -354,6 +354,11 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Melding agendasynchronisatie",
+      "hide_calendar_warning": "Agendamelding verbergen",
+      "hide_calendar_warning_hint": "Sluit deze melding over agendasynchronisatie",
+      "view_calendar_settings": "Instellingen voor agendasynchronisatie openen",
+      "view_calendar_settings_hint": "Opent Instellingen om je favorieten met je agenda te synchroniseren",
       "badge_warning_container": "Melding badge beschikbaar",
       "hide_badge_warning": "Badgemelding verbergen",
       "hide_badge_warning_hint": "Sluit deze melding over de beschikbare badge",
@@ -410,6 +415,8 @@
       "placeholder": "Zoek naar evenementen, dealers en informatie-artikelen…"
     },
     "warnings": {
+      "calendar_sync": "Synchroniseer je agenda",
+      "calendar_sync_subtitle": "Voeg je favoriete evenementen toe aan je agenda-app. Tik hier om dit in te stellen in Instellingen.",
       "badge_available": "Je badge is klaar",
       "badge_available_subtitle": "Je conventiebadge is beschikbaar. Tik hier om je badgecode te bekijken.",
       "favorites_changed": "Favorieten bijgewerkt",

@@ -454,6 +454,11 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Benachrichtigung: Kalender-Synchronisierung",
+      "hide_calendar_warning": "Kalender-Benachrichtigung ausblenden",
+      "hide_calendar_warning_hint": "Blendet diese Kalender-Synchronisierungs-Benachrichtigung aus",
+      "view_calendar_settings": "Kalender-Synchronisierungseinstellungen öffnen",
+      "view_calendar_settings_hint": "Öffnet die Einstellungen, um deine Favoriten mit deinem Kalender zu synchronisieren",
       "badge_warning_container": "Benachrichtigung: Badge verfügbar",
       "hide_badge_warning": "Badge-Benachrichtigung ausblenden",
       "hide_badge_warning_hint": "Blendet diese Benachrichtigung über das verfügbare Badge aus",
@@ -514,6 +519,8 @@
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "view_all_announcements": "Alle Mitteilungen anzeigen",
     "warnings": {
+      "calendar_sync": "Kalender synchronisieren",
+      "calendar_sync_subtitle": "Füge deine Favoriten zu deiner Kalender-App hinzu. Tippe hier, um es in den Einstellungen einzurichten.",
       "badge_available": "Dein Badge ist bereit",
       "badge_available_subtitle": "Dein Convention-Badge ist verfügbar. Tippe hier, um deinen Badge-Code anzuzeigen.",
       "favorites_changed": "Favoriten geändert",
