@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
+import { Pressable } from '@/components/generic/Pressable'
 import { addEnterpriseNetwork } from '@/components/wifi/efWifiModule'
 import {
   buildOnsiteFileUrl,
@@ -47,6 +48,9 @@ export function WifiSetup({
     initialProfile ?? 'eurofurence'
   )
   const [busy, setBusy] = useState(false)
+
+  const [showAdvSettings, setAdvSettings] = useState(false)
+  const toggleAdvSettings = () => setAdvSettings(!showAdvSettings)
 
   const form = useForm<CustomSchema>({
     resolver: zodResolver(customSchema),
@@ -112,39 +116,48 @@ export function WifiSetup({
     <View>
       <Section icon='wifi' title={t('title')} subtitle={t('subtitle')} />
 
-      <Button
-        icon='qrcode-scan'
-        outline
-        className='mt-2'
-        onPress={() => router.navigate('/wifi/scan')}
-      >
-        {t('scan_qr')}
-      </Button>
-
       <Button icon='wifi' className='mt-4' disabled={busy} onPress={apply}>
         {t('apply')}
       </Button>
 
-      <Section icon='cog' title={t('advanced_title')} subtitle={t('intro')} />
+      <Pressable onPress={toggleAdvSettings}>
+        <Section
+          icon={showAdvSettings ? 'chevron-down' : 'chevron-up'}
+          title={t('advanced_title')}
+          subtitle={t('intro')}
+        />
+      </Pressable>
 
-      {WIFI_PROFILE_IDS.map((id) => (
+      {showAdvSettings && (
         <Button
-          key={id}
-          icon={profile === id ? 'radiobox-marked' : 'radiobox-blank'}
-          outline={profile !== id}
-          className='mb-2'
-          onPress={() => setProfile(id)}
-          accessibilityRole='radio'
-          accessibilityLabel={t(`profile_${id}_name`)}
-          accessibilityHint={t(`profile_${id}_desc`)}
+          icon='qrcode-scan'
+          outline
+          className='mb-4'
+          onPress={() => router.navigate('/wifi/scan')}
         >
-          {profile === id
-            ? `${t(`profile_${id}_name`)}\n\n${t(`profile_${id}_desc`)}`
-            : t(`profile_${id}_name`)}
+          {t('scan_qr')}
         </Button>
-      ))}
+      )}
 
-      {profile === 'custom' ? (
+      {showAdvSettings &&
+        WIFI_PROFILE_IDS.map((id) => (
+          <Button
+            key={id}
+            icon={profile === id ? 'radiobox-marked' : 'radiobox-blank'}
+            outline={profile !== id}
+            className='mb-2'
+            onPress={() => setProfile(id)}
+            accessibilityRole='radio'
+            accessibilityLabel={t(`profile_${id}_name`)}
+            accessibilityHint={t(`profile_${id}_desc`)}
+          >
+            {profile === id
+              ? `${t(`profile_${id}_name`)}\n\n${t(`profile_${id}_desc`)}`
+              : t(`profile_${id}_name`)}
+          </Button>
+        ))}
+
+      {showAdvSettings && profile === 'custom' ? (
         <FormProvider {...form}>
           <ManagedTextInput<CustomSchema>
             name='identity'
