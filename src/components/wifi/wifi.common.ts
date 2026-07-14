@@ -1,4 +1,4 @@
-/** EF WiFi contract — mirrored from wifisetup-html for parity. Security-critical: NOT overridable by deeplinks. */
+/** EF WiFi contract - mirrored from wifisetup-html for parity. Security-critical: NOT overridable by deeplinks. */
 export const WIFI_SSID = 'Eurofurence'
 export const WIFI_ANONYMOUS_IDENTITY = 'anonymous'
 export const WIFI_DOMAIN_SUFFIX_MATCH = 'radius.eurofurence.org'
@@ -81,7 +81,7 @@ export function parseWifiUrl(raw: string): ParsedWifiLink | null {
   return null
 }
 
-/** Onsite WiFi setup page (wifi.onsite.eurofurence.org) — a static site that generates an UNSIGNED .mobileconfig client-side. */
+/** Onsite WiFi setup page (wifi.onsite.eurofurence.org) - a static site that generates an UNSIGNED .mobileconfig client-side. */
 export const WIFI_ONSITE_URL = 'https://wifi.onsite.eurofurence.org'
 
 /**
