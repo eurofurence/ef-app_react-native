@@ -667,6 +667,10 @@
       "title": "Ustawienia deweloperskie"
     },
     "device_warnings": {
+      "show_badge_warning": "Pokaż powiadomienie o identyfikatorze",
+      "hide_badge_warning": "Ukryj powiadomienie o identyfikatorze",
+      "show_calendar_sync": "Pokaż przypomnienie o synchronizacji kalendarza",
+      "hide_calendar_sync": "Ukryj przypomnienie o synchronizacji kalendarza",
       "hide_device_warnings": "Ukryj ostrzeżenia urządzenia",
       "hide_language_warnings": "Ukryj ostrzeżenia języka",
       "hide_registration_countdown": "Ukryj odliczanie rejestracji",

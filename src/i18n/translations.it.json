@@ -639,6 +639,10 @@
     "changeLanguage": "Cambia lingua",
     "currentLanguage": "La tua lingua è Italiano 🤌",
     "device_warnings": {
+      "show_badge_warning": "Mostra notifica badge",
+      "hide_badge_warning": "Nascondi notifica badge",
+      "show_calendar_sync": "Mostra promemoria sincronizzazione calendario",
+      "hide_calendar_sync": "Nascondi promemoria sincronizzazione calendario",
       "hide_device_warnings": "Nascondi avvisi dispositivo",
       "hide_language_warnings": "Nascondi avvisi lingua",
       "hide_registration_countdown": "Nascondi countdown registrazione",

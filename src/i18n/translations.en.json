@@ -886,6 +886,10 @@
       "title": "Developer Settings"
     },
     "device_warnings": {
+      "show_badge_warning": "Show badge notification",
+      "hide_badge_warning": "Hide badge notification",
+      "show_calendar_sync": "Show calendar sync reminder",
+      "hide_calendar_sync": "Hide calendar sync reminder",
       "hide_device_warnings": "Hide device warnings",
       "hide_language_warnings": "Hide language warnings",
       "hide_registration_countdown": "Hide registration countdown",

@@ -841,6 +841,10 @@
       "title": "Entwickler-Einstellungen"
     },
     "device_warnings": {
+      "show_badge_warning": "Badge-Benachrichtigung anzeigen",
+      "hide_badge_warning": "Badge-Benachrichtigung verbergen",
+      "show_calendar_sync": "Kalender-Synchronisierung anzeigen",
+      "hide_calendar_sync": "Kalender-Synchronisierung verbergen",
       "hide_device_warnings": "Kompatibilitätsprobleme verbergen",
       "hide_language_warnings": "Übersetzungshinweise verbergen",
       "hide_registration_countdown": "Anmeldungs-Countdown verbergen",

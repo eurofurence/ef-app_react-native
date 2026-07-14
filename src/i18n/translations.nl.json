@@ -705,6 +705,10 @@
       "title": "Ontwikkelaarsinstellingen"
     },
     "device_warnings": {
+      "show_badge_warning": "Toon badgemelding",
+      "hide_badge_warning": "Verberg badgemelding",
+      "show_calendar_sync": "Toon herinnering agendasynchronisatie",
+      "hide_calendar_sync": "Verberg herinnering agendasynchronisatie",
       "hide_device_warnings": "Verberg apparaatwaarschuwingen",
       "hide_language_warnings": "Verberg taalwaarschuwingen",
       "hide_registration_countdown": "Verberg registratie countdown",

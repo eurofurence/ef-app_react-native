@@ -14,6 +14,8 @@ export const Warnings = () => {
   const languageWarnings = useWarningState('languageWarningsHidden')
   const timeZoneWarnings = useWarningState('timeZoneWarningsHidden')
   const registrationCountdown = useWarningState('registrationCountdownHidden')
+  const badgeWarning = useWarningState('badgeAvailableHidden')
+  const calendarSyncWarning = useWarningState('calendarSyncHidden')
 
   return (
     <SettingContainer>
@@ -73,6 +75,34 @@ export const Warnings = () => {
         {timeZoneWarnings.isHidden
           ? t('show_time_zone_warnings')
           : t('hide_time_zone_warnings')}
+      </Button>
+
+      <Button
+        containerStyle={styles.button}
+        icon={badgeWarning.isHidden ? 'eye' : 'eye-off'}
+        onPress={
+          badgeWarning.isHidden
+            ? badgeWarning.showWarning
+            : badgeWarning.hideWarning
+        }
+      >
+        {badgeWarning.isHidden
+          ? t('show_badge_warning')
+          : t('hide_badge_warning')}
+      </Button>
+
+      <Button
+        containerStyle={styles.button}
+        icon={calendarSyncWarning.isHidden ? 'eye' : 'eye-off'}
+        onPress={
+          calendarSyncWarning.isHidden
+            ? calendarSyncWarning.showWarning
+            : calendarSyncWarning.hideWarning
+        }
+      >
+        {calendarSyncWarning.isHidden
+          ? t('show_calendar_sync')
+          : t('hide_calendar_sync')}
       </Button>
     </SettingContainer>
   )
