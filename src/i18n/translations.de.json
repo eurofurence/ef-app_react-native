@@ -454,6 +454,16 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Benachrichtigung: Kalender-Synchronisierung",
+      "hide_calendar_warning": "Kalender-Benachrichtigung ausblenden",
+      "hide_calendar_warning_hint": "Blendet diese Kalender-Synchronisierungs-Benachrichtigung aus",
+      "view_calendar_settings": "Kalender-Synchronisierungseinstellungen öffnen",
+      "view_calendar_settings_hint": "Öffnet die Einstellungen, um deine Favoriten mit deinem Kalender zu synchronisieren",
+      "badge_warning_container": "Benachrichtigung: Badge verfügbar",
+      "hide_badge_warning": "Badge-Benachrichtigung ausblenden",
+      "hide_badge_warning_hint": "Blendet diese Benachrichtigung über das verfügbare Badge aus",
+      "view_badge": "Badge anzeigen",
+      "view_badge_hint": "Öffnet dein Profil, um deinen Badge-Code anzuzeigen",
       "banner_image": "Convention-Banner-Hintergrundbild",
       "changed_dealers_list": "{{count}} aktualisierte Dealer: {{dealers}}",
       "changed_events_list": "{{count}} aktualisierte Events: {{events}}",
@@ -509,6 +519,10 @@
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "view_all_announcements": "Alle Mitteilungen anzeigen",
     "warnings": {
+      "calendar_sync": "Kalender synchronisieren",
+      "calendar_sync_subtitle": "Füge deine Favoriten zu deiner Kalender-App hinzu. Tippe hier, um es in den Einstellungen einzurichten.",
+      "badge_available": "Dein Badge ist bereit",
+      "badge_available_subtitle": "Dein Convention-Badge ist verfügbar. Tippe hier, um deinen Badge-Code anzuzeigen.",
       "favorites_changed": "Favoriten geändert",
       "favorites_changed_subtitle": "Infos in Deinen Favoriten wurden geändert, seitdem Du diese das letzte mal angeschaut hast",
       "hide": "Verbergen",
@@ -794,6 +808,12 @@
     "search_input_hint": "Text eingeben um nach Inhalten zu suchen",
     "search_input_label": "Suchfeld"
   },
+  "SessionExpired": {
+    "title": "Sitzung abgelaufen",
+    "body": "Du wurdest abgemeldet. Melde dich erneut an, um deine Favoriten synchron zu halten.",
+    "sign_in": "Anmelden",
+    "not_now": "Nicht jetzt"
+  },
   "Settings": {
     "about": "Über uns",
     "allowAnalytics": "Erlaube uns, Fehler zu übermitteln",
@@ -807,6 +827,16 @@
       "synchronize": "Synchronisieren",
       "title": "Cache-Statistiken"
     },
+    "calendar": {
+      "copy_link": "Kalenderlink kopieren",
+      "error": "Kalender konnte nicht geöffnet werden. Kopiere stattdessen den Link.",
+      "link_copied": "Kalenderlink in die Zwischenablage kopiert",
+      "login_required": "Melde Dich an, um Deine Favoriten zu synchronisieren.",
+      "retry": "Erneut versuchen",
+      "subscribe": "Favoriten zum Kalender hinzufügen",
+      "subtitle": "Abonniere Deine Favoriten mit Deiner Kalender-App. Neue Favoriten und Änderungen werden automatisch synchronisiert.",
+      "title": "Kalender-Synchronisierung"
+    },
     "changeLanguage": "Sprache ändern",
     "currentLanguage": "Deine Sprachauswahl ist Deutsch!",
     "developer_settings": {
@@ -814,6 +844,10 @@
       "title": "Entwickler-Einstellungen"
     },
     "device_warnings": {
+      "show_badge_warning": "Badge-Benachrichtigung anzeigen",
+      "hide_badge_warning": "Badge-Benachrichtigung verbergen",
+      "show_calendar_sync": "Kalender-Synchronisierung anzeigen",
+      "hide_calendar_sync": "Kalender-Synchronisierung verbergen",
       "hide_device_warnings": "Kompatibilitätsprobleme verbergen",
       "hide_language_warnings": "Übersetzungshinweise verbergen",
       "hide_registration_countdown": "Anmeldungs-Countdown verbergen",
@@ -865,6 +899,10 @@
       "title": "Appaussehen ändern"
     },
     "timeTravel": "Zeitreise-Einstellungen anzeigen.",
+    "sync": {
+      "title": "Synchronisierung erzwingen",
+      "subtitle": "Lädt alle Daten neu und kann mehr Datenvolumen verbrauchen. Sinnvoll, wenn Inhalte fehlen oder veraltet wirken."
+    },
     "sync_full": "Volle Synchronisierung erzwingen",
     "accessibility": {
       "settings_page_loaded": "Einstellungsseite geladen",

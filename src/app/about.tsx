@@ -40,8 +40,9 @@ And Sentry helps us out with exception tracing.
 
 ## App Team Alumni
 
-- [Luchs](https://github.com/Pinselohrkater) (IT vice director & app team lead)
-- [Shez](https://github.com/ShezHsky) (iOS app developer)
+- [Requinard](https://github.com/Requinard) (App Developer)
+- [Luchs](https://github.com/Pinselohrkater) (IT Vice Director & App Team Lead)
+- [Shez](https://github.com/ShezHsky) (iOS App Developer)
 - Zefiro (IT director)
 
 ## Other Special People
@@ -63,6 +64,7 @@ And Sentry helps us out with exception tracing.
 
 ## English Translations
 
+- faye
 - Fenrikur
 - Luchs
 - Pazuzu
@@ -70,6 +72,7 @@ And Sentry helps us out with exception tracing.
 
 ## German Translations
 
+- faye
 - Fenrikur
 - Luchs
 - Pazuzu
@@ -77,6 +80,7 @@ And Sentry helps us out with exception tracing.
 
 ## Dutch Translations
 
+- faye
 - Pazuzu
 - Requinard
 
@@ -145,13 +149,7 @@ export default function AboutScreen() {
   const [devMenu, setDevMenu] = useAppSetting('DevMenuEnabled')
 
   // Load static assets.
-  const cheeseSound = useAudioPlayer(require('@/assets/runtime/cheese.webm'))
   const sheeshSound = useAudioPlayer(require('@/assets/runtime/sheesh.webm'))
-
-  const requinardEgg = useCallback(async () => {
-    cheeseSound.play()
-    setTheme('requinard')
-  }, [cheeseSound, setTheme])
 
   const pazuzuEgg = useCallback(async () => {
     sheeshSound.play()
@@ -272,17 +270,12 @@ export default function AboutScreen() {
         <Credit
           name='Faye'
           url='https://avatars.githubusercontent.com/u/30414906'
-          jobTitle='React Development'
+          jobTitle='App Development'
         />
         <Credit
           name='Fenrikur'
           url='https://avatars.githubusercontent.com/u/3359222'
           jobTitle='App Team Director and getting us to move our butts in gear'
-        />
-        <Credit
-          name='Gendo Doggo'
-          url='https://avatars.githubusercontent.com/u/16690224'
-          jobTitle='Backend Development'
         />
         <Credit
           name='Kalynx'
@@ -302,7 +295,7 @@ export default function AboutScreen() {
         <Credit
           name='Pazuzu'
           url='https://avatars.githubusercontent.com/u/5929561'
-          jobTitle='React Development'
+          jobTitle='App Development'
           onEasterEgg={pazuzuEgg}
         />
         <Credit
@@ -311,10 +304,9 @@ export default function AboutScreen() {
           jobTitle='Backend Development'
         />
         <Credit
-          name='Requinard'
-          url='https://avatars.githubusercontent.com/u/5537850'
-          jobTitle='React Development support'
-          onEasterEgg={requinardEgg}
+          name='vanjmali'
+          url='https://avatars.githubusercontent.com/u/31445914'
+          jobTitle='App Development'
         />
         <MarkdownContent>{extraThanksMarkdown}</MarkdownContent>
       </Floater>

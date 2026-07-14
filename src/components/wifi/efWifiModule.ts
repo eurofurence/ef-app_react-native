@@ -1,36 +1,35 @@
 import { NativeModule, requireOptionalNativeModule } from 'expo'
 
-declare class ExpoEfWifiModule extends NativeModule<{}> {
-  addEnterpriseNetwork(
-    ssid: string,
-    identity: string,
-    password: string,
-    anonymousIdentity: string,
-    subjectMatch: string
-  ): number
+type EfWifiRequest = {
+  ssid: string
+  identity: string
+  password: string
+  anonymousIdentity?: string
+  domainSuffixMatch?: string
 }
 
-const efWifiModule = requireOptionalNativeModule<ExpoEfWifiModule>('EfWifi')
+declare class EfWifiNativeModule extends NativeModule<{}> {
+  addEnterpriseNetwork(request: EfWifiRequest): Promise<void>
+}
 
-// Native return codes, mirrored from ExpoEfWifiModule.kt:
-// 0 OK, 1 wifi service unavailable, 2 CA cert unreadable,
-// 3 enterprise config rejected, 4 permission denied reading networks (pre-Android 10), 5 apply failed
-export function addEnterpriseNetwork(
+const efWifiModule = requireOptionalNativeModule<EfWifiNativeModule>('EfWifi')
+
+// Native module (see EfWifiModule.kt) launches the Android system "add network" dialog on
+// API 30+ and throws EfWifiException / MissingActivity on failure rather than returning a code.
+export async function addEnterpriseNetwork(
   ssid: string,
   identity: string,
   password: string,
   anonymousIdentity: string,
-  subjectMatch: string
-): void {
+  domainSuffixMatch: string
+): Promise<void> {
   if (!efWifiModule)
     throw new Error('EfWifi native module is not available in this build')
-  const code = efWifiModule.addEnterpriseNetwork(
+  await efWifiModule.addEnterpriseNetwork({
     ssid,
     identity,
     password,
     anonymousIdentity,
-    subjectMatch
-  )
-  if (code !== 0)
-    throw new Error(`EfWifi.addEnterpriseNetwork failed with code ${code}`)
+    domainSuffixMatch,
+  })
 }

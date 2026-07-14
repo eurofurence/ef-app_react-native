@@ -87,7 +87,7 @@ export function WifiSetup({
 
       setBusy(true)
       if (Platform.OS === 'android') {
-        addEnterpriseNetwork(
+        await addEnterpriseNetwork(
           WIFI_SSID,
           creds.identity,
           creds.password,

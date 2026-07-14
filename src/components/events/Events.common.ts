@@ -22,7 +22,7 @@ import {
 import { appBase, conAbbr } from '@/configuration'
 import type { EventDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
-import { useEventReminder } from '@/hooks/data/useEventReminder'
+import { useToggleEventFavorite } from '@/hooks/data/useToggleEventFavorite'
 
 /**
  Returns a list of event instances according to conversion rules.
@@ -203,7 +203,7 @@ export const shareEvent = (event: EventDetails) =>
  * Uses default handlers for event card interaction, i.e., opening the event or toggling favorites.
  */
 export function useEventCardInteractions(notify = true) {
-  const { toggleReminder } = useEventReminder()
+  const toggleFavorite = useToggleEventFavorite()
   const { toast } = useToastContext()
   const { t } = useTranslation('Events')
 
@@ -216,12 +216,18 @@ export function useEventCardInteractions(notify = true) {
 
   const onLongPress = useCallback(
     async (event: EventDetails) => {
-      const mode = await toggleReminder(event)
+      let mode: 'added' | 'removed'
+      try {
+        mode = await toggleFavorite(event)
+      } catch (error) {
+        captureException(error)
+        return
+      }
       if (!notify) return
       if (mode === 'added') toast('info', t('favorite_added'), 3000)
       else if (mode === 'removed') toast('info', t('favorite_removed'), 3000)
     },
-    [toggleReminder, notify, toast, t]
+    [toggleFavorite, notify, toast, t]
   )
 
   return {

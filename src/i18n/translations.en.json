@@ -259,7 +259,7 @@
     "title": "Artist Alley Registration",
     "unauthorized_not_attending": "Please ensure that you have a valid registration for this year's convention if you wish to register at a table in the Artist Alley.",
     "unauthorized_not_checked_in": "Please check in and pick up your convention badge at the Registration Desk before trying to register at an Artist Alley table.",
-    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist alley.",
+    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist Alley.",
     "update": "Update your request",
     "view": {
       "title": "Artist Alley Table"
@@ -460,6 +460,16 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Calendar sync notification",
+      "hide_calendar_warning": "Hide calendar sync notification",
+      "hide_calendar_warning_hint": "Dismisses this calendar sync notification",
+      "view_calendar_settings": "Open calendar sync settings",
+      "view_calendar_settings_hint": "Opens Settings to sync your favorites to your calendar",
+      "badge_warning_container": "Badge available notification",
+      "hide_badge_warning": "Hide badge notification",
+      "hide_badge_warning_hint": "Dismisses this badge available notification",
+      "view_badge": "View badge",
+      "view_badge_hint": "Opens your profile to view your badge code",
       "banner_image": "Convention banner background image",
       "changed_dealers_list": "{{count}} updated dealers: {{dealers}}",
       "changed_events_list": "{{count}} updated events: {{events}}",
@@ -515,6 +525,10 @@
     "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
+      "calendar_sync": "Sync your calendar",
+      "calendar_sync_subtitle": "Add your favorite events to your calendar app. Tap here to set it up in Settings.",
+      "badge_available": "Your badge is ready",
+      "badge_available_subtitle": "Your convention badge is available. Tap here to view your badge code.",
       "favorites_changed": "Favorites updated",
       "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
       "hide": "Hide",
@@ -671,7 +685,7 @@
       "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Announcements",
-    "artist_alley": "Artist alley",
+    "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
@@ -810,6 +824,12 @@
     "search_input_hint": "Enter text to search for content",
     "search_input_label": "Search input field"
   },
+  "SessionExpired": {
+    "title": "Session expired",
+    "body": "You've been signed out. Sign in again to keep your favourites synced.",
+    "sign_in": "Sign in",
+    "not_now": "Not now"
+  },
   "Settings": {
     "about": "About",
     "allowAnalytics": "Allow us to collect analytics events",
@@ -823,6 +843,16 @@
       "subtitle": "Last sync: {{ time }}",
       "synchronize": "Synchronize",
       "title": "Cache Stats"
+    },
+    "calendar": {
+      "copy_link": "Copy calendar link",
+      "error": "Could not open your calendar. Try copying the link instead.",
+      "link_copied": "Calendar link copied to clipboard",
+      "login_required": "Log in to sync your favorite events.",
+      "retry": "Try again",
+      "subscribe": "Add favorites to calendar",
+      "subtitle": "Subscribe your calendar app to your favorite events. New favorites and changes sync automatically.",
+      "title": "Calendar sync"
     },
     "changeLanguage": "Change language",
     "currentLanguage": "Your current language is English!",
@@ -859,6 +889,10 @@
       "title": "Developer Settings"
     },
     "device_warnings": {
+      "show_badge_warning": "Show badge notification",
+      "hide_badge_warning": "Hide badge notification",
+      "show_calendar_sync": "Show calendar sync reminder",
+      "hide_calendar_sync": "Hide calendar sync reminder",
       "hide_device_warnings": "Hide device warnings",
       "hide_language_warnings": "Hide language warnings",
       "hide_registration_countdown": "Hide registration countdown",
@@ -907,6 +941,10 @@
       "title": "Change the application theme"
     },
     "timeTravel": "Show time travel settings.",
+    "sync": {
+      "title": "Force sync",
+      "subtitle": "Reloads all convention data and may use more data. Use it if content seems missing or out of date."
+    },
     "sync_full": "Force full sync",
     "accessibility": {
       "settings_page_loaded": "Settings page loaded",

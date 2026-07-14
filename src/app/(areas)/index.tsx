@@ -16,6 +16,8 @@ import { UpcomingEventsList } from '@/components/events/UpcomingEventsList'
 import { Search } from '@/components/generic/atoms/Search'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
+import { BadgeAvailableWarning } from '@/components/home/BadgeAvailableWarning'
+import { CalendarSyncWarning } from '@/components/home/CalendarSyncWarning'
 import { CountdownHeader } from '@/components/home/CountdownHeader'
 import { DeviceSpecificWarnings } from '@/components/home/DeviceSpecificWarnings'
 import { FavoritesChangedWarning } from '@/components/home/FavoritesChangedWarning'
@@ -194,6 +196,8 @@ export default function Index() {
         <LanguageWarnings parentPad={padFloater} />
         <TimezoneWarning parentPad={padFloater} />
         <DeviceSpecificWarnings />
+        <BadgeAvailableWarning />
+        <CalendarSyncWarning />
         <FavoritesChangedWarning />
         {results ? null : (
           <RegistrationCountdown registrationUrl={registrationUrl} />

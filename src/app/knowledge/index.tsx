@@ -149,17 +149,20 @@ export default function Knowledge() {
         accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
       >
         <Header>{t('header')}</Header>
-        <KbSectionedList
-          kbGroups={displayData}
-          leader={
-            <Search
-              className='my-2.5 mx-2.5'
-              filter={filter}
-              setFilter={setFilter}
-              placeholder={t('search.placeholder')}
-            />
-          }
-        />
+        {/* flex allows sticky sections to stick correctly under the header */}
+        <View className='flex-1'>
+          <KbSectionedList
+            kbGroups={displayData}
+            leader={
+              <Search
+                className='my-2.5 mx-2.5'
+                filter={filter}
+                setFilter={setFilter}
+                placeholder={t('search.placeholder')}
+              />
+            }
+          />
+        </View>
       </View>
     </>
   )

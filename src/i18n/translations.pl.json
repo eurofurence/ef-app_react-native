@@ -305,6 +305,16 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Powiadomienie o synchronizacji kalendarza",
+      "hide_calendar_warning": "Ukryj powiadomienie o synchronizacji kalendarza",
+      "hide_calendar_warning_hint": "Zamyka to powiadomienie o synchronizacji kalendarza",
+      "view_calendar_settings": "Otwórz ustawienia synchronizacji kalendarza",
+      "view_calendar_settings_hint": "Otwiera Ustawienia, aby zsynchronizować ulubione z kalendarzem",
+      "badge_warning_container": "Powiadomienie o dostępnym identyfikatorze",
+      "hide_badge_warning": "Ukryj powiadomienie o identyfikatorze",
+      "hide_badge_warning_hint": "Zamyka to powiadomienie o dostępnym identyfikatorze",
+      "view_badge": "Zobacz identyfikator",
+      "view_badge_hint": "Otwiera Twój profil, aby zobaczyć kod identyfikatora",
       "banner_image": "Obraz tła banera konwentu",
       "changed_dealers_list": "{{count}} zaktualizowanych wystawców: {{dealers}}",
       "changed_events_list": "{{count}} zaktualizowanych wydarzeń: {{events}}",
@@ -356,6 +366,10 @@
       "placeholder": "Szukaj wydarzeń, wystawców i artykułów informacyjnych…"
     },
     "warnings": {
+      "calendar_sync": "Zsynchronizuj kalendarz",
+      "calendar_sync_subtitle": "Dodaj ulubione wydarzenia do aplikacji kalendarza. Dotknij tutaj, aby skonfigurować to w Ustawieniach.",
+      "badge_available": "Twój identyfikator jest gotowy",
+      "badge_available_subtitle": "Twój identyfikator konwentu jest dostępny. Dotknij tutaj, aby zobaczyć kod identyfikatora.",
       "favorites_changed": "Ulubione zaktualizowane",
       "favorites_changed_subtitle": "Niektóre z twoich ulubionych zostały zaktualizowane od ostatniego wyświetlenia",
       "hide": "Ukryj",
@@ -630,6 +644,12 @@
     "search_input_hint": "Wprowadź tekst, aby wyszukać treści",
     "search_input_label": "Pole wyszukiwania"
   },
+  "SessionExpired": {
+    "title": "Sesja wygasła",
+    "body": "Zostałeś wylogowany. Zaloguj się ponownie, aby zachować synchronizację ulubionych.",
+    "sign_in": "Zaloguj się",
+    "not_now": "Nie teraz"
+  },
   "Settings": {
     "about": "O aplikacji",
     "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
@@ -650,6 +670,10 @@
       "title": "Ustawienia deweloperskie"
     },
     "device_warnings": {
+      "show_badge_warning": "Pokaż powiadomienie o identyfikatorze",
+      "hide_badge_warning": "Ukryj powiadomienie o identyfikatorze",
+      "show_calendar_sync": "Pokaż przypomnienie o synchronizacji kalendarza",
+      "hide_calendar_sync": "Ukryj przypomnienie o synchronizacji kalendarza",
       "hide_device_warnings": "Ukryj ostrzeżenia urządzenia",
       "hide_language_warnings": "Ukryj ostrzeżenia języka",
       "hide_registration_countdown": "Ukryj odliczanie rejestracji",
@@ -674,6 +698,10 @@
     },
     "settingsSection": "Ustawienia aplikacji",
     "timeTravel": "Pokaż ustawienia podróży w czasie.",
+    "sync": {
+      "title": "Wymuś synchronizację",
+      "subtitle": "Ponownie pobiera wszystkie dane i może zużyć więcej transferu. Przydatne, gdy treści wydają się nieaktualne lub ich brakuje."
+    },
     "sync_full": "Wymuś pełną synchronizację",
     "accessibility": {
       "settings_page_loaded": "Strona ustawień załadowana",

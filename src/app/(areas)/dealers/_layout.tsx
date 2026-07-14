@@ -71,7 +71,7 @@ export default function DealersLayout() {
   if (dealers.length === 0)
     return (
       <ComingSoon
-        image={require('@/assets/static/dealers-empty.png')}
+        image={require('@/assets/static/dealersempty.png')}
         title={t('coming_soon_title')}
         text={t('coming_soon_body', { conName })}
       />

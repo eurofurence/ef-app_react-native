@@ -89,7 +89,7 @@ export default function ScheduleLayout() {
   if (events.length === 0)
     return (
       <ComingSoon
-        image={require('@/assets/static/events-empty.png')}
+        image={require('@/assets/static/eventsempty.png')}
         title={t('coming_soon_title')}
         text={t('coming_soon_body', { conName })}
       />
