@@ -288,6 +288,10 @@ export const CacheProvider = ({
           )
         }
 
+        // AppConfig is a plain object returned in full; keep the cached value if absent.
+        if (data.AppConfig)
+          dispatch(actionValuesSet('appConfig', data.AppConfig))
+
         dispatch(
           actionInternalsSet(
             conId,

@@ -157,6 +157,14 @@ export type UserRecord = {
   }[]
 }
 
+/** Backend-provided app configuration. All values arrive as strings. */
+export type AppConfigRecord = {
+  CmaUrl?: string
+  MapsUrl?: string
+  FeatureWalletPassesDisabled?: string
+  FeatureWifiConfigDisabled?: string
+}
+
 export type ArtistAlleyRecord = RecordMetadata & {
   CreatedDateTimeUtc: string
   DisplayName: string

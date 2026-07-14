@@ -4,6 +4,7 @@ import { devMenu, eurofurenceCacheVersion } from '@/configuration'
 import { defineEntity, defineField } from '@/context/data/CacheTools'
 import type {
   AnnouncementRecord,
+  AppConfigRecord,
   ArtistAlleyRecord,
   DealerRecord,
   EventDayRecord,
@@ -65,6 +66,11 @@ export const schemaValues = {
    * Currently registered notifications (i.e., event reminders).
    */
   notifications: defineField<readonly Notification[]>([]),
+
+  /**
+   * Backend-provided app configuration from the sync response.
+   */
+  appConfig: defineField<AppConfigRecord | null>(null),
 } as const
 
 /**
