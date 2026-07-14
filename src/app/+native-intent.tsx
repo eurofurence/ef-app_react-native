@@ -20,8 +20,18 @@ export function redirectSystemPath({ path }: { path: string }) {
   if (path === matchKnowledgeGroups) return `/knowledge`
   // WiFi deeplinks: forward only the query (id/pw/profile); host/path are not trusted.
   if (path.includes(wifiOnsiteHost) || path.startsWith('eventwifi:')) {
-    const q = path.indexOf('?')
-    return q >= 0 ? `/wifi${path.slice(q)}` : '/wifi'
+    if (path.startsWith('eventwifi:')) {
+      const q = path.indexOf('?')
+      return q >= 0 ? `/wifi${path.slice(q)}` : '/wifi'
+    }
+    try {
+      const url = new URL(path)
+      if (url.hostname === wifiOnsiteHost) {
+        return url.search ? `/wifi${url.search}` : '/wifi'
+      }
+    } catch {
+      // Not an absolute URL; ignore and fall through.
+    }
   }
   return path
 }
