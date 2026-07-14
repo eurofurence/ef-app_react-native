@@ -1,4 +1,4 @@
-# Expo prebuild folders
+# Expo prebuild folders (modules/*/android must stay tracked, so anchor to root)
 /android
 /ios
 

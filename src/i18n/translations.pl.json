@@ -517,7 +517,9 @@
       "settings_tab": "Zakładka ustawień",
       "settings_tab_hint": "Konfiguruj preferencje i ustawienia aplikacji",
       "website_tab": "Zakładka strony konwentu",
-      "website_tab_hint": "Otwiera stronę konwentu w przeglądarce"
+      "website_tab_hint": "Otwiera stronę konwentu w przeglądarce",
+      "wifi_tab": "WiFi setup",
+      "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Ogłoszenia",
     "dealers": "Wystawcy",
@@ -534,7 +536,8 @@
     "open_messages": "Otwórz prywatne wiadomości",
     "pm": "Prywatne wiadomości",
     "services": "Usługi",
-    "settings": "Ustawienia"
+    "settings": "Ustawienia",
+    "wifi": "WiFi"
   },
   "Notification": {
     "announcement": "Nowe ogłoszenie od {{conName}}",
@@ -716,5 +719,34 @@
     "reset": "Resetuj",
     "subtitle": "Dostosuj czas dla testów i debugowania",
     "title": "Podróże w czasie"
+  },
+  "WiFi": {
+    "title": "Konfiguracja WiFi",
+    "subtitle": "Eurofurence udostępnia bezpłatną sieć WiFi dla uczestników i staffu.\n\nUwaga: dla Dealers' Den, Artshow i innych szczególnych zastosowań mogą istnieć osobne sieci - w takim przypadku ekipa sieciowa poinstruuje cię osobno!",
+    "intro": "Jeśli jesteś zaawansowanym użytkownikiem lub członkiem staffu, możesz zmienić zachowanie zapory sieciowej lub podać własne dane dostępowe.",
+    "profile_eurofurence_name": "Chroniony (zalecany)",
+    "profile_eurofurence_desc": "Połączenia przychodzące do twojego urządzenia są zablokowane. Możesz swobodnie korzystać z internetu, ale nikt nie może nawiązać połączenia z otwartymi portami twojego urządzenia i działającymi za nimi aplikacjami.",
+    "profile_public_name": "Publiczny (niezalecany)",
+    "profile_public_desc": "Przydzielone IP będzie w pełni publicznie dostępne - bez filtrowania, ale też bez żadnych zabezpieczeń. Sam odpowiadasz za swoje bezpieczeństwo. Używaj zapory sieciowej i uważaj na uruchomione aplikacje.",
+    "profile_event_name": "Tylko event",
+    "profile_event_desc": "Połączenia przychodzące do twojego urządzenia są dozwolone z sieci Eurofurence, ale nie z internetu. Każdy w sieci może więc uzyskać dostęp do otwartych portów twojego urządzenia. Używaj zapory sieciowej i uważaj na uruchomione aplikacje.",
+    "profile_custom_name": "Własny/Staff",
+    "profile_custom_desc": "W niektórych przypadkach staff przekaże ci własne dane dostępowe, które mogą mieć zupełnie inne ustawienia sieci.",
+    "identity_label": "ID dostępu",
+    "identity_placeholder": "Twoje ID dostępu",
+    "password_label": "Hasło",
+    "password_placeholder": "Twoje hasło",
+    "scan_qr": "Zeskanuj kod QR",
+    "apply": "Skonfiguruj WiFi",
+    "confirm_title": "Skonfigurować WiFi?",
+    "confirm_body": "Skonfigurować sieć Eurofurence, używając profilu {{profile}}?",
+    "confirm_apply": "Skonfiguruj",
+    "confirm_cancel": "Anuluj",
+    "invalid_credentials": "Podaj prawidłowe ID dostępu i hasło.",
+    "apply_failed": "Nie udało się skonfigurować WiFi. Spróbuj ponownie.",
+    "apply_success": "Profil WiFi zapisany. Urządzenie połączy się automatycznie, gdy sieć będzie w zasięgu.",
+    "camera_permission": "Zezwól na dostęp do aparatu, aby zeskanować kod QR WiFi.",
+    "grant_camera": "Zezwól na aparat",
+    "advanced_title": "Ustawienia zaawansowane"
   }
 }

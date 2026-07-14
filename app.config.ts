@@ -28,7 +28,7 @@ const config: ExpoConfig & {
   version,
   orientation: 'default',
   userInterfaceStyle: 'automatic',
-  scheme: 'eurofurence',
+  scheme: ['eurofurence', 'eventwifi'],
   splash: {
     image: './assets/platform/splash.png',
     resizeMode: 'native',
@@ -83,8 +83,19 @@ const config: ExpoConfig & {
         ],
         category: ['BROWSABLE', 'DEFAULT'],
       },
+      {
+        action: 'VIEW',
+        autoVerify: true,
+        data: [
+          {
+            scheme: 'https',
+            host: 'wifi.onsite.eurofurence.org',
+          },
+        ],
+        category: ['BROWSABLE', 'DEFAULT'],
+      },
     ],
-    permissions: ['INTERNET', 'VIBRATE', 'WRITE_EXTERNAL_STORAGE'],
+    permissions: ['INTERNET', 'VIBRATE', 'WRITE_EXTERNAL_STORAGE', 'CHANGE_WIFI_STATE', 'ACCESS_WIFI_STATE'],
     blockedPermissions: ['com.google.android.gms.permission.AD_ID', 'android.permission.RECORD_AUDIO'],
   },
   web: {
@@ -173,6 +184,12 @@ const config: ExpoConfig & {
     'expo-web-browser',
     'expo-image',
     'react-native-legal',
+    [
+      'expo-camera',
+      {
+        cameraPermission: 'Eurofurence uses the camera to scan WiFi setup QR codes.',
+      },
+    ],
   ],
   extra: {
     eas: {

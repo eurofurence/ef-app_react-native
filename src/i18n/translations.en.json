@@ -680,7 +680,9 @@
       "settings_tab": "Settings tab",
       "settings_tab_hint": "Configure app preferences and settings",
       "website_tab": "Convention website tab",
-      "website_tab_hint": "Opens convention website in browser"
+      "website_tab_hint": "Opens convention website in browser",
+      "wifi_tab": "WiFi setup",
+      "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Announcements",
     "artist_alley": "Artist Alley",
@@ -702,7 +704,8 @@
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
-    "website": "Website"
+    "website": "Website",
+    "wifi": "WiFi"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",
@@ -963,6 +966,35 @@
     "week_before": "1 week before {{conName}}"
   },
   "Todo": {},
+  "WiFi": {
+    "title": "WiFi Setup",
+    "subtitle": "Eurofurence maintains a free WiFi network for use by attendees and staff.\n\nPlease note: for Dealers Den, Artshow and other special use-cases matching specialty networks may exist and you will be instructed by network staff seperately!",
+    "intro": "If you are an advanced user or staff you can change the firewall behaviour or provide custom credentials.",
+    "profile_eurofurence_name": "Protected (Recommended)",
+    "profile_eurofurence_desc": "Incoming connections to your device aren't allowed, so you can still access the internet freely, but nobody can initiate connections to your devices open ports and running apps behind them.",
+    "profile_public_name": "Public (Not recommended)",
+    "profile_public_desc": "Your assigned IP will be fully publicly accessible, no filtering, but also absolutely no safety nets, you are responsible for your safety. Please have a firewall and mind your running apps.",
+    "profile_event_name": "Event-only",
+    "profile_event_desc": "Incoming connections to your device are allowed from within the Eurofurence network, but not the internet, allowing for everyone else in the network to access open ports on your device. Please have a firewall and mind your running apps.",
+    "profile_custom_name": "Custom/Staff",
+    "profile_custom_desc": "In some cases staff will provide you with custom access credentials that may have completely custom network settings.",
+    "identity_label": "Access ID",
+    "identity_placeholder": "Your access ID",
+    "password_label": "Password",
+    "password_placeholder": "Your password",
+    "scan_qr": "Scan QR code",
+    "apply": "Configure WiFi",
+    "confirm_title": "Set up WiFi?",
+    "confirm_body": "Configure the Eurofurence network using the {{profile}} profile?",
+    "confirm_apply": "Set up",
+    "confirm_cancel": "Cancel",
+    "invalid_credentials": "Please enter a valid access ID and password.",
+    "apply_failed": "Could not set up WiFi. Please try again.",
+    "apply_success": "WiFi profile saved. Your device will connect automatically when the network is in range.",
+    "camera_permission": "Allow camera access to scan a WiFi QR code.",
+    "grant_camera": "Allow camera",
+    "advanced_title": "Advanced settings"
+  },
   "Viewer": {
     "announcement": "Announcement: {{name}}",
     "artist": "Artist: {{name}}",
