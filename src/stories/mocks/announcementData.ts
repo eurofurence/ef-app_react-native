@@ -1,5 +1,5 @@
-import type {EfAnnouncementFull} from "@/data/collections/content/AnnouncementsFull";
-import type {EfImage} from "@/data/types/EfImage";
+import type { EfAnnouncementFull } from '@/data/collections/content/AnnouncementsFull'
+import type { EfImage } from '@/data/types/EfImage'
 
 // Mock image record for testing
 const mockImageRecord: EfImage = {
@@ -13,7 +13,7 @@ const mockImageRecord: EfImage = {
   Url: 'https://picsum.photos/800/200',
   LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
   IsRestricted: false,
-  BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+  BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
 }
 
 // Mock announcement data for Storybook stories
@@ -28,7 +28,7 @@ export const mockAnnouncementDetails: EfAnnouncementFull = {
   Content: 'Welcome to the biggest furry convention in Europe!',
   ImageId: undefined,
   Image: null,
-  Roles: undefined
+  Roles: undefined,
 }
 
 export const mockAnnouncementDetailsWithImage: EfAnnouncementFull = {
@@ -42,7 +42,7 @@ export const mockAnnouncementDetailsWithImage: EfAnnouncementFull = {
   Content: 'Get ready for the spectacular fursuit parade!',
   ImageId: 'image-1',
   Image: mockImageRecord,
-  Roles: undefined
+  Roles: undefined,
 }
 
 export const mockAnnouncementDetailsLongTitle: EfAnnouncementFull = {
@@ -58,7 +58,7 @@ export const mockAnnouncementDetailsLongTitle: EfAnnouncementFull = {
     'A detailed announcement with a very long title to test how the component handles text overflow.',
   ImageId: undefined,
   Image: null,
-  Roles: undefined
+  Roles: undefined,
 }
 
 export const mockAnnouncementDetailsDifferentAreas: EfAnnouncementFull[] = [
@@ -73,7 +73,7 @@ export const mockAnnouncementDetailsDifferentAreas: EfAnnouncementFull[] = [
     Content: 'A general announcement for all attendees.',
     ImageId: undefined,
     Image: null,
-    Roles: undefined
+    Roles: undefined,
   },
   {
     Id: 'announcement-5',
@@ -86,7 +86,7 @@ export const mockAnnouncementDetailsDifferentAreas: EfAnnouncementFull[] = [
     Content: 'Important update about upcoming events.',
     ImageId: undefined,
     Image: null,
-    Roles: undefined
+    Roles: undefined,
   },
   {
     Id: 'announcement-6',
@@ -99,7 +99,7 @@ export const mockAnnouncementDetailsDifferentAreas: EfAnnouncementFull[] = [
     Content: 'Information about the help desk location.',
     ImageId: undefined,
     Image: null,
-    Roles: undefined
+    Roles: undefined,
   },
   {
     Id: 'announcement-7',
@@ -112,6 +112,6 @@ export const mockAnnouncementDetailsDifferentAreas: EfAnnouncementFull[] = [
     Content: 'Important emergency information.',
     ImageId: undefined,
     Image: null,
-    Roles: undefined
+    Roles: undefined,
   },
 ]

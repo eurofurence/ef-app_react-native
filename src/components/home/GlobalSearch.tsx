@@ -1,19 +1,19 @@
-import {onLongPressDealer, onPressDealer} from "@/app/(areas)/dealers/all";
-import {onLongPressEvent, onPressEvent} from "@/app/(areas)/schedule/day-1";
-import {onPressKbEntry} from "@/app/knowledge";
-import {DealerCard2} from "@/components/dealers/DealerCard2";
-import {dealersFullCollection} from "@/data/collections/content/DealersFull";
-import {eventsFullCollection} from "@/data/collections/content/EventsFull";
-import {kbEntriesCollection} from "@/data/collections/content/KbEntries";
-import {useAppSetting} from "@/data/collections/supplemental/AppSettings";
-import type {EfId} from "@/data/types/EfId";
-import {inArray, isUndefined, not, or, useLiveQuery} from "@tanstack/react-db";
-import {useTranslation} from 'react-i18next'
-import {StyleSheet, View} from 'react-native'
+import { inArray, isUndefined, not, or, useLiveQuery } from '@tanstack/react-db'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+import { onLongPressDealer, onPressDealer } from '@/app/(areas)/dealers/all'
+import { onLongPressEvent, onPressEvent } from '@/app/(areas)/schedule/day-1'
+import { onPressKbEntry } from '@/app/knowledge'
+import { DealerCard2 } from '@/components/dealers/DealerCard2'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
+import type { EfId } from '@/data/types/EfId'
 
-import {EventCard2} from '../events/EventCard2'
-import {Section} from '../generic/atoms/Section'
-import {KbEntryCard} from '../kb/KbEntryCard'
+import { EventCard2 } from '../events/EventCard2'
+import { Section } from '../generic/atoms/Section'
+import { KbEntryCard } from '../kb/KbEntryCard'
 
 export type GlobalSearchProps = {
   resultDealers: EfId[] | null
@@ -21,7 +21,11 @@ export type GlobalSearchProps = {
   resultKbEntries: EfId[] | null
 }
 
-export const GlobalSearch = ({resultDealers, resultEvents, resultKbEntries}: GlobalSearchProps) => {
+export const GlobalSearch = ({
+  resultDealers,
+  resultEvents,
+  resultKbEntries,
+}: GlobalSearchProps) => {
   const { t: tMenu } = useTranslation('Menu')
   const { t: tAccessibility } = useTranslation('Home', {
     keyPrefix: 'accessibility',
@@ -29,28 +33,43 @@ export const GlobalSearch = ({resultDealers, resultEvents, resultKbEntries}: Glo
 
   const [showInternal] = useAppSetting('ShowInternalEvents')
 
-  const {data: dealers} = useLiveQuery({
-    id: 'global-search-dealers',
-    query: q => q.from({item: dealersFullCollection})
-      .where(({item}) => inArray(item.Id, resultDealers ?? []))
-      .orderBy(({item}) => item.DisplayName)
-  }, [resultDealers])
+  const { data: dealers } = useLiveQuery(
+    {
+      id: 'global-search-dealers',
+      query: (q) =>
+        q
+          .from({ item: dealersFullCollection })
+          .where(({ item }) => inArray(item.Id, resultDealers ?? []))
+          .orderBy(({ item }) => item.DisplayName),
+    },
+    [resultDealers]
+  )
 
-  const {data: events} = useLiveQuery({
-    id: 'global-search-events',
-    query: q => q.from({item: eventsFullCollection})
-      .where(({item}) => isUndefined(item.Hidden))
-      .where(({item}) => or(showInternal, not(item.IsInternal)))
-      .where(({item}) => inArray(item.Id, resultEvents ?? []))
-      .orderBy(({item}) => item.StartDateTimeUtc)
-  }, [showInternal, resultEvents])
+  const { data: events } = useLiveQuery(
+    {
+      id: 'global-search-events',
+      query: (q) =>
+        q
+          .from({ item: eventsFullCollection })
+          .where(({ item }) => isUndefined(item.Hidden))
+          .where(({ item }) => or(showInternal, not(item.IsInternal)))
+          .where(({ item }) => inArray(item.Id, resultEvents ?? []))
+          .orderBy(({ item }) => item.StartDateTimeUtc),
+    },
+    [showInternal, resultEvents]
+  )
 
-  const {data: entries} = useLiveQuery({
-    id: 'global-search-kb-entries',
-    query: q => q.from({item: kbEntriesCollection})
-      .where(({item}) => inArray(item.Id, resultKbEntries ?? []))
-      .orderBy(({item}) => item.Title)
-  }, [showInternal, resultKbEntries])
+  const { data: entries } = useLiveQuery(
+    {
+      id: 'global-search-kb-entries',
+      query: (q) =>
+        q
+          .from({ item: kbEntriesCollection })
+          .where(({ item }) => inArray(item.Id, resultKbEntries ?? []))
+          .orderBy(({ item }) => item.Title),
+    },
+    [showInternal, resultKbEntries]
+  )
 
   if (!resultDealers && !resultEvents && !resultKbEntries) return null
 

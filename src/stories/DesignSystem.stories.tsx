@@ -1,19 +1,15 @@
-import {DealerCard2} from "@/components/dealers/DealerCard2";
-import {EventCard2} from "@/components/events/EventCard2";
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { ScrollView, View } from 'react-native'
 import { fn } from 'storybook/test'
 import { AnnouncementCard } from '@/components/announce/AnnouncementCard'
+import { DealerCard2 } from '@/components/dealers/DealerCard2'
+import { EventCard2 } from '@/components/events/EventCard2'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Card } from '@/components/generic/containers/Card'
-import {
-  mockAnnouncementDetails,
-} from '@/stories/mocks/announcementData'
-import {
-  mockDealerDetails,
-} from '@/stories/mocks/dealerData'
+import { mockAnnouncementDetails } from '@/stories/mocks/announcementData'
+import { mockDealerDetails } from '@/stories/mocks/dealerData'
 import { mockEventDetails } from '@/stories/mocks/eventData'
 
 const DesignSystemOverview = () => (
@@ -106,10 +102,7 @@ const DesignSystemOverview = () => (
       <Label type='h2' style={{ marginBottom: 15 }}>
         Event Cards
       </Label>
-      <EventCard2
-        event={mockEventDetails}
-        onPress={fn()}
-      />
+      <EventCard2 event={mockEventDetails} onPress={fn()} />
     </Card>
 
     {/* Announcement Card Section */}
@@ -117,10 +110,7 @@ const DesignSystemOverview = () => (
       <Label type='h2' style={{ marginBottom: 15 }}>
         Announcement Cards
       </Label>
-      <AnnouncementCard
-        announcement={mockAnnouncementDetails}
-        onPress={fn()}
-      />
+      <AnnouncementCard announcement={mockAnnouncementDetails} onPress={fn()} />
     </Card>
 
     {/* Dealer Card Section */}
@@ -128,10 +118,7 @@ const DesignSystemOverview = () => (
       <Label type='h2' style={{ marginBottom: 15 }}>
         Dealer Cards
       </Label>
-      <DealerCard2
-        dealer={mockDealerDetails}
-        onPress={fn()}
-      />
+      <DealerCard2 dealer={mockDealerDetails} onPress={fn()} />
     </Card>
 
     {/* Color Palette Section */}

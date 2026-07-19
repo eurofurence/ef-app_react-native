@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { auth } from '@/data/clients/auth'
 import { apiBase } from '@/configuration'
+import { auth } from '@/data/clients/auth'
 
 /**
  * App API client with base URL. Uses the global AuthClient's instance for access tokens, unless requests specify

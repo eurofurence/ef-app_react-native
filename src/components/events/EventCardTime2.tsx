@@ -5,25 +5,25 @@ import { Label } from '../generic/atoms/Label'
 
 export type EventCardTimeProps = {
   type: 'duration' | 'time'
-  start: string;
-  end: string;
-  day: string;
-  startLocal: string;
-  endLocal: string;
-  dayLocal: string;
-  done: boolean;
+  start: string
+  end: string
+  day: string
+  startLocal: string
+  endLocal: string
+  dayLocal: string
+  done: boolean
 }
 
 export const EventCardTime2: FC<EventCardTimeProps> = ({
-                                                         type,
-                                                         start,
-                                                         end,
-                                                         day,
-                                                         startLocal,
-                                                         endLocal,
-                                                         dayLocal,
-                                                         done,
-                                                       }) => {
+  type,
+  start,
+  end,
+  day,
+  startLocal,
+  endLocal,
+  dayLocal,
+  done,
+}) => {
   const showLocal = start !== startLocal
 
   return (
@@ -31,26 +31,26 @@ export const EventCardTime2: FC<EventCardTimeProps> = ({
       {type === 'duration' ? (
         <>
           <Label
-            type="h3"
-            variant="middle"
+            type='h3'
+            variant='middle'
             color={done ? 'important' : 'white'}
           >
             {start}
           </Label>
           <Label
-            type="h3"
-            variant="middle"
+            type='h3'
+            variant='middle'
             color={done ? 'important' : 'white'}
           >
             {end}
           </Label>
-          <Label type="cap" color={done ? 'important' : 'white'}>
+          <Label type='cap' color={done ? 'important' : 'white'}>
             {day}
           </Label>
           {!showLocal ? null : (
             <Label
-              type="cap"
-              variant="receded"
+              type='cap'
+              variant='receded'
               color={done ? 'important' : 'white'}
             >
               {startLocal} {endLocal} local
@@ -60,27 +60,27 @@ export const EventCardTime2: FC<EventCardTimeProps> = ({
       ) : (
         <>
           <Label
-            type="h3"
-            variant="middle"
+            type='h3'
+            variant='middle'
             color={done ? 'important' : 'white'}
           >
             {start}
           </Label>
-          <Label type="cap" color={done ? 'important' : 'white'}>
+          <Label type='cap' color={done ? 'important' : 'white'}>
             {day}
           </Label>
           {!showLocal ? null : (
             <>
               <Label
-                type="cap"
-                variant="receded"
+                type='cap'
+                variant='receded'
                 color={done ? 'important' : 'white'}
               >
                 {startLocal} {dayLocal}
               </Label>
               <Label
-                type="cap"
-                variant="receded"
+                type='cap'
+                variant='receded'
                 color={done ? 'important' : 'white'}
               >
                 local

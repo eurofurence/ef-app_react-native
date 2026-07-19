@@ -1,8 +1,7 @@
-import type {EfKbEntry} from "@/data/types/EfKbEntry";
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, type ViewStyle } from 'react-native'
-
+import type { EfKbEntry } from '@/data/types/EfKbEntry'
 
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'

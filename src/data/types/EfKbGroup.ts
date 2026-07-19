@@ -1,4 +1,4 @@
-import type {IconNames} from "@/components/generic/atoms/Icon";
+import type { IconNames } from '@/components/generic/atoms/Icon'
 import type { EfEntity } from './EfEntity.ts'
 
 export type EfKbGroup = EfEntity & {

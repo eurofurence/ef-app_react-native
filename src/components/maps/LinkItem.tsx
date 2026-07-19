@@ -1,15 +1,15 @@
-import {onPressDealer} from "@/app/(areas)/dealers/all";
-import {DealerCard2} from "@/components/dealers/DealerCard2";
-import {dealersFullCollection} from "@/data/collections/content/DealersFull";
-import type {EfMapFull} from "@/data/collections/content/MapsFull";
-import type {EfLink} from "@/data/types/EfLink";
-import type {EfMapEntry} from "@/data/types/EfMapEntry";
-import {eq, useLiveQuery} from "@tanstack/react-db";
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { router } from 'expo-router'
 import type { FC } from 'react'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform, StyleSheet } from 'react-native'
+import { onPressDealer } from '@/app/(areas)/dealers/all'
+import { DealerCard2 } from '@/components/dealers/DealerCard2'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import type { EfMapFull } from '@/data/collections/content/MapsFull'
+import type { EfLink } from '@/data/types/EfLink'
+import type { EfMapEntry } from '@/data/types/EfMapEntry'
 
 import { confirmPrompt } from '@/util/confirmPrompt'
 
@@ -25,25 +25,23 @@ type LinkItemProps = {
 }
 
 const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
-  const {data: dealer} = useLiveQuery({
-    id: `dealer-link-item-${link.Id}`,
-    query: q => q
-      .from({dealer: dealersFullCollection})
-      .where(({dealer}) => eq(dealer.Id, link.Target))
-      .findOne()
-  }, [link.Target])
-
+  const { data: dealer } = useLiveQuery(
+    {
+      id: `dealer-link-item-${link.Id}`,
+      query: (q) =>
+        q
+          .from({ dealer: dealersFullCollection })
+          .where(({ dealer }) => eq(dealer.Id, link.Target))
+          .findOne(),
+    },
+    [link.Target]
+  )
 
   if (!dealer) {
     return null
   }
 
-  return (
-    <DealerCard2
-      dealer={dealer}
-      onPress={onPressDealer}
-    />
-  )
+  return <DealerCard2 dealer={dealer} onPress={onPressDealer} />
 }
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {

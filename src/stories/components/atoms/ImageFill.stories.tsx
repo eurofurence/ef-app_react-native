@@ -36,7 +36,7 @@ export const Default: Story = {
       Url: 'https://picsum.photos/800/600',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
       IsRestricted: false,
-      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     style: { width: 300, height: 200 },
   },
@@ -55,7 +55,7 @@ export const WithTarget: Story = {
       Url: 'https://picsum.photos/800/600',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
       IsRestricted: false,
-      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     style: { width: 300, height: 200 },
     target: {
@@ -82,7 +82,7 @@ export const DifferentTargets: Story = {
             Url: 'https://picsum.photos/800/600',
             LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
             IsRestricted: false,
-            BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+            BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
           }}
           style={{ width: 300, height: 200 }}
           target={{
@@ -105,7 +105,7 @@ export const DifferentTargets: Story = {
             Url: 'https://picsum.photos/800/600',
             LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
             IsRestricted: false,
-            BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+            BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
           }}
           style={{ width: 300, height: 200 }}
           target={{
@@ -138,7 +138,7 @@ export const WithoutTarget: Story = {
       Url: 'https://picsum.photos/800/600',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
       IsRestricted: false,
-      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     style: { width: 300, height: 200 },
   },

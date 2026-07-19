@@ -8,9 +8,7 @@ import type { EfRegisterTable } from '@/data/types/EfRegisterTable'
  * Posts a table registration via the API with the given access token and registration data.
  * @param data The registration data.
  */
-export async function registerTable(
-  data: EfRegisterTable
-) {
+export async function registerTable(data: EfRegisterTable) {
   const accessToken = auth.state.tokenResponse?.accessToken
   if (!accessToken) throw new Error('Unauthorized')
 

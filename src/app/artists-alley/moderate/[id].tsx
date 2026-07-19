@@ -1,12 +1,9 @@
-import {artistsAlleyAdminChangeStatus, artistsAlleyAdminCollection, artistsAlleyAdminDelete} from "@/data/collections/artists-alley/ArtistsAlleyAdmin";
-import {vibrateAfter} from "@/util/vibrateAfter";
 import { captureException } from '@sentry/react-native'
-import {eq, useLiveQuery} from "@tanstack/react-db";
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { Redirect, router, useLocalSearchParams } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
 import { ArtistsAlleyReview } from '@/components/artists-alley/ArtistsAlleyReview'
 import { stateToBackground } from '@/components/artists-alley/utils'
@@ -14,11 +11,17 @@ import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Badge } from '@/components/generic/containers/Badge'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
-import {useToastContext} from '@/context/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import {
+  artistsAlleyAdminChangeStatus,
+  artistsAlleyAdminCollection,
+  artistsAlleyAdminDelete,
+} from '@/data/collections/artists-alley/ArtistsAlleyAdmin'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { confirmPrompt } from '@/util/confirmPrompt'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Moderate() {
   const { id } = useLocalSearchParams<{ id: string }>()
@@ -32,16 +35,20 @@ export default function Moderate() {
   })
   const { user } = useAuthState()
 
-
   // Use toast function.
   const { toast } = useToastContext()
 
-  const {data, isLoading} = useLiveQuery({
-    id: 'artists-alley-moderate-item',
-    query: q => q.from({item: artistsAlleyAdminCollection})
-      .where(({item}) => eq(item.Id, id))
-      .findOne()
-  }, [id])
+  const { data, isLoading } = useLiveQuery(
+    {
+      id: 'artists-alley-moderate-item',
+      query: (q) =>
+        q
+          .from({ item: artistsAlleyAdminCollection })
+          .where(({ item }) => eq(item.Id, id))
+          .findOne(),
+    },
+    [id]
+  )
 
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
@@ -138,7 +145,10 @@ export default function Moderate() {
         refreshControl={
           <RefreshControl
             refreshing={isLoading}
-            onRefresh={() => vibrateAfter(artistsAlleyAdminCollection.utils.refetch())}/>
+            onRefresh={() =>
+              vibrateAfter(artistsAlleyAdminCollection.utils.refetch())
+            }
+          />
         }
         stickyHeaderIndices={[0]}
         accessibilityLabel={a11y('moderation_entry_scroll')}

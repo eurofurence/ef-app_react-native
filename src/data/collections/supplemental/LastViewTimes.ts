@@ -11,16 +11,15 @@ export const lastViewTimesCollection = createCollection(
     getKey: (item) => item.Id,
     autoIndex: 'eager',
     defaultIndexType: BasicIndex,
-  }),
+  })
 )
 
 export function lastViewTimesUpdate(key: EfLastViewTime['Id'], now: Date) {
   if (lastViewTimesCollection.has(key))
-    lastViewTimesCollection.update(key, draft => {
+    lastViewTimesCollection.update(key, (draft) => {
       draft.Time = now
     })
-  else
-    lastViewTimesCollection.insert({ Id: key, Time: now })
+  else lastViewTimesCollection.insert({ Id: key, Time: now })
 }
 
 export function lastViewTimesClear() {

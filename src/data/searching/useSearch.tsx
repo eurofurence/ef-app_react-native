@@ -1,8 +1,12 @@
-import type {EfId} from "@/data/types/EfId";
 import type { StandardSchemaV1 } from '@standard-schema/spec'
-import type {Collection, UtilsRecord, WithVirtualProps} from '@tanstack/react-db'
+import type {
+  Collection,
+  UtilsRecord,
+  WithVirtualProps,
+} from '@tanstack/react-db'
 import Fuse, { type FuseResult, type IFuseOptions } from 'fuse.js'
-import {useEffect, useMemo, useRef, useState} from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { EfId } from '@/data/types/EfId'
 
 /**
  * Indices by collection.
@@ -113,15 +117,16 @@ export function useSearch<
   >(() => {
     if (!term) return null
     const fuse = getOrInitialize(collection)
-    return fuse.search(term, limit ? {limit} : undefined)
+    return fuse.search(term, limit ? { limit } : undefined)
   })
 
   // Subscribe to change of search term.
   useEffect(() => {
-    if (!term)
-      setResults(null)
+    if (!term) setResults(null)
     else
-      setResults(getOrInitialize(collection).search(term, limit ? {limit} : undefined))
+      setResults(
+        getOrInitialize(collection).search(term, limit ? { limit } : undefined)
+      )
   }, [term, limit])
 
   // Reference for transfer of term to the subscription function.
@@ -131,10 +136,14 @@ export function useSearch<
   // Subscribe to change of collection.
   useEffect(() => {
     const subscription = collection.subscribeChanges(() => {
-      if (!termRef.current)
-        setResults(null)
+      if (!termRef.current) setResults(null)
       else
-        setResults(getOrInitialize(collection).search(termRef.current, limit ? {limit} : undefined))
+        setResults(
+          getOrInitialize(collection).search(
+            termRef.current,
+            limit ? { limit } : undefined
+          )
+        )
     })
     return () => {
       subscription.unsubscribe()
@@ -156,5 +165,8 @@ export function useSearchIds<
   limit: number | null | undefined = 15
 ) {
   const results = useSearch(collection, term, limit)
-  return useMemo(() => results?.map(result => result.item.Id) ?? null, [results])
+  return useMemo(
+    () => results?.map((result) => result.item.Id) ?? null,
+    [results]
+  )
 }

@@ -1,4 +1,4 @@
-import {useLiveQuery} from "@tanstack/react-db";
+import { useLiveQuery } from '@tanstack/react-db'
 import { withLayoutContext } from 'expo-router'
 import {
   createMaterialTopTabNavigator,
@@ -20,9 +20,9 @@ import { Search } from '@/components/generic/atoms/Search'
 import { ComingSoon } from '@/components/generic/containers/ComingSoon'
 import { conName } from '@/configuration'
 import { DealersSearchContext } from '@/context/DealersSearchContext'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { useSearchIds } from '@/data/searching/useSearch'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import {useSearchIds} from '@/data/searching/useSearch'
-import {dealersFullCollection} from '@/data/collections/content/DealersFull'
 
 export const unstable_settings = {
   initialRouteName: 'all',
@@ -57,7 +57,7 @@ export default function DealersLayout() {
   const { t } = useTranslation('Dealers')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
-  const {data: dealers, isReady} = useLiveQuery(dealersFullCollection)
+  const { data: dealers, isReady } = useLiveQuery(dealersFullCollection)
   const [query, setQuery] = useState('')
   const results = useSearchIds(dealersFullCollection, query)
 
@@ -81,7 +81,7 @@ export default function DealersLayout() {
     )
 
   return (
-    <DealersSearchContext.Provider value={{query, setQuery, results}}>
+    <DealersSearchContext.Provider value={{ query, setQuery, results }}>
       <MaterialTopTabs
         initialRouteName='all'
         style={StyleSheet.absoluteFill}

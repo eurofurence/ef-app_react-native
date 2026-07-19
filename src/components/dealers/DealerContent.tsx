@@ -1,41 +1,41 @@
-import {deriveDealerDescription} from "@/data/utils/deriveDealerDescription";
-import {deriveDealerTable} from "@/data/utils/deriveDealerTable";
-import {deriveProfileUrlFromMastodonHandle} from "@/data/utils/deriveProfileUrlFromMastodonHandle";
-import type {EfDealerFull} from "@/data/collections/content/DealersFull";
-import {favoriteDealersToggle} from "@/data/collections/supplemental/FavoriteDealers";
-import {useDealerEfDays} from "@/data/hooks/useDealerEfDays";
-import {useViewTrackingState, useViewTrackingUpdate} from "@/hooks/data/useUpdateSinceNote";
-import {format} from 'date-fns'
-import {toZonedTime} from 'date-fns-tz'
-import {setStringAsync} from 'expo-clipboard'
-import {openBrowserAsync} from 'expo-web-browser'
-import {useMemo} from 'react'
-import {useTranslation} from 'react-i18next'
-import {StyleSheet, View} from 'react-native'
-
+import { format } from 'date-fns'
+import { toZonedTime } from 'date-fns-tz'
+import { setStringAsync } from 'expo-clipboard'
+import { openBrowserAsync } from 'expo-web-browser'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+import { shareDealer } from '@/components/dealers/Dealers.common'
+import { Row } from '@/components/generic/containers/Row'
+import { conTimeZone } from '@/configuration'
+import { useToastContext } from '@/context/ToastContext'
+import type { EfDealerFull } from '@/data/collections/content/DealersFull'
+import { favoriteDealersToggle } from '@/data/collections/supplemental/FavoriteDealers'
+import { useDealerEfDays } from '@/data/hooks/useDealerEfDays'
+import { deriveDealerDescription } from '@/data/utils/deriveDealerDescription'
+import { deriveDealerTable } from '@/data/utils/deriveDealerTable'
+import { deriveProfileUrlFromMastodonHandle } from '@/data/utils/deriveProfileUrlFromMastodonHandle'
 import {
-  shareDealer,
-} from '@/components/dealers/Dealers.common'
-import {Row} from '@/components/generic/containers/Row'
-import {conTimeZone} from '@/configuration'
-import {useToastContext} from '@/context/ToastContext'
-import {useThemeBackground} from '@/hooks/themes/useThemeHooks'
-import {useNow} from '@/hooks/time/useNow'
+  useViewTrackingState,
+  useViewTrackingUpdate,
+} from '@/hooks/data/useUpdateSinceNote'
+import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { useNow } from '@/hooks/time/useNow'
 
-import {appStyles} from '../AppStyles'
-import {handleExternalLink} from '../ExternalLink'
-import {Banner} from '../generic/atoms/Banner'
-import {FaIcon} from '../generic/atoms/FaIcon'
-import {Image} from '../generic/atoms/Image'
-import {sourceFromImage} from '../generic/atoms/Image.common'
-import {Label} from '../generic/atoms/Label'
-import {Section} from '../generic/atoms/Section'
-import {Badge} from '../generic/containers/Badge'
-import {Button} from '../generic/containers/Button'
-import {LinkItem} from '../maps/LinkItem'
-import {LinkPreview} from '../maps/LinkPreview'
+import { appStyles } from '../AppStyles'
+import { handleExternalLink } from '../ExternalLink'
+import { Banner } from '../generic/atoms/Banner'
+import { FaIcon } from '../generic/atoms/FaIcon'
+import { Image } from '../generic/atoms/Image'
+import { sourceFromImage } from '../generic/atoms/Image.common'
+import { Label } from '../generic/atoms/Label'
+import { Section } from '../generic/atoms/Section'
+import { Badge } from '../generic/containers/Badge'
+import { Button } from '../generic/containers/Button'
+import { LinkItem } from '../maps/LinkItem'
+import { LinkPreview } from '../maps/LinkPreview'
 
-const DealerCategories = ({dealer}: { dealer: EfDealerFull }) => {
+const DealerCategories = ({ dealer }: { dealer: EfDealerFull }) => {
   // Nothing to display for no categories.
   if (!dealer.Categories?.length) return null
 
@@ -93,15 +93,14 @@ export type DealerContent2Props = {
   shareButton?: boolean
 }
 
-export function DealerContent(
-  {
-    dealer,
-    parentPad = 0,
-    shareButton,
-  }: DealerContent2Props) {
-  const {t} = useTranslation('Dealer')
-  const {t: a11y} = useTranslation('Accessibility')
-  const {toast} = useToastContext()
+export function DealerContent({
+  dealer,
+  parentPad = 0,
+  shareButton,
+}: DealerContent2Props) {
+  const { t } = useTranslation('Dealer')
+  const { t: a11y } = useTranslation('Accessibility')
+  const { toast } = useToastContext()
   const now = useNow()
 
   useViewTrackingUpdate(dealer)
@@ -109,13 +108,19 @@ export function DealerContent(
 
   const avatarBackground = useThemeBackground('text')
 
-  const attendanceDays = useDealerEfDays(dealer.AttendsOnThursday, dealer.AttendsOnFriday, dealer.AttendsOnSaturday)
+  const attendanceDays = useDealerEfDays(
+    dealer.AttendsOnThursday,
+    dealer.AttendsOnFriday,
+    dealer.AttendsOnSaturday
+  )
   const days = useMemo(
     () =>
-      attendanceDays.map((day) => {
-        const zonedDate = toZonedTime(day.Date, conTimeZone)
-        return format(zonedDate, 'EEEE')
-      }).join(', '),
+      attendanceDays
+        .map((day) => {
+          const zonedDate = toZonedTime(day.Date, conTimeZone)
+          return format(zonedDate, 'EEEE')
+        })
+        .join(', '),
     [dealer]
   )
 
@@ -190,7 +195,7 @@ export function DealerContent(
       <Row
         style={styles.marginAround}
         gap={5}
-        accessibilityLabel={t('accessibility.dealer_attendance', {days})}
+        accessibilityLabel={t('accessibility.dealer_attendance', { days })}
       >
         <Label type='caption'>{t('attends')}</Label>
         <Label type='caption' color='important'>
@@ -255,11 +260,11 @@ export function DealerContent(
         />
       )}
 
-      <DealerCategories dealer={dealer}/>
+      <DealerCategories dealer={dealer} />
 
       {dealer.Links?.map((it) => (
         <View style={styles.marginAround} key={it.Name}>
-          <LinkItem link={it}/>
+          <LinkItem link={it} />
         </View>
       ))}
 
@@ -332,11 +337,11 @@ export function DealerContent(
           onPress={() =>
             mastodonUrl
               ? handleExternalLink(mastodonUrl, {
-                title: a11y('external_link_no_prompt'),
-                body: a11y('outside_link'),
-                confirmText: a11y('confirm'),
-                cancelText: a11y('cancel'),
-              })
+                  title: a11y('external_link_no_prompt'),
+                  body: a11y('outside_link'),
+                  confirmText: a11y('confirm'),
+                  cancelText: a11y('cancel'),
+                })
               : null
           }
           icon='mastodon'
@@ -374,11 +379,11 @@ export function DealerContent(
 
       {!dealer.AboutTheArtText && !dealer.ArtPreview ? null : (
         <>
-          <Section icon='film' title={t('about_the_art')}/>
+          <Section icon='film' title={t('about_the_art')} />
 
           {!dealer.ArtPreview ? null : (
             <View style={styles.posterLine}>
-              <Banner image={dealer.ArtPreview} viewable/>
+              <Banner image={dealer.ArtPreview} viewable />
 
               <Label
                 className='mt-3'
@@ -416,7 +421,7 @@ export function DealerContent(
 
           {!dealer.Artist ? null : (
             <View style={styles.posterLine}>
-              <Banner image={dealer.Artist} viewable/>
+              <Banner image={dealer.Artist} viewable />
             </View>
           )}
 

@@ -1,7 +1,7 @@
-import {EventCard2} from "@/components/events/EventCard2";
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
+import { EventCard2 } from '@/components/events/EventCard2'
 import {
   mockEventDetails,
   mockEventDetailsLongTitle,
@@ -33,7 +33,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
 
 export const Default: Story = {
   args: {
@@ -101,19 +100,10 @@ export const MultipleEvents: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <EventCard2 event={mockEventDetails} onPress={fn()}/>
-      <EventCard2
-        event={mockEventDetailsWithBanner}
-        onPress={fn()}
-      />
-      <EventCard2
-        event={mockEventDetailsPassed}
-        onPress={fn()}
-      />
-      <EventCard2
-        event={mockEventDetailsSimple}
-        onPress={fn()}
-      />
+      <EventCard2 event={mockEventDetails} onPress={fn()} />
+      <EventCard2 event={mockEventDetailsWithBanner} onPress={fn()} />
+      <EventCard2 event={mockEventDetailsPassed} onPress={fn()} />
+      <EventCard2 event={mockEventDetailsSimple} onPress={fn()} />
     </View>
   ),
 }
@@ -145,15 +135,9 @@ export const EventStates: Story = {
 
     return (
       <View style={{ gap: 15 }}>
-        <EventCard2
-          event={upcomingEvent}
-          onPress={fn()}
-        />
-        <EventCard2
-          event={runningEvent}
-          onPress={fn()}
-        />
-        <EventCard2 event={passedEvent} onPress={fn()}/>
+        <EventCard2 event={upcomingEvent} onPress={fn()} />
+        <EventCard2 event={runningEvent} onPress={fn()} />
+        <EventCard2 event={passedEvent} onPress={fn()} />
       </View>
     )
   },

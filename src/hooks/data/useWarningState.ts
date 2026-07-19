@@ -1,5 +1,5 @@
-import {useAppSetting} from "@/data/collections/supplemental/AppSettings";
-import {useCallback} from "react";
+import { useCallback } from 'react'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 
 /**
  * Possible warning keys.
@@ -20,11 +20,11 @@ export function useWarningState(warningKey: WarningKey) {
   const isHidden = Boolean(warningsHidden?.[warningKey])
 
   const hideWarning = useCallback(() => {
-    updateWarningsHidden(current => ({...current, [warningKey]: true}))
+    updateWarningsHidden((current) => ({ ...current, [warningKey]: true }))
   }, [warningKey])
 
   const showWarning = useCallback(() => {
-    updateWarningsHidden(current => ({...current, [warningKey]: false}))
+    updateWarningsHidden((current) => ({ ...current, [warningKey]: false }))
   }, [warningKey])
 
   return {

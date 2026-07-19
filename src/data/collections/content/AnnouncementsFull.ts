@@ -1,6 +1,6 @@
-import {  createLiveQueryCollection, eq } from '@tanstack/react-db'
-import { announcementsCollection } from '@/data/collections/content/Announcements'
+import { createLiveQueryCollection, eq } from '@tanstack/react-db'
 import type { CollectionItem } from '@/data/collections/CollectionItem'
+import { announcementsCollection } from '@/data/collections/content/Announcements'
 import { imagesCollection } from '@/data/collections/content/Images'
 import { defineSearch } from '@/data/searching/useSearch'
 

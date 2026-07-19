@@ -1,11 +1,10 @@
-import type {EfTableRegistration} from "@/data/types/EfTableRegistration";
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Image } from '@/components/generic/atoms/Image'
 import { sourceFromImage } from '@/components/generic/atoms/Image.common'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
+import type { EfTableRegistration } from '@/data/types/EfTableRegistration'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export type ArtistsAlleyStatusProps = {
@@ -104,20 +103,20 @@ export const ArtistsAlleyStatus = ({
       <Label type='caption' className='mb-2'>
         {t('submission_image_label')}
       </Label>
-      {!data.Image ? null :
-      <View style={[styles.imageContainer, backgroundStyle]} className='mb-5'>
-        <Image
-          style={{ aspectRatio: data.Image.Width / data.Image.Height }}
-          contentFit={undefined}
-          source={sourceFromImage(data.Image)}
-          placeholder={null}
-          accessibilityRole='image'
-          accessibilityLabel={tAccessibility('submission_image', {
-            displayName: data.DisplayName,
-          })}
-        />
-      </View>
-      }
+      {!data.Image ? null : (
+        <View style={[styles.imageContainer, backgroundStyle]} className='mb-5'>
+          <Image
+            style={{ aspectRatio: data.Image.Width / data.Image.Height }}
+            contentFit={undefined}
+            source={sourceFromImage(data.Image)}
+            placeholder={null}
+            accessibilityRole='image'
+            accessibilityLabel={tAccessibility('submission_image', {
+              displayName: data.DisplayName,
+            })}
+          />
+        </View>
+      )}
 
       {data.State === 'Pending' ? (
         <Button

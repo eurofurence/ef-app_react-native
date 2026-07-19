@@ -1,10 +1,8 @@
-import {artistsAlleyFullCollection} from "@/data/collections/artists-alley/ArtistsAlleyFull";
-import {eq, useLiveQuery} from "@tanstack/react-db";
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { Redirect, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
 import { ArtistsAlleyContent } from '@/components/artists-alley/ArtistsAlleyContent'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
@@ -12,6 +10,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { artistsAlleyFullCollection } from '@/data/collections/artists-alley/ArtistsAlleyFull'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function ArtistsAlleyDetail() {
@@ -21,12 +20,17 @@ export default function ArtistsAlleyDetail() {
   })
   const { id } = useLocalSearchParams<{ id: string }>()
   const { user } = useAuthState()
-  const {data: artistAlleyEntry} = useLiveQuery({
-    id: 'artists-alley-item',
-    query: q => q.from({item: artistsAlleyFullCollection})
-      .where(({item}) => eq(item.Id, id))
-      .findOne()
-  }, [id])
+  const { data: artistAlleyEntry } = useLiveQuery(
+    {
+      id: 'artists-alley-item',
+      query: (q) =>
+        q
+          .from({ item: artistsAlleyFullCollection })
+          .where(({ item }) => eq(item.Id, id))
+          .findOne(),
+    },
+    [id]
+  )
 
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)

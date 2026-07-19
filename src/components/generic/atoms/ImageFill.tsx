@@ -6,10 +6,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native'
-
+import type { EfImage } from '@/data/types/EfImage'
 import { Image, type ImageProps } from './Image'
 import { sourceFromImage } from './Image.common'
-import type { EfImage } from '@/data/types/EfImage'
 
 const initialSize = { width: Dimensions.get('window').width - 40, height: 160 }
 

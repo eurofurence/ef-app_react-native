@@ -7,10 +7,7 @@ import type { EfImage } from '@/data/types/EfImage'
  * @param image The image record to convert.
  */
 export const sourceFromImage = (
-  image:
-    | EfImage
-    | null
-    | undefined,
+  image: EfImage | null | undefined
 ): ImageSource | null => {
   if (!image) return null
   return {

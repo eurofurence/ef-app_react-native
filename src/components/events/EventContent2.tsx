@@ -1,37 +1,38 @@
-import {favoriteEventsToggle} from "@/data/collections/supplemental/FavoriteEvents";
-import {deriveIconFromTags} from "@/data/utils/deriveIconFromTags";
-import {deriveIsMaskRequired} from "@/data/utils/deriveIsMaskRequired";
-import {deriveIsSponsorsOnly} from "@/data/utils/deriveIsSponsorsOnly";
-import {deriveIsSuperSponsorsOnly} from "@/data/utils/deriveIsSuperSponsorsOnly";
-import {differenceInMilliseconds} from 'date-fns'
-import {de} from 'date-fns/locale/de'
-import {format} from 'date-fns-tz'
-import {useCalendars} from 'expo-localization'
-import {router} from 'expo-router'
-import {openBrowserAsync} from 'expo-web-browser'
-import {useMemo} from 'react'
-import {useTranslation} from 'react-i18next'
-import {StyleSheet, View} from 'react-native'
-
-import {shareEvent} from '@/components/events/Events.common'
-import {conTimeZone} from '@/configuration'
-import {useThemeColorValue} from '@/hooks/themes/useThemeHooks'
-import {useNow} from '@/hooks/time/useNow'
-
-import {Banner} from '../generic/atoms/Banner'
-import {Icon, type IconNames, platformShareIcon} from '../generic/atoms/Icon'
-import {Label} from '../generic/atoms/Label'
-import {MarkdownContent} from '../generic/atoms/MarkdownContent'
-import {Progress} from '../generic/atoms/Progress'
-import {Section} from '../generic/atoms/Section'
-import {Badge} from '../generic/containers/Badge'
-import {Button} from '../generic/containers/Button'
-import {Row} from '../generic/containers/Row'
-import {LinkPreview} from '../maps/LinkPreview'
-import type {EfEventFull} from '@/data/collections/content/EventsFull'
-import type {EfId} from '@/data/types/EfId'
-import {getTiming} from '@/util/eventTiming'
-import {useViewTrackingState, useViewTrackingUpdate} from '@/hooks/data/useUpdateSinceNote'
+import { differenceInMilliseconds } from 'date-fns'
+import { de } from 'date-fns/locale/de'
+import { format } from 'date-fns-tz'
+import { useCalendars } from 'expo-localization'
+import { router } from 'expo-router'
+import { openBrowserAsync } from 'expo-web-browser'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { StyleSheet, View } from 'react-native'
+import { shareEvent } from '@/components/events/Events.common'
+import { conTimeZone } from '@/configuration'
+import type { EfEventFull } from '@/data/collections/content/EventsFull'
+import { favoriteEventsToggle } from '@/data/collections/supplemental/FavoriteEvents'
+import type { EfId } from '@/data/types/EfId'
+import { deriveIconFromTags } from '@/data/utils/deriveIconFromTags'
+import { deriveIsMaskRequired } from '@/data/utils/deriveIsMaskRequired'
+import { deriveIsSponsorsOnly } from '@/data/utils/deriveIsSponsorsOnly'
+import { deriveIsSuperSponsorsOnly } from '@/data/utils/deriveIsSuperSponsorsOnly'
+import {
+  useViewTrackingState,
+  useViewTrackingUpdate,
+} from '@/hooks/data/useUpdateSinceNote'
+import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
+import { useNow } from '@/hooks/time/useNow'
+import { getTiming } from '@/util/eventTiming'
+import { Banner } from '../generic/atoms/Banner'
+import { Icon, type IconNames, platformShareIcon } from '../generic/atoms/Icon'
+import { Label } from '../generic/atoms/Label'
+import { MarkdownContent } from '../generic/atoms/MarkdownContent'
+import { Progress } from '../generic/atoms/Progress'
+import { Section } from '../generic/atoms/Section'
+import { Badge } from '../generic/containers/Badge'
+import { Button } from '../generic/containers/Button'
+import { Row } from '../generic/containers/Row'
+import { LinkPreview } from '../maps/LinkPreview'
 
 /**
  * Props to the content.
@@ -61,16 +62,15 @@ export type EventContent2Props = {
 /**
  * Placeholder blur hash.
  */
-const placeholder = {blurhash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'}
+const placeholder = { blurhash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667' }
 
-export function EventContent2(
-  {
-    event,
-    parentPad = 0,
-    shareButton,
-    onToggleHidden,
-  }: EventContent2Props) {
-  const {t} = useTranslation('Event')
+export function EventContent2({
+  event,
+  parentPad = 0,
+  shareButton,
+  onToggleHidden,
+}: EventContent2Props) {
+  const { t } = useTranslation('Event')
   const isFavorite = Boolean(event.Favorite)
   const now = useNow()
 
@@ -83,7 +83,7 @@ export function EventContent2(
     differenceInMilliseconds(now, new Date(event.StartDateTimeUtc)) /
     differenceInMilliseconds(
       new Date(event.EndDateTimeUtc),
-      new Date(event.StartDateTimeUtc),
+      new Date(event.StartDateTimeUtc)
     )
 
   const SuperSponsorOnly = deriveIsSuperSponsorsOnly(event.Tags)
@@ -95,7 +95,7 @@ export function EventContent2(
   const feedbackDisabled = progress < 0.0
 
   const calendar = useCalendars()
-  const {zone, start, end, day, startLocal, endLocal, dayLocal, date} =
+  const { zone, start, end, day, startLocal, endLocal, dayLocal, date } =
     useMemo(() => {
       const timing = getTiming(event)
       const timeZone = calendar[0]?.timeZone ?? conTimeZone
@@ -106,14 +106,14 @@ export function EventContent2(
         .format(new Date())
         .split(' ')
         .pop()
-      const start = format(timing.start, 'p', {timeZone, locale: de})
-      const end = format(timing.end, 'p', {timeZone, locale: de})
-      const day = format(timing.start, 'EEE', {timeZone})
-      const date = format(timing.start, 'yyyy-MM-dd', {timeZone})
-      const startLocal = format(timing.startLocal, 'p', {locale: de})
-      const endLocal = format(timing.endLocal, 'p', {locale: de})
+      const start = format(timing.start, 'p', { timeZone, locale: de })
+      const end = format(timing.end, 'p', { timeZone, locale: de })
+      const day = format(timing.start, 'EEE', { timeZone })
+      const date = format(timing.start, 'yyyy-MM-dd', { timeZone })
+      const startLocal = format(timing.startLocal, 'p', { locale: de })
+      const endLocal = format(timing.endLocal, 'p', { locale: de })
       const dayLocal = format(timing.startLocal, 'EEE')
-      return {zone, start, end, day, startLocal, endLocal, dayLocal, date}
+      return { zone, start, end, day, startLocal, endLocal, dayLocal, date }
     }, [calendar, event])
 
   const mapLink = event.Room?.MapLink
@@ -121,7 +121,7 @@ export function EventContent2(
   return (
     <>
       {!updated ? null : (
-        <Badge unpad={parentPad} badgeColor="warning" textColor="white">
+        <Badge unpad={parentPad} badgeColor='warning' textColor='white'>
           {t('event_was_updated')}
         </Badge>
       )}
@@ -129,28 +129,28 @@ export function EventContent2(
       {!SuperSponsorOnly ? null : (
         <Badge
           unpad={parentPad}
-          badgeColor="superSponsor"
-          textColor="superSponsorText"
+          badgeColor='superSponsor'
+          textColor='superSponsorText'
         >
           {t('supersponsor_event')}
         </Badge>
       )}
 
       {!SponsorOnly ? null : (
-        <Badge unpad={parentPad} badgeColor="sponsor" textColor="sponsorText">
+        <Badge unpad={parentPad} badgeColor='sponsor' textColor='sponsorText'>
           {t('sponsor_event')}
         </Badge>
       )}
 
       {!event.IsInternal ? null : (
-        <Badge unpad={parentPad} badgeColor="staff" textColor="staffText">
+        <Badge unpad={parentPad} badgeColor='staff' textColor='staffText'>
           {t('internal_event')}
         </Badge>
       )}
 
       {!event.Poster ? null : (
         <View style={styles.posterLine}>
-          <Banner image={event.Poster} placeholder={placeholder} viewable/>
+          <Banner image={event.Poster} placeholder={placeholder} viewable />
         </View>
       )}
       {isFavorite || Glyph ? (
@@ -173,25 +173,25 @@ export function EventContent2(
       ) : null}
 
       {event.Title ? (
-        <Label type="h1" className="mt-5">
+        <Label type='h1' className='mt-5'>
           {event.Title}
         </Label>
       ) : null}
-      {event.SubTitle ? <Label type="compact">{event.SubTitle}</Label> : null}
+      {event.SubTitle ? <Label type='compact'>{event.SubTitle}</Label> : null}
       {event.Track?.Name ? (
         <Row style={styles.marginAround} gap={5}>
-          <Label type="caption">{t('label_event_track')}</Label>
-          <Label type="caption" color="important">
+          <Label type='caption'>{t('label_event_track')}</Label>
+          <Label type='caption' color='important'>
             {event.Track?.Name}
           </Label>
         </Row>
       ) : null}
 
       {!happening ? null : (
-        <Progress style={styles.marginBefore} value={progress}/>
+        <Progress style={styles.marginBefore} value={progress} />
       )}
 
-      <Label style={styles.marginAround} type="h3">
+      <Label style={styles.marginAround} type='h3'>
         {t('when', {
           day: day,
           date: date,
@@ -200,7 +200,7 @@ export function EventContent2(
           zone: zone,
         })}
         {start === startLocal ? null : (
-          <Label type="h3" variant="receded">
+          <Label type='h3' variant='receded'>
             {' ' +
               t('when_local', {
                 day: dayLocal,
@@ -213,14 +213,14 @@ export function EventContent2(
         )}
       </Label>
 
-      <MarkdownContent style={styles.marginAround} defaultType="para">
+      <MarkdownContent style={styles.marginAround} defaultType='para'>
         {event.Abstract}
       </MarkdownContent>
 
       {event.PanelHosts ? (
         <Row style={styles.marginAround} gap={5}>
-          <Label type="caption">{t('label_event_panelhosts')}</Label>
-          <Label type="caption" color="important">
+          <Label type='caption'>{t('label_event_panelhosts')}</Label>
+          <Label type='caption' color='important'>
             {event.PanelHosts}
           </Label>
         </Row>
@@ -229,10 +229,10 @@ export function EventContent2(
       {!MaskRequired ? null : (
         <Badge
           unpad={parentPad}
-          icon="face-mask"
-          textColor="secondary"
-          textType="regular"
-          textVariant="regular"
+          icon='face-mask'
+          textColor='secondary'
+          textType='regular'
+          textVariant='regular'
         >
           {t('mask_required')}
         </Badge>
@@ -244,7 +244,7 @@ export function EventContent2(
         </Button>
       )}
 
-      <Row type="stretch" style={styles.marginAround} gap={16}>
+      <Row type='stretch' style={styles.marginAround} gap={16}>
         <Button
           containerStyle={styles.flex}
           outline={isFavorite}
@@ -267,11 +267,11 @@ export function EventContent2(
         <Button
           disabled={feedbackDisabled}
           containerStyle={styles.marginAround}
-          icon="pencil"
+          icon='pencil'
           onPress={() =>
             router.navigate({
               pathname: '/events/[id]/feedback',
-              params: {id: event.Id},
+              params: { id: event.Id },
             })
           }
         >
@@ -281,10 +281,10 @@ export function EventContent2(
 
       {event.Room?.Name ? (
         <Row style={styles.marginAround} gap={5}>
-          <Label type="h3" variant="receded">
+          <Label type='h3' variant='receded'>
             {t('label_event_room')}
           </Label>
-          <Label type="h3" color="important">
+          <Label type='h3' color='important'>
             {event.Room.Name}
           </Label>
         </Row>
@@ -298,8 +298,8 @@ export function EventContent2(
         />
       )}
 
-      <Section icon="information" title={t('label_event_description')}/>
-      <MarkdownContent defaultType="para">{event.Description}</MarkdownContent>
+      <Section icon='information' title={t('label_event_description')} />
+      <MarkdownContent defaultType='para'>{event.Description}</MarkdownContent>
     </>
   )
 }
@@ -333,6 +333,6 @@ const styles = StyleSheet.create({
   },
   glyph: {
     opacity: 0.2,
-    transform: [{rotate: '15deg'}],
+    transform: [{ rotate: '15deg' }],
   },
 })

@@ -1,7 +1,5 @@
-import {artistsAlleyOwnCheckout, artistsAlleyOwnCollection} from "@/data/collections/artists-alley/ArtistsAlleyOwn";
-import {vibrateAfter} from "@/util/vibrateAfter";
 import { captureException } from '@sentry/react-native'
-import {useLiveQuery} from "@tanstack/react-db";
+import { useLiveQuery } from '@tanstack/react-db'
 import { Redirect } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +10,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
 import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
 import { ArtistsAlleyEdit } from '@/components/artists-alley/ArtistsAlleyEdit'
@@ -27,8 +24,13 @@ import { artistAlleyUrl } from '@/configuration'
 import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import {
+  artistsAlleyOwnCheckout,
+  artistsAlleyOwnCollection,
+} from '@/data/collections/artists-alley/ArtistsAlleyOwn'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { confirmPrompt } from '@/util/confirmPrompt'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 const stateToBackground = {
   Pending: 'warning',
@@ -51,7 +53,10 @@ export default function Register() {
   const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
 
   // Get current registration if available. Only run when authorized.
-  const {data: [own], isLoading} = useLiveQuery(artistsAlleyOwnCollection)
+  const {
+    data: [own],
+    isLoading,
+  } = useLiveQuery(artistsAlleyOwnCollection)
   const [localData] = useArtistsAlleyLocalData()
   const { toast } = useToastContext()
 
@@ -76,7 +81,7 @@ export default function Register() {
       toast('notice', t('cancel_request_in_progress'), 2000)
       await artistsAlleyOwnCheckout().then(
         () => toast('info', t('cancel_request_success')),
-        () => toast('error', t('cancel_request_error')),
+        () => toast('error', t('cancel_request_error'))
       )
     } catch (error) {
       captureException(error)
@@ -97,7 +102,7 @@ export default function Register() {
       toast('notice', t('check_out_in_progress'), 2000)
       await artistsAlleyOwnCheckout().then(
         () => toast('info', t('check_out_success')),
-        () => toast('error', t('check_out_error')),
+        () => toast('error', t('check_out_error'))
       )
     } catch (error) {
       captureException(error)
@@ -107,7 +112,7 @@ export default function Register() {
   useEffect(() => {
     if (own) {
       setAnnouncementMessage(
-        a11y('registration_form_loaded', {status: own.State})
+        a11y('registration_form_loaded', { status: own.State })
       )
     } else {
       setAnnouncementMessage(a11y('registration_form_new'))
@@ -143,7 +148,10 @@ export default function Register() {
         refreshControl={
           <RefreshControl
             refreshing={isLoading}
-            onRefresh={() => vibrateAfter(artistsAlleyOwnCollection.utils.refetch())}/>
+            onRefresh={() =>
+              vibrateAfter(artistsAlleyOwnCollection.utils.refetch())
+            }
+          />
         }
         stickyHeaderIndices={[0]}
         accessibilityLabel={a11y('registration_form_scroll')}
@@ -160,9 +168,7 @@ export default function Register() {
               <Badge
                 unpad={padFloater}
                 badgeColor={
-                  stateToBackground[
-                    own.State as keyof typeof stateToBackground
-                  ]
+                  stateToBackground[own.State as keyof typeof stateToBackground]
                 }
                 textColor='white'
               >

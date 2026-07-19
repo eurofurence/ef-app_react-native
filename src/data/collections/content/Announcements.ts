@@ -9,7 +9,7 @@ export const announcementsCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ['announcements'],
-    meta: {collection: true},
+    meta: { collection: true },
     async queryFn({ signal }) {
       const response = await api.get<EfAnnouncement[]>('/Announcements', {
         signal,

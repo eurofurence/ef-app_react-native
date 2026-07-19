@@ -1,15 +1,17 @@
-import {deriveBadgesFromTags} from "@/data/utils/deriveBadgesFromTags";
-import {deriveIconFromTags} from "@/data/utils/deriveIconFromTags";
 import { type FC, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, type ViewStyle } from 'react-native'
-
+import { EventCardTime2 } from '@/components/events/EventCardTime2'
 import { Pressable } from '@/components/generic/Pressable'
+import type { EfEventFull } from '@/data/collections/content/EventsFull'
+import { deriveBadgesFromTags } from '@/data/utils/deriveBadgesFromTags'
+import { deriveIconFromTags } from '@/data/utils/deriveIconFromTags'
 import {
   useThemeBackground,
   useThemeColorValue,
 } from '@/hooks/themes/useThemeHooks'
-
+import { useNow } from '@/hooks/time/useNow'
+import { getProgress, getTiming } from '@/util/eventTiming'
 import { appStyles } from '../AppStyles'
 import { Icon, type IconNames } from '../generic/atoms/Icon'
 import { sourceFromImage } from '../generic/atoms/Image.common'
@@ -17,11 +19,6 @@ import { ImageBackground } from '../generic/atoms/ImageBackground'
 import { Label } from '../generic/atoms/Label'
 import { Progress } from '../generic/atoms/Progress'
 import { Row } from '../generic/containers/Row'
-
-import type { EfEventFull } from '@/data/collections/content/EventsFull'
-import { getProgress, getTiming } from '@/util/eventTiming'
-import { useNow } from '@/hooks/time/useNow'
-import { EventCardTime2 } from '@/components/events/EventCardTime2'
 
 const glyphIconSize = 90
 const badgeIconSize = 20
@@ -36,13 +33,13 @@ export type EventCardProps = {
 }
 
 export const EventCard2: FC<EventCardProps> = ({
-                                                 containerStyle,
-                                                 style,
-                                                 type = 'duration',
-                                                 event,
-                                                 onPress,
-                                                 onLongPress,
-                                               }) => {
+  containerStyle,
+  style,
+  type = 'duration',
+  event,
+  onPress,
+  onLongPress,
+}) => {
   const { t } = useTranslation('Events')
 
   const {
@@ -74,20 +71,17 @@ export const EventCard2: FC<EventCardProps> = ({
     ? styleInternalContainer
     : stylePublicContainer
   const stylePre = useThemeBackground(
-    done ? 'darken' : favorite ? 'notification' : 'primary',
+    done ? 'darken' : favorite ? 'notification' : 'primary'
   )
   const styleBadgeFrame = useThemeBackground('secondary')
   const colorBadge = useThemeColorValue('white')
   const colorGlyph = useThemeColorValue('lighten')
   const colorHeart = useThemeColorValue(Banner ? 'white' : 'text')
 
-  const onPressBind = useCallback(
-    () => onPress?.(event),
-    [event, onPress],
-  )
+  const onPressBind = useCallback(() => onPress?.(event), [event, onPress])
   const onLongPressBind = useCallback(
     () => onLongPress?.(event),
-    [event, onLongPress],
+    [event, onLongPress]
   )
 
   return (
@@ -99,7 +93,7 @@ export const EventCard2: FC<EventCardProps> = ({
       >
         <View style={[styles.pre, stylePre]}>
           {glyph && (
-            <View key="eventGlyph" style={styles.glyphContainer}>
+            <View key='eventGlyph' style={styles.glyphContainer}>
               <Icon
                 style={styles.glyph}
                 name={glyph}
@@ -116,15 +110,16 @@ export const EventCard2: FC<EventCardProps> = ({
             startLocal={timing.formattedStartLocal}
             endLocal={timing.formattedEndLocal}
             dayLocal={timing.formattedDayLocal}
-            done={done} />
+            done={done}
+          />
 
           {happening && (
             <Label
-              key="eventHappening"
+              key='eventHappening'
               style={styles.happening}
-              type="cap"
+              type='cap'
               color={done ? 'important' : 'white'}
-              variant="receded"
+              variant='receded'
             >
               LIVE
             </Label>
@@ -137,16 +132,16 @@ export const EventCard2: FC<EventCardProps> = ({
               key={Id}
               recyclingKey={Id}
               source={sourceFromImage(Banner)}
-              contentFit="cover"
+              contentFit='cover'
               style={StyleSheet.absoluteFill}
             >
               <View style={styles.tagArea2}>
                 <View style={styles.tagAreaInner}>
                   <Label
                     style={styles.tag}
-                    type="regular"
-                    color="white"
-                    ellipsizeMode="head"
+                    type='regular'
+                    color='white'
+                    ellipsizeMode='head'
                     numberOfLines={1}
                   >
                     {IsInternal ? `${t('internal')} – ` : ''}
@@ -155,9 +150,9 @@ export const EventCard2: FC<EventCardProps> = ({
                   {tag && (
                     <Label
                       style={styles.tag}
-                      type="regular"
-                      color="white"
-                      ellipsizeMode="head"
+                      type='regular'
+                      color='white'
+                      ellipsizeMode='head'
                       numberOfLines={1}
                     >
                       {tag}
@@ -167,10 +162,10 @@ export const EventCard2: FC<EventCardProps> = ({
               </View>
               {happening && (
                 <Progress
-                  key="eventProgress"
+                  key='eventProgress'
                   style={styles.progress}
                   value={progress}
-                  color="white"
+                  color='white'
                 />
               )}
             </ImageBackground>
@@ -178,7 +173,7 @@ export const EventCard2: FC<EventCardProps> = ({
         ) : (
           <View style={styles.mainText}>
             <Row>
-              <Label style={styles.title} type="h3">
+              <Label style={styles.title} type='h3'>
                 {title}
               </Label>
               {badges?.map((icon) => (
@@ -187,13 +182,13 @@ export const EventCard2: FC<EventCardProps> = ({
                 </View>
               ))}
             </Row>
-            <Label type="h4" variant="narrow">
+            <Label type='h4' variant='narrow'>
               {subtitle}
             </Label>
             <Label
               style={styles.tag}
-              type="regular"
-              ellipsizeMode="head"
+              type='regular'
+              ellipsizeMode='head'
               numberOfLines={1}
             >
               {IsInternal ? `${t('internal')} – ` : ''}
@@ -202,7 +197,7 @@ export const EventCard2: FC<EventCardProps> = ({
 
             {happening && (
               <Progress
-                key="eventProgress"
+                key='eventProgress'
                 style={styles.progress}
                 value={progress}
               />
@@ -211,8 +206,8 @@ export const EventCard2: FC<EventCardProps> = ({
         )}
 
         {favorite && (
-          <View key="eventFavorite" style={styles.favorite}>
-            <Icon name="heart" size={20} color={colorHeart} />
+          <View key='eventFavorite' style={styles.favorite}>
+            <Icon name='heart' size={20} color={colorHeart} />
           </View>
         )}
       </Pressable>

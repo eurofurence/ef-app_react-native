@@ -1,4 +1,4 @@
-import type {IconNames} from "@/components/generic/atoms/Icon";
+import type { IconNames } from '@/components/generic/atoms/Icon'
 
 export function deriveBadgesFromTags(
   tags: string[] | null | undefined

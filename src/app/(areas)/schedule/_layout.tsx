@@ -1,4 +1,4 @@
-import {useLiveQuery} from "@tanstack/react-db";
+import { useLiveQuery } from '@tanstack/react-db'
 import { isSameDay } from 'date-fns'
 import { withLayoutContext } from 'expo-router'
 import {
@@ -22,12 +22,12 @@ import { Search } from '@/components/generic/atoms/Search'
 import { ComingSoon } from '@/components/generic/containers/ComingSoon'
 import { conName } from '@/configuration'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
+import { daysCollection } from '@/data/collections/content/Days'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { useSearchIds } from '@/data/searching/useSearch'
+import type { EfDay } from '@/data/types/EfDay'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { getNow } from '@/hooks/time/useNow'
-import {useSearchIds} from '@/data/searching/useSearch'
-import type {EfDay} from '@/data/types/EfDay'
-import {eventsFullCollection} from '@/data/collections/content/EventsFull'
-import {daysCollection} from '@/data/collections/content/Days'
 
 export const unstable_settings = {
   initialRouteName: 'day-1',
@@ -71,8 +71,8 @@ export default function ScheduleLayout() {
   const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
-  const {data: events, isReady} = useLiveQuery(eventsFullCollection)
-  const {data: days} = useLiveQuery(daysCollection)
+  const { data: events, isReady } = useLiveQuery(eventsFullCollection)
+  const { data: days } = useLiveQuery(daysCollection)
   const initialRouteName = getInitialRoute(days, getNow())
   const [query, setQuery] = useState('')
   const results = useSearchIds(eventsFullCollection, query)
@@ -101,7 +101,7 @@ export default function ScheduleLayout() {
     )
 
   return (
-    <ScheduleSearchContext.Provider value={{query, setQuery, results}}>
+    <ScheduleSearchContext.Provider value={{ query, setQuery, results }}>
       <MaterialTopTabs
         initialRouteName={initialRouteName}
         style={StyleSheet.absoluteFill}

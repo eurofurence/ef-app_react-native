@@ -9,7 +9,7 @@ export const artistsAlleyCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ['artists-alley', 'general'],
-    meta: {collection: true},
+    meta: { collection: true },
     async queryFn({ signal }) {
       const response = await api.get<EfArtistsAlley[]>('/ArtistsAlley', {
         signal,

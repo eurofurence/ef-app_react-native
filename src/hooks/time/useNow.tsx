@@ -1,6 +1,6 @@
 import { subMilliseconds, subSeconds } from 'date-fns'
 import { addMilliseconds } from 'date-fns/addMilliseconds'
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import {
   appSettingsCollection,
   appSettingsDefaults,
@@ -114,7 +114,7 @@ export function useNow(_input?: number | 'static') {
   useEffect(() => {
     setNow(minutesResult)
     return subscribeMinutes(() => setNow(minutesResult))
-  }, []);
+  }, [])
 
   return now
 }
@@ -129,7 +129,7 @@ export function useNowPrecise() {
   useEffect(() => {
     setNow(secondsResult)
     return subscribeSeconds(() => setNow(secondsResult))
-  }, []);
+  }, [])
 
   return now
 }

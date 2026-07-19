@@ -1,7 +1,7 @@
-import {queryClient} from '@/data/clients/query'
-import {createAsyncStorageCollectionOptions} from '@/data/collections/createAsyncStorageCollectionOptions'
-import type {EfLocalNotification} from '@/data/types/EfLocalNotification'
-import {BasicIndex, createCollection} from '@tanstack/react-db'
+import { BasicIndex, createCollection } from '@tanstack/react-db'
+import { queryClient } from '@/data/clients/query'
+import { createAsyncStorageCollectionOptions } from '@/data/collections/createAsyncStorageCollectionOptions'
+import type { EfLocalNotification } from '@/data/types/EfLocalNotification'
 
 export const localNotificationsCollection = createCollection(
   createAsyncStorageCollectionOptions<EfLocalNotification>({
@@ -13,5 +13,3 @@ export const localNotificationsCollection = createCollection(
     defaultIndexType: BasicIndex,
   })
 )
-
-

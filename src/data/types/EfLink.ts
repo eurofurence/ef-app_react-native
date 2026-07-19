@@ -1,4 +1,4 @@
-import type {EfEntity} from "@/data/types/EfEntity";
+import type { EfEntity } from '@/data/types/EfEntity'
 
 export type EfLink = EfEntity & {
   Id: string

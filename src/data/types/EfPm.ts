@@ -1,4 +1,4 @@
-import type {EfEntity} from "@/data/types/EfEntity";
+import type { EfEntity } from '@/data/types/EfEntity'
 
 export type EfPm = EfEntity & {
   RecipientRegSysId: string

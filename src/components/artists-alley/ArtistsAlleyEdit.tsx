@@ -1,17 +1,16 @@
-import {artistsAlleyOwnRegister} from "@/data/collections/artists-alley/ArtistsAlleyOwn";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { captureException } from '@sentry/react-native'
-import {useCallback, useState} from 'react'
+import { useCallback, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
-
 import { useArtistsAlleyLocalData } from '@/components/artists-alley/ArtistsAlley.common'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { ManagedImagePicker } from '@/components/generic/forms/ManagedImagePicker'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { useToastContext } from '@/context/ToastContext'
+import { artistsAlleyOwnRegister } from '@/data/collections/artists-alley/ArtistsAlleyOwn'
 
 const websiteUrlMatcher =
   /^\s*((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)\s*)?$/
@@ -95,18 +94,20 @@ export const ArtistsAlleyEdit = ({
 
       setIsPending(true)
       // Submit remote, toast for success or error.
-      artistsAlleyOwnRegister(data).then(
-        () => {
-          toast('info', t('submit_succeeded'), 6000)
-          onDismiss()
-        },
-        (error) => {
-          toast('error', t('submit_failed'), 6000)
-          captureException(error)
-        }
-      ).finally(() => {
-        setIsPending(false)
-      })
+      artistsAlleyOwnRegister(data)
+        .then(
+          () => {
+            toast('info', t('submit_succeeded'), 6000)
+            onDismiss()
+          },
+          (error) => {
+            toast('error', t('submit_failed'), 6000)
+            captureException(error)
+          }
+        )
+        .finally(() => {
+          setIsPending(false)
+        })
     },
     [toast, t, setLocalData, onDismiss]
   )

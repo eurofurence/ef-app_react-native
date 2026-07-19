@@ -1,9 +1,8 @@
-import type {EfPm} from "@/data/types/EfPm";
 import { format } from 'date-fns'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, type ViewStyle } from 'react-native'
-
 import { Pressable } from '@/components/generic/Pressable'
+import type { EfPm } from '@/data/types/EfPm'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { appStyles } from '../AppStyles'
@@ -19,14 +18,13 @@ export type PrivateMessageCardProps = {
   onPress: (item: EfPm) => void
 }
 
-export function PrivateMessageCard(
-  {
-    containerStyle,
-    style,
-    item,
-    onPress,
-  }: PrivateMessageCardProps) {
-  const {t} = useTranslation('PrivateMessageList')
+export function PrivateMessageCard({
+  containerStyle,
+  style,
+  item,
+  onPress,
+}: PrivateMessageCardProps) {
+  const { t } = useTranslation('PrivateMessageList')
   const styleContainer = useThemeBackground('background')
 
   const readStatus = item.ReadDateTimeUtc === null ? t('unread') : t('read')
@@ -78,7 +76,7 @@ export function PrivateMessageCard(
             accessibilityElementsHidden={true}
             importantForAccessibility='no'
           >
-            <Icon name='chevron-right' size={30}/>
+            <Icon name='chevron-right' size={30} />
           </View>
         </Row>
       </Pressable>

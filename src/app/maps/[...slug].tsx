@@ -1,12 +1,11 @@
-import {mapsFullCollection} from "@/data/collections/content/MapsFull";
-import {eq, useLiveQuery} from "@tanstack/react-db";
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { useLocalSearchParams } from 'expo-router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Header } from '@/components/generic/containers/Header'
-import {MapContent} from '@/components/maps/MapContent'
+import { MapContent } from '@/components/maps/MapContent'
+import { mapsFullCollection } from '@/data/collections/content/MapsFull'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export default function MapItem() {
@@ -19,12 +18,17 @@ export default function MapItem() {
   const linkId = params.slug?.[2]
   const backgroundStyle = useThemeBackground('background')
 
-  const {data: mapCache} = useLiveQuery({
-    id: 'maps-item',
-    query: q => q.from({map: mapsFullCollection})
-      .where(({map}) => eq(map.Id, mapId))
-      .findOne()
-  }, [mapId])
+  const { data: mapCache } = useLiveQuery(
+    {
+      id: 'maps-item',
+      query: (q) =>
+        q
+          .from({ map: mapsFullCollection })
+          .where(({ map }) => eq(map.Id, mapId))
+          .findOne(),
+    },
+    [mapId]
+  )
 
   // Resolve entry if requested
   const entry = useMemo(() => {
@@ -60,7 +64,7 @@ export default function MapItem() {
     >
       <Header>{titleText}</Header>
       {!mapCache?.Image || (entryId && !entry) || (linkId && !link) ? null : (
-        <MapContent map={mapCache} entry={entry} link={link}/>
+        <MapContent map={mapCache} entry={entry} link={link} />
       )}
     </View>
   )

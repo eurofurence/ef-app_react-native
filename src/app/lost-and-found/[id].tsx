@@ -1,27 +1,34 @@
-import {lostAndFoundCollection} from "@/data/collections/content/LostAndFound";
-import {eq, useLiveQuery} from "@tanstack/react-db";
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
-
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { NoData } from '@/components/generic/containers/NoData'
+import { lostAndFoundCollection } from '@/data/collections/content/LostAndFound'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export default function LostAndFoundDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('LostAndFound')
   const theme = useTheme()
-  const {data: item, isLoading, isError} = useLiveQuery({
-    id: 'lost-and-found-item',
-    query: q => q
-      .from({item: lostAndFoundCollection})
-      .where(({item}) => eq(item.Id, id))
-      .findOne()
-  }, [id])
+  const {
+    data: item,
+    isLoading,
+    isError,
+  } = useLiveQuery(
+    {
+      id: 'lost-and-found-item',
+      query: (q) =>
+        q
+          .from({ item: lostAndFoundCollection })
+          .where(({ item }) => eq(item.Id, id))
+          .findOne(),
+    },
+    [id]
+  )
 
   if (isLoading) {
     return (

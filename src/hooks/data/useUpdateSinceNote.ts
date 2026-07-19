@@ -1,11 +1,13 @@
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { isAfter } from 'date-fns'
-import {useEffect, useState} from 'react'
-
+import { useEffect, useState } from 'react'
+import {
+  lastViewTimesCollection,
+  lastViewTimesUpdate,
+} from '@/data/collections/supplemental/LastViewTimes'
+import type { EfEntity } from '@/data/types/EfEntity'
 import { getNow } from '@/hooks/time/useNow'
-import {eq, useLiveQuery} from '@tanstack/react-db'
-import {lastViewTimesCollection, lastViewTimesUpdate} from '@/data/collections/supplemental/LastViewTimes'
-import type {EfEntity} from '@/data/types/EfEntity'
-import {useLatchTrue} from '@/hooks/util/useLatchTrue'
+import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 
 export function useViewTrackingUpdate(entity: EfEntity, delay = 500) {
   // On use time and "invoked" latch.
@@ -32,15 +34,22 @@ export function useViewTrackingUpdate(entity: EfEntity, delay = 500) {
 
 export function useViewTrackingState(entity: EfEntity) {
   // Resolve source view entry.
-  const {data: view, isReady} = useLiveQuery({
-    id: `entity-last-view-${entity.Id}`,
-    query: q => q.from({entry: lastViewTimesCollection})
-      .where(({entry}) => eq(entry.Id, entity.Id))
-      .findOne()
-  }, [entity.Id])
+  const { data: view, isReady } = useLiveQuery(
+    {
+      id: `entity-last-view-${entity.Id}`,
+      query: (q) =>
+        q
+          .from({ entry: lastViewTimesCollection })
+          .where(({ entry }) => eq(entry.Id, entity.Id))
+          .findOne(),
+    },
+    [entity.Id]
+  )
 
   // Result is updated.
-  const updated = Boolean(isReady && view && isAfter(entity.LastChangeDateTimeUtc, view.Time))
+  const updated = Boolean(
+    isReady && view && isAfter(entity.LastChangeDateTimeUtc, view.Time)
+  )
 
   return useLatchTrue(updated)
 }

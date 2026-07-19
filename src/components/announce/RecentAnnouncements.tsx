@@ -1,37 +1,32 @@
-import {useNow} from "@/hooks/time/useNow";
-import {
-  addMinutes,
-  isAfter,
-  isBefore,
-  subMinutes,
-} from 'date-fns'
+import { useLiveQuery } from '@tanstack/react-db'
+import { addMinutes, isAfter, isBefore, subMinutes } from 'date-fns'
 import { router } from 'expo-router'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
+import { announcementsFullCollection } from '@/data/collections/content/AnnouncementsFull'
+import { useNow } from '@/hooks/time/useNow'
 import { Section } from '../generic/atoms/Section'
 import { Button } from '../generic/containers/Button'
-
 import { AnnouncementCard } from './AnnouncementCard'
-import {useLiveQuery} from '@tanstack/react-db'
-import {announcementsFullCollection} from '@/data/collections/content/AnnouncementsFull'
 
 const recentLimit = 2
 
 export function RecentAnnouncements() {
-  const {t} = useTranslation('Home')
+  const { t } = useTranslation('Home')
   const now = useNow()
-  const {t: tAnnouncements} = useTranslation('Announcements')
-  const {data: announcements} = useLiveQuery(announcementsFullCollection)
+  const { t: tAnnouncements } = useTranslation('Announcements')
+  const { data: announcements } = useLiveQuery(announcementsFullCollection)
 
   const recent = useMemo(
     () =>
-      announcements.filter(
-        (item) =>
-          isAfter(now, subMinutes(item.ValidFromDateTimeUtc, 5)) &&
-          isBefore(now, addMinutes(item.ValidFromDateTimeUtc, 5))
-      ).slice(0, recentLimit),
+      announcements
+        .filter(
+          (item) =>
+            isAfter(now, subMinutes(item.ValidFromDateTimeUtc, 5)) &&
+            isBefore(now, addMinutes(item.ValidFromDateTimeUtc, 5))
+        )
+        .slice(0, recentLimit),
     [announcements, now]
   )
 
@@ -43,7 +38,7 @@ export function RecentAnnouncements() {
     <>
       <Section
         title={t('recent_announcements')}
-        subtitle={t('announcementsTitle', {count: recent.length})}
+        subtitle={t('announcementsTitle', { count: recent.length })}
         icon='newspaper'
       />
       <View
@@ -59,7 +54,7 @@ export function RecentAnnouncements() {
             onPress={(announcement) =>
               router.navigate({
                 pathname: '/announcements/[id]',
-                params: {id: announcement.Id},
+                params: { id: announcement.Id },
               })
             }
           />

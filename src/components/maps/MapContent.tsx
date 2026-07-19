@@ -1,7 +1,3 @@
-import type {EfMapFull} from "@/data/collections/content/MapsFull";
-import type {EfLink} from "@/data/types/EfLink";
-
-import type {EfMapEntry} from "@/data/types/EfMapEntry";
 import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import {
   ReactNativeZoomableView as ZoomableView,
@@ -26,6 +22,9 @@ import {
   View,
   type ViewStyle,
 } from 'react-native'
+import type { EfMapFull } from '@/data/collections/content/MapsFull'
+import type { EfLink } from '@/data/types/EfLink'
+import type { EfMapEntry } from '@/data/types/EfMapEntry'
 
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
@@ -101,7 +100,9 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
 
           // Get area and area center.
           const x1 =
-            (((map.Image?.Width ?? 0) * zoom) / 2 - offsetX * zoom - targetWidth / 2) /
+            (((map.Image?.Width ?? 0) * zoom) / 2 -
+              offsetX * zoom -
+              targetWidth / 2) /
             zoom
           const x2 = x1 + targetWidth / zoom
           const y1 =
@@ -174,7 +175,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
 
   // Compute containers.
   const styleContainer = useMemo<ViewStyle>(
-    () => ({width: map.Image?.Width ?? 0, height: map.Image?.Height ?? 0}),
+    () => ({ width: map.Image?.Width ?? 0, height: map.Image?.Height ?? 0 }),
     [map]
   )
   const styleMarker = useMemo<ViewStyle>(

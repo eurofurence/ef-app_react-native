@@ -60,7 +60,11 @@ export function useAppSetting<T extends keyof EfAppSettings>(key: T) {
   const value = (useLiveQuery(appSettingsCollection).data[0] ??
     appSettingsDefaults)[key]
   const update = useCallback(
-    (value: EfAppSettings[T] | ((current: EfAppSettings[T]) => EfAppSettings[T])) => {
+    (
+      value:
+        | EfAppSettings[T]
+        | ((current: EfAppSettings[T]) => EfAppSettings[T])
+    ) => {
       appSettingsUpdate((draft) => {
         draft[key] = value instanceof Function ? value(draft[key]) : value
       })

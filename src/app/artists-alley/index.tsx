@@ -1,34 +1,39 @@
-import {ArtistsAlleyCard} from "@/components/artists-alley/ArtistsAlleyCard";
-import {ArtistsAlleySection} from "@/components/artists-alley/ArtistsAlleySection";
-import type {IconNames} from "@/components/generic/atoms/Icon";
-import {EfSectionList} from "@/components/generic/lists/EfLists";
-import {artistsAlleyCollection} from "@/data/collections/artists-alley/ArtistsAlley";
-import {artistsAlleyAdminCollection} from "@/data/collections/artists-alley/ArtistsAlleyAdmin";
-import {artistsAlleyFullCollection, type EfArtistsAlleyFull} from "@/data/collections/artists-alley/ArtistsAlleyFull";
-import type {EfArtistsAlley} from "@/data/types/EfArtistsAlley";
-import type {EfTableRegistration, EfTableRegistrationStatus} from "@/data/types/EfTableRegistration";
-import {collectBy, orderBy} from "@/util/arrays";
 import { captureException } from '@sentry/react-native'
-import {useLiveQuery} from "@tanstack/react-db";
+import { useLiveQuery } from '@tanstack/react-db'
 import { router } from 'expo-router'
-import {useEffect, useMemo, useState} from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, View } from 'react-native'
-
+import { ArtistsAlleyCard } from '@/components/artists-alley/ArtistsAlleyCard'
+import { ArtistsAlleySection } from '@/components/artists-alley/ArtistsAlleySection'
+import type { IconNames } from '@/components/generic/atoms/Icon'
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Button } from '@/components/generic/containers/Button'
 import { Header } from '@/components/generic/containers/Header'
+import { EfSectionList } from '@/components/generic/lists/EfLists'
 import { artistAlleyUrl } from '@/configuration'
 import { auth, useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { artistsAlleyCollection } from '@/data/collections/artists-alley/ArtistsAlley'
+import { artistsAlleyAdminCollection } from '@/data/collections/artists-alley/ArtistsAlleyAdmin'
+import {
+  artistsAlleyFullCollection,
+  type EfArtistsAlleyFull,
+} from '@/data/collections/artists-alley/ArtistsAlleyFull'
+import type { EfArtistsAlley } from '@/data/types/EfArtistsAlley'
+import type {
+  EfTableRegistration,
+  EfTableRegistrationStatus,
+} from '@/data/types/EfTableRegistration'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { collectBy, orderBy } from '@/util/arrays'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 function onPressItem(item: EfArtistsAlley | EfTableRegistration) {
   router.navigate({
     pathname: '/artists-alley/[id]',
-    params: {id: item.Id},
+    params: { id: item.Id },
   })
 }
 
@@ -48,25 +53,33 @@ export default function List() {
     inRole(user, 'ArtistAlleyModerator')
   const isAuthorized = isCheckedIn || isPrivileged
 
-
-  const {data: sourceGeneral, isLoading: isLoadingGeneral} = useLiveQuery(artistsAlleyFullCollection)
-  const {data: sourceAdmin, isLoading: isLoadingAdmin} = useLiveQuery(artistsAlleyAdminCollection)
+  const { data: sourceGeneral, isLoading: isLoadingGeneral } = useLiveQuery(
+    artistsAlleyFullCollection
+  )
+  const { data: sourceAdmin, isLoading: isLoadingAdmin } = useLiveQuery(
+    artistsAlleyAdminCollection
+  )
 
   const grouping = useMemo(() => {
     if (isPrivileged) {
-      const sorted = orderBy(sourceAdmin, a =>
-        a.State === 'Pending' && 1 ||
-        a.State === 'Accepted' && 2 ||
-        a.State === 'Published' && 3 ||
-        a.State === 'Rejected' && 4 || 5)
-      return collectBy(sorted, a => a.State)
+      const sorted = orderBy(
+        sourceAdmin,
+        (a) =>
+          (a.State === 'Pending' && 1) ||
+          (a.State === 'Accepted' && 2) ||
+          (a.State === 'Published' && 3) ||
+          (a.State === 'Rejected' && 4) ||
+          5
+      )
+      return collectBy(sorted, (a) => a.State)
     } else {
       return sourceGeneral
     }
   }, [sourceAdmin, sourceGeneral])
   const isLoading = isPrivileged ? isLoadingAdmin : isLoadingGeneral
-  const refresh = isPrivileged ? artistsAlleyAdminCollection.utils.refetch : artistsAlleyCollection.utils.refetch
-
+  const refresh = isPrivileged
+    ? artistsAlleyAdminCollection.utils.refetch
+    : artistsAlleyCollection.utils.refetch
 
   useEffect(() => {
     if (isAuthorized) {
@@ -76,46 +89,50 @@ export default function List() {
     }
   }, [isAuthorized, t])
 
-  const listHeaderComponent = <View className='m-5 gap-4'>
-        <Label type='para'>{t('intro')}</Label>
+  const listHeaderComponent = (
+    <View className='m-5 gap-4'>
+      <Label type='para'>{t('intro')}</Label>
+      <Button
+        icon='link'
+        outline
+        onPress={() => Linking.openURL(artistAlleyUrl)}
+        accessibilityRole='button'
+        accessibilityLabel={t('accessibility.learn_more_button')}
+        accessibilityHint={t('accessibility.learn_more_button_hint')}
+      >
+        {t('learn_more')}
+      </Button>
+
+      {!isCheckedIn ? null : (
         <Button
-          icon='link'
-          outline
-          onPress={() => Linking.openURL(artistAlleyUrl)}
+          icon='application-edit-outline'
+          onPress={() => router.navigate('/artists-alley/reg')}
           accessibilityRole='button'
-          accessibilityLabel={t('accessibility.learn_more_button')}
-          accessibilityHint={t('accessibility.learn_more_button_hint')}
+          accessibilityLabel={t('accessibility.register_self_button')}
+          accessibilityHint={t('accessibility.register_self_button_hint')}
         >
-          {t('learn_more')}
+          {t('list.register_self')}
         </Button>
+      )}
+      {!isPrivileged ? null : (
+        <Button
+          icon='shield-plus-outline'
+          onPress={() => router.navigate('/artists-alley/moderate')}
+          accessibilityRole='button'
+          accessibilityLabel={t('accessibility.moderate_button')}
+          accessibilityHint={t('accessibility.moderate_button_hint')}
+        >
+          {t('list.moderate')}
+        </Button>
+      )}
+    </View>
+  )
 
-        {!isCheckedIn ? null : (
-          <Button
-            icon='application-edit-outline'
-            onPress={() => router.navigate('/artists-alley/reg')}
-            accessibilityRole='button'
-            accessibilityLabel={t('accessibility.register_self_button')}
-            accessibilityHint={t('accessibility.register_self_button_hint')}
-          >
-            {t('list.register_self')}
-          </Button>
-        )}
-        {!isPrivileged ? null : (
-          <Button
-            icon='shield-plus-outline'
-            onPress={() => router.navigate('/artists-alley/moderate')}
-            accessibilityRole='button'
-            accessibilityLabel={t('accessibility.moderate_button')}
-            accessibilityHint={t('accessibility.moderate_button_hint')}
-          >
-            {t('list.moderate')}
-          </Button>
-        )}
-      </View>
-
-  const listEmptyComponent = <Label type='h3' className='mx-5' variant='middle'>
-        {t('list.artists_alley_empty')}
-      </Label>
+  const listEmptyComponent = (
+    <Label type='h3' className='mx-5' variant='middle'>
+      {t('list.artists_alley_empty')}
+    </Label>
+  )
 
   if (!isAuthorized) {
     const disabledReason =
@@ -182,25 +199,34 @@ export default function List() {
       <StatusMessage message={announcementMessage} />
       <View style={StyleSheet.absoluteFill}>
         <Header>{t('list.header')}</Header>
-        <EfSectionList<EfTableRegistrationStatus, EfArtistsAlleyFull | EfTableRegistration>
+        <EfSectionList<
+          EfTableRegistrationStatus,
+          EfArtistsAlleyFull | EfTableRegistration
+        >
           refreshing={isLoading}
           onRefresh={() => vibrateAfter(refresh())}
           scrollEnabled={true}
-          contentContainerClassName="pb-32"
+          contentContainerClassName='pb-32'
           ListHeaderComponent={listHeaderComponent}
           ListEmptyComponent={listEmptyComponent}
           data={grouping}
-          renderSection={({item}) => {
+          renderSection={({ item }) => {
             const title = t(item)
             const icon = ((item === 'Pending' && 'notebook-edit') ||
               (item === 'Accepted' && 'notebook-check') ||
               (item === 'Published' && 'notebook') ||
               (item === 'Rejected' && 'notebook-remove') ||
               'notebook') as IconNames
-            return <ArtistsAlleySection title={title} icon={icon}/>
+            return <ArtistsAlleySection title={title} icon={icon} />
           }}
-          renderItem={({item}) => {
-            return <ArtistsAlleyCard containerStyle={styles.item} item={item} onPress={onPressItem}/>
+          renderItem={({ item }) => {
+            return (
+              <ArtistsAlleyCard
+                containerStyle={styles.item}
+                item={item}
+                onPress={onPressItem}
+              />
+            )
           }}
         />
       </View>

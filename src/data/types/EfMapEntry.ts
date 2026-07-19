@@ -1,4 +1,4 @@
-import type {EfLink} from "@/data/types/EfLink";
+import type { EfLink } from '@/data/types/EfLink'
 
 export type EfMapEntry = {
   Id: string

@@ -9,7 +9,7 @@ export const kbGroupsCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ['kb-groups'],
-    meta: {collection: true},
+    meta: { collection: true },
     async queryFn({ signal }) {
       const response = await api.get<EfKbGroup[]>('/KnowledgeGroups', {
         signal,

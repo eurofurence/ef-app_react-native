@@ -1,41 +1,41 @@
-import {announcementsCollection} from "@/data/collections/content/Announcements";
-import {dealersFullCollection} from "@/data/collections/content/DealersFull";
-import {eventsCollection} from "@/data/collections/content/Events";
-import {kbEntriesCollection} from "@/data/collections/content/KbEntries";
-import type {EfImage} from "@/data/types/EfImage";
-import {useLiveQuery} from "@tanstack/react-db";
-import {useMemo} from "react";
+import { useLiveQuery } from '@tanstack/react-db'
+import { useMemo } from 'react'
+import { announcementsCollection } from '@/data/collections/content/Announcements'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { eventsCollection } from '@/data/collections/content/Events'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import type { EfImage } from '@/data/types/EfImage'
 
 /**
  * Image usage location.
  */
 export type ImageLocation =
   | {
-  type: 'Event'
-  location: 'eventPoster' | 'eventBanner'
-  title: string
-}
+      type: 'Event'
+      location: 'eventPoster' | 'eventBanner'
+      title: string
+    }
   | {
-  type: 'Dealer'
-  location: 'artist' | 'artistThumbnail' | 'artPreview'
-  title: string
-}
+      type: 'Dealer'
+      location: 'artist' | 'artistThumbnail' | 'artPreview'
+      title: string
+    }
   | {
-  type: 'Announcement'
-  location: 'announcement'
-  title: string
-}
+      type: 'Announcement'
+      location: 'announcement'
+      title: string
+    }
   | {
-  type: 'KnowledgeEntry'
-  location: 'knowledgeEntryBanner'
-  title: string
-}
+      type: 'KnowledgeEntry'
+      location: 'knowledgeEntryBanner'
+      title: string
+    }
 
 export function useImageLocation(key: EfImage['Id']) {
-  const {data: events} = useLiveQuery(eventsCollection)
-  const {data: dealers} = useLiveQuery(dealersFullCollection)
-  const {data: announcements} = useLiveQuery(announcementsCollection)
-  const {data: kbEntries} = useLiveQuery(kbEntriesCollection)
+  const { data: events } = useLiveQuery(eventsCollection)
+  const { data: dealers } = useLiveQuery(dealersFullCollection)
+  const { data: announcements } = useLiveQuery(announcementsCollection)
+  const { data: kbEntries } = useLiveQuery(kbEntriesCollection)
 
   return useMemo((): ImageLocation | undefined => {
     for (const event of events) {

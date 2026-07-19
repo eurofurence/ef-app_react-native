@@ -1,6 +1,3 @@
-import {useFavoriteDealersToasts} from "@/data/hooks/useFavoriteDealersToasts";
-import {useFavoriteEventsToasts} from "@/data/hooks/useFavoriteEventsToasts";
-import {useLocalNotificationsIntegration} from "@/data/hooks/useLocalNotificationsIntegration";
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { SplashScreen, Stack, useSegments } from 'expo-router'
 import {
@@ -12,9 +9,11 @@ import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-
 import { ToastProvider } from '@/context/ToastContext'
 import { AppClients } from '@/data/clients/AppClients'
+import { useFavoriteDealersToasts } from '@/data/hooks/useFavoriteDealersToasts'
+import { useFavoriteEventsToasts } from '@/data/hooks/useFavoriteEventsToasts'
+import { useLocalNotificationsIntegration } from '@/data/hooks/useLocalNotificationsIntegration'
 import { useStackScreensData } from '@/hooks/data/useStackScreensData'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'

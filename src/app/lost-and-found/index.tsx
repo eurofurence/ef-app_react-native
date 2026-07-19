@@ -1,15 +1,8 @@
-import {EfList} from "@/components/generic/lists/EfLists";
-import {LostAndFoundCard} from "@/components/lost-and-found/LostAndFoundCard";
-import {lostAndFoundCollection} from "@/data/collections/content/LostAndFound";
-import {synchronize, useIsSynchronizing} from "@/data/hooks/useSynchronize";
-import type {EfLostAndFound} from "@/data/types/EfLostAndFound";
-import {vibrateAfter} from "@/util/vibrateAfter";
-import {ilike, inArray, or, useLiveQuery} from "@tanstack/react-db";
-import {router} from "expo-router";
-import {useRef, useState} from 'react'
+import { ilike, inArray, or, useLiveQuery } from '@tanstack/react-db'
+import { router } from 'expo-router'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import {
   ComboModal,
   type ComboModalRef,
@@ -20,16 +13,22 @@ import { Button } from '@/components/generic/containers/Button'
 import { Header } from '@/components/generic/containers/Header'
 import { NoData } from '@/components/generic/containers/NoData'
 import { Row } from '@/components/generic/containers/Row'
+import { EfList } from '@/components/generic/lists/EfLists'
+import { LostAndFoundCard } from '@/components/lost-and-found/LostAndFoundCard'
+import { lostAndFoundCollection } from '@/data/collections/content/LostAndFound'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
+import type { EfLostAndFound } from '@/data/types/EfLostAndFound'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 function onPressItem(item: EfLostAndFound) {
   router.navigate({
     pathname: '/lost-and-found/[id]',
-    params: {id: item.Id},
+    params: { id: item.Id },
   })
 }
 
 export default function LostAndFoundPage() {
-  const {t} = useTranslation('LostAndFound')
+  const { t } = useTranslation('LostAndFound')
 
   const isSynchronizing = useIsSynchronizing()
   const [search, setSearch] = useState<string>('')
@@ -38,21 +37,35 @@ export default function LostAndFoundPage() {
   const modalRef = useRef<ComboModalRef<string> | null>(null)
 
   const term = search.trim().toLowerCase()
-  const {data: items, isLoading, isError} = useLiveQuery({
+  const {
+    data: items,
+    isLoading,
+    isError,
+  } = useLiveQuery(
+    {
       id: 'lost-and-found',
-      query: q => q.from({item: lostAndFoundCollection})
-        .where(({item}) =>
-          or(
-            selectedStatuses.length === 0,
-            inArray(item.Status, selectedStatuses)))
-        .where(({item}) =>
-          or(
-            term.length === 0,
-            ilike(item.Title, `%${term}%`),
-            ilike(item.Description, `%${term}%`)))
-        .orderBy(({item}) => item.LastChangeDateTimeUtc, {direction: "desc"})
+      query: (q) =>
+        q
+          .from({ item: lostAndFoundCollection })
+          .where(({ item }) =>
+            or(
+              selectedStatuses.length === 0,
+              inArray(item.Status, selectedStatuses)
+            )
+          )
+          .where(({ item }) =>
+            or(
+              term.length === 0,
+              ilike(item.Title, `%${term}%`),
+              ilike(item.Description, `%${term}%`)
+            )
+          )
+          .orderBy(({ item }) => item.LastChangeDateTimeUtc, {
+            direction: 'desc',
+          }),
     },
-    [selectedStatuses, term])
+    [selectedStatuses, term]
+  )
 
   if (isLoading) {
     return (
@@ -108,11 +121,11 @@ export default function LostAndFoundPage() {
       accessibilityLabel={t('accessibility.main_container')}
     >
       <Header>{t('header')}</Header>
-      <Search className='mx-2.5' filter={search} setFilter={setSearch}/>
+      <Search className='mx-2.5' filter={search} setFilter={setSearch} />
 
       <Row
         variant='start'
-        style={{paddingHorizontal: 10, gap: 8, alignItems: 'center'}}
+        style={{ paddingHorizontal: 10, gap: 8, alignItems: 'center' }}
       >
         <Button
           onPress={async () => {
@@ -123,8 +136,8 @@ export default function LostAndFoundPage() {
             )
             setSelectedStatuses(res ?? [])
           }}
-          containerStyle={{flex: 0}}
-          style={{flex: 0}}
+          containerStyle={{ flex: 0 }}
+          style={{ flex: 0 }}
         >
           {t('filters')}
         </Button>
@@ -143,13 +156,20 @@ export default function LostAndFoundPage() {
         refreshing={isSynchronizing}
         onRefresh={() => vibrateAfter(synchronize())}
         scrollEnabled={true}
-        contentContainerClassName="pb-32"
+        contentContainerClassName='pb-32'
         data={items}
-        renderItem={({item}) => {
-          return <LostAndFoundCard containerStyle={styles.item} item={item} onPress={onPressItem}/>;
+        renderItem={({ item }) => {
+          return (
+            <LostAndFoundCard
+              containerStyle={styles.item}
+              item={item}
+              onPress={onPressItem}
+            />
+          )
         }}
         accessibilityLabel={t('accessibility.lost_found_list')}
-        accessibilityHint={t('accessibility.lost_found_list_hint')}/>
+        accessibilityHint={t('accessibility.lost_found_list_hint')}
+      />
     </View>
   )
 }

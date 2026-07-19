@@ -1,6 +1,6 @@
-import type {EfMapEntry} from "@/data/types/EfMapEntry";
-import type {EfEntity} from './EfEntity.ts'
-import type {EfId} from './EfId.ts'
+import type { EfMapEntry } from '@/data/types/EfMapEntry'
+import type { EfEntity } from './EfEntity.ts'
+import type { EfId } from './EfId.ts'
 
 export type EfMap = EfEntity & {
   Description: string

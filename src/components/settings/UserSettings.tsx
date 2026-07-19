@@ -1,9 +1,8 @@
-import {synchronize, useIsSynchronizing} from "@/data/hooks/useSynchronize";
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 import { AnalyticsOptIns } from './AnalyticsOptIns'

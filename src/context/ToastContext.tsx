@@ -119,8 +119,10 @@ export const ToastProvider = ({ children }: ToastContextProviderProps) => {
       }
 
       setMessages((current) => {
-        const source = filtersGroup ? current.filter(item => item.group !== group) : current;
-        return [...source, message];
+        const source = filtersGroup
+          ? current.filter((item) => item.group !== group)
+          : current
+        return [...source, message]
       })
       setTimeout(() => {
         setMessages((current) => {

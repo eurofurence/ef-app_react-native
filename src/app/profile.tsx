@@ -1,15 +1,14 @@
-import {synchronize, useIsSynchronizing} from "@/data/hooks/useSynchronize";
 import { captureException } from '@sentry/react-native'
 import { Redirect } from 'expo-router'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ProfileContent } from '@/components/ProfileContent'
 import { auth, useAuthState } from '@/data/clients/auth'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
 

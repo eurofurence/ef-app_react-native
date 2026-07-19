@@ -10,7 +10,7 @@ export const mapsCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ['maps'],
-    meta: {collection: true},
+    meta: { collection: true },
     async queryFn({ signal }) {
       const response = await api.get<EfMap[]>('/Maps', { signal })
       return response.data

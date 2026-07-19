@@ -1,18 +1,17 @@
-import {daysCollection} from "@/data/collections/content/Days";
-import type {EfDay} from "@/data/types/EfDay";
-import {useLiveQuery} from "@tanstack/react-db";
+import { useLiveQuery } from '@tanstack/react-db'
 import { addWeeks, format, subWeeks } from 'date-fns'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
+import { daysCollection } from '@/data/collections/content/Days'
 import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
+import type { EfDay } from '@/data/types/EfDay'
 import { useNow } from '@/hooks/time/useNow'
 
 const ONE_HOUR = 60 * 60 * 1000
@@ -20,7 +19,7 @@ const ONE_MINUTE = 60 * 1000
 
 export function TimeTravel() {
   const { t } = useTranslation('TimeTravel')
-  const {data: days} = useLiveQuery(daysCollection)
+  const { data: days } = useLiveQuery(daysCollection)
   const now = useNow()
 
   const [enabled, setEnabled] = useAppSetting('TimeTravelEnabled')

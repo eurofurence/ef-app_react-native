@@ -59,9 +59,7 @@ export const ComboModal = forwardRef(
     const [selected, setSelected] = useState<T[]>([])
     const [filter, setFilter] = useState<string>('')
 
-    const onChangeRef = useRef<((selected: T[]) => void) | undefined>(
-      undefined
-    )
+    const onChangeRef = useRef<((selected: T[]) => void) | undefined>(undefined)
 
     const fuse = useMemo(
       () => new Fuse(options, { keys: [{ name: 'Label', getFn: getLabel }] }),

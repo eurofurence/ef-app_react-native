@@ -9,7 +9,7 @@ export const lostAndFoundCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ['lost-and-found'],
-    meta: {collection: true},
+    meta: { collection: true },
     async queryFn({ signal }) {
       const response = await api.get<EfLostAndFound[]>('/LostAndFound/Items', {
         signal,

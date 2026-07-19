@@ -1,4 +1,3 @@
-import {pmsSend} from "@/data/collections/user/Pms";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Redirect } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
@@ -6,7 +5,6 @@ import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { z } from 'zod'
-
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Button } from '@/components/generic/containers/Button'
@@ -17,6 +15,7 @@ import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { pmsSend } from '@/data/collections/user/Pms'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 const messageSchema = z.object({
@@ -66,12 +65,14 @@ export default function ComposeMessage() {
   const onSend = useCallback(
     (args: MessageSchema) => {
       setIsPending(true)
-      pmsSend(args).then(
-        () => toast('info', 'Message sent'),
-        () => toast('error', 'Failed to send message'),
-      ).finally(() => {
-        setIsPending(false)
-      })
+      pmsSend(args)
+        .then(
+          () => toast('info', 'Message sent'),
+          () => toast('error', 'Failed to send message')
+        )
+        .finally(() => {
+          setIsPending(false)
+        })
     },
     [toast]
   )

@@ -1,8 +1,7 @@
-import type {EfEventFull} from "@/data/collections/content/EventsFull";
 import { captureException } from '@sentry/react-native'
 import { Share } from 'react-native'
-
 import { appBase, conAbbr } from '@/configuration'
+import type { EfEventFull } from '@/data/collections/content/EventsFull'
 
 export const shareEvent = (event: Pick<EfEventFull, 'Id' | 'Title'>) =>
   Share.share(

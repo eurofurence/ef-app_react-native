@@ -1,11 +1,13 @@
-import type {EfArtistsAlleyFull} from "@/data/collections/artists-alley/ArtistsAlleyFull";
-import type {EfTableRegistration, EfTableRegistrationStatus} from "@/data/types/EfTableRegistration";
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, type ViewStyle } from 'react-native'
-
 import { stateToBackground } from '@/components/artists-alley/utils'
 import { Pressable } from '@/components/generic/Pressable'
+import type { EfArtistsAlleyFull } from '@/data/collections/artists-alley/ArtistsAlleyFull'
+import type {
+  EfTableRegistration,
+  EfTableRegistrationStatus,
+} from '@/data/types/EfTableRegistration'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { appStyles } from '../AppStyles'

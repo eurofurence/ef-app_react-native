@@ -1,11 +1,10 @@
-import type {EfLostAndFound} from "@/data/types/EfLostAndFound";
-import {useCallback} from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Card } from '@/components/generic/containers/Card'
+import type { EfLostAndFound } from '@/data/types/EfLostAndFound'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export type LostAndFoundCardProps = {
@@ -14,14 +13,13 @@ export type LostAndFoundCardProps = {
   containerStyle?: any
 }
 
-export function LostAndFoundCard(
-  {
-    item,
-    onPress,
-    containerStyle,
-  }: LostAndFoundCardProps) {
+export function LostAndFoundCard({
+  item,
+  onPress,
+  containerStyle,
+}: LostAndFoundCardProps) {
   const theme = useTheme()
-  const {t} = useTranslation('LostAndFound')
+  const { t } = useTranslation('LostAndFound')
 
   const statusColor =
     item.Status === 'Found'
@@ -30,10 +28,7 @@ export function LostAndFoundCard(
         ? theme.warning
         : theme.notification
 
-  const onPressBind = useCallback(
-    () => onPress?.(item),
-    [item, onPress],
-  )
+  const onPressBind = useCallback(() => onPress?.(item), [item, onPress])
 
   return (
     <View style={containerStyle}>
@@ -53,7 +48,7 @@ export function LostAndFoundCard(
           {item.ImageUrl && (
             <View style={styles.imageContainer}>
               <Image
-                source={{uri: item.ImageUrl}}
+                source={{ uri: item.ImageUrl }}
                 style={styles.image}
                 accessibilityLabel={t('accessibility.item_image', {
                   title: item.Title,
@@ -71,7 +66,7 @@ export function LostAndFoundCard(
                 {item.Title}
               </Label>
               <View
-                style={[styles.statusBadge, {backgroundColor: statusColor}]}
+                style={[styles.statusBadge, { backgroundColor: statusColor }]}
                 accessibilityLabel={t('accessibility.status_badge', {
                   status: t(`status.${item.Status}`),
                 })}

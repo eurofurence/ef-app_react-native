@@ -1,13 +1,10 @@
-import {pmsCollection} from "@/data/collections/user/Pms";
-import type {EfPm} from "@/data/types/EfPm";
 import { captureException } from '@sentry/react-native'
-import {useLiveQuery} from "@tanstack/react-db";
+import { useLiveQuery } from '@tanstack/react-db'
 import { Redirect, router } from 'expo-router'
 import { chain, isEmpty, partition, startCase } from 'lodash'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { SectionList, StyleSheet, View } from 'react-native'
-
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Header } from '@/components/generic/containers/Header'
@@ -15,6 +12,8 @@ import { NoData } from '@/components/generic/containers/NoData'
 import { PrivateMessageCard } from '@/components/messages/PrivateMessageCard'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { pmsCollection } from '@/data/collections/user/Pms'
+import type { EfPm } from '@/data/types/EfPm'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
@@ -23,11 +22,11 @@ type Section = {
   data: EfPm[]
 }
 
-function keyExtractor({Id}: EfPm, index: number) {
+function keyExtractor({ Id }: EfPm, index: number) {
   return Id + index
 }
 
-function renderItem({item}: { item: EfPm }) {
+function renderItem({ item }: { item: EfPm }) {
   return (
     <PrivateMessageCard
       key={item.Id}
@@ -46,7 +45,7 @@ function renderItem({item}: { item: EfPm }) {
 export default function Messages() {
   const { t } = useTranslation('PrivateMessageList')
   const { t: a11y } = useTranslation('PrivateMessageList')
-  const {data: communications, isLoading} = useLiveQuery(pmsCollection)
+  const { data: communications, isLoading } = useLiveQuery(pmsCollection)
   const { user } = useAuthState()
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
@@ -57,11 +56,14 @@ export default function Messages() {
   const isPrivateMessageSender = inRole(user, 'PrivateMessageSender')
 
   const sectionedData = useMemo(() => {
-    const [unread, read] = partition(communications, it => it.ReadDateTimeUtc === null)
+    const [unread, read] = partition(
+      communications,
+      (it) => it.ReadDateTimeUtc === null
+    )
 
     const readSections = chain(read)
       .orderBy(['AuthorName', 'SentDateTimeUtc'], ['asc', 'desc'])
-      .groupBy(it =>
+      .groupBy((it) =>
         it.AuthorName
           ? t('from', { author: it.AuthorName?.trim() })
           : t('from_unknown')
@@ -153,7 +155,9 @@ export default function Messages() {
           contentContainerStyle={styles.container}
           keyExtractor={keyExtractor}
           stickySectionHeadersEnabled
-          onRefresh={() => pmsCollection.utils.refetch().catch(captureException)}
+          onRefresh={() =>
+            pmsCollection.utils.refetch().catch(captureException)
+          }
           refreshing={isLoading}
           ListEmptyComponent={emptyComponent}
           ListHeaderComponent={headerComponent}

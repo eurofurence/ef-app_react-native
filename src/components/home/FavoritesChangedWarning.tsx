@@ -1,8 +1,7 @@
-import {lastViewTimesClear} from "@/data/collections/supplemental/LastViewTimes";
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-
 import { Icon } from '@/components/generic/atoms/Icon'
+import { lastViewTimesClear } from '@/data/collections/supplemental/LastViewTimes'
 import { useFavoritesUpdated } from '@/hooks/data/useFavoritesUpdated'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 
@@ -15,8 +14,7 @@ export const FavoritesChangedWarning = () => {
     keyPrefix: 'accessibility',
   })
   const iconColor = useThemeColorValue('important')
-  const { events, dealers } =    useFavoritesUpdated()
-
+  const { events, dealers } = useFavoritesUpdated()
 
   if (!events.length && !dealers.length) {
     return null

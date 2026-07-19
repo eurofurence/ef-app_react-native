@@ -1,17 +1,20 @@
-import {conId} from "@/configuration";
-import {appSettingsCollection} from "@/data/collections/supplemental/AppSettings";
-import {type EfEventFull, eventsFullCollection} from "@/data/collections/content/EventsFull";
-import {localNotificationsCollection} from "@/data/collections/supplemental/LocalNotifications";
-import type {EfLocalNotification} from "@/data/types/EfLocalNotification";
-import {getNowOffset} from "@/hooks/time/useNow";
-import {parseDefaultISO} from "@/util/parseDefaultISO";
-import {captureException} from "@sentry/react-native";
-import {isBefore, subMilliseconds, subMinutes} from "date-fns";
-import {randomUUID} from "expo-crypto";
-import * as Notifications from "expo-notifications";
-import {SchedulableTriggerInputTypes} from "expo-notifications";
-import {useEffect} from "react";
-import {Platform} from "react-native";
+import { captureException } from '@sentry/react-native'
+import { isBefore, subMilliseconds, subMinutes } from 'date-fns'
+import { randomUUID } from 'expo-crypto'
+import * as Notifications from 'expo-notifications'
+import { SchedulableTriggerInputTypes } from 'expo-notifications'
+import { useEffect } from 'react'
+import { Platform } from 'react-native'
+import { conId } from '@/configuration'
+import {
+  type EfEventFull,
+  eventsFullCollection,
+} from '@/data/collections/content/EventsFull'
+import { appSettingsCollection } from '@/data/collections/supplemental/AppSettings'
+import { localNotificationsCollection } from '@/data/collections/supplemental/LocalNotifications'
+import type { EfLocalNotification } from '@/data/types/EfLocalNotification'
+import { getNowOffset } from '@/hooks/time/useNow'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 async function scheduleEventReminder(
   time: string,
@@ -73,9 +76,9 @@ async function cancelEventReminder(id: string) {
     (Platform.OS === 'android' || Platform.OS === 'ios') &&
     !id.startsWith('offline:')
   ) {
-    await Notifications.cancelScheduledNotificationAsync(
-      id
-    ).catch((error) => captureException(error, {level: 'warning'}))
+    await Notifications.cancelScheduledNotificationAsync(id).catch((error) =>
+      captureException(error, { level: 'warning' })
+    )
   }
 }
 
@@ -98,7 +101,8 @@ async function processAdded(event: EfEventFull, offset: number) {
     event.Id,
     event.Title,
     'This event is starting soon!',
-    offset)
+    offset
+  )
 
   // Insert new.
   localNotificationsCollection.insert(entity)
@@ -123,7 +127,8 @@ async function processChange(event: EfEventFull, offset: number) {
     event.Id,
     event.Title,
     'This event is starting soon!',
-    offset)
+    offset
+  )
 
   // Insert.
   localNotificationsCollection.insert(entity)
@@ -148,38 +153,41 @@ async function processRemoved(event: EfEventFull) {
 export function useLocalNotificationsIntegration() {
   useEffect(() => {
     // Subscribe to event changes.
-    const subEvents = eventsFullCollection.subscribeChanges(async changes => {
+    const subEvents = eventsFullCollection.subscribeChanges(async (changes) => {
       for (const change of changes) {
         // Get current TTO.
         const offset = getNowOffset()
 
         // Process types of changes.
         if (!change.previousValue?.Favorite && change.value.Favorite) {
-          await processAdded(change.value, offset);
+          await processAdded(change.value, offset)
         } else if (change.previousValue?.Favorite && change.value.Favorite) {
-          await processChange(change.value, offset);
+          await processChange(change.value, offset)
         } else if (change.previousValue?.Favorite && !change.value.Favorite) {
-          await processRemoved(change.value);
+          await processRemoved(change.value)
         } else if (change.type === 'delete') {
-          await processRemoved(change.value);
+          await processRemoved(change.value)
         }
       }
     })
 
     // Subscribe to TTO changes.
-    const subSettings = appSettingsCollection.subscribeChanges(changes => {
+    const subSettings = appSettingsCollection.subscribeChanges((changes) => {
       for (const change of changes) {
         // Iterates all changes, but there will only ever be one key. Check if the TTO changed.
-        const previousOffset = change.previousValue?.TimeTravelEnabled ? change.previousValue?.TimeTravelOffset : 0
-        const currentOffset = change.value.TimeTravelEnabled ? change.value.TimeTravelOffset : 0
-        if (previousOffset === currentOffset) continue;
+        const previousOffset = change.previousValue?.TimeTravelEnabled
+          ? change.previousValue?.TimeTravelOffset
+          : 0
+        const currentOffset = change.value.TimeTravelEnabled
+          ? change.value.TimeTravelOffset
+          : 0
+        if (previousOffset === currentOffset) continue
 
         // Changed, reschedule.
-        localNotificationsCollection.forEach(async notification => {
+        localNotificationsCollection.forEach(async (notification) => {
           // Get the corresponding event. Must exist but don't jinx it.
           const event = eventsFullCollection.get(notification.TargetId)
-          if (!event)
-            return
+          if (!event) return
 
           // Remove and add.
           await processRemoved(event)
@@ -193,5 +201,5 @@ export function useLocalNotificationsIntegration() {
       subEvents.unsubscribe()
       subSettings.unsubscribe()
     }
-  }, []);
+  }, [])
 }

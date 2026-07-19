@@ -1,7 +1,7 @@
-import {conTimeZone} from "@/configuration";
-import {parseDefaultISO} from "@/util/parseDefaultISO";
-import {getHours} from "date-fns";
-import {toZonedTime} from "date-fns-tz";
+import { getHours } from 'date-fns'
+import { toZonedTime } from 'date-fns-tz'
+import { conTimeZone } from '@/configuration'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export function deriveCategorizedTime(dateStr: string) {
   const date = toZonedTime(parseDefaultISO(dateStr), conTimeZone)

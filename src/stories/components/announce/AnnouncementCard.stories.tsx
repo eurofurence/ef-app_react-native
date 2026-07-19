@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
-import {subHours, subMinutes, subSeconds} from "date-fns";
+import { subHours, subMinutes, subSeconds } from 'date-fns'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
 import { AnnouncementCard } from '@/components/announce/AnnouncementCard'
@@ -67,25 +67,37 @@ export const DifferentTimes: Story = {
   render: () => {
     const now = new Date()
     return (
-      <View style={{gap: 15}}>
+      <View style={{ gap: 15 }}>
         <AnnouncementCard
-          announcement={{...mockAnnouncementDetails, ValidFromDateTimeUtc: subSeconds(now, 5).toISOString()}}
+          announcement={{
+            ...mockAnnouncementDetails,
+            ValidFromDateTimeUtc: subSeconds(now, 5).toISOString(),
+          }}
           onPress={fn()}
         />
         <AnnouncementCard
-          announcement={{...mockAnnouncementDetailsWithImage, ValidFromDateTimeUtc: subMinutes(now, 5).toISOString()}}
+          announcement={{
+            ...mockAnnouncementDetailsWithImage,
+            ValidFromDateTimeUtc: subMinutes(now, 5).toISOString(),
+          }}
           onPress={fn()}
         />
         <AnnouncementCard
-          announcement={{...mockAnnouncementDetailsLongTitle, ValidFromDateTimeUtc: subHours(now, 1).toISOString()}}
+          announcement={{
+            ...mockAnnouncementDetailsLongTitle,
+            ValidFromDateTimeUtc: subHours(now, 1).toISOString(),
+          }}
           onPress={fn()}
         />
         <AnnouncementCard
-          announcement={{...mockAnnouncementDetails, ValidFromDateTimeUtc: subHours(now, 2).toISOString()}}
+          announcement={{
+            ...mockAnnouncementDetails,
+            ValidFromDateTimeUtc: subHours(now, 2).toISOString(),
+          }}
           onPress={fn()}
         />
       </View>
-    );
+    )
   },
 }
 
@@ -96,7 +108,7 @@ export const DifferentAreas: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      {mockAnnouncementDetailsDifferentAreas.map((details, index) => (
+      {mockAnnouncementDetailsDifferentAreas.map((details) => (
         <AnnouncementCard
           key={details.Id}
           announcement={details}
@@ -114,10 +126,7 @@ export const MultipleAnnouncements: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <AnnouncementCard
-        announcement={mockAnnouncementDetails}
-        onPress={fn()}
-      />
+      <AnnouncementCard announcement={mockAnnouncementDetails} onPress={fn()} />
       <AnnouncementCard
         announcement={mockAnnouncementDetailsWithImage}
         onPress={fn()}

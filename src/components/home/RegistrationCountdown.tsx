@@ -1,14 +1,13 @@
-import {daysCollection} from "@/data/collections/content/Days";
 import { captureException } from '@sentry/react-native'
-import {useLiveQuery} from "@tanstack/react-db";
+import { useLiveQuery } from '@tanstack/react-db'
 import { formatDistance, isAfter, isBefore } from 'date-fns'
 import type { TFunction } from 'i18next'
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, View } from 'react-native'
-
 import { auth, useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { daysCollection } from '@/data/collections/content/Days'
 import { useRegistrationDatesQuery } from '@/hooks/api/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
@@ -32,7 +31,7 @@ const useRegistrationState = (
   isLoading: boolean,
   error: Error | null
 ) => {
-  const {data: days} = useLiveQuery(daysCollection)
+  const { data: days } = useLiveQuery(daysCollection)
 
   if (isLoading || error || !startDate || !endDate) {
     return { countdownText: null, isRegistrationOpen: false }

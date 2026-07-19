@@ -1,7 +1,7 @@
-import {DealerCard2} from "@/components/dealers/DealerCard2";
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
-import {fn} from 'storybook/test'
+import { fn } from 'storybook/test'
+import { DealerCard2 } from '@/components/dealers/DealerCard2'
 import {
   mockDealerDetails,
   mockDealerDetailsDifferentCategories,
@@ -82,11 +82,7 @@ export const DifferentCategories: Story = {
   render: () => (
     <View style={{ gap: 15 }}>
       {mockDealerDetailsDifferentCategories.map((details) => (
-        <DealerCard2
-          key={details.Id}
-          dealer={details}
-          onPress={fn()}
-        />
+        <DealerCard2 key={details.Id} dealer={details} onPress={fn()} />
       ))}
     </View>
   ),
@@ -99,22 +95,10 @@ export const MultipleDealers: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <DealerCard2
-        dealer={mockDealerDetails}
-        onPress={fn()}
-      />
-      <DealerCard2
-        dealer={mockDealerDetailsWithOffDays}
-        onPress={fn()}
-      />
-      <DealerCard2
-        dealer={mockDealerDetailsLongName}
-        onPress={fn()}
-      />
-      <DealerCard2
-        dealer={mockDealerDetailsSimple}
-        onPress={fn()}
-      />
+      <DealerCard2 dealer={mockDealerDetails} onPress={fn()} />
+      <DealerCard2 dealer={mockDealerDetailsWithOffDays} onPress={fn()} />
+      <DealerCard2 dealer={mockDealerDetailsLongName} onPress={fn()} />
+      <DealerCard2 dealer={mockDealerDetailsSimple} onPress={fn()} />
     </View>
   ),
 }
@@ -126,14 +110,8 @@ export const PresentVsAbsent: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <DealerCard2
-        dealer={mockDealerDetails}
-        onPress={fn()}
-      />
-      <DealerCard2
-        dealer={mockDealerDetailsWithOffDays}
-        onPress={fn()}
-      />
+      <DealerCard2 dealer={mockDealerDetails} onPress={fn()} />
+      <DealerCard2 dealer={mockDealerDetailsWithOffDays} onPress={fn()} />
     </View>
   ),
 }
@@ -145,14 +123,8 @@ export const FavoriteVsNotFavorite: Story = {
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <DealerCard2
-        dealer={mockDealerDetails}
-        onPress={fn()}
-      />
-      <DealerCard2
-        dealer={mockDealerDetailsSimple}
-        onPress={fn()}
-      />
+      <DealerCard2 dealer={mockDealerDetails} onPress={fn()} />
+      <DealerCard2 dealer={mockDealerDetailsSimple} onPress={fn()} />
     </View>
   ),
 }

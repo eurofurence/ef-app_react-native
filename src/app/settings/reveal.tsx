@@ -1,24 +1,25 @@
-import {EventCard2} from "@/components/events/EventCard2";
-import {eventsFullCollection} from "@/data/collections/content/EventsFull";
-import {hiddenEventsToggle} from "@/data/collections/supplemental/HiddenEvents";
-import {not, isUndefined, useLiveQuery} from "@tanstack/react-db";
-import {useEffect, useState} from 'react'
+import { isUndefined, not, useLiveQuery } from '@tanstack/react-db'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
-
+import { EventCard2 } from '@/components/events/EventCard2'
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { hiddenEventsToggle } from '@/data/collections/supplemental/HiddenEvents'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function RevealHiddenPage() {
   const { t } = useTranslation('RevealHidden')
-  const {data: events} = useLiveQuery({
+  const { data: events } = useLiveQuery({
     id: 'settings-reveal',
-    query: q => q.from({item: eventsFullCollection})
-      .where(({item}) => not(isUndefined(item.Hidden)))
-      .orderBy(({item}) => item.StartDateTimeUtc)
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => not(isUndefined(item.Hidden)))
+        .orderBy(({ item }) => item.StartDateTimeUtc),
   })
 
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
@@ -29,7 +30,7 @@ export default function RevealHiddenPage() {
       setAnnouncementMessage(t('accessibility.no_hidden_events'))
     } else {
       setAnnouncementMessage(
-        t('accessibility.hidden_events_loaded', {count: events.length})
+        t('accessibility.hidden_events_loaded', { count: events.length })
       )
     }
   }, [events.length, t])

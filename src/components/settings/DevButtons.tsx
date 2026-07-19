@@ -1,16 +1,15 @@
-import {synchronize} from "@/data/hooks/useSynchronize";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { captureException } from '@sentry/react-native'
 import { setStringAsync } from 'expo-clipboard'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, TextInput, View } from 'react-native'
-
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { withAlpha } from '@/context/Theme'
 import { useToastContext } from '@/context/ToastContext'
 import { auth, useAuthState } from '@/data/clients/auth'
+import { synchronize } from '@/data/hooks/useSynchronize'
 import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
 import { vibrateAfter } from '@/util/vibrateAfter'

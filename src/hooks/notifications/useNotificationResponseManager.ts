@@ -1,10 +1,9 @@
-import {pmsCollection} from "@/data/collections/user/Pms";
-import {synchronize} from "@/data/hooks/useSynchronize";
 import { useLastNotificationResponse } from 'expo-notifications'
 import { router } from 'expo-router'
 import { useEffect } from 'react'
-
 import { conId } from '@/configuration'
+import { pmsCollection } from '@/data/collections/user/Pms'
+import { synchronize } from '@/data/hooks/useSynchronize'
 
 /**
  * Handles the last notification response.

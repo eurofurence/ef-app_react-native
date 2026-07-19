@@ -1,11 +1,10 @@
-import {api} from "@/data/clients/api";
 import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
-import {Platform, type PlatformOSType} from 'react-native'
+import { Platform, type PlatformOSType } from 'react-native'
+import { api } from '@/data/clients/api'
 import { useAuthState } from '@/data/clients/auth'
 import { captureNotificationException } from '@/sentryHelpers'
-
 
 /**
  * Makes sure we can request a token. We must be on a device and have permissions. If
@@ -25,16 +24,22 @@ async function prepareDevicePushTokenPermissions() {
   return request.granted
 }
 
-async function pushDeviceRegistration(deviceId: string, deviceType: PlatformOSType) {
+async function pushDeviceRegistration(
+  deviceId: string,
+  deviceType: PlatformOSType
+) {
   return await api
-    .post(`/PushNotifications/FcmDeviceRegistration`, {deviceId, deviceType}, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    .post(
+      `/PushNotifications/FcmDeviceRegistration`,
+      { deviceId, deviceType },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
     .then((res) => res.status === 204)
 }
-
 
 /**
  * Retrieves the appropriate device token.
@@ -52,7 +57,7 @@ export async function getDevicePushToken() {
  */
 export function useTokenManager() {
   // Use login state to trigger.
-  const {tokenResponse} = useAuthState()
+  const { tokenResponse } = useAuthState()
   const accessToken = tokenResponse?.accessToken
 
   // Connect device itself via it's token to the backend and the topics. This

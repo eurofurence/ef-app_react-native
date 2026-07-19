@@ -1,14 +1,11 @@
-import {eventsSubmitFeedback} from "@/data/collections/content/Events";
-import {eventsFullCollection} from "@/data/collections/content/EventsFull";
 import { zodResolver } from '@hookform/resolvers/zod'
-import {eq, useLiveQuery} from "@tanstack/react-db";
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { router, useLocalSearchParams } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 import { z } from 'zod'
-
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Button } from '@/components/generic/containers/Button'
@@ -16,9 +13,11 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedRating } from '@/components/generic/forms/ManagedRating'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import {useToastContext} from '@/context/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { eventsSubmitFeedback } from '@/data/collections/content/Events'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
@@ -39,12 +38,17 @@ export default function EventFeedback() {
   const { id: eventId } = useLocalSearchParams<{ id: string }>()
   const { toast } = useToastContext()
   const theme = useTheme()
-  const {data: event} = useLiveQuery({
-    id: 'events-item-feedback',
-    query: q => q.from({item: eventsFullCollection})
-      .where(({item}) => eq(item.Id, eventId))
-      .findOne()
-  }, [eventId])
+  const { data: event } = useLiveQuery(
+    {
+      id: 'events-item-feedback',
+      query: (q) =>
+        q
+          .from({ item: eventsFullCollection })
+          .where(({ item }) => eq(item.Id, eventId))
+          .findOne(),
+    },
+    [eventId]
+  )
 
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
@@ -83,15 +87,17 @@ export default function EventFeedback() {
   const submit = useCallback(
     (args: FeedbackSchema) => {
       setIsPending(true)
-      eventsSubmitFeedback(args).then(
-        () => {
-          toast('info', 'Feedback submitted successfully')
-          router.back()
-        },
-        () => toast('error', 'Failed to submit feedback'),
-      ).finally(() => {
-        setIsPending(false)
-      })
+      eventsSubmitFeedback(args)
+        .then(
+          () => {
+            toast('info', 'Feedback submitted successfully')
+            router.back()
+          },
+          () => toast('error', 'Failed to submit feedback')
+        )
+        .finally(() => {
+          setIsPending(false)
+        })
     },
     [toast]
   )

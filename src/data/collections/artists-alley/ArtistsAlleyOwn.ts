@@ -1,31 +1,34 @@
-import {api} from '@/data/clients/api'
-import {queryClient} from '@/data/clients/query'
-import {registerTable} from "@/data/collections/artists-alley/registerTable";
-import {defineSearch} from '@/data/searching/useSearch'
-import type {EfRegisterTable} from "@/data/types/EfRegisterTable";
-import type {EfTableRegistration} from "@/data/types/EfTableRegistration";
-import {queryCollectionOptions} from '@tanstack/query-db-collection'
-import {BasicIndex, createCollection} from '@tanstack/react-db'
+import { queryCollectionOptions } from '@tanstack/query-db-collection'
+import { BasicIndex, createCollection } from '@tanstack/react-db'
+import { api } from '@/data/clients/api'
+import { queryClient } from '@/data/clients/query'
+import { registerTable } from '@/data/collections/artists-alley/registerTable'
+import { defineSearch } from '@/data/searching/useSearch'
+import type { EfRegisterTable } from '@/data/types/EfRegisterTable'
+import type { EfTableRegistration } from '@/data/types/EfTableRegistration'
 
 export const artistsAlleyOwnCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ['artists-alley', 'own'],
-    meta: {collection: true},
-    async queryFn({signal}) {
-      const response = await api.get<EfTableRegistration>('/ArtistsAlley/TableRegistration/:my-latest', {
-        signal,
-        validateStatus(status) {
-          return (status <= 200 && status < 300) || status === 404;
-        },
-      })
+    meta: { collection: true },
+    async queryFn({ signal }) {
+      const response = await api.get<EfTableRegistration>(
+        '/ArtistsAlley/TableRegistration/:my-latest',
+        {
+          signal,
+          validateStatus(status) {
+            return (status <= 200 && status < 300) || status === 404
+          },
+        }
+      )
       return response.status === 404 ? [] : [response.data]
     },
     getKey(item) {
       return item.Id
     },
     autoIndex: 'eager',
-    defaultIndexType: BasicIndex
+    defaultIndexType: BasicIndex,
   })
 )
 

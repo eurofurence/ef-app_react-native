@@ -1,8 +1,13 @@
-import type {EfEntity} from "@/data/types/EfEntity";
-import type {EfId} from "@/data/types/EfId";
-import type {EfImage} from "@/data/types/EfImage";
+import type { EfEntity } from '@/data/types/EfEntity'
+import type { EfId } from '@/data/types/EfId'
+import type { EfImage } from '@/data/types/EfImage'
 
-export type EfTableRegistrationStatus = "Pending" | "Accepted" | "Published" | "Rejected" | "CheckedOut"
+export type EfTableRegistrationStatus =
+  | 'Pending'
+  | 'Accepted'
+  | 'Published'
+  | 'Rejected'
+  | 'CheckedOut'
 
 export type EfTableRegistration = EfEntity & {
   CreatedDateTimeUtc: string

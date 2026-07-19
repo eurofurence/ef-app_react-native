@@ -1,4 +1,3 @@
-import {useIsSynchronizing} from "@/data/hooks/useSynchronize";
 import { type Href, Tabs } from 'expo-router'
 import type { BottomTabBarProps } from 'expo-router/js-tabs'
 import React, { useMemo, useRef } from 'react'
@@ -13,6 +12,7 @@ import {
 import { MainMenu } from '@/components/mainmenu/MainMenu'
 import { Toast } from '@/components/Toast'
 import { useToastMessages } from '@/context/ToastContext'
+import { useIsSynchronizing } from '@/data/hooks/useSynchronize'
 
 export const unstable_settings = {
   initialRouteName: 'index',

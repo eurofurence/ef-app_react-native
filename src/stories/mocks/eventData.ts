@@ -1,6 +1,6 @@
 // Mock event data for Storybook stories
-import type {EfEventFull} from "@/data/collections/content/EventsFull";
-import type {EfImage} from "@/data/types/EfImage";
+import type { EfEventFull } from '@/data/collections/content/EventsFull'
+import type { EfImage } from '@/data/types/EfImage'
 
 // Mock image record for testing
 const mockImageRecord: EfImage = {
@@ -14,7 +14,7 @@ const mockImageRecord: EfImage = {
   Url: 'https://picsum.photos/800/200',
   LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
   IsRestricted: false,
-  BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+  BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
 }
 
 export const mockEventDetails: EfEventFull = {
@@ -34,15 +34,29 @@ export const mockEventDetails: EfEventFull = {
     Description: 'Main Hall',
     Capacity: 100,
     IsInternal: false,
-    MapLink: 'about:blank'
+    MapLink: 'about:blank',
   },
-  Favorite: {Id: '0'},
+  Favorite: { Id: '0' },
   Banner: undefined,
   PanelHosts: 'Convention Staff',
   Hidden: null,
-  Tags: [], IsInternal: false, Poster: null,
-  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
-  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
+  Tags: [],
+  IsInternal: false,
+  Poster: null,
+  Day: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample day',
+    Date: '2024-08-15',
+    IsInternal: false,
+  },
+  Track: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample track',
+    Description: 'Sample',
+    IsInternal: false,
+  },
 }
 
 export const mockEventDetailsWithBanner: EfEventFull = {
@@ -63,15 +77,29 @@ export const mockEventDetailsWithBanner: EfEventFull = {
     Description: 'Convention Center',
     Capacity: 1000,
     IsInternal: false,
-    MapLink: 'about:blank'
+    MapLink: 'about:blank',
   },
   Favorite: null,
   Banner: mockImageRecord,
   PanelHosts: 'Fursuit Committee',
   Hidden: null,
-  Tags: [], IsInternal: false, Poster: null,
-  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
-  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
+  Tags: [],
+  IsInternal: false,
+  Poster: null,
+  Day: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample day',
+    Date: '2024-08-15',
+    IsInternal: false,
+  },
+  Track: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample track',
+    Description: 'Sample',
+    IsInternal: false,
+  },
 }
 
 export const mockEventDetailsPassed: EfEventFull = {
@@ -91,15 +119,29 @@ export const mockEventDetailsPassed: EfEventFull = {
     Description: 'Workshop Room A',
     Capacity: 100,
     IsInternal: false,
-    MapLink: 'about:blank'
+    MapLink: 'about:blank',
   },
   Favorite: null,
   Banner: undefined,
   PanelHosts: 'Digital Artist',
   Hidden: null,
-  Tags: [], IsInternal: false, Poster: null,
-  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
-  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
+  Tags: [],
+  IsInternal: false,
+  Poster: null,
+  Day: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample day',
+    Date: '2024-08-15',
+    IsInternal: false,
+  },
+  Track: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample track',
+    Description: 'Sample',
+    IsInternal: false,
+  },
 }
 
 export const mockEventDetailsSimple: EfEventFull = {
@@ -119,15 +161,29 @@ export const mockEventDetailsSimple: EfEventFull = {
     Description: 'Panel Room 1',
     Capacity: 100,
     IsInternal: false,
-    MapLink: 'about:blank'
+    MapLink: 'about:blank',
   },
   Favorite: null,
   Banner: undefined,
   PanelHosts: 'Panel Moderator',
   Hidden: null,
-  Tags: [], IsInternal: false, Poster: null,
-  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
-  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
+  Tags: [],
+  IsInternal: false,
+  Poster: null,
+  Day: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample day',
+    Date: '2024-08-15',
+    IsInternal: false,
+  },
+  Track: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample track',
+    Description: 'Sample',
+    IsInternal: false,
+  },
 }
 
 export const mockEventDetailsLongTitle: EfEventFull = {
@@ -149,13 +205,27 @@ export const mockEventDetailsLongTitle: EfEventFull = {
     Description: 'Large Conference Hall',
     Capacity: 5000,
     IsInternal: false,
-    MapLink: 'about:blank'
+    MapLink: 'about:blank',
   },
-  Favorite: {Id: '0'},
+  Favorite: { Id: '0' },
   Banner: undefined,
   PanelHosts: 'Event Organizer',
   Hidden: null,
-  Tags: [], IsInternal: false, Poster: null,
-  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
-  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
+  Tags: [],
+  IsInternal: false,
+  Poster: null,
+  Day: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample day',
+    Date: '2024-08-15',
+    IsInternal: false,
+  },
+  Track: {
+    Id: '0',
+    LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
+    Name: 'Sample track',
+    Description: 'Sample',
+    IsInternal: false,
+  },
 }

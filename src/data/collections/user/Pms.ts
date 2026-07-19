@@ -1,18 +1,18 @@
-import type {EfPm} from "@/data/types/EfPm";
-import type {EfSendPm} from "@/data/types/EfSendPm";
-import {parseDefaultISO} from "@/util/parseDefaultISO";
-import {queryCollectionOptions} from '@tanstack/query-db-collection'
-import {BasicIndex, createCollection} from '@tanstack/react-db'
-import {api} from '@/data/clients/api'
-import {queryClient} from '@/data/clients/query'
-import {defineSearch} from '@/data/searching/useSearch'
+import { queryCollectionOptions } from '@tanstack/query-db-collection'
+import { BasicIndex, createCollection } from '@tanstack/react-db'
+import { api } from '@/data/clients/api'
+import { queryClient } from '@/data/clients/query'
+import { defineSearch } from '@/data/searching/useSearch'
+import type { EfPm } from '@/data/types/EfPm'
+import type { EfSendPm } from '@/data/types/EfSendPm'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export const pmsCollection = createCollection(
   queryCollectionOptions({
     queryClient,
     queryKey: ['pms'],
-    meta: {collection: true},
-    async queryFn({signal}) {
+    meta: { collection: true },
+    async queryFn({ signal }) {
       // todo: empty with no auth? or covered with invalidation
       const response = await api.get<EfPm[]>('/Communication/PrivateMessages', {
         signal,
@@ -31,7 +31,7 @@ defineSearch(pmsCollection, {
   keys: ['Author', 'Title', 'Content'],
 })
 
-export async function pmsSend({type, ...message}: EfSendPm) {
+export async function pmsSend({ type, ...message }: EfSendPm) {
   const result = await api
     .post(
       `/Communication/PrivateMessages/:${type ?? 'byRegistrationId'}`,

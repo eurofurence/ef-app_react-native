@@ -9,7 +9,7 @@ export const ScheduleSearchContext = createContext<{
 }>({
   query: '',
   setQuery: () => {},
-  results: null
+  results: null,
 })
 
 export const useScheduleSearch = () => {

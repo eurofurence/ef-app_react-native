@@ -1,6 +1,8 @@
-import type {EfDealerFull} from "@/data/collections/content/DealersFull";
+import type { EfDealerFull } from '@/data/collections/content/DealersFull'
 
-export function deriveDealerTable(dealer: Pick<EfDealerFull, 'ShortDescription'>) {
+export function deriveDealerTable(
+  dealer: Pick<EfDealerFull, 'ShortDescription'>
+) {
   if (!dealer.ShortDescription) return undefined
   if (!dealer.ShortDescription?.startsWith('Table')) return undefined
 

@@ -1,7 +1,6 @@
-
 // Mock dealer data for Storybook stories
-import type {EfDealerFull} from "@/data/collections/content/DealersFull";
-import type {EfImage} from "@/data/types/EfImage";
+import type { EfDealerFull } from '@/data/collections/content/DealersFull'
+import type { EfImage } from '@/data/types/EfImage'
 
 // Mock image record for testing
 const mockImageRecord: EfImage = {
@@ -15,7 +14,7 @@ const mockImageRecord: EfImage = {
   Url: 'https://picsum.photos/1/200/200',
   LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
   IsRestricted: false,
-  BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+  BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
 }
 
 export const mockDealerDetails: EfDealerFull = {
@@ -31,7 +30,7 @@ export const mockDealerDetails: EfDealerFull = {
   ArtistThumbnail: mockImageRecord,
   ArtPreview: undefined,
   Hidden: null,
-  Favorite: {Id: '0'},
+  Favorite: { Id: '0' },
   Links: undefined,
   LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
 }
@@ -69,7 +68,7 @@ export const mockDealerDetailsLongName: EfDealerFull = {
   ArtistThumbnail: mockImageRecord,
   ArtPreview: undefined,
   Hidden: null,
-  Favorite: {Id: '0'},
+  Favorite: { Id: '0' },
   Links: undefined,
   LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
 }
@@ -121,8 +120,8 @@ export const mockDealerDetailsDifferentCategories: EfDealerFull[] = [
     AttendsOnFriday: true,
     AttendsOnSaturday: true,
     Artist: mockImageRecord,
-    ArtistThumbnail:mockImageRecord,
-    Favorite: {Id: '0'},
+    ArtistThumbnail: mockImageRecord,
+    Favorite: { Id: '0' },
     Links: undefined,
     LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
     ArtPreview: undefined,
@@ -153,7 +152,7 @@ export const mockDealerDetailsDifferentCategories: EfDealerFull[] = [
     AttendsOnSaturday: true,
     Artist: mockImageRecord,
     ArtistThumbnail: mockImageRecord,
-    Favorite: {Id: '0'},
+    Favorite: { Id: '0' },
     Links: undefined,
     LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
     ArtPreview: undefined,

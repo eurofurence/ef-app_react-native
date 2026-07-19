@@ -1,7 +1,7 @@
-import {  createLiveQueryCollection, eq } from '@tanstack/react-db'
-import { mapsCollection } from '@/data/collections/content/Maps'
+import { createLiveQueryCollection, eq } from '@tanstack/react-db'
 import type { CollectionItem } from '@/data/collections/CollectionItem'
 import { imagesCollection } from '@/data/collections/content/Images'
+import { mapsCollection } from '@/data/collections/content/Maps'
 import { defineSearch } from '@/data/searching/useSearch'
 
 export const mapsFullCollection = createLiveQueryCollection({
@@ -21,9 +21,7 @@ export const mapsFullCollection = createLiveQueryCollection({
   },
 })
 
-export type EfMapFull = CollectionItem<
-  typeof mapsFullCollection
->
+export type EfMapFull = CollectionItem<typeof mapsFullCollection>
 
 defineSearch(mapsFullCollection, {
   keys: ['Description'],

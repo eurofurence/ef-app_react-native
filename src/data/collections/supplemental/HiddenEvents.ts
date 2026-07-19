@@ -20,6 +20,6 @@ export function hiddenEventsToggle(key: EfHiddenEvent['Id']) {
     : hiddenEventsCollection.insert({ Id: key })
 }
 
-export function hiddenEventsClear(){
+export function hiddenEventsClear() {
   hiddenEventsCollection.delete([...hiddenEventsCollection.keys()])
 }

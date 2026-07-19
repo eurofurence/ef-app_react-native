@@ -1,23 +1,10 @@
-import {onLongPressEvent, onPressEvent} from "@/app/(areas)/schedule/day-1";
-import {EventCard2} from "@/components/events/EventCard2";
-import {EventSection} from "@/components/events/EventSection";
-import {EfSectionList} from "@/components/generic/lists/EfLists";
-import {deriveHosts} from "@/data/utils/deriveHosts";
-import {daysCollection} from "@/data/collections/content/Days";
-import {type EfEventFull, eventsFullCollection} from "@/data/collections/content/EventsFull";
-import {roomsCollection} from "@/data/collections/content/Rooms";
-import {tracksCollection} from "@/data/collections/content/Tracks";
-import {synchronize, useIsSynchronizing} from "@/data/hooks/useSynchronize";
-import type {EfDay} from "@/data/types/EfDay";
-import type {EfRoom} from "@/data/types/EfRoom";
-import type {EfTrack} from "@/data/types/EfTrack";
-import {collectBy, intersects} from "@/util/arrays";
-import {vibrateAfter} from "@/util/vibrateAfter";
-import {inArray, isUndefined, not, or, useLiveQuery} from "@tanstack/react-db";
+import { inArray, isUndefined, not, or, useLiveQuery } from '@tanstack/react-db'
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
+import { onLongPressEvent, onPressEvent } from '@/app/(areas)/schedule/day-1'
+import { EventCard2 } from '@/components/events/EventCard2'
+import { EventSection } from '@/components/events/EventSection'
 import {
   ComboModal,
   type ComboModalRef,
@@ -25,40 +12,58 @@ import {
 import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Tab } from '@/components/generic/containers/Tab'
+import { EfSectionList } from '@/components/generic/lists/EfLists'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
-import {useAppSetting} from '@/data/collections/supplemental/AppSettings'
+import { daysCollection } from '@/data/collections/content/Days'
+import {
+  type EfEventFull,
+  eventsFullCollection,
+} from '@/data/collections/content/EventsFull'
+import { roomsCollection } from '@/data/collections/content/Rooms'
+import { tracksCollection } from '@/data/collections/content/Tracks'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
+import type { EfDay } from '@/data/types/EfDay'
+import type { EfRoom } from '@/data/types/EfRoom'
+import type { EfTrack } from '@/data/types/EfTrack'
+import { deriveHosts } from '@/data/utils/deriveHosts'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import { collectBy, intersects } from '@/util/arrays'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function FilterScreen() {
-  const {results} = useScheduleSearch()
+  const { results } = useScheduleSearch()
   const { t } = useTranslation('Events')
   const isSynchronizing = useIsSynchronizing()
 
   const [showInternal] = useAppSetting('ShowInternalEvents')
 
-  const {data: events} = useLiveQuery({
-    id: 'area-schedule-filter',
-    query: q => q.from({item: eventsFullCollection})
-      .where(({item}) => isUndefined(item.Hidden))
-      .where(({item}) => or(showInternal, not(item.IsInternal)))
-      .where(({item}) => or(!results, inArray(item.Id, results)))
-      .orderBy(({item}) => item.StartDateTimeUtc)
-  }, [showInternal, results])
+  const { data: events } = useLiveQuery(
+    {
+      id: 'area-schedule-filter',
+      query: (q) =>
+        q
+          .from({ item: eventsFullCollection })
+          .where(({ item }) => isUndefined(item.Hidden))
+          .where(({ item }) => or(showInternal, not(item.IsInternal)))
+          .where(({ item }) => or(!results, inArray(item.Id, results)))
+          .orderBy(({ item }) => item.StartDateTimeUtc),
+    },
+    [showInternal, results]
+  )
 
-  const {data: days} = useLiveQuery(daysCollection)
-  const {data: tracks} = useLiveQuery(tracksCollection)
-  const {data: rooms} = useLiveQuery(roomsCollection)
+  const { data: days } = useLiveQuery(daysCollection)
+  const { data: tracks } = useLiveQuery(tracksCollection)
+  const { data: rooms } = useLiveQuery(roomsCollection)
 
-  const {data: eventsForHosts} = useLiveQuery(eventsFullCollection)
+  const { data: eventsForHosts } = useLiveQuery(eventsFullCollection)
   const hosts = useMemo(() => {
-    const result = new Set<string>();
+    const result = new Set<string>()
     for (const event of events)
-      for (const host of deriveHosts(event.PanelHosts))
-        result.add(host)
+      for (const host of deriveHosts(event.PanelHosts)) result.add(host)
 
     return [...result].sort()
   }, [eventsForHosts])
-
 
   const activeStyle = useThemeBackground('secondary')
   const inactiveStyle = useThemeBackground('inverted')
@@ -79,18 +84,34 @@ export default function FilterScreen() {
     const roomsIds = filterRooms.map((item) => item.Id)
     const hostNames = filterHosts
 
-    const matched = events.filter(item => {
-      if (item.ConferenceDayId && daysIds.length && !daysIds.includes(item.ConferenceDayId))
+    const matched = events.filter((item) => {
+      if (
+        item.ConferenceDayId &&
+        daysIds.length &&
+        !daysIds.includes(item.ConferenceDayId)
+      )
         return false
-      if (item.ConferenceTrackId && tracksIds.length && !tracksIds.includes(item.ConferenceTrackId))
+      if (
+        item.ConferenceTrackId &&
+        tracksIds.length &&
+        !tracksIds.includes(item.ConferenceTrackId)
+      )
         return false
-      if (item.ConferenceRoomId && roomsIds.length && !roomsIds.includes(item.ConferenceRoomId))
+      if (
+        item.ConferenceRoomId &&
+        roomsIds.length &&
+        !roomsIds.includes(item.ConferenceRoomId)
+      )
         return false
-      if (item.PanelHosts && hostNames.length && !intersects(deriveHosts(item.PanelHosts), hostNames))
+      if (
+        item.PanelHosts &&
+        hostNames.length &&
+        !intersects(deriveHosts(item.PanelHosts), hostNames)
+      )
         return false
       return true
     })
-    return collectBy(matched, a => a.Day.Name)
+    return collectBy(matched, (a) => a.Day.Name)
   }, [events, filterDays, filterTracks, filterRooms, filterHosts])
 
   const listHeaderComponent = (
@@ -201,23 +222,29 @@ export default function FilterScreen() {
         refreshing={isSynchronizing}
         onRefresh={() => vibrateAfter(synchronize())}
         scrollEnabled={true}
-        contentContainerClassName="pb-32"
+        contentContainerClassName='pb-32'
         ListHeaderComponent={listHeaderComponent}
         data={grouping}
-        renderSection={({item}) => {
-          return <EventSection
-            style={styles.item}
-            title={item}
-            icon="calendar-outline"/>
+        renderSection={({ item }) => {
+          return (
+            <EventSection
+              style={styles.item}
+              title={item}
+              icon='calendar-outline'
+            />
+          )
         }}
-        renderItem={({item}) => {
-          return <EventCard2
-            containerStyle={styles.item}
-            event={item}
-            onPress={onPressEvent}
-            onLongPress={onLongPressEvent}/>
+        renderItem={({ item }) => {
+          return (
+            <EventCard2
+              containerStyle={styles.item}
+              event={item}
+              onPress={onPressEvent}
+              onLongPress={onLongPressEvent}
+            />
+          )
         }}
-        accessibilityLabel={t('events_list', {defaultValue: 'Events list'})}
+        accessibilityLabel={t('events_list', { defaultValue: 'Events list' })}
       />
     </>
   )

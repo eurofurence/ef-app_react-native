@@ -1,8 +1,3 @@
-import {dealersFullCollection} from "@/data/collections/content/DealersFull";
-import {eventsFullCollection} from "@/data/collections/content/EventsFull";
-import {kbEntriesCollection} from "@/data/collections/content/KbEntries";
-import {synchronize, useIsSynchronizing} from "@/data/hooks/useSynchronize";
-import {useSearchIds} from "@/data/searching/useSearch";
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -29,7 +24,12 @@ import { LanguageWarnings } from '@/components/home/LanguageWarnings'
 import { RegistrationCountdown } from '@/components/home/RegistrationCountdown'
 import { TimezoneWarning } from '@/components/home/TimezoneWarning'
 import { registrationUrl } from '@/configuration'
-import {useToastContext} from '@/context/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
+import { useSearchIds } from '@/data/searching/useSearch'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { vibrateAfter } from '@/util/vibrateAfter'
@@ -50,7 +50,10 @@ export default function Index() {
   const resultEvents = useSearchIds(eventsFullCollection, query, 5)
   const resultEntries = useSearchIds(kbEntriesCollection, query, 5)
 
-  const resultsCount = (resultDealers?.length ?? 0) + (resultEvents?.length ?? 0) + (resultEntries?.length ?? 0)
+  const resultsCount =
+    (resultDealers?.length ?? 0) +
+    (resultEvents?.length ?? 0) +
+    (resultEntries?.length ?? 0)
 
   // Focus management for search results
   const searchResultsRef = useAccessibilityFocus<View>(300)
@@ -176,8 +179,8 @@ export default function Index() {
                 ? t('search.no_results', { defaultValue: 'No results found' })
                 : t('search.results_count', {
                     defaultValue: '{{count}} result{{s}}',
-                  count: resultsCount || 0,
-                  s: resultsCount === 1 ? '' : 's',
+                    count: resultsCount || 0,
+                    s: resultsCount === 1 ? '' : 's',
                   })}
             </Text>
           </View>
@@ -201,14 +204,15 @@ export default function Index() {
             <GlobalSearch
               resultDealers={resultDealers}
               resultEvents={resultEvents}
-              resultKbEntries={resultEntries}/>
+              resultKbEntries={resultEntries}
+            />
           </View>
         ) : (
           <View accessibilityLabel={a11y('main_sections')}>
-            <RecentAnnouncements/>
-            <UpcomingEventsList/>
-            <TodayScheduleList/>
-            <CurrentEventList/>
+            <RecentAnnouncements />
+            <UpcomingEventsList />
+            <TodayScheduleList />
+            <CurrentEventList />
           </View>
         )}
       </Floater>

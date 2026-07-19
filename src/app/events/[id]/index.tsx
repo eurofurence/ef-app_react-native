@@ -1,36 +1,39 @@
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { useLocalSearchParams } from 'expo-router'
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
+import { EventContent2 } from '@/components/events/EventContent2'
 import { shareEvent } from '@/components/events/Events.common'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { NotFoundContent } from '@/components/NotFoundContent'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { hiddenEventsToggle } from '@/data/collections/supplemental/HiddenEvents'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import {eq, useLiveQuery} from '@tanstack/react-db'
-import {eventsFullCollection} from '@/data/collections/content/EventsFull'
-import {EventContent2} from '@/components/events/EventContent2'
-import {hiddenEventsToggle} from '@/data/collections/supplemental/HiddenEvents'
 
 export default function EventItem() {
   const { t } = useTranslation('Event')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const {data: event} = useLiveQuery({
-    id: 'events-item',
-    query: q => q.from({item: eventsFullCollection})
-      .where(({item}) => eq(item.Id, id))
-      .findOne()
-  }, [id])
+  const { data: event } = useLiveQuery(
+    {
+      id: 'events-item',
+      query: (q) =>
+        q
+          .from({ item: eventsFullCollection })
+          .where(({ item }) => eq(item.Id, id))
+          .findOne(),
+    },
+    [id]
+  )
 
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
   const mainContentRef = useAccessibilityFocus<View>(200)
-
 
   // Announce the event details to screen readers
   useEffect(() => {
