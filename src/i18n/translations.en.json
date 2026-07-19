@@ -259,7 +259,7 @@
     "title": "Artist Alley Registration",
     "unauthorized_not_attending": "Please ensure that you have a valid registration for this year's convention if you wish to register at a table in the Artist Alley.",
     "unauthorized_not_checked_in": "Please check in and pick up your convention badge at the Registration Desk before trying to register at an Artist Alley table.",
-    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist alley.",
+    "unauthorized_not_logged_in": "You need to log in before you can register at a table in the Artist Alley.",
     "update": "Update your request",
     "view": {
       "title": "Artist Alley Table"
@@ -462,6 +462,16 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Calendar sync notification",
+      "hide_calendar_warning": "Hide calendar sync notification",
+      "hide_calendar_warning_hint": "Dismisses this calendar sync notification",
+      "view_calendar_settings": "Open calendar sync settings",
+      "view_calendar_settings_hint": "Opens Settings to sync your favorites to your calendar",
+      "badge_warning_container": "Badge available notification",
+      "hide_badge_warning": "Hide badge notification",
+      "hide_badge_warning_hint": "Dismisses this badge available notification",
+      "view_badge": "View badge",
+      "view_badge_hint": "Opens your profile to view your badge code",
       "banner_image": "Convention banner background image",
       "changed_dealers_list": "{{count}} updated dealers: {{dealers}}",
       "changed_events_list": "{{count}} updated events: {{events}}",
@@ -517,6 +527,10 @@
     "sync_error": "There was an issue with getting the data, please try again later.",
     "view_all_announcements": "View all announcements",
     "warnings": {
+      "calendar_sync": "Sync your calendar",
+      "calendar_sync_subtitle": "Add your favorite events to your calendar app. Tap here to set it up in Settings.",
+      "badge_available": "Your badge is ready",
+      "badge_available_subtitle": "Your convention badge is available. Tap here to view your badge code.",
       "favorites_changed": "Favorites updated",
       "favorites_changed_subtitle": "Some of your favorites were updated since you last viewed them",
       "hide": "Hide",
@@ -668,10 +682,12 @@
       "settings_tab": "Settings tab",
       "settings_tab_hint": "Configure app preferences and settings",
       "website_tab": "Convention website tab",
-      "website_tab_hint": "Opens convention website in browser"
+      "website_tab_hint": "Opens convention website in browser",
+      "wifi_tab": "WiFi setup",
+      "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Announcements",
-    "artist_alley": "Artist alley",
+    "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
     "dealers": "Dealers",
     "events": "Events",
@@ -690,7 +706,8 @@
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
-    "website": "Website"
+    "website": "Website",
+    "wifi": "WiFi"
   },
   "Notification": {
     "announcement": "There is an announcement from {{conName}}",
@@ -809,6 +826,12 @@
     "search_input_hint": "Enter text to search for content",
     "search_input_label": "Search input field"
   },
+  "SessionExpired": {
+    "title": "Session expired",
+    "body": "You've been signed out. Sign in again to keep your favourites synced.",
+    "sign_in": "Sign in",
+    "not_now": "Not now"
+  },
   "Settings": {
     "about": "About",
     "allowAnalytics": "Allow us to collect analytics events",
@@ -822,6 +845,16 @@
       "subtitle": "Last sync: {{ time }}",
       "synchronize": "Synchronize",
       "title": "Cache Stats"
+    },
+    "calendar": {
+      "copy_link": "Copy calendar link",
+      "error": "Could not open your calendar. Try copying the link instead.",
+      "link_copied": "Calendar link copied to clipboard",
+      "login_required": "Log in to sync your favorite events.",
+      "retry": "Try again",
+      "subscribe": "Add favorites to calendar",
+      "subtitle": "Subscribe your calendar app to your favorite events. New favorites and changes sync automatically.",
+      "title": "Calendar sync"
     },
     "changeLanguage": "Change language",
     "currentLanguage": "Your current language is English!",
@@ -858,6 +891,10 @@
       "title": "Developer Settings"
     },
     "device_warnings": {
+      "show_badge_warning": "Show badge notification",
+      "hide_badge_warning": "Hide badge notification",
+      "show_calendar_sync": "Show calendar sync reminder",
+      "hide_calendar_sync": "Hide calendar sync reminder",
       "hide_device_warnings": "Hide device warnings",
       "hide_language_warnings": "Hide language warnings",
       "hide_registration_countdown": "Hide registration countdown",
@@ -906,6 +943,10 @@
       "title": "Change the application theme"
     },
     "timeTravel": "Show time travel settings.",
+    "sync": {
+      "title": "Force sync",
+      "subtitle": "Reloads all convention data and may use more data. Use it if content seems missing or out of date."
+    },
     "sync_full": "Force full sync",
     "accessibility": {
       "settings_page_loaded": "Settings page loaded",
@@ -927,6 +968,35 @@
     "week_before": "1 week before {{conName}}"
   },
   "Todo": {},
+  "WiFi": {
+    "title": "WiFi Setup",
+    "subtitle": "Eurofurence maintains a free WiFi network for use by attendees and staff.\n\nPlease note: for Dealers Den, Artshow and other special use-cases matching specialty networks may exist and you will be instructed by network staff seperately!",
+    "intro": "If you are an advanced user or staff you can change the firewall behaviour or provide custom credentials.",
+    "profile_eurofurence_name": "Protected (Recommended)",
+    "profile_eurofurence_desc": "Incoming connections to your device aren't allowed, so you can still access the internet freely, but nobody can initiate connections to your devices open ports and running apps behind them.",
+    "profile_public_name": "Public (Not recommended)",
+    "profile_public_desc": "Your assigned IP will be fully publicly accessible, no filtering, but also absolutely no safety nets, you are responsible for your safety. Please have a firewall and mind your running apps.",
+    "profile_event_name": "Event-only",
+    "profile_event_desc": "Incoming connections to your device are allowed from within the Eurofurence network, but not the internet, allowing for everyone else in the network to access open ports on your device. Please have a firewall and mind your running apps.",
+    "profile_custom_name": "Custom/Staff",
+    "profile_custom_desc": "In some cases staff will provide you with custom access credentials that may have completely custom network settings.",
+    "identity_label": "Access ID",
+    "identity_placeholder": "Your access ID",
+    "password_label": "Password",
+    "password_placeholder": "Your password",
+    "scan_qr": "Scan QR code",
+    "apply": "Configure WiFi",
+    "confirm_title": "Set up WiFi?",
+    "confirm_body": "Configure the Eurofurence network using the {{profile}} profile?",
+    "confirm_apply": "Set up",
+    "confirm_cancel": "Cancel",
+    "invalid_credentials": "Please enter a valid access ID and password.",
+    "apply_failed": "Could not set up WiFi. Please try again.",
+    "apply_success": "WiFi profile saved. Your device will connect automatically when the network is in range.",
+    "camera_permission": "Allow camera access to scan a WiFi QR code.",
+    "grant_camera": "Allow camera",
+    "advanced_title": "Advanced settings"
+  },
   "Viewer": {
     "announcement": "Announcement: {{name}}",
     "artist": "Artist: {{name}}",

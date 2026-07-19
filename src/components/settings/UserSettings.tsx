@@ -6,8 +6,10 @@ import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 import { AnalyticsOptIns } from './AnalyticsOptIns'
+import { CalendarSync } from './CalendarSync'
 import { HiddenEvents } from './HiddenEvents'
 import { LanguagePicker } from './LanguagePicker'
+import { SettingContainer } from './SettingContainer'
 import { ThemePicker } from './ThemePicker'
 import { Warnings } from './Warnings'
 
@@ -29,6 +31,9 @@ export function UserSettings() {
       {/* Language selection mask */}
       <LanguagePicker />
 
+      {/* Subscribe favorite events to the device calendar */}
+      <CalendarSync />
+
       {/* Hidden events functionality, undo */}
       <HiddenEvents />
 
@@ -36,13 +41,20 @@ export function UserSettings() {
       <Warnings />
 
       {/* Force full sync (fetch all data) */}
-      <Button
-        disabled={isSynchronizing}
-        onPress={() => vibrateAfter(synchronize())}
-        icon='refresh'
-      >
-        {t('sync_full')}
-      </Button>
+      <SettingContainer>
+        <Section
+          title={t('sync.title')}
+          subtitle={t('sync.subtitle')}
+          icon='sync'
+        />
+        <Button
+          disabled={isSynchronizing}
+          onPress={() => vibrateAfter(synchronize())}
+          icon='refresh'
+        >
+          {t('sync_full')}
+        </Button>
+      </SettingContainer>
     </View>
   )
 }

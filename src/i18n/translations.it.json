@@ -294,6 +294,16 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Notifica sincronizzazione calendario",
+      "hide_calendar_warning": "Nascondi notifica sincronizzazione calendario",
+      "hide_calendar_warning_hint": "Ignora questa notifica di sincronizzazione del calendario",
+      "view_calendar_settings": "Apri impostazioni sincronizzazione calendario",
+      "view_calendar_settings_hint": "Apre le Impostazioni per sincronizzare i tuoi preferiti con il calendario",
+      "badge_warning_container": "Notifica badge disponibile",
+      "hide_badge_warning": "Nascondi notifica badge",
+      "hide_badge_warning_hint": "Ignora questa notifica di badge disponibile",
+      "view_badge": "Visualizza badge",
+      "view_badge_hint": "Apre il tuo profilo per visualizzare il codice del badge",
       "banner_image": "Immagine di sfondo banner convention",
       "changed_dealers_list": "{{count}} venditori aggiornati: {{dealers}}",
       "changed_events_list": "{{count}} eventi aggiornati: {{events}}",
@@ -343,6 +353,10 @@
       "placeholder": "Cerca eventi, venditori e articoli informativi…"
     },
     "warnings": {
+      "calendar_sync": "Sincronizza il calendario",
+      "calendar_sync_subtitle": "Aggiungi i tuoi eventi preferiti all’app calendario. Tocca qui per configurarlo nelle Impostazioni.",
+      "badge_available": "Il tuo badge è pronto",
+      "badge_available_subtitle": "Il tuo badge della convention è disponibile. Tocca qui per visualizzare il codice del badge.",
       "favorites_changed": "Preferiti aggiornati",
       "favorites_changed_subtitle": "Alcuni dei tuoi preferiti sono stati aggiornati dall'ultima volta che li hai visualizzati",
       "hide": "Nascondi",
@@ -490,7 +504,9 @@
       "settings_tab": "Scheda impostazioni",
       "settings_tab_hint": "Configura preferenze e impostazioni dell'app",
       "website_tab": "Scheda sito web convention",
-      "website_tab_hint": "Apre sito web convention nel browser"
+      "website_tab_hint": "Apre sito web convention nel browser",
+      "wifi_tab": "WiFi setup",
+      "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Annunci",
     "dealers": "Venditori",
@@ -506,7 +522,8 @@
     "open_messages": "Apri i messaggi",
     "pm": "Messaggi privati",
     "services": "Servizi",
-    "settings": "Impostazioni"
+    "settings": "Impostazioni",
+    "wifi": "WiFi"
   },
   "Notification": {
     "announcement": "C'è un annuncio da {{conName}}",
@@ -612,6 +629,12 @@
     "search_input_hint": "Inserisci testo per cercare contenuti",
     "search_input_label": "Campo di ricerca"
   },
+  "SessionExpired": {
+    "title": "Sessione scaduta",
+    "body": "Sei stato disconnesso. Accedi di nuovo per mantenere sincronizzati i tuoi preferiti.",
+    "sign_in": "Accedi",
+    "not_now": "Non ora"
+  },
   "Settings": {
     "about": "Crediti",
     "allowAnalytics": "Permetti la raccolta di dati analitici",
@@ -619,6 +642,10 @@
     "changeLanguage": "Cambia lingua",
     "currentLanguage": "La tua lingua è Italiano 🤌",
     "device_warnings": {
+      "show_badge_warning": "Mostra notifica badge",
+      "hide_badge_warning": "Nascondi notifica badge",
+      "show_calendar_sync": "Mostra promemoria sincronizzazione calendario",
+      "hide_calendar_sync": "Nascondi promemoria sincronizzazione calendario",
       "hide_device_warnings": "Nascondi avvisi dispositivo",
       "hide_language_warnings": "Nascondi avvisi lingua",
       "hide_registration_countdown": "Nascondi countdown registrazione",
@@ -632,6 +659,10 @@
     },
     "header": "Impostazioni",
     "settingsSection": "Impostazioni",
+    "sync": {
+      "title": "Forza sincronizzazione",
+      "subtitle": "Ricarica tutti i dati e può consumare più dati. Utile se i contenuti sembrano mancanti o non aggiornati."
+    },
     "sync_full": "Forza sincronizzazione completa",
     "accessibility": {
       "settings_page_loaded": "Pagina impostazioni caricata",
@@ -639,5 +670,34 @@
       "settings_scroll_hint": "Scorri attraverso le opzioni e preferenze delle impostazioni",
       "settings_content": "Area contenuto impostazioni"
     }
+  },
+  "WiFi": {
+    "title": "Configurazione WiFi",
+    "subtitle": "Eurofurence mette a disposizione una rete WiFi gratuita per partecipanti e staff.\n\nNota: per Dealers' Den, Artshow e altri casi particolari possono esistere reti dedicate - in tal caso riceverai istruzioni separate dallo staff di rete!",
+    "intro": "Se sei un utente esperto o fai parte dello staff, puoi modificare il comportamento del firewall o usare credenziali personalizzate.",
+    "profile_eurofurence_name": "Protetto (consigliato)",
+    "profile_eurofurence_desc": "Le connessioni in entrata verso il tuo dispositivo non sono consentite: puoi comunque navigare liberamente, ma nessuno può aprire connessioni verso le porte aperte del tuo dispositivo e le app in esecuzione dietro di esse.",
+    "profile_public_name": "Pubblico (sconsigliato)",
+    "profile_public_desc": "L'IP assegnato sarà completamente raggiungibile dall'esterno, senza filtri ma anche senza alcuna rete di sicurezza: sei responsabile della tua protezione. Usa un firewall e fai attenzione alle app in esecuzione.",
+    "profile_event_name": "Solo evento",
+    "profile_event_desc": "Le connessioni in entrata verso il tuo dispositivo sono consentite dall'interno della rete Eurofurence ma non da internet: chiunque nella rete può quindi accedere alle porte aperte del tuo dispositivo. Usa un firewall e fai attenzione alle app in esecuzione.",
+    "profile_custom_name": "Personalizzato/Staff",
+    "profile_custom_desc": "In alcuni casi lo staff ti fornirà credenziali di accesso personalizzate, che possono avere impostazioni di rete completamente diverse.",
+    "identity_label": "ID di accesso",
+    "identity_placeholder": "Il tuo ID di accesso",
+    "password_label": "Password",
+    "password_placeholder": "La tua password",
+    "scan_qr": "Scansiona il codice QR",
+    "apply": "Configura WiFi",
+    "confirm_title": "Configurare il WiFi?",
+    "confirm_body": "Configurare la rete Eurofurence con il profilo {{profile}}?",
+    "confirm_apply": "Configura",
+    "confirm_cancel": "Annulla",
+    "invalid_credentials": "Inserisci un ID di accesso e una password validi.",
+    "apply_failed": "Impossibile configurare il WiFi. Riprova.",
+    "apply_success": "Profilo WiFi salvato. Il tuo dispositivo si connetterà automaticamente quando la rete sarà a portata.",
+    "camera_permission": "Consenti l'accesso alla fotocamera per scansionare un codice QR WiFi.",
+    "grant_camera": "Consenti fotocamera",
+    "advanced_title": "Impostazioni avanzate"
   }
 }

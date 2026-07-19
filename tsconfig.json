@@ -17,6 +17,7 @@
   "extends": "expo/tsconfig.base",
   "include": [
     "./src",
+    "./app.config.ts",
     "./node_modules/moment/locale",
     "./package.json",
     "nativewind-env.d.ts",

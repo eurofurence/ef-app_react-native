@@ -119,35 +119,37 @@ export default function Knowledge() {
         accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
       >
         <Header>{t('header')}</Header>
-        <EfSectionList<KnowledgeSection, EfKbEntry>
-          refreshing={isSynchronizing}
-          onRefresh={() => vibrateAfter(synchronize())}
-          scrollEnabled={true}
-          contentContainerClassName='pb-32'
-          ListHeaderComponent={listHeaderComponent}
-          data={grouping}
-          renderSection={({ item }) => {
-            return (
-              <KbSection
-                style={styles.item}
-                title={item.name}
-                subtitle={item.description}
-                icon={item.icon}
-              />
-            )
-          }}
-          renderItem={({ item }) => {
-            return (
-              <KbEntryCard
-                containerStyle={styles.item}
-                entry={item}
-                onPress={onPressKbEntry}
-              />
-            )
-          }}
-          accessibilityLabel={t('accessibility.kb_sectioned_list')}
-          accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
-        />
+        <View className='flex-1'>
+          <EfSectionList<KnowledgeSection, EfKbEntry>
+            refreshing={isSynchronizing}
+            onRefresh={() => vibrateAfter(synchronize())}
+            scrollEnabled={true}
+            contentContainerClassName='pb-32'
+            ListHeaderComponent={listHeaderComponent}
+            data={grouping}
+            renderSection={({ item }) => {
+              return (
+                <KbSection
+                  style={styles.item}
+                  title={item.name}
+                  subtitle={item.description}
+                  icon={item.icon}
+                />
+              )
+            }}
+            renderItem={({ item }) => {
+              return (
+                <KbEntryCard
+                  containerStyle={styles.item}
+                  entry={item}
+                  onPress={onPressKbEntry}
+                />
+              )
+            }}
+            accessibilityLabel={t('accessibility.kb_sectioned_list')}
+            accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
+          />
+        </View>
       </View>
     </>
   )

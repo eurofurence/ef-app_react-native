@@ -1,6 +1,6 @@
-# Expo prebuild folders
-android
-ios
+# Expo prebuild folders (modules/*/android must stay in the upload, so anchor to root)
+/android
+/ios
 
 # Actual settings
 convention.config*.json

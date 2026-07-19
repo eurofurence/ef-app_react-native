@@ -50,14 +50,6 @@ export const conWebsite = required(
 )
 
 /**
- * EFNav map URL
- */
-export const efnavMapUrl = required(
-  process.env.EXPO_PUBLIC_CONVENTION_EFNAVMAPURL,
-  'EXPO_PUBLIC_CONVENTION_EFNAVMAPURL'
-)
-
-/**
  * App base, non-API URLs are relative to this.
  */
 export const appBase = required(
@@ -87,19 +79,6 @@ export const menuColumns = Number(
  * True if login is available for this convention.
  */
 export const showLogin = process.env.EXPO_PUBLIC_CONVENTION_SHOWLOGIN
-
-/**
- * True if Catch 'em All game is available for this convention.
- */
-export const showCatchEm = process.env.EXPO_PUBLIC_CONVENTION_SHOWCATCHEM
-
-/**
- * URL for accessing the Catch 'em All game for this convention.
- */
-export const catchEmUrl = required(
-  process.env.EXPO_PUBLIC_CONVENTION_CATCHEMURL,
-  'EXPO_PUBLIC_CONVENTION_CATCHEMURL'
-)
 
 /**
  * URL leading to the Artist Alley detail page for this convention.

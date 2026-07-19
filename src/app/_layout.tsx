@@ -9,6 +9,9 @@ import { StatusBar } from 'expo-status-bar'
 import { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+
+import { AuthBridge } from '@/components/auth/AuthBridge'
+import { SessionExpiredModal } from '@/components/auth/SessionExpiredModal'
 import { ToastProvider } from '@/context/ToastContext'
 import { AppClients } from '@/data/clients/AppClients'
 import { useFavoriteDealersToasts } from '@/data/hooks/useFavoriteDealersToasts'
@@ -95,6 +98,8 @@ export function MainLayout() {
   return (
     <SafeAreaProvider onLayout={() => SplashScreen.hide()}>
       <BottomSheetModalProvider>
+        <AuthBridge />
+        <SessionExpiredModal />
         <ThemeProvider value={themeNavigation}>
           <StatusBar
             style={

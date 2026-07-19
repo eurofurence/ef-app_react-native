@@ -5,6 +5,7 @@ import {
 import { isRunningInExpoGo } from 'expo'
 
 import { sentryDsn, sentryEnvironment } from '@/configuration'
+import { redactSensitiveUrl } from '@/util/redactSensitiveUrl'
 
 sentryInit({
   dsn: sentryDsn,
@@ -13,6 +14,16 @@ sentryInit({
   enabled: process.env.NODE_ENV === 'production' || false,
   environment: sentryEnvironment || 'production',
   debug: false,
+  beforeBreadcrumb(breadcrumb) {
+    if (breadcrumb.data?.url)
+      breadcrumb.data.url = redactSensitiveUrl(breadcrumb.data.url)
+    return breadcrumb
+  },
+  beforeSend(event) {
+    if (event.request?.url)
+      event.request.url = redactSensitiveUrl(event.request.url)
+    return event
+  },
   enableNativeFramesTracking: !isRunningInExpoGo(), // Tracks slow and frozen frames in the application
   integrations: [
     reactNativeTracingIntegration({

@@ -202,6 +202,20 @@ export function useStackScreensData(): StackScreenProps[] {
         swipeEnabled: true,
       },
       {
+        location: 'wifi/index',
+        title: t('wifi'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
+        location: 'wifi/scan',
+        title: t('wifi'),
+        headerLeft: CustomBack,
+        headerShown: false,
+        swipeEnabled: true,
+      },
+      {
         location: '+not-found',
         headerShown: false,
       },

@@ -456,6 +456,16 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Benachrichtigung: Kalender-Synchronisierung",
+      "hide_calendar_warning": "Kalender-Benachrichtigung ausblenden",
+      "hide_calendar_warning_hint": "Blendet diese Kalender-Synchronisierungs-Benachrichtigung aus",
+      "view_calendar_settings": "Kalender-Synchronisierungseinstellungen öffnen",
+      "view_calendar_settings_hint": "Öffnet die Einstellungen, um deine Favoriten mit deinem Kalender zu synchronisieren",
+      "badge_warning_container": "Benachrichtigung: Badge verfügbar",
+      "hide_badge_warning": "Badge-Benachrichtigung ausblenden",
+      "hide_badge_warning_hint": "Blendet diese Benachrichtigung über das verfügbare Badge aus",
+      "view_badge": "Badge anzeigen",
+      "view_badge_hint": "Öffnet dein Profil, um deinen Badge-Code anzuzeigen",
       "banner_image": "Convention-Banner-Hintergrundbild",
       "changed_dealers_list": "{{count}} aktualisierte Dealer: {{dealers}}",
       "changed_events_list": "{{count}} aktualisierte Events: {{events}}",
@@ -511,6 +521,10 @@
     "sync_error": "Es gab ein Problem beim Abrufen der Daten, probiere es bitte später noch einmal.",
     "view_all_announcements": "Alle Mitteilungen anzeigen",
     "warnings": {
+      "calendar_sync": "Kalender synchronisieren",
+      "calendar_sync_subtitle": "Füge deine Favoriten zu deiner Kalender-App hinzu. Tippe hier, um es in den Einstellungen einzurichten.",
+      "badge_available": "Dein Badge ist bereit",
+      "badge_available_subtitle": "Dein Convention-Badge ist verfügbar. Tippe hier, um deinen Badge-Code anzuzeigen.",
       "favorites_changed": "Favoriten geändert",
       "favorites_changed_subtitle": "Infos in Deinen Favoriten wurden geändert, seitdem Du diese das letzte mal angeschaut hast",
       "hide": "Verbergen",
@@ -662,7 +676,9 @@
       "settings_tab": "Einstellungen Tab",
       "settings_tab_hint": "App-Einstellungen und Präferenzen konfigurieren",
       "website_tab": "Convention-Website Tab",
-      "website_tab_hint": "Öffnet Convention-Website im Browser"
+      "website_tab_hint": "Öffnet Convention-Website im Browser",
+      "wifi_tab": "WLAN-Einrichtung",
+      "wifi_tab_hint": "Öffnet die WLAN-Einrichtung"
     },
     "announcements": "Ankündigungen",
     "artist_alley": "Artist Alley",
@@ -682,7 +698,8 @@
     "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen",
-    "website": "Webseite"
+    "website": "Webseite",
+    "wifi": "WLAN"
   },
   "Notification": {
     "announcement": "Es gibt neue Ankündigungen von {{conName}}",
@@ -793,6 +810,12 @@
     "search_input_hint": "Text eingeben um nach Inhalten zu suchen",
     "search_input_label": "Suchfeld"
   },
+  "SessionExpired": {
+    "title": "Sitzung abgelaufen",
+    "body": "Du wurdest abgemeldet. Melde dich erneut an, um deine Favoriten synchron zu halten.",
+    "sign_in": "Anmelden",
+    "not_now": "Nicht jetzt"
+  },
   "Settings": {
     "about": "Über uns",
     "allowAnalytics": "Erlaube uns, Fehler zu übermitteln",
@@ -806,6 +829,16 @@
       "synchronize": "Synchronisieren",
       "title": "Cache-Statistiken"
     },
+    "calendar": {
+      "copy_link": "Kalenderlink kopieren",
+      "error": "Kalender konnte nicht geöffnet werden. Kopiere stattdessen den Link.",
+      "link_copied": "Kalenderlink in die Zwischenablage kopiert",
+      "login_required": "Melde Dich an, um Deine Favoriten zu synchronisieren.",
+      "retry": "Erneut versuchen",
+      "subscribe": "Favoriten zum Kalender hinzufügen",
+      "subtitle": "Abonniere Deine Favoriten mit Deiner Kalender-App. Neue Favoriten und Änderungen werden automatisch synchronisiert.",
+      "title": "Kalender-Synchronisierung"
+    },
     "changeLanguage": "Sprache ändern",
     "currentLanguage": "Deine Sprachauswahl ist Deutsch!",
     "developer_settings": {
@@ -813,6 +846,10 @@
       "title": "Entwickler-Einstellungen"
     },
     "device_warnings": {
+      "show_badge_warning": "Badge-Benachrichtigung anzeigen",
+      "hide_badge_warning": "Badge-Benachrichtigung verbergen",
+      "show_calendar_sync": "Kalender-Synchronisierung anzeigen",
+      "hide_calendar_sync": "Kalender-Synchronisierung verbergen",
       "hide_device_warnings": "Kompatibilitätsprobleme verbergen",
       "hide_language_warnings": "Übersetzungshinweise verbergen",
       "hide_registration_countdown": "Anmeldungs-Countdown verbergen",
@@ -864,6 +901,10 @@
       "title": "Appaussehen ändern"
     },
     "timeTravel": "Zeitreise-Einstellungen anzeigen.",
+    "sync": {
+      "title": "Synchronisierung erzwingen",
+      "subtitle": "Lädt alle Daten neu und kann mehr Datenvolumen verbrauchen. Sinnvoll, wenn Inhalte fehlen oder veraltet wirken."
+    },
     "sync_full": "Volle Synchronisierung erzwingen",
     "accessibility": {
       "settings_page_loaded": "Einstellungsseite geladen",
@@ -885,6 +926,35 @@
     "week_before": "Eine Woche vor {{conName}}"
   },
   "Todo": {},
+  "WiFi": {
+    "title": "WLAN-Einrichtung",
+    "subtitle": "Eurofurence betreibt ein kostenloses WLAN für Teilnehmer und Staff.\n\nHinweis: Für Dealers' Den, Artshow und andere Spezialfälle kann es eigene Netzwerke geben - in dem Fall wirst du vom Netzwerk-Team separat eingewiesen!",
+    "intro": "Als fortgeschrittener Nutzer oder Staff kannst du das Firewall-Verhalten ändern oder eigene Zugangsdaten verwenden.",
+    "profile_eurofurence_name": "Geschützt (empfohlen)",
+    "profile_eurofurence_desc": "Eingehende Verbindungen zu deinem Gerät sind nicht erlaubt. Du kannst das Internet frei nutzen, aber niemand kann von außen Verbindungen zu offenen Ports deines Geräts und den dahinter laufenden Apps aufbauen.",
+    "profile_public_name": "Öffentlich (nicht empfohlen)",
+    "profile_public_desc": "Deine zugewiesene IP ist vollständig öffentlich erreichbar - ohne Filterung, aber auch ohne jedes Sicherheitsnetz. Du bist selbst für deine Sicherheit verantwortlich. Nutze eine Firewall und achte auf deine laufenden Apps.",
+    "profile_event_name": "Nur Event",
+    "profile_event_desc": "Eingehende Verbindungen zu deinem Gerät sind aus dem Eurofurence-Netzwerk erlaubt, nicht aber aus dem Internet. Alle anderen im Netzwerk können also auf offene Ports deines Geräts zugreifen. Nutze eine Firewall und achte auf deine laufenden Apps.",
+    "profile_custom_name": "Benutzerdefiniert/Staff",
+    "profile_custom_desc": "In manchen Fällen erhältst du vom Staff eigene Zugangsdaten, die komplett eigene Netzwerkeinstellungen haben können.",
+    "identity_label": "Zugangs-ID",
+    "identity_placeholder": "Deine Zugangs-ID",
+    "password_label": "Passwort",
+    "password_placeholder": "Dein Passwort",
+    "scan_qr": "QR-Code scannen",
+    "apply": "WLAN einrichten",
+    "confirm_title": "WLAN einrichten?",
+    "confirm_body": "Das Eurofurence-Netzwerk mit dem Profil {{profile}} einrichten?",
+    "confirm_apply": "Einrichten",
+    "confirm_cancel": "Abbrechen",
+    "invalid_credentials": "Bitte gib eine gültige Zugangs-ID und ein Passwort ein.",
+    "apply_failed": "WLAN konnte nicht eingerichtet werden. Bitte versuche es erneut.",
+    "apply_success": "WLAN-Profil gespeichert. Dein Gerät verbindet sich automatisch, sobald das Netzwerk in Reichweite ist.",
+    "camera_permission": "Erlaube den Kamerazugriff, um einen WLAN-QR-Code zu scannen.",
+    "grant_camera": "Kamera erlauben",
+    "advanced_title": "Erweiterte Einstellungen"
+  },
   "Viewer": {
     "announcement": "Ankündigung: {{name}}",
     "artist": "Dealer: {{name}}",

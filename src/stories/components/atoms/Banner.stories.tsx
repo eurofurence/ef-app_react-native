@@ -79,8 +79,8 @@ export const DifferentAspectRatios: Story = {
     <View style={{ gap: 20 }}>
       <Banner
         image={{
-          Id: 'banner-wide',
-          InternalReference: 'banner-wide-ref',
+          Id: 'bannerwide',
+          InternalReference: 'bannerwide-ref',
           Width: 1200,
           Height: 200,
           SizeInBytes: 60000,

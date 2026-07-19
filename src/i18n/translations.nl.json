@@ -354,6 +354,16 @@
   },
   "Home": {
     "accessibility": {
+      "calendar_warning_container": "Melding agendasynchronisatie",
+      "hide_calendar_warning": "Agendamelding verbergen",
+      "hide_calendar_warning_hint": "Sluit deze melding over agendasynchronisatie",
+      "view_calendar_settings": "Instellingen voor agendasynchronisatie openen",
+      "view_calendar_settings_hint": "Opent Instellingen om je favorieten met je agenda te synchroniseren",
+      "badge_warning_container": "Melding badge beschikbaar",
+      "hide_badge_warning": "Badgemelding verbergen",
+      "hide_badge_warning_hint": "Sluit deze melding over de beschikbare badge",
+      "view_badge": "Badge bekijken",
+      "view_badge_hint": "Opent je profiel om je badgecode te bekijken",
       "banner_image": "Conventie-banner achtergrondafbeelding",
       "changed_dealers_list": "{{count}} bijgewerkte dealers: {{dealers}}",
       "changed_events_list": "{{count}} bijgewerkte evenementen: {{events}}",
@@ -405,6 +415,10 @@
       "placeholder": "Zoek naar evenementen, dealers en informatie-artikelen…"
     },
     "warnings": {
+      "calendar_sync": "Synchroniseer je agenda",
+      "calendar_sync_subtitle": "Voeg je favoriete evenementen toe aan je agenda-app. Tik hier om dit in te stellen in Instellingen.",
+      "badge_available": "Je badge is klaar",
+      "badge_available_subtitle": "Je conventiebadge is beschikbaar. Tik hier om je badgecode te bekijken.",
       "favorites_changed": "Favorieten bijgewerkt",
       "favorites_changed_subtitle": "Sommige van je favorieten zijn bijgewerkt sinds je ze voor het laatst hebt bekeken",
       "hide": "Verbergen",
@@ -550,11 +564,14 @@
       "settings_tab": "Instellingen tabblad",
       "settings_tab_hint": "Configureer app-voorkeuren en instellingen",
       "website_tab": "Conventie website tabblad",
-      "website_tab_hint": "Opent conventie website in browser"
+      "website_tab_hint": "Opent conventie website in browser",
+      "wifi_tab": "WiFi setup",
+      "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Aankondigingen",
     "map": "Kaart",
-    "website": "Website"
+    "website": "Website",
+    "wifi": "WiFi"
   },
   "PrivateMessageCompose": {
     "accessibility": {
@@ -657,6 +674,12 @@
     "search_input_hint": "Voer tekst in om naar inhoud te zoeken",
     "search_input_label": "Zoekveld"
   },
+  "SessionExpired": {
+    "title": "Sessie verlopen",
+    "body": "Je bent uitgelogd. Log opnieuw in om je favorieten gesynchroniseerd te houden.",
+    "sign_in": "Inloggen",
+    "not_now": "Niet nu"
+  },
   "Settings": {
     "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
     "cache": {
@@ -668,6 +691,16 @@
       "synchronize": "Synchronizeer",
       "title": "Opslagstatus"
     },
+    "calendar": {
+      "copy_link": "Kalenderlink kopiëren",
+      "error": "Kan de kalender niet openen. Kopieer in plaats daarvan de link.",
+      "link_copied": "Kalenderlink gekopieerd naar klembord",
+      "login_required": "Meld je aan om je favoriete evenementen te synchroniseren.",
+      "retry": "Probeer opnieuw",
+      "subscribe": "Favorieten aan kalender toevoegen",
+      "subtitle": "Abonneer je kalender-app op je favoriete evenementen. Nieuwe favorieten en wijzigingen worden automatisch gesynchroniseerd.",
+      "title": "Kalendersynchronisatie"
+    },
     "changeLanguage": "Verander taal",
     "currentLanguage": "Jouw huidige taal is Nederlands!",
     "developer_settings": {
@@ -675,6 +708,10 @@
       "title": "Ontwikkelaarsinstellingen"
     },
     "device_warnings": {
+      "show_badge_warning": "Toon badgemelding",
+      "hide_badge_warning": "Verberg badgemelding",
+      "show_calendar_sync": "Toon herinnering agendasynchronisatie",
+      "hide_calendar_sync": "Verberg herinnering agendasynchronisatie",
       "hide_device_warnings": "Verberg apparaatwaarschuwingen",
       "hide_language_warnings": "Verberg taalwaarschuwingen",
       "hide_registration_countdown": "Verberg registratie countdown",
@@ -699,6 +736,10 @@
     },
     "settingsSection": "Instellingen",
     "timeTravel": "Toon tijdreisinstellingen.",
+    "sync": {
+      "title": "Forceer synchronisatie",
+      "subtitle": "Laadt alle gegevens opnieuw en kan meer data verbruiken. Handig als inhoud lijkt te ontbreken of verouderd is."
+    },
     "sync_full": "Forceer volledige synchronisatie",
     "accessibility": {
       "settings_page_loaded": "Instellingenpagina geladen",
@@ -716,5 +757,34 @@
     "reset": "Reset",
     "subtitle": "Pas de tijd en datum aan voor het debuggen",
     "title": "Tijdreizen"
+  },
+  "WiFi": {
+    "title": "WiFi instellen",
+    "subtitle": "Eurofurence biedt een gratis WiFi-netwerk voor bezoekers en staff.\n\nLet op: voor de Dealers' Den, Artshow en andere bijzondere gevallen kunnen aparte netwerken bestaan - je krijgt dan aparte instructies van het netwerkteam!",
+    "intro": "Ben je een gevorderde gebruiker of staff, dan kun je het firewallgedrag aanpassen of eigen inloggegevens gebruiken.",
+    "profile_eurofurence_name": "Beschermd (aanbevolen)",
+    "profile_eurofurence_desc": "Inkomende verbindingen naar je apparaat zijn niet toegestaan. Je kunt vrij internetten, maar niemand kan verbinding maken met open poorten van je apparaat en de apps die daarachter draaien.",
+    "profile_public_name": "Openbaar (niet aanbevolen)",
+    "profile_public_desc": "Je toegewezen IP is volledig publiek bereikbaar, zonder filtering maar ook zonder enig vangnet: je bent zelf verantwoordelijk voor je veiligheid. Gebruik een firewall en let op welke apps er draaien.",
+    "profile_event_name": "Alleen event",
+    "profile_event_desc": "Inkomende verbindingen naar je apparaat zijn toegestaan vanuit het Eurofurence-netwerk, maar niet vanaf internet. Iedereen in het netwerk kan dus open poorten op je apparaat bereiken. Gebruik een firewall en let op welke apps er draaien.",
+    "profile_custom_name": "Aangepast/Staff",
+    "profile_custom_desc": "In sommige gevallen krijg je van de staff eigen inloggegevens, die volledig eigen netwerkinstellingen kunnen hebben.",
+    "identity_label": "Toegangs-ID",
+    "identity_placeholder": "Jouw toegangs-ID",
+    "password_label": "Wachtwoord",
+    "password_placeholder": "Jouw wachtwoord",
+    "scan_qr": "QR-code scannen",
+    "apply": "WiFi instellen",
+    "confirm_title": "WiFi instellen?",
+    "confirm_body": "Het Eurofurence-netwerk instellen met het profiel {{profile}}?",
+    "confirm_apply": "Instellen",
+    "confirm_cancel": "Annuleren",
+    "invalid_credentials": "Voer een geldige toegangs-ID en een geldig wachtwoord in.",
+    "apply_failed": "WiFi instellen is mislukt. Probeer het opnieuw.",
+    "apply_success": "WiFi-profiel opgeslagen. Je apparaat verbindt automatisch zodra het netwerk binnen bereik is.",
+    "camera_permission": "Sta cameratoegang toe om een WiFi-QR-code te scannen.",
+    "grant_camera": "Camera toestaan",
+    "advanced_title": "Geavanceerde instellingen"
   }
 }

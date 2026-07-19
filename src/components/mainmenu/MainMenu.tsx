@@ -3,22 +3,16 @@ import { router } from 'expo-router'
 import { openBrowserAsync } from 'expo-web-browser'
 import { type RefObject, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking } from 'react-native'
+import { Linking, Platform } from 'react-native'
 
 import { Col } from '@/components/generic/containers/Col'
 import { Grid } from '@/components/generic/containers/Grid'
 import { Tab } from '@/components/generic/containers/Tab'
 import type { TabsRef } from '@/components/generic/containers/Tabs'
 import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
-import {
-  catchEmUrl,
-  conWebsite,
-  efnavMapUrl,
-  menuColumns,
-  showCatchEm,
-  showLogin,
-} from '@/configuration'
+import { conWebsite, menuColumns, showLogin } from '@/configuration'
 import { auth, useAuthState } from '@/data/clients/auth'
+import { useAppConfig } from '@/hooks/data/useAppConfig'
 
 export type MainMenuProps = {
   tabs: RefObject<TabsRef | null>
@@ -27,15 +21,16 @@ export type MainMenuProps = {
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
   const { isLoggedIn, claims } = useAuthState()
+  const { cmaUrl, mapsUrl, wifiConfigDisabled } = useAppConfig()
 
   const handleCatchEmAll = useCallback(async () => {
     if (!isLoggedIn) {
       alert(t('not_logged_in'))
       return
     }
-    await Linking.openURL(catchEmUrl).catch(console.error)
+    if (cmaUrl) await Linking.openURL(cmaUrl).catch(console.error)
     tabs.current?.close()
-  }, [t, isLoggedIn, tabs])
+  }, [t, isLoggedIn, tabs, cmaUrl])
 
   return (
     <Col type='stretch'>
@@ -57,7 +52,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
           accessibilityLabel={t('accessibility.info_tab')}
           accessibilityHint={t('accessibility.info_tab_hint')}
         />
-        {showCatchEm === 'true' && (
+        {cmaUrl && (
           <Tab
             icon='paw'
             text={t('catch_em')}
@@ -97,6 +92,15 @@ export function MainMenu({ tabs }: MainMenuProps) {
           accessibilityLabel={t('accessibility.settings_tab')}
           accessibilityHint={t('accessibility.settings_tab_hint')}
         />
+        {Platform.OS !== 'web' && !wifiConfigDisabled && (
+          <Tab
+            icon='wifi'
+            text={t('wifi')}
+            onPress={() => router.navigate('/wifi')}
+            accessibilityLabel={t('accessibility.wifi_tab')}
+            accessibilityHint={t('accessibility.wifi_tab_hint')}
+          />
+        )}
         <Tab
           icon='magnify'
           text={t('lost_and_found')}
@@ -116,13 +120,15 @@ export function MainMenu({ tabs }: MainMenuProps) {
           accessibilityLabel={t('accessibility.website_tab')}
           accessibilityHint={t('accessibility.website_tab_hint')}
         />
-        <Tab
-          icon='map'
-          text={t('map')}
-          onPress={() => openBrowserAsync(efnavMapUrl)}
-          accessibilityLabel={t('accessibility.map_tab')}
-          accessibilityHint={t('accessibility.map_tab_hint')}
-        />
+        {mapsUrl && (
+          <Tab
+            icon='map'
+            text={t('map')}
+            onPress={() => openBrowserAsync(mapsUrl)}
+            accessibilityLabel={t('accessibility.map_tab')}
+            accessibilityHint={t('accessibility.map_tab_hint')}
+          />
+        )}
         <Tab
           icon='information'
           text={t('about')}
