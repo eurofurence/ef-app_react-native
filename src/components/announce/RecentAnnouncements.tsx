@@ -1,6 +1,6 @@
+import {useNow} from "@/hooks/time/useNow";
 import {
   addMinutes,
-  formatDistanceToNow,
   isAfter,
   isBefore,
   subMinutes,
@@ -10,45 +10,29 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useCache } from '@/context/data/Cache'
-import type { AnnouncementDetails } from '@/context/data/types.details'
-
 import { Section } from '../generic/atoms/Section'
 import { Button } from '../generic/containers/Button'
 
 import { AnnouncementCard } from './AnnouncementCard'
+import {useLiveQuery} from '@tanstack/react-db'
+import {announcementsFullCollection} from '@/data/collections/content/AnnouncementsFull'
 
 const recentLimit = 2
 
-export const RecentAnnouncements = ({ now }: { now: Date }) => {
-  const { t } = useTranslation('Home')
-  const { t: tAnnouncements } = useTranslation('Announcements')
-  const { announcements } = useCache()
+export function RecentAnnouncements() {
+  const {t} = useTranslation('Home')
+  const now = useNow()
+  const {t: tAnnouncements} = useTranslation('Announcements')
+  const {data: announcements} = useLiveQuery(announcementsFullCollection)
 
   const recent = useMemo(
     () =>
       announcements.filter(
         (item) =>
-          isAfter(now, subMinutes(item.ValidFrom, 5)) &&
-          isBefore(now, addMinutes(item.ValidUntil, 5))
-      ),
+          isAfter(now, subMinutes(item.ValidFromDateTimeUtc, 5)) &&
+          isBefore(now, addMinutes(item.ValidFromDateTimeUtc, 5))
+      ).slice(0, recentLimit),
     [announcements, now]
-  )
-
-  /**
-   * Creates the announcement instance props for an upcoming or running announcement.
-   * @param details The details to use.
-   */
-  const announcementInstanceForAny = (
-    details: AnnouncementDetails
-  ): AnnouncementDetailsInstance => {
-    const time = formatDistanceToNow(details.ValidFrom, { addSuffix: true })
-    return { details, time }
-  }
-
-  const recentAnnouncements = useMemo(
-    () => recent.slice(0, recentLimit).map(announcementInstanceForAny),
-    [recent]
   )
 
   // if (recentAnnouncements.length === 0) {
@@ -59,7 +43,7 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
     <>
       <Section
         title={t('recent_announcements')}
-        subtitle={t('announcementsTitle', { count: recent.length })}
+        subtitle={t('announcementsTitle', {count: recent.length})}
         icon='newspaper'
       />
       <View
@@ -68,14 +52,14 @@ export const RecentAnnouncements = ({ now }: { now: Date }) => {
           'accessibility.recent_announcements_section'
         )}
       >
-        {recentAnnouncements.map((item) => (
+        {recent.map((item) => (
           <AnnouncementCard
-            key={item.details.Id}
+            key={item.Id}
             announcement={item}
             onPress={(announcement) =>
               router.navigate({
                 pathname: '/announcements/[id]',
-                params: { id: announcement.Id },
+                params: {id: announcement.Id},
               })
             }
           />
@@ -103,9 +87,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 })
-
-// Define AnnouncementDetailsInstance type inside the file
-type AnnouncementDetailsInstance = {
-  details: AnnouncementDetails
-  time: string
-}

@@ -1,3 +1,4 @@
+import {synchronize, useIsSynchronizing} from "@/data/hooks/useSynchronize";
 import { captureException } from '@sentry/react-native'
 import { Redirect } from 'expo-router'
 import { useCallback, useState } from 'react'
@@ -8,7 +9,6 @@ import { appStyles } from '@/components/AppStyles'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ProfileContent } from '@/components/ProfileContent'
-import { useCache } from '@/context/data/Cache'
 import { auth, useAuthState } from '@/data/clients/auth'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
@@ -16,7 +16,7 @@ import { vibrateAfter } from '@/util/vibrateAfter'
 export default function Profile() {
   const { claims, user } = useAuthState()
   const [isReloading, setIsReloading] = useState(false)
-  const { synchronize, isSynchronizing } = useCache()
+  const isSynchronizing = useIsSynchronizing()
   const backgroundStyle = useThemeBackground('background')
   const { t } = useTranslation('Profile')
   const { t: a11y } = useTranslation('Accessibility')

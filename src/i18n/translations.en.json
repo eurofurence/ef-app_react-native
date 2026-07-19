@@ -359,7 +359,9 @@
     "search": {
       "placeholder": "Search dealers…"
     },
-    "section_notice": "Dealer grouping is picked by the app based on most unique category"
+    "section_notice": "Dealer grouping is picked by the app based on most unique category",
+    "section_table": "Section {{section}}",
+    "section_table_none": "Without section"
   },
   "EmptyScreen": {
     "notImplemented": "Content is not implemented yet."

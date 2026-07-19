@@ -34,10 +34,10 @@ export type ComboModalProps<T> = {
 
 export type ComboModalRef<T> = {
   pick(
-    options: readonly T[],
-    selected?: readonly T[],
-    onChange?: (selected: readonly T[]) => void
-  ): Promise<readonly T[] | null>
+    options: T[],
+    selected?: T[],
+    onChange?: (selected: T[]) => void
+  ): Promise<T[] | null>
 }
 
 export const ComboModal = forwardRef(
@@ -59,7 +59,7 @@ export const ComboModal = forwardRef(
     const [selected, setSelected] = useState<T[]>([])
     const [filter, setFilter] = useState<string>('')
 
-    const onChangeRef = useRef<((selected: readonly T[]) => void) | undefined>(
+    const onChangeRef = useRef<((selected: T[]) => void) | undefined>(
       undefined
     )
 
@@ -93,7 +93,7 @@ export const ComboModal = forwardRef(
         pick(
           options: T[],
           selected?: T[],
-          onChange?: (selected: readonly T[]) => void
+          onChange?: (selected: T[]) => void
         ): Promise<T[] | null> {
           if (visible) throw new Error('Already open')
 

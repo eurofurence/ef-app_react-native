@@ -11,7 +11,7 @@ import { DevValues } from '@/components/settings/DevValues'
 import { OssLicenses } from '@/components/settings/OssLicenses'
 import { TimeTravel } from '@/components/settings/TimeTravel'
 import { UserSettings } from '@/components/settings/UserSettings'
-import { useAppSetting } from '@/data/collections/AppSettings'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function SettingsPage() {

@@ -1,11 +1,10 @@
 import { subMilliseconds, subSeconds } from 'date-fns'
 import { addMilliseconds } from 'date-fns/addMilliseconds'
-import { useFocusEffect } from 'expo-router'
-import { useCallback, useState } from 'react'
+import {useEffect, useState} from 'react'
 import {
   appSettingsCollection,
   appSettingsDefaults,
-} from '@/data/collections/AppSettings'
+} from '@/data/collections/supplemental/AppSettings'
 
 /**
  * Offset provided by the app settings.
@@ -89,7 +88,9 @@ setInterval(() => {
  */
 export function subscribeSeconds(listener: () => void) {
   secondsListeners.add(listener)
-  return () => secondsListeners.delete(listener)
+  return () => {
+    secondsListeners.delete(listener)
+  }
 }
 
 /**
@@ -97,7 +98,9 @@ export function subscribeSeconds(listener: () => void) {
  */
 export function subscribeMinutes(listener: () => void) {
   minutesListeners.add(listener)
-  return () => minutesListeners.delete(listener)
+  return () => {
+    minutesListeners.delete(listener)
+  }
 }
 
 /**
@@ -108,12 +111,10 @@ export function subscribeMinutes(listener: () => void) {
 export function useNow(_input?: number | 'static') {
   const [now, setNow] = useState(minutesResult)
 
-  useFocusEffect(
-    useCallback(() => {
-      setNow(minutesResult)
-      return subscribeMinutes(() => setNow(minutesResult))
-    }, [])
-  )
+  useEffect(() => {
+    setNow(minutesResult)
+    return subscribeMinutes(() => setNow(minutesResult))
+  }, []);
 
   return now
 }
@@ -125,14 +126,19 @@ export function useNow(_input?: number | 'static') {
 export function useNowPrecise() {
   const [now, setNow] = useState(secondsResult)
 
-  useFocusEffect(
-    useCallback(() => {
-      setNow(secondsResult)
-      return subscribeSeconds(() => setNow(secondsResult))
-    }, [])
-  )
+  useEffect(() => {
+    setNow(secondsResult)
+    return subscribeSeconds(() => setNow(secondsResult))
+  }, []);
 
   return now
+}
+
+/**
+ * Returns the currently active offset.
+ */
+export function getNowOffset() {
+  return currentOffset
 }
 
 /**
@@ -141,67 +147,3 @@ export function useNowPrecise() {
 export function getNow() {
   return new Date(Date.now() + currentOffset)
 }
-
-// todo verify
-// if (import.meta.hot)
-//   import.meta.hot.dispose(() => clearInterval(handle))
-
-//
-// /**
-//  * Returns the current time with a millisecond offset.
-//  * @param amount The ms offset.
-//  */
-// const nowWithOffset = (amount: number) => addMilliseconds(new Date(), amount)
-//
-// /**
-//  * True if the values are equal in a given quantization.
-//  * @param a The first value.
-//  * @param b The second value.
-//  * @param resolution The resolution.
-//  */
-// const sameInResolution = (a: number, b: number, resolution: number) =>
-//   Math.floor(a / resolution) === Math.floor(b / resolution)
-//
-// /**
-//  * Get the current date, which includes time traveling.
-//  * @param resolution Static if not live. Otherwise, gives the minute hand
-//  * precision of the clock. Starts an interval, so use in central places only.
-//  */
-// export const useNow = (resolution: 'static' | number = 'static'): Date => {
-//   const [enabled] = useAppSetting('TimeTravelEnabled')
-//   const [offset] = useAppSetting('TimeTravelOffset')
-//   const effectiveOffset = enabled ? offset : 0
-//
-//   const [now, setNow] = useState(() => nowWithOffset(effectiveOffset))
-//
-//   useEffect(() => {
-//     setNow(nowWithOffset(effectiveOffset))
-//     if (resolution === 'static') return
-//
-//     const handle = setInterval(() => {
-//       setNow((current) => {
-//         const next = nowWithOffset(effectiveOffset)
-//         const currentMinutes = getHours(current) * 60 + getMinutes(current)
-//         const nextMinutes = getHours(next) * 60 + getMinutes(next)
-//         return sameInResolution(currentMinutes, nextMinutes, resolution)
-//           ? current
-//           : next
-//       })
-//     }, 500)
-//
-//     return () => clearInterval(handle)
-//   }, [effectiveOffset, resolution])
-//
-//   return now
-// }
-//
-// /**
-//  * Returns a function that gets the current date with optional time travel offset.
-//  */
-// export function useGetNow(): () => Date {
-//   const [enabled] = useAppSetting('TimeTravelEnabled')
-//   const [offset] = useAppSetting('TimeTravelOffset')
-//   const effectiveOffset = enabled ? offset : 0
-//
-//   return useCallback(() => addMilliseconds(new Date(), effectiveOffset), [effectiveOffset])
-// }

@@ -7,10 +7,9 @@ import {
   type ViewStyle,
 } from 'react-native'
 
-import type { ImageDetails } from '@/context/data/types.details'
-
 import { Image, type ImageProps } from './Image'
 import { sourceFromImage } from './Image.common'
+import type { EfImage } from '@/data/types/EfImage'
 
 const initialSize = { width: Dimensions.get('window').width - 40, height: 160 }
 
@@ -29,7 +28,7 @@ export type ImageFillProps = {
   /**
    * The source image object.
    */
-  image?: ImageDetails
+  image?: EfImage
 
   /**
    * The targeted point and the dimension to make visible.

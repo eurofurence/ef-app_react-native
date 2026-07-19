@@ -11,14 +11,20 @@ import { Rule } from '@/components/generic/atoms/Rule'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
-import { useCache } from '@/context/data/Cache'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
+import {eq, useLiveQuery} from '@tanstack/react-db'
+import {announcementsFullCollection} from '@/data/collections/content/AnnouncementsFull'
 
 export default function AnnounceItem() {
   const { t } = useTranslation('Announcement')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { announcements } = useCache()
-  const announcement = announcements.dict[id]
+  const {data: announcement} = useLiveQuery({
+    id: 'announcements-item',
+    query: q => q
+      .from({item: announcementsFullCollection})
+      .where(({item}) => eq(item.Id, id))
+      .findOne()
+  }, [id])
 
   return (
     <ScrollView
@@ -48,7 +54,7 @@ export default function AnnounceItem() {
               accessibilityLabel={t('accessibility.title_heading')}
               accessibilityRole='header'
             >
-              {announcement.NormalizedTitle}
+              {announcement.Title}
             </Label>
 
             <Row

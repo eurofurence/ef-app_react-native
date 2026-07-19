@@ -1,25 +1,46 @@
-import type { FC } from 'react'
+import {onLongPressEvent, onPressEvent} from "@/app/(areas)/schedule/day-1";
+import {EventCard2} from "@/components/events/EventCard2";
+import {conTimeZone} from "@/configuration";
+import {type EfEventFull, eventsFullCollection} from "@/data/collections/content/EventsFull";
+import {useAppSetting} from "@/data/collections/supplemental/AppSettings";
+import {useNow} from "@/hooks/time/useNow";
+import {orderBy} from "@/util/arrays";
+import {getProgress} from "@/util/eventTiming";
+import {isUndefined, not, or, useLiveQuery} from "@tanstack/react-db";
+import {isWithinInterval} from "date-fns";
+import {toZonedTime} from "date-fns-tz";
+import {useCallback, useMemo} from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useEventCardInteractions } from '@/components/events/Events.common'
-import { useCurrentEvents } from '@/hooks/data/useCurrentEvents'
-
 import { Section } from '../generic/atoms/Section'
 
-import { EventCard } from './EventCard'
 
-export type CurrentEventListProps = {
-  now: Date
-}
+export function CurrentEventList() {
+  const {t} = useTranslation('Events')
+  const now = useNow()
+  const [showInternal] = useAppSetting('ShowInternalEvents')
 
-export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
-  const { t } = useTranslation('Events')
-  const events = useCurrentEvents(now)
+  const currentFilter = useCallback((event: EfEventFull) => {
+    return isWithinInterval(now, {
+      start: toZonedTime(event.StartDateTimeUtc, conTimeZone),
+      end: toZonedTime(event.EndDateTimeUtc, conTimeZone)
+    });
+  }, [now])
 
-  const { onPress, onLongPress } = useEventCardInteractions()
+  const {data: events} = useLiveQuery({
+    id: 'current-events',
+    query: q => q.from({item: eventsFullCollection})
+      .where(({item}) => isUndefined(item.Hidden))
+      .where(({item}) => or(showInternal, not(item.IsInternal)))
+      .fn.where(({item}) => currentFilter(item))
+  }, [showInternal, currentFilter])
 
-  if (events.length === 0) {
+  const current = useMemo(() => {
+    return orderBy(events, event => getProgress(event, now))
+  }, [events, now])
+
+  if (current.length === 0) {
     return null
   }
 
@@ -31,13 +52,13 @@ export const CurrentEventList: FC<CurrentEventListProps> = ({ now }) => {
         icon='clock'
       />
       <View style={styles.condense}>
-        {events.map((event) => (
-          <EventCard
-            key={event.details.Id}
+        {current.map((event) => (
+          <EventCard2
+            key={event.Id}
             event={event}
             type='duration'
-            onPress={onPress}
-            onLongPress={onLongPress}
+            onPress={onPressEvent}
+            onLongPress={onLongPressEvent}
           />
         ))}
       </View>

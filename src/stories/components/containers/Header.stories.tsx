@@ -1,8 +1,10 @@
+import {ToastProvider} from "@/context/ToastContext";
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import type React from 'react'
 import { View } from 'react-native'
 import type { IconNames } from '@/components/generic/atoms/Icon'
 import { Header } from '@/components/generic/containers/Header'
+import {SafeAreaInsetsContext} from "react-native-safe-area-context";
 
 // Wrapper component to handle Header's union type
 const HeaderWrapper = ({
@@ -36,6 +38,8 @@ const meta = {
   title: 'Components/Containers/Header',
   component: HeaderWrapper,
   decorators: [
+    (Story) => <ToastProvider><Story/></ToastProvider>,
+    (Story) => <SafeAreaInsetsContext value={{top: 0, left: 0, right: 0, bottom: 0}}><Story/></SafeAreaInsetsContext>,
     (Story) => (
       <View style={{ flex: 1, backgroundColor: '#f5f5f5' }}>
         <Story />

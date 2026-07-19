@@ -1,3 +1,6 @@
+import {useFavoriteDealersToasts} from "@/data/hooks/useFavoriteDealersToasts";
+import {useFavoriteEventsToasts} from "@/data/hooks/useFavoriteEventsToasts";
+import {useLocalNotificationsIntegration} from "@/data/hooks/useLocalNotificationsIntegration";
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { SplashScreen, Stack, useSegments } from 'expo-router'
 import {
@@ -10,10 +13,8 @@ import { useMemo } from 'react'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 
-import { CacheProvider } from '@/context/data/Cache'
-import { ToastProvider } from '@/context/ui/ToastContext'
+import { ToastProvider } from '@/context/ToastContext'
 import { AppClients } from '@/data/clients/AppClients'
-import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
 import { useStackScreensData } from '@/hooks/data/useStackScreensData'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'
@@ -42,11 +43,9 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <AppClients>
-        <CacheProvider>
-          <ToastProvider>
-            <MainLayout />
-          </ToastProvider>
-        </CacheProvider>
+        <ToastProvider>
+          <MainLayout />
+        </ToastProvider>
       </AppClients>
     </GestureHandlerRootView>
   )
@@ -81,8 +80,10 @@ export function MainLayout() {
   )
 
   useZoneAbbr()
-  useEventReminderRescheduling()
   useTokenManager()
+  useLocalNotificationsIntegration()
+  useFavoriteEventsToasts()
+  useFavoriteDealersToasts()
   useNotificationResponseManager()
 
   // Check if we're on the exact (areas)/index route

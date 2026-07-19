@@ -1,5 +1,6 @@
+import {lostAndFoundCollection} from "@/data/collections/content/LostAndFound";
+import {eq, useLiveQuery} from "@tanstack/react-db";
 import { useLocalSearchParams } from 'expo-router'
-import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
@@ -8,18 +9,19 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { NoData } from '@/components/generic/containers/NoData'
-import { useLostAndFoundItemQuery } from '@/hooks/api/lost-and-found/useLostAndFoundQuery'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export default function LostAndFoundDetailPage() {
-  return <LostAndFoundDetailContent />
-}
-
-const LostAndFoundDetailContent: FC = () => {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('LostAndFound')
   const theme = useTheme()
-  const { data: item, isLoading, error } = useLostAndFoundItemQuery(id)
+  const {data: item, isLoading, isError} = useLiveQuery({
+    id: 'lost-and-found-item',
+    query: q => q
+      .from({item: lostAndFoundCollection})
+      .where(({item}) => eq(item.Id, id))
+      .findOne()
+  }, [id])
 
   if (isLoading) {
     return (
@@ -30,7 +32,7 @@ const LostAndFoundDetailContent: FC = () => {
     )
   }
 
-  if (error || !item) {
+  if (isError || !item) {
     return (
       <View style={styles.container}>
         <Header>{t('header')}</Header>

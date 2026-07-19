@@ -1,4 +1,7 @@
+import {artistsAlleyOwnCheckout, artistsAlleyOwnCollection} from "@/data/collections/artists-alley/ArtistsAlleyOwn";
+import {vibrateAfter} from "@/util/vibrateAfter";
 import { captureException } from '@sentry/react-native'
+import {useLiveQuery} from "@tanstack/react-db";
 import { Redirect } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -21,11 +24,9 @@ import { Button } from '@/components/generic/containers/Button'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { artistAlleyUrl } from '@/configuration'
-import { useToastContext } from '@/context/ui/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
-import { useArtistsAlleyCheckOutMutation } from '@/hooks/api/artists-alley/useArtistsAlleyCheckOutMutation'
-import { useArtistsAlleyOwnRegistrationQuery } from '@/hooks/api/artists-alley/useArtistsAlleyOwnRegistrationQuery'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { confirmPrompt } from '@/util/confirmPrompt'
 
@@ -50,9 +51,8 @@ export default function Register() {
   const isCheckedIn = inRole(user, 'AttendeeCheckedIn')
 
   // Get current registration if available. Only run when authorized.
-  const { data, isPending, refetch } = useArtistsAlleyOwnRegistrationQuery()
-  const { mutate: checkOut } = useArtistsAlleyCheckOutMutation()
-  const { localData } = useArtistsAlleyLocalData()
+  const {data: [own], isLoading} = useLiveQuery(artistsAlleyOwnCollection)
+  const [localData] = useArtistsAlleyLocalData()
   const { toast } = useToastContext()
 
   // Switch for show and edit modes.
@@ -61,6 +61,7 @@ export default function Register() {
   const mainContentRef = useAccessibilityFocus<View>(200)
 
   const onEdit = useCallback(() => setShow(false), [])
+
   const onCancel = useCallback(async () => {
     try {
       if (
@@ -73,14 +74,15 @@ export default function Register() {
       )
         return
       toast('notice', t('cancel_request_in_progress'), 2000)
-      checkOut(undefined, {
-        onSuccess: () => toast('info', t('cancel_request_success')),
-        onError: () => toast('error', t('cancel_request_error')),
-      })
+      await artistsAlleyOwnCheckout().then(
+        () => toast('info', t('cancel_request_success')),
+        () => toast('error', t('cancel_request_error')),
+      )
     } catch (error) {
       captureException(error)
     }
-  }, [checkOut, toast, t])
+  }, [toast, t])
+
   const onCheckOut = useCallback(async () => {
     try {
       if (
@@ -93,40 +95,40 @@ export default function Register() {
       )
         return
       toast('notice', t('check_out_in_progress'), 2000)
-      checkOut(undefined, {
-        onSuccess: () => toast('info', t('check_out_success')),
-        onError: () => toast('error', t('check_out_error')),
-      })
+      await artistsAlleyOwnCheckout().then(
+        () => toast('info', t('check_out_success')),
+        () => toast('error', t('check_out_error')),
+      )
     } catch (error) {
       captureException(error)
     }
-  }, [checkOut, toast, t])
+  }, [toast, t])
 
   useEffect(() => {
-    if (data) {
+    if (own) {
       setAnnouncementMessage(
-        a11y('registration_form_loaded', { status: data.State })
+        a11y('registration_form_loaded', {status: own.State})
       )
     } else {
       setAnnouncementMessage(a11y('registration_form_new'))
     }
-  }, [data, a11y])
+  }, [own, a11y])
 
   // Compose prefill data.
   const prefill = {
     // Prefilled from current registration, then local data, then reasonable default.
     displayName:
-      data?.DisplayName ??
-      localData?.displayName ??
+      own?.DisplayName ??
+      localData?.DisplayName ??
       (claims?.name as string) ??
       '',
     // Prefilled from current registration, then local data.
-    websiteUrl: data?.WebsiteUrl ?? localData?.websiteUrl ?? '',
+    websiteUrl: own?.WebsiteUrl ?? localData?.WebsiteUrl ?? '',
     shortDescription:
-      data?.ShortDescription ?? localData?.shortDescription ?? '',
-    telegramHandle: data?.TelegramHandle ?? localData?.telegramHandle ?? '',
+      own?.ShortDescription ?? localData?.ShortDescription ?? '',
+    telegramHandle: own?.TelegramHandle ?? localData?.TelegramHandle ?? '',
     // Prefilled from current registration only.
-    imageUri: data?.Image?.Url ?? '',
+    imageUri: own?.Image?.Url ?? '',
     // Never prefilled.
     location: '',
   }
@@ -139,7 +141,9 @@ export default function Register() {
       <ScrollView
         style={StyleSheet.absoluteFill}
         refreshControl={
-          <RefreshControl refreshing={isPending} onRefresh={refetch} />
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={() => vibrateAfter(artistsAlleyOwnCollection.utils.refetch())}/>
         }
         stickyHeaderIndices={[0]}
         accessibilityLabel={a11y('registration_form_scroll')}
@@ -152,17 +156,17 @@ export default function Register() {
             accessibilityLabel={a11y('registration_form_content')}
             accessibilityRole='text'
           >
-            {!data?.State ? null : (
+            {!own?.State ? null : (
               <Badge
                 unpad={padFloater}
                 badgeColor={
                   stateToBackground[
-                    data.State as keyof typeof stateToBackground
+                    own.State as keyof typeof stateToBackground
                   ]
                 }
                 textColor='white'
               >
-                {tStatus(data.State)}
+                {tStatus(own.State)}
               </Badge>
             )}
 
@@ -181,10 +185,10 @@ export default function Register() {
               {t('learn_more')}
             </Button>
 
-            {!isPending ? (
-              show && data ? (
+            {!isLoading ? (
+              show && own ? (
                 <ArtistsAlleyStatus
-                  data={data}
+                  data={own}
                   onEdit={onEdit}
                   onCheckOut={onCheckOut}
                   onCancel={onCancel}
@@ -193,7 +197,7 @@ export default function Register() {
                 <ArtistsAlleyEdit
                   prefill={prefill}
                   onDismiss={() => setShow(true)}
-                  mode={data ? 'change' : 'new'}
+                  mode={own ? 'change' : 'new'}
                 />
               )
             ) : null}

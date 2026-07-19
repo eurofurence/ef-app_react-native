@@ -1,24 +1,14 @@
-import { formatDistanceToNow } from 'date-fns'
-import { useMemo } from 'react'
+import { useLiveQuery } from '@tanstack/react-db'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { AnnouncementList } from '@/components/announce/AnnouncementList'
 import { Label } from '@/components/generic/atoms/Label'
 import { Header } from '@/components/generic/containers/Header'
-import { useCache } from '@/context/data/Cache'
-import type { AnnouncementDetails } from '@/context/data/types.details'
+import { announcementsFullCollection } from '@/data/collections/content/AnnouncementsFull'
 
 export default function AnnouncementsList() {
   const { t } = useTranslation('Announcements')
-  const { announcements } = useCache()
-
-  const announcementInstances = useMemo(() => {
-    return announcements.map((details: AnnouncementDetails) => ({
-      details,
-      time: formatDistanceToNow(details.ValidFrom, { addSuffix: true }),
-    }))
-  }, [announcements])
+  const { data: announcements } = useLiveQuery(announcementsFullCollection)
 
   const empty = (
     <View
@@ -39,7 +29,7 @@ export default function AnnouncementsList() {
       accessibilityLabel={t('accessibility.main_container')}
     >
       <Header>{t('header')}</Header>
-      <AnnouncementList announcements={announcementInstances} empty={empty} />
+      <AnnouncementList announcements={announcements} empty={empty} />
     </View>
   )
 }

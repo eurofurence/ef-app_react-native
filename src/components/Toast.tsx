@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated'
 
 import { Pressable } from '@/components/generic/Pressable'
-import { type ToastMessage, useToastContext } from '@/context/ui/ToastContext'
+import { type ToastMessage, useToastContext } from '@/context/ToastContext'
 import {
   useThemeBackground,
   useThemeBorder,

@@ -1,45 +1,39 @@
-import { isBefore, isSameDay } from 'date-fns'
-import { type FC, useMemo } from 'react'
+import {onLongPressEvent, onPressEvent} from "@/app/(areas)/schedule/day-1";
+import {EventCard2} from "@/components/events/EventCard2";
+import {conTimeZone} from "@/configuration";
+import {type EfEventFull, eventsFullCollection} from "@/data/collections/content/EventsFull";
+import {useNow} from "@/hooks/time/useNow";
+import {isUndefined, not, or, useLiveQuery} from "@tanstack/react-db";
+import {isBefore, isSameDay} from 'date-fns'
+import {toZonedTime} from "date-fns-tz";
+import {useCallback} from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useEventCardInteractions } from '@/components/events/Events.common'
 import { Section } from '@/components/generic/atoms/Section'
-import { useCache } from '@/context/data/Cache'
-import type { EventDetails } from '@/context/data/types.details'
-import { useAppSetting } from '@/data/collections/AppSettings'
-import { EventCard, eventInstanceForAny } from './EventCard'
+import {useAppSetting} from '@/data/collections/supplemental/AppSettings'
 
-const filterHappeningTodayEvents = <
-  T extends Pick<EventDetails, 'StartDateTimeUtc' | 'EndDateTimeUtc'>,
->(
-  events: readonly T[],
-  now: Date
-): T[] =>
-  events
-    .filter((it) => isSameDay(now, new Date(it.StartDateTimeUtc)))
-    .filter((it) => isBefore(now, new Date(it.EndDateTimeUtc)))
-
-export type TodayScheduleListProps = {
-  now: Date
-}
-
-export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
+export const TodayScheduleList = () => {
   const { t } = useTranslation('Events')
-  const { eventsFavorite } = useCache()
+  const now = useNow()
 
   const [showInternal] = useAppSetting('ShowInternalEvents')
-  const today = useMemo(() => {
-    const favorites = eventsFavorite.filter(
-      (item) => !item.Hidden && (showInternal || !item.IsInternal)
-    )
 
-    return filterHappeningTodayEvents(favorites, now).map((details) =>
-      eventInstanceForAny(details, now)
-    )
-  }, [eventsFavorite, now, showInternal])
+  const todayFilter = useCallback((event: EfEventFull) => {
+    const start = toZonedTime(event.StartDateTimeUtc, conTimeZone)
+    const end = toZonedTime(event.EndDateTimeUtc, conTimeZone)
+    return isBefore(now, end) && (isSameDay(now, start) || isSameDay(now, end))
+  }, [now])
 
-  const { onPress, onLongPress } = useEventCardInteractions()
+  const {data: today} = useLiveQuery({
+    id: 'todays-schedule',
+    query: q => q.from({item: eventsFullCollection})
+      .where(({item}) => isUndefined(item.Hidden))
+      .where(({item}) => not(isUndefined(item.Favorite)))
+      .where(({item}) => or(showInternal, not(item.IsInternal)))
+      .orderBy(({item}) => item.StartDateTimeUtc)
+      .fn.where(({item}) => todayFilter(item))
+  }, [showInternal, todayFilter])
 
   if (today.length === 0) {
     return null
@@ -54,12 +48,12 @@ export const TodayScheduleList: FC<TodayScheduleListProps> = ({ now }) => {
       />
       <View style={styles.condense}>
         {today.map((event) => (
-          <EventCard
-            key={event.details.Id}
+          <EventCard2
+            key={event.Id}
             event={event}
             type='time'
-            onPress={onPress}
-            onLongPress={onLongPress}
+            onPress={onPressEvent}
+            onLongPress={onLongPressEvent}
           />
         ))}
       </View>

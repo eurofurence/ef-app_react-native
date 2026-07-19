@@ -9,6 +9,6 @@ export type EfAnnouncement = EfEntity & {
   Author: string
   Title: string
   Content: string
-  ImageId: EfId
-  Roles: string[]
+  ImageId?: EfId
+  Roles?: string[]
 }

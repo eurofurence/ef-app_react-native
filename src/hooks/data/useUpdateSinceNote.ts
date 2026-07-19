@@ -1,62 +1,46 @@
 import { isAfter } from 'date-fns'
-import { useEffect, useMemo, useState } from 'react'
+import {useEffect, useState} from 'react'
 
-import { useCache } from '@/context/data/Cache'
-import type { RecordMetadata } from '@/context/data/types.api'
 import { getNow } from '@/hooks/time/useNow'
-import { parseDefaultISO } from '@/util/parseDefaultISO'
+import {eq, useLiveQuery} from '@tanstack/react-db'
+import {lastViewTimesCollection, lastViewTimesUpdate} from '@/data/collections/supplemental/LastViewTimes'
+import type {EfEntity} from '@/data/types/EfEntity'
+import {useLatchTrue} from '@/hooks/util/useLatchTrue'
 
-/**
- * Gets the last viewed time of this record and if the record has changed
- * since, returns true. Also connects setting the viewed time of the item after
- * a delay.
- * @param item The item or null or undefined if not yet loaded.
- * @param delay The delay before setting as viewed.
- */
-export const useUpdateSinceNote = (
-  item: RecordMetadata | null | undefined,
-  delay = 500
-) => {
+export function useViewTrackingUpdate(entity: EfEntity, delay = 500) {
+  // On use time and "invoked" latch.
+  const [viewTime] = useState(() => getNow())
   const [invoked, setInvoked] = useState(false)
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
-  const lastViewed = item ? (settings.lastViewTimes?.[item.Id] ?? null) : null
 
-  const updated = useMemo(
-    () =>
-      Boolean(
-        item &&
-          lastViewed &&
-          isAfter(
-            parseDefaultISO(item.LastChangeDateTimeUtc),
-            parseDefaultISO(lastViewed)
-          )
-      ),
-    [item, lastViewed]
-  )
   useEffect(() => {
     // Item not given yet or already invoked: skip.
-    if (!item?.Id) return
     if (invoked) return
 
     // Set after a timeout.
     const timeoutId = setTimeout(() => {
       // Mark as invoked and update the last viewed time to current time.
       setInvoked(true)
-      setValue('settings', {
-        ...settings,
-        lastViewTimes: {
-          ...(settings.lastViewTimes ?? {}),
-          [item.Id]: getNow().toISOString(),
-        },
-      })
+      lastViewTimesUpdate(entity.Id, viewTime)
     }, delay)
 
     // If something has changed, clear the timeout. It might have already run, but then, invoked is also set.
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [item?.Id, invoked, setValue, settings, getNow, delay])
+  }, [viewTime, entity.Id])
+}
 
-  return updated
+export function useViewTrackingState(entity: EfEntity) {
+  // Resolve source view entry.
+  const {data: view, isReady} = useLiveQuery({
+    id: `entity-last-view-${entity.Id}`,
+    query: q => q.from({entry: lastViewTimesCollection})
+      .where(({entry}) => eq(entry.Id, entity.Id))
+      .findOne()
+  }, [entity.Id])
+
+  // Result is updated.
+  const updated = Boolean(isReady && view && isAfter(entity.LastChangeDateTimeUtc, view.Time))
+
+  return useLatchTrue(updated)
 }

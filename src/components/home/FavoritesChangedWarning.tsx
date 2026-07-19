@@ -1,12 +1,10 @@
-import { isAfter } from 'date-fns'
-import { useMemo } from 'react'
+import {lastViewTimesClear} from "@/data/collections/supplemental/LastViewTimes";
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 
 import { Icon } from '@/components/generic/atoms/Icon'
 import { useFavoritesUpdated } from '@/hooks/data/useFavoritesUpdated'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
-import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 import { Label } from '../generic/atoms/Label'
 
@@ -17,37 +15,10 @@ export const FavoritesChangedWarning = () => {
     keyPrefix: 'accessibility',
   })
   const iconColor = useThemeColorValue('important')
-  const { favoriteEvents, favoriteDealers, lastViewTimes, clear } =
-    useFavoritesUpdated()
+  const { events, dealers } =    useFavoritesUpdated()
 
-  const { changedEventFavorite, changedDealerFavorite } = useMemo(() => {
-    const changedEvents = favoriteEvents.filter(
-      (event) =>
-        lastViewTimes &&
-        event.Id in lastViewTimes &&
-        isAfter(
-          parseDefaultISO(event.LastChangeDateTimeUtc),
-          parseDefaultISO(lastViewTimes[event.Id])
-        )
-    )
 
-    const changedDealers = favoriteDealers.filter(
-      (dealer) =>
-        lastViewTimes &&
-        dealer.Id in lastViewTimes &&
-        isAfter(
-          parseDefaultISO(dealer.LastChangeDateTimeUtc),
-          parseDefaultISO(lastViewTimes[dealer.Id])
-        )
-    )
-
-    return {
-      changedEventFavorite: changedEvents,
-      changedDealerFavorite: changedDealers,
-    }
-  }, [favoriteEvents, favoriteDealers, lastViewTimes])
-
-  if (!changedEventFavorite.length && !changedDealerFavorite.length) {
+  if (!events.length && !dealers.length) {
     return null
   }
 
@@ -80,7 +51,7 @@ export const FavoritesChangedWarning = () => {
             type='compact'
             variant='bold'
             color='secondary'
-            onPress={clear}
+            onPress={lastViewTimesClear}
             accessibilityRole='button'
             accessibilityLabel={tAccessibility('hide_favorites_warning')}
             accessibilityHint={tAccessibility('hide_favorites_warning_hint')}
@@ -97,30 +68,30 @@ export const FavoritesChangedWarning = () => {
         {t('warnings.favorites_changed_subtitle')}
       </Label>
 
-      {changedEventFavorite.length > 0 && (
+      {events.length > 0 && (
         <Label
           className='mt-1'
           accessibilityLabel={tAccessibility('changed_events_list', {
-            count: changedEventFavorite.length,
-            events: changedEventFavorite.map((event) => event.Title).join(', '),
+            count: events.length,
+            events: events.map((event) => event.Title).join(', '),
           })}
         >
           <Label variant='bold'>{tMenu('events')}: </Label>
-          {changedEventFavorite.map((event) => event.Title).join(', ')}
+          {events.map((event) => event.Title).join(', ')}
         </Label>
       )}
-      {changedDealerFavorite.length > 0 && (
+      {dealers.length > 0 && (
         <Label
           className='mt-1'
           accessibilityLabel={tAccessibility('changed_dealers_list', {
-            count: changedDealerFavorite.length,
-            dealers: changedDealerFavorite
+            count: dealers.length,
+            dealers: dealers
               .map((dealer) => dealer.DisplayNameOrAttendeeNickname)
               .join(', '),
           })}
         >
           <Label variant='bold'>{tMenu('dealers')}: </Label>
-          {changedDealerFavorite
+          {dealers
             .map((dealer) => dealer.DisplayNameOrAttendeeNickname)
             .join(', ')}
         </Label>

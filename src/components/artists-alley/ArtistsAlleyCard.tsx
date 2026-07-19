@@ -1,14 +1,11 @@
+import type {EfArtistsAlleyFull} from "@/data/collections/artists-alley/ArtistsAlleyFull";
+import type {EfTableRegistration, EfTableRegistrationStatus} from "@/data/types/EfTableRegistration";
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, type ViewStyle } from 'react-native'
 
 import { stateToBackground } from '@/components/artists-alley/utils'
 import { Pressable } from '@/components/generic/Pressable'
-import type {
-  TableRegistrationRecord,
-  TableRegistrationRecordStatus,
-} from '@/context/data/types.api'
-import type { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { appStyles } from '../AppStyles'
@@ -19,9 +16,9 @@ import { Label } from '../generic/atoms/Label'
 export type ArtistsAlleyCardProps = {
   containerStyle?: ViewStyle
   style?: ViewStyle
-  item: ArtistAlleyDetails | TableRegistrationRecord
-  onPress?: (item: ArtistAlleyDetails | TableRegistrationRecord) => void
-  onLongPress?: (item: ArtistAlleyDetails | TableRegistrationRecord) => void
+  item: EfArtistsAlleyFull | EfTableRegistration
+  onPress?: (item: EfArtistsAlleyFull | EfTableRegistration) => void
+  onLongPress?: (item: EfArtistsAlleyFull | EfTableRegistration) => void
 }
 
 export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({
@@ -38,7 +35,7 @@ export const ArtistsAlleyCard: FC<ArtistsAlleyCardProps> = ({
   // Dependent and independent styles.
   const styleContainer = useThemeBackground('background')
   const stylePre = useThemeBackground('primary')
-  const state: TableRegistrationRecordStatus =
+  const state: EfTableRegistrationStatus =
     'State' in item && item.State ? item.State : 'Accepted'
   const styleAreaIndicator = useThemeBackground(stateToBackground[state])
   const styleDarken = useThemeBackground('darken')

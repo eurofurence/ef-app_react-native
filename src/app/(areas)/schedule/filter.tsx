@@ -1,9 +1,23 @@
+import {onLongPressEvent, onPressEvent} from "@/app/(areas)/schedule/day-1";
+import {EventCard2} from "@/components/events/EventCard2";
+import {EventSection} from "@/components/events/EventSection";
+import {EfSectionList} from "@/components/generic/lists/EfLists";
+import {deriveHosts} from "@/data/utils/deriveHosts";
+import {daysCollection} from "@/data/collections/content/Days";
+import {type EfEventFull, eventsFullCollection} from "@/data/collections/content/EventsFull";
+import {roomsCollection} from "@/data/collections/content/Rooms";
+import {tracksCollection} from "@/data/collections/content/Tracks";
+import {synchronize, useIsSynchronizing} from "@/data/hooks/useSynchronize";
+import type {EfDay} from "@/data/types/EfDay";
+import type {EfRoom} from "@/data/types/EfRoom";
+import type {EfTrack} from "@/data/types/EfTrack";
+import {collectBy, intersects} from "@/util/arrays";
+import {vibrateAfter} from "@/util/vibrateAfter";
+import {inArray, isUndefined, not, or, useLiveQuery} from "@tanstack/react-db";
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
-import { useEventOtherGroups } from '@/components/events/Events.common'
-import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import {
   ComboModal,
   type ComboModalRef,
@@ -11,98 +25,75 @@ import {
 import { Label } from '@/components/generic/atoms/Label'
 import { Row } from '@/components/generic/containers/Row'
 import { Tab } from '@/components/generic/containers/Tab'
-import { useCache } from '@/context/data/Cache'
-import type {
-  EventDayDetails,
-  EventRoomDetails,
-  EventTrackDetails,
-} from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
-import { useAppSetting } from '@/data/collections/AppSettings'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import {useAppSetting} from '@/data/collections/supplemental/AppSettings'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useNow } from '@/hooks/time/useNow'
 
 export default function FilterScreen() {
-  const { query } = useScheduleSearch()
+  const {results} = useScheduleSearch()
   const { t } = useTranslation('Events')
-  const {
-    events,
-    eventDays,
-    eventTracks,
-    eventRooms,
-    eventHosts,
-    searchEvents,
-  } = useCache()
+  const isSynchronizing = useIsSynchronizing()
 
   const [showInternal] = useAppSetting('ShowInternalEvents')
+
+  const {data: events} = useLiveQuery({
+    id: 'area-schedule-filter',
+    query: q => q.from({item: eventsFullCollection})
+      .where(({item}) => isUndefined(item.Hidden))
+      .where(({item}) => or(showInternal, not(item.IsInternal)))
+      .where(({item}) => or(!results, inArray(item.Id, results)))
+      .orderBy(({item}) => item.StartDateTimeUtc)
+  }, [showInternal, results])
+
+  const {data: days} = useLiveQuery(daysCollection)
+  const {data: tracks} = useLiveQuery(tracksCollection)
+  const {data: rooms} = useLiveQuery(roomsCollection)
+
+  const {data: eventsForHosts} = useLiveQuery(eventsFullCollection)
+  const hosts = useMemo(() => {
+    const result = new Set<string>();
+    for (const event of events)
+      for (const host of deriveHosts(event.PanelHosts))
+        result.add(host)
+
+    return [...result].sort()
+  }, [eventsForHosts])
+
 
   const activeStyle = useThemeBackground('secondary')
   const inactiveStyle = useThemeBackground('inverted')
 
-  const now = useNow()
-
-  const daysRef = useRef<ComboModalRef<EventDayDetails>>(null)
-  const tracksRef = useRef<ComboModalRef<EventTrackDetails>>(null)
-  const roomsRef = useRef<ComboModalRef<EventRoomDetails>>(null)
+  const daysRef = useRef<ComboModalRef<EfDay>>(null)
+  const tracksRef = useRef<ComboModalRef<EfTrack>>(null)
+  const roomsRef = useRef<ComboModalRef<EfRoom>>(null)
   const hostsRef = useRef<ComboModalRef<string>>(null)
 
-  const [filterDays, setFilterDays] = useState<readonly EventDayDetails[]>([])
-  const [filterTracks, setFilterTracks] = useState<
-    readonly EventTrackDetails[]
-  >([])
-  const [filterRooms, setFilterRooms] = useState<readonly EventRoomDetails[]>(
-    []
-  )
-  const [filterHosts, setFilterHosts] = useState<readonly string[]>([])
+  const [filterDays, setFilterDays] = useState<EfDay[]>([])
+  const [filterTracks, setFilterTracks] = useState<EfTrack[]>([])
+  const [filterRooms, setFilterRooms] = useState<EfRoom[]>([])
+  const [filterHosts, setFilterHosts] = useState<string[]>([])
 
-  const search = useFuseResults(searchEvents, query ?? '')
-  const filtered = useMemo(() => {
+  const grouping = useMemo(() => {
     const daysIds = filterDays.map((item) => item.Id)
     const tracksIds = filterTracks.map((item) => item.Id)
     const roomsIds = filterRooms.map((item) => item.Id)
     const hostNames = filterHosts
-    return (search ?? events).filter((item) => {
-      if (!showInternal && item.IsInternal) return false
-      if (
-        item.ConferenceDayId &&
-        daysIds.length &&
-        !daysIds.includes(item.ConferenceDayId)
-      )
+
+    const matched = events.filter(item => {
+      if (item.ConferenceDayId && daysIds.length && !daysIds.includes(item.ConferenceDayId))
         return false
-      if (
-        item.ConferenceTrackId &&
-        tracksIds.length &&
-        !tracksIds.includes(item.ConferenceTrackId)
-      )
+      if (item.ConferenceTrackId && tracksIds.length && !tracksIds.includes(item.ConferenceTrackId))
         return false
-      if (
-        item.ConferenceRoomId &&
-        roomsIds.length &&
-        !roomsIds.includes(item.ConferenceRoomId)
-      )
+      if (item.ConferenceRoomId && roomsIds.length && !roomsIds.includes(item.ConferenceRoomId))
         return false
-      if (
-        item.Hosts &&
-        hostNames.length &&
-        !hostNames.some((name) => item.Hosts.includes(name))
-      )
+      if (item.PanelHosts && hostNames.length && !intersects(deriveHosts(item.PanelHosts), hostNames))
         return false
       return true
     })
-  }, [
-    filterDays,
-    filterTracks,
-    filterRooms,
-    filterHosts,
-    search,
-    events,
-    showInternal,
-  ])
+    return collectBy(matched, a => a.Day.Name)
+  }, [events, filterDays, filterTracks, filterRooms, filterHosts])
 
-  const groups = useEventOtherGroups(t, now, filtered)
-
-  const leader = (
+  const listHeaderComponent = (
     <View>
       <Label type='lead' variant='middle'>
         Find events
@@ -117,7 +108,7 @@ export default function FilterScreen() {
           icon='calendar-outline'
           text={t('filter_by_day')}
           onPress={() =>
-            daysRef.current?.pick(eventDays, filterDays, (result) =>
+            daysRef.current?.pick(days, filterDays, (result) =>
               setFilterDays(result ?? [])
             )
           }
@@ -131,7 +122,7 @@ export default function FilterScreen() {
           icon='bus-stop'
           text={t('filter_by_track')}
           onPress={() =>
-            tracksRef.current?.pick(eventTracks, filterTracks, (result) =>
+            tracksRef.current?.pick(tracks, filterTracks, (result) =>
               setFilterTracks(result ?? [])
             )
           }
@@ -145,7 +136,7 @@ export default function FilterScreen() {
           icon='office-building'
           text={t('filter_by_room')}
           onPress={() =>
-            roomsRef.current?.pick(eventRooms, filterRooms, (result) =>
+            roomsRef.current?.pick(rooms, filterRooms, (result) =>
               setFilterRooms(result ?? [])
             )
           }
@@ -159,7 +150,7 @@ export default function FilterScreen() {
           icon='human-male-board'
           text={t('filter_by_host')}
           onPress={() =>
-            hostsRef.current?.pick(eventHosts, filterHosts, (result) =>
+            hostsRef.current?.pick(hosts, filterHosts, (result) =>
               setFilterHosts(result ?? [])
             )
           }
@@ -170,7 +161,7 @@ export default function FilterScreen() {
 
   return (
     <>
-      <ComboModal<EventDayDetails>
+      <ComboModal<EfDay>
         ref={daysRef}
         title='Pick one or more days'
         getKey={(item) => item.Id}
@@ -179,7 +170,7 @@ export default function FilterScreen() {
         <Label type='para'>Select the days to filter on.</Label>
       </ComboModal>
 
-      <ComboModal<EventTrackDetails>
+      <ComboModal<EfTrack>
         ref={tracksRef}
         title='Pick one or more tracks'
         getKey={(item) => item.Id}
@@ -188,7 +179,7 @@ export default function FilterScreen() {
         <Label type='para'>Select the tracks to filter on.</Label>
       </ComboModal>
 
-      <ComboModal<EventRoomDetails>
+      <ComboModal<EfRoom>
         ref={roomsRef}
         title='Pick one or more rooms'
         getKey={(item) => item.Id}
@@ -206,10 +197,27 @@ export default function FilterScreen() {
         <Label type='para'>Select the hosts to filter on.</Label>
       </ComboModal>
 
-      <EventsSectionedList
-        eventsGroups={groups}
-        cardType='duration'
-        leader={leader}
+      <EfSectionList<string, EfEventFull>
+        refreshing={isSynchronizing}
+        onRefresh={() => vibrateAfter(synchronize())}
+        scrollEnabled={true}
+        contentContainerClassName="pb-32"
+        ListHeaderComponent={listHeaderComponent}
+        data={grouping}
+        renderSection={({item}) => {
+          return <EventSection
+            style={styles.item}
+            title={item}
+            icon="calendar-outline"/>
+        }}
+        renderItem={({item}) => {
+          return <EventCard2
+            containerStyle={styles.item}
+            event={item}
+            onPress={onPressEvent}
+            onLongPress={onLongPressEvent}/>
+        }}
+        accessibilityLabel={t('events_list', {defaultValue: 'Events list'})}
       />
     </>
   )
@@ -221,5 +229,8 @@ const styles = StyleSheet.create({
   },
   rounded: {
     borderRadius: 10,
+  },
+  item: {
+    paddingHorizontal: 20,
   },
 })

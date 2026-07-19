@@ -1,4 +1,7 @@
+import {eventsSubmitFeedback} from "@/data/collections/content/Events";
+import {eventsFullCollection} from "@/data/collections/content/EventsFull";
 import { zodResolver } from '@hookform/resolvers/zod'
+import {eq, useLiveQuery} from "@tanstack/react-db";
 import { router, useLocalSearchParams } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -13,11 +16,9 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedRating } from '@/components/generic/forms/ManagedRating'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { useCache } from '@/context/data/Cache'
-import { useToastContext } from '@/context/ui/ToastContext'
+import {useToastContext} from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
-import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
@@ -38,8 +39,13 @@ export default function EventFeedback() {
   const { id: eventId } = useLocalSearchParams<{ id: string }>()
   const { toast } = useToastContext()
   const theme = useTheme()
-  const { events } = useCache()
-  const event = events.dict[eventId]
+  const {data: event} = useLiveQuery({
+    id: 'events-item-feedback',
+    query: q => q.from({item: eventsFullCollection})
+      .where(({item}) => eq(item.Id, eventId))
+      .findOne()
+  }, [eventId])
+
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
@@ -54,7 +60,7 @@ export default function EventFeedback() {
     },
   })
 
-  const { mutate, isPending } = useEventFeedbackMutation()
+  const [isPending, setIsPending] = useState(false)
 
   const { isLoggedIn, user } = useAuthState()
   const attending = inRole(user, 'Attendee')
@@ -76,15 +82,18 @@ export default function EventFeedback() {
 
   const submit = useCallback(
     (args: FeedbackSchema) => {
-      mutate(args, {
-        onSuccess: () => {
+      setIsPending(true)
+      eventsSubmitFeedback(args).then(
+        () => {
           toast('info', 'Feedback submitted successfully')
           router.back()
         },
-        onError: () => toast('error', 'Failed to submit feedback'),
+        () => toast('error', 'Failed to submit feedback'),
+      ).finally(() => {
+        setIsPending(false)
       })
     },
-    [mutate, toast]
+    [toast]
   )
 
   return (

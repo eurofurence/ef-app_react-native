@@ -1,6 +1,6 @@
 import { useColorScheme } from 'react-native'
 
-import { useAppSetting } from '@/data/collections/AppSettings'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 
 export function useTheme() {
   const systemTheme = useColorScheme()

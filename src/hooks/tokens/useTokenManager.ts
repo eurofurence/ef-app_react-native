@@ -1,16 +1,17 @@
+import {api} from "@/data/clients/api";
 import * as Device from 'expo-device'
 import * as Notifications from 'expo-notifications'
 import { useEffect } from 'react'
-import { Platform } from 'react-native'
+import {Platform, type PlatformOSType} from 'react-native'
 import { useAuthState } from '@/data/clients/auth'
-import { usePushNotificationsFcmRegistrationMutation } from '@/hooks/api/push/usePushNotificationsFcmRegistrationMutation'
 import { captureNotificationException } from '@/sentryHelpers'
+
 
 /**
  * Makes sure we can request a token. We must be on a device and have permissions. If
  * permissions are not given and can be asked for, try to get permission.
  */
-const prepareDevicePushTokenPermissions = async () => {
+async function prepareDevicePushTokenPermissions() {
   // Not a device, useless.
   if (!Device.isDevice) return false
 
@@ -24,10 +25,21 @@ const prepareDevicePushTokenPermissions = async () => {
   return request.granted
 }
 
+async function pushDeviceRegistration(deviceId: string, deviceType: PlatformOSType) {
+  return await api
+    .post(`/PushNotifications/FcmDeviceRegistration`, {deviceId, deviceType}, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((res) => res.status === 204)
+}
+
+
 /**
  * Retrieves the appropriate device token.
  */
-export const getDevicePushToken = async () => {
+export async function getDevicePushToken() {
   // Get the *device* token. We are using native FCM, therefore we need the device token.
   const response = await Notifications.getDevicePushTokenAsync()
   return response.data
@@ -38,13 +50,10 @@ export const getDevicePushToken = async () => {
  * originating from a background notification.
  * @constructor
  */
-export const useTokenManager = () => {
+export function useTokenManager() {
   // Use login state to trigger.
-  const { tokenResponse } = useAuthState()
+  const {tokenResponse} = useAuthState()
   const accessToken = tokenResponse?.accessToken
-
-  // TODO: Verify.
-  const { mutateAsync } = usePushNotificationsFcmRegistrationMutation()
 
   // Connect device itself via it's token to the backend and the topics. This
   // effect specifies token as a dependency, as a change of the token results
@@ -61,17 +70,14 @@ export const useTokenManager = () => {
       const token = await getDevicePushToken()
 
       // Register token as a device with all topics.
-      await mutateAsync({
-        deviceId: token,
-        deviceType: Platform.OS,
-      })
+      await pushDeviceRegistration(token, Platform.OS)
 
       // Return actionable true.
       return true
     })().catch((e) =>
       captureNotificationException('Could not register and subscribe', e)
     )
-  }, [accessToken, mutateAsync])
+  }, [accessToken])
 
   return null
 }

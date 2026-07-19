@@ -1,186 +1,161 @@
-import type { EventDetails } from '@/context/data/types.details'
-
 // Mock event data for Storybook stories
-export const mockEventDetails: EventDetails = {
+import type {EfEventFull} from "@/data/collections/content/EventsFull";
+import type {EfImage} from "@/data/types/EfImage";
+
+// Mock image record for testing
+const mockImageRecord: EfImage = {
+  Id: 'banner-1',
+  InternalReference: 'banner-1-ref',
+  Width: 800,
+  Height: 200,
+  SizeInBytes: 50000,
+  MimeType: 'image/jpeg',
+  ContentHashSha1: 'abc123',
+  Url: 'https://picsum.photos/800/200',
+  LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
+  IsRestricted: false,
+  BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667'
+}
+
+export const mockEventDetails: EfEventFull = {
   Id: 'event-1',
   LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-  IsDeleted: 0,
   Title: 'Opening Ceremony',
   SubTitle: 'Welcome to Eurofurence 2024',
   Description: 'Join us for the grand opening of Eurofurence 2024!',
-  Start: new Date('2024-08-15T10:00:00Z'),
-  End: new Date('2024-08-15T11:30:00Z'),
-  StartLocal: new Date('2024-08-15T12:00:00+02:00'),
-  EndLocal: new Date('2024-08-15T13:30:00+02:00'),
   StartTime: '10:00',
   EndTime: '11:30',
   StartDateTimeUtc: '2024-08-15T10:00:00Z',
   EndDateTimeUtc: '2024-08-15T11:30:00Z',
-  ConferenceRoom: {
+  Room: {
     Id: 'room-1',
     Name: 'Main Hall',
-    ShortName: 'Main',
     LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-    IsDeleted: 0,
+    Description: 'Main Hall',
+    Capacity: 100,
+    IsInternal: false,
+    MapLink: 'about:blank'
   },
-  Badges: ['star', 'heart'],
-  Glyph: 'calendar-star',
-  Favorite: true,
+  Favorite: {Id: '0'},
   Banner: undefined,
-  Hosts: ['Convention Staff'],
-  PartOfDay: 'morning',
-  SuperSponsorOnly: false,
-  SponsorOnly: false,
-  MaskRequired: false,
-  Hidden: false,
+  PanelHosts: 'Convention Staff',
+  Hidden: null,
+  Tags: [], IsInternal: false, Poster: null,
+  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
+  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
 }
 
-export const mockEventDetailsWithBanner: EventDetails = {
+export const mockEventDetailsWithBanner: EfEventFull = {
   Id: 'event-2',
   LastChangeDateTimeUtc: '2024-08-15T14:00:00Z',
-  IsDeleted: 0,
   Title: 'Fursuit Parade',
   SubTitle: 'Show off your amazing fursuit!',
   Description:
     'A spectacular parade showcasing the best fursuits at the convention.',
-  Start: new Date('2024-08-15T14:00:00Z'),
-  End: new Date('2024-08-15T16:00:00Z'),
-  StartLocal: new Date('2024-08-15T16:00:00+02:00'),
-  EndLocal: new Date('2024-08-15T18:00:00+02:00'),
   StartTime: '14:00',
   EndTime: '16:00',
   StartDateTimeUtc: '2024-08-15T14:00:00Z',
   EndDateTimeUtc: '2024-08-15T16:00:00Z',
-  ConferenceRoom: {
+  Room: {
     Id: 'room-2',
     Name: 'Convention Center',
-    ShortName: 'CC',
     LastChangeDateTimeUtc: '2024-08-15T14:00:00Z',
-    IsDeleted: 0,
+    Description: 'Convention Center',
+    Capacity: 1000,
+    IsInternal: false,
+    MapLink: 'about:blank'
   },
-  Badges: ['star'],
-  Glyph: 'paw',
-  Favorite: false,
-  Banner: {
-    Id: 'banner-2',
-    InternalReference: 'banner-2-ref',
-    Width: 800,
-    Height: 200,
-    SizeInBytes: 50000,
-    MimeType: 'image/jpeg',
-    ContentHashSha1: 'abc123',
-    Url: 'https://example.com/banner.jpg',
-    LastChangeDateTimeUtc: '2024-08-15T14:00:00Z',
-    IsDeleted: 0,
-  },
-  Hosts: ['Fursuit Committee'],
-  PartOfDay: 'afternoon',
-  SuperSponsorOnly: false,
-  SponsorOnly: false,
-  MaskRequired: false,
-  Hidden: false,
+  Favorite: null,
+  Banner: mockImageRecord,
+  PanelHosts: 'Fursuit Committee',
+  Hidden: null,
+  Tags: [], IsInternal: false, Poster: null,
+  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
+  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
 }
 
-export const mockEventDetailsPassed: EventDetails = {
+export const mockEventDetailsPassed: EfEventFull = {
   Id: 'event-3',
   LastChangeDateTimeUtc: '2024-08-14T09:00:00Z',
-  IsDeleted: 0,
   Title: 'Workshop: Digital Art',
   SubTitle: 'Learn digital art techniques',
   Description: 'A comprehensive workshop on digital art creation.',
-  Start: new Date('2024-08-14T09:00:00Z'),
-  End: new Date('2024-08-14T12:00:00Z'),
-  StartLocal: new Date('2024-08-14T11:00:00+02:00'),
-  EndLocal: new Date('2024-08-14T14:00:00+02:00'),
   StartTime: '09:00',
   EndTime: '12:00',
   StartDateTimeUtc: '2024-08-14T09:00:00Z',
   EndDateTimeUtc: '2024-08-14T12:00:00Z',
-  ConferenceRoom: {
+  Room: {
     Id: 'room-3',
     Name: 'Workshop Room A',
-    ShortName: 'WRA',
     LastChangeDateTimeUtc: '2024-08-14T09:00:00Z',
-    IsDeleted: 0,
+    Description: 'Workshop Room A',
+    Capacity: 100,
+    IsInternal: false,
+    MapLink: 'about:blank'
   },
-  Badges: [],
-  Glyph: 'palette',
-  Favorite: false,
+  Favorite: null,
   Banner: undefined,
-  Hosts: ['Digital Artist'],
-  PartOfDay: 'morning',
-  SuperSponsorOnly: false,
-  SponsorOnly: false,
-  MaskRequired: false,
-  Hidden: false,
+  PanelHosts: 'Digital Artist',
+  Hidden: null,
+  Tags: [], IsInternal: false, Poster: null,
+  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
+  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
 }
 
-export const mockEventDetailsSimple: EventDetails = {
+export const mockEventDetailsSimple: EfEventFull = {
   Id: 'event-4',
   LastChangeDateTimeUtc: '2024-08-15T16:30:00Z',
-  IsDeleted: 0,
   Title: 'Panel Discussion',
   SubTitle: 'Future of Furry Fandom',
   Description: 'An engaging panel about the future of the furry community.',
-  Start: new Date('2024-08-15T16:30:00Z'),
-  End: new Date('2024-08-15T18:00:00Z'),
-  StartLocal: new Date('2024-08-15T18:30:00+02:00'),
-  EndLocal: new Date('2024-08-15T20:00:00+02:00'),
   StartTime: '16:30',
   EndTime: '18:00',
   StartDateTimeUtc: '2024-08-15T16:30:00Z',
   EndDateTimeUtc: '2024-08-15T18:00:00Z',
-  ConferenceRoom: {
+  Room: {
     Id: 'room-4',
     Name: 'Panel Room 1',
-    ShortName: 'PR1',
     LastChangeDateTimeUtc: '2024-08-15T16:30:00Z',
-    IsDeleted: 0,
+    Description: 'Panel Room 1',
+    Capacity: 100,
+    IsInternal: false,
+    MapLink: 'about:blank'
   },
-  Badges: [],
-  Glyph: undefined,
-  Favorite: false,
+  Favorite: null,
   Banner: undefined,
-  Hosts: ['Panel Moderator'],
-  PartOfDay: 'afternoon',
-  SuperSponsorOnly: false,
-  SponsorOnly: false,
-  MaskRequired: false,
-  Hidden: false,
+  PanelHosts: 'Panel Moderator',
+  Hidden: null,
+  Tags: [], IsInternal: false, Poster: null,
+  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
+  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
 }
 
-export const mockEventDetailsLongTitle: EventDetails = {
+export const mockEventDetailsLongTitle: EfEventFull = {
   Id: 'event-5',
   LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
-  IsDeleted: 0,
   Title:
     'This is a very long event title that might wrap to multiple lines and should be handled gracefully by the component',
   SubTitle: 'With a subtitle that is also quite long and descriptive',
   Description:
     'A detailed description of this event that provides comprehensive information about what attendees can expect.',
-  Start: new Date('2024-08-15T19:00:00Z'),
-  End: new Date('2024-08-15T21:00:00Z'),
-  StartLocal: new Date('2024-08-15T21:00:00+02:00'),
-  EndLocal: new Date('2024-08-15T23:00:00+02:00'),
   StartTime: '19:00',
   EndTime: '21:00',
   StartDateTimeUtc: '2024-08-15T19:00:00Z',
   EndDateTimeUtc: '2024-08-15T21:00:00Z',
-  ConferenceRoom: {
+  Room: {
     Id: 'room-5',
     Name: 'Large Conference Hall',
-    ShortName: 'LCH',
     LastChangeDateTimeUtc: '2024-08-15T19:00:00Z',
-    IsDeleted: 0,
+    Description: 'Large Conference Hall',
+    Capacity: 5000,
+    IsInternal: false,
+    MapLink: 'about:blank'
   },
-  Badges: ['star', 'heart', 'bell'],
-  Glyph: 'calendar',
-  Favorite: true,
+  Favorite: {Id: '0'},
   Banner: undefined,
-  Hosts: ['Event Organizer'],
-  PartOfDay: 'evening',
-  SuperSponsorOnly: false,
-  SponsorOnly: false,
-  MaskRequired: false,
-  Hidden: false,
+  PanelHosts: 'Event Organizer',
+  Hidden: null,
+  Tags: [], IsInternal: false, Poster: null,
+  Day: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample day', Date: '2024-08-15', IsInternal: false},
+  Track: {Id: '0', LastChangeDateTimeUtc: '2024-08-15T19:00:00Z', Name: 'Sample track', Description: 'Sample', IsInternal: false}
 }

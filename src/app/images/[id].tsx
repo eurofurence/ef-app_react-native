@@ -1,4 +1,7 @@
+import {imagesCollection} from "@/data/collections/content/Images";
+import {useImageLocation} from "@/data/hooks/useImageLocations";
 import { ReactNativeZoomableView as ZoomableView } from '@openspacelabs/react-native-zoomable-view'
+import {eq, useLiveQuery} from "@tanstack/react-db";
 import { useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
@@ -8,16 +11,21 @@ import { Image } from '@/components/generic/atoms/Image'
 import { sourceFromImage } from '@/components/generic/atoms/Image.common'
 import { Header } from '@/components/generic/containers/Header'
 import { minZoomFor, shareImage } from '@/components/images/Images.common'
-import { useCache } from '@/context/data/Cache'
 
 const viewerPadding = 20
 
 export default function ImageItem() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('Viewer')
-  const { images, imageLocations } = useCache()
-  const image = images.dict[id]
-  const location = imageLocations[id]
+
+  const {data: image} = useLiveQuery({
+    id: 'images-item',
+    query: q => q.from({item: imagesCollection})
+      .where(({item}) => eq(item.Id, id))
+      .findOne()
+  }, [id])
+
+  const location = useImageLocation(id)
   const title = t(location?.location ?? 'unspecified', {
     name: location?.title,
   })

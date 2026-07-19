@@ -1,22 +1,31 @@
+import {ArtistsAlleyCard} from "@/components/artists-alley/ArtistsAlleyCard";
+import {ArtistsAlleySection} from "@/components/artists-alley/ArtistsAlleySection";
+import type {IconNames} from "@/components/generic/atoms/Icon";
+import {EfSectionList} from "@/components/generic/lists/EfLists";
+import {artistsAlleyAdminCollection} from "@/data/collections/artists-alley/ArtistsAlleyAdmin";
+import type {EfArtistsAlley} from "@/data/types/EfArtistsAlley";
+import type {EfTableRegistration, EfTableRegistrationStatus} from "@/data/types/EfTableRegistration";
+import {collectBy, orderBy} from "@/util/arrays";
+import {vibrateAfter} from "@/util/vibrateAfter";
+import {useLiveQuery} from "@tanstack/react-db";
 import { Redirect, router } from 'expo-router'
-import { useCallback, useMemo } from 'react'
+import {useMemo} from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, StyleSheet, View } from 'react-native'
 
-import {
-  type ArtistsAlleySectionProps,
-  artistsAlleySectionForState,
-} from '@/components/artists-alley/ArtistsAlleySection'
-import { ArtistsAlleySectionedList } from '@/components/artists-alley/ArtistsAlleySectionedList'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Header } from '@/components/generic/containers/Header'
 import { artistAlleyUrl } from '@/configuration'
-import type { TableRegistrationRecord } from '@/context/data/types.api'
-import type { ArtistAlleyDetails } from '@/context/data/types.details'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
-import { useArtistsAlleyQuery } from '@/hooks/api/artists-alley/useArtistsAlleyQuery'
+
+function onPressItem(item: EfArtistsAlley | EfTableRegistration) {
+  router.navigate({
+    pathname: '/artists-alley/moderate/[id]',
+    params: {id: item.Id},
+  })
+}
 
 export default function List() {
   const { t } = useTranslation('ArtistsAlley', { keyPrefix: 'list' })
@@ -28,54 +37,18 @@ export default function List() {
     inRole(user, 'ArtistAlleyAdmin') ||
     inRole(user, 'ArtistAlleyModerator')
 
-  const {
-    data: source,
-    refetch,
-    isFetching,
-  } = useArtistsAlleyQuery(isPrivileged)
+  const {data: source, isLoading} = useLiveQuery(artistsAlleyAdminCollection)
 
-  const items = useMemo((): (
-    | ArtistsAlleySectionProps
-    | ArtistAlleyDetails
-    | TableRegistrationRecord
-  )[] => {
-    if (!source) return []
-    const pending = []
-    const accepted = []
-    const published = []
-    const rejected = []
-    for (const item of source) {
-      if (!('State' in item)) continue
+  const grouping = useMemo(() => {
+    const sorted = orderBy(source, a =>
+      a.State === 'Pending' && 1 ||
+      a.State === 'Accepted' && 2 ||
+      a.State === 'Published' && 3 ||
+      a.State === 'Rejected' && 4 || 5)
+    return collectBy(sorted, a => a.State)
+  }, [source])
 
-      if (item.State === 'Pending') pending.push(item)
-      else if (item.State === 'Accepted') accepted.push(item)
-      else if (item.State === 'Published') published.push(item)
-      else if (item.State === 'Rejected') rejected.push(item)
-    }
-
-    const result = []
-    if (pending.length) {
-      result.push(artistsAlleySectionForState(t, 'Pending'))
-      result.push(...pending)
-    }
-    if (accepted.length) {
-      result.push(artistsAlleySectionForState(t, 'Accepted'))
-      result.push(...accepted)
-    }
-    if (published.length) {
-      result.push(artistsAlleySectionForState(t, 'Published'))
-      result.push(...published)
-    }
-    if (rejected.length) {
-      result.push(artistsAlleySectionForState(t, 'Rejected'))
-      result.push(...rejected)
-    }
-    return result
-  }, [source, t])
-
-  const leader = useMemo(() => {
-    return (
-      <View className='m-5 gap-4'>
+  const listHeaderComponent = <View className='m-5 gap-4'>
         <Label type='h3' variant='middle'>
           {t('moderate')}
         </Label>
@@ -86,31 +59,39 @@ export default function List() {
           {t('moderate_rules')}
         </Button>
       </View>
-    )
-  }, [t])
-
-  const onPress = useCallback(
-    (item: ArtistAlleyDetails | TableRegistrationRecord) => {
-      router.navigate({
-        pathname: '/artists-alley/moderate/[id]',
-        params: { id: item.Id },
-      })
-    },
-    []
-  )
 
   if (!isPrivileged) return <Redirect href='/artists-alley' />
 
   return (
     <View style={StyleSheet.absoluteFill}>
       <Header>{t('moderate_header')}</Header>
-      <ArtistsAlleySectionedList
-        leader={leader}
-        items={items}
-        onPress={onPress}
-        onRefresh={refetch}
-        refreshing={isFetching}
+
+      <EfSectionList<EfTableRegistrationStatus, EfTableRegistration>
+        refreshing={isLoading}
+        onRefresh={() => vibrateAfter(artistsAlleyAdminCollection.utils.refetch())}
+        scrollEnabled={true}
+        contentContainerClassName="pb-32"
+        ListHeaderComponent={listHeaderComponent}
+        data={grouping}
+        renderSection={({item}) => {
+          const title = t(item)
+          const icon = ((item === 'Pending' && 'notebook-edit') ||
+            (item === 'Accepted' && 'notebook-check') ||
+            (item === 'Published' && 'notebook') ||
+            (item === 'Rejected' && 'notebook-remove') ||
+            'notebook') as IconNames
+          return <ArtistsAlleySection title={title} icon={icon}/>
+        }}
+        renderItem={({item}) => {
+          return <ArtistsAlleyCard containerStyle={styles.item} item={item} onPress={onPressItem}/>
+        }}
       />
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  item: {
+    paddingHorizontal: 20,
+  },
+})

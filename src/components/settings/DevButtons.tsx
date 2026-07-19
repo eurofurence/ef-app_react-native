@@ -1,3 +1,4 @@
+import {synchronize} from "@/data/hooks/useSynchronize";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { captureException } from '@sentry/react-native'
 import { setStringAsync } from 'expo-clipboard'
@@ -7,9 +8,8 @@ import { StyleSheet, TextInput, View } from 'react-native'
 
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
-import { useCache } from '@/context/data/Cache'
 import { withAlpha } from '@/context/Theme'
-import { useToastContext } from '@/context/ui/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { auth, useAuthState } from '@/data/clients/auth'
 import { useThemeBackground, useThemeColor } from '@/hooks/themes/useThemeHooks'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
@@ -17,7 +17,6 @@ import { vibrateAfter } from '@/util/vibrateAfter'
 
 export function DevButtons() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_buttons' })
-  const { synchronize, clear } = useCache()
   const { toast } = useToastContext()
   const [tokenData, setTokenData] = useState('')
   const { isLoggedIn, tokenResponse } = useAuthState()
@@ -125,17 +124,6 @@ export function DevButtons() {
 
       <Button onPress={() => vibrateAfter(synchronize())} icon='refresh'>
         {t('sync')}
-      </Button>
-
-      <Button
-        onPress={() => vibrateAfter(synchronize({ full: true }))}
-        icon='refresh'
-      >
-        {t('sync_full', 'Force full sync')}
-      </Button>
-
-      <Button onPress={() => vibrateAfter(clear())} icon='refresh'>
-        {t('clear')}
       </Button>
 
       <Button onPress={copyDevicePushToken} icon='file-key'>

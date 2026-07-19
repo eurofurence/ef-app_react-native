@@ -23,7 +23,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
-import { useAppSetting } from '@/data/collections/AppSettings'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 import { useTheme } from '@/hooks/themes/useTheme'
 import { useMultiTap } from '@/hooks/util/useMultiTap'
 

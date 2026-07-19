@@ -1,19 +1,17 @@
+import {DealerCard2} from "@/components/dealers/DealerCard2";
+import {EventCard2} from "@/components/events/EventCard2";
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { ScrollView, View } from 'react-native'
 import { fn } from 'storybook/test'
 import { AnnouncementCard } from '@/components/announce/AnnouncementCard'
-import { DealerCard } from '@/components/dealers/DealerCard'
-import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { Card } from '@/components/generic/containers/Card'
 import {
-  createAnnouncementInstance,
   mockAnnouncementDetails,
 } from '@/stories/mocks/announcementData'
 import {
-  createDealerInstance,
   mockDealerDetails,
 } from '@/stories/mocks/dealerData'
 import { mockEventDetails } from '@/stories/mocks/eventData'
@@ -108,8 +106,8 @@ const DesignSystemOverview = () => (
       <Label type='h2' style={{ marginBottom: 15 }}>
         Event Cards
       </Label>
-      <EventCard
-        event={eventInstanceForAny(mockEventDetails, new Date())}
+      <EventCard2
+        event={mockEventDetails}
         onPress={fn()}
       />
     </Card>
@@ -120,7 +118,7 @@ const DesignSystemOverview = () => (
         Announcement Cards
       </Label>
       <AnnouncementCard
-        announcement={createAnnouncementInstance(mockAnnouncementDetails)}
+        announcement={mockAnnouncementDetails}
         onPress={fn()}
       />
     </Card>
@@ -130,8 +128,8 @@ const DesignSystemOverview = () => (
       <Label type='h2' style={{ marginBottom: 15 }}>
         Dealer Cards
       </Label>
-      <DealerCard
-        dealer={createDealerInstance(mockDealerDetails)}
+      <DealerCard2
+        dealer={mockDealerDetails}
         onPress={fn()}
       />
     </Card>

@@ -1,26 +1,27 @@
-import type { FC } from 'react'
+import type {EfLostAndFound} from "@/data/types/EfLostAndFound";
+import {useCallback} from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
 
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Card } from '@/components/generic/containers/Card'
-import type { LostAndFoundRecord } from '@/context/data/types.api'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export type LostAndFoundCardProps = {
-  item: LostAndFoundRecord
-  onPress?: () => void
+  item: EfLostAndFound
+  onPress?: (item: EfLostAndFound) => void
   containerStyle?: any
 }
 
-export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
-  item,
-  onPress,
-  containerStyle,
-}) => {
+export function LostAndFoundCard(
+  {
+    item,
+    onPress,
+    containerStyle,
+  }: LostAndFoundCardProps) {
   const theme = useTheme()
-  const { t } = useTranslation('LostAndFound')
+  const {t} = useTranslation('LostAndFound')
 
   const statusColor =
     item.Status === 'Found'
@@ -29,10 +30,15 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
         ? theme.warning
         : theme.notification
 
+  const onPressBind = useCallback(
+    () => onPress?.(item),
+    [item, onPress],
+  )
+
   return (
     <View style={containerStyle}>
       <Card
-        onPress={onPress}
+        onPress={onPressBind}
         accessibilityRole='button'
         accessibilityLabel={t('accessibility.lost_found_card', {
           title: item.Title,
@@ -47,7 +53,7 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
           {item.ImageUrl && (
             <View style={styles.imageContainer}>
               <Image
-                source={{ uri: item.ImageUrl }}
+                source={{uri: item.ImageUrl}}
                 style={styles.image}
                 accessibilityLabel={t('accessibility.item_image', {
                   title: item.Title,
@@ -65,7 +71,7 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
                 {item.Title}
               </Label>
               <View
-                style={[styles.statusBadge, { backgroundColor: statusColor }]}
+                style={[styles.statusBadge, {backgroundColor: statusColor}]}
                 accessibilityLabel={t('accessibility.status_badge', {
                   status: t(`status.${item.Status}`),
                 })}

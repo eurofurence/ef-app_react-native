@@ -1,6 +1,7 @@
+import {artistsAlleyOwnRegister} from "@/data/collections/artists-alley/ArtistsAlleyOwn";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { captureException } from '@sentry/react-native'
-import { useCallback } from 'react'
+import {useCallback, useState} from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { z } from 'zod'
@@ -10,15 +11,14 @@ import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { ManagedImagePicker } from '@/components/generic/forms/ManagedImagePicker'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { useToastContext } from '@/context/ui/ToastContext'
-import { useArtistsAlleyTableRegistrationRequestMutation } from '@/hooks/api/artists-alley/useArtistsAlleyTableRegistrationRequestMutation'
+import { useToastContext } from '@/context/ToastContext'
 
 const websiteUrlMatcher =
   /^\s*((http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&/=]*)\s*)?$/
 const telegramHandleMatcher = /^\s*(@?[a-zA-Z0-9_]{5,64}\s*)?$/
 const tableNumberMatcher = /^\s*[0-9]+\s*$/
 
-const artistsAlleySchema = z.object({
+const efRegisterTableSchema = z.object({
   displayName: z.string().min(1).trim(),
   websiteUrl: z
     .string()
@@ -35,10 +35,10 @@ const artistsAlleySchema = z.object({
   imageUri: z.string().min(1).url().trim(),
 })
 
-type ArtistsAlleySchema = z.infer<typeof artistsAlleySchema>
+type EfRegisterTableSchema = z.infer<typeof efRegisterTableSchema>
 
 export type ArtistsAlleyEditProps = {
-  prefill: ArtistsAlleySchema
+  prefill: EfRegisterTableSchema
   mode: 'change' | 'new'
   onDismiss: () => void
 }
@@ -49,10 +49,8 @@ export const ArtistsAlleyEdit = ({
   mode,
   onDismiss,
 }: ArtistsAlleyEditProps) => {
-  // Get current registration. Create submit mutation.
-  const { mutateAsync: submitRegistration, isPending } =
-    useArtistsAlleyTableRegistrationRequestMutation()
-  const { setLocalData } = useArtistsAlleyLocalData()
+  const [isPending, setIsPending] = useState(false)
+  const [, setLocalData] = useArtistsAlleyLocalData()
 
   // Use toast function.
   const { toast } = useToastContext()
@@ -74,8 +72,8 @@ export const ArtistsAlleyEdit = ({
   const disabled = isPending
 
   // Make a form with the given scheme and sensible defaults.
-  const form = useForm<ArtistsAlleySchema>({
-    resolver: zodResolver(artistsAlleySchema),
+  const form = useForm<EfRegisterTableSchema>({
+    resolver: zodResolver(efRegisterTableSchema),
     disabled,
     mode: 'onChange',
     defaultValues: prefill,
@@ -83,20 +81,21 @@ export const ArtistsAlleyEdit = ({
 
   // Submit the data. On success, notify and dismiss the form, otherwise mark error.
   const doSubmit = useCallback(
-    (data: ArtistsAlleySchema) => {
+    (data: EfRegisterTableSchema) => {
       // Toast submit.
       toast('notice', t('submit_in_progress'))
 
       // Store repeat data.
       setLocalData({
-        displayName: data.displayName,
-        websiteUrl: data.websiteUrl,
-        shortDescription: data.shortDescription,
-        telegramHandle: data.telegramHandle,
+        DisplayName: data.displayName,
+        WebsiteUrl: data.websiteUrl,
+        ShortDescription: data.shortDescription,
+        TelegramHandle: data.telegramHandle,
       })
 
+      setIsPending(true)
       // Submit remote, toast for success or error.
-      submitRegistration(data).then(
+      artistsAlleyOwnRegister(data).then(
         () => {
           toast('info', t('submit_succeeded'), 6000)
           onDismiss()
@@ -105,9 +104,11 @@ export const ArtistsAlleyEdit = ({
           toast('error', t('submit_failed'), 6000)
           captureException(error)
         }
-      )
+      ).finally(() => {
+        setIsPending(false)
+      })
     },
-    [toast, t, setLocalData, submitRegistration, onDismiss]
+    [toast, t, setLocalData, onDismiss]
   )
 
   return (
@@ -118,13 +119,13 @@ export const ArtistsAlleyEdit = ({
         )}
       </Label>
 
-      <ManagedTextInput<ArtistsAlleySchema>
+      <ManagedTextInput<EfRegisterTableSchema>
         name='displayName'
         label={t('display_name_label')}
         errorTranslator={errorTranslator}
         placeholder={t('display_name_placeholder')}
       />
-      <ManagedTextInput<ArtistsAlleySchema>
+      <ManagedTextInput<EfRegisterTableSchema>
         name='websiteUrl'
         label={t('website_url_label')}
         errorTranslator={errorTranslator}
@@ -132,7 +133,7 @@ export const ArtistsAlleyEdit = ({
         inputMode='url'
         keyboardType='url'
       />
-      <ManagedTextInput<ArtistsAlleySchema>
+      <ManagedTextInput<EfRegisterTableSchema>
         name='shortDescription'
         label={t('short_description_label')}
         errorTranslator={errorTranslator}
@@ -140,7 +141,7 @@ export const ArtistsAlleyEdit = ({
         multiline
         numberOfLines={8}
       />
-      <ManagedTextInput<ArtistsAlleySchema>
+      <ManagedTextInput<EfRegisterTableSchema>
         name='location'
         label={t('location_label')}
         errorTranslator={errorTranslator}
@@ -148,14 +149,14 @@ export const ArtistsAlleyEdit = ({
         inputMode='numeric'
         keyboardType='numeric'
       />
-      <ManagedTextInput<ArtistsAlleySchema>
+      <ManagedTextInput<EfRegisterTableSchema>
         name='telegramHandle'
         label={t('telegram_handle_label')}
         errorTranslator={errorTranslator}
         placeholder={t('telegram_handle_placeholder')}
       />
 
-      <ManagedImagePicker<ArtistsAlleySchema>
+      <ManagedImagePicker<EfRegisterTableSchema>
         name='imageUri'
         label={t('submission_image_label')}
         errorTranslator={errorTranslator}

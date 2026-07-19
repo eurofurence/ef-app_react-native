@@ -1,8 +1,8 @@
-import type { TableRegistrationRecordStatus } from '@/context/data/types.api'
 import type { ThemeColor } from '@/context/Theme'
+import type {EfTableRegistrationStatus} from "@/data/types/EfTableRegistration";
 
 export const stateToBackground: Record<
-  TableRegistrationRecordStatus,
+  EfTableRegistrationStatus,
   ThemeColor
 > = {
   Pending: 'warning',

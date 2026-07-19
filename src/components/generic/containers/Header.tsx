@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Pressable, type PressableProps } from '@/components/generic/Pressable'
 import { Toast } from '@/components/Toast'
-import { useToastMessages } from '@/context/ui/ToastContext'
+import { useToastMessages } from '@/context/ToastContext'
 import {
   useThemeBackground,
   useThemeBorder,

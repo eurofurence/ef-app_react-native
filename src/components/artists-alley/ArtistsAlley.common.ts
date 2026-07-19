@@ -1,25 +1,29 @@
-import { useCallback } from 'react'
-
-import { useCache } from '@/context/data/Cache'
-import type { ArtistsAlleyLocal } from '@/context/data/types.own'
+import {useAppSetting} from "@/data/collections/supplemental/AppSettings";
+import type {EfRegisterTableLocal} from "@/data/types/EfRegisterTableLocal";
+import {useCallback, useMemo} from 'react'
 
 /**
  * Uses locally stored artists alley registration info to be used for repeat registrations.
  */
 export function useArtistsAlleyLocalData() {
-  const { getValue, setValue } = useCache()
+  const [displayName, setDisplayName] = useAppSetting('ArtistsAlleyDisplayName')
+  const [websiteUrl, setWebsiteUrl] = useAppSetting('ArtistsAlleyWebsiteUrl')
+  const [shortDescription, setShortDescription] = useAppSetting('ArtistsAlleyShortDescription')
+  const [telegramHandle, setTelegramHandle] = useAppSetting('ArtistsAlleyTelegramHandle')
 
-  const localData = getValue('settings').artistsAlleyLocal
-  const setLocalData = useCallback(
-    (data: ArtistsAlleyLocal) => {
-      const settings = getValue('settings')
-      setValue('settings', {
-        ...settings,
-        artistsAlleyLocal: data,
-      })
-    },
-    [getValue, setValue]
-  )
+  const value = useMemo(() => ({
+    DisplayName: displayName,
+    WebsiteUrl: websiteUrl,
+    ShortDescription: shortDescription,
+    TelegramHandle: telegramHandle,
+  } satisfies EfRegisterTableLocal), [displayName, websiteUrl, shortDescription, telegramHandle])
 
-  return { localData, setLocalData }
+  const update = useCallback((data: EfRegisterTableLocal) => {
+    setDisplayName(data.DisplayName)
+    setWebsiteUrl(data.WebsiteUrl)
+    setShortDescription(data.ShortDescription)
+    setTelegramHandle(data.TelegramHandle)
+  }, [setDisplayName, setWebsiteUrl, setShortDescription, setTelegramHandle])
+
+  return [value, update] as const
 }
