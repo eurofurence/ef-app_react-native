@@ -1,7 +1,6 @@
 import { differenceInMilliseconds } from 'date-fns'
 import { de } from 'date-fns/locale/de'
 import { format, toZonedTime } from 'date-fns-tz'
-import { LRUCache } from 'lru-cache'
 import { conTimeZone } from '@/configuration'
 import type { EfEvent } from '@/data/types/EfEvent'
 import type { EfId } from '@/data/types/EfId'
@@ -20,7 +19,8 @@ type EfEventTiming = {
   formattedDayLocal: string
   formattedRuntime: string
 }
-const results = new LRUCache<EfId, EfEventTiming>({ max: 512 })
+
+const results = new Map<EfId, EfEventTiming>()
 
 export function getTiming(event: EfEvent) {
   let result = results.get(event.Id)
