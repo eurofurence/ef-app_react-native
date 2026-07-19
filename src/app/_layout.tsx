@@ -1,3 +1,14 @@
+// Import initializer scripts
+import '@/init/cryptoInit'
+import '@/init/firebaseApp'
+import '@/init/sentryInit'
+import '@/init/setNotificationChannels'
+import '@/init/setNotificationHandler'
+import '@/init/splash' // Import global tailwind CSS.
+
+import '@/i18n'
+import '@/css/globals.css'
+
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { SplashScreen, Stack, useSegments } from 'expo-router'
 import {
@@ -23,14 +34,6 @@ import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useTokenManager } from '@/hooks/tokens/useTokenManager'
 import 'react-native-reanimated' // Import i18n configuration
-import '@/i18n' // Import initializer scripts
-import '@/init/firebaseApp'
-import '@/init/cryptoInit'
-import '@/init/sentryInit'
-import '@/init/setNotificationChannels'
-import '@/init/setNotificationHandler'
-import '@/init/splash' // Import global tailwind CSS.
-import '@/css/globals.css'
 
 export const unstable_settings = {
   initialRouteName: '(areas)',
