@@ -1,3 +1,4 @@
+import { useLiveQuery } from '@tanstack/react-db'
 import { isSameDay } from 'date-fns'
 import { withLayoutContext } from 'expo-router'
 import {
@@ -20,9 +21,11 @@ import { Icon, type IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
 import { ComingSoon } from '@/components/generic/containers/ComingSoon'
 import { conName } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
-import type { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
+import { daysCollection } from '@/data/collections/content/Days'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { useSearchIds } from '@/data/searching/useSearch'
+import type { EfDay } from '@/data/types/EfDay'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { getNow } from '@/hooks/time/useNow'
 
@@ -52,13 +55,13 @@ function createOptions(
   }
 }
 
-function getInitialRoute(eventDays: readonly EventDayDetails[], now: Date) {
-  if (!eventDays?.length) return undefined
-  const today = eventDays.findIndex((item) => isSameDay(now, item.Date))
+function getInitialRoute(days: readonly EfDay[], now: Date) {
+  if (!days?.length) return undefined
+  const today = days.findIndex((item) => isSameDay(now, item.Date))
   return today >= 0 ? `day-${today + 1}` : 'day-1'
 }
 
-function dayTabTitle(day: EventDayDetails | undefined) {
+function dayTabTitle(day: EfDay | undefined) {
   if (!day) return undefined
   const date = new Date(day.Date)
   return ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()]
@@ -68,25 +71,27 @@ export default function ScheduleLayout() {
   const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
-  const { events, eventDays } = useCache()
-  const initialRouteName = getInitialRoute(eventDays, getNow())
-  const [filter, setFilter] = useState('')
+  const { data: events, isReady } = useLiveQuery(eventsFullCollection)
+  const { data: days } = useLiveQuery(daysCollection)
+  const initialRouteName = getInitialRoute(days, getNow())
+  const [query, setQuery] = useState('')
+  const results = useSearchIds(eventsFullCollection, query)
 
   const options = useMemo(() => {
     return {
       filter: createOptions('Filter', 'filter-variant'),
       personal: createOptions('Personal', 'calendar-heart'),
-      'day-1': createOptions(dayTabTitle(eventDays[0])),
-      'day-2': createOptions(dayTabTitle(eventDays[1])),
-      'day-3': createOptions(dayTabTitle(eventDays[2])),
-      'day-4': createOptions(dayTabTitle(eventDays[3])),
-      'day-5': createOptions(dayTabTitle(eventDays[4])),
-      'day-6': createOptions(dayTabTitle(eventDays[5])),
-      'day-7': createOptions(dayTabTitle(eventDays[6])),
+      'day-1': createOptions(dayTabTitle(days[0])),
+      'day-2': createOptions(dayTabTitle(days[1])),
+      'day-3': createOptions(dayTabTitle(days[2])),
+      'day-4': createOptions(dayTabTitle(days[3])),
+      'day-5': createOptions(dayTabTitle(days[4])),
+      'day-6': createOptions(dayTabTitle(days[5])),
+      'day-7': createOptions(dayTabTitle(days[6])),
     }
-  }, [eventDays])
+  }, [days])
 
-  if (events.length === 0)
+  if (isReady && events.length === 0)
     return (
       <ComingSoon
         image={require('@/assets/static/eventsempty.png')}
@@ -96,9 +101,7 @@ export default function ScheduleLayout() {
     )
 
   return (
-    <ScheduleSearchContext.Provider
-      value={{ query: filter, setQuery: setFilter }}
-    >
+    <ScheduleSearchContext.Provider value={{ query, setQuery, results }}>
       <MaterialTopTabs
         initialRouteName={initialRouteName}
         style={StyleSheet.absoluteFill}
@@ -113,8 +116,8 @@ export default function ScheduleLayout() {
             <View className='flex-row items-center pr-2.5'>
               <Search
                 className='flex-1 my-2.5 ml-2.5 mr-0'
-                filter={filter}
-                setFilter={setFilter}
+                filter={query}
+                setFilter={setQuery}
                 placeholder={t('search.placeholder')}
               />
               <ShowInternalEventsToggle />
@@ -127,37 +130,37 @@ export default function ScheduleLayout() {
         <MaterialTopTabs.Screen
           name='day-1'
           options={options['day-1']}
-          redirect={eventDays.length < 1}
+          redirect={days.length < 1}
         />
         <MaterialTopTabs.Screen
           name='day-2'
           options={options['day-2']}
-          redirect={eventDays.length < 2}
+          redirect={days.length < 2}
         />
         <MaterialTopTabs.Screen
           name='day-3'
           options={options['day-3']}
-          redirect={eventDays.length < 3}
+          redirect={days.length < 3}
         />
         <MaterialTopTabs.Screen
           name='day-4'
           options={options['day-4']}
-          redirect={eventDays.length < 4}
+          redirect={days.length < 4}
         />
         <MaterialTopTabs.Screen
           name='day-5'
           options={options['day-5']}
-          redirect={eventDays.length < 5}
+          redirect={days.length < 5}
         />
         <MaterialTopTabs.Screen
           name='day-6'
           options={options['day-6']}
-          redirect={eventDays.length < 6}
+          redirect={days.length < 6}
         />
         <MaterialTopTabs.Screen
           name='day-7'
           options={options['day-7']}
-          redirect={eventDays.length < 7}
+          redirect={days.length < 7}
         />
       </MaterialTopTabs>
     </ScheduleSearchContext.Provider>

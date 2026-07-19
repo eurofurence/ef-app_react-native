@@ -1,60 +1,39 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { isUndefined, not, useLiveQuery } from '@tanstack/react-db'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
-
-import { EventCard, eventInstanceForAny } from '@/components/events/EventCard'
-import { useEventCardInteractions } from '@/components/events/Events.common'
+import { EventCard2 } from '@/components/events/EventCard2'
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
-import { useCache } from '@/context/data/Cache'
-import type { EventDetails } from '@/context/data/types.details'
-import { useNow } from '@/hooks/time/useNow'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { hiddenEventsToggle } from '@/data/collections/supplemental/HiddenEvents'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 export default function RevealHiddenPage() {
   const { t } = useTranslation('RevealHidden')
-  const { events, getValue, setValue } = useCache()
-  const now = useNow()
+  const { data: events } = useLiveQuery({
+    id: 'settings-reveal',
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => not(isUndefined(item.Hidden)))
+        .orderBy(({ item }) => item.StartDateTimeUtc),
+  })
+
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
 
-  // Get all events from cache
-  // Filter hidden events and create event instances
-  const hiddenEvents = useMemo(
-    () =>
-      events
-        .filter((item) => item.Hidden)
-        .map((item) => eventInstanceForAny(item, now)),
-    [events, now]
-  )
-
   useEffect(() => {
-    if (hiddenEvents.length === 0) {
+    if (events.length === 0) {
       setAnnouncementMessage(t('accessibility.no_hidden_events'))
     } else {
       setAnnouncementMessage(
-        t('accessibility.hidden_events_loaded', { count: hiddenEvents.length })
+        t('accessibility.hidden_events_loaded', { count: events.length })
       )
     }
-  }, [hiddenEvents.length, t])
-
-  // Handle unhiding an event
-  const onPress = useCallback(
-    (event: EventDetails) => {
-      const settings = getValue('settings')
-      const newSettings = {
-        ...settings,
-        hiddenEvents: settings.hiddenEvents?.filter(
-          (item) => item !== event.Id
-        ),
-      }
-      setValue('settings', newSettings)
-    },
-    [getValue, setValue]
-  )
-  const { onLongPress } = useEventCardInteractions()
+  }, [events.length, t])
 
   return (
     <>
@@ -78,13 +57,12 @@ export default function RevealHiddenPage() {
               {t('lead')}
             </Label>
 
-            {hiddenEvents.map((item) => (
-              <EventCard
-                key={item.details.Id}
+            {events.map((item) => (
+              <EventCard2
+                key={item.Id}
                 event={item}
                 type='time'
-                onPress={onPress}
-                onLongPress={onLongPress}
+                onPress={() => hiddenEventsToggle(item.Id)}
               />
             ))}
           </View>

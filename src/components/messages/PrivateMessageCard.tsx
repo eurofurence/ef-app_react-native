@@ -1,10 +1,8 @@
 import { format } from 'date-fns'
-import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, type ViewStyle } from 'react-native'
-
 import { Pressable } from '@/components/generic/Pressable'
-import type { CommunicationRecord } from '@/context/data/types.api'
+import type { EfPm } from '@/data/types/EfPm'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { appStyles } from '../AppStyles'
@@ -16,16 +14,16 @@ import { Row } from '../generic/containers/Row'
 export type PrivateMessageCardProps = {
   containerStyle?: ViewStyle
   style?: ViewStyle
-  item: CommunicationRecord
-  onPress: (item: CommunicationRecord) => void
+  item: EfPm
+  onPress: (item: EfPm) => void
 }
 
-export const PrivateMessageCard: FC<PrivateMessageCardProps> = ({
+export function PrivateMessageCard({
   containerStyle,
   style,
   item,
   onPress,
-}) => {
+}: PrivateMessageCardProps) {
   const { t } = useTranslation('PrivateMessageList')
   const styleContainer = useThemeBackground('background')
 

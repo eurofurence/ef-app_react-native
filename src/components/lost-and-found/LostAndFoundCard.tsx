@@ -1,24 +1,23 @@
-import type { FC } from 'react'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Image } from '@/components/generic/atoms/Image'
 import { Label } from '@/components/generic/atoms/Label'
 import { Card } from '@/components/generic/containers/Card'
-import type { LostAndFoundRecord } from '@/context/data/types.api'
+import type { EfLostAndFound } from '@/data/types/EfLostAndFound'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 export type LostAndFoundCardProps = {
-  item: LostAndFoundRecord
-  onPress?: () => void
+  item: EfLostAndFound
+  onPress?: (item: EfLostAndFound) => void
   containerStyle?: any
 }
 
-export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
+export function LostAndFoundCard({
   item,
   onPress,
   containerStyle,
-}) => {
+}: LostAndFoundCardProps) {
   const theme = useTheme()
   const { t } = useTranslation('LostAndFound')
 
@@ -29,10 +28,12 @@ export const LostAndFoundCard: FC<LostAndFoundCardProps> = ({
         ? theme.warning
         : theme.notification
 
+  const onPressBind = useCallback(() => onPress?.(item), [item, onPress])
+
   return (
     <View style={containerStyle}>
       <Card
-        onPress={onPress}
+        onPress={onPressBind}
         accessibilityRole='button'
         accessibilityLabel={t('accessibility.lost_found_card', {
           title: item.Title,

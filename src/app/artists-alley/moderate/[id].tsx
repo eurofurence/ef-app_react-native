@@ -1,9 +1,9 @@
 import { captureException } from '@sentry/react-native'
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { Redirect, router, useLocalSearchParams } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
 import { ArtistsAlleyReview } from '@/components/artists-alley/ArtistsAlleyReview'
 import { stateToBackground } from '@/components/artists-alley/utils'
@@ -11,14 +11,17 @@ import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Badge } from '@/components/generic/containers/Badge'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
-import { useToastContext } from '@/context/ui/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
-import { useArtistsAlleyItemDeleteMutation } from '@/hooks/api/artists-alley/useArtistsAlleyItemDeleteMutation'
-import { useArtistsAlleyItemQuery } from '@/hooks/api/artists-alley/useArtistsAlleyItemQuery'
-import { useArtistsAlleyItemStatusMutation } from '@/hooks/api/artists-alley/useArtistsAlleyItemStatusMutation'
+import {
+  artistsAlleyAdminChangeStatus,
+  artistsAlleyAdminCollection,
+  artistsAlleyAdminDelete,
+} from '@/data/collections/artists-alley/ArtistsAlleyAdmin'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { confirmPrompt } from '@/util/confirmPrompt'
+import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Moderate() {
   const { id } = useLocalSearchParams<{ id: string }>()
@@ -32,14 +35,21 @@ export default function Moderate() {
   })
   const { user } = useAuthState()
 
-  const { mutateAsync: changeStatus } = useArtistsAlleyItemStatusMutation()
-  const { mutateAsync: deleteRegistration } =
-    useArtistsAlleyItemDeleteMutation()
-
   // Use toast function.
   const { toast } = useToastContext()
 
-  const { data, isPending, refetch } = useArtistsAlleyItemQuery(id)
+  const { data, isLoading } = useLiveQuery(
+    {
+      id: 'artists-alley-moderate-item',
+      query: (q) =>
+        q
+          .from({ item: artistsAlleyAdminCollection })
+          .where(({ item }) => eq(item.Id, id))
+          .findOne(),
+    },
+    [id]
+  )
+
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)
 
@@ -76,13 +86,13 @@ export default function Moderate() {
         return
 
       toast('notice', t('accept_in_progress'))
-      await changeStatus({ id: id, status: 'Accepted' })
+      await artistsAlleyAdminChangeStatus(id, 'Accepted')
       toast('info', t('accept_succeeded'), 6000)
     } catch (error) {
       toast('error', t('accept_failed'), 6000)
       captureException(error)
     }
-  }, [changeStatus, id, t, toast])
+  }, [id, t, toast])
 
   const doReject = useCallback(async () => {
     try {
@@ -96,13 +106,13 @@ export default function Moderate() {
       )
         return
       toast('notice', t('reject_in_progress'))
-      await changeStatus({ id: id, status: 'Rejected' })
+      await artistsAlleyAdminChangeStatus(id, 'Rejected')
       toast('info', t('reject_succeeded'), 6000)
     } catch (error) {
       toast('error', t('reject_failed'), 6000)
       captureException(error)
     }
-  }, [changeStatus, id, t, toast])
+  }, [id, t, toast])
 
   const doDelete = useCallback(async () => {
     try {
@@ -116,14 +126,14 @@ export default function Moderate() {
       )
         return
       toast('notice', t('delete_in_progress'))
-      await deleteRegistration(id)
+      await artistsAlleyAdminDelete(id)
       toast('info', t('delete_succeeded'), 6000)
       router.navigate('/artists-alley')
     } catch (error) {
       toast('error', t('delete_failed'), 6000)
       captureException(error)
     }
-  }, [deleteRegistration, id, t, toast])
+  }, [id, t, toast])
 
   if (!(isAdmin || isPrivileged)) return <Redirect href='/artists-alley' />
 
@@ -133,7 +143,12 @@ export default function Moderate() {
       <ScrollView
         style={StyleSheet.absoluteFill}
         refreshControl={
-          <RefreshControl refreshing={isPending} onRefresh={refetch} />
+          <RefreshControl
+            refreshing={isLoading}
+            onRefresh={() =>
+              vibrateAfter(artistsAlleyAdminCollection.utils.refetch())
+            }
+          />
         }
         stickyHeaderIndices={[0]}
         accessibilityLabel={a11y('moderation_entry_scroll')}

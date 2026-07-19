@@ -1,7 +1,7 @@
 /**
  * Retrieves the appropriate device token.
  */
-export const getDevicePushToken = async () => {
+export async function getDevicePushToken() {
   // Stub for web.
   return undefined
 }
@@ -11,6 +11,6 @@ export const getDevicePushToken = async () => {
  * originating from a background notification.
  * @constructor
  */
-export const useTokenManager = () => {
+export function useTokenManager() {
   // Stub for web.
 }

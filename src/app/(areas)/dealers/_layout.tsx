@@ -1,3 +1,4 @@
+import { useLiveQuery } from '@tanstack/react-db'
 import { withLayoutContext } from 'expo-router'
 import {
   createMaterialTopTabNavigator,
@@ -19,7 +20,8 @@ import { Search } from '@/components/generic/atoms/Search'
 import { ComingSoon } from '@/components/generic/containers/ComingSoon'
 import { conName } from '@/configuration'
 import { DealersSearchContext } from '@/context/DealersSearchContext'
-import { useCache } from '@/context/data/Cache'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { useSearchIds } from '@/data/searching/useSearch'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 export const unstable_settings = {
@@ -55,8 +57,9 @@ export default function DealersLayout() {
   const { t } = useTranslation('Dealers')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
-  const { dealers } = useCache()
-  const [filter, setFilter] = useState('')
+  const { data: dealers, isReady } = useLiveQuery(dealersFullCollection)
+  const [query, setQuery] = useState('')
+  const results = useSearchIds(dealersFullCollection, query)
 
   const options = useMemo(() => {
     return {
@@ -68,7 +71,7 @@ export default function DealersLayout() {
     }
   }, [])
 
-  if (dealers.length === 0)
+  if (isReady && dealers.length === 0)
     return (
       <ComingSoon
         image={require('@/assets/static/dealersempty.png')}
@@ -78,9 +81,7 @@ export default function DealersLayout() {
     )
 
   return (
-    <DealersSearchContext.Provider
-      value={{ query: filter, setQuery: setFilter }}
-    >
+    <DealersSearchContext.Provider value={{ query, setQuery, results }}>
       <MaterialTopTabs
         initialRouteName='all'
         style={StyleSheet.absoluteFill}
@@ -94,8 +95,8 @@ export default function DealersLayout() {
             <MaterialTopTabBar {...props} />
             <Search
               className={'my-2.5 mx-2.5'}
-              filter={filter}
-              setFilter={setFilter}
+              filter={query}
+              setFilter={setQuery}
               placeholder={t('search.placeholder')}
             />
           </View>

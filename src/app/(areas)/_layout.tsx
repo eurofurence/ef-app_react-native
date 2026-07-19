@@ -11,8 +11,8 @@ import {
 } from '@/components/generic/containers/Tabs'
 import { MainMenu } from '@/components/mainmenu/MainMenu'
 import { Toast } from '@/components/Toast'
-import { useCache } from '@/context/data/Cache'
-import { useToastMessages } from '@/context/ui/ToastContext'
+import { useToastMessages } from '@/context/ToastContext'
+import { useIsSynchronizing } from '@/data/hooks/useSynchronize'
 
 export const unstable_settings = {
   initialRouteName: 'index',
@@ -51,7 +51,7 @@ function AreasTabBar(props: BottomTabBarProps) {
   const tabs = useRef<TabsRef>(null)
   const { t } = useTranslation('Menu')
   const toastMessages = useToastMessages(5)
-  const { isSynchronizing } = useCache()
+  const isSynchronizing = useIsSynchronizing()
   const { bottom } = useSafeAreaInsets()
 
   const tabEntries = useMemo(

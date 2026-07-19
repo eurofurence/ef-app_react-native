@@ -1,3 +1,14 @@
+// Import initializer scripts
+import '@/init/cryptoInit'
+import '@/init/firebaseApp'
+import '@/init/sentryInit'
+import '@/init/setNotificationChannels'
+import '@/init/setNotificationHandler'
+import '@/init/splash' // Import global tailwind CSS.
+
+import '@/i18n'
+import '@/css/globals.css'
+
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { SplashScreen, Stack, useSegments } from 'expo-router'
 import {
@@ -12,24 +23,17 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import { AuthBridge } from '@/components/auth/AuthBridge'
 import { SessionExpiredModal } from '@/components/auth/SessionExpiredModal'
-import { CacheProvider } from '@/context/data/Cache'
-import { ToastProvider } from '@/context/ui/ToastContext'
+import { ToastProvider } from '@/context/ToastContext'
 import { AppClients } from '@/data/clients/AppClients'
-import { useEventReminderRescheduling } from '@/hooks/data/useEventReminderRescheduling'
+import { useFavoriteDealersToasts } from '@/data/hooks/useFavoriteDealersToasts'
+import { useFavoriteEventsToasts } from '@/data/hooks/useFavoriteEventsToasts'
+import { useLocalNotificationsIntegration } from '@/data/hooks/useLocalNotificationsIntegration'
 import { useStackScreensData } from '@/hooks/data/useStackScreensData'
 import { useNotificationResponseManager } from '@/hooks/notifications/useNotificationResponseManager'
 import { useTheme, useThemeName } from '@/hooks/themes/useThemeHooks'
 import { useZoneAbbr } from '@/hooks/time/useZoneAbbr'
 import { useTokenManager } from '@/hooks/tokens/useTokenManager'
 import 'react-native-reanimated' // Import i18n configuration
-import '@/i18n' // Import initializer scripts
-import '@/init/firebaseApp'
-import '@/init/cryptoInit'
-import '@/init/sentryInit'
-import '@/init/setNotificationChannels'
-import '@/init/setNotificationHandler'
-import '@/init/splash' // Import global tailwind CSS.
-import '@/css/globals.css'
 
 export const unstable_settings = {
   initialRouteName: '(areas)',
@@ -44,11 +48,9 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView>
       <AppClients>
-        <CacheProvider>
-          <ToastProvider>
-            <MainLayout />
-          </ToastProvider>
-        </CacheProvider>
+        <ToastProvider>
+          <MainLayout />
+        </ToastProvider>
       </AppClients>
     </GestureHandlerRootView>
   )
@@ -83,8 +85,10 @@ export function MainLayout() {
   )
 
   useZoneAbbr()
-  useEventReminderRescheduling()
   useTokenManager()
+  useLocalNotificationsIntegration()
+  useFavoriteEventsToasts()
+  useFavoriteDealersToasts()
   useNotificationResponseManager()
 
   // Check if we're on the exact (areas)/index route

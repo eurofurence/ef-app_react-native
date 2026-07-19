@@ -1,21 +1,20 @@
-import { resolve } from 'node:path'
-import type { StorybookConfig } from '@storybook/react-native-web-vite'
+import type {StorybookConfig} from '@storybook/react-native-web-vite';
+import {loadEnvFile} from 'node:process';
+
+loadEnvFile('.env');
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  framework: '@storybook/react-native-web-vite',
+  stories: ['../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: ['@storybook/addon-docs', '@storybook/addon-onboarding'],
-  framework: {
-    name: '@storybook/react-native-web-vite',
-    options: {},
-  },
-  viteFinal: async (config) => {
-    if (config.resolve) {
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        '@': resolve(__dirname, '../src'),
-      }
-    }
+  staticDirs: ['../src/stories/assets'],
+  viteFinal(config) {
+    config.define = {}
+    for (const key in process.env)
+      if (key.startsWith('EXPO_PUBLIC_'))
+        config.define[`process.env.${key}`] = JSON.stringify(process.env[key] || '');
     return config
   },
-}
-export default config
+};
+
+export default config;

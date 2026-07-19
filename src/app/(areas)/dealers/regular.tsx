@@ -1,41 +1,38 @@
+import { inArray, not, or, useLiveQuery } from '@tanstack/react-db'
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useDealerGroups } from '@/components/dealers/Dealers.common'
-import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
-import { Label } from '@/components/generic/atoms/Label'
-import { Badge } from '@/components/generic/containers/Badge'
+import { DealersView } from '@/app/(areas)/dealers/all'
 import { useDealersSearch } from '@/context/DealersSearchContext'
-import { useCache } from '@/context/data/Cache'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
-import { useNow } from '@/hooks/time/useNow'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { deriveDealerSection } from '@/data/utils/deriveDealerSection'
+import { collectBy } from '@/util/arrays'
 
 export default function RegularScreen() {
-  const { query } = useDealersSearch()
+  const { results } = useDealersSearch()
   const { t } = useTranslation('Dealers')
-  const now = useNow()
 
-  const { dealersInRegular, searchDealersInRegular } = useCache()
-  const search = useFuseResults(searchDealersInRegular, query ?? '')
-  const groups = useDealerGroups(now, search ?? dealersInRegular)
+  const { data: dealers } = useLiveQuery(
+    {
+      id: 'area-dealers-regular',
+      query: (q) =>
+        q
+          .from({ item: dealersFullCollection })
+          .where(({ item }) => not(item.IsAfterDark))
+          .where(({ item }) => or(!results, inArray(item.Id, results)))
+          .orderBy(({ item }) => item.DisplayName),
+    },
+    [results]
+  )
+
+  const grouping = useMemo(() => {
+    return collectBy(dealers, (a) => deriveDealerSection(a) ?? '')
+  }, [dealers])
 
   return (
-    <DealersSectionedList
-      dealersGroups={groups}
-      leader={
-        <>
-          <Badge
-            unpad={0}
-            badgeColor='lighten'
-            textColor='text'
-            textType='regular'
-          >
-            {t('section_notice')}
-          </Badge>
-          <Label type='lead' variant='middle' className='mt-8'>
-            {t('dealers_in_regular')}
-          </Label>
-        </>
-      }
+    <DealersView
+      grouping={grouping}
+      title={t('dealers_in_regular')}
+      icon='desk'
     />
   )
 }

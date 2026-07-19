@@ -1,14 +1,14 @@
 import { captureException } from '@sentry/react-native'
+import { useLiveQuery } from '@tanstack/react-db'
 import { formatDistance, isAfter, isBefore } from 'date-fns'
 import type { TFunction } from 'i18next'
 import { type FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, View } from 'react-native'
-
-import { useCache } from '@/context/data/Cache'
 import { auth, useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
-import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
+import { daysCollection } from '@/data/collections/content/Days'
+import { useRegistrationDatesQuery } from '@/hooks/api/useRegistrationDatesQuery'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
@@ -31,15 +31,15 @@ const useRegistrationState = (
   isLoading: boolean,
   error: Error | null
 ) => {
-  const { eventDays } = useCache()
+  const { data: days } = useLiveQuery(daysCollection)
 
   if (isLoading || error || !startDate || !endDate) {
     return { countdownText: null, isRegistrationOpen: false }
   }
 
   // Check if we're after the current convention but before next registration opens
-  if (eventDays.length > 0) {
-    const lastDay = eventDays[eventDays.length - 1]
+  if (days.length > 0) {
+    const lastDay = days[days.length - 1]
     const lastDate = new Date(lastDay.Date)
 
     if (isAfter(now, lastDate) && isBefore(now, startDate)) {

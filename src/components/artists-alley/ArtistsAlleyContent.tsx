@@ -1,17 +1,16 @@
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Image } from '@/components/generic/atoms/Image'
 import { sourceFromImage } from '@/components/generic/atoms/Image.common'
 import { Label } from '@/components/generic/atoms/Label'
-import type { TableRegistrationRecord } from '@/context/data/types.api'
-import type { ArtistAlleyDetails } from '@/context/data/types.details'
+import type { EfArtistsAlleyFull } from '@/data/collections/artists-alley/ArtistsAlleyFull'
+import type { EfTableRegistration } from '@/data/types/EfTableRegistration'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { handleExternalLink } from '../ExternalLink'
 
 export type ArtistsAlleyContentProps = {
-  data: ArtistAlleyDetails | TableRegistrationRecord
+  data: EfArtistsAlleyFull | EfTableRegistration
 }
 
 export const ArtistsAlleyContent = ({ data }: ArtistsAlleyContentProps) => {

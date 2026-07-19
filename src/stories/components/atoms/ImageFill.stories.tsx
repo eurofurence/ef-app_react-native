@@ -35,7 +35,8 @@ export const Default: Story = {
       ContentHashSha1: 'abc123',
       Url: 'https://picsum.photos/800/600',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-      IsDeleted: 0,
+      IsRestricted: false,
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     style: { width: 300, height: 200 },
   },
@@ -53,7 +54,8 @@ export const WithTarget: Story = {
       ContentHashSha1: 'def456',
       Url: 'https://picsum.photos/800/600',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-      IsDeleted: 0,
+      IsRestricted: false,
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     style: { width: 300, height: 200 },
     target: {
@@ -79,7 +81,8 @@ export const DifferentTargets: Story = {
             ContentHashSha1: 'ghi789',
             Url: 'https://picsum.photos/800/600',
             LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-            IsDeleted: 0,
+            IsRestricted: false,
+            BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
           }}
           style={{ width: 300, height: 200 }}
           target={{
@@ -101,7 +104,8 @@ export const DifferentTargets: Story = {
             ContentHashSha1: 'jkl012',
             Url: 'https://picsum.photos/800/600',
             LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-            IsDeleted: 0,
+            IsRestricted: false,
+            BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
           }}
           style={{ width: 300, height: 200 }}
           target={{
@@ -133,7 +137,8 @@ export const WithoutTarget: Story = {
       ContentHashSha1: 'mno345',
       Url: 'https://picsum.photos/800/600',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-      IsDeleted: 0,
+      IsRestricted: false,
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     style: { width: 300, height: 200 },
   },

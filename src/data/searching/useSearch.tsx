@@ -5,7 +5,8 @@ import type {
   WithVirtualProps,
 } from '@tanstack/react-db'
 import Fuse, { type FuseResult, type IFuseOptions } from 'fuse.js'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { EfId } from '@/data/types/EfId'
 
 /**
  * Indices by collection.
@@ -97,6 +98,7 @@ export function search<
  * Uses search results of a collection that is searchable.
  * @param collection The collection.
  * @param term The term to search.
+ * @param limit Maximum results
  */
 export function useSearch<
   T extends object = Record<string, unknown>,
@@ -106,23 +108,26 @@ export function useSearch<
   TInsertInput extends object = T,
 >(
   collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>,
-  term: string | null
+  term: string | null,
+  limit: number | null | undefined = 15
 ) {
   // Initialize with current results.
   const [results, setResults] = useState<
-    FuseResult<WithVirtualProps<T, TKey>>[]
+    FuseResult<WithVirtualProps<T, TKey>>[] | null
   >(() => {
-    if (term === null) return []
+    if (!term) return null
     const fuse = getOrInitialize(collection)
-    return fuse.search(term)
+    return fuse.search(term, limit ? { limit } : undefined)
   })
 
   // Subscribe to change of search term.
   useEffect(() => {
-    if (term === null) return
-    const fuse = getOrInitialize(collection)
-    setResults(fuse.search(term))
-  }, [term])
+    if (!term) setResults(null)
+    else
+      setResults(
+        getOrInitialize(collection).search(term, limit ? { limit } : undefined)
+      )
+  }, [term, limit])
 
   // Reference for transfer of term to the subscription function.
   const termRef = useRef<string | null>(term)
@@ -131,14 +136,37 @@ export function useSearch<
   // Subscribe to change of collection.
   useEffect(() => {
     const subscription = collection.subscribeChanges(() => {
-      if (termRef.current === null) return null
-      const fuse = getOrInitialize(collection)
-      setResults(fuse.search(termRef.current))
+      if (!termRef.current) setResults(null)
+      else
+        setResults(
+          getOrInitialize(collection).search(
+            termRef.current,
+            limit ? { limit } : undefined
+          )
+        )
     })
     return () => {
       subscription.unsubscribe()
     }
-  }, [])
+  }, [limit])
 
   return results
+}
+
+export function useSearchIds<
+  T extends { Id: EfId } = { Id: EfId },
+  TKey extends string | number = string | number,
+  TUtils extends UtilsRecord = UtilsRecord,
+  TSchema extends StandardSchemaV1 = StandardSchemaV1,
+  TInsertInput extends object = T,
+>(
+  collection: Collection<T, TKey, TUtils, TSchema, TInsertInput>,
+  term: string | null,
+  limit: number | null | undefined = 15
+) {
+  const results = useSearch(collection, term, limit)
+  return useMemo(
+    () => results?.map((result) => result.item.Id) ?? null,
+    [results]
+  )
 }

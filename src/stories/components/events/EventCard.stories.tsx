@@ -1,11 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
-import {
-  EventCard,
-  eventInstanceForAny,
-  eventInstanceForPassed,
-} from '@/components/events/EventCard'
+import { EventCard2 } from '@/components/events/EventCard2'
 import {
   mockEventDetails,
   mockEventDetailsLongTitle,
@@ -16,7 +12,7 @@ import {
 
 const meta = {
   title: 'Components/Events/EventCard',
-  component: EventCard,
+  component: EventCard2,
   decorators: [
     (Story) => (
       <View style={{ flex: 1, padding: 20, backgroundColor: '#f5f5f5' }}>
@@ -33,54 +29,49 @@ const meta = {
     onPress: { action: 'pressed' },
     onLongPress: { action: 'long pressed' },
   },
-} satisfies Meta<typeof EventCard>
+} satisfies Meta<typeof EventCard2>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-// Helper function to create event instances
-const createEventInstance = (details: any, now: Date = new Date()) => {
-  return eventInstanceForAny(details, now)
-}
-
 export const Default: Story = {
   args: {
-    event: createEventInstance(mockEventDetails),
+    event: mockEventDetails,
     onPress: fn(),
   },
 }
 
 export const WithBanner: Story = {
   args: {
-    event: createEventInstance(mockEventDetailsWithBanner),
+    event: mockEventDetailsWithBanner,
     onPress: fn(),
   },
 }
 
 export const PassedEvent: Story = {
   args: {
-    event: eventInstanceForPassed(mockEventDetailsPassed),
+    event: mockEventDetailsPassed,
     onPress: fn(),
   },
 }
 
 export const SimpleEvent: Story = {
   args: {
-    event: createEventInstance(mockEventDetailsSimple),
+    event: mockEventDetailsSimple,
     onPress: fn(),
   },
 }
 
 export const LongTitle: Story = {
   args: {
-    event: createEventInstance(mockEventDetailsLongTitle),
+    event: mockEventDetailsLongTitle,
     onPress: fn(),
   },
 }
 
 export const TimeDisplay: Story = {
   args: {
-    event: createEventInstance(mockEventDetails),
+    event: mockEventDetails,
     type: 'time',
     onPress: fn(),
   },
@@ -88,7 +79,7 @@ export const TimeDisplay: Story = {
 
 export const DurationDisplay: Story = {
   args: {
-    event: createEventInstance(mockEventDetails),
+    event: mockEventDetails,
     type: 'duration',
     onPress: fn(),
   },
@@ -96,7 +87,7 @@ export const DurationDisplay: Story = {
 
 export const Interactive: Story = {
   args: {
-    event: createEventInstance(mockEventDetails),
+    event: mockEventDetails,
     onPress: fn(),
     onLongPress: fn(),
   },
@@ -104,31 +95,22 @@ export const Interactive: Story = {
 
 export const MultipleEvents: Story = {
   args: {
-    event: createEventInstance(mockEventDetails),
+    event: mockEventDetails,
     onPress: fn(),
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      <EventCard event={createEventInstance(mockEventDetails)} onPress={fn()} />
-      <EventCard
-        event={createEventInstance(mockEventDetailsWithBanner)}
-        onPress={fn()}
-      />
-      <EventCard
-        event={eventInstanceForPassed(mockEventDetailsPassed)}
-        onPress={fn()}
-      />
-      <EventCard
-        event={createEventInstance(mockEventDetailsSimple)}
-        onPress={fn()}
-      />
+      <EventCard2 event={mockEventDetails} onPress={fn()} />
+      <EventCard2 event={mockEventDetailsWithBanner} onPress={fn()} />
+      <EventCard2 event={mockEventDetailsPassed} onPress={fn()} />
+      <EventCard2 event={mockEventDetailsSimple} onPress={fn()} />
     </View>
   ),
 }
 
 export const EventStates: Story = {
   args: {
-    event: createEventInstance(mockEventDetails),
+    event: mockEventDetails,
     onPress: fn(),
   },
   render: () => {
@@ -153,15 +135,9 @@ export const EventStates: Story = {
 
     return (
       <View style={{ gap: 15 }}>
-        <EventCard
-          event={createEventInstance(upcomingEvent, now)}
-          onPress={fn()}
-        />
-        <EventCard
-          event={createEventInstance(runningEvent, now)}
-          onPress={fn()}
-        />
-        <EventCard event={eventInstanceForPassed(passedEvent)} onPress={fn()} />
+        <EventCard2 event={upcomingEvent} onPress={fn()} />
+        <EventCard2 event={runningEvent} onPress={fn()} />
+        <EventCard2 event={passedEvent} onPress={fn()} />
       </View>
     )
   },

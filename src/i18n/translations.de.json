@@ -355,7 +355,9 @@
     "search": {
       "placeholder": "Suche Dealer…"
     },
-    "section_notice": "Dealer-Gruppierung wurde durch die App vorgenommen anhand hervorstechender Kategorien"
+    "section_notice": "Dealer-Gruppierung wurde durch die App vorgenommen anhand hervorstechender Kategorien",
+    "section_table": "Bereich {{section}}",
+    "section_table_none": "Ohne Bereich"
   },
   "EmptyScreen": {
     "notImplemented": "Inhalt noch nicht implementiert."

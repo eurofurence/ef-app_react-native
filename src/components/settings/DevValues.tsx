@@ -1,19 +1,29 @@
+import { useLiveQuery } from '@tanstack/react-db'
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
 import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
-import { useCache } from '@/context/data/Cache'
 import { useAuthState } from '@/data/clients/auth'
+import { artistsAlleyCollection } from '@/data/collections/artists-alley/ArtistsAlley'
+import { announcementsCollection } from '@/data/collections/content/Announcements'
+import { daysCollection } from '@/data/collections/content/Days'
+import { dealersCollection } from '@/data/collections/content/Dealers'
+import { eventsCollection } from '@/data/collections/content/Events'
+import { imagesCollection } from '@/data/collections/content/Images'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import { kbGroupsCollection } from '@/data/collections/content/KbGroups'
+import { lostAndFoundCollection } from '@/data/collections/content/LostAndFound'
+import { mapsCollection } from '@/data/collections/content/Maps'
+import { roomsCollection } from '@/data/collections/content/Rooms'
+import { tracksCollection } from '@/data/collections/content/Tracks'
+import { localNotificationsCollection } from '@/data/collections/supplemental/LocalNotifications'
 import { getDevicePushToken } from '@/hooks/tokens/useTokenManager'
 
 export function DevValues() {
   const { t } = useTranslation('Settings', { keyPrefix: 'dev_values' })
   const { tokenResponse, claims, user } = useAuthState()
-  const { getValue } = useCache()
-  const notifications = getValue('notifications')
 
   const [devicePushToken, setDevicePushToken] = useState<any | null>(null)
 
@@ -23,7 +33,33 @@ export function DevValues() {
     getDevicePushToken().then((value) => setDevicePushToken(value))
   }, [])
 
-  const { data } = useCache()
+  const { data: notifications } = useLiveQuery(localNotificationsCollection)
+  const { data: announcements } = useLiveQuery(announcementsCollection)
+  const { data: artistsAlley } = useLiveQuery(artistsAlleyCollection)
+  const { data: days } = useLiveQuery(daysCollection)
+  const { data: dealers } = useLiveQuery(dealersCollection)
+  const { data: events } = useLiveQuery(eventsCollection)
+  const { data: images } = useLiveQuery(imagesCollection)
+  const { data: kbEntries } = useLiveQuery(kbEntriesCollection)
+  const { data: kbGroups } = useLiveQuery(kbGroupsCollection)
+  const { data: lostAndFound } = useLiveQuery(lostAndFoundCollection)
+  const { data: maps } = useLiveQuery(mapsCollection)
+  const { data: rooms } = useLiveQuery(roomsCollection)
+  const { data: tracks } = useLiveQuery(tracksCollection)
+  const collections = {
+    announcements,
+    artistsAlley,
+    days,
+    dealers,
+    events,
+    images,
+    kbEntries,
+    kbGroups,
+    lostAndFound,
+    maps,
+    rooms,
+    tracks,
+  }
 
   return (
     <View className='p-4'>
@@ -48,9 +84,9 @@ export function DevValues() {
       <View>
         {notifications?.map((item) => {
           return (
-            <View key={item.recordId} className='py-1 ml-2'>
+            <View key={item.TargetId} className='py-1 ml-2'>
               <Label type='regular'>
-                {item.type} - {item.dateScheduledUtc}
+                Event notification {item.ScheduledUtc}
               </Label>
             </View>
           )
@@ -83,18 +119,15 @@ export function DevValues() {
       <Label className='mt-5' type='h3'>
         {t('cache_values')}
       </Label>
-      {Object.entries(data).map(([key, value]) => (
+      {Object.entries(collections).map(([key, value]) => (
         <Fragment key={key}>
           <Label className='mt-3' type='h4'>
             {key}
           </Label>
-          {Array.isArray(value) ? (
-            <Label className='ml-2'>Array of length {value.length}</Label>
-          ) : (
-            <Label className='ml-2'>
-              {value ? JSON.stringify(value, null, 2) : 'None'}
-            </Label>
-          )}
+          <Label className='ml-2'>{value.length} items</Label>
+          <Label className='ml-2'>
+            {JSON.stringify(value.slice(0, 4), null, 2)}
+          </Label>
         </Fragment>
       ))}
     </View>

@@ -1,9 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
-import { useCache } from '@/context/data/Cache'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 import { AnalyticsOptIns } from './AnalyticsOptIns'
@@ -16,7 +15,7 @@ import { Warnings } from './Warnings'
 
 export function UserSettings() {
   const { t } = useTranslation('Settings')
-  const { synchronize, isSynchronizing } = useCache()
+  const isSynchronizing = useIsSynchronizing()
 
   return (
     <View>
@@ -50,7 +49,7 @@ export function UserSettings() {
         />
         <Button
           disabled={isSynchronizing}
-          onPress={() => vibrateAfter(synchronize({ full: true }))}
+          onPress={() => vibrateAfter(synchronize())}
           icon='refresh'
         >
           {t('sync_full')}

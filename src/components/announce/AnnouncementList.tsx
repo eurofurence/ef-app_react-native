@@ -3,25 +3,20 @@ import { router } from 'expo-router'
 import { type FC, type ReactElement, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
-
-import type { AnnouncementDetails } from '@/context/data/types.details'
+import type { EfAnnouncementFull } from '@/data/collections/content/AnnouncementsFull'
 import { useThemeName } from '@/hooks/themes/useThemeHooks'
-
-import {
-  AnnouncementCard,
-  type AnnouncementDetailsInstance,
-} from './AnnouncementCard'
+import { AnnouncementCard } from './AnnouncementCard'
 
 export type AnnouncementListProps = {
   leader?: ReactElement
-  announcements: AnnouncementDetailsInstance[]
+  announcements: EfAnnouncementFull[]
   empty?: ReactElement
   trailer?: ReactElement
   padEnd?: boolean
 }
 
-function keyExtractor(item: AnnouncementDetailsInstance) {
-  return item.details.Id
+function keyExtractor(item: EfAnnouncementFull) {
+  return item.Id
 }
 
 export const AnnouncementList: FC<AnnouncementListProps> = ({
@@ -35,7 +30,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({
   const theme = useThemeName()
 
   const onPress = useCallback(
-    (announcement: AnnouncementDetails) =>
+    (announcement: EfAnnouncementFull) =>
       router.navigate({
         pathname: '/announcements/[id]',
         params: { id: announcement.Id },
@@ -44,7 +39,7 @@ export const AnnouncementList: FC<AnnouncementListProps> = ({
   )
 
   const renderItem = useCallback(
-    ({ item }: { item: AnnouncementDetailsInstance }) => {
+    ({ item }: { item: EfAnnouncementFull }) => {
       return (
         <AnnouncementCard
           containerStyle={styles.item}

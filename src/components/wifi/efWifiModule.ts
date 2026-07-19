@@ -8,6 +8,7 @@ type EfWifiRequest = {
   domainSuffixMatch?: string
 }
 
+// biome-ignore lint/complexity/noBannedTypes: Module specification, not used.
 declare class EfWifiNativeModule extends NativeModule<{}> {
   addEnterpriseNetwork(request: EfWifiRequest): Promise<void>
 }

@@ -1,4 +1,5 @@
-import { useCache } from '@/context/data/Cache'
+import { useCallback } from 'react'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 
 /**
  * Possible warning keys.
@@ -16,26 +17,17 @@ export type WarningKey =
  * @param warningKey The warning key.
  */
 export function useWarningState(warningKey: WarningKey) {
-  const { getValue, setValue } = useCache()
-  const settings = getValue('settings')
-  const isHidden = settings.warnings?.[warningKey] === true
+  const [warningsHidden, updateWarningsHidden] = useAppSetting('WarningsHidden')
 
-  const hideWarning = () =>
-    setValue('settings', {
-      ...settings,
-      warnings: {
-        ...(settings.warnings ?? {}),
-        [warningKey]: true,
-      },
-    })
-  const showWarning = () =>
-    setValue('settings', {
-      ...settings,
-      warnings: {
-        ...(settings.warnings ?? {}),
-        [warningKey]: false,
-      },
-    })
+  const isHidden = Boolean(warningsHidden?.[warningKey])
+
+  const hideWarning = useCallback(() => {
+    updateWarningsHidden((current) => ({ ...current, [warningKey]: true }))
+  }, [warningKey])
+
+  const showWarning = useCallback(() => {
+    updateWarningsHidden((current) => ({ ...current, [warningKey]: false }))
+  }, [warningKey])
 
   return {
     isHidden,

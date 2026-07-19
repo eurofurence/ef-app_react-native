@@ -2,8 +2,7 @@ import { router } from 'expo-router'
 import { StyleSheet } from 'react-native'
 
 import { Pressable } from '@/components/generic/Pressable'
-import type { ImageDetails } from '@/context/data/types.details'
-
+import type { EfImage } from '@/data/types/EfImage'
 import { Image, type ImageProps } from './Image'
 import { sourceFromImage } from './Image.common'
 
@@ -16,7 +15,7 @@ export type BannerProps = {
   /**
    * The source image object.
    */
-  image?: ImageDetails
+  image?: EfImage
 
   /**
    * The viewer title.

@@ -1,18 +1,15 @@
 import { useLastNotificationResponse } from 'expo-notifications'
 import { router } from 'expo-router'
 import { useEffect } from 'react'
-
 import { conId } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
-import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
+import { pmsCollection } from '@/data/collections/user/Pms'
+import { synchronize } from '@/data/hooks/useSynchronize'
 
 /**
  * Handles the last notification response.
  */
 export function useNotificationResponseManager() {
   const response = useLastNotificationResponse()
-  const { synchronize } = useCache()
-  const { refetch } = useCommunicationsQuery()
 
   // Handle notification responses (when user taps on notification)
   useEffect(() => {
@@ -58,7 +55,7 @@ export function useNotificationResponseManager() {
 
     // Handle private message notifications, refetch prior to navigation.
     if (event === 'Notification') {
-      refetch().then(() =>
+      pmsCollection.utils.refetch().then(() =>
         router.navigate({
           pathname: '/messages/[id]',
           params: { id: relatedId },
@@ -66,7 +63,7 @@ export function useNotificationResponseManager() {
       )
       return
     }
-  }, [response, synchronize, refetch])
+  }, [response])
 
   return null
 }

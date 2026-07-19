@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-native-web-vite'
+import { subHours, subMinutes, subSeconds } from 'date-fns'
 import { View } from 'react-native'
 import { fn } from 'storybook/test'
 import { AnnouncementCard } from '@/components/announce/AnnouncementCard'
 import {
-  createAnnouncementInstance,
   mockAnnouncementDetails,
   mockAnnouncementDetailsDifferentAreas,
   mockAnnouncementDetailsLongTitle,
@@ -32,28 +32,28 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    announcement: mockAnnouncementDetails,
     onPress: fn(),
   },
 }
 
 export const WithImage: Story = {
   args: {
-    announcement: createAnnouncementInstance(mockAnnouncementDetailsWithImage),
+    announcement: mockAnnouncementDetailsWithImage,
     onPress: fn(),
   },
 }
 
 export const LongTitle: Story = {
   args: {
-    announcement: createAnnouncementInstance(mockAnnouncementDetailsLongTitle),
+    announcement: mockAnnouncementDetailsLongTitle,
     onPress: fn(),
   },
 }
 
 export const Interactive: Story = {
   args: {
-    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    announcement: mockAnnouncementDetails,
     onPress: fn(),
     onLongPress: fn(),
   },
@@ -61,57 +61,57 @@ export const Interactive: Story = {
 
 export const DifferentTimes: Story = {
   args: {
-    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    announcement: mockAnnouncementDetails,
     onPress: fn(),
   },
-  render: () => (
-    <View style={{ gap: 15 }}>
-      <AnnouncementCard
-        announcement={createAnnouncementInstance(
-          mockAnnouncementDetails,
-          'Just now'
-        )}
-        onPress={fn()}
-      />
-      <AnnouncementCard
-        announcement={createAnnouncementInstance(
-          mockAnnouncementDetailsWithImage,
-          '5 minutes ago'
-        )}
-        onPress={fn()}
-      />
-      <AnnouncementCard
-        announcement={createAnnouncementInstance(
-          mockAnnouncementDetailsLongTitle,
-          '1 hour ago'
-        )}
-        onPress={fn()}
-      />
-      <AnnouncementCard
-        announcement={createAnnouncementInstance(
-          mockAnnouncementDetails,
-          '2 hours ago'
-        )}
-        onPress={fn()}
-      />
-    </View>
-  ),
+  render: () => {
+    const now = new Date()
+    return (
+      <View style={{ gap: 15 }}>
+        <AnnouncementCard
+          announcement={{
+            ...mockAnnouncementDetails,
+            ValidFromDateTimeUtc: subSeconds(now, 5).toISOString(),
+          }}
+          onPress={fn()}
+        />
+        <AnnouncementCard
+          announcement={{
+            ...mockAnnouncementDetailsWithImage,
+            ValidFromDateTimeUtc: subMinutes(now, 5).toISOString(),
+          }}
+          onPress={fn()}
+        />
+        <AnnouncementCard
+          announcement={{
+            ...mockAnnouncementDetailsLongTitle,
+            ValidFromDateTimeUtc: subHours(now, 1).toISOString(),
+          }}
+          onPress={fn()}
+        />
+        <AnnouncementCard
+          announcement={{
+            ...mockAnnouncementDetails,
+            ValidFromDateTimeUtc: subHours(now, 2).toISOString(),
+          }}
+          onPress={fn()}
+        />
+      </View>
+    )
+  },
 }
 
 export const DifferentAreas: Story = {
   args: {
-    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    announcement: mockAnnouncementDetails,
     onPress: fn(),
   },
   render: () => (
     <View style={{ gap: 15 }}>
-      {mockAnnouncementDetailsDifferentAreas.map((details, index) => (
+      {mockAnnouncementDetailsDifferentAreas.map((details) => (
         <AnnouncementCard
           key={details.Id}
-          announcement={createAnnouncementInstance(
-            details,
-            `${index + 1} hour${index > 0 ? 's' : ''} ago`
-          )}
+          announcement={details}
           onPress={fn()}
         />
       ))}
@@ -121,25 +121,18 @@ export const DifferentAreas: Story = {
 
 export const MultipleAnnouncements: Story = {
   args: {
-    announcement: createAnnouncementInstance(mockAnnouncementDetails),
+    announcement: mockAnnouncementDetails,
     onPress: fn(),
   },
   render: () => (
     <View style={{ gap: 15 }}>
+      <AnnouncementCard announcement={mockAnnouncementDetails} onPress={fn()} />
       <AnnouncementCard
-        announcement={createAnnouncementInstance(mockAnnouncementDetails)}
+        announcement={mockAnnouncementDetailsWithImage}
         onPress={fn()}
       />
       <AnnouncementCard
-        announcement={createAnnouncementInstance(
-          mockAnnouncementDetailsWithImage
-        )}
-        onPress={fn()}
-      />
-      <AnnouncementCard
-        announcement={createAnnouncementInstance(
-          mockAnnouncementDetailsLongTitle
-        )}
+        announcement={mockAnnouncementDetailsLongTitle}
         onPress={fn()}
       />
     </View>

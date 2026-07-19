@@ -22,13 +22,10 @@ import {
   View,
   type ViewStyle,
 } from 'react-native'
+import type { EfMapFull } from '@/data/collections/content/MapsFull'
+import type { EfLink } from '@/data/types/EfLink'
+import type { EfMapEntry } from '@/data/types/EfMapEntry'
 
-import type { LinkFragment } from '@/context/data/types.api'
-import type {
-  ImageDetails,
-  MapDetails,
-  MapEntryDetails,
-} from '@/context/data/types.details'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { Image } from '../generic/atoms/Image'
@@ -55,15 +52,15 @@ const circleTouches = (
 
 type FilterResult = {
   key: string
-  map: MapDetails
-  entry: MapEntryDetails
-  link: LinkFragment
+  map: EfMapFull
+  entry: EfMapEntry
+  link: EfLink
 }
 
 export type MapContentProps = {
-  map: MapDetails & { Image: ImageDetails }
-  entry?: MapEntryDetails
-  link?: LinkFragment
+  map: EfMapFull
+  entry?: EfMapEntry
+  link?: EfLink
 }
 
 /**
@@ -103,11 +100,13 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
 
           // Get area and area center.
           const x1 =
-            ((map.Image.Width * zoom) / 2 - offsetX * zoom - targetWidth / 2) /
+            (((map.Image?.Width ?? 0) * zoom) / 2 -
+              offsetX * zoom -
+              targetWidth / 2) /
             zoom
           const x2 = x1 + targetWidth / zoom
           const y1 =
-            ((map.Image.Height * zoom) / 2 -
+            (((map.Image?.Height ?? 0) * zoom) / 2 -
               offsetY * zoom -
               targetHeight / 2) /
             zoom
@@ -168,15 +167,15 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
       const zoom = current.zoomLevel
 
       // Get change to current center.
-      const diffX = entry.X - (map.Image.Width / 2 - offsetX)
-      const diffY = entry.Y - (map.Image.Height / 2 - offsetY)
+      const diffX = entry.X - ((map.Image?.Width ?? 0) / 2 - offsetX)
+      const diffY = entry.Y - ((map.Image?.Height ?? 0) / 2 - offsetY)
       void refZoom.current.moveBy(diffX * zoom, diffY * zoom)
     })
   }, [entry, map])
 
   // Compute containers.
   const styleContainer = useMemo<ViewStyle>(
-    () => ({ width: map.Image.Width, height: map.Image.Height }),
+    () => ({ width: map.Image?.Width ?? 0, height: map.Image?.Height ?? 0 }),
     [map]
   )
   const styleMarker = useMemo<ViewStyle>(
@@ -185,7 +184,7 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
   )
 
   // Determine zoom levels.
-  const minZoom = Dimensions.get('window').width / map.Image.Width
+  const minZoom = Dimensions.get('window').width / (map.Image?.Width ?? 1)
   const maxZoom = minZoom * 5
 
   // List header component.
@@ -223,8 +222,8 @@ export const MapContent: FC<MapContentProps> = ({ map, entry }) => {
       >
         <ZoomableView
           ref={refZoom}
-          contentWidth={map.Image.Width}
-          contentHeight={map.Image.Height}
+          contentWidth={map.Image?.Width ?? 1}
+          contentHeight={map.Image?.Height ?? 1}
           maxZoom={maxZoom}
           minZoom={minZoom}
           zoomStep={maxZoom - minZoom}

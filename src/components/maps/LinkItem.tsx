@@ -1,41 +1,39 @@
-import { format, setDay } from 'date-fns'
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { router } from 'expo-router'
 import type { FC } from 'react'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Linking, Platform, StyleSheet } from 'react-native'
+import { onPressDealer } from '@/app/(areas)/dealers/all'
+import { DealerCard2 } from '@/components/dealers/DealerCard2'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import type { EfMapFull } from '@/data/collections/content/MapsFull'
+import type { EfLink } from '@/data/types/EfLink'
+import type { EfMapEntry } from '@/data/types/EfMapEntry'
 
-import { useCache } from '@/context/data/Cache'
-import type { LinkFragment } from '@/context/data/types.api'
-import type { MapDetails, MapEntryDetails } from '@/context/data/types.details'
 import { confirmPrompt } from '@/util/confirmPrompt'
 
-import { DealerCard } from '../dealers/DealerCard'
-import { isPresent, joinOffDays } from '../dealers/utils'
 import { FaIcon } from '../generic/atoms/FaIcon'
 import { Icon } from '../generic/atoms/Icon'
 import { Image } from '../generic/atoms/Image'
 import { Button, type ButtonProps } from '../generic/containers/Button'
 
 type LinkItemProps = {
-  map?: MapDetails
-  entry?: MapEntryDetails
-  link: LinkFragment
+  map?: EfMapFull
+  entry?: EfMapEntry
+  link: EfLink
 }
 
 const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
-  const now = new Date()
-  const day1 = format(setDay(now, 1), 'EEEE')
-  const day2 = format(setDay(now, 2), 'EEEE')
-  const day3 = format(setDay(now, 3), 'EEEE')
-
-  const { dealers } = useCache()
-  const dealer = dealers.dict[link.Target]
-  const present = dealer ? isPresent(dealer, now) : false
-  const offDays = dealer ? joinOffDays(dealer, day1, day2, day3) : ''
-
-  const onPress = useCallback(
-    () => router.push(`/dealers/${link.Target}`),
+  const { data: dealer } = useLiveQuery(
+    {
+      id: `dealer-link-item-${link.Id}`,
+      query: (q) =>
+        q
+          .from({ dealer: dealersFullCollection })
+          .where(({ dealer }) => eq(dealer.Id, link.Target))
+          .findOne(),
+    },
     [link.Target]
   )
 
@@ -43,12 +41,7 @@ const DealerLinkItem: FC<LinkItemProps> = ({ link }) => {
     return null
   }
 
-  return (
-    <DealerCard
-      dealer={{ details: dealer, present, offDays }}
-      onPress={onPress}
-    />
-  )
+  return <DealerCard2 dealer={dealer} onPress={onPressDealer} />
 }
 
 const WebExternalLinkItem: FC<LinkItemProps> = ({ link }) => {
