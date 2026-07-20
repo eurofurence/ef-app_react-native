@@ -28,7 +28,7 @@ export const ComingSoon = ({ image, title, text }: ComingSoonProps) => {
       refreshControl={
         <RefreshControl
           refreshing={isSynchronizing}
-          onRefresh={() => vibrateAfter(synchronize())}
+          onRefresh={() => vibrateAfter(synchronize()).catch(console.error)}
           accessibilityLabel={a11y('pull_to_refresh')}
           accessibilityHint={a11y('pull_to_refresh_hint')}
         />

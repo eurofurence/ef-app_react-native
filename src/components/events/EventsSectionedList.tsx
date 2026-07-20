@@ -84,6 +84,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
 
   return (
     <FlashList
+      maintainVisibleContentPosition={{ disabled: true }}
       refreshing={isSynchronizing}
       onRefresh={() => vibrateAfter(synchronize())}
       contentContainerStyle={padEnd ? styles.container : undefined}

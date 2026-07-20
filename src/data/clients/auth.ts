@@ -278,14 +278,18 @@ export class AuthClient {
     const fetchUserSelfPromise = AuthClient._fetchUserSelf(response.accessToken)
     const claims = await fetchUserInfoPromise
     const user = await fetchUserSelfPromise
+    const idData = parseIdToken(response.idToken)
+
+    const sameSubject =
+      idData?.sub != null && idData.sub === this._state.idData?.sub
 
     this._state = {
       isReady: true,
       tokenResponse: response,
       isLoggedIn: Boolean(response),
-      idData: parseIdToken(response.idToken),
-      claims: claims ?? this._state.claims,
-      user: user ?? this._state.user,
+      idData,
+      claims: claims ?? (sameSubject ? this._state.claims : null),
+      user: user ?? (sameSubject ? this._state.user : null),
       sessionExpired: false,
     }
     await this._saveState()
@@ -311,19 +315,35 @@ export class AuthClient {
   }
 
   /**
+   * Reads the persisted state, retrying transient storage failures. Returns
+   * null for both "no session stored" and "unreadable after retries".
+   * @throws never
+   * @private
+   */
+  private static async _readPersistedState(attempts = 3) {
+    for (let attempt = 0; ; attempt++) {
+      try {
+        return await AsyncStorage.get('auth-client-persisted-state')
+      } catch (error) {
+        // A read failure is not proof of a missing session, so retry before
+        // giving up. Persisted data is deliberately left untouched here so a
+        // later launch can still restore it.
+        if (attempt >= attempts - 1) {
+          captureException(error)
+          return null
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100 * 2 ** attempt))
+      }
+    }
+  }
+
+  /**
    * Restores the saved state.
    * @throws never
    * @private
    */
   private async _restoreState() {
-    // Must honour @throws never: isReady gates the initial cache sync, so a
-    // rejected read here would leave the app never synchronizing.
-    const stored = await AsyncStorage.get('auth-client-persisted-state').catch(
-      (error) => {
-        captureException(error)
-        return null
-      }
-    )
+    const stored = await AuthClient._readPersistedState()
     if (stored === null) {
       this._state = {
         isReady: true,

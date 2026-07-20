@@ -20,8 +20,10 @@ export default function Personal() {
   const { eventsFavorite, searchEventsFavorite } = useCache()
   const search = useFuseResults(searchEventsFavorite, query ?? '')
   const [showInternal] = useAppSetting('ShowInternalEvents')
-  const filtered = (search ?? eventsFavorite).filter(
-    (e) => showInternal || !e.IsInternal
+  const filtered = useMemo(
+    () =>
+      (search ?? eventsFavorite).filter((e) => showInternal || !e.IsInternal),
+    [search, eventsFavorite, showInternal]
   )
   const groups = useEventOtherGroups(t, now, filtered)
 
