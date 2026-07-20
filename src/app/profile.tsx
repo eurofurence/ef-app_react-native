@@ -14,7 +14,7 @@ import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Profile() {
-  const { claims, user } = useAuthState()
+  const { isLoggedIn, claims, user } = useAuthState()
   const [isReloading, setIsReloading] = useState(false)
   const { synchronize, isSynchronizing } = useCache()
   const backgroundStyle = useThemeBackground('background')
@@ -37,7 +37,7 @@ export default function Profile() {
   }, [isReloading])
 
   // Navigate back if not logged in.
-  if (!user) return <Redirect href='/' />
+  if (!isLoggedIn) return <Redirect href='/' />
 
   return (
     <ScrollView

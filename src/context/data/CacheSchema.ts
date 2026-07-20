@@ -40,9 +40,12 @@ export const schemaInternal = {
   lastSynchronised: defineField<string>(formatISO(0)),
 
   /**
-   * True if last sync was authorized.
+   * Identity the last sync was served for, as `sub/roles`. Internal records are
+   * role-gated, and a delta sync never re-sends records that only became
+   * visible, so the identity must invalidate the baseline, not just token
+   * presence.
    */
-  lastSyncAuthorized: defineField<boolean>(false),
+  lastSyncAuthKey: defineField<string>(''),
 } as const
 
 /**

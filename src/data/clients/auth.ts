@@ -276,13 +276,16 @@ export class AuthClient {
   private async _setStateAndNotify(response: TokenResponse) {
     const fetchUserInfoPromise = AuthClient._fetchUserInfo(response.accessToken)
     const fetchUserSelfPromise = AuthClient._fetchUserSelf(response.accessToken)
+    const claims = await fetchUserInfoPromise
+    const user = await fetchUserSelfPromise
+
     this._state = {
       isReady: true,
       tokenResponse: response,
       isLoggedIn: Boolean(response),
       idData: parseIdToken(response.idToken),
-      claims: await fetchUserInfoPromise,
-      user: await fetchUserSelfPromise,
+      claims: claims ?? this._state.claims,
+      user: user ?? this._state.user,
       sessionExpired: false,
     }
     await this._saveState()
@@ -313,7 +316,14 @@ export class AuthClient {
    * @private
    */
   private async _restoreState() {
-    const stored = await AsyncStorage.get('auth-client-persisted-state')
+    // Must honour @throws never: isReady gates the initial cache sync, so a
+    // rejected read here would leave the app never synchronizing.
+    const stored = await AsyncStorage.get('auth-client-persisted-state').catch(
+      (error) => {
+        captureException(error)
+        return null
+      }
+    )
     if (stored === null) {
       this._state = {
         isReady: true,
