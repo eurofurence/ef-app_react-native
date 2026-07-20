@@ -31,6 +31,7 @@ import {
   storeReducer,
 } from '@/context/data/CacheStore'
 import type { SchemaField } from '@/context/data/CacheTools'
+import { authKeyOf, decideSyncMode } from '@/context/data/decideSyncMode'
 import {
   type CacheExtensions,
   useCacheExtensions,
@@ -218,8 +219,10 @@ export const CacheProvider = ({
   const invocation = useRef<AbortController | null>(null)
 
   // Get authentication details if available
-  const { tokenResponse } = useAuthState()
+  const { tokenResponse, idData, user, isReady: isAuthReady } = useAuthState()
   const accessToken = tokenResponse?.accessToken
+
+  const authKey = authKeyOf(idData, user)
 
   // Synchronization function.
   const synchronize = useCallback(
@@ -230,21 +233,19 @@ export const CacheProvider = ({
       setIsSynchronizing(true)
 
       // Get states to determine delta based sync or full sync.
-      const { lastSynchronised, cid, cacheVersion, lastSyncAuthorized } =
+      const { lastSynchronised, cid, cacheVersion, lastSyncAuthKey } =
         dataRef.current
-      const isWithBaseline = Boolean(lastSynchronised)
-      const isSameCon = cid === conId
-      const isSameVersion = cacheVersion === eurofurenceCacheVersion
-      const isSameAuthState = Boolean(accessToken) === lastSyncAuthorized
-      const deltaBased =
-        !options?.full &&
-        isWithBaseline &&
-        isSameCon &&
-        isSameVersion &&
-        isSameAuthState
+      const mode = decideSyncMode(
+        options ?? {},
+        { lastSynchronised, cid, cacheVersion, lastSyncAuthKey },
+        {
+          cid: conId,
+          cacheVersion: eurofurenceCacheVersion,
+          authKey,
+        }
+      )
 
-      // Sync fully if state is for a different convention.
-      const path = deltaBased ? `Sync?since=${lastSynchronised}` : `Sync`
+      const path = mode === 'delta' ? `Sync?since=${lastSynchronised}` : `Sync`
 
       try {
         const data = await axios
@@ -258,6 +259,8 @@ export const CacheProvider = ({
           })
           .then((res) => res.data)
 
+        if (invocation.current !== ownInvocation) return
+
         // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
         if (
           data.ConventionIdentifier !== conId ||
@@ -269,7 +272,7 @@ export const CacheProvider = ({
               conId,
               eurofurenceCacheVersion,
               lastSynchronised,
-              Boolean(accessToken)
+              authKey
             )
           )
         }
@@ -297,7 +300,7 @@ export const CacheProvider = ({
             conId,
             eurofurenceCacheVersion,
             data.CurrentDateTimeUtc,
-            Boolean(accessToken)
+            authKey
           )
         )
       } finally {
@@ -306,13 +309,14 @@ export const CacheProvider = ({
         }
       }
     },
-    [accessToken]
+    [accessToken, authKey]
   )
 
-  // Run synchronize initially.
+  // Run synchronize initially. Wait for auth so the first sync is not an
+  // anonymous full sync that discards the authorized baseline.
   useEffect(() => {
-    if (initialized) synchronize().catch(console.error)
-  }, [initialized, synchronize])
+    if (initialized && isAuthReady) synchronize().catch(console.error)
+  }, [initialized, isAuthReady, synchronize])
 
   // Use extensions.
   const extensions = useCacheExtensions(data)

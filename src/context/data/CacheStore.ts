@@ -32,13 +32,13 @@ export type StoreActionInternalsSet = {
  * @param cid The convention identifier.
  * @param cacheVersion The cache version.
  * @param lastSynchronised The last synchronized timestamp as an ISO string.
- * @param lastSyncAuthorized True if the sync was authorized.
+ * @param lastSyncAuthKey The identity the sync was served for.
  */
 export function actionInternalsSet(
   cid: string,
   cacheVersion: number,
   lastSynchronised: string,
-  lastSyncAuthorized: boolean
+  lastSyncAuthKey: string
 ): StoreActionInternalsSet {
   return {
     type: 'STORE_ACTION_INTERNALS_SET',
@@ -46,7 +46,7 @@ export function actionInternalsSet(
       cid,
       cacheVersion,
       lastSynchronised,
-      lastSyncAuthorized,
+      lastSyncAuthKey,
     },
   }
 }
