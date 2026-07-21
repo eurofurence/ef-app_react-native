@@ -28,11 +28,6 @@ on:
                     - development
                     - preview
                     - production
-            should_submit:
-                type: boolean
-                description: Whether to perform the submit step
-                required: true
-                default: true
 jobs:
     build:
         permissions:
@@ -108,14 +103,6 @@ jobs:
               with:
                   name: ${{ inputs.platform }}-build
                   path: app-build
-
-            - name: 🚢 Submit EAS build
-              if: ${{ inputs.should_submit && inputs.build_mode == 'cloud' }}
-              run: eas submit --non-interactive -p ${{ inputs.platform }} --profile ${{ inputs.profile }} --latest
-
-            - name: 🚢 Submit runner build
-              if: ${{ inputs.should_submit && inputs.build_mode == 'local' }}
-              run: eas submit --non-interactive -p ${{ inputs.platform }} --profile ${{ inputs.profile }} --path app-build
 
             - name: 🔄 Convert AAB to APK
               if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
