@@ -119,13 +119,19 @@ jobs:
                 rm app-build/app.apks
                 rm bundletool.jar
 
+            - name: 🏷 Read app version
+              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
+              id: version
+              run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
             - name: 📦 Create GitHub Release
               if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
               uses: softprops/action-gh-release@v1
               with:
+                tag_name: v${{ steps.version.outputs.value }}
                 files: app-build/app-universal.apk
                 generate_release_notes: true
-                draft: false
+                draft: true
                 prerelease: false
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
