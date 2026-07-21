@@ -2,12 +2,19 @@ name: Build App
 on:
     workflow_dispatch:
         inputs:
+            build_mode:
+                type: choice
+                description: Where the build runs. Cloud uses EAS servers (pair with ubuntu-latest); local uses this runner (iOS needs macos-26)
+                options:
+                    - cloud
+                    - local
             os:
                 type: choice
-                description: OS to build on. Ubuntu is faster, MacOS supports iOS builds
+                description: OS to build on. Ubuntu is faster, MacOS supports local iOS builds
                 options:
-                    - macos-latest
                     - ubuntu-latest
+                    - macos-26
+                    - macos-latest
             platform:
                 type: choice
                 description: Platform to build for
@@ -61,26 +68,55 @@ jobs:
                   token: ${{ secrets.EXPO_TOKEN }}
                   eas-version: latest
 
+            # macos runners default to an Xcode whose iOS SDK predates Apple's
+            # submission floor, so pin the newest one on the image explicitly.
+            - name: 🏗 Select Xcode
+              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'ios' }}
+              run: |
+                  sudo xcode-select -s /Applications/Xcode_26.6.app
+                  xcodebuild -version
+                  xcodebuild -showsdks | grep iphoneos
+
             - name: Copy .env.example to .env
               run: cp .env.example .env
 
             - name: 📦 Install dependencies
               run: bun install
 
-            - name: 👷 Build app
+            - name: 👷 Build app on EAS
+              if: ${{ inputs.build_mode == 'cloud' }}
+              run: |
+                  eas build \
+                    --non-interactive \
+                    --platform=${{ inputs.platform }} \
+                    --profile=${{ inputs.profile }}
+
+            - name: 👷 Build app on runner
+              if: ${{ inputs.build_mode == 'local' }}
               run: |
                   eas build --local \
                     --non-interactive \
                     --output=./app-build \
-                    --platform=${{ github.event.inputs.platform }} \
-                    --profile=${{ github.event.inputs.profile }}
+                    --platform=${{ inputs.platform }} \
+                    --profile=${{ inputs.profile }}
 
-            - name: 🚢 Submit
-              if: ${{ github.event.inputs.should_submit }}
-              run: eas submit -p ${{ github.event.inputs.platform }} --profile ${{ github.event.inputs.profile }} --path app-build
+            - name: 📤 Upload build
+              if: ${{ inputs.build_mode == 'local' }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ inputs.platform }}-build
+                  path: app-build
+
+            - name: 🚢 Submit EAS build
+              if: ${{ inputs.should_submit && inputs.build_mode == 'cloud' }}
+              run: eas submit --non-interactive -p ${{ inputs.platform }} --profile ${{ inputs.profile }} --latest
+
+            - name: 🚢 Submit runner build
+              if: ${{ inputs.should_submit && inputs.build_mode == 'local' }}
+              run: eas submit --non-interactive -p ${{ inputs.platform }} --profile ${{ inputs.profile }} --path app-build
 
             - name: 🔄 Convert AAB to APK
-              if: ${{ github.event.inputs.platform == 'android' && github.event.inputs.profile == 'production' }}
+              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
               run: |
                 # Download bundletool
                 curl -L https://github.com/google/bundletool/releases/download/1.15.6/bundletool-all-1.15.6.jar -o bundletool.jar
@@ -95,7 +131,7 @@ jobs:
                 rm bundletool.jar
 
             - name: 📦 Create GitHub Release
-              if: ${{ github.event.inputs.platform == 'android' && github.event.inputs.profile == 'production' }}
+              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
               uses: softprops/action-gh-release@v1
               with:
                 files: app-build/app-universal.apk
