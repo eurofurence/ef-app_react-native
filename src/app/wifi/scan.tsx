@@ -28,23 +28,45 @@ export default function WifiScanScreen() {
   if (!permission) return <View />
   if (!permission.granted) {
     return (
-      <View style={styles.center}>
-        <Label type='para' className='mb-4'>
-          {t('camera_permission')}
-        </Label>
-        <Button icon='camera' onPress={requestPermission}>
-          {t('grant_camera')}
-        </Button>
-      </View>
+      <>
+        <View style={styles.center}>
+          <Label type='para' className='mb-4'>
+            {t('camera_permission')}
+          </Label>
+          <Button icon='camera' onPress={requestPermission}>
+            {t('grant_camera')}
+          </Button>
+        </View>
+        <View style={styles.bottom}>
+          <Button
+            style={styles.back}
+            icon='arrow-left'
+            onPress={() => router.replace({ pathname: '/wifi' })}
+          >
+            {t('confirm_cancel')}
+          </Button>
+        </View>
+      </>
     )
   }
 
   return (
-    <CameraView
-      style={StyleSheet.absoluteFill}
-      barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
-      onBarcodeScanned={onScanned}
-    />
+    <>
+      <CameraView
+        style={StyleSheet.absoluteFill}
+        barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
+        onBarcodeScanned={onScanned}
+      />
+      <View style={styles.bottom}>
+        <Button
+          style={styles.back}
+          icon='arrow-left'
+          onPress={() => router.replace({ pathname: '/wifi' })}
+        >
+          {t('confirm_cancel')}
+        </Button>
+      </View>
+    </>
   )
 }
 
@@ -54,5 +76,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 24,
+  },
+  bottom: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    padding: 8,
+    width: '100%',
+  },
+  back: {
+    width: '100%',
   },
 })
