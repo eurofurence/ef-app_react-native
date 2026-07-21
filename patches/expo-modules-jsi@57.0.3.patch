@@ -1,0 +1,24 @@
+diff --git a/apple/scripts/build-xcframework.sh b/apple/scripts/build-xcframework.sh
+index 28d3249..6c1fb8a 100755
+--- a/apple/scripts/build-xcframework.sh
++++ b/apple/scripts/build-xcframework.sh
+@@ -199,6 +199,11 @@ build_slice() {
+     env_args+=(DEVELOPER_DIR="$DEVELOPER_DIR")
+   fi
+ 
++  # Xcode 27 betas print this line for a SwiftCompile task that actually
++  # succeeded; xcodebuild still exits 0. Left in place, the outer build's log
++  # parser reads it off this build phase's stdout and fails the archive with
++  # "PhaseScriptExecution emitted errors but did not return a nonzero exit code".
++  # `pipefail` keeps a genuine xcodebuild failure fatal.
+   (cd "$PACKAGE_DIR" && env -i "${env_args[@]}" \
+     xcodebuild \
+     build \
+@@ -217,6 +222,7 @@ build_slice() {
+     DEBUG_INFORMATION_FORMAT=dwarf-with-dsym \
+     COMPILER_INDEX_STORE_ENABLE=NO \
+     SWIFT_COMPILATION_MODE=wholemodule \
++    | sed '/^error: the following command failed with exit code 0 but produced no further output$/d' \
+   )
+ 
+   local product_path="${BUILD_PRODUCTS_PATH}/${build_dir_name}"

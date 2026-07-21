@@ -104,6 +104,7 @@
     },
   },
   "patchedDependencies": {
+    "expo-modules-jsi@57.0.3": "patches/expo-modules-jsi@57.0.3.patch",
     "react-native-legal@1.6.3": "patches/react-native-legal@1.6.3.patch",
   },
   "overrides": {
