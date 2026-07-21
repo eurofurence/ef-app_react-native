@@ -19,7 +19,7 @@ export function useUserDatamatrix(): UseQueryResult<string | null> {
           responseType: 'text',
           transformResponse: (data) => data,
           params: {
-            imageType: 'image/svg+xml',
+            mimeType: 'image/svg+xml',
           },
         })
         .then((res) => res.data),
