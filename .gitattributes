@@ -1,6 +1,10 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
 * text=auto eol=crlf
 
+# Patches inject shell into scripts that run on macOS; CRLF turns a trailing
+# line-continuation backslash into a literal carriage return argument.
+*.patch text eol=lf
+
 # Denote all files that are truly binary and should not be modified.
 *.png binary
 *.jpg binary
