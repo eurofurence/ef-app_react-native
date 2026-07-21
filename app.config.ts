@@ -153,6 +153,8 @@ const config: ExpoConfig & {
       },
     ],
     'expo-localization',
+    // Used to hand the wallet pass file to the OS (Add to Wallet).
+    'expo-sharing',
     [
       'expo-build-properties',
       {
