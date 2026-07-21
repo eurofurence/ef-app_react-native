@@ -77,11 +77,13 @@ jobs:
                   xcodebuild -version
                   xcodebuild -showsdks | grep iphoneos
 
-            - name: 🔑 Pull environment variables
-              run: eas env:pull --non-interactive --environment ${{ inputs.profile }} --path .env
-
             - name: 📦 Install dependencies
               run: bun install
+
+            - name: 🔑 Pull environment variables
+              run: |
+                  cp .env.example .env
+                  eas env:pull --non-interactive --environment ${{ inputs.profile }} --path .env
 
             - name: 👷 Build app on EAS
               if: ${{ inputs.build_mode == 'cloud' }}
