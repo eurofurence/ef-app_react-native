@@ -3,6 +3,7 @@ import { router } from 'expo-router'
 import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
@@ -11,6 +12,7 @@ import { parseWifiUrl } from '@/components/wifi/wifi.common'
 export default function WifiScanScreen() {
   const { t } = useTranslation('WiFi')
   const [permission, requestPermission] = useCameraPermissions()
+  const insets = useSafeAreaInsets()
   const handled = useRef(false)
 
   const onScanned = useCallback(({ data }: { data: string }) => {
@@ -26,9 +28,16 @@ export default function WifiScanScreen() {
   }, [])
 
   if (!permission) return <View />
-  if (!permission.granted) {
-    return (
-      <>
+
+  return (
+    <>
+      {permission.granted ? (
+        <CameraView
+          style={StyleSheet.absoluteFill}
+          barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
+          onBarcodeScanned={onScanned}
+        />
+      ) : (
         <View style={styles.center}>
           <Label type='para' className='mb-4'>
             {t('camera_permission')}
@@ -37,27 +46,8 @@ export default function WifiScanScreen() {
             {t('grant_camera')}
           </Button>
         </View>
-        <View style={styles.bottom}>
-          <Button
-            style={styles.back}
-            icon='arrow-left'
-            onPress={() => router.replace({ pathname: '/wifi' })}
-          >
-            {t('confirm_cancel')}
-          </Button>
-        </View>
-      </>
-    )
-  }
-
-  return (
-    <>
-      <CameraView
-        style={StyleSheet.absoluteFill}
-        barcodeScannerSettings={{ barcodeTypes: ['qr'] }}
-        onBarcodeScanned={onScanned}
-      />
-      <View style={styles.bottom}>
+      )}
+      <View style={[styles.bottom, { paddingBottom: insets.bottom + 8 }]}>
         <Button
           style={styles.back}
           icon='arrow-left'
