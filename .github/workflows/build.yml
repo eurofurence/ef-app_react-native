@@ -77,9 +77,6 @@ jobs:
                   xcodebuild -version
                   xcodebuild -showsdks | grep iphoneos
 
-            - name: Copy .env.example to .env
-              run: cp .env.example .env
-
             - name: 📦 Install dependencies
               run: bun install
 
