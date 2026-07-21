@@ -20,20 +20,30 @@ export type GridProps = PropsWithChildren<{
 }>
 
 export const Grid: FC<GridProps> = ({ style, cols = 2, children }) => {
-  // Get an array of children, padded for necessary chunks.
-  const childrenArray = useMemo(() => {
-    const result = Array.isArray(children)
-      ? [...children].filter(Boolean)
-      : [children].filter(Boolean)
-    while (result.length % cols !== 0) result.push(null)
-    return result
+  const rows = useMemo(() => {
+    const items = (Array.isArray(children) ? children : [children]).filter(
+      Boolean
+    )
+    const rows = chunk(items, cols)
+
+    const last = rows[rows.length - 1]
+    if (last && last.length < cols) {
+      const missing = cols - last.length
+      const lead = Math.floor(missing / 2)
+      rows[rows.length - 1] = [
+        ...Array(lead).fill(null),
+        ...last,
+        ...Array(missing - lead).fill(null),
+      ]
+    }
+    return rows
   }, [children, cols])
 
   let itemCounter = 0
 
   return (
     <Col style={style} type='stretch'>
-      {chunk(childrenArray, cols).map((row) => {
+      {rows.map((row) => {
         const rowKey = `grid-row-${itemCounter}`
         return (
           <Row key={rowKey} style={styles.distributed} type='stretch'>

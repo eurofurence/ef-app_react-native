@@ -251,6 +251,7 @@ export const CacheProvider = ({
         const data = await axios
           .get(`${apiBase}/${path}`, {
             signal: ownInvocation.signal,
+            timeout: 30000,
             headers: accessToken
               ? {
                   Authorization: `Bearer ${accessToken}`,

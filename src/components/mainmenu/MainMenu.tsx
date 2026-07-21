@@ -10,7 +10,7 @@ import { Grid } from '@/components/generic/containers/Grid'
 import { Tab } from '@/components/generic/containers/Tab'
 import type { TabsRef } from '@/components/generic/containers/Tabs'
 import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
-import { conWebsite, menuColumns, showLogin } from '@/configuration'
+import { conWebsite, showLogin } from '@/configuration'
 import { auth, useAuthState } from '@/data/clients/auth'
 import { useAppConfig } from '@/hooks/data/useAppConfig'
 
@@ -44,7 +44,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
         />
       )}
 
-      <Grid cols={menuColumns}>
+      <Grid cols={3}>
         <Tab
           icon='information-outline'
           text={t('info')}

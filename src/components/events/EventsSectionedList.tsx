@@ -1,5 +1,11 @@
 import { FlashList } from '@shopify/flash-list'
-import { type FC, type ReactElement, useCallback, useMemo } from 'react'
+import {
+  type FC,
+  type ReactElement,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet } from 'react-native'
 
@@ -45,7 +51,16 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
 }) => {
   const { t } = useTranslation('Events')
   const theme = useThemeName()
-  const { isSynchronizing, synchronize } = useCache()
+  const { synchronize } = useCache()
+
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const onRefresh = useCallback(() => {
+    setIsRefreshing(true)
+    vibrateAfter(synchronize())
+      .catch(console.error)
+      .finally(() => setIsRefreshing(false))
+  }, [synchronize])
+
   const stickyIndices = useMemo(
     () =>
       sticky
@@ -85,8 +100,8 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
   return (
     <FlashList
       maintainVisibleContentPosition={{ disabled: true }}
-      refreshing={isSynchronizing}
-      onRefresh={() => vibrateAfter(synchronize())}
+      refreshing={isRefreshing}
+      onRefresh={onRefresh}
       contentContainerStyle={padEnd ? styles.container : undefined}
       scrollEnabled={true}
       stickyHeaderIndices={stickyIndices}
