@@ -7,10 +7,12 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "environment": "development"
     },
     "preview": {
       "distribution": "internal",
+      "environment": "preview",
       "android": {
         "gradleCommand": ":app:assembleRelease --parallel --no-daemon"
       },
@@ -22,6 +24,7 @@
       "ios": {
         "credentialsSource": "local"
       },
+      "environment": "production",
       "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
