@@ -5,6 +5,7 @@ const isTrue = (value?: string) => value?.toLowerCase() === 'true'
 export type AppConfig = {
   cmaUrl?: string
   mapsUrl?: string
+  publicWifiSsid?: string
   walletPassesDisabled: boolean
   wifiConfigDisabled: boolean
 }
@@ -19,6 +20,7 @@ export function normalizeAppConfig(
   return {
     cmaUrl: appConfig?.CmaUrl,
     mapsUrl: appConfig?.MapsUrl,
+    publicWifiSsid: appConfig?.PublicWifiSsid,
     walletPassesDisabled: isTrue(appConfig?.FeatureWalletPassesDisabled),
     wifiConfigDisabled: isTrue(appConfig?.FeatureWifiConfigDisabled),
   }
