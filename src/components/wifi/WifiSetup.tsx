@@ -45,9 +45,7 @@ export function WifiSetup({
 }: WifiSetupProps) {
   const { t } = useTranslation('WiFi')
   const { toast } = useToastContext()
-  const [profile, _setProfile] = useState<WifiProfileId>(
-    initialProfile ?? 'custom'
-  )
+  const profile: WifiProfileId = 'custom'
   const [busy, setBusy] = useState(false)
 
   const { publicWifiSsid } = useAppConfig()
@@ -160,7 +158,7 @@ export function WifiSetup({
           icon='wifi'
           title={t('title_public')}
           subtitle={t('subtitle_public', {
-            ssid: publicWifiSsid,
+            ssid: publicWifiSsid || 'Eurofurence-OPEN',
           })}
         />
       )}
