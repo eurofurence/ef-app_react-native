@@ -728,7 +728,7 @@
     "title_staff": "Konfiguracja sieci Wi-Fi dla pracowników",
     "title_public": "Informacje o publicznych sieciach Wi-Fi",
     "subtitle_staff": "Witaj, członku personelu! Aby ułatwić Ci pracę podczas Eurofurence, zaloguj się do sieci WPA-Enterprise przeznaczonej wyłącznie dla personelu, korzystając z kodu QR lub danych logowania, które otrzymałeś.\nNie wolno udostępniać tych danych logowania osobom postronnym ani innym osobom!\n\nUwaga: w przypadku Dealers Den, Artshow i innych specjalnych sytuacji mogą istnieć odpowiednie sieci specjalistyczne, a personel sieci przekaże Ci oddzielne instrukcje!",
-    "subtitle_public": "Eurofurence udostępnia bezpłatną sieć Wi-Fi dla uczestników – wystarczy znaleźć sieć o nazwie „EF-Open” i połączyć się z nią.\n\nUwaga: w przypadku Dealers Den, Artshow i innych specjalnych sytuacji mogą istnieć odpowiednie sieci specjalistyczne, a personel odpowiedzialny za sieć udzieli Państwu oddzielnych instrukcji!",
+    "subtitle_public": "Eurofurence udostępnia bezpłatną sieć Wi-Fi dla uczestników – wystarczy znaleźć sieć o nazwie „{{ssid}}” i połączyć się z nią.\n\nUwaga: w przypadku Dealers Den, Artshow i innych specjalnych sytuacji mogą istnieć odpowiednie sieci specjalistyczne, a personel odpowiedzialny za sieć udzieli Państwu oddzielnych instrukcji!",
     "intro": "Jeśli jesteś zaawansowanym użytkownikiem lub członkiem staffu, możesz zmienić zachowanie zapory sieciowej lub podać własne dane dostępowe.",
     "profile_eurofurence_name": "Chroniony (zalecany)",
     "profile_eurofurence_desc": "Połączenia przychodzące do twojego urządzenia są zablokowane. Możesz swobodnie korzystać z internetu, ale nikt nie może nawiązać połączenia z otwartymi portami twojego urządzenia i działającymi za nimi aplikacjami.",

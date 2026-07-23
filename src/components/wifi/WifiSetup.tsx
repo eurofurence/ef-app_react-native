@@ -23,6 +23,7 @@ import {
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
+import { useAppConfig } from '@/hooks/data/useAppConfig'
 import { confirmPrompt } from '@/util/confirmPrompt'
 
 const customSchema = z.object({
@@ -49,6 +50,7 @@ export function WifiSetup({
   )
   const [busy, setBusy] = useState(false)
 
+  const { publicWifiSsid } = useAppConfig()
   const { user } = useAuthState()
   const isStaff = inRole(user, 'Staff')
 
@@ -157,7 +159,9 @@ export function WifiSetup({
         <Section
           icon='wifi'
           title={t('title_public')}
-          subtitle={t('subtitle_public')}
+          subtitle={t('subtitle_public', {
+            ssid: publicWifiSsid,
+          })}
         />
       )}
     </View>

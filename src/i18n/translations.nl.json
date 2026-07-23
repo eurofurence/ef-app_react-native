@@ -766,7 +766,7 @@
     "title_staff": "WiFi-configuratie voor medewerkers",
     "title_public": "Informatie over openbare wifi",
     "subtitle_staff": "Hallo medewerker! Om je te helpen bij je werkzaamheden voor Eurofurence, log je alstublieft in op het WPA-Enterprise-netwerk dat uitsluitend voor medewerkers bestemd is, met behulp van de QR-code of de inloggegevens die je hebt ontvangen.\nDeze inloggegevens mogen niet met het publiek of anderen worden gedeeld!\n\nLet op: voor de Dealers Den, de Artshow en andere speciale gevallen kunnen er specifieke netwerken bestaan; je ontvangt hierover aparte instructies van het netwerkpersoneel!",
-    "subtitle_public": "Eurofurence biedt een gratis wifi-netwerk aan voor bezoekers. Zoek gewoon naar een netwerk met de naam „EF-Open“ en maak verbinding.\n\nLet op: voor de Dealers Den, de Artshow en andere speciale gelegenheden kunnen er aparte netwerken bestaan; het netwerkpersoneel zal je hierover apart informeren!",
+    "subtitle_public": "Eurofurence biedt een gratis wifi-netwerk aan voor bezoekers. Zoek gewoon naar een netwerk met de naam „{{ssid}}“ en maak verbinding.\n\nLet op: voor de Dealers Den, de Artshow en andere speciale gelegenheden kunnen er aparte netwerken bestaan; het netwerkpersoneel zal je hierover apart informeren!",
     "intro": "Ben je een gevorderde gebruiker of staff, dan kun je het firewallgedrag aanpassen of eigen inloggegevens gebruiken.",
     "profile_eurofurence_name": "Beschermd (aanbevolen)",
     "profile_eurofurence_desc": "Inkomende verbindingen naar je apparaat zijn niet toegestaan. Je kunt vrij internetten, maar niemand kan verbinding maken met open poorten van je apparaat en de apps die daarachter draaien.",

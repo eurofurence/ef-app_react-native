@@ -679,7 +679,7 @@
     "title_staff": "Configurazione WiFi per il personale",
     "title_public": "Informazioni sul WiFi pubblico",
     "subtitle_staff": "Ciao, membro dello staff! Per aiutarti nel tuo lavoro per Eurofurence, accedi alla rete WPA-Enterprise riservata allo staff utilizzando il codice QR o le credenziali che ti sono state fornite.\nQueste credenziali non devono essere condivise con il pubblico o con altre persone!\n\nNota bene: per il Dealers Den, l’Artshow e altre situazioni particolari potrebbero esserci reti dedicate; riceverai istruzioni separate dal personale addetto alla rete!",
-    "subtitle_public": "Eurofurence mette a disposizione dei partecipanti una rete Wi-Fi gratuita: basta cercare la rete denominata “EF-Open” e connettersi.\n\nNota bene: per il Dealers Den, l’Artshow e altre situazioni particolari, potrebbero esserci reti dedicate specifiche; in tal caso, riceverete istruzioni separate dal personale addetto alla rete!",
+    "subtitle_public": "Eurofurence mette a disposizione dei partecipanti una rete Wi-Fi gratuita: basta cercare la rete denominata “{{ssid}}” e connettersi.\n\nNota bene: per il Dealers Den, l’Artshow e altre situazioni particolari, potrebbero esserci reti dedicate specifiche; in tal caso, riceverete istruzioni separate dal personale addetto alla rete!",
     "intro": "Se sei un utente esperto o fai parte dello staff, puoi modificare il comportamento del firewall o usare credenziali personalizzate.",
     "profile_eurofurence_name": "Protetto (consigliato)",
     "profile_eurofurence_desc": "Le connessioni in entrata verso il tuo dispositivo non sono consentite: puoi comunque navigare liberamente, ma nessuno può aprire connessioni verso le porte aperte del tuo dispositivo e le app in esecuzione dietro di esse.",

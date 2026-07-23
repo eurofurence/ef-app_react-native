@@ -161,6 +161,7 @@ export type UserRecord = {
 export type AppConfigRecord = {
   CmaUrl?: string
   MapsUrl?: string
+  PublicWifiSsid?: string
   FeatureWalletPassesDisabled?: string
   FeatureWifiConfigDisabled?: string
 }
