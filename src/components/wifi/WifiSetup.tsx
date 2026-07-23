@@ -10,7 +10,6 @@ import { z } from 'zod'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { Pressable } from '@/components/generic/Pressable'
 import { addEnterpriseNetwork } from '@/components/wifi/efWifiModule'
 import {
   buildOnsiteFileUrl,
@@ -18,11 +17,12 @@ import {
   credentialsForProfile,
   WIFI_ANONYMOUS_IDENTITY,
   WIFI_DOMAIN_SUFFIX_MATCH,
-  WIFI_PROFILE_IDS,
   WIFI_SSID,
   type WifiProfileId,
 } from '@/components/wifi/wifi.common'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { useAuthState } from '@/data/clients/auth'
+import { inRole } from '@/data/clients/auth.utils'
 import { confirmPrompt } from '@/util/confirmPrompt'
 
 const customSchema = z.object({
@@ -44,13 +44,13 @@ export function WifiSetup({
 }: WifiSetupProps) {
   const { t } = useTranslation('WiFi')
   const { toast } = useToastContext()
-  const [profile, setProfile] = useState<WifiProfileId>(
-    initialProfile ?? 'eurofurence'
+  const [profile, _setProfile] = useState<WifiProfileId>(
+    initialProfile ?? 'custom'
   )
   const [busy, setBusy] = useState(false)
 
-  const [showAdvSettings, setAdvSettings] = useState(false)
-  const toggleAdvSettings = () => setAdvSettings(!showAdvSettings)
+  const { user } = useAuthState()
+  const isStaff = inRole(user, 'Staff')
 
   const form = useForm<CustomSchema>({
     resolver: zodResolver(customSchema),
@@ -114,68 +114,52 @@ export function WifiSetup({
 
   return (
     <View>
-      <Section icon='wifi' title={t('title')} subtitle={t('subtitle')} />
+      {isStaff ? (
+        <>
+          <Section
+            icon='wifi'
+            title={t('title_staff')}
+            subtitle={t('subtitle_staff')}
+          />
 
-      <Button icon='wifi' className='mt-4' disabled={busy} onPress={apply}>
-        {t('apply')}
-      </Button>
-
-      <Pressable onPress={toggleAdvSettings}>
-        <Section
-          icon={showAdvSettings ? 'chevron-down' : 'chevron-up'}
-          title={t('advanced_title')}
-          subtitle={t('intro')}
-        />
-      </Pressable>
-
-      {showAdvSettings && (
-        <Button
-          icon='qrcode-scan'
-          outline
-          className='mb-4'
-          onPress={() => router.navigate('/wifi/scan')}
-        >
-          {t('scan_qr')}
-        </Button>
-      )}
-
-      {showAdvSettings &&
-        WIFI_PROFILE_IDS.map((id) => (
           <Button
-            key={id}
-            icon={profile === id ? 'radiobox-marked' : 'radiobox-blank'}
-            outline={profile !== id}
-            className='mb-2'
-            onPress={() => setProfile(id)}
-            accessibilityRole='radio'
-            accessibilityLabel={t(`profile_${id}_name`)}
-            accessibilityHint={t(`profile_${id}_desc`)}
+            icon='qrcode-scan'
+            outline
+            className='mb-4'
+            onPress={() => router.navigate('/wifi/scan')}
           >
-            {profile === id
-              ? `${t(`profile_${id}_name`)}\n\n${t(`profile_${id}_desc`)}`
-              : t(`profile_${id}_name`)}
+            {t('scan_qr')}
           </Button>
-        ))}
 
-      {showAdvSettings && profile === 'custom' ? (
-        <FormProvider {...form}>
-          <ManagedTextInput<CustomSchema>
-            name='identity'
-            label={t('identity_label')}
-            placeholder={t('identity_placeholder')}
-            autoCapitalize='none'
-            autoCorrect={false}
-          />
-          <ManagedTextInput<CustomSchema>
-            name='password'
-            label={t('password_label')}
-            placeholder={t('password_placeholder')}
-            autoCapitalize='none'
-            autoCorrect={false}
-            secureTextEntry
-          />
-        </FormProvider>
-      ) : null}
+          <FormProvider {...form}>
+            <ManagedTextInput<CustomSchema>
+              name='identity'
+              label={t('identity_label')}
+              placeholder={t('identity_placeholder')}
+              autoCapitalize='none'
+              autoCorrect={false}
+            />
+            <ManagedTextInput<CustomSchema>
+              name='password'
+              label={t('password_label')}
+              placeholder={t('password_placeholder')}
+              autoCapitalize='none'
+              autoCorrect={false}
+              secureTextEntry
+            />
+          </FormProvider>
+
+          <Button icon='wifi' className='mt-4' disabled={busy} onPress={apply}>
+            {t('apply')}
+          </Button>
+        </>
+      ) : (
+        <Section
+          icon='wifi'
+          title={t('title_public')}
+          subtitle={t('subtitle_public')}
+        />
+      )}
     </View>
   )
 }
