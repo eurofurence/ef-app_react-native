@@ -91,9 +91,10 @@ jobs:
             - name: 👷 Build app on runner
               if: ${{ inputs.build_mode == 'local' }}
               run: |
+                  mkdir -p app-build
                   eas build --local \
                     --non-interactive \
-                    --output=./app-build \
+                    --output=./app-build/app.${{ inputs.platform == 'ios' && 'ipa' || 'aab' }} \
                     --platform=${{ inputs.platform }} \
                     --profile=${{ inputs.profile }}
 
