@@ -1,9 +1,9 @@
 import { captureException } from '@sentry/react-native'
 import * as FileSystem from 'expo-file-system/legacy'
-import * as Sharing from 'expo-sharing'
+import * as IntentLauncher from 'expo-intent-launcher'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Platform, StyleSheet } from 'react-native'
+import { Linking, Platform, StyleSheet } from 'react-native'
 
 import { Image } from '@/components/generic/atoms/Image'
 import { Pressable } from '@/components/generic/Pressable'
@@ -32,27 +32,36 @@ export function AddToWalletButton() {
     if (busy) return
     setBusy(true)
     try {
-      if (!(await Sharing.isAvailableAsync())) {
-        toast('error', t('wallet_unavailable'), 6000)
-        return
-      }
-
-      // The endpoint is auth-gated, so fetch the file with the token attached
-      // rather than opening the URL; the OS handoff still needs a real file.
-      const token = auth.state.tokenResponse?.accessToken
-      const target = `${FileSystem.cacheDirectory}convention-pass.pkpass`
-      const { status, uri } = await FileSystem.downloadAsync(
-        `${apiBase}/Users/Pass?mimeType=${encodeURIComponent(pkpassMime)}`,
-        target,
-        { headers: token ? { Authorization: `Bearer ${token}` } : undefined }
-      )
-      if (status !== 200) throw new Error(`Pass download failed (${status})`)
-
-      await Sharing.shareAsync(uri, {
-        mimeType: pkpassMime,
-        UTI: 'com.apple.pkpass',
-        dialogTitle: t('add_to_wallet'),
+      // The pass endpoint is auth-gated. Exchange the bearer token for a
+      // single-use pass token so the pass URL is self-authenticating, then
+      // hand it to the wallet per platform below.
+      const bearer = auth.state.tokenResponse?.accessToken
+      const res = await fetch(`${apiBase}/Users/Pass/:token`, {
+        headers: {
+          Accept: 'application/json',
+          ...(bearer ? { Authorization: `Bearer ${bearer}` } : {}),
+        },
       })
+      if (!res.ok) throw new Error(`Pass token request failed (${res.status})`)
+      const passToken = String(await res.json())
+
+      const url = `${apiBase}/Users/Pass?mimeType=${encodeURIComponent(pkpassMime)}&token=${encodeURIComponent(passToken)}`
+
+      if (Platform.OS === 'android') {
+        // A browser would just download the file; save it ourselves and fire a
+        // VIEW intent so Google Wallet's "Add pass" screen handles it instead.
+        const target = `${FileSystem.cacheDirectory}convention-pass.pkpass`
+        await FileSystem.downloadAsync(url, target)
+        const contentUri = await FileSystem.getContentUriAsync(target)
+        await IntentLauncher.startActivityAsync('android.intent.action.VIEW', {
+          data: contentUri,
+          type: pkpassMime,
+          flags: 1, // FLAG_GRANT_READ_URI_PERMISSION
+        })
+      } else {
+        // iOS recognises the pkpass response and shows the Add to Wallet sheet.
+        await Linking.openURL(url)
+      }
     } catch (error) {
       captureException(error)
       toast('error', t('wallet_failed'), 6000)
