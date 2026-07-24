@@ -7,6 +7,7 @@ const matchKnowledgeGroups = `${appBase}/Web/KnowledgeGroups`
 const prefixDealers = `${appBase}/Web/Dealers/`
 const prefixEvents = `${appBase}/Web/Events/`
 const prefixKnowledgeEntries = `${appBase}/Web/KnowledgeEntries/`
+const prefixWifi = 'eurofurence://wifi'
 
 export function redirectSystemPath({ path }: { path: string }) {
   if (path.startsWith(prefixEvents))
@@ -19,11 +20,12 @@ export function redirectSystemPath({ path }: { path: string }) {
   if (path === matchArtistAlleyReg) return `/artists-alley/reg`
   if (path === matchKnowledgeGroups) return `/knowledge`
   // WiFi deeplinks: forward only the query (id/pw/profile); host/path are not trusted.
-  if (path.includes(wifiOnsiteHost) || path.startsWith('eventwifi:')) {
-    if (path.startsWith('eventwifi:')) {
-      const q = path.indexOf('?')
-      return q >= 0 ? `/wifi${path.slice(q)}` : '/wifi'
-    }
+  if (path.startsWith(prefixWifi)) {
+    console.log(path)
+    const q = path.indexOf('?')
+    return q >= 0 ? `/wifi${path.slice(q)}` : '/wifi'
+  }
+  if (path.includes(wifiOnsiteHost)) {
     try {
       const url = new URL(path)
       if (url.hostname === wifiOnsiteHost) {
