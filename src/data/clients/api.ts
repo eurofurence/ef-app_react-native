@@ -1,15 +1,13 @@
 import axios from 'axios'
 import { auth } from '@/data/clients/auth'
-
-const url = 'https://app.eurofurence.org/EF30/Api'
-//const url ='https://app.eurofurence.org/EF29/Api'
+import { apiBase } from '@/configuration'
 
 /**
  * App API client with base URL. Uses the global AuthClient's instance for access tokens, unless requests specify
  * `Authorization: false` as a header.
  */
 export const api = axios.create({
-  baseURL: url,
+  baseURL: apiBase,
 })
 
 api.interceptors.request.use((config) => {
