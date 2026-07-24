@@ -28,7 +28,7 @@ const config: ExpoConfig & {
   version,
   orientation: 'default',
   userInterfaceStyle: 'automatic',
-  scheme: ['eurofurence', 'eventwifi'],
+  scheme: 'eurofurence',
   splash: {
     image: './assets/platform/splash.png',
     resizeMode: 'native',
