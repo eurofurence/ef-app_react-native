@@ -3,6 +3,7 @@ import axios from 'axios'
 import {
   AuthRequest,
   exchangeCodeAsync,
+  Prompt,
   refreshAsync,
   TokenResponse,
 } from 'expo-auth-session'
@@ -137,6 +138,7 @@ export class AuthClient {
         clientId: authClientId,
         scopes: authScopes,
         redirectUri: authRedirect,
+        prompt: Prompt.Login,
       })
 
       // Prompt, result is code to exchange.
