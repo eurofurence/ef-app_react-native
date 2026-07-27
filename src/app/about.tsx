@@ -1,5 +1,4 @@
 import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
-import { useAudioPlayer } from 'expo-audio'
 import { router } from 'expo-router'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -148,13 +147,9 @@ export default function AboutScreen() {
 
   const [devMenu, setDevMenu] = useAppSetting('DevMenuEnabled')
 
-  // Load static assets.
-  const sheeshSound = useAudioPlayer(require('@/assets/runtime/sheesh.webm'))
-
   const pazuzuEgg = useCallback(async () => {
-    sheeshSound.play()
     setTheme('pazuzu')
-  }, [sheeshSound, setTheme])
+  }, [setTheme])
 
   const toggleDevMenu = useMultiTap(
     10,
