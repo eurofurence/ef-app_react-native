@@ -48,7 +48,6 @@
     "expo": "~57.0.7",
     "expo-application": "~57.0.2",
     "expo-asset": "~57.0.6",
-    "expo-audio": "~57.0.2",
     "expo-auth-session": "~57.0.4",
     "expo-build-properties": "~57.0.6",
     "expo-camera": "~57.0.3",

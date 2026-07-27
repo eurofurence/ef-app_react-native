@@ -137,14 +137,6 @@ const config: ExpoConfig & {
         color: '#005953',
       },
     ],
-    // Used to render audio.
-    [
-      'expo-audio',
-      {
-        microphonePermission: false,
-        enableMicrophone: false,
-      },
-    ],
     // Used for Artist Alley registration
     [
       'expo-image-picker',
