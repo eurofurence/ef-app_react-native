@@ -89,24 +89,33 @@ export const CalendarSync = () => {
           {t('retry')}
         </Button>
       ) : (
-        <Row type='stretch' gap={10}>
-          <Button
-            containerStyle={styles.subscribe}
-            icon='calendar-export'
-            onPress={onSubscribe}
-            disabled={subscribeDisabled}
-          >
-            {t('subscribe')}
-          </Button>
-          <Pressable
-            style={[styles.copy, copyBorder, copyDisabled && styles.disabled]}
-            onPress={onCopy}
-            disabled={copyDisabled}
-            accessibilityLabel={t('copy_link')}
-          >
-            <Icon name='content-copy' size={buttonIconSize} color={copyColor} />
-          </Pressable>
-        </Row>
+        <>
+          <Row type='stretch' gap={10}>
+            <Button
+              containerStyle={styles.subscribe}
+              icon='calendar-export'
+              onPress={onSubscribe}
+              disabled={subscribeDisabled}
+            >
+              {t('subscribe')}
+            </Button>
+            <Pressable
+              style={[styles.copy, copyBorder, copyDisabled && styles.disabled]}
+              onPress={onCopy}
+              disabled={copyDisabled}
+              accessibilityLabel={t('copy_link')}
+            >
+              <Icon
+                name='content-copy'
+                size={buttonIconSize}
+                color={copyColor}
+              />
+            </Pressable>
+          </Row>
+          <Label variant='narrow' style={styles.syncHint}>
+            {t('sync_hint')}
+          </Label>
+        </>
       )}
     </SettingContainer>
   )
@@ -115,6 +124,10 @@ export const CalendarSync = () => {
 const styles = StyleSheet.create({
   hint: {
     marginBottom: 10,
+  },
+  syncHint: {
+    marginTop: 10,
+    textAlign: 'center',
   },
   subscribe: {
     flex: 1,
