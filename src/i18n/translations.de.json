@@ -838,6 +838,7 @@
       "retry": "Erneut versuchen",
       "subscribe": "Favoriten zum Kalender hinzufügen",
       "subtitle": "Abonniere Deine Favoriten mit Deiner Kalender-App. Neue Favoriten und Änderungen werden automatisch synchronisiert.",
+      "sync_hint": "Die Kalender-Synchronisierung kann etwas dauern",
       "title": "Kalender-Synchronisierung"
     },
     "changeLanguage": "Sprache ändern",

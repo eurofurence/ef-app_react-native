@@ -702,6 +702,7 @@
       "retry": "Probeer opnieuw",
       "subscribe": "Favorieten aan kalender toevoegen",
       "subtitle": "Abonneer je kalender-app op je favoriete evenementen. Nieuwe favorieten en wijzigingen worden automatisch gesynchroniseerd.",
+      "sync_hint": "Kalendersynchronisatie kan even duren",
       "title": "Kalendersynchronisatie"
     },
     "changeLanguage": "Verander taal",
