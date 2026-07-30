@@ -6,12 +6,17 @@ import {
 } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
+import { TextSelectionContext } from '@/context/ui/TextSelectionContext'
 
 export type PressableProps = TouchableOpacityProps & {
   containerStyle?: StyleProp<ViewStyle>
 }
 
-export function Pressable({ containerStyle, ...props }: PressableProps) {
+export function Pressable({
+  containerStyle,
+  children,
+  ...props
+}: PressableProps) {
   // Set default accessibility props if not provided
   const accessible = props.accessible !== undefined ? props.accessible : true
   const accessibilityRole = props.accessibilityRole || 'button'
@@ -21,9 +26,13 @@ export function Pressable({ containerStyle, ...props }: PressableProps) {
       {...props}
       activeOpacity={props.activeOpacity ?? 0.7}
       style={[appStyles.minTouchSize, containerStyle, props.style]}
-      delayLongPress={1000}
+      delayLongPress={props.delayLongPress ?? 1000}
       accessible={accessible}
       accessibilityRole={accessibilityRole}
-    />
+    >
+      <TextSelectionContext.Provider value={false}>
+        {children}
+      </TextSelectionContext.Provider>
+    </TouchableOpacity>
   )
 }
