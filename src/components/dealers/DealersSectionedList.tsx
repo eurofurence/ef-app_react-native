@@ -67,7 +67,7 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({
       } else {
         return (
           <DealerSection
-            style={styles.item}
+            style={styles.section}
             title={item.title}
             subtitle={item.subtitle}
             icon={item.icon}
@@ -102,6 +102,10 @@ export const DealersSectionedList: FC<DealersSectionedListProps> = ({
 const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 20,
+  },
+  section: {
+    paddingHorizontal: 5,
+    marginHorizontal: 15
   },
   container: {
     paddingBottom: 100,
