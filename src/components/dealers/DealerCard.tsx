@@ -87,6 +87,7 @@ export const DealerCard: FC<DealerCardProps> = ({
       t('accessibility.dealer_categories', { categories: description }),
     offDays && t('accessibility.dealer_off_days', { offDays }),
     favorite && t('accessibility.dealer_favorited'),
+    afterDark && ('accessibility.dealer_after_dark_icon'),
     !present && t('accessibility.dealer_not_present'),
   ]
     .filter(Boolean)
@@ -151,7 +152,7 @@ export const DealerCard: FC<DealerCardProps> = ({
           )}
         </View>
 
-        <View key='eventFavorite' style={styles.favorite}>
+        <View key='dealerFavorite' style={styles.favorite}>
           {!!afterDark && (
             <Icon
               name='moon-waning-crescent'

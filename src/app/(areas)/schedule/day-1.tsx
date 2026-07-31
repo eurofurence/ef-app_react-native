@@ -57,7 +57,7 @@ export function DayView({ day }: { day: EventDayDetails }) {
         </Label>
       </View>
     ),
-    [day, search]
+    [day, search, t]
   )
 
   return <EventsSectionedList eventsGroups={groups} leader={leader} />

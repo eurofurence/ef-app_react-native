@@ -130,7 +130,7 @@ export const useEventDayGroups = (
     }
 
     return result
-  }, [t, now, items])
+  }, [t, sectioned, now, items])
 }
 
 /**
@@ -190,7 +190,7 @@ export const useEventOtherGroups = (
     }
 
     return result
-  }, [t, now, items])
+  }, [t, sectioned, now, items])
 }
 
 export const shareEvent = (event: EventDetails) =>

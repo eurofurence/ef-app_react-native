@@ -362,6 +362,7 @@
       "placeholder": "Search dealers…"
     },
     "section_notice": "Dealer grouping is picked by the app based on most unique category",
+    "section_notice_alphabetical": "Dealers are grouped by the first letter of their name",
     "section_notice_search": "Dealer sorting is based on best match for search text"
   },
   "EmptyScreen": {

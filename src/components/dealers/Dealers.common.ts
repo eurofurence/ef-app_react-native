@@ -89,7 +89,7 @@ export const useDealerGroups = (
 
     // Create sections for each category in sorted order.
     for (const category of Object.keys(categoryMap).sort(compareCategory)) {
-      sectioned && result.push(dealerSectionForCategory(category))
+      if (sectioned) result.push(dealerSectionForCategory(category))
       result.push(...categoryMap[category])
     }
 
