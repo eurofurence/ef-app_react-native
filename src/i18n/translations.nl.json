@@ -201,6 +201,7 @@
       "art_preview_caption": "Kunst voorbeeldbijschrift: {{caption}}",
       "bluesky_button": "Bezoek {{handle}} op Bluesky",
       "bluesky_button_hint": "Opent Bluesky profiel in browser",
+      "dealer_after_dark_icon": "After Dark indicator",
       "dealer_attendance": "Aanwezigheidsinformatie: {{days}}",
       "dealer_avatar": "Profielafbeelding voor {{name}}",
       "dealer_content_area": "Dealer informatie inhoud",
@@ -228,6 +229,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "After Dark indicator",
       "dealer_avatar": "Profielafbeelding voor {{name}}",
       "dealer_card": "Dealer: {{name}}",
       "dealer_card_hint": "Tik om dealer details te bekijken, houd ingedrukt voor opties",
@@ -258,7 +260,9 @@
     "search": {
       "placeholder": "Zoek naar dealers…"
     },
-    "section_notice": "Dealer groepering is gekozen door de app op basis van de meest unieke categorie"
+    "section_notice": "Dealer groepering is gekozen door de app op basis van de meest unieke categorie",
+    "section_notice_alphabetical": "Dealers zijn ingedeeld op basis van de eerste letter van hun naam",
+    "section_notice_search": "Het sorteren van dealers is gebaseerd op de beste overeenkomst met de zoektekst"
   },
   "EmptyScreen": {
     "notImplemented": "Deze content is niet zichtbaar."
@@ -346,6 +350,7 @@
     "search": {
       "placeholder": "Zoek naar evenementen…"
     },
+    "section_notice_search": "Het sorteren van evenementen gebeurt op basis van de beste overeenkomst met de zoektekst",
     "today_schedule_subtitle": "Je ontvangt een herinnering voordat dit evenement begint",
     "today_schedule_title": "Deze dag",
     "upcoming_favorites_title": "Favorite Events",

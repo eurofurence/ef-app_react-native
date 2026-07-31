@@ -163,6 +163,7 @@
       "art_preview_caption": "Podpis podglądu sztuki: {{caption}}",
       "bluesky_button": "Odwiedź {{handle}} na Bluesky",
       "bluesky_button_hint": "Otwiera profil Bluesky w przeglądarce",
+      "dealer_after_dark_icon": "Wskaźnik sekcji „After Dark”",
       "dealer_attendance": "Informacje o obecności: {{days}}",
       "dealer_avatar": "Zdjęcie profilowe dla {{name}}",
       "dealer_content_area": "Zawartość informacji o wystawcy",
@@ -198,6 +199,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "Wskaźnik sekcji „After Dark”",
       "dealer_avatar": "Zdjęcie profilowe dla {{name}}",
       "dealer_card": "Wystawca: {{name}}",
       "dealer_card_hint": "Dotknij, aby wyświetlić szczegóły wystawcy, przytrzymaj dla opcji",
@@ -218,7 +220,10 @@
     "not_attending_on": "Nie biorą udziału w {{offDays}}",
     "search": {
       "placeholder": "Szukaj wystawców…"
-    }
+    },
+    "section_notice": "Aplikacja wybiera grupę sprzedawców na podstawie kategorii o największej liczbie unikalnych wpisów",
+    "section_notice_alphabetical": "Sprzedawcy są pogrupowani według pierwszej litery nazwy",
+    "section_notice_search": "Sortowanie wyników według sprzedawców opiera się na najlepszym dopasowaniu do wyszukiwanego tekstu"
   },
   "EmptyScreen": {
     "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
@@ -299,6 +304,7 @@
     "search": {
       "placeholder": "Szukaj wydarzeń…"
     },
+    "section_notice_search": "Sortowanie wydarzeń opiera się na najlepszym dopasowaniu do wyszukiwanego tekstu",
     "upcoming_favorites_title": "Ulubione punkty programu",
     "upcoming_subtitle": "Te punkty programu zaczną się w przeciągu 30 minut",
     "upcoming_title": "Nadchodzące wydarzenia"

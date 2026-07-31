@@ -212,7 +212,10 @@
     "not_attending_on": "Non disponibile il {{offDays}}",
     "search": {
       "placeholder": "Cerca venditori…"
-    }
+    },
+    "section_notice": "Il raggruppamento dei rivenditori viene selezionato dall'app in base alla categoria più specifica",
+    "section_notice_alphabetical": "I rivenditori sono raggruppati in base alla prima lettera del loro nome",
+    "section_notice_search": "L'ordinamento dei rivenditori si basa sulla migliore corrispondenza con il testo cercato"
   },
   "Event": {
     "about_title": "Informazioni",
@@ -290,6 +293,7 @@
     "search": {
       "placeholder": "Cerca eventi…"
     },
+    "section_notice_search": "L'ordinamento degli eventi si basa sulla corrispondenza migliore con il testo cercato",
     "upcoming_favorites_title": "La tua agenda",
     "upcoming_subtitle": "Questi eventi inizieranno nei prossimi 30 minuti",
     "upcoming_title": "Eventi in arrivo"

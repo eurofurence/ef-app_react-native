@@ -94,7 +94,7 @@ export const useDealerGroups = (
     }
 
     return result
-  }, [now, items])
+  }, [sectioned, now, items])
 }
 
 /**
@@ -139,7 +139,7 @@ export const useDealerLocationGroups = (
     }
 
     return result
-  }, [t, now, items])
+  }, [t, now, sectioned, items])
 }
 
 /**
@@ -171,7 +171,7 @@ export const useDealerAlphabeticalGroups = (
       result.push(dealerInstanceForAny(item, now, day1, day2, day3))
     }
     return result
-  }, [now, items])
+  }, [now, sectioned, items])
 }
 
 export const shareDealer = (dealer: DealerDetails) =>
