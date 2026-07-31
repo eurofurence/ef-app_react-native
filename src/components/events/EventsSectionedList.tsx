@@ -86,7 +86,7 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
       } else {
         return (
           <EventSection
-            style={styles.item}
+            style={styles.section}
             title={item.title}
             subtitle={item.subtitle}
             icon={item.icon}
@@ -121,6 +121,10 @@ export const EventsSectionedList: FC<EventsSectionedListProps> = ({
 const styles = StyleSheet.create({
   item: {
     paddingHorizontal: 20,
+  },
+  section: {
+    paddingHorizontal: 5,
+    marginHorizontal: 15,
   },
   container: {
     paddingBottom: 100,
