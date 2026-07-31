@@ -143,6 +143,12 @@ export type TabsRef = {
 const openThreshold = 0.35
 
 /**
+ * Below what offset the dismiss overlay is moved out of the way. Exact equality
+ * would leave an invisible overlay swallowing all touches.
+ */
+const closedThreshold = 0.01
+
+/**
  * How much must the drawer be dragged to flip open.
  */
 const openDragThreshold = 40
@@ -225,7 +231,7 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(
         opacity: offset.value,
         transform: [
           {
-            translateY: offset.value === 0 ? 99999 : 0,
+            translateY: offset.value < closedThreshold ? 99999 : 0,
           },
         ],
       }),
@@ -276,9 +282,9 @@ export const Tabs = forwardRef<TabsRef, TabsProps>(
     const gesture = useMemo(
       () =>
         Gesture.Pan()
-          .onBegin(() => {
-            startOffset.value = offset.value
+          .onStart(() => {
             cancelAnimation(offset)
+            startOffset.value = offset.value
           })
           .onUpdate((e) => {
             const newOffset = -e.translationY / height.value + startOffset.value
