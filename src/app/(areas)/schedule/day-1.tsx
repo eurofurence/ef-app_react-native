@@ -27,7 +27,7 @@ export function DayView({ day }: { day: EventDayDetails }) {
       ),
     [search, eventsByDay, day.Id, showInternal]
   )
-  const groups = useEventDayGroups(t, now, filtered)
+  const groups = useEventDayGroups(t, now, filtered, search == null)
 
   const leader = useMemo(
     () => (

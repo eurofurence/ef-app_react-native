@@ -25,7 +25,7 @@ export default function Personal() {
       (search ?? eventsFavorite).filter((e) => showInternal || !e.IsInternal),
     [search, eventsFavorite, showInternal]
   )
-  const groups = useEventOtherGroups(t, now, filtered)
+  const groups = useEventOtherGroups(t, now, filtered, search == null)
 
   const leader = useMemo(
     () => (

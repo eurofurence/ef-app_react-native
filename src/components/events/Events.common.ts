@@ -45,11 +45,13 @@ export const useEventInstances = (
  * @param t The translation function.
  * @param now The current moment.
  * @param items The events on that day.
+ * @param sectioned Should the list include sections?
  */
 export const useEventDayGroups = (
   t: TFunction,
   now: Date,
-  items: readonly EventDetails[]
+  items: readonly EventDetails[],
+  sectioned = false
 ) => {
   return useMemo(() => {
     let hidden = 0
@@ -73,35 +75,35 @@ export const useEventDayGroups = (
       } else if (isBefore(now, item.End)) {
         // First pass not passed.
         if (differenceInHours(item.End, item.Start) > 4) {
-          if (!sectionedLongRunning) {
+          if (sectioned && !sectionedLongRunning) {
             result.push(eventSectionForPartOfDay(t, 'long_running'))
             sectionedLongRunning = true
           }
 
           result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'morning') {
-          if (!sectionedMorning) {
+          if (sectioned && !sectionedMorning) {
             result.push(eventSectionForPartOfDay(t, 'morning'))
             sectionedMorning = true
           }
 
           result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'afternoon') {
-          if (!sectionedAfternoon) {
+          if (sectioned && !sectionedAfternoon) {
             result.push(eventSectionForPartOfDay(t, 'afternoon'))
             sectionedAfternoon = true
           }
 
           result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'evening') {
-          if (!sectionedEvening) {
+          if (sectioned && !sectionedEvening) {
             result.push(eventSectionForPartOfDay(t, 'evening'))
             sectionedEvening = true
           }
 
           result.push(eventInstanceForNotPassed(item, now))
         } else if (item.PartOfDay === 'night') {
-          if (!sectionedNight) {
+          if (sectioned && !sectionedNight) {
             result.push(eventSectionForPartOfDay(t, 'night'))
             sectionedNight = true
           }
@@ -119,7 +121,7 @@ export const useEventDayGroups = (
     // Second pass not hidden and passed.
     for (const item of items) {
       if (!item.Hidden && !isBefore(now, item.End)) {
-        if (!sectionedPassed) {
+        if (sectioned && !sectionedPassed) {
           result.push(eventSectionForPassed(t))
           sectionedPassed = true
         }
@@ -137,11 +139,13 @@ export const useEventDayGroups = (
  * @param t The translation function.
  * @param now The current moment.
  * @param items The events.
+ * @param sectioned Should the list include sections?
  */
 export const useEventOtherGroups = (
   t: TFunction,
   now: Date,
-  items: readonly EventDetails[]
+  items: readonly EventDetails[],
+  sectioned = false
 ) => {
   return useMemo(() => {
     let hidden = 0
@@ -160,7 +164,7 @@ export const useEventOtherGroups = (
       } else if (!item.ConferenceDay) {
         // Nothing, not applicable.
       } else if (isBefore(now, item.End)) {
-        if (!(item.ConferenceDay.Date in sectionedDays)) {
+        if (sectioned && !(item.ConferenceDay.Date in sectionedDays)) {
           result.push(eventSectionForDate(item.ConferenceDay.Date))
           sectionedDays[item.ConferenceDay.Date] = true
         }
@@ -177,7 +181,7 @@ export const useEventOtherGroups = (
     // Second pass not hidden and passed.
     for (const item of items) {
       if (!item.Hidden && !isBefore(now, item.End)) {
-        if (!sectionedPassed) {
+        if (sectioned && !sectionedPassed) {
           result.push(eventSectionForPassed(t))
           sectionedPassed = true
         }

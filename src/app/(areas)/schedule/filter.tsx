@@ -100,7 +100,7 @@ export default function FilterScreen() {
     showInternal,
   ])
 
-  const groups = useEventOtherGroups(t, now, filtered)
+  const groups = useEventOtherGroups(t, now, filtered, search == null)
 
   const leader = (
     <View>
@@ -206,11 +206,7 @@ export default function FilterScreen() {
         <Label type='para'>Select the hosts to filter on.</Label>
       </ComboModal>
 
-      <EventsSectionedList
-        eventsGroups={groups}
-        cardType='duration'
-        leader={leader}
-      />
+      <EventsSectionedList eventsGroups={groups} leader={leader} sticky={search != null} />
     </>
   )
 }
