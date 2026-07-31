@@ -23,7 +23,10 @@ import { conName } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
 import { ScheduleSearchContext } from '@/context/ScheduleSearchContext'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 import { getNow } from '@/hooks/time/useNow'
 
 export const unstable_settings = {
@@ -68,6 +71,8 @@ export default function ScheduleLayout() {
   const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
+  const tabBarActiveTintColor = useThemeColorValue('secondary')
+  const tabBarInactiveTintColor = useThemeColorValue('text')
   const { events, eventDays } = useCache()
   const initialRouteName = getInitialRoute(eventDays, getNow())
   const [filter, setFilter] = useState('')
@@ -104,6 +109,9 @@ export default function ScheduleLayout() {
         style={StyleSheet.absoluteFill}
         screenOptions={{
           tabBarStyle: { paddingTop: insets.top },
+          tabBarActiveTintColor: tabBarActiveTintColor,
+          tabBarInactiveTintColor: tabBarInactiveTintColor,
+          tabBarIndicatorStyle: { height: 3 },
           sceneStyle: backgroundSurface,
           tabBarItemStyle: styles.tabItem,
         }}

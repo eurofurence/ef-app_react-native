@@ -145,6 +145,11 @@ export const Tab: FC<TabProps> = ({
           color={colorName}
           accessibilityElementsHidden={true}
           importantForAccessibility='no'
+          style={
+            active
+              ? [styles.itemActive, { borderBottomColor: colorValue }]
+              : null
+          }
         >
           {text}
         </Label>
@@ -165,6 +170,9 @@ const styles = StyleSheet.create({
   item: {
     alignSelf: 'stretch',
     alignItems: 'center',
+  },
+  itemActive: {
+    borderBottomWidth: 3,
   },
   indicatorArea: {
     position: 'absolute',
