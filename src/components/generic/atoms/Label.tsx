@@ -2,6 +2,7 @@ import type { FC } from 'react'
 import { StyleSheet, Text, type TextProps } from 'react-native'
 
 import type { ThemeColor } from '@/context/Theme'
+import { useTextSelectable } from '@/context/ui/TextSelectionContext'
 import { useThemeColor } from '@/hooks/themes/useThemeHooks'
 
 /**
@@ -48,11 +49,14 @@ export const Label: FC<LabelProps> = ({
     ? labelVariantStyles[variant]
     : labelVariantStyles.regular
   const styleColor = useThemeColor(color ?? 'text')
-
-  const textProps = { ...(props as any), selectable: props.selectable ?? true }
+  const selectableInScope = useTextSelectable()
 
   return (
-    <Text style={[styleType, styleVariant, styleColor, style]} {...textProps}>
+    <Text
+      style={[styleType, styleVariant, styleColor, style]}
+      {...props}
+      selectable={props.selectable ?? selectableInScope}
+    >
       {children}
     </Text>
   )

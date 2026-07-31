@@ -21,6 +21,7 @@ import { Col } from '@/components/generic/containers/Col'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
+import { Pressable } from '@/components/generic/Pressable'
 import { conName } from '@/configuration'
 import { useAppSetting } from '@/data/collections/AppSettings'
 import { useTheme } from '@/hooks/themes/useTheme'
@@ -108,7 +109,7 @@ type CreditProps = {
 
 const Credit = ({ url, name, jobTitle, onEasterEgg }: CreditProps) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() =>
         router.navigate({
           pathname: '/images/web',
@@ -136,7 +137,7 @@ const Credit = ({ url, name, jobTitle, onEasterEgg }: CreditProps) => {
           <Label>{jobTitle}</Label>
         </Col>
       </Row>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
