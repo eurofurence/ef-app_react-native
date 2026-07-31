@@ -151,7 +151,7 @@ export const themes: Record<string, Theme> = {
   },
   medium: {
     primary: '#003531',
-    secondary: '#ccdddc',
+    secondary: '#004742',
     background: '#669b97',
     surface: '#7faca9',
     inverted: '#001816',

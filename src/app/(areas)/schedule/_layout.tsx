@@ -71,7 +71,8 @@ export default function ScheduleLayout() {
   const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
-  const tabBarTintColor = useThemeColorValue('secondary')
+  const tabBarActiveTintColor = useThemeColorValue('secondary')
+  const tabBarInactiveTintColor = useThemeColorValue('text')
   const { events, eventDays } = useCache()
   const initialRouteName = getInitialRoute(eventDays, getNow())
   const [filter, setFilter] = useState('')
@@ -108,8 +109,8 @@ export default function ScheduleLayout() {
         style={StyleSheet.absoluteFill}
         screenOptions={{
           tabBarStyle: { paddingTop: insets.top },
-          tabBarActiveTintColor: tabBarTintColor,
-          tabBarInactiveTintColor: tabBarTintColor,
+          tabBarActiveTintColor: tabBarActiveTintColor,
+          tabBarInactiveTintColor: tabBarInactiveTintColor,
           tabBarIndicatorStyle: { height: 3 },
           sceneStyle: backgroundSurface,
           tabBarItemStyle: styles.tabItem,
