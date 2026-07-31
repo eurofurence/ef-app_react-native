@@ -5,6 +5,7 @@ import { View } from 'react-native'
 import { useEventDayGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
+import { Badge } from '@/components/generic/containers/Badge'
 import { useCache } from '@/context/data/Cache'
 import type { EventDayDetails } from '@/context/data/types.details'
 import { useScheduleSearch } from '@/context/ScheduleSearchContext'
@@ -32,7 +33,23 @@ export function DayView({ day }: { day: EventDayDetails }) {
   const leader = useMemo(
     () => (
       <View>
-        <Label type='lead' variant='middle'>
+        {search !== null ? (
+          <Badge
+            unpad={0}
+            badgeColor='lighten'
+            textColor='text'
+            textType='regular'
+          >
+            {t('section_notice_search')}
+          </Badge>
+        ) : (
+          ''
+        )}
+        <Label
+          type='lead'
+          variant='middle'
+          className={search !== null ? 'mt-3' : ''}
+        >
           {day?.Name ?? ''}
         </Label>
         <Label type='lead' variant='middle'>
@@ -40,7 +57,7 @@ export function DayView({ day }: { day: EventDayDetails }) {
         </Label>
       </View>
     ),
-    [day]
+    [day, search]
   )
 
   return <EventsSectionedList eventsGroups={groups} leader={leader} />

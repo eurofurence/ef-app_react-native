@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useEventOtherGroups } from '@/components/events/Events.common'
 import { EventsSectionedList } from '@/components/events/EventsSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
+import { Badge } from '@/components/generic/containers/Badge'
 import { Row } from '@/components/generic/containers/Row'
 import { Avatar } from '@/components/profile/Avatar'
 import { useCache } from '@/context/data/Cache'
@@ -29,14 +30,33 @@ export default function Personal() {
 
   const leader = useMemo(
     () => (
-      <Row type='center' variant='center' gap={10}>
-        <Avatar />
-        <Label type='lead' variant='middle'>
-          {t('schedule_title')}
-        </Label>
-      </Row>
+      <>
+        {search !== null ? (
+          <Badge
+            unpad={0}
+            badgeColor='lighten'
+            textColor='text'
+            textType='regular'
+          >
+            {t('section_notice_search')}
+          </Badge>
+        ) : (
+          ''
+        )}
+        <Row
+          type='center'
+          variant='center'
+          gap={10}
+          className={search !== null ? 'mt-3' : ''}
+        >
+          <Avatar />
+          <Label type='lead' variant='middle'>
+            {t('schedule_title')}
+          </Label>
+        </Row>
+      </>
     ),
-    [t]
+    [t, search]
   )
 
   const empty = useMemo(

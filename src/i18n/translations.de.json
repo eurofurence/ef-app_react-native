@@ -449,6 +449,7 @@
     "search": {
       "placeholder": "Suche Events…"
     },
+    "section_notice_search": "Event-Sortierung basiert auf bester Übereinstimmung mit Suchtext",
     "today_schedule_subtitle": "Du wirst an diese Events erinnert werden",
     "today_schedule_title": "Deine Agenda",
     "upcoming_favorites_title": "Favorisierte Events",

@@ -33,7 +33,7 @@ export default function PersonalScreen() {
           >
             {search ? t('section_notice_search') : t('section_notice')}
           </Badge>
-          <Row type='center' variant='center' gap={10} className='mt-8'>
+          <Row type='center' variant='center' gap={10} className='mt-3'>
             <Avatar />
             <Label type='lead' variant='middle'>
               {t('favorites_title')}

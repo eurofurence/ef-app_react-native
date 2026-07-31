@@ -9,6 +9,7 @@ import {
   type ComboModalRef,
 } from '@/components/generic/atoms/ComboModal'
 import { Label } from '@/components/generic/atoms/Label'
+import { Badge } from '@/components/generic/containers/Badge'
 import { Row } from '@/components/generic/containers/Row'
 import { Tab } from '@/components/generic/containers/Tab'
 import { useCache } from '@/context/data/Cache'
@@ -104,7 +105,23 @@ export default function FilterScreen() {
 
   const leader = (
     <View>
-      <Label type='lead' variant='middle'>
+      {search !== null ? (
+        <Badge
+          unpad={0}
+          badgeColor='lighten'
+          textColor='text'
+          textType='regular'
+        >
+          {t('section_notice_search')}
+        </Badge>
+      ) : (
+        ''
+      )}
+      <Label
+        type='lead'
+        variant='middle'
+        className={search !== null ? 'mt-3' : ''}
+      >
         Find events
       </Label>
       <Row style={styles.filters} type='stretch' variant='spaced' gap={10}>
@@ -216,6 +233,9 @@ export default function FilterScreen() {
 }
 
 const styles = StyleSheet.create({
+  section: {
+    paddingBottom: 20,
+  },
   filters: {
     margin: 20,
   },

@@ -35,7 +35,7 @@ export default function RegularScreen() {
           >
             {search ? t('section_notice_search') : t('section_notice')}
           </Badge>
-          <Label type='lead' variant='middle' className='mt-8'>
+          <Label type='lead' variant='middle' className='mt-3'>
             {t('dealers_in_regular')}
           </Label>
         </>

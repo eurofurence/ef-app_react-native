@@ -455,6 +455,7 @@
     "search": {
       "placeholder": "Search events…"
     },
+    "section_notice_search": "Event sorting is based on best match for search text",
     "today_schedule_subtitle": "You will receive a reminder before this event starts",
     "today_schedule_title": "Today's schedule",
     "upcoming_favorites_title": "Favorite Events",
