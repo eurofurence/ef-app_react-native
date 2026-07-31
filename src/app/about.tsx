@@ -305,7 +305,7 @@ export default function AboutScreen() {
           jobTitle='Backend Development'
         />
         <Credit
-          name='vanjmali'
+          name='Vanj'
           url='https://avatars.githubusercontent.com/u/31445914'
           jobTitle='App Development'
         />
