@@ -20,7 +20,10 @@ import { ComingSoon } from '@/components/generic/containers/ComingSoon'
 import { conName } from '@/configuration'
 import { DealersSearchContext } from '@/context/DealersSearchContext'
 import { useCache } from '@/context/data/Cache'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 
 export const unstable_settings = {
   initialRouteName: 'all',
@@ -59,12 +62,13 @@ export default function DealersLayout() {
   const { t } = useTranslation('Dealers')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
+  const tabBarTintColor = useThemeColorValue('secondary')
   const { dealers } = useCache()
   const [filter, setFilter] = useState('')
 
   const options = useMemo(() => {
     return {
-      personal: createOptions('Faves', 'calendar-heart'),
+      personal: createOptions('Favs', 'calendar-heart'),
       all: createOptions('All'),
       regular: createOptions('Regular'),
       ad: createOptions('AD', 'moon-waning-crescent'),
@@ -90,6 +94,9 @@ export default function DealersLayout() {
         style={StyleSheet.absoluteFill}
         screenOptions={{
           tabBarStyle: { paddingTop: insets.top },
+          tabBarActiveTintColor: tabBarTintColor,
+          tabBarInactiveTintColor: tabBarTintColor,
+          tabBarIndicatorStyle: { height: 3 },
           sceneStyle: backgroundSurface,
           tabBarLabelStyle: styles.tabLabel,
         }}

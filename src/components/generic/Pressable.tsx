@@ -24,7 +24,7 @@ export function Pressable({
   return (
     <TouchableOpacity
       {...props}
-      activeOpacity={props.activeOpacity ?? 0.7}
+      activeOpacity={props.activeOpacity ?? 0.6}
       style={[appStyles.minTouchSize, containerStyle, props.style]}
       delayLongPress={props.delayLongPress ?? 1000}
       accessible={accessible}
