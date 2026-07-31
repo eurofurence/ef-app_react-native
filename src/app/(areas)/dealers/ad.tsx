@@ -16,7 +16,11 @@ export default function AdScreen() {
 
   const { dealersInAfterDark, searchDealersInAfterDark } = useCache()
   const search = useFuseResults(searchDealersInAfterDark, query ?? '')
-  const groups = useDealerGroups(now, search ?? dealersInAfterDark, search == null)
+  const groups = useDealerGroups(
+    now,
+    search ?? dealersInAfterDark,
+    search == null
+  )
 
   return (
     <DealersSectionedList
@@ -29,7 +33,7 @@ export default function AdScreen() {
             textColor='text'
             textType='regular'
           >
-            {t('section_notice')}
+            {search ? t('section_notice_search') : t('section_notice')}
           </Badge>
           <Label type='lead' variant='middle' className='mt-8'>
             {t('dealers_in_ad')}

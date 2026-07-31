@@ -32,7 +32,7 @@ export function dealerSectionForCategory(category: string): DealerSectionProps {
 /**
  * Creates the properties for a dealer section.
  * @param t Translation function.
- * @param isAfterDark True if after dark.
+ * @param isAfterDark True if After Dark.
  */
 export function dealerSectionForLocation(
   t: TFunction,

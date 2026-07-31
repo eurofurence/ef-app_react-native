@@ -42,12 +42,16 @@ function createOptions(
   title: string | undefined,
   icon: IconNames | undefined = undefined
 ): MaterialTopTabNavigationOptions {
-  if (icon === undefined) return { title: title }
+  //if (icon === undefined) return { title: title }
   return {
     title: title,
-    tabBarShowLabel: false,
-    tabBarIcon: ({ color }) => <Icon name={icon} color={color} size={20} />,
-    tabBarShowIcon: true,
+    tabBarShowLabel: true,
+    tabBarIcon:
+      icon === undefined
+        ? undefined
+        : ({ color }) => <Icon name={icon} color={color} size={20} />,
+    tabBarShowIcon: icon !== undefined,
+    tabBarItemStyle: { flexDirection: 'row' },
   }
 }
 
@@ -63,7 +67,7 @@ export default function DealersLayout() {
       personal: createOptions('Faves', 'calendar-heart'),
       all: createOptions('All'),
       regular: createOptions('Regular'),
-      ad: createOptions('AD'),
+      ad: createOptions('AD', 'moon-waning-crescent'),
       az: createOptions('A-Z', 'order-alphabetical-ascending'),
     }
   }, [])

@@ -206,7 +206,11 @@ export default function FilterScreen() {
         <Label type='para'>Select the hosts to filter on.</Label>
       </ComboModal>
 
-      <EventsSectionedList eventsGroups={groups} leader={leader} sticky={search != null} />
+      <EventsSectionedList
+        eventsGroups={groups}
+        leader={leader}
+        sticky={search != null}
+      />
     </>
   )
 }

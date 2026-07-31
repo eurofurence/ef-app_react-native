@@ -30,7 +30,7 @@ export default function AllScreen() {
             textColor='text'
             textType='regular'
           >
-            {t('section_notice')}
+            {search ? t('section_notice_search') : t('section_notice')}
           </Badge>
           <Label type='lead' variant='middle' className='mt-8'>
             {t('dealers_at_convention', { convention: conName })}

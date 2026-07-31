@@ -151,6 +151,10 @@ export default function AboutScreen() {
     setTheme('pazuzu')
   }, [setTheme])
 
+  const eggPlant = useCallback(async () => {
+    setTheme('adbergine')
+  }, [setTheme])
+
   const toggleDevMenu = useMultiTap(
     10,
     useCallback(() => {
@@ -271,6 +275,7 @@ export default function AboutScreen() {
           name='Fenrikur'
           url='https://avatars.githubusercontent.com/u/3359222'
           jobTitle='App Team Director and getting us to move our butts in gear'
+          onEasterEgg={eggPlant}
         />
         <Credit
           name='Kalynx'
