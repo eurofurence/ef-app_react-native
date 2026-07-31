@@ -33,7 +33,9 @@ export default function AzScreen() {
             textColor='text'
             textType='regular'
           >
-            {search ? t('section_notice_search') : t('section_notice_alphabetical')}
+            {search
+              ? t('section_notice_search')
+              : t('section_notice_alphabetical')}
           </Badge>
           <Label type='lead' variant='middle' className='mt-3'>
             {t('dealers_at_convention', { convention: conName })}
