@@ -87,7 +87,7 @@ export const DealerCard: FC<DealerCardProps> = ({
       t('accessibility.dealer_categories', { categories: description }),
     offDays && t('accessibility.dealer_off_days', { offDays }),
     favorite && t('accessibility.dealer_favorited'),
-    afterDark && 'accessibility.dealer_after_dark_icon',
+    afterDark && t('accessibility.dealer_after_dark_icon'),
     !present && t('accessibility.dealer_not_present'),
   ]
     .filter(Boolean)
