@@ -201,6 +201,7 @@
       "art_preview_caption": "Kunst voorbeeldbijschrift: {{caption}}",
       "bluesky_button": "Bezoek {{handle}} op Bluesky",
       "bluesky_button_hint": "Opent Bluesky profiel in browser",
+      "dealer_after_dark_icon": "After Dark indicator",
       "dealer_attendance": "Aanwezigheidsinformatie: {{days}}",
       "dealer_avatar": "Profielafbeelding voor {{name}}",
       "dealer_content_area": "Dealer informatie inhoud",
@@ -228,6 +229,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "After Dark indicator",
       "dealer_avatar": "Profielafbeelding voor {{name}}",
       "dealer_card": "Dealer: {{name}}",
       "dealer_card_hint": "Tik om dealer details te bekijken, houd ingedrukt voor opties",
@@ -241,13 +243,13 @@
       "dealers_sectioned_list": "Dealers georganiseerd per sectie",
       "dealers_sectioned_list_hint": "Veeg om door dealers gegroepeerd per categorie te navigeren, trek naar beneden om te vernieuwen"
     },
-    "after_dark": "After dark",
+    "after_dark": "After Dark",
     "all": "All",
     "alphabetical": "A-Z",
     "coming_soon_body": "De Dealers' Den voor {{conName}} wordt nog voorbereid. Kom later terug om te zien wie erbij zal zijn!",
     "coming_soon_title": "Binnenkort beschikbaar!",
     "dealers_at_convention": "Dealers op {{convention}}",
-    "dealers_in_ad": "After dark dealers den",
+    "dealers_in_ad": "After Dark Dealers' Den",
     "dealers_in_regular": "Normale dealers",
     "favorite_added": "Favoriet toegevoegd",
     "favorite_removed": "Favoriet verwijderd",
@@ -258,7 +260,9 @@
     "search": {
       "placeholder": "Zoek naar dealers…"
     },
-    "section_notice": "Dealer groepering is gekozen door de app op basis van de meest unieke categorie"
+    "section_notice": "Dealer groepering is gekozen door de app op basis van de meest unieke categorie",
+    "section_notice_alphabetical": "Dealers zijn ingedeeld op basis van de eerste letter van hun naam",
+    "section_notice_search": "Het sorteren van dealers is gebaseerd op de beste overeenkomst met de zoektekst"
   },
   "EmptyScreen": {
     "notImplemented": "Deze content is niet zichtbaar."
@@ -346,6 +350,7 @@
     "search": {
       "placeholder": "Zoek naar evenementen…"
     },
+    "section_notice_search": "Het sorteren van evenementen gebeurt op basis van de beste overeenkomst met de zoektekst",
     "today_schedule_subtitle": "Je ontvangt een herinnering voordat dit evenement begint",
     "today_schedule_title": "Deze dag",
     "upcoming_favorites_title": "Favorite Events",
@@ -766,8 +771,8 @@
     "title": "WiFi instellen",
     "title_staff": "WiFi-configuratie voor medewerkers",
     "title_public": "Informatie over openbare wifi",
-    "subtitle_staff": "Hallo medewerker! Om je te helpen bij je werkzaamheden voor Eurofurence, log je alstublieft in op het WPA-Enterprise-netwerk dat uitsluitend voor medewerkers bestemd is, met behulp van de QR-code of de inloggegevens die je hebt ontvangen.\nDeze inloggegevens mogen niet met het publiek of anderen worden gedeeld!\n\nLet op: voor de Dealers Den, de Artshow en andere speciale gevallen kunnen er specifieke netwerken bestaan; je ontvangt hierover aparte instructies van het netwerkpersoneel!",
-    "subtitle_public": "Eurofurence biedt een gratis wifi-netwerk aan voor bezoekers. Zoek gewoon naar een netwerk met de naam „{{ssid}}“ en maak verbinding.\n\nLet op: voor de Dealers Den, de Artshow en andere speciale gelegenheden kunnen er aparte netwerken bestaan; het netwerkpersoneel zal je hierover apart informeren!",
+    "subtitle_staff": "Hallo medewerker! Om je te helpen bij je werkzaamheden voor Eurofurence, log je alstublieft in op het WPA-Enterprise-netwerk dat uitsluitend voor medewerkers bestemd is, met behulp van de QR-code of de inloggegevens die je hebt ontvangen.\nDeze inloggegevens mogen niet met het publiek of anderen worden gedeeld!\n\nLet op: voor de Dealers' Den, de Artshow en andere speciale gevallen kunnen er specifieke netwerken bestaan; je ontvangt hierover aparte instructies van het netwerkpersoneel!",
+    "subtitle_public": "Eurofurence biedt een gratis wifi-netwerk aan voor bezoekers. Zoek gewoon naar een netwerk met de naam „{{ssid}}“ en maak verbinding.\n\nLet op: voor de Dealers' Den, de Artshow en andere speciale gelegenheden kunnen er aparte netwerken bestaan; het netwerkpersoneel zal je hierover apart informeren!",
     "intro": "Ben je een gevorderde gebruiker of staff, dan kun je het firewallgedrag aanpassen of eigen inloggegevens gebruiken.",
     "profile_eurofurence_name": "Beschermd (aanbevolen)",
     "profile_eurofurence_desc": "Inkomende verbindingen naar je apparaat zijn niet toegestaan. Je kunt vrij internetten, maar niemand kan verbinding maken met open poorten van je apparaat en de apps die daarachter draaien.",

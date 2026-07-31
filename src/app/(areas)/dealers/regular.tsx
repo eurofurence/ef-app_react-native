@@ -16,7 +16,11 @@ export default function RegularScreen() {
 
   const { dealersInRegular, searchDealersInRegular } = useCache()
   const search = useFuseResults(searchDealersInRegular, query ?? '')
-  const groups = useDealerGroups(now, search ?? dealersInRegular)
+  const groups = useDealerGroups(
+    now,
+    search ?? dealersInRegular,
+    search == null
+  )
 
   return (
     <DealersSectionedList
@@ -29,9 +33,9 @@ export default function RegularScreen() {
             textColor='text'
             textType='regular'
           >
-            {t('section_notice')}
+            {search ? t('section_notice_search') : t('section_notice')}
           </Badge>
-          <Label type='lead' variant='middle' className='mt-8'>
+          <Label type='lead' variant='middle' className='mt-3'>
             {t('dealers_in_regular')}
           </Label>
         </>

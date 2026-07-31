@@ -156,6 +156,7 @@
       "art_preview_caption": "Didascalia anteprima arte: {{caption}}",
       "bluesky_button": "Visita {{handle}} su Bluesky",
       "bluesky_button_hint": "Apre profilo Bluesky nel browser",
+      "dealer_after_dark_icon": "Indicatore della sezione After Dark",
       "dealer_attendance": "Informazioni presenza: {{days}}",
       "dealer_avatar": "Immagine profilo per {{name}}",
       "dealer_content_area": "Contenuto informazioni venditore",
@@ -181,7 +182,7 @@
     "attends_sat": "Sabato",
     "attends_thu": "Giovedì",
     "categories": "Categorie",
-    "in_after_dark": "Situato nella sezione after dark",
+    "in_after_dark": "Situato nella sezione After Dark",
     "merchandise": "Merce",
     "not_attending": "Non disponibile oggi",
     "table": "tavolo",
@@ -190,6 +191,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "Indicatore della sezione After Dark",
       "dealer_avatar": "Immagine profilo per {{name}}",
       "dealer_card": "Venditore: {{name}}",
       "dealer_card_hint": "Tocca per visualizzare dettagli venditore, tieni premuto per opzioni",
@@ -210,7 +212,10 @@
     "not_attending_on": "Non disponibile il {{offDays}}",
     "search": {
       "placeholder": "Cerca venditori…"
-    }
+    },
+    "section_notice": "Il raggruppamento dei rivenditori viene selezionato dall'app in base alla categoria più specifica",
+    "section_notice_alphabetical": "I rivenditori sono raggruppati in base alla prima lettera del loro nome",
+    "section_notice_search": "L'ordinamento dei rivenditori si basa sulla migliore corrispondenza con il testo cercato"
   },
   "Event": {
     "about_title": "Informazioni",
@@ -288,6 +293,7 @@
     "search": {
       "placeholder": "Cerca eventi…"
     },
+    "section_notice_search": "L'ordinamento degli eventi si basa sulla corrispondenza migliore con il testo cercato",
     "upcoming_favorites_title": "La tua agenda",
     "upcoming_subtitle": "Questi eventi inizieranno nei prossimi 30 minuti",
     "upcoming_title": "Eventi in arrivo"
@@ -678,8 +684,8 @@
     "title": "Configurazione WiFi",
     "title_staff": "Configurazione WiFi per il personale",
     "title_public": "Informazioni sul WiFi pubblico",
-    "subtitle_staff": "Ciao, membro dello staff! Per aiutarti nel tuo lavoro per Eurofurence, accedi alla rete WPA-Enterprise riservata allo staff utilizzando il codice QR o le credenziali che ti sono state fornite.\nQueste credenziali non devono essere condivise con il pubblico o con altre persone!\n\nNota bene: per il Dealers Den, l’Artshow e altre situazioni particolari potrebbero esserci reti dedicate; riceverai istruzioni separate dal personale addetto alla rete!",
-    "subtitle_public": "Eurofurence mette a disposizione dei partecipanti una rete Wi-Fi gratuita: basta cercare la rete denominata “{{ssid}}” e connettersi.\n\nNota bene: per il Dealers Den, l’Artshow e altre situazioni particolari, potrebbero esserci reti dedicate specifiche; in tal caso, riceverete istruzioni separate dal personale addetto alla rete!",
+    "subtitle_staff": "Ciao, membro dello staff! Per aiutarti nel tuo lavoro per Eurofurence, accedi alla rete WPA-Enterprise riservata allo staff utilizzando il codice QR o le credenziali che ti sono state fornite.\nQueste credenziali non devono essere condivise con il pubblico o con altre persone!\n\nNota bene: per il Dealers' Den, l’Artshow e altre situazioni particolari potrebbero esserci reti dedicate; riceverai istruzioni separate dal personale addetto alla rete!",
+    "subtitle_public": "Eurofurence mette a disposizione dei partecipanti una rete Wi-Fi gratuita: basta cercare la rete denominata “{{ssid}}” e connettersi.\n\nNota bene: per il Dealers' Den, l’Artshow e altre situazioni particolari, potrebbero esserci reti dedicate specifiche; in tal caso, riceverete istruzioni separate dal personale addetto alla rete!",
     "intro": "Se sei un utente esperto o fai parte dello staff, puoi modificare il comportamento del firewall o usare credenziali personalizzate.",
     "profile_eurofurence_name": "Protetto (consigliato)",
     "profile_eurofurence_desc": "Le connessioni in entrata verso il tuo dispositivo non sono consentite: puoi comunque navigare liberamente, ma nessuno può aprire connessioni verso le porte aperte del tuo dispositivo e le app in esecuzione dietro di esse.",

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { useDealerGroups } from '@/components/dealers/Dealers.common'
 import { DealersSectionedList } from '@/components/dealers/DealersSectionedList'
 import { Label } from '@/components/generic/atoms/Label'
+import { Badge } from '@/components/generic/containers/Badge'
 import { Row } from '@/components/generic/containers/Row'
 import { Avatar } from '@/components/profile/Avatar'
 import { useDealersSearch } from '@/context/DealersSearchContext'
@@ -17,18 +18,28 @@ export default function PersonalScreen() {
 
   const { dealersFavorite, searchDealersFavorite } = useCache()
   const search = useFuseResults(searchDealersFavorite, query ?? '')
-  const groups = useDealerGroups(now, search ?? dealersFavorite)
+  const groups = useDealerGroups(now, search ?? dealersFavorite, search == null)
 
   return (
     <DealersSectionedList
       dealersGroups={groups}
       leader={
-        <Row type='center' variant='center' gap={10}>
-          <Avatar />
-          <Label type='lead' variant='middle'>
-            {t('favorites_title')}
-          </Label>
-        </Row>
+        <>
+          <Badge
+            unpad={0}
+            badgeColor='lighten'
+            textColor='text'
+            textType='regular'
+          >
+            {search ? t('section_notice_search') : t('section_notice')}
+          </Badge>
+          <Row type='center' variant='center' gap={10} className='mt-3'>
+            <Avatar />
+            <Label type='lead' variant='middle'>
+              {t('favorites_title')}
+            </Label>
+          </Row>
+        </>
       }
       empty={
         <Label type='para' className='mt-5 ml-5 mr-5' variant='middle'>

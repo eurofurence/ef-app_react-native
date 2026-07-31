@@ -57,6 +57,7 @@ export const DealerCard: FC<DealerCardProps> = ({
   const description = dealer.details.Categories?.join(', ')
   const offDays = dealer.offDays
   const favorite = dealer.details.Favorite
+  const afterDark = dealer.details.IsAfterDark
   const avatar =
     sourceFromImage(dealer.details.ArtistThumbnail) ??
     sourceFromImage(dealer.details.Artist) ??
@@ -86,6 +87,7 @@ export const DealerCard: FC<DealerCardProps> = ({
       t('accessibility.dealer_categories', { categories: description }),
     offDays && t('accessibility.dealer_off_days', { offDays }),
     favorite && t('accessibility.dealer_favorited'),
+    afterDark && t('accessibility.dealer_after_dark_icon'),
     !present && t('accessibility.dealer_not_present'),
   ]
     .filter(Boolean)
@@ -150,8 +152,17 @@ export const DealerCard: FC<DealerCardProps> = ({
           )}
         </View>
 
-        {!!favorite && (
-          <View key='eventFavorite' style={styles.favorite}>
+        <View key='dealerFavorite' style={styles.favorite}>
+          {!!afterDark && (
+            <Icon
+              name='moon-waning-crescent'
+              size={20}
+              color={colorHeart}
+              accessibilityLabel={t('accessibility.dealer_after_dark_icon')}
+              accessibilityRole='image'
+            />
+          )}
+          {!!favorite && (
             <Icon
               name='heart'
               size={20}
@@ -159,8 +170,8 @@ export const DealerCard: FC<DealerCardProps> = ({
               accessibilityLabel={t('accessibility.dealer_favorite_icon')}
               accessibilityRole='image'
             />
-          </View>
-        )}
+          )}
+        </View>
       </Pressable>
     </View>
   )
@@ -198,5 +209,8 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     padding: 8,
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'space-around',
   },
 })

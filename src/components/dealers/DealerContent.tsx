@@ -14,13 +14,17 @@ import { Row } from '@/components/generic/containers/Row'
 import { conTimeZone } from '@/configuration'
 import type { DealerDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 import { useNow } from '@/hooks/time/useNow'
 
 import { appStyles } from '../AppStyles'
 import { handleExternalLink } from '../ExternalLink'
 import { Banner } from '../generic/atoms/Banner'
 import { FaIcon } from '../generic/atoms/FaIcon'
+import { Icon } from '../generic/atoms/Icon'
 import { Image } from '../generic/atoms/Image'
 import { sourceFromImage } from '../generic/atoms/Image.common'
 import { Label } from '../generic/atoms/Label'
@@ -105,6 +109,7 @@ export const DealerContent: FC<DealerContentProps> = ({
   const now = useNow()
 
   const avatarBackground = useThemeBackground('text')
+  const afterDarkIcon = useThemeColorValue('important')
 
   const days = useMemo(
     () =>
@@ -230,11 +235,21 @@ export const DealerContent: FC<DealerContentProps> = ({
               {dealer.ShortDescriptionTable}
             </Label>
           ) : null}
-          {dealer.IsAfterDark ? (
-            <Label type='h3' variant='receded'>
-              ({t('in_after_dark')})
-            </Label>
-          ) : null}
+        </Row>
+      ) : null}
+
+      {dealer.IsAfterDark ? (
+        <Row style={styles.marginAround} gap={5}>
+          <Icon
+            name='moon-waning-crescent'
+            size={20}
+            color={afterDarkIcon}
+            accessibilityLabel={t('accessibility.dealer_after_dark_icon')}
+            accessibilityRole='image'
+          />
+          <Label type='h3' variant='receded'>
+            {t('in_after_dark')}
+          </Label>
         </Row>
       ) : null}
 

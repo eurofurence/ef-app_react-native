@@ -62,8 +62,13 @@ export const useDealerInstances = (
  * Returns a list of dealer instances or section headers according to conversion rules.
  * @param now The current date.
  * @param items General results.
+ * @param sectioned Should the list include sections?
  */
-export const useDealerGroups = (now: Date, items: readonly DealerDetails[]) => {
+export const useDealerGroups = (
+  now: Date,
+  items: readonly DealerDetails[],
+  sectioned = true
+) => {
   return useMemo(() => {
     const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
     const day2 = format(setDay(Date.now(), 2, { weekStartsOn: 0 }), 'EEEE')
@@ -84,12 +89,12 @@ export const useDealerGroups = (now: Date, items: readonly DealerDetails[]) => {
 
     // Create sections for each category in sorted order.
     for (const category of Object.keys(categoryMap).sort(compareCategory)) {
-      result.push(dealerSectionForCategory(category))
+      if (sectioned) result.push(dealerSectionForCategory(category))
       result.push(...categoryMap[category])
     }
 
     return result
-  }, [now, items])
+  }, [sectioned, now, items])
 }
 
 /**
@@ -97,11 +102,13 @@ export const useDealerGroups = (now: Date, items: readonly DealerDetails[]) => {
  * @param t The translation function.
  * @param now The current date.
  * @param items General results.
+ * @param sectioned Should the list include sections?
  */
 export const useDealerLocationGroups = (
   t: TFunction,
   now: Date,
-  items: readonly DealerDetails[]
+  items: readonly DealerDetails[],
+  sectioned = true
 ) => {
   return useMemo(() => {
     const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
@@ -114,7 +121,7 @@ export const useDealerLocationGroups = (
     const result: (DealerSectionProps | DealerDetailsInstance)[] = []
     for (const item of items) {
       if (item.IsAfterDark === false) {
-        if (!sectionedRegular) {
+        if (sectioned && !sectionedRegular) {
           result.push(dealerSectionForLocation(t, false))
           sectionedRegular = true
         }
@@ -123,7 +130,7 @@ export const useDealerLocationGroups = (
     }
     for (const item of items) {
       if (item.IsAfterDark === true) {
-        if (!sectionedAd) {
+        if (sectioned && !sectionedAd) {
           result.push(dealerSectionForLocation(t, true))
           sectionedAd = true
         }
@@ -132,17 +139,19 @@ export const useDealerLocationGroups = (
     }
 
     return result
-  }, [t, now, items])
+  }, [t, now, sectioned, items])
 }
 
 /**
  * Returns a list of dealer instances or section headers sorted alphabetically.
  * @param now The current date.
  * @param items General results.
+ * @param sectioned Should the list include sections?
  */
 export const useDealerAlphabeticalGroups = (
   now: Date,
-  items: readonly DealerDetails[]
+  items: readonly DealerDetails[],
+  sectioned = true
 ) => {
   return useMemo(() => {
     const day1 = format(setDay(Date.now(), 1, { weekStartsOn: 0 }), 'EEEE')
@@ -155,14 +164,14 @@ export const useDealerAlphabeticalGroups = (
       const displayName =
         item.DisplayNameOrAttendeeNickname || item.DisplayName || 'Unknown'
       const firstLetter = displayName[0]?.toUpperCase() || '#'
-      if (!(firstLetter in sectionedLetters)) {
+      if (sectioned && !(firstLetter in sectionedLetters)) {
         result.push(dealerSectionForLetter(firstLetter))
         sectionedLetters[firstLetter] = true
       }
       result.push(dealerInstanceForAny(item, now, day1, day2, day3))
     }
     return result
-  }, [now, items])
+  }, [now, sectioned, items])
 }
 
 export const shareDealer = (dealer: DealerDetails) =>

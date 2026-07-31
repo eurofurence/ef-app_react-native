@@ -283,6 +283,7 @@
       "art_preview_caption": "Art preview caption: {{caption}}",
       "bluesky_button": "Visit {{handle}} on Bluesky",
       "bluesky_button_hint": "Opens Bluesky profile in browser",
+      "dealer_after_dark_icon": "After Dark section indicator",
       "dealer_attendance": "Attendance information: {{days}}",
       "dealer_avatar": "Profile image for {{name}}",
       "dealer_content_area": "Dealer information content",
@@ -305,7 +306,7 @@
       "twitter_button_hint": "Opens Twitter profile in browser"
     },
     "add_favorite": "Favorite",
-    "after_dark": "After dark",
+    "after_dark": "After Dark",
     "attends": "Attends on",
     "attends_fri": "Friday",
     "attends_sat": "Saturday",
@@ -316,7 +317,7 @@
     "dealer_not_found_title": "This dealer does not exist",
     "dealer_was_updated": "Dealer was updated since your last visit",
     "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
-    "in_after_dark": "Located in the after dark section",
+    "in_after_dark": "Located in the After Dark section",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
     "remove_favorite": "Unfavorite",
@@ -329,6 +330,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "After Dark section indicator",
       "dealer_avatar": "Profile image for {{name}}",
       "dealer_card": "Dealer: {{name}}",
       "dealer_card_hint": "Tap to view dealer details, long press for options",
@@ -342,14 +344,14 @@
       "dealers_sectioned_list": "Dealers organized by sections",
       "dealers_sectioned_list_hint": "Swipe to navigate through dealers grouped by category, pull down to refresh"
     },
-    "after_dark": "After dark",
+    "after_dark": "After Dark",
     "all": "All",
     "alphabetical": "A-Z",
     "coming_soon_body": "The Dealers' Den for {{conName}} is still being prepared. Check back later to see who will be there!",
     "coming_soon_title": "Coming soon!",
     "dealers_at_convention": "Dealers at {{convention}}",
-    "dealers_in_ad": "After dark dealers den",
-    "dealers_in_regular": "Regular dealers den",
+    "dealers_in_ad": "After Dark Dealers' Den",
+    "dealers_in_regular": "Regular Dealers' Den",
     "favorite_added": "Favorite added",
     "favorite_removed": "Favorite removed",
     "favorites_empty": "You do not have any favorite dealers yet. Favorite some dealers to create your own list.",
@@ -359,7 +361,9 @@
     "search": {
       "placeholder": "Search dealers…"
     },
-    "section_notice": "Dealer grouping is picked by the app based on most unique category"
+    "section_notice": "Dealer grouping is picked by the app based on most unique category",
+    "section_notice_alphabetical": "Dealers are grouped by the first letter of their name",
+    "section_notice_search": "Dealer sorting is based on best match for search text"
   },
   "EmptyScreen": {
     "notImplemented": "Content is not implemented yet."
@@ -452,6 +456,7 @@
     "search": {
       "placeholder": "Search events…"
     },
+    "section_notice_search": "Event sorting is based on best match for search text",
     "today_schedule_subtitle": "You will receive a reminder before this event starts",
     "today_schedule_title": "Today's schedule",
     "upcoming_favorites_title": "Favorite Events",
@@ -974,8 +979,8 @@
     "title": "WiFi Setup",
     "title_staff": "Staff WiFi Setup",
     "title_public": "Public WiFi Info",
-    "subtitle_staff": "Hello Staffer! To help you with your work for Eurofurence please log into the staff-only WPA-Enterprise network, with the QR-code or credentials supplied to you.\nThese credentials are not to be shared with the public or others!\n\nPlease note: for Dealers Den, Artshow and other special use-cases matching specialty networks may exist and you will be instructed by network staff separately!",
-    "subtitle_public": "Eurofurence maintains a free WiFi network for use by attendees, simply look out for a network with the name \"{{ssid}}\" and connect.\n\nPlease note: for Dealers Den, Artshow and other special use-cases, matching specialty networks may exist and you will be instructed by network staff separately!",
+    "subtitle_staff": "Hello Staffer! To help you with your work for Eurofurence please log into the staff-only WPA-Enterprise network, with the QR-code or credentials supplied to you.\nThese credentials are not to be shared with the public or others!\n\nPlease note: for Dealers' Den, Artshow and other special use-cases matching specialty networks may exist and you will be instructed by network staff separately!",
+    "subtitle_public": "Eurofurence maintains a free WiFi network for use by attendees, simply look out for a network with the name \"{{ssid}}\" and connect.\n\nPlease note: for Dealers' Den, Artshow and other special use-cases, matching specialty networks may exist and you will be instructed by network staff separately!",
     "intro": "If you are an advanced user or staff you can change the firewall behaviour or provide custom credentials.",
     "profile_eurofurence_name": "Protected (Recommended)",
     "profile_eurofurence_desc": "Incoming connections to your device aren't allowed, so you can still access the internet freely, but nobody can initiate connections to your devices open ports and running apps behind them.",
