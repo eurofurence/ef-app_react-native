@@ -15,7 +15,7 @@ export default function AzScreen() {
 
   const { dealers, searchDealers } = useCache()
   const search = useFuseResults(searchDealers, query ?? '')
-  const groups = useDealerAlphabeticalGroups(now, search ?? dealers)
+  const groups = useDealerAlphabeticalGroups(now, search ?? dealers, search == null)
 
   return (
     <DealersSectionedList

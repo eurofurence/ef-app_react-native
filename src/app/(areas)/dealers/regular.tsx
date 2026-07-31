@@ -16,7 +16,7 @@ export default function RegularScreen() {
 
   const { dealersInRegular, searchDealersInRegular } = useCache()
   const search = useFuseResults(searchDealersInRegular, query ?? '')
-  const groups = useDealerGroups(now, search ?? dealersInRegular)
+  const groups = useDealerGroups(now, search ?? dealersInRegular, search == null)
 
   return (
     <DealersSectionedList

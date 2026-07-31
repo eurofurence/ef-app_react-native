@@ -16,7 +16,7 @@ export default function AdScreen() {
 
   const { dealersInAfterDark, searchDealersInAfterDark } = useCache()
   const search = useFuseResults(searchDealersInAfterDark, query ?? '')
-  const groups = useDealerGroups(now, search ?? dealersInAfterDark)
+  const groups = useDealerGroups(now, search ?? dealersInAfterDark, search == null)
 
   return (
     <DealersSectionedList

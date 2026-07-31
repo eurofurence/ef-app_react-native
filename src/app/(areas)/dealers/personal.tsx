@@ -17,7 +17,7 @@ export default function PersonalScreen() {
 
   const { dealersFavorite, searchDealersFavorite } = useCache()
   const search = useFuseResults(searchDealersFavorite, query ?? '')
-  const groups = useDealerGroups(now, search ?? dealersFavorite)
+  const groups = useDealerGroups(now, search ?? dealersFavorite, search == null)
 
   return (
     <DealersSectionedList
