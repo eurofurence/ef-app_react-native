@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   section: {
     paddingHorizontal: 5,
-    marginHorizontal: 15
+    marginHorizontal: 15,
   },
   container: {
     paddingBottom: 100,
