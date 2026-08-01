@@ -278,6 +278,8 @@
       "event_header_hint": "Header met evenementtitel en deel-knop"
     },
     "add_favorite": "Favoriet",
+    "event_not_found_message": "Het spijt ons, maar we hebben het evenement dat je zocht niet kunnen vinden.",
+    "event_not_found_title": "Dit evenement bestaat niet",
     "event_was_updated": "Het evenement is sinds je laatste bezoek bijgewerkt",
     "give_feedback": "Feedback geven",
     "hide": "Verbergen",
@@ -306,8 +308,11 @@
       "submit_feedback": "Feedback verzenden",
       "submit_feedback_hint": "Verzendt je beoordeling en bericht voor dit evenement"
     },
+    "disabled_not_accepting_feedback": "Voor dit evenement kan geen feedback worden gegeven",
     "disabled_not_attending": "Alleen deelnemers kunnen feedback geven",
     "disabled_not_logged_in": "Log in om feedback te geven",
+    "event_not_found_message": "Het spijt ons, maar we hebben het evenement dat je zocht niet kunnen vinden.",
+    "event_not_found_title": "Dit evenement bestaat niet",
     "explanation": "Laat ons weten hoe je {{ eventTitle }} vond door ons een beoordeling en misschien zelfs een bericht te geven! We zorgen ervoor dat het bij de juiste persoon terechtkomt.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Heb je nog specifieke feedback voor de organisatoren? Typ het hier.",
