@@ -301,6 +301,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "Het evenement bestaat niet",
       "feedback_form_content": "Feedbackformulier inhoud",
       "feedback_form_loaded": "Feedbackformulier geladen voor {{title}}",
       "feedback_form_scroll": "Feedbackformulier scroll weergave",

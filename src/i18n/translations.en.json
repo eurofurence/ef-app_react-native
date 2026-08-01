@@ -404,6 +404,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "Event does not exist",
       "feedback_form_content": "Feedback form content",
       "feedback_form_loaded": "Feedback form loaded for {{title}}",
       "feedback_form_scroll": "Feedback form scroll view",

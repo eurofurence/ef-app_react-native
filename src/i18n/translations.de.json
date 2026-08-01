@@ -398,6 +398,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "Event existiert nicht",
       "feedback_form_content": "Feedback-Formular-Inhalt",
       "feedback_form_loaded": "Feedback-Formular für {{title}} geladen",
       "feedback_form_scroll": "Feedback-Formular Scroll-Ansicht",

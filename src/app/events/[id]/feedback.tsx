@@ -60,11 +60,11 @@ export default function EventFeedback() {
   const { isLoggedIn, user } = useAuthState()
   const attending = inRole(user, 'Attendee')
 
-  const disabled = !isLoggedIn || !attending || !event.IsAcceptingFeedback
+  const disabled = !isLoggedIn || !attending || !event?.IsAcceptingFeedback
   const disabledReason =
     (!isLoggedIn && t('disabled_not_logged_in')) ||
     (!attending && t('disabled_not_attending')) ||
-    (!event.IsAcceptingFeedback && t('disabled_not_accepting_feedback'))
+    (!event?.IsAcceptingFeedback && t('disabled_not_accepting_feedback'))
 
   // Announce the feedback form to screen readers
   useEffect(() => {

@@ -251,6 +251,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "L'evento non esiste",
       "feedback_form_content": "Contenuto modulo feedback",
       "feedback_form_loaded": "Modulo feedback caricato per {{title}}",
       "feedback_form_scroll": "Vista scroll modulo feedback",
@@ -261,6 +262,7 @@
     "disabled_not_accepting_feedback": "Non è possibile lasciare un feedback per questo evento",
     "disabled_not_attending": "Solo i partecipanti possono dare feedback",
     "disabled_not_logged_in": "Effettua l'accesso per dare feedback",
+    "event_not_found_message": "Ci dispiace, non siamo riusciti a trovare l'evento che stavi cercando.",
     "event_not_found_title": "Questo evento non esiste",
     "event_was_updated": "L'evento è stato aggiornato dalla tua ultima visita",
     "explanation": "Facci sapere come ti è sembrato {{ eventTitle }} lasciandoci una valutazione e magari anche un messaggio! Ci assicureremo che arrivi alla persona giusta.",
