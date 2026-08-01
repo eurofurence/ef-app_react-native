@@ -1,4 +1,4 @@
-import type { AppConfigRecord } from '@/context/data/types.api'
+import type {EfAppConfig} from "@/data/types/EfAppConfig";
 
 const isTrue = (value?: string) => value?.toLowerCase() === 'true'
 
@@ -14,7 +14,7 @@ export type AppConfig = {
  * booleans; absent flags default to false.
  */
 export function normalizeAppConfig(
-  appConfig: AppConfigRecord | null
+  appConfig: EfAppConfig | null
 ): AppConfig {
   return {
     cmaUrl: appConfig?.CmaUrl,

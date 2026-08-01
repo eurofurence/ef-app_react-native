@@ -22,7 +22,7 @@ import {
   WIFI_SSID,
   type WifiProfileId,
 } from '@/components/wifi/wifi.common'
-import { useToastContext } from '@/context/ui/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { confirmPrompt } from '@/util/confirmPrompt'
 
 const customSchema = z.object({

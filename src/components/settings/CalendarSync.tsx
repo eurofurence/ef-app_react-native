@@ -9,7 +9,7 @@ import { Button, buttonIconSize } from '@/components/generic/containers/Button'
 import { Row } from '@/components/generic/containers/Row'
 import { Pressable } from '@/components/generic/Pressable'
 import { apiBase } from '@/configuration'
-import { useToastContext } from '@/context/ui/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { useFavoritesCalendarToken } from '@/hooks/api/events/useFavoritesCalendarToken'
 import {

@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/react-native'
 
 import { api } from '@/data/clients/api'
-import { favoriteEventsCollection } from '@/data/collections/FavoriteEvents'
+import { favoriteEventsCollection } from '@/data/collections/supplemental/FavoriteEvents'
 
 /**
  * Pure union diff between local and remote favourite ids. `pushed` are local

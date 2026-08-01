@@ -1,12 +1,13 @@
+import {appConfigCollection} from "@/data/collections/content/AppConfig";
+import {useLiveQuery} from "@tanstack/react-db";
 import { useMemo } from 'react'
 
-import { useCache } from '@/context/data/Cache'
 import { type AppConfig, normalizeAppConfig } from '@/hooks/data/appConfig'
 
 /**
  * Normalized, backend-provided app configuration cached from the sync response.
  */
 export function useAppConfig(): AppConfig {
-  const appConfig = useCache().data.appConfig
-  return useMemo(() => normalizeAppConfig(appConfig), [appConfig])
+  const {data: [appConfig]} = useLiveQuery(appConfigCollection)
+  return useMemo(() => normalizeAppConfig(appConfig ?? null), [appConfig])
 }
