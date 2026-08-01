@@ -16,11 +16,11 @@ import type { GlobalSearchResult } from '@/context/data/types.own'
  */
 export const searchOptions: IFuseOptions<any> = {
   shouldSort: true,
-  threshold: 0.3, // More forgiving threshold for better partial matches
+  threshold: 0.2, // Only slightly more forgiving threshold to prevent sub-par matches
   ignoreLocation: true, // Don't care where in the text the match is
   includeMatches: false, // Don't need match details for performance
   includeScore: false, // Don't need scores for performance
-  minMatchCharLength: 2, // Allow shorter matches for better partial search
+  minMatchCharLength: 3, // Allow short, but not too short matches
   findAllMatches: true, // Find all matches within threshold
 }
 
@@ -34,15 +34,17 @@ export const searchOptionsGlobal: IFuseOptions<any> = {
 
 /**
  * Dealer properties to include in the search.
+ * Highest priority on name, followed by categories and keywords.
+ * Matches in description and other about texts are less specific.
  */
 export const dealersSearchProperties: FuseOptionKey<DealerDetails>[] = [
-  { name: 'DisplayNameOrAttendeeNickname', weight: 2 },
-  { name: 'Categories', weight: 1 },
+  { name: 'DisplayNameOrAttendeeNickname', weight: 20 },
+  { name: 'Categories', weight: 10 },
   {
     name: 'Keywords',
     getFn: (details) =>
       details.Keywords ? flatten(Object.values(details.Keywords)) : [],
-    weight: 1,
+    weight: 5,
   },
   { name: 'ShortDescription', weight: 1 },
   { name: 'AboutTheArtistText', weight: 1 },
@@ -51,43 +53,48 @@ export const dealersSearchProperties: FuseOptionKey<DealerDetails>[] = [
 
 /**
  * Event properties to include in the search.
+ * Highest priority on title, followed by subtitle and track.
+ * Matches in abstract are less specific and search by room name less likely.
  */
 export const eventsSearchProperties: FuseOptionKey<EventDetails>[] = [
-  { name: 'Title', weight: 2 },
-  { name: 'SubTitle', weight: 1 },
+  { name: 'Title', weight: 20 },
+  { name: 'SubTitle', weight: 10 },
+  { name: 'ConferenceTrack.Name', weight: 5 },
+  { name: 'PanelHosts', weight: 1 },
   { name: 'Abstract', weight: 0.5 },
-  { name: 'ConferenceRoom.Name', weight: 0.333 },
-  { name: 'ConferenceTrack.Name', weight: 0.333 },
-  { name: 'Abstract', weight: 0.5 },
-  { name: 'PanelHosts', weight: 0.1 },
+  { name: 'ConferenceRoom.Name', weight: 0.5 },
 ]
 
 /**
  * Knowledge base entry properties to include in the search.
+ * Highest priority on title.
  */
 export const knowledgeEntriesSearchProperties: FuseOptionKey<KnowledgeEntryDetails>[] =
   [
-    { name: 'Title', weight: 2 }, // Increased weight for titles
+    { name: 'Title', weight: 5 }, // Increased weight for titles
     { name: 'Text', weight: 1 }, // Full text content
   ]
 
 /**
  * Announcement properties to include in the search.
+ * Highest priority on title followed by content.
  */
 export const announcementsSearchProperties: FuseOptionKey<AnnouncementDetails>[] =
   [
-    { name: 'NormalizedTitle', weight: 1.5 },
-    { name: 'Content', weight: 1 },
+    { name: 'NormalizedTitle', weight: 5 },
+    { name: 'Content', weight: 2 },
     { name: 'Author', weight: 0.5 },
     { name: 'Area', weight: 0.5 },
   ]
 
 /**
  * Artist Alley properties to include in the search.
+ * Highest priority on display name, although less critical than with dealers,
+ * since name may be less well known.
  */
 export const artistAlleySearchProperties: FuseOptionKey<ArtistAlleyDetails>[] =
   [
-    { name: 'DisplayName', weight: 2 },
+    { name: 'DisplayName', weight: 3 },
     { name: 'ShortDescription', weight: 1 },
   ]
 
