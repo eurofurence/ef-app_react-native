@@ -32,9 +32,9 @@ export const Search: FC<SearchProps> = ({
   submit,
 }) => {
   const { t } = useTranslation('Search')
-  const styleLighten = useThemeBackground('inverted')
-  const styleText = useThemeColor('invText')
-  const colorText = useThemeColorValue('invText')
+  const styleLighten = useThemeBackground('background')
+  const styleText = useThemeColor('text')
+  const colorText = useThemeColorValue('text')
 
   // Use ref to track current filter without causing effect re-runs
   const filterRef = useRef(filter)
