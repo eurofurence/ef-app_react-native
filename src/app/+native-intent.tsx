@@ -12,7 +12,7 @@ const uuidLength = 36
 
 export function redirectSystemPath({ path }: { path: string }) {
   if (path.startsWith(prefixEvents)) {
-    if (path.endsWith('/Feedback')) 
+    if (path.endsWith('/Feedback'))
       return `/events/${path.substring(prefixEvents.length, prefixEvents.length + uuidLength)}/feedback`
     return `/events/${path.substring(prefixEvents.length, prefixEvents.length + uuidLength)}`
   }

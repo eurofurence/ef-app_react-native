@@ -13,6 +13,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedRating } from '@/components/generic/forms/ManagedRating'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
+import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
@@ -20,7 +21,6 @@ import { inRole } from '@/data/clients/auth.utils'
 import { useEventFeedbackMutation } from '@/hooks/api/feedback/useEventFeedbackMutation'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
-import { NotFoundContent } from '@/components/NotFoundContent'
 
 const feedbackSchema = z.object({
   rating: z
@@ -117,8 +117,7 @@ export default function EventFeedback() {
               title={t('event_not_found_title')}
               message={t('event_not_found_message')}
             />
-          ) :
-          (
+          ) : (
             <View
               ref={mainContentRef}
               accessibilityLabel={t('accessibility.feedback_form_content')}
