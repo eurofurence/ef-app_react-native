@@ -239,6 +239,8 @@
       "event_header_hint": "Nagłówek zawierający tytuł wydarzenia i przycisk udostępniania"
     },
     "add_favorite": "Dodaj do ulubi",
+    "event_not_found_message": "Przepraszamy, nie udało nam się znaleźć wydarzenia, którego szukałeś.",
+    "event_not_found_title": "To wydarzenie nie istnieje",
     "event_was_updated": "Punkt programu został zaktualizowany od ostatniej wizyty",
     "give_feedback": "Dodaj feedback",
     "hide": "Ukryj z listy",
@@ -267,8 +269,11 @@
       "submit_feedback": "Wyślij feedback",
       "submit_feedback_hint": "Wysyła Twoją ocenę i wiadomość dla tego wydarzenia"
     },
+    "disabled_not_accepting_feedback": "Nie można wystawić opinii na temat tego wydarzenia",
     "disabled_not_attending": "Tylko uczestnicy mogą dawać feedback",
     "disabled_not_logged_in": "Zaloguj się, aby dać feedback",
+    "event_not_found_message": "Przepraszamy, nie udało nam się znaleźć wydarzenia, którego szukałeś.",
+    "event_not_found_title": "To wydarzenie nie istnieje",
     "explanation": "Daj nam znać, jak Ci się podobało {{ eventTitle }}, zostawiając nam ocenę i może nawet wiadomość! Upewnimy się, że trafi do właściwej osoby.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Czy masz jakieś konkretne uwagi dla organizatorów? Napisz je tutaj.",

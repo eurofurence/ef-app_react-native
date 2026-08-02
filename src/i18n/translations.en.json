@@ -380,9 +380,9 @@
       "event_not_found": "The page for this event does not exist"
     },
     "add_favorite": "Favorite",
-    "event_was_updated": "Event was updated since your last visit",
     "event_not_found_message": "Sorry, we were unable to find the event you were looking for.",
     "event_not_found_title": "This event does not exist",
+    "event_was_updated": "Event was updated since your last visit",
     "give_feedback": "Give Feedback",
     "hide": "Hide from overview",
     "label_event_description": "More about the event",
@@ -404,6 +404,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "Event does not exist",
       "feedback_form_content": "Feedback form content",
       "feedback_form_loaded": "Feedback form loaded for {{title}}",
       "feedback_form_scroll": "Feedback form scroll view",
@@ -411,8 +412,11 @@
       "submit_feedback": "Submit feedback",
       "submit_feedback_hint": "Submits your rating and message for this event"
     },
+    "disabled_not_accepting_feedback": "Feedback cannot be given for this event",
     "disabled_not_attending": "Only attendees can give feedback",
     "disabled_not_logged_in": "Please log in to give feedback",
+    "event_not_found_message": "Sorry, we were unable to find the event you were looking for.",
+    "event_not_found_title": "This event does not exist",
     "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",

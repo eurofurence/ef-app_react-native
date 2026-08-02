@@ -375,9 +375,9 @@
       "event_not_found": "Die Seite für dieses Event existiert nicht"
     },
     "add_favorite": "Favorit hinzufügen",
-    "event_was_updated": "Es gab Änderungen am Event, seitdem Du es das letzte Mal aufgerufen hast",
     "event_not_found_message": "Entschuldigung, wir konnten das Event, nachdem du suchst, nicht finden.",
     "event_not_found_title": "Dieses Event existiert nicht",
+    "event_was_updated": "Es gab Änderungen am Event, seitdem Du es das letzte Mal aufgerufen hast",
     "give_feedback": "Feedback geben",
     "hide": "Event verbergen",
     "label_event_description": "Mehr zu diesem Event",
@@ -398,6 +398,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "Event existiert nicht",
       "feedback_form_content": "Feedback-Formular-Inhalt",
       "feedback_form_loaded": "Feedback-Formular für {{title}} geladen",
       "feedback_form_scroll": "Feedback-Formular Scroll-Ansicht",
@@ -405,8 +406,11 @@
       "submit_feedback": "Feedback absenden",
       "submit_feedback_hint": "Sendet deine Bewertung und Nachricht für dieses Event"
     },
+    "disabled_not_accepting_feedback": "Für dieses Event kann kein Feedback gegeben werden",
     "disabled_not_attending": "Nur Attendees können Feedback geben",
     "disabled_not_logged_in": "Bitte melde dich an, um Feedback zu geben",
+    "event_not_found_message": "Entschuldigung, wir konnten das Event, nachdem du suchst, nicht finden.",
+    "event_not_found_title": "Dieses Event existiert nicht",
     "explanation": "Lass uns wissen, wie du {{ eventTitle }} fandest. Gib eine Bewertung und optional eine Nachricht ein, und wir schauen, dass diese bei der richtigen Person landen.",
     "header": "Feedback: {{ eventTitle }}",
     "message_placeholder": "Wenn du spezifische Anmerkungen an die Veranstaltenden hast, schreibe diese hier auf.",

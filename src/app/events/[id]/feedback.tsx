@@ -13,6 +13,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedRating } from '@/components/generic/forms/ManagedRating'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
+import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
@@ -59,10 +60,11 @@ export default function EventFeedback() {
   const { isLoggedIn, user } = useAuthState()
   const attending = inRole(user, 'Attendee')
 
-  const disabled = !isLoggedIn || !attending
+  const disabled = !isLoggedIn || !attending || !event?.IsAcceptingFeedback
   const disabledReason =
     (!isLoggedIn && t('disabled_not_logged_in')) ||
-    (!attending && t('disabled_not_attending'))
+    (!attending && t('disabled_not_attending')) ||
+    (!event?.IsAcceptingFeedback && t('disabled_not_accepting_feedback'))
 
   // Announce the feedback form to screen readers
   useEffect(() => {
@@ -109,63 +111,71 @@ export default function EventFeedback() {
           })}
         </Header>
         <Floater>
-          <View
-            ref={mainContentRef}
-            accessibilityLabel={t('accessibility.feedback_form_content')}
-            accessibilityRole='text'
-          >
-            <FormProvider {...form}>
-              <Label variant='narrow'>
-                {t('explanation', {
-                  eventTitle: event?.Title,
-                  interpolation: { escapeValue: false },
-                })}
-              </Label>
-
-              <ManagedRating<FeedbackSchema>
-                name='rating'
-                label={t('rating_title')}
-                minRating={1}
-                enableHalfStar={false}
-                color={theme.secondary}
-                style={styles.star}
-                starSize={52}
-              />
-
-              <ManagedTextInput<FeedbackSchema>
-                name='message'
-                label={t('message_title')}
-                placeholder={t('message_placeholder')}
-                numberOfLines={8}
-                multiline
-              />
-
-              <Button
-                onPress={form.handleSubmit(submit)}
-                disabled={isPending || disabled}
-                accessibilityLabel={t('accessibility.submit_feedback')}
-                accessibilityHint={t('accessibility.submit_feedback_hint')}
-                accessibilityRole='button'
-              >
-                {t('submit')}
-              </Button>
-
-              {disabledReason && (
-                <Label
-                  type='caption'
-                  color='important'
-                  variant='middle'
-                  className='mt-4'
-                >
-                  {disabledReason}
+          {!event ? (
+            <NotFoundContent
+              accessibilityStatus={t('accessibility.event_not_found')}
+              title={t('event_not_found_title')}
+              message={t('event_not_found_message')}
+            />
+          ) : (
+            <View
+              ref={mainContentRef}
+              accessibilityLabel={t('accessibility.feedback_form_content')}
+              accessibilityRole='text'
+            >
+              <FormProvider {...form}>
+                <Label variant='narrow'>
+                  {t('explanation', {
+                    eventTitle: event?.Title,
+                    interpolation: { escapeValue: false },
+                  })}
                 </Label>
-              )}
 
-              {isPending && (
-                <Label className='mt-4'>{t('submit_in_progress')}</Label>
-              )}
-            </FormProvider>
-          </View>
+                <ManagedRating<FeedbackSchema>
+                  name='rating'
+                  label={t('rating_title')}
+                  minRating={1}
+                  enableHalfStar={false}
+                  color={theme.secondary}
+                  style={styles.star}
+                  starSize={52}
+                />
+
+                <ManagedTextInput<FeedbackSchema>
+                  name='message'
+                  label={t('message_title')}
+                  placeholder={t('message_placeholder')}
+                  numberOfLines={8}
+                  multiline
+                />
+
+                <Button
+                  onPress={form.handleSubmit(submit)}
+                  disabled={isPending || disabled}
+                  accessibilityLabel={t('accessibility.submit_feedback')}
+                  accessibilityHint={t('accessibility.submit_feedback_hint')}
+                  accessibilityRole='button'
+                >
+                  {t('submit')}
+                </Button>
+
+                {disabledReason && (
+                  <Label
+                    type='caption'
+                    color='important'
+                    variant='middle'
+                    className='mt-4'
+                  >
+                    {disabledReason}
+                  </Label>
+                )}
+
+                {isPending && (
+                  <Label className='mt-4'>{t('submit_in_progress')}</Label>
+                )}
+              </FormProvider>
+            </View>
+          )}
         </Floater>
       </ScrollView>
     </>
