@@ -103,7 +103,6 @@ const config: ExpoConfig & {
     favicon: './assets/platform/appicon-android.png',
   },
   experiments: {
-    baseUrl: '/ef-app_react-native',
     reactCompiler: true,
     typedRoutes: true,
   },
