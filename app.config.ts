@@ -144,6 +144,7 @@ const config: ExpoConfig & {
       },
     ],
     'expo-localization',
+    ['react-native-enriched-markdown', { enableMath: false }],
     [
       'expo-build-properties',
       {
