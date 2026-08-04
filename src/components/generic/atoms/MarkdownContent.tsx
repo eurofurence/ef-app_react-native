@@ -1,10 +1,11 @@
+import { captureException } from '@sentry/react-native'
 import { mapValues } from 'lodash'
 import { type FC, useMemo } from 'react'
-import { type StyleSheet, Text, View, type ViewStyle } from 'react-native'
-import Markdown, {
-  type MarkdownProps,
-  type RenderRules,
-} from 'react-native-markdown-display'
+import { Linking, View, type ViewStyle } from 'react-native'
+import {
+  EnrichedMarkdownText,
+  type MarkdownStyle,
+} from 'react-native-enriched-markdown'
 import { withAlpha } from '@/context/Theme'
 import { useTheme, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import type { LabelProps } from './Label'
@@ -29,100 +30,73 @@ const deriveLineHeights = <
     return { ...style, lineHeight: Math.ceil(style.fontSize * factor) }
   })
 
-function useMarkdownRules() {
-  const theme = useThemeColorValue('primary')
-  return useMemo((): RenderRules => {
-    const selectionColor = withAlpha(theme, 0.35)
-    return {
-      text: (node, _children, _parent, styles, inheritedStyles = {}) => (
-        <Text
-          key={node.key}
-          style={[inheritedStyles, styles.text]}
-          selectable
-          selectionColor={selectionColor}
-        >
-          {node.content}
-        </Text>
-      ),
-      textgroup: (node, children, _parent, styles) => (
-        <Text
-          key={node.key}
-          style={styles.textgroup}
-          selectable
-          selectionColor='#5043E350'
-        >
-          {children}
-        </Text>
-      ),
-    }
-  }, [theme])
-}
-
 function useMarkdownTheme() {
   const theme = useTheme()
   return useMemo(
-    (): StyleSheet.NamedStyles<any> =>
+    () =>
       deriveLineHeights({
         blockquote: {
-          borderLeftWidth: 5,
-          borderLeftColor: theme.secondary,
+          borderWidth: 5,
+          borderColor: theme.secondary,
           backgroundColor: theme.darken,
-          paddingLeft: 10,
+          gapWidth: 10,
+          color: theme.text,
         },
-        heading1: {
+        h1: {
           fontWeight: '300',
           fontSize: 24,
           color: theme.important,
-          paddingTop: 20,
-          paddingBottom: 8,
+          marginTop: 20,
+          marginBottom: 8,
         },
-        heading2: {
+        h2: {
           fontSize: 20,
           color: theme.important,
-          paddingTop: 16,
-          paddingBottom: 8,
+          marginTop: 16,
+          marginBottom: 8,
         },
-        heading3: {
+        h3: {
           fontSize: 18,
           color: theme.important,
-          paddingTop: 16,
-          paddingBottom: 8,
+          marginTop: 16,
+          marginBottom: 8,
         },
-        heading4: {
+        h4: {
           fontSize: 16,
           fontWeight: 'bold',
           color: theme.important,
-          paddingTop: 16,
-          paddingBottom: 8,
+          marginTop: 16,
+          marginBottom: 8,
         },
-        heading5: {
+        h5: {
           fontSize: 14,
           fontWeight: 'bold',
           color: theme.important,
-          paddingTop: 12,
-          paddingBottom: 6,
+          marginTop: 12,
+          marginBottom: 6,
         },
-        heading6: {
+        h6: {
           fontSize: 14,
           fontWeight: 'bold',
           color: theme.important,
-          paddingTop: 12,
-          paddingBottom: 6,
+          marginTop: 12,
+          marginBottom: 6,
         },
-        hr: {
+        thematicBreak: {
           height: 1,
-          backgroundColor: theme.text,
-          marginVertical: 8,
+          color: theme.text,
+          marginTop: 8,
+          marginBottom: 8,
         },
         code: {
           backgroundColor: theme.notification,
           color: 'orange',
         },
-        body: {
-          color: theme.text,
-          lineHeight: 24,
+        codeBlock: {
+          backgroundColor: theme.notification,
+          color: 'orange',
         },
-        text: {
+        paragraph: {
           color: theme.text,
           lineHeight: 24,
         },
@@ -134,41 +108,30 @@ function useMarkdownTheme() {
           fontStyle: 'italic',
           color: theme.text,
         },
-        del: {
-          textDecorationLine: 'line-through',
+        strikethrough: {
           color: theme.text,
         },
-        u: {
-          textDecorationLine: 'underline',
+        underline: {
           color: theme.text,
-        },
-        bullet_list_icon: {
-          color: theme.important,
-        },
-        ordered_list_icon: {
-          color: theme.important,
         },
         link: {
-          textDecorationLine: 'underline',
+          underline: true,
           color: theme.important,
         },
         list: {
-          paddingBottom: 20,
-        },
-        list_item: {
-          marginVertical: 5,
+          color: theme.text,
+          lineHeight: 24,
+          bulletColor: theme.important,
+          markerColor: theme.important,
+          marginBottom: 20,
         },
         image: {
-          minWidth: 200,
           height: 200,
         },
-      }),
+      }) as MarkdownStyle,
     [theme]
   )
 }
-
-const MarkdownComponent: FC<MarkdownProps & { children?: string }> =
-  Markdown as any
 
 /**
  * Matches newlines with carriage return or carriage return and newline, for normalization.
@@ -176,15 +139,21 @@ const MarkdownComponent: FC<MarkdownProps & { children?: string }> =
 const newline = /\r\n?/gm
 
 /**
- * Matches sections that should be paragraph spaced.
+ * Matches hard-wrapped lines that should reflow into one paragraph. Only a
+ * lowercase continuation counts as a wrap!
  */
-const paraspace = /(?<!\s)\n(?!\n|\s*\*|\s*-|\s*\+|\s*\d|#)/gm
+const paraspace = /^(?![ \t]*#)(.*\S)\n(?=[ \t]*\p{Ll})/gmu
 
 /**
  * Matches links, checking if they were not in a markdown link segment.
  */
 const links =
   /(]\(|\[)?https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*/gi
+
+/**
+ * Amounts are common in this content, so LaTeX must not claim them.
+ */
+const md4cFlags = { latexMath: false }
 
 export type MarkdownContentProps = {
   defaultType?: LabelProps['type']
@@ -202,23 +171,29 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({
     () =>
       children
         ?.replace(newline, '\n')
-        ?.replace(paraspace, ' ')
+        ?.replace(paraspace, '$1 ')
         ?.replace(links, (s, args) => {
           if (args?.[0]) return s
           else return `[${s}](${s})`
-        }),
+        }) ?? '',
     [children]
   )
 
-  // Get markdown style.
-  const markdownRules = useMarkdownRules()
   const markdownTheme = useMarkdownTheme()
+  const primary = useThemeColorValue('primary')
 
   return (
     <View style={style}>
-      <MarkdownComponent rules={markdownRules} style={markdownTheme}>
-        {fixed}
-      </MarkdownComponent>
+      <EnrichedMarkdownText
+        markdown={fixed}
+        markdownStyle={markdownTheme}
+        md4cFlags={md4cFlags}
+        selectable
+        selectionColor={withAlpha(primary, 0.35)}
+        onLinkPress={({ url }) => {
+          Linking.openURL(url).catch(captureException)
+        }}
+      />
     </View>
   )
 }
