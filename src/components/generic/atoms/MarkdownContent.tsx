@@ -139,9 +139,10 @@ function useMarkdownTheme() {
 const newline = /\r\n?/gm
 
 /**
- * Matches sections that should be paragraph spaced.
+ * Matches hard-wrapped lines that should reflow into one paragraph. Only a
+ * lowercase continuation counts as a wrap!
  */
-const paraspace = /^(?![ \t]*#)(.*\S)\n(?!\n|\s*\*|\s*-|\s*\+|\s*\d|#)/gm
+const paraspace = /^(?![ \t]*#)(.*\S)\n(?=[ \t]*\p{Ll})/gmu
 
 /**
  * Matches links, checking if they were not in a markdown link segment.
