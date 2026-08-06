@@ -80,6 +80,10 @@ jobs:
                   cp .env.example .env
                   eas env:pull --non-interactive --environment ${{ inputs.profile }} --path .env
 
+            - name: 🏷 Read app version
+              id: version
+              run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
             - name: 👷 Build app on EAS
               if: ${{ inputs.build_mode == 'cloud' }}
               run: |
@@ -94,20 +98,14 @@ jobs:
                   mkdir -p app-build
                   eas build --local \
                     --non-interactive \
-                    --output=./app-build/app.${{ inputs.platform == 'ios' && 'ipa' || 'aab' }} \
+                    --output=./app-build/${{ steps.version.outputs.value }}-EF.${{ inputs.platform == 'ios' && 'ipa' || 'aab' }} \
                     --platform=${{ inputs.platform }} \
                     --profile=${{ inputs.profile }}
-
-            - name: 📤 Upload build
-              if: ${{ inputs.build_mode == 'local' }}
-              uses: actions/upload-artifact@v4
-              with:
-                  name: ${{ inputs.platform }}-build
-                  path: app-build
 
             - name: 🔄 Convert AAB to APK
               if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
               env:
+                  VERSION: ${{ steps.version.outputs.value }}
                   KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
                   KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
                   KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
@@ -121,7 +119,7 @@ jobs:
 
                 # Convert AAB to APK
                 java -jar bundletool.jar build-apks \
-                  --bundle=app-build/app.aab \
+                  --bundle="app-build/$VERSION-EF.aab" \
                   --output=app-build/app.apks \
                   --mode=universal \
                   --ks=keystore.jks \
@@ -129,24 +127,26 @@ jobs:
                   --ks-key-alias="$KEY_ALIAS" \
                   --key-pass="pass:$KEY_PASSWORD"
                 unzip app-build/app.apks -d app-build/
-                mv app-build/universal.apk app-build/app-universal.apk
+                mv app-build/universal.apk "app-build/$VERSION-EF.apk"
 
                 # Clean up temporary files
                 rm app-build/app.apks
                 rm bundletool.jar
                 rm keystore.jks
 
-            - name: 🏷 Read app version
-              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
-              id: version
-              run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+            - name: 📤 Upload build
+              if: ${{ inputs.build_mode == 'local' }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ inputs.platform }}-build
+                  path: app-build
 
             - name: 📦 Create GitHub Release
               if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
               uses: softprops/action-gh-release@v1
               with:
                 tag_name: v${{ steps.version.outputs.value }}
-                files: app-build/app-universal.apk
+                files: app-build/${{ steps.version.outputs.value }}-EF.apk
                 generate_release_notes: true
                 draft: true
                 prerelease: false
