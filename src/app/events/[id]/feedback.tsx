@@ -13,6 +13,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedRating } from '@/components/generic/forms/ManagedRating'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
+import { LoadingContent } from '@/components/LoadingContent'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { useToastContext } from '@/context/ui/ToastContext'
@@ -39,8 +40,9 @@ export default function EventFeedback() {
   const { id: eventId } = useLocalSearchParams<{ id: string }>()
   const { toast } = useToastContext()
   const theme = useTheme()
-  const { events } = useCache()
+  const { events, isSynchronizing } = useCache()
   const event = events.dict[eventId]
+  const loading = !event && isSynchronizing
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
@@ -111,7 +113,9 @@ export default function EventFeedback() {
           })}
         </Header>
         <Floater>
-          {!event ? (
+          {loading ? (
+            <LoadingContent message={t('loading')} />
+          ) : !event ? (
             <NotFoundContent
               accessibilityStatus={t('accessibility.event_not_found')}
               title={t('event_not_found_title')}

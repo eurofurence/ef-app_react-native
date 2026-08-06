@@ -7,10 +7,10 @@ import { appStyles } from '@/components/AppStyles'
 import { EventContent } from '@/components/events/EventContent'
 import { shareEvent } from '@/components/events/Events.common'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
-import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { LoadingContent } from '@/components/LoadingContent'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
@@ -86,14 +86,7 @@ export default function EventItem() {
             accessibilityRole='text'
           >
             {pending ? (
-              <Label
-                type='h2'
-                className='mt-8 mb-3'
-                accessibilityLabel={t('loading')}
-                accessibilityRole='text'
-              >
-                {t('loading')}
-              </Label>
+              <LoadingContent message={t('loading')} />
             ) : !event ? (
               <NotFoundContent
                 accessibilityStatus={t('accessibility.event_not_found')}

@@ -192,6 +192,7 @@
     "attends_thu": "Czwartek",
     "categories": "Kategorie",
     "in_after_dark": "Znajduje się w sekcji After Dark",
+    "loading": "Ładowanie...",
     "merchandise": "Oferuje",
     "not_attending": "Dziś nie bierze udziału",
     "table": "Tabela",
@@ -278,6 +279,7 @@
     "event_not_found_title": "To wydarzenie nie istnieje",
     "explanation": "Daj nam znać, jak Ci się podobało {{ eventTitle }}, zostawiając nam ocenę i może nawet wiadomość! Upewnimy się, że trafi do właściwej osoby.",
     "header": "Feedback: {{ eventTitle }}",
+    "loading": "Ładowanie...",
     "message_placeholder": "Czy masz jakieś konkretne uwagi dla organizatorów? Napisz je tutaj.",
     "message_title": "Wiadomość z feedbackiem",
     "rating_title": "Jak bardzo podobało Ci się to wydarzenie?",
@@ -409,6 +411,7 @@
       "search_results": "Znaleziono {{count}} artykułów informacyjnych dla \"{{query}}\""
     },
     "header": "Podstawowe informacje",
+    "loading": "Ładowanie...",
     "search": {
       "placeholder": "Szukaj artykułów informacyjnych…"
     }
@@ -575,6 +578,7 @@
     },
     "from": "Od {{authorName}}",
     "header": "Prywatna wiadomość",
+    "loading": "Ładowanie...",
     "read_at": "Przeczytana o {{time}}"
   },
   "PrivateMessageList": {

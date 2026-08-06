@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { Redirect, router, useLocalSearchParams } from 'expo-router'
+import { Redirect, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
@@ -12,6 +12,7 @@ import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
+import { LoadingContent } from '@/components/LoadingContent'
 import { useCommunicationsMarkReadMutation } from '@/hooks/api/communications/useCommunicationsMarkReadMutation'
 import { useCommunicationsItemQuery } from '@/hooks/api/communications/useCommunicationsQuery'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
@@ -24,7 +25,7 @@ export default function MessageItem() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('PrivateMessageItem')
   const { t: a11y } = useTranslation('PrivateMessageItem')
-  const { data: message } = useCommunicationsItemQuery(id)
+  const { data: message, isPending } = useCommunicationsItemQuery(id)
   const { mutate } = useCommunicationsMarkReadMutation()
   const backgroundStyle = useThemeBackground('background')
   const [announcementMessage, setAnnouncementMessage] = useState('')
@@ -43,13 +44,6 @@ export default function MessageItem() {
     return () => clearTimeout(handle)
   }, [message, mutate])
 
-  // Navigate back if the message not found
-  useEffect(() => {
-    if (!message) {
-      router.back()
-    }
-  }, [message])
-
   // Announce message loaded to screen readers
   useEffect(() => {
     if (message) {
@@ -60,6 +54,18 @@ export default function MessageItem() {
       setAnnouncementMessage(messageText)
     }
   }, [message, a11y])
+
+  // Only assert absence once the query has settled; the notification path opens
+  // this screen before the fetch that carries the message has finished.
+  if (isPending)
+    return (
+      <>
+        <Header>{t('header')}</Header>
+        <Floater contentStyle={appStyles.trailer}>
+          <LoadingContent message={t('loading')} />
+        </Floater>
+      </>
+    )
 
   if (!message) return <Redirect href='/messages' />
 

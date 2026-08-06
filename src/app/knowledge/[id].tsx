@@ -8,6 +8,7 @@ import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { LoadingContent } from '@/components/LoadingContent'
 import { LinkItem } from '@/components/maps/LinkItem'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
@@ -17,10 +18,11 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 export default function KnowledgeItem() {
   const { t } = useTranslation('KnowledgeGroups')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { knowledgeEntries } = useCache()
+  const { knowledgeEntries, isSynchronizing } = useCache()
 
   // Get the knowledge entry from cache
   const entry = knowledgeEntries.dict[id]
+  const pending = !entry && isSynchronizing
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
@@ -52,7 +54,9 @@ export default function KnowledgeItem() {
       >
         <Header>{entry?.Title ?? t('viewing_entry')}</Header>
         <Floater>
-          {!entry ? (
+          {pending ? (
+            <LoadingContent message={t('loading')} />
+          ) : !entry ? (
             <NotFoundContent
               accessibilityStatus={t('accessibility.kb_entry_not_found')}
               title={t('kb_entry_not_found_title')}

@@ -226,6 +226,7 @@
     "attends_fri": "Vrijdag",
     "attends_sat": "Zaterdag",
     "attends_thu": "Donderdag",
+    "loading": "Laden...",
     "table": "Tafel"
   },
   "Dealers": {
@@ -318,6 +319,7 @@
     "event_not_found_title": "Dit evenement bestaat niet",
     "explanation": "Laat ons weten hoe je {{ eventTitle }} vond door ons een beoordeling en misschien zelfs een bericht te geven! We zorgen ervoor dat het bij de juiste persoon terechtkomt.",
     "header": "Feedback: {{ eventTitle }}",
+    "loading": "Laden...",
     "message_placeholder": "Heb je nog specifieke feedback voor de organisatoren? Typ het hier.",
     "message_title": "Feedback bericht",
     "rating_title": "Hoeveel vond je dit evenement?",
@@ -456,6 +458,7 @@
       "search_results": "{{count}} kennisartikelen gevonden voor \"{{query}}\""
     },
     "header": "Informatie-artikelen",
+    "loading": "Laden...",
     "search": {
       "placeholder": "Zoek info-artikelen…"
     }
@@ -605,6 +608,7 @@
     },
     "from": "Van {{authorName}}",
     "header": "Privébericht",
+    "loading": "Laden...",
     "read_at": "Gelezen om {{time}}"
   },
   "PrivateMessageList": {

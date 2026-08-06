@@ -184,6 +184,7 @@
     "attends_thu": "Giovedì",
     "categories": "Categorie",
     "in_after_dark": "Situato nella sezione After Dark",
+    "loading": "Caricamento...",
     "merchandise": "Merce",
     "not_attending": "Non disponibile oggi",
     "table": "tavolo",
@@ -269,6 +270,7 @@
     "event_was_updated": "L'evento è stato aggiornato dalla tua ultima visita",
     "explanation": "Facci sapere come ti è sembrato {{ eventTitle }} lasciandoci una valutazione e magari anche un messaggio! Ci assicureremo che arrivi alla persona giusta.",
     "header": "Feedback: {{ eventTitle }}",
+    "loading": "Caricamento...",
     "message_placeholder": "Hai altri feedback specifici per gli organizzatori? Scrivilo qui.",
     "message_title": "Messaggio di feedback",
     "rating_title": "Quanto ti è piaciuto questo evento?",
@@ -398,6 +400,7 @@
       "search_results": "Trovati {{count}} articoli informativi per \"{{query}}\""
     },
     "header": "Articoli Informativi",
+    "loading": "Caricamento...",
     "search": {
       "placeholder": "Cerca articoli informativi…"
     }
@@ -563,6 +566,7 @@
     },
     "from": "Da {{authorName}}",
     "header": "Messaggio privato",
+    "loading": "Caricamento...",
     "read_at": "Letto alle {{time}}"
   },
   "PrivateMessageList": {
