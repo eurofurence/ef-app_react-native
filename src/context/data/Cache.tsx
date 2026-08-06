@@ -40,6 +40,17 @@ import { useAuthState } from '@/data/clients/auth'
 import * as Storage from '@/util/asyncStorage'
 
 /**
+ * Raised when a synchronization was replaced by a newer one before it could
+ * apply its data. Callers must not treat the cache as up to date.
+ */
+export class SyncSupersededError extends Error {
+  constructor() {
+    super('Synchronization was superseded before its data was applied')
+    this.name = 'SyncSupersededError'
+  }
+}
+
+/**
  * Cache context.
  */
 export type CacheContextType = {
@@ -214,9 +225,11 @@ export const CacheProvider = ({
 
   // Secondary state. Synchronizing is set from the callback according to
   // its runtime and completion. Invocation tracks an abort controller to
-  // stop a running invocation if needed.
+  // stop a running invocation if needed. Running tracks the pending run so
+  // equivalent calls can join it instead of cancelling it.
   const [isSynchronizing, setIsSynchronizing] = useState(false)
   const invocation = useRef<AbortController | null>(null)
+  const running = useRef<{ key: string; promise: Promise<void> } | null>(null)
 
   // Get authentication details if available
   const { tokenResponse, idData, user, isReady: isAuthReady } = useAuthState()
@@ -226,12 +239,7 @@ export const CacheProvider = ({
 
   // Synchronization function.
   const synchronize = useCallback(
-    async (options?: { full?: boolean }) => {
-      const ownInvocation = new AbortController()
-      invocation.current?.abort()
-      invocation.current = ownInvocation
-      setIsSynchronizing(true)
-
+    (options?: { full?: boolean }) => {
       // Get states to determine delta based sync or full sync.
       const { lastSynchronised, cid, cacheVersion, lastSyncAuthKey } =
         dataRef.current
@@ -246,69 +254,86 @@ export const CacheProvider = ({
       )
 
       const path = mode === 'delta' ? `Sync?since=${lastSynchronised}` : `Sync`
+      const runKey = `${authKey}|${accessToken ?? ''}|${path}`
 
-      try {
-        const data = await axios
-          .get(`${apiBase}/${path}`, {
-            signal: ownInvocation.signal,
-            timeout: 30000,
-            headers: accessToken
-              ? {
-                  Authorization: `Bearer ${accessToken}`,
-                }
-              : {},
-          })
-          .then((res) => res.data)
+      // An equivalent run is already pending. Join it rather than cancelling
+      // it, so callers that act on completion see the data it applies.
+      if (running.current?.key === runKey) return running.current.promise
 
-        if (invocation.current !== ownInvocation) return
+      const ownInvocation = new AbortController()
+      invocation.current?.abort()
+      invocation.current = ownInvocation
+      setIsSynchronizing(true)
 
-        // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
-        if (
-          data.ConventionIdentifier !== conId ||
-          cacheVersion !== eurofurenceCacheVersion
-        ) {
-          dispatch(actionReset(initialState, 'CID or format change'))
+      const promise = (async () => {
+        try {
+          const data = await axios
+            .get(`${apiBase}/${path}`, {
+              signal: ownInvocation.signal,
+              timeout: 30000,
+              headers: accessToken
+                ? {
+                    Authorization: `Bearer ${accessToken}`,
+                  }
+                : {},
+            })
+            .then((res) => res.data)
+
+          if (invocation.current !== ownInvocation)
+            throw new SyncSupersededError()
+
+          // Convention identifier switched, transfer new one and clear all data irrespective of the clear data flag.
+          if (
+            data.ConventionIdentifier !== conId ||
+            cacheVersion !== eurofurenceCacheVersion
+          ) {
+            dispatch(actionReset(initialState, 'CID or format change'))
+            dispatch(
+              actionInternalsSet(
+                conId,
+                eurofurenceCacheVersion,
+                lastSynchronised,
+                authKey
+              )
+            )
+          }
+
+          // Dispatch all received changes to the reducer.
+          for (const key in schemaEntities) {
+            const store = key as keyof SchemaEntities
+            const change = data[schemaEntities[store].syncResponseField]
+            dispatch(
+              actionEntitiesChange(
+                store,
+                change.RemoveAllBeforeInsert,
+                change.DeletedEntities,
+                change.ChangedEntities
+              )
+            )
+          }
+
+          // AppConfig is a plain object returned in full; keep the cached value if absent.
+          if (data.AppConfig)
+            dispatch(actionValuesSet('appConfig', data.AppConfig))
+
           dispatch(
             actionInternalsSet(
               conId,
               eurofurenceCacheVersion,
-              lastSynchronised,
+              data.CurrentDateTimeUtc,
               authKey
             )
           )
+        } finally {
+          if (invocation.current === ownInvocation) {
+            setIsSynchronizing(false)
+            running.current = null
+          }
         }
+      })()
 
-        // Dispatch all received changes to the reducer.
-        for (const key in schemaEntities) {
-          const store = key as keyof SchemaEntities
-          const change = data[schemaEntities[store].syncResponseField]
-          dispatch(
-            actionEntitiesChange(
-              store,
-              change.RemoveAllBeforeInsert,
-              change.DeletedEntities,
-              change.ChangedEntities
-            )
-          )
-        }
-
-        // AppConfig is a plain object returned in full; keep the cached value if absent.
-        if (data.AppConfig)
-          dispatch(actionValuesSet('appConfig', data.AppConfig))
-
-        dispatch(
-          actionInternalsSet(
-            conId,
-            eurofurenceCacheVersion,
-            data.CurrentDateTimeUtc,
-            authKey
-          )
-        )
-      } finally {
-        if (invocation.current === ownInvocation) {
-          setIsSynchronizing(false)
-        }
-      }
+      running.current = { key: runKey, promise }
+      return promise
     },
     [accessToken, authKey]
   )

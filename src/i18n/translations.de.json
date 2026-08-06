@@ -72,6 +72,7 @@
       "title_heading": "Mitteilungstitel"
     },
     "header": "Mitteilung",
+    "loading": "Laden...",
     "not_available": "Diese Mitteilung ist nicht mehr verfügbar."
   },
   "Announcements": {
@@ -385,6 +386,7 @@
     "label_event_room": "Raum",
     "label_event_track": "Kategorie",
     "label_event_when": "Zeit",
+    "loading": "Laden...",
     "mask_required": "Auf diesem Event ist eine Mund-Nasen-Maske verpflichtend zu tragen",
     "remove_favorite": "Favorit entfernen",
     "reveal": "Wieder anzeigen",

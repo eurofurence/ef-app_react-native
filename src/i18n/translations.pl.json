@@ -70,6 +70,7 @@
       "title_heading": "Tytuł ogłoszenia"
     },
     "header": "Ogłoszenie",
+    "loading": "Ładowanie...",
     "not_available": "To ogłoszenie nie jest już dostępne."
   },
   "Announcements": {
@@ -249,6 +250,7 @@
     "label_event_room": "Sala",
     "label_event_track": "Ścieżka",
     "label_event_when": "Kiedy",
+    "loading": "Ładowanie...",
     "mask_required": "Maseczki są obowiązkowe podczas tego punktu programu",
     "remove_favorite": "Usuń z ulubionych",
     "reveal": "Pokaż w listy",
