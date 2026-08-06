@@ -14,8 +14,8 @@ describe('redirectSystemPath (wifi)', () => {
       })
     ).toBe('/wifi?id=a&pw=b')
   })
-  it('maps eventwifi:// links to /wifi', () => {
-    expect(redirectSystemPath({ path: 'eventwifi://connect?id=a&pw=b' })).toBe(
+  it('maps eurofurence://wifi links to /wifi', () => {
+    expect(redirectSystemPath({ path: 'eurofurence://wifi?id=a&pw=b' })).toBe(
       '/wifi?id=a&pw=b'
     )
   })

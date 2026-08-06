@@ -7,6 +7,7 @@ import { appStyles } from '@/components/AppStyles'
 import { EventContent } from '@/components/events/EventContent'
 import { shareEvent } from '@/components/events/Events.common'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
+import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
@@ -19,9 +20,10 @@ import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 export default function EventItem() {
   const { t } = useTranslation('Event')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { events, getValue, setValue } = useCache()
+  const { events, getValue, setValue, isSynchronizing } = useCache()
 
   const event = events.dict[id]
+  const pending = !event && isSynchronizing
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
@@ -83,7 +85,16 @@ export default function EventItem() {
             accessibilityLabel={t('accessibility.event_content')}
             accessibilityRole='text'
           >
-            {!event ? (
+            {pending ? (
+              <Label
+                type='h2'
+                className='mt-8 mb-3'
+                accessibilityLabel={t('loading')}
+                accessibilityRole='text'
+              >
+                {t('loading')}
+              </Label>
+            ) : !event ? (
               <NotFoundContent
                 accessibilityStatus={t('accessibility.event_not_found')}
                 title={t('event_not_found_title')}

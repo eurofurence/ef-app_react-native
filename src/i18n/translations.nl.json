@@ -62,6 +62,7 @@
       "title_heading": "Aankondigingstitel"
     },
     "header": "Aankondiging",
+    "loading": "Laden...",
     "not_available": "Deze aankondiging is niet meer beschikbaar."
   },
   "Announcements": {
@@ -288,6 +289,7 @@
     "label_event_room": "Ruimte",
     "label_event_track": "Track",
     "label_event_when": "Wanneer",
+    "loading": "Laden...",
     "mask_required": "Mondkapjes zijn verplicht voor dit evenement",
     "remove_favorite": "Verwijder favoriet",
     "reveal": "Toon in overzicht",

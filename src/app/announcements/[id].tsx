@@ -17,8 +17,9 @@ import { parseDefaultISO } from '@/util/parseDefaultISO'
 export default function AnnounceItem() {
   const { t } = useTranslation('Announcement')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { announcements } = useCache()
+  const { announcements, isSynchronizing } = useCache()
   const announcement = announcements.dict[id]
+  const pending = !announcement && isSynchronizing
 
   return (
     <ScrollView
@@ -35,10 +36,14 @@ export default function AnnounceItem() {
           <Label
             type='h2'
             className='mt-8 mb-3'
-            accessibilityLabel={t('accessibility.not_available_message')}
-            accessibilityRole='alert'
+            accessibilityLabel={
+              pending
+                ? t('accessibility.loading_announcement')
+                : t('accessibility.not_available_message')
+            }
+            accessibilityRole={pending ? 'text' : 'alert'}
           >
-            {t('not_available')}
+            {pending ? t('loading') : t('not_available')}
           </Label>
         ) : (
           <>

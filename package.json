@@ -103,6 +103,7 @@
   "devDependencies": {
     "@babel/core": "^7.29.0",
     "@biomejs/biome": "2.4.16",
+    "@happy-dom/global-registrator": "^20.11.1",
     "@storybook/addon-docs": "9.1.17",
     "@storybook/addon-onboarding": "9.1.17",
     "@storybook/react-native-web-vite": "9.1.17",

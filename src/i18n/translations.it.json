@@ -63,6 +63,7 @@
       "title_heading": "Titolo annuncio"
     },
     "header": "Annuncio",
+    "loading": "Caricamento...",
     "not_available": "Questo annuncio non è più disponibile."
   },
   "Announcements": {
@@ -238,6 +239,7 @@
     "label_event_room": "Stanza",
     "label_event_track": "Tracciato",
     "label_event_when": "Quando",
+    "loading": "Caricamento...",
     "mask_required": "Le maschere sono obbligatorie per questo evento",
     "remove_favorite": "Rimuovi da preferiti",
     "reveal": "Rileva nell'elenco",
