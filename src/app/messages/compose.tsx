@@ -3,7 +3,12 @@ import { Redirect } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native'
 import { z } from 'zod'
 
 import { Label } from '@/components/generic/atoms/Label'
@@ -83,73 +88,83 @@ export default function ComposeMessage() {
         visible={false}
       />
 
-      <ScrollView
-        style={StyleSheet.absoluteFill}
-        stickyHeaderIndices={[0]}
-        accessibilityLabel={t('accessibility.compose_form_scroll')}
-        accessibilityHint={t('accessibility.compose_form_scroll_hint')}
-      >
-        <Header>Compose message</Header>
-        <Floater>
-          <View
-            ref={mainContentRef}
-            accessibilityLabel={t('accessibility.compose_form_content')}
-            accessibilityRole='text'
-            style={{ marginVertical: 30, gap: 20 }}
-          >
-            <FormProvider {...form}>
-              <ManagedChoiceButtons<MessageSchema>
-                name='type'
-                label='Send by'
-                choices={typeChoices}
-                getLabel={typeChoiceLabel}
-              />
-              <ManagedTextInput<MessageSchema>
-                name='recipientUid'
-                label='Recipient'
-                placeholder="Recipient's ID"
-              />
-              <ManagedTextInput<MessageSchema>
-                name='authorName'
-                label='Author name'
-                placeholder='John Doe'
-              />
-              <ManagedTextInput<MessageSchema>
-                name='toastTitle'
-                label='Toast title'
-                placeholder='Shown in toast'
-              />
-              <ManagedTextInput<MessageSchema>
-                name='toastMessage'
-                label='Toast message'
-                placeholder='Shown as toast content'
-              />
-              <ManagedTextInput<MessageSchema>
-                name='subject'
-                label='subject'
-                placeholder='Subject'
-              />
-              <ManagedTextInput<MessageSchema>
-                name='message'
-                label='message'
-                placeholder='Body of the message'
-                numberOfLines={8}
-                multiline
-              />
+      <KeyboardAvoidingView style={StyleSheet.absoluteFill} behavior='padding'>
+        <ScrollView
+          stickyHeaderIndices={[0]}
+          keyboardShouldPersistTaps='handled'
+          keyboardDismissMode='interactive'
+          contentContainerStyle={styles.scrollContent}
+          accessibilityLabel={t('accessibility.compose_form_scroll')}
+          accessibilityHint={t('accessibility.compose_form_scroll_hint')}
+        >
+          <Header>Compose message</Header>
+          <Floater>
+            <View
+              ref={mainContentRef}
+              accessibilityLabel={t('accessibility.compose_form_content')}
+              accessibilityRole='text'
+              style={{ marginVertical: 30, gap: 20 }}
+            >
+              <FormProvider {...form}>
+                <ManagedChoiceButtons<MessageSchema>
+                  name='type'
+                  label='Send by'
+                  choices={typeChoices}
+                  getLabel={typeChoiceLabel}
+                />
+                <ManagedTextInput<MessageSchema>
+                  name='recipientUid'
+                  label='Recipient'
+                  placeholder="Recipient's ID"
+                />
+                <ManagedTextInput<MessageSchema>
+                  name='authorName'
+                  label='Author name'
+                  placeholder='John Doe'
+                />
+                <ManagedTextInput<MessageSchema>
+                  name='toastTitle'
+                  label='Toast title'
+                  placeholder='Shown in toast'
+                />
+                <ManagedTextInput<MessageSchema>
+                  name='toastMessage'
+                  label='Toast message'
+                  placeholder='Shown as toast content'
+                />
+                <ManagedTextInput<MessageSchema>
+                  name='subject'
+                  label='subject'
+                  placeholder='Subject'
+                />
+                <ManagedTextInput<MessageSchema>
+                  name='message'
+                  label='message'
+                  placeholder='Body of the message'
+                  numberOfLines={8}
+                  multiline
+                />
 
-              {isPending && <Label className='mt-4'>Submitting</Label>}
-            </FormProvider>
-          </View>
-          <Button
-            onPress={form.handleSubmit(onSend)}
-            accessibilityLabel={t('accessibility.submit_message')}
-            accessibilityHint={t('accessibility.submit_message_hint')}
-            accessibilityRole='button'
-          >
-            Submit
-          </Button>
-        </Floater>
-      </ScrollView>
+                {isPending && <Label className='mt-4'>Submitting</Label>}
+              </FormProvider>
+            </View>
+            <Button
+              onPress={form.handleSubmit(onSend)}
+              accessibilityLabel={t('accessibility.submit_message')}
+              accessibilityHint={t('accessibility.submit_message_hint')}
+              accessibilityRole='button'
+            >
+              Submit
+            </Button>
+          </Floater>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  scrollContent: {
+    paddingBottom: 40,
+  },
+})
