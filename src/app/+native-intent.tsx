@@ -25,7 +25,6 @@ export function redirectSystemPath({ path }: { path: string }) {
   if (path === matchKnowledgeGroups) return `/knowledge`
   // WiFi deeplinks: forward only the query (id/pw/profile); host/path are not trusted.
   if (path.startsWith(prefixWifi) || matchWifi.test(path)) {
-    console.log(path)
     const q = path.indexOf('?')
     return q >= 0 ? `/wifi${path.slice(q)}` : '/wifi'
   }
