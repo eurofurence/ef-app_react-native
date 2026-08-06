@@ -1,10 +1,8 @@
-import { captureException } from '@sentry/react-native'
 import { format, setDay } from 'date-fns'
 import { router } from 'expo-router'
 import type { TFunction } from 'i18next'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Share } from 'react-native'
 
 import {
   type DealerDetailsInstance,
@@ -16,10 +14,11 @@ import {
   dealerSectionForLetter,
   dealerSectionForLocation,
 } from '@/components/dealers/DealerSection'
-import { appBase, conAbbr } from '@/configuration'
+import { appBase } from '@/configuration'
 import { useCache } from '@/context/data/Cache'
 import type { DealerDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
+import { shareLink } from '@/util/shareLink'
 
 /**
  * Compares category, checks if the categories are adult labeled.
@@ -175,17 +174,12 @@ export const useDealerAlphabeticalGroups = (
 }
 
 export const shareDealer = (dealer: DealerDetails) =>
-  Share.share(
-    {
-      title:
-        dealer.DisplayNameOrAttendeeNickname ||
-        dealer.DisplayName ||
-        'Unknown Dealer',
-      url: `${appBase}/Web/Dealers/${dealer.Id}`,
-      message: `Check out ${dealer.DisplayNameOrAttendeeNickname || dealer.DisplayName || 'Unknown Dealer'} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
-    },
-    {}
-  ).catch(captureException)
+  shareLink(
+    dealer.DisplayNameOrAttendeeNickname ||
+      dealer.DisplayName ||
+      'Unknown Dealer',
+    `${appBase}/Web/Dealers/${dealer.Id}`
+  )
 
 /**
  * Returns a function that toggles dealer favorite state.

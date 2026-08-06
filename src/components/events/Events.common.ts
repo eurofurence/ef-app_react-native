@@ -4,7 +4,6 @@ import { router } from 'expo-router'
 import type { TFunction } from 'i18next'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Share } from 'react-native'
 
 import {
   type EventDetailsInstance,
@@ -19,10 +18,11 @@ import {
   eventSectionForPartOfDay,
   eventSectionForPassed,
 } from '@/components/events/EventSection'
-import { appBase, conAbbr } from '@/configuration'
+import { appBase } from '@/configuration'
 import type { EventDetails } from '@/context/data/types.details'
 import { useToastContext } from '@/context/ui/ToastContext'
 import { useToggleEventFavorite } from '@/hooks/data/useToggleEventFavorite'
+import { shareLink } from '@/util/shareLink'
 
 /**
  Returns a list of event instances according to conversion rules.
@@ -194,14 +194,7 @@ export const useEventOtherGroups = (
 }
 
 export const shareEvent = (event: EventDetails) =>
-  Share.share(
-    {
-      title: event.Title,
-      url: `${appBase}/Web/Events/${event.Id}`,
-      message: `Check out ${event.Title} on ${conAbbr}!\n${appBase}/Web/Events/${event.Id}`,
-    },
-    {}
-  ).catch(captureException)
+  shareLink(event.Title, `${appBase}/Web/Events/${event.Id}`)
 
 /**
  * Uses default handlers for event card interaction, i.e., opening the event or toggling favorites.
