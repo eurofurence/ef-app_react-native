@@ -15,6 +15,8 @@ import { useCache } from '@/context/data/Cache'
 import type { LinkFragment } from '@/context/data/types.api'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
+const leadingHeading = /^\s*#{1,6}\s/
+
 export default function KnowledgeItem() {
   const { t } = useTranslation('KnowledgeGroups')
   const { id } = useLocalSearchParams<{ id: string }>()
@@ -23,6 +25,9 @@ export default function KnowledgeItem() {
   // Get the knowledge entry from cache
   const entry = knowledgeEntries.dict[id]
   const pending = !entry && isSynchronizing
+
+  const leadsWithHeading =
+    !entry?.Images?.length && leadingHeading.test(entry?.Text ?? '')
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
@@ -65,6 +70,7 @@ export default function KnowledgeItem() {
           ) : (
             <View
               ref={mainContentRef}
+              className={leadsWithHeading ? '' : 'mt-5'}
               accessibilityLabel={t('accessibility.kb_entry_content')}
               accessibilityRole='text'
             >
