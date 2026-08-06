@@ -9,8 +9,8 @@ describe('redactSensitiveUrl', () => {
         'https://x/WiFi/profile.mobileconfig?profile=event&token=abc'
       )
     ).toBe('https://x/WiFi/profile.mobileconfig?profile=event&token=REDACTED')
-    expect(redactSensitiveUrl('eventwifi://c?id=greeny&pw=secret')).toBe(
-      'eventwifi://c?id=REDACTED&pw=REDACTED'
+    expect(redactSensitiveUrl('eurofurence://wifi?id=greeny&pw=secret')).toBe(
+      'eurofurence://wifi?id=REDACTED&pw=REDACTED'
     )
   })
   it('passes through urls with nothing sensitive', () => {
