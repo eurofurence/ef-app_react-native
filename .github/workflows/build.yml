@@ -107,18 +107,34 @@ jobs:
 
             - name: 🔄 Convert AAB to APK
               if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
+              env:
+                  KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+                  KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+                  KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+                  KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
               run: |
                 # Download bundletool
                 curl -L https://github.com/google/bundletool/releases/download/1.15.6/bundletool-all-1.15.6.jar -o bundletool.jar
-                
+
+                # bundletool re-signs the split APKs, so it needs the same release key EAS signed the bundle with
+                echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
+
                 # Convert AAB to APK
-                java -jar bundletool.jar build-apks --bundle=app-build/*.aab --output=app-build/app.apks --mode=universal
+                java -jar bundletool.jar build-apks \
+                  --bundle=app-build/app.aab \
+                  --output=app-build/app.apks \
+                  --mode=universal \
+                  --ks=keystore.jks \
+                  --ks-pass="pass:$KEYSTORE_PASSWORD" \
+                  --ks-key-alias="$KEY_ALIAS" \
+                  --key-pass="pass:$KEY_PASSWORD"
                 unzip app-build/app.apks -d app-build/
                 mv app-build/universal.apk app-build/app-universal.apk
-                
+
                 # Clean up temporary files
                 rm app-build/app.apks
                 rm bundletool.jar
+                rm keystore.jks
 
             - name: 🏷 Read app version
               if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
