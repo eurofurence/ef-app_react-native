@@ -265,7 +265,12 @@ export const CacheProvider = ({
       invocation.current = ownInvocation
       setIsSynchronizing(true)
 
-      const promise = (async () => {
+      // Registered before the body runs: a synchronous throw would otherwise
+      // reach the finally first and leave a rejected run in the ref for good.
+      const entry = { key: runKey } as { key: string; promise: Promise<void> }
+      running.current = entry
+
+      entry.promise = (async () => {
         try {
           const data = await axios
             .get(`${apiBase}/${path}`, {
@@ -278,6 +283,12 @@ export const CacheProvider = ({
                 : {},
             })
             .then((res) => res.data)
+            .catch((error) => {
+              // Being superseded aborts the request; report the cause, not the symptom.
+              if (invocation.current !== ownInvocation)
+                throw new SyncSupersededError()
+              throw error
+            })
 
           if (invocation.current !== ownInvocation)
             throw new SyncSupersededError()
@@ -332,8 +343,7 @@ export const CacheProvider = ({
         }
       })()
 
-      running.current = { key: runKey, promise }
-      return promise
+      return entry.promise
     },
     [accessToken, authKey]
   )

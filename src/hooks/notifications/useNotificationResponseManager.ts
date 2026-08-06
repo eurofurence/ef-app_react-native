@@ -3,7 +3,7 @@ import { router } from 'expo-router'
 import { useEffect, useRef } from 'react'
 
 import { conId } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
+import { SyncSupersededError, useCache } from '@/context/data/Cache'
 import { useCommunicationsQuery } from '@/hooks/api/communications/useCommunicationsQuery'
 import { captureNotificationException } from '@/sentryHelpers'
 
@@ -53,12 +53,14 @@ export function useNotificationResponseManager() {
       navigate: () => void
     ) => {
       fetch()
-        .catch((error) =>
+        .catch((error) => {
+          // A superseded run is replaced by one that does apply the data.
+          if (error instanceof SyncSupersededError) return
           captureNotificationException(
             `Fetching data for the ${event} notification failed`,
             error
           )
-        )
+        })
         .finally(navigate)
     }
 

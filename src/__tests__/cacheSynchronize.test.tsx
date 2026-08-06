@@ -186,4 +186,34 @@ describe('synchronize', () => {
     expect(error).toBeInstanceOf(SyncSupersededError)
     expect(cache().announcements.dict[later]).toBeUndefined()
   })
+
+  test('a run aborted before its response also rejects as superseded', async () => {
+    const cache = await mountCache()
+    const { SyncSupersededError } = await import('@/context/data/Cache')
+
+    await act(async () => {
+      requests[0].resolve(syncBody())
+    })
+
+    let error: unknown
+    let aborted!: Promise<unknown>
+    await act(async () => {
+      aborted = cache()
+        .synchronize()
+        .catch((caught: unknown) => {
+          error = caught
+        })
+    })
+
+    await act(async () => {
+      // No response yet, so the supersede cancels the request in flight.
+      cache()
+        .synchronize({ full: true })
+        .catch(() => {})
+      await aborted
+    })
+
+    expect(requests[1].aborted).toBe(true)
+    expect(error).toBeInstanceOf(SyncSupersededError)
+  })
 })

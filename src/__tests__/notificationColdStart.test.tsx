@@ -24,9 +24,8 @@ mock.module('@/util/asyncStorage', () => ({
   get: mock(async () => null),
 }))
 
-mock.module('@/sentryHelpers', () => ({
-  captureNotificationException: mock(),
-}))
+const captureNotificationException = mock()
+mock.module('@/sentryHelpers', () => ({ captureNotificationException }))
 
 // Mirrors the real auth client: ready with a restored token first, then whoami
 // lands and adds roles, which changes the sync auth key mid-tap.
@@ -192,5 +191,7 @@ describe('notification cold start', () => {
       { pathname: '/announcements/[id]', params: { id: ID } },
     ])
     expect(cache.announcements.dict[ID]).toBeDefined()
+    // Being superseded by the auth-key change is not a fetch failure.
+    expect(captureNotificationException).not.toHaveBeenCalled()
   })
 })
