@@ -11,6 +11,7 @@ import { Rule } from '@/components/generic/atoms/Rule'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
+import { LoadingContent } from '@/components/LoadingContent'
 import { useCache } from '@/context/data/Cache'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
@@ -32,18 +33,16 @@ export default function AnnounceItem() {
     >
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        {!announcement ? (
+        {pending ? (
+          <LoadingContent message={t('loading')} />
+        ) : !announcement ? (
           <Label
             type='h2'
             className='mt-8 mb-3'
-            accessibilityLabel={
-              pending
-                ? t('accessibility.loading_announcement')
-                : t('accessibility.not_available_message')
-            }
-            accessibilityRole={pending ? 'text' : 'alert'}
+            accessibilityLabel={t('accessibility.not_available_message')}
+            accessibilityRole='alert'
           >
-            {pending ? t('loading') : t('not_available')}
+            {t('not_available')}
           </Label>
         ) : (
           <>

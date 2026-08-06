@@ -319,6 +319,7 @@
     "dealer_was_updated": "Dealer was updated since your last visit",
     "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
     "in_after_dark": "Located in the After Dark section",
+    "loading": "Loading...",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
     "remove_favorite": "Unfavorite",
@@ -421,6 +422,7 @@
     "event_not_found_title": "This event does not exist",
     "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
     "header": "Feedback: {{ eventTitle }}",
+    "loading": "Loading...",
     "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
     "message_title": "Feedback message",
     "rating_title": "How much did you like this event?",
@@ -569,6 +571,7 @@
     "header": "Info Articles",
     "kb_entry_not_found_message": "Sorry, we were unable to find the article you were looking for.",
     "kb_entry_not_found_title": "This article does not exist",
+    "loading": "Loading...",
     "search": {
       "placeholder": "Search info articles…"
     },
@@ -741,6 +744,7 @@
     },
     "from": "From {{authorName}}",
     "header": "Private Message",
+    "loading": "Loading...",
     "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {

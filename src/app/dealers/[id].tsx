@@ -8,6 +8,7 @@ import { shareDealer } from '@/components/dealers/Dealers.common'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { LoadingContent } from '@/components/LoadingContent'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { useCache } from '@/context/data/Cache'
 import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
@@ -16,8 +17,9 @@ import { useLatchTrue } from '@/hooks/util/useLatchTrue'
 export default function DealerItem() {
   const { t } = useTranslation('Dealer')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { dealers } = useCache()
+  const { dealers, isSynchronizing } = useCache()
   const dealer = dealers.dict[id]
+  const pending = !dealer && isSynchronizing
 
   // Get update note. Latch so it's displayed even if reset in background.
   const updated = useUpdateSinceNote(dealer)
@@ -41,7 +43,9 @@ export default function DealerItem() {
         {dealerName}
       </Header>
       <Floater contentStyle={appStyles.trailer}>
-        {!dealer ? (
+        {pending ? (
+          <LoadingContent message={t('loading')} />
+        ) : !dealer ? (
           <NotFoundContent
             accessibilityStatus={t('accessibility.dealer_not_found')}
             title={t('dealer_not_found_title')}
