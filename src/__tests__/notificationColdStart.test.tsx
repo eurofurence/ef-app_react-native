@@ -54,6 +54,9 @@ const ID = 'e7a7aae3-8f7d-4663-8af4-759980f43959'
 
 // Mirrors expo-notifications: a layout effect supplies the response after mount.
 mock.module('expo-notifications', () => ({
+  clearLastNotificationResponse: () => {
+    // Nothing.
+  },
   useLastNotificationResponse: () => {
     const [value, setValue] = useState<any>(undefined)
     useLayoutEffect(() => {
