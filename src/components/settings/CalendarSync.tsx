@@ -55,7 +55,9 @@ export const CalendarSync = () => {
 
   const onSubscribeGoogle = () => {
     if (!webcalUrl) return
-    Linking.openURL(`https://calendar.google.com/calendar/render?cid=${webcalUrl}`).catch(onError)
+    Linking.openURL(
+      `https://calendar.google.com/calendar/render?cid=${webcalUrl}`
+    ).catch(onError)
   }
 
   const onCopy = () => {
@@ -127,7 +129,9 @@ export const CalendarSync = () => {
             >
               {t('subscribe_google')}
             </Button>
-          ) : ''}
+          ) : (
+            ''
+          )}
           <Label variant='narrow' style={styles.syncHint}>
             {t('sync_hint')}
           </Label>
