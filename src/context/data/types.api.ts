@@ -160,6 +160,7 @@ export type UserRecord = {
 /** Backend-provided app configuration. All values arrive as strings. */
 export type AppConfigRecord = {
   CmaUrl?: string
+  CritterUrl?: string
   MapsUrl?: string
   PublicWifiSsid?: string
   FeatureWalletPassesDisabled?: string

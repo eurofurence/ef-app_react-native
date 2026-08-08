@@ -21,7 +21,7 @@ export type MainMenuProps = {
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
   const { isLoggedIn, claims } = useAuthState()
-  const { cmaUrl, mapsUrl, wifiConfigDisabled } = useAppConfig()
+  const { cmaUrl, critterUrl, mapsUrl, wifiConfigDisabled } = useAppConfig()
 
   const handleCatchEmAll = useCallback(async () => {
     if (!isLoggedIn) {
@@ -92,6 +92,15 @@ export function MainMenu({ tabs }: MainMenuProps) {
           accessibilityLabel={t('accessibility.settings_tab')}
           accessibilityHint={t('accessibility.settings_tab_hint')}
         />
+        {critterUrl && (
+          <Tab
+            icon='account-reactivate'
+            text={t('critter')}
+            onPress={() => openBrowserAsync(critterUrl)}
+            accessibilityLabel={t('accessibility.critter_tab')}
+            accessibilityHint={t('accessibility.critter_tab_hint')}
+          />
+        )}
         {Platform.OS !== 'web' && !wifiConfigDisabled && (
           <Tab
             icon='wifi'

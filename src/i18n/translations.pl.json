@@ -508,6 +508,8 @@
       "catch_em_tab": "Zakładka gry Catch-em-all",
       "catch_em_tab_disabled_hint": "Wymagane logowanie, aby grać w catch-em-all",
       "catch_em_tab_hint": "Graj w grę łapania fursuitów",
+      "critter_tab_hint": "Otwórz Critter System, aby zapisać się na dyżury wolontariackie lub sprawdzić swój harmonogram",
+      "critter_tab": "Zakładka Critter System",
       "info_tab": "Zakładka artykułów informacyjnych",
       "info_tab_hint": "Przeglądaj bazę wiedzy i artykuły informacyjne",
       "login_button": "Przycisk logowania",
@@ -538,6 +540,7 @@
       "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Ogłoszenia",
+    "critter": "Critter System",
     "dealers": "Wystawcy",
     "events": "Program",
     "home": "Start",
