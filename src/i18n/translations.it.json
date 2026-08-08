@@ -661,6 +661,18 @@
     "about": "Crediti",
     "allowAnalytics": "Permetti la raccolta di dati analitici",
     "allowAnalyticsSubtitle": "Abilitando la raccolta di dati analitici permetterai di migliorare le funzionalità dell'applicazione. I dati sono forniti da Firebase e non sono condivisi con altre terze parti.",
+    "calendar": {
+      "copy_link": "Copia il link del calendario",
+      "error": "Impossibile aprire il tuo calendario. Prova invece a copiare il link.",
+      "link_copied": "Link al calendario copiato negli appunti",
+      "login_required": "Accedi per sincronizzare i tuoi eventi preferiti.",
+      "retry": "Riprova",
+      "subscribe": "Aggiungi i preferiti al calendario",
+      "subscribe_google": "Aggiungi i preferiti a Google Calendar",
+      "subtitle": "Aggiungi i tuoi eventi preferiti all'app del calendario. I nuovi preferiti e le modifiche vengono sincronizzati automaticamente.",
+      "sync_hint": "La sincronizzazione del calendario potrebbe richiedere un po' di tempo.",
+      "title": "Sincronizzazione del calendario"
+    },
     "changeLanguage": "Cambia lingua",
     "currentLanguage": "La tua lingua è Italiano 🤌",
     "device_warnings": {

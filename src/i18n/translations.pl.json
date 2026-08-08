@@ -683,6 +683,18 @@
       "synchronize": "Synchronizuj",
       "title": "Pamięć podręczna - statystyki"
     },
+    "calendar": {
+      "copy_link": "Skopiuj link do kalendarza",
+      "error": "Nie udało się otworzyć Twojego kalendarza. Spróbuj zamiast tego skopiować link.",
+      "link_copied": "Link do kalendarza skopiowano do schowka",
+      "login_required": "Zaloguj się, aby zsynchronizować swoje ulubione wydarzenia.",
+      "retry": "Spróbuj ponownie",
+      "subscribe": "Dodaj ulubione do kalendarza",
+      "subscribe_google": "Dodaj ulubione do Kalendarza Google",
+      "subtitle": "Dodaj swoje ulubione wydarzenia do aplikacji kalendarza. Nowe ulubione i zmiany synchronizują się automatycznie.",
+      "sync_hint": "Synchronizacja kalendarza może chwilę potrwać.",
+      "title": "Synchronizacja kalendarza"
+    },
     "changeLanguage": "Zmień język",
     "currentLanguage": "Twój aktualnie używany język to polski! 🥟",
     "developer_settings": {

@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/react-native'
 import { setStringAsync } from 'expo-clipboard'
 import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet } from 'react-native'
+import { Linking, Platform, StyleSheet } from 'react-native'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
@@ -53,6 +53,13 @@ export const CalendarSync = () => {
     Linking.openURL(webcalUrl).catch(onError)
   }
 
+  const onSubscribeGoogle = () => {
+    if (!webcalUrl) return
+    Linking.openURL(
+      `https://calendar.google.com/calendar/render?cid=${webcalUrl}`
+    ).catch(onError)
+  }
+
   const onCopy = () => {
     if (!feedUrl) return
     setStringAsync(feedUrl)
@@ -62,6 +69,7 @@ export const CalendarSync = () => {
 
   const subscribeDisabled = isLoading || !webcalUrl
   const copyDisabled = isLoading || !feedUrl
+  const isAndroid = Platform.OS === 'android'
 
   return (
     <SettingContainer>
@@ -112,6 +120,18 @@ export const CalendarSync = () => {
               />
             </Pressable>
           </Row>
+          {isAndroid ? (
+            <Button
+              containerStyle={styles.subscribeGoogle}
+              icon='calendar-export'
+              onPress={onSubscribeGoogle}
+              disabled={subscribeDisabled}
+            >
+              {t('subscribe_google')}
+            </Button>
+          ) : (
+            ''
+          )}
           <Label variant='narrow' style={styles.syncHint}>
             {t('sync_hint')}
           </Label>
@@ -131,6 +151,9 @@ const styles = StyleSheet.create({
   },
   subscribe: {
     flex: 1,
+  },
+  subscribeGoogle: {
+    marginTop: 5,
   },
   copy: {
     aspectRatio: 1,

@@ -851,8 +851,9 @@
       "login_required": "Melde Dich an, um Deine Favoriten zu synchronisieren.",
       "retry": "Erneut versuchen",
       "subscribe": "Favoriten zum Kalender hinzufügen",
+      "subscribe_google": "Favoriten zu Google Calendar hinzufügen",
       "subtitle": "Abonniere Deine Favoriten mit Deiner Kalender-App. Neue Favoriten und Änderungen werden automatisch synchronisiert.",
-      "sync_hint": "Die Kalender-Synchronisierung kann etwas dauern",
+      "sync_hint": "Die Kalender-Synchronisierung kann etwas dauern.",
       "title": "Kalender-Synchronisierung"
     },
     "changeLanguage": "Sprache ändern",
