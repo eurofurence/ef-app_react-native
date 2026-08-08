@@ -523,6 +523,8 @@
       "profile_tab_hint": "Visualizza e gestisci il tuo profilo",
       "settings_tab": "Scheda impostazioni",
       "settings_tab_hint": "Configura preferenze e impostazioni dell'app",
+      "weather_tab": "Scheda meteo fursuit",
+      "weather_tab_hint": "Controlla le condizioni meteo attuali per il fursuiting all’Eurofurence",
       "website_tab": "Scheda sito web convention",
       "website_tab_hint": "Apre sito web convention nel browser",
       "wifi_tab": "WiFi setup",
@@ -544,6 +546,7 @@
     "pm": "Messaggi privati",
     "services": "Servizi",
     "settings": "Impostazioni",
+    "weather": "Meteo",
     "wifi": "WiFi"
   },
   "Notification": {

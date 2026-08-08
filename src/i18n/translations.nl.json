@@ -581,6 +581,8 @@
       "profile_tab_hint": "Bekijk en beheer je profiel",
       "settings_tab": "Instellingen tabblad",
       "settings_tab_hint": "Configureer app-voorkeuren en instellingen",
+      "weather_tab": "Fursuit weer tabblad",
+      "weather_tab_hint": "Bekijk het actuele weer voor fursuiting op Eurofurence",
       "website_tab": "Conventie website tabblad",
       "website_tab_hint": "Opent conventie website in browser",
       "wifi_tab": "WiFi setup",
@@ -589,6 +591,7 @@
     "announcements": "Aankondigingen",
     "critter": "Critter System",
     "map": "Kaart",
+    "weather": "Weer",
     "website": "Website",
     "wifi": "WiFi"
   },

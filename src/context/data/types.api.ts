@@ -163,6 +163,7 @@ export type AppConfigRecord = {
   CritterUrl?: string
   MapsUrl?: string
   PublicWifiSsid?: string
+  WeatherUrl?: string
   FeatureWalletPassesDisabled?: string
   FeatureWifiConfigDisabled?: string
 }

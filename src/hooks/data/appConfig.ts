@@ -7,6 +7,7 @@ export type AppConfig = {
   critterUrl?: string
   mapsUrl?: string
   publicWifiSsid?: string
+  weatherUrl?: string
   walletPassesDisabled: boolean
   wifiConfigDisabled: boolean
 }
@@ -23,6 +24,7 @@ export function normalizeAppConfig(
     critterUrl: appConfig?.CritterUrl,
     mapsUrl: appConfig?.MapsUrl,
     publicWifiSsid: appConfig?.PublicWifiSsid,
+    weatherUrl: appConfig?.WeatherUrl,
     walletPassesDisabled: isTrue(appConfig?.FeatureWalletPassesDisabled),
     wifiConfigDisabled: isTrue(appConfig?.FeatureWifiConfigDisabled),
   }
