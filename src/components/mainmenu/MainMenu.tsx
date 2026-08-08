@@ -21,7 +21,8 @@ export type MainMenuProps = {
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
   const { isLoggedIn, claims } = useAuthState()
-  const { cmaUrl, critterUrl, mapsUrl, weatherUrl, wifiConfigDisabled } = useAppConfig()
+  const { cmaUrl, critterUrl, mapsUrl, weatherUrl, wifiConfigDisabled } =
+    useAppConfig()
 
   const handleCatchEmAll = useCallback(async () => {
     if (!isLoggedIn) {
