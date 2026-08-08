@@ -21,7 +21,7 @@ export type MainMenuProps = {
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
   const { isLoggedIn, claims } = useAuthState()
-  const { cmaUrl, critterUrl, mapsUrl, wifiConfigDisabled } = useAppConfig()
+  const { cmaUrl, critterUrl, mapsUrl, weatherUrl, wifiConfigDisabled } = useAppConfig()
 
   const handleCatchEmAll = useCallback(async () => {
     if (!isLoggedIn) {
@@ -99,6 +99,15 @@ export function MainMenu({ tabs }: MainMenuProps) {
             onPress={() => openBrowserAsync(critterUrl)}
             accessibilityLabel={t('accessibility.critter_tab')}
             accessibilityHint={t('accessibility.critter_tab_hint')}
+          />
+        )}
+        {weatherUrl && (
+          <Tab
+            icon='weather-cloudy'
+            text={t('weather')}
+            onPress={() => openBrowserAsync(weatherUrl)}
+            accessibilityLabel={t('accessibility.weather_tab')}
+            accessibilityHint={t('accessibility.weather_tab_hint')}
           />
         )}
         {Platform.OS !== 'web' && !wifiConfigDisabled && (

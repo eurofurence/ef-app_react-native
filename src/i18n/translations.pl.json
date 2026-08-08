@@ -534,6 +534,8 @@
       "profile_tab_hint": "Wyświetl i zarządzaj swoim profilem",
       "settings_tab": "Zakładka ustawień",
       "settings_tab_hint": "Konfiguruj preferencje i ustawienia aplikacji",
+      "weather_tab": "Zakładka fursuit pogoda",
+      "weather_tab_hint": "Sprawdź aktualną pogodę na Eurofurence, jeśli planujesz wystąpić w fursuicie",
       "website_tab": "Zakładka strony konwentu",
       "website_tab_hint": "Otwiera stronę konwentu w przeglądarce",
       "wifi_tab": "WiFi setup",
@@ -556,6 +558,7 @@
     "pm": "Prywatne wiadomości",
     "services": "Usługi",
     "settings": "Ustawienia",
+    "weather": "Pogoda",
     "wifi": "WiFi"
   },
   "Notification": {

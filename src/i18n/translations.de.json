@@ -688,6 +688,8 @@
       "profile_tab_hint": "Profil anzeigen und verwalten",
       "settings_tab": "Einstellungen Tab",
       "settings_tab_hint": "App-Einstellungen und Präferenzen konfigurieren",
+      "weather_tab": "Fursuit Wetter Tab",
+      "weather_tab_hint": "Informiere dich über das aktuelle Wetter für das Fursuiting auf der Eurofurence",
       "website_tab": "Convention-Website Tab",
       "website_tab_hint": "Öffnet Convention-Website im Browser",
       "wifi_tab": "WLAN-Einrichtung",
@@ -712,6 +714,7 @@
     "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen",
+    "weather": "Wetter",
     "website": "Webseite",
     "wifi": "WLAN"
   },
