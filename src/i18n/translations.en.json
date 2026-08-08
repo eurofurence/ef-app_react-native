@@ -869,8 +869,9 @@
       "login_required": "Log in to sync your favorite events.",
       "retry": "Try again",
       "subscribe": "Add favorites to calendar",
+      "subscribe_google": "Add favorites to Google Calendar",
       "subtitle": "Subscribe your calendar app to your favorite events. New favorites and changes sync automatically.",
-      "sync_hint": "Calendar synchronization may take some time",
+      "sync_hint": "Calendar synchronization may take some time.",
       "title": "Calendar sync"
     },
     "changeLanguage": "Change language",
