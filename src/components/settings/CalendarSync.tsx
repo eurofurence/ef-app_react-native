@@ -58,9 +58,11 @@ export const CalendarSync = () => {
     setStringAsync(feedUrl)
       .then(() => toast('info', t('link_copied'), 3000))
       .catch(onError)
-    Linking.openURL(
-      `https://calendar.google.com/calendar/u/0/r/settings/addbyurl`
-    ).catch(onError)
+      .finally(() =>
+        Linking.openURL(
+          'https://calendar.google.com/calendar/u/0/r/settings/addbyurl'
+        )
+      )
   }
 
   const onCopy = () => {
