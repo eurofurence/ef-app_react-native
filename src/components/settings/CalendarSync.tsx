@@ -54,10 +54,15 @@ export const CalendarSync = () => {
   }
 
   const onSubscribeGoogle = () => {
-    if (!webcalUrl) return
-    Linking.openURL(
-      `https://calendar.google.com/calendar/render?cid=${webcalUrl}`
-    ).catch(onError)
+    if (!feedUrl) return
+    setStringAsync(feedUrl)
+      .then(() => toast('info', t('link_copied'), 3000))
+      .catch(onError)
+      .finally(() =>
+        Linking.openURL(
+          'https://calendar.google.com/calendar/u/0/r/settings/addbyurl'
+        )
+      )
   }
 
   const onCopy = () => {
@@ -121,14 +126,19 @@ export const CalendarSync = () => {
             </Pressable>
           </Row>
           {isAndroid ? (
-            <Button
-              containerStyle={styles.subscribeGoogle}
-              icon='calendar-export'
-              onPress={onSubscribeGoogle}
-              disabled={subscribeDisabled}
-            >
-              {t('subscribe_google')}
-            </Button>
+            <>
+              <Button
+                containerStyle={styles.subscribeGoogle}
+                icon='calendar-export'
+                onPress={onSubscribeGoogle}
+                disabled={subscribeDisabled}
+              >
+                {t('subscribe_google')}
+              </Button>
+              <Label variant='narrow' style={styles.syncHint}>
+                {t('subscribe_google_hint')}
+              </Label>
+            </>
           ) : (
             ''
           )}

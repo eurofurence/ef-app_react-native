@@ -858,6 +858,7 @@
       "retry": "Erneut versuchen",
       "subscribe": "Favoriten zum Kalender hinzufügen",
       "subscribe_google": "Favoriten zu Google Calendar hinzufügen",
+      "subscribe_google_hint": "Die Schaltfläche kopiert die Kalender-URL und öffnet Google Calendar in deinem Browser.",
       "subtitle": "Abonniere Deine Favoriten mit Deiner Kalender-App. Neue Favoriten und Änderungen werden automatisch synchronisiert.",
       "sync_hint": "Die Kalender-Synchronisierung kann etwas dauern.",
       "title": "Kalender-Synchronisierung"
