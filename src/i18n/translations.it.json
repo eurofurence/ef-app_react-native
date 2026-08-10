@@ -675,6 +675,7 @@
       "retry": "Riprova",
       "subscribe": "Aggiungi i preferiti al calendario",
       "subscribe_google": "Aggiungi i preferiti a Google Calendar",
+      "subscribe_google_hint": "Il pulsante qui sopra copierà l'URL del calendario e aprirà Google Calendar nel tuo browser.",
       "subtitle": "Aggiungi i tuoi eventi preferiti all'app del calendario. I nuovi preferiti e le modifiche vengono sincronizzati automaticamente.",
       "sync_hint": "La sincronizzazione del calendario potrebbe richiedere un po' di tempo.",
       "title": "Sincronizzazione del calendario"

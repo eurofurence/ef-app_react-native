@@ -876,6 +876,7 @@
       "retry": "Try again",
       "subscribe": "Add favorites to calendar",
       "subscribe_google": "Add favorites to Google Calendar",
+      "subscribe_google_hint": "The button above will copy the calendar URL and open Google Calendar in your browser.",
       "subtitle": "Subscribe your calendar app to your favorite events. New favorites and changes sync automatically.",
       "sync_hint": "Calendar synchronization may take some time.",
       "title": "Calendar sync"

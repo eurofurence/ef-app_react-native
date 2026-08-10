@@ -725,6 +725,7 @@
       "retry": "Probeer opnieuw",
       "subscribe": "Favorieten aan kalender toevoegen",
       "subscribe_google": "Favorieten aan Google Calendar toevoegen",
+      "subscribe_google_hint": "Met de knop hierboven wordt de URL van de agenda gekopieerd en wordt Google Calendar in je browser geopend.",
       "subtitle": "Abonneer je kalender-app op je favoriete evenementen. Nieuwe favorieten en wijzigingen worden automatisch gesynchroniseerd.",
       "sync_hint": "Kalendersynchronisatie kan even duren.",
       "title": "Kalendersynchronisatie"
