@@ -5,6 +5,7 @@ const isTrue = (value?: string) => value?.toLowerCase() === 'true'
 export type AppConfig = {
   cmaUrl?: string
   critterUrl?: string
+  latestRelease?: string
   mapsUrl?: string
   publicWifiSsid?: string
   weatherUrl?: string
@@ -22,6 +23,7 @@ export function normalizeAppConfig(
   return {
     cmaUrl: appConfig?.CmaUrl,
     critterUrl: appConfig?.CritterUrl,
+    latestRelease: appConfig?.LatestRelease,
     mapsUrl: appConfig?.MapsUrl,
     publicWifiSsid: appConfig?.PublicWifiSsid,
     weatherUrl: appConfig?.WeatherUrl,

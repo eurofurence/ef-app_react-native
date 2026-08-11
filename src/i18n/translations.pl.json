@@ -676,6 +676,12 @@
     "sign_in": "Zaloguj się",
     "not_now": "Nie teraz"
   },
+  "UpdateAvailable": {
+    "title": "Dostępna aktualizacja",
+    "body": "Wersja {{version}} aplikacji jest już dostępna. Zaktualizuj, aby otrzymać najnowsze poprawki i funkcje.",
+    "update": "Aktualizuj teraz",
+    "dismiss": "Zamknij"
+  },
   "Settings": {
     "about": "O aplikacji",
     "allowAnalytics": "Pozwól nam gromadzić dane analityczne",

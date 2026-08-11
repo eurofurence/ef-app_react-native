@@ -663,6 +663,12 @@
     "sign_in": "Accedi",
     "not_now": "Non ora"
   },
+  "UpdateAvailable": {
+    "title": "Aggiornamento disponibile",
+    "body": "La versione {{version}} dell'app è disponibile. Aggiorna per ottenere le ultime correzioni e novità.",
+    "update": "Aggiorna ora",
+    "dismiss": "Chiudi"
+  },
   "Settings": {
     "about": "Crediti",
     "allowAnalytics": "Permetti la raccolta di dati analitici",

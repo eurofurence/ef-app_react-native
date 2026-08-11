@@ -18,6 +18,11 @@ export type Settings = {
   timeTravelOffset?: number
   timeTravelEnabled?: boolean
   warnings?: Record<string, boolean>
+  /**
+   * Release the update prompt was last dismissed for. A newer release prompts
+   * again.
+   */
+  dismissedRelease?: string
   favoriteDealers?: string[]
   artistsAlleyLocal?: ArtistsAlleyLocal
   /**

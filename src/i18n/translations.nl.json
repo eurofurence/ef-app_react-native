@@ -706,6 +706,12 @@
     "sign_in": "Inloggen",
     "not_now": "Niet nu"
   },
+  "UpdateAvailable": {
+    "title": "Update beschikbaar",
+    "body": "Versie {{version}} van de app is uit. Werk bij voor de nieuwste oplossingen en functies.",
+    "update": "Nu bijwerken",
+    "dismiss": "Sluiten"
+  },
   "Settings": {
     "allowAnalytics": "Sta ons toe om analytische events te verzamelen.",
     "cache": {
