@@ -18,4 +18,11 @@ describe('compareVersions', () => {
     expect(compareVersions('7.1.0-beta', '7.1.0')).toBe(0)
     expect(compareVersions('7.2.0-beta', '7.1.0')).toBeGreaterThan(0)
   })
+
+  it('ignores dotted pre-release and build qualifiers', () => {
+    expect(compareVersions('7.1.0-beta.1', '7.1.0')).toBe(0)
+    expect(compareVersions('7.1.0+build.5', '7.1.0')).toBe(0)
+    expect(compareVersions('7.1.0-rc.2', '7.1.0-rc.9')).toBe(0)
+    expect(compareVersions('7.1.1-beta.1', '7.1.0')).toBeGreaterThan(0)
+  })
 })

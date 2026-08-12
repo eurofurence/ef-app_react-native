@@ -2,8 +2,8 @@
  * Compares dot separated version strings, returning a negative number if left
  * precedes right, zero if they are equal and a positive number otherwise.
  * Segments are compared numerically and missing segments count as zero, so
- * `7.1` and `7.1.0` are equal. Anything non-numeric in a segment is ignored,
- * which makes a pre-release suffix rank the same as its release.
+ * `7.1` and `7.1.0` are equal. Pre-release and build qualifiers rank the same as
+ * the release they qualify, so `7.1.0-beta.1` and `7.1.0` are equal too.
  */
 export function compareVersions(left: string, right: string): number {
   const leftParts = parseVersion(left)
@@ -18,8 +18,11 @@ export function compareVersions(left: string, right: string): number {
 }
 
 function parseVersion(version: string): number[] {
+  // A qualifier can itself be dotted, so it has to go before splitting or its
+  // segments would be read as further release numbers.
   return version
     .trim()
+    .replace(/[-+].*$/, '')
     .split('.')
     .map((segment) => {
       const parsed = Number.parseInt(segment, 10)

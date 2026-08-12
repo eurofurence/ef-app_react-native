@@ -29,32 +29,38 @@ export function UpdateAvailableModal() {
   const { latestRelease } = useAppConfig()
   const { getValue, setValue } = useCache()
   const theme = useTheme()
-  const [closed, setClosed] = useState(false)
+  const [closedRelease, setClosedRelease] = useState<string>()
 
   // Null off-device, where there is no store to send anyone to either.
   const currentVersion = Application.nativeApplicationVersion
   const { dismissedRelease } = getValue('settings')
 
   const visible =
-    !closed &&
     storeUrl !== undefined &&
     latestRelease !== undefined &&
     currentVersion !== null &&
+    closedRelease !== latestRelease &&
     compareVersions(latestRelease, currentVersion) > 0 &&
     (dismissedRelease === undefined ||
       compareVersions(latestRelease, dismissedRelease) > 0)
 
   const onDismiss = () => {
-    setClosed(true)
+    setClosedRelease(latestRelease)
     setValue('settings', {
       ...getValue('settings'),
       dismissedRelease: latestRelease,
     })
   }
 
-  const onUpdate = () => {
-    setClosed(true)
-    if (storeUrl) Linking.openURL(storeUrl).catch(captureException)
+  const onUpdate = async () => {
+    if (!storeUrl) return
+    try {
+      await Linking.openURL(storeUrl)
+      setClosedRelease(latestRelease)
+    } catch (error) {
+      // Leave the prompt up so a failed hand-off to the store can be retried.
+      captureException(error)
+    }
   }
 
   return (
