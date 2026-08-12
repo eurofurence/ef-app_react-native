@@ -837,6 +837,12 @@
     "sign_in": "Anmelden",
     "not_now": "Nicht jetzt"
   },
+  "UpdateAvailable": {
+    "title": "Update verfügbar",
+    "body": "Version {{version}} der App ist da. Aktualisiere, um die neuesten Fehlerbehebungen und Funktionen zu erhalten.",
+    "update": "Jetzt aktualisieren",
+    "dismiss": "Schließen"
+  },
   "Settings": {
     "about": "Über uns",
     "allowAnalytics": "Erlaube uns, Fehler zu übermitteln",

@@ -161,6 +161,7 @@ export type UserRecord = {
 export type AppConfigRecord = {
   CmaUrl?: string
   CritterUrl?: string
+  LatestRelease?: string
   MapsUrl?: string
   PublicWifiSsid?: string
   WeatherUrl?: string
