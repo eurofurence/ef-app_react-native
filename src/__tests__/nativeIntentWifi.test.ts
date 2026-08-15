@@ -1,8 +1,4 @@
-import { describe, expect, it, mock } from 'bun:test'
-
-mock.module('@/configuration', () => ({
-  appBase: 'https://app.eurofurence.org',
-}))
+import { describe, expect, it } from 'bun:test'
 
 const { redirectSystemPath } = await import('@/app/+native-intent')
 
