@@ -1,4 +1,5 @@
 import { captureException } from '@sentry/react-native'
+import { type Href, router } from 'expo-router'
 import { mapValues } from 'lodash'
 import { type FC, useMemo } from 'react'
 import { Linking, View, type ViewStyle } from 'react-native'
@@ -6,6 +7,7 @@ import {
   EnrichedMarkdownText,
   type MarkdownStyle,
 } from 'react-native-enriched-markdown'
+import { redirectSystemPath } from '@/app/+native-intent'
 import { withAlpha } from '@/context/Theme'
 import { useTheme, useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import type { LabelProps } from './Label'
@@ -191,7 +193,10 @@ export const MarkdownContent: FC<MarkdownContentProps> = ({
         selectable
         selectionColor={withAlpha(primary, 0.35)}
         onLinkPress={({ url }) => {
-          Linking.openURL(url).catch(captureException)
+          // Unrecognized paths come back unchanged, so a rewrite means it resolved to an in-app route.
+          const target = redirectSystemPath({ path: url })
+          if (target !== url) router.push(target as Href)
+          else Linking.openURL(url).catch(captureException)
         }}
       />
     </View>
