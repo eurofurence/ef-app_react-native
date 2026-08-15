@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
 
+import { appStyles } from '@/components/AppStyles'
 import { Banner } from '@/components/generic/atoms/Banner'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
@@ -58,7 +59,7 @@ export default function KnowledgeItem() {
         accessibilityHint={t('accessibility.kb_entry_scroll_hint')}
       >
         <Header>{entry?.Title ?? t('viewing_entry')}</Header>
-        <Floater>
+        <Floater contentStyle={appStyles.trailer}>
           {pending ? (
             <LoadingContent message={t('loading')} />
           ) : !entry ? (
