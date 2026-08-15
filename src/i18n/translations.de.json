@@ -92,6 +92,7 @@
     },
     "header": "Mitteilungen",
     "noAnnouncements": "Momentan gibt es keine Mitteilungen",
+    "noResults": "Keine Mitteilungen entsprechen deiner Suche",
     "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
     "sectionTitle": "Mitteilungen"
   },

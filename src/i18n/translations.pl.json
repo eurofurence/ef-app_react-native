@@ -90,6 +90,7 @@
     },
     "header": "Ogłoszenia",
     "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",
+    "noResults": "Żadne ogłoszenia nie pasują do wyszukiwania",
     "sectionSubtitle": "Na żywo z konwentu",
     "sectionTitle": "Ogłoszenia"
   },
