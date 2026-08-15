@@ -92,6 +92,7 @@
     },
     "header": "Announcements",
     "noAnnouncements": "There are currently no active announcements",
+    "noResults": "No announcements match your search",
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
   },

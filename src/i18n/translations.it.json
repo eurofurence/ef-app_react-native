@@ -83,6 +83,7 @@
     },
     "header": "Annunci",
     "noAnnouncements": "Non ci sono annunci al momento.",
+    "noResults": "Nessun annuncio corrisponde alla tua ricerca",
     "sectionSubtitle": "Aggiornamenti in tempo reale dalla convention",
     "sectionTitle": "Annunci"
   },
