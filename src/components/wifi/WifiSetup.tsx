@@ -13,7 +13,7 @@ import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
 import { addEnterpriseNetwork } from '@/components/wifi/efWifiModule'
 import {
   buildOnsiteFileUrl,
-  buildOnsiteProfileUrl,
+  buildOnsiteFileUrlCustom,
   credentialsForProfile,
   WIFI_ANONYMOUS_IDENTITY,
   WIFI_DOMAIN_SUFFIX_MATCH,
@@ -99,7 +99,7 @@ export function WifiSetup({
         // custom creds can't be static, so they open the prefilled onsite page (tap Download there).
         const url =
           profile === 'custom'
-            ? buildOnsiteProfileUrl(creds.identity, creds.password)
+            ? buildOnsiteFileUrlCustom(creds.identity, creds.password)
             : buildOnsiteFileUrl(profile)
         await Linking.openURL(url)
       }
