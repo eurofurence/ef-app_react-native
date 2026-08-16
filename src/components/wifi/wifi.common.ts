@@ -100,10 +100,19 @@ export function buildOnsiteProfileUrl(
 /**
  * Build a DIRECT URL to a pre-filled, statically-hosted .mobileconfig for a PUBLIC profile.
  * Opening it in Safari triggers the iOS install prompt in one step (no tutorial-page tap).
- * Custom credentials can't be static, so those use buildOnsiteProfileUrl (the prefilled page).
+ * buildOnsiteFileUrl       -> general profiles
+ * buildOnsiteFileUrlCustom -> custom profiles with preloaded credentials
  */
 export function buildOnsiteFileUrl(
   profile: (typeof WIFI_PUBLIC_PROFILE_IDS)[number]
 ): string {
   return `${WIFI_ONSITE_URL}/ios-profile-${profile}/`
+}
+
+export function buildOnsiteFileUrlCustom(
+  identity: string,
+  password: string
+): string {
+  const params = new URLSearchParams({ id: identity, pw: password })
+  return `${WIFI_ONSITE_URL}/ios-profile-custom/?${params.toString()}`
 }
