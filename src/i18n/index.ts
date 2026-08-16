@@ -81,7 +81,6 @@ export const i18t = i18next
   })
   .init({
     fallbackLng: 'en',
-    initImmediate: true,
     defaultNS: 'Home',
     resources: {
       en: enTranslations,
