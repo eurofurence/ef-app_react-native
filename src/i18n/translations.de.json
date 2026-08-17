@@ -552,6 +552,7 @@
       "kb_entry_card": "Wissensartikel: {{title}}",
       "kb_entry_card_hint": "Tippen um vollständige Artikeldetails anzuzeigen",
       "kb_entry_content": "Wissensartikel-Inhalt",
+      "kb_entry_header_hint": "Kopfzeile mit Artikeltitel und Teilen-Schaltfläche",
       "kb_entry_loaded": "Wissensartikel geladen: {{title}}",
       "kb_entry_not_found": "Die Seite für diesen Artikel existiert nicht",
       "kb_entry_scroll": "Wissensartikel-Scroll-Ansicht",
@@ -569,6 +570,7 @@
     "search": {
       "placeholder": "Info-Artikel suchen…"
     },
+    "share": "Diesen Artikel teilen",
     "viewing_entry": "Artikel ansehen"
   },
   "LostAndFound": {

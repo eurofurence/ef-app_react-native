@@ -5,10 +5,12 @@ import { ScrollView, StyleSheet, View } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
 import { Banner } from '@/components/generic/atoms/Banner'
+import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { shareKbEntry } from '@/components/kb/KbEntry.common'
 import { LoadingContent } from '@/components/LoadingContent'
 import { LinkItem } from '@/components/maps/LinkItem'
 import { NotFoundContent } from '@/components/NotFoundContent'
@@ -58,7 +60,14 @@ export default function KnowledgeItem() {
         accessibilityLabel={t('accessibility.kb_entry_scroll')}
         accessibilityHint={t('accessibility.kb_entry_scroll_hint')}
       >
-        <Header>{entry?.Title ?? t('viewing_entry')}</Header>
+        <Header
+          secondaryIcon={entry ? platformShareIcon : undefined}
+          secondaryPress={entry ? () => shareKbEntry(entry) : undefined}
+          secondaryAccessibilityLabel={t('share')}
+          secondaryAccessibilityHint={t('accessibility.kb_entry_header_hint')}
+        >
+          {entry?.Title ?? t('viewing_entry')}
+        </Header>
         <Floater contentStyle={appStyles.trailer}>
           {pending ? (
             <LoadingContent message={t('loading')} />

@@ -391,6 +391,7 @@
       "kb_entry_card": "Articolo informativo: {{title}}",
       "kb_entry_card_hint": "Tocca per visualizzare i dettagli completi dell'articolo",
       "kb_entry_content": "Contenuto articolo informativo",
+      "kb_entry_header_hint": "Intestazione contenente il titolo dell'articolo e il pulsante di condivisione",
       "kb_entry_loaded": "Articolo informativo caricato: {{title}}",
       "kb_entry_scroll": "Vista scroll articolo informativo",
       "kb_entry_scroll_hint": "Vista scrollabile contenente il contenuto dell'articolo informativo",
@@ -404,7 +405,8 @@
     "loading": "Caricamento...",
     "search": {
       "placeholder": "Cerca articoli informativi…"
-    }
+    },
+    "share": "Condividi questo articolo"
   },
   "LostAndFound": {
     "accessibility": {

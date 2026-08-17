@@ -402,6 +402,7 @@
       "kb_entry_card": "Artykuł informacyjny: {{title}}",
       "kb_entry_card_hint": "Dotknij, aby wyświetlić pełne szczegóły artykułu",
       "kb_entry_content": "Treść artykułu informacyjnego",
+      "kb_entry_header_hint": "Nagłówek zawierający tytuł artykułu i przycisk udostępniania",
       "kb_entry_loaded": "Artykuł informacyjny załadowany: {{title}}",
       "kb_entry_scroll": "Widok przewijania artykułu informacyjnego",
       "kb_entry_scroll_hint": "Przewijalny widok zawierający treść artykułu informacyjnego",
@@ -415,7 +416,8 @@
     "loading": "Ładowanie...",
     "search": {
       "placeholder": "Szukaj artykułów informacyjnych…"
-    }
+    },
+    "share": "Udostępnij ten artykuł"
   },
   "LostAndFound": {
     "accessibility": {

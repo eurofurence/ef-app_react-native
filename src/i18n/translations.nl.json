@@ -449,6 +449,7 @@
       "kb_entry_card": "Kennisartikel: {{title}}",
       "kb_entry_card_hint": "Tik om volledige artikeldetails te bekijken",
       "kb_entry_content": "Kennisartikel-inhoud",
+      "kb_entry_header_hint": "Koptekst met artikeltitel en deelknop",
       "kb_entry_loaded": "Kennisartikel geladen: {{title}}",
       "kb_entry_scroll": "Kennisartikel scroll-weergave",
       "kb_entry_scroll_hint": "Scrollbare weergave met kennisartikel-inhoud",
@@ -462,7 +463,8 @@
     "loading": "Laden...",
     "search": {
       "placeholder": "Zoek info-artikelen…"
-    }
+    },
+    "share": "Deel dit artikel"
   },
   "LostAndFound": {
     "accessibility": {
