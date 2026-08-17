@@ -1,9 +1,10 @@
 import { captureException } from '@sentry/react-native'
 import * as FileSystem from 'expo-file-system/legacy'
 import * as IntentLauncher from 'expo-intent-launcher'
+import { openBrowserAsync } from 'expo-web-browser'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Linking, Platform, StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 import { Image } from '@/components/generic/atoms/Image'
 import { Pressable } from '@/components/generic/Pressable'
@@ -59,8 +60,9 @@ export function AddToWalletButton() {
           flags: 1, // FLAG_GRANT_READ_URI_PERMISSION
         })
       } else {
-        // iOS recognises the pkpass response and shows the Add to Wallet sheet.
-        await Linking.openURL(url)
+        // Safari recognises the pkpass response and shows the Add to Wallet
+        // sheet; a third-party default browser would just download the file.
+        await openBrowserAsync(url)
       }
     } catch (error) {
       captureException(error)

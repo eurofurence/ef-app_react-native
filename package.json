@@ -164,7 +164,7 @@
     "test": "bun test",
     "web": "expo start --web"
   },
-  "version": "7.2.0",
+  "version": "7.2.1",
   "patchedDependencies": {
     "react-native-legal@1.6.3": "patches/react-native-legal@1.6.3.patch"
   },
