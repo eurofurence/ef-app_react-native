@@ -24,6 +24,7 @@ import { Row } from '@/components/generic/containers/Row'
 import { Pressable } from '@/components/generic/Pressable'
 import { conName } from '@/configuration'
 import { useAppSetting } from '@/data/collections/AppSettings'
+import { useAppConfig } from '@/hooks/data/useAppConfig'
 import { useTheme } from '@/hooks/themes/useTheme'
 import { useMultiTap } from '@/hooks/util/useMultiTap'
 
@@ -145,6 +146,7 @@ export default function AboutScreen() {
   const { t } = useTranslation('About')
   const { t: a11y } = useTranslation('Accessibility')
   const { setTheme } = useTheme()
+  const { supportUrl } = useAppConfig()
 
   const [devMenu, setDevMenu] = useAppSetting('DevMenuEnabled')
 
@@ -227,23 +229,25 @@ export default function AboutScreen() {
         </TouchableOpacity>
 
         <Row style={styles.marginAround} gap={16}>
-          <Button
-            containerStyle={styles.flex}
-            onPress={() =>
-              handleExternalLink('https://t.me/+lAYTadnRKdY2NDBk', {
-                title: a11y('external_link_no_prompt'),
-                body: a11y('outside_link'),
-                confirmText: a11y('confirm'),
-                cancelText: a11y('cancel'),
-              })
-            }
-            icon='help'
-            accessible
-            accessibilityLabel={t('app_details.get_help')}
-            accessibilityRole='link'
-          >
-            {t('app_details.get_help')}
-          </Button>
+          {supportUrl && (
+            <Button
+              containerStyle={styles.flex}
+              onPress={() =>
+                handleExternalLink(supportUrl, {
+                  title: a11y('external_link_no_prompt'),
+                  body: a11y('outside_link'),
+                  confirmText: a11y('confirm'),
+                  cancelText: a11y('cancel'),
+                })
+              }
+              icon='help'
+              accessible
+              accessibilityLabel={t('app_details.get_help')}
+              accessibilityRole='link'
+            >
+              {t('app_details.get_help')}
+            </Button>
+          )}
           <Button
             containerStyle={styles.flex}
             onPress={() =>
