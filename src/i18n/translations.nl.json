@@ -151,6 +151,7 @@
       "location_invalid_string": "Voer het nummer van de tafel in die op je handout staat.",
       "telegramHandle_invalid_string": "Dit lijkt niet op een geldig Telegram-handle.",
       "too_small": "Dit veld is verplicht.",
+      "unsupported_image": "Dit afbeeldingsformaat wordt niet ondersteund. Kies een andere afbeelding.",
       "websiteUrl_invalid_string": "Voer je website in als: https://eurofurence.org"
     },
     "explanation_edit_change": "Je kunt je Artist Alley tafelregistratie hier wijzigen. Update je informatie, kies een afbeelding en stuur de wijzigingen.",

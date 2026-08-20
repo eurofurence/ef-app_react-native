@@ -175,6 +175,7 @@
       "location_invalid_string": "Enter the number on the handout at your table.",
       "telegramHandle_invalid_string": "This does not look like a valid Telegram handle.",
       "too_small": "This is required.",
+      "unsupported_image": "This image format is not supported. Pick a different image.",
       "websiteUrl_invalid_string": "Write your website like: https://eurofurence.org"
     },
     "explanation_edit_change": "You can change your Artist Alley table registration details here. Just update your information, select a picture, and submit it.",
