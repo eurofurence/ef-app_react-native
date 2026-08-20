@@ -1,6 +1,13 @@
+import { captureException } from '@sentry/react-native'
+import {
+  ImageManipulator,
+  type ImageManipulatorContext,
+  type ImageRef,
+  SaveFormat,
+} from 'expo-image-manipulator'
 import * as ImagePicker from 'expo-image-picker'
 import { useState } from 'react'
-import { Controller } from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'
 
 import { Image, type ImageProps } from '@/components/generic/atoms/Image'
@@ -52,6 +59,7 @@ export const ManagedImagePicker = <T extends object>({
   placeholder,
 }: ManagedImagePickerProps<T>) => {
   const backgroundStyle = useThemeBackground('background')
+  const { setError } = useFormContext()
   const [aspectRatio, setAspectRatio] = useState<undefined | number>()
   return (
     <Controller
@@ -61,15 +69,31 @@ export const ManagedImagePicker = <T extends object>({
           <Pressable
             containerStyle={[styles.container, backgroundStyle]}
             disabled={field.disabled}
-            onPress={() => {
-              ImagePicker.launchImageLibraryAsync({
+            onPress={async () => {
+              const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ['images'],
                 allowsEditing: false,
                 allowsMultipleSelection: false,
                 quality: 1,
-              }).then((result) => {
-                if (!result.canceled) field.onChange(result.assets[0].uri)
               })
+              if (result.canceled) return
+
+              // iOS and web hand back the picked file untouched, so HEIC/TIFF/AVIF
+              // reach the API in a format its resizer cannot decode. Re-encode here.
+              let context: ImageManipulatorContext | undefined
+              let image: ImageRef | undefined
+              try {
+                context = ImageManipulator.manipulate(result.assets[0].uri)
+                image = await context.renderAsync()
+                const jpeg = await image.saveAsync({ format: SaveFormat.JPEG })
+                field.onChange(jpeg.uri)
+              } catch (error) {
+                captureException(error)
+                setError(field.name, { type: 'unsupported_image' })
+              } finally {
+                context?.release()
+                image?.release()
+              }
             }}
           >
             <Image

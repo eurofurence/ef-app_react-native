@@ -175,6 +175,7 @@
       "location_invalid_string": "Gib die Tischnummer vom Handout auf deinem Tisch ein.",
       "telegramHandle_invalid_string": "Das sieht nicht nach einem gültigen Telegram-Handle aus.",
       "too_small": "Dieses Feld ist verpflichtend.",
+      "unsupported_image": "Dieses Bildformat wird nicht unterstützt. Wähle ein anderes Bild.",
       "websiteUrl_invalid_string": "Gib deine Webseite ein wie: https://eurofurence.org"
     },
     "explanation_edit_change": "Hier kannst du deine Tischregistrierung in der Artist Alley bearbeiten. Aktualisiere deine Eingaben, wähle ein Bild und schicke uns die Änderungen.",
