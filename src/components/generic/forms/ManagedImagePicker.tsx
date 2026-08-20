@@ -6,7 +6,7 @@ import {
   SaveFormat,
 } from 'expo-image-manipulator'
 import * as ImagePicker from 'expo-image-picker'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Controller, useFormContext } from 'react-hook-form'
 import { StyleSheet, View } from 'react-native'
 
@@ -61,6 +61,8 @@ export const ManagedImagePicker = <T extends object>({
   const backgroundStyle = useThemeBackground('background')
   const { setError } = useFormContext()
   const [aspectRatio, setAspectRatio] = useState<undefined | number>()
+  const [picking, setPicking] = useState(false)
+  const pickGeneration = useRef(0)
   return (
     <Controller
       render={({ field, fieldState }) => (
@@ -68,31 +70,43 @@ export const ManagedImagePicker = <T extends object>({
           <Label type='caption'>{label}</Label>
           <Pressable
             containerStyle={[styles.container, backgroundStyle]}
-            disabled={field.disabled}
+            disabled={field.disabled || picking}
             onPress={async () => {
-              const result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ['images'],
-                allowsEditing: false,
-                allowsMultipleSelection: false,
-                quality: 1,
-              })
-              if (result.canceled) return
-
-              // iOS and web hand back the picked file untouched, so HEIC/TIFF/AVIF
-              // reach the API in a format its resizer cannot decode. Re-encode here.
-              let context: ImageManipulatorContext | undefined
-              let image: ImageRef | undefined
+              // Disabling is not enough: taps within one frame both start before
+              // the re-render, so only the newest run may touch the field.
+              const generation = ++pickGeneration.current
+              const isCurrent = () => generation === pickGeneration.current
+              setPicking(true)
               try {
-                context = ImageManipulator.manipulate(result.assets[0].uri)
-                image = await context.renderAsync()
-                const jpeg = await image.saveAsync({ format: SaveFormat.JPEG })
-                field.onChange(jpeg.uri)
-              } catch (error) {
-                captureException(error)
-                setError(field.name, { type: 'unsupported_image' })
+                const result = await ImagePicker.launchImageLibraryAsync({
+                  mediaTypes: ['images'],
+                  allowsEditing: false,
+                  allowsMultipleSelection: false,
+                  quality: 1,
+                })
+                if (result.canceled) return
+
+                // iOS and web hand back the picked file untouched, so HEIC/TIFF/AVIF
+                // reach the API in a format its resizer cannot decode. Re-encode here.
+                let context: ImageManipulatorContext | undefined
+                let image: ImageRef | undefined
+                try {
+                  context = ImageManipulator.manipulate(result.assets[0].uri)
+                  image = await context.renderAsync()
+                  const jpeg = await image.saveAsync({
+                    format: SaveFormat.JPEG,
+                  })
+                  if (isCurrent()) field.onChange(jpeg.uri)
+                } catch (error) {
+                  captureException(error)
+                  if (isCurrent())
+                    setError(field.name, { type: 'unsupported_image' })
+                } finally {
+                  context?.release()
+                  image?.release()
+                }
               } finally {
-                context?.release()
-                image?.release()
+                if (isCurrent()) setPicking(false)
               }
             }}
           >
