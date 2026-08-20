@@ -8,10 +8,12 @@ describe('normalizeAppConfig', () => {
         CmaUrl: 'https://fursuit.eurofurence.org/catch-em-all',
         FeatureWalletPassesDisabled: 'True',
         MapsUrl: 'https://nav.eurofurence.org/',
+        SupportUrl: 'https://t.me/+lAYTadnRKdY2NDBk',
       })
     ).toEqual({
       cmaUrl: 'https://fursuit.eurofurence.org/catch-em-all',
       mapsUrl: 'https://nav.eurofurence.org/',
+      supportUrl: 'https://t.me/+lAYTadnRKdY2NDBk',
       walletPassesDisabled: true,
       wifiConfigDisabled: false,
     })

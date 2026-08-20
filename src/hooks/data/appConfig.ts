@@ -8,6 +8,7 @@ export type AppConfig = {
   latestRelease?: string
   mapsUrl?: string
   publicWifiSsid?: string
+  supportUrl?: string
   weatherUrl?: string
   walletPassesDisabled: boolean
   wifiConfigDisabled: boolean
@@ -26,6 +27,7 @@ export function normalizeAppConfig(
     latestRelease: appConfig?.LatestRelease,
     mapsUrl: appConfig?.MapsUrl,
     publicWifiSsid: appConfig?.PublicWifiSsid,
+    supportUrl: appConfig?.SupportUrl,
     weatherUrl: appConfig?.WeatherUrl,
     walletPassesDisabled: isTrue(appConfig?.FeatureWalletPassesDisabled),
     wifiConfigDisabled: isTrue(appConfig?.FeatureWifiConfigDisabled),

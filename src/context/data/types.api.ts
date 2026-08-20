@@ -164,6 +164,7 @@ export type AppConfigRecord = {
   LatestRelease?: string
   MapsUrl?: string
   PublicWifiSsid?: string
+  SupportUrl?: string
   WeatherUrl?: string
   FeatureWalletPassesDisabled?: string
   FeatureWifiConfigDisabled?: string
