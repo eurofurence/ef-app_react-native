@@ -11,7 +11,7 @@ the respective artists as listed below:
   * `/assets/platform/appicon.png`
   * `/assets/platform/splash.png`
   * `/assets/static/banner_logo.png`
-* Artwork: [Jujako](https://linktr.ee/jukajo)
+* Artwork: [Jukajo](https://linktr.ee/jukajo)
   * `/assets/static/banner_narrow.png`
   * `/assets/static/banner_wide.png`
 
@@ -55,7 +55,7 @@ the respective artists as listed below:
 
 ## [Eurofurence 26 (2022)](https://github.com/eurofurence/ef-app_react-native/tree/v3.0.0-439)
 
-* Logo: Fleeks](<https://fleeks.art/>)
+* Logo: [Fleeks](https://fleeks.art/)
   * `/assets/platform/appicon-android-monochrome.png`
   * `/assets/platform/appicon-android.png`
   * `/assets/platform/splash.png`
@@ -65,7 +65,7 @@ the respective artists as listed below:
   * Artwork @ `/assets/images/banner_2022.png`
   * `/assets/images/banner_2022_no_logo.png`
 
-## [Eurofurence 26 (2019)](https://github.com/eurofurence/ef-app_react-native/tree/v3.0.0-439)
+## Eurofurence 25 (2019)
 
 * Logo: [Fleeks](https://fleeks.art/) & AlphaKi
   * Logo @ `/assets/images/banner_2019.png`
