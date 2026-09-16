@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { format, type Locale } from 'date-fns'
-import { de, enGB, it, nl, pl } from 'date-fns/locale'
+import { de, enGB, fr, it, nl, pl } from 'date-fns/locale'
 import * as Localization from 'expo-localization'
 import i18next from 'i18next'
 import { noop, partial } from 'lodash'
@@ -17,11 +17,12 @@ import enTranslations from './translations.en.json'
 import itTranslations from './translations.it.json'
 import nlTranslations from './translations.nl.json'
 import plTranslations from './translations.pl.json'
+import frTranslations from './translations.fr.json'
 
 /**
  * List of supported locales.
  */
-export const supportedTranslations = ['en', 'nl', 'pl', 'it', 'de'] as const
+export const supportedTranslations = ['en', 'nl', 'pl', 'it', 'de', 'fr'] as const
 
 /**
  * The translations we provide.
@@ -37,6 +38,7 @@ export const dateFnsLocales: Record<string, Locale> = {
   pl: pl,
   it: it,
   de: de,
+  fr: fr,
 }
 
 /**
@@ -88,6 +90,7 @@ export const i18t = i18next
       de: deTranslations,
       it: itTranslations,
       pl: plTranslations,
+      fr: frTranslations,
     },
     interpolation: { escapeValue: false },
     react: {

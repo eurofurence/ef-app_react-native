@@ -938,7 +938,7 @@
       "show_language_warnings": "Show language warnings",
       "show_registration_countdown": "Show registration countdown",
       "show_time_zone_warnings": "Show time zone warnings",
-      "subtitle": "Show or hide device warnigns on home screen",
+      "subtitle": "Show or hide device warnings on home screen",
       "title": "Warnings on home screen"
     },
     "header": "Settings",
@@ -950,7 +950,7 @@
     },
     "notifications": {
       "is_device_scheduled": "Scheduled on device",
-      "is_not_device_scheduled": "Not schedule on device",
+      "is_not_device_scheduled": "Not scheduled on device",
       "no_notifications": "There are no scheduled notifications!",
       "scheduled_at": "Scheduled on {{ time }}",
       "scheduled_for": "Scheduled for {{ time }}",
