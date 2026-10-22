@@ -1,6 +1,4 @@
-import { captureException } from '@sentry/react-native'
-import { Share } from 'react-native'
-import { appBase, conAbbr } from '@/configuration'
+import { appBase } from '@/configuration'
 import type { EfDealerFull } from '@/data/collections/content/DealersFull'
 import { shareLink } from '@/util/shareLink'
 
@@ -22,10 +20,15 @@ export const compareCategory = (left: string, right: string) => {
   }
 }
 
-export const shareDealer = (dealer: Pick<EfDealerFull, 'DisplayNameOrAttendeeNickname' | 'DisplayName' | 'Id'>) =>
+export const shareDealer = (
+  dealer: Pick<
+    EfDealerFull,
+    'DisplayNameOrAttendeeNickname' | 'DisplayName' | 'Id'
+  >
+) =>
   shareLink(
     dealer.DisplayNameOrAttendeeNickname ||
-    dealer.DisplayName ||
-    'Unknown Dealer',
-    `${appBase}/Web/Dealers/${dealer.Id}`,
+      dealer.DisplayName ||
+      'Unknown Dealer',
+    `${appBase}/Web/Dealers/${dealer.Id}`
   )

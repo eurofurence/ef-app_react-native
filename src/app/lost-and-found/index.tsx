@@ -41,31 +41,28 @@ export default function LostAndFoundPage() {
     data: items,
     isLoading,
     isError,
-  } = useLiveQuery(
-    {
-      id: 'lost-and-found',
-      query: (q) =>
-        q
-          .from({ item: lostAndFoundCollection })
-          .where(({ item }) =>
-            or(
-              selectedStatuses.length === 0,
-              inArray(item.Status, selectedStatuses)
-            )
+  } = useLiveQuery({
+    id: 'lost-and-found',
+    query: (q) =>
+      q
+        .from({ item: lostAndFoundCollection })
+        .where(({ item }) =>
+          or(
+            selectedStatuses.length === 0,
+            inArray(item.Status, selectedStatuses)
           )
-          .where(({ item }) =>
-            or(
-              term.length === 0,
-              ilike(item.Title, `%${term}%`),
-              ilike(item.Description, `%${term}%`)
-            )
+        )
+        .where(({ item }) =>
+          or(
+            term.length === 0,
+            ilike(item.Title, `%${term}%`),
+            ilike(item.Description, `%${term}%`)
           )
-          .orderBy(({ item }) => item.LastChangeDateTimeUtc, {
-            direction: 'desc',
-          }),
-    },
-    [selectedStatuses, term]
-  )
+        )
+        .orderBy(({ item }) => item.LastChangeDateTimeUtc, {
+          direction: 'desc',
+        }),
+  })
 
   if (isLoading) {
     return (

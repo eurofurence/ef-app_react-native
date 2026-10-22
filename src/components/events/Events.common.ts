@@ -1,6 +1,4 @@
-import { captureException } from '@sentry/react-native'
-import { Share } from 'react-native'
-import { appBase, conAbbr } from '@/configuration'
+import { appBase } from '@/configuration'
 import type { EfEventFull } from '@/data/collections/content/EventsFull'
 import { shareLink } from '@/util/shareLink'
 

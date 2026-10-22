@@ -3,14 +3,16 @@ import { useEffect, useRef } from 'react'
 
 import { decideFavoritesAuthAction } from '@/components/auth/decideFavoritesAuthAction'
 import { useAuthState } from '@/data/clients/auth'
-import { useFavoritesSync } from '@/hooks/data/useFavoritesSync'
+import {
+  clearLocalFavoriteEvents,
+  mergeFavoriteEvents,
+} from '@/data/clients/favoritesSync'
 
 /**
  * Drives favourite merge/clear off auth transitions. Renders nothing.
  */
 export function AuthBridge() {
   const { isReady, isLoggedIn, sessionExpired } = useAuthState()
-  const { mergeFavorites, clearLocalFavorites } = useFavoritesSync()
   const prevRef = useRef<{ isLoggedIn: boolean } | null>(null)
 
   useEffect(() => {
@@ -20,9 +22,9 @@ export function AuthBridge() {
       sessionExpired,
     })
     prevRef.current = { isLoggedIn }
-    if (action === 'merge') mergeFavorites().catch(captureException)
-    else if (action === 'clear') clearLocalFavorites().catch(captureException)
-  }, [isReady, isLoggedIn, sessionExpired, mergeFavorites, clearLocalFavorites])
+    if (action === 'merge') mergeFavoriteEvents().catch(captureException)
+    else if (action === 'clear') clearLocalFavoriteEvents()
+  }, [isReady, isLoggedIn, sessionExpired])
 
   return null
 }

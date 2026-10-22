@@ -1,8 +1,7 @@
 import type { FC } from 'react'
 import { StyleSheet, Text, type TextProps } from 'react-native'
-
+import { useTextSelectable } from '@/context/TextSelectionContext'
 import type { ThemeColor } from '@/context/Theme'
-import { useTextSelectable } from '@/context/ui/TextSelectionContext'
 import { useThemeColor } from '@/hooks/themes/useThemeHooks'
 
 /**

@@ -15,17 +15,14 @@ import { dealersFullCollection } from '@/data/collections/content/DealersFull'
 export default function DealerItem() {
   const { t } = useTranslation('Dealer')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { data: dealer, isLoading: pending } = useLiveQuery(
-    {
-      id: 'dealers-item',
-      query: (q) =>
-        q
-          .from({ item: dealersFullCollection })
-          .where(({ item }) => eq(item.Id, id))
-          .findOne(),
-    },
-    [id]
-  )
+  const { data: dealer, isLoading: pending } = useLiveQuery({
+    id: 'dealers-item',
+    query: (q) =>
+      q
+        .from({ item: dealersFullCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   const dealerName = dealer?.DisplayName ?? t('viewing_dealer')
 

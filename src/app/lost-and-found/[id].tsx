@@ -18,17 +18,14 @@ export default function LostAndFoundDetailPage() {
     data: item,
     isLoading,
     isError,
-  } = useLiveQuery(
-    {
-      id: 'lost-and-found-item',
-      query: (q) =>
-        q
-          .from({ item: lostAndFoundCollection })
-          .where(({ item }) => eq(item.Id, id))
-          .findOne(),
-    },
-    [id]
-  )
+  } = useLiveQuery({
+    id: 'lost-and-found-item',
+    query: (q) =>
+      q
+        .from({ item: lostAndFoundCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   if (isLoading) {
     return (

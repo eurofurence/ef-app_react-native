@@ -6,7 +6,7 @@ import { Modal, StyleSheet, View } from 'react-native'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
 import { auth, useAuthState } from '@/data/clients/auth'
-import { useFavoritesSync } from '@/hooks/data/useFavoritesSync'
+import { clearLocalFavoriteEvents } from '@/data/clients/favoritesSync'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 
 /**
@@ -17,7 +17,6 @@ import { useTheme } from '@/hooks/themes/useThemeHooks'
 export function SessionExpiredModal() {
   const { t } = useTranslation('SessionExpired')
   const { sessionExpired } = useAuthState()
-  const { clearLocalFavorites } = useFavoritesSync()
   const theme = useTheme()
   const [busy, setBusy] = useState(false)
 
@@ -26,10 +25,10 @@ export function SessionExpiredModal() {
     setBusy(true)
     try {
       await auth.login()
-      if (!auth.state.isLoggedIn) await clearLocalFavorites()
+      if (!auth.state.isLoggedIn) clearLocalFavoriteEvents()
     } catch (error) {
       captureException(error)
-      await clearLocalFavorites().catch(captureException)
+      clearLocalFavoriteEvents()
     } finally {
       auth.acknowledgeSessionExpired()
       setBusy(false)
@@ -40,7 +39,7 @@ export function SessionExpiredModal() {
     if (busy) return
     setBusy(true)
     try {
-      await clearLocalFavorites()
+      clearLocalFavoriteEvents()
     } catch (error) {
       captureException(error)
     } finally {

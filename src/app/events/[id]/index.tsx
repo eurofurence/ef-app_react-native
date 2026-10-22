@@ -19,17 +19,14 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 export default function EventItem() {
   const { t } = useTranslation('Event')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { data: event, isLoading: pending } = useLiveQuery(
-    {
-      id: 'events-item',
-      query: (q) =>
-        q
-          .from({ item: eventsFullCollection })
-          .where(({ item }) => eq(item.Id, id))
-          .findOne(),
-    },
-    [id]
-  )
+  const { data: event, isLoading: pending } = useLiveQuery({
+    id: 'events-item',
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   const [announcementMessage, setAnnouncementMessage] = useState('')
 

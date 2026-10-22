@@ -40,17 +40,14 @@ export default function EventFeedback() {
   const { id: eventId } = useLocalSearchParams<{ id: string }>()
   const { toast } = useToastContext()
   const theme = useTheme()
-  const { data: event, isLoading: loading } = useLiveQuery(
-    {
-      id: 'events-item-feedback',
-      query: (q) =>
-        q
-          .from({ item: eventsFullCollection })
-          .where(({ item }) => eq(item.Id, eventId))
-          .findOne(),
-    },
-    [eventId]
-  )
+  const { data: event, isLoading: loading } = useLiveQuery({
+    id: 'events-item-feedback',
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => eq(item.Id, eventId))
+        .findOne(),
+  })
 
   const [announcementMessage, setAnnouncementMessage] = useState('')
 

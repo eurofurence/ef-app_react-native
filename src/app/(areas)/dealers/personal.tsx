@@ -22,18 +22,15 @@ export default function PersonalScreen() {
   const { results } = useDealersSearch()
   const { t } = useTranslation('Dealers')
 
-  const { data: dealers, isLoading } = useLiveQuery(
-    {
-      id: 'area-dealers-personal',
-      query: (q) =>
-        q
-          .from({ item: dealersFullCollection })
-          .where(({ item }) => not(isUndefined(item.Favorite)))
-          .where(({ item }) => or(!results, inArray(item.Id, results)))
-          .orderBy(({ item }) => item.DisplayName),
-    },
-    [results]
-  )
+  const { data: dealers, isLoading } = useLiveQuery({
+    id: 'area-dealers-personal',
+    query: (q) =>
+      q
+        .from({ item: dealersFullCollection })
+        .where(({ item }) => not(isUndefined(item.Favorite)))
+        .where(({ item }) => or(!results, inArray(item.Id, results)))
+        .orderBy(({ item }) => item.DisplayName),
+  })
 
   const grouping = useMemo(() => {
     return collectBy(dealers, (a) => deriveDealerSection(a) ?? '')

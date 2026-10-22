@@ -13,4 +13,5 @@ export type EfAppSettings = {
   ArtistsAlleyWebsiteUrl: string | null
   ArtistsAlleyShortDescription: string | null
   ArtistsAlleyTelegramHandle: string | null
+  DismissedRelease: string | null
 }

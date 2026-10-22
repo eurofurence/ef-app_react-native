@@ -6,7 +6,7 @@ import { Linking, Modal, Platform, StyleSheet, View } from 'react-native'
 
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
-import { useCache } from '@/context/data/Cache'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 import { useAppConfig } from '@/hooks/data/useAppConfig'
 import { useTheme } from '@/hooks/themes/useThemeHooks'
 import { compareVersions } from '@/util/compareVersions'
@@ -27,13 +27,13 @@ const storeUrl = Platform.select({
 export function UpdateAvailableModal() {
   const { t } = useTranslation('UpdateAvailable')
   const { latestRelease } = useAppConfig()
-  const { getValue, setValue } = useCache()
   const theme = useTheme()
   const [closedRelease, setClosedRelease] = useState<string>()
 
   // Null off-device, where there is no store to send anyone to either.
   const currentVersion = Application.nativeApplicationVersion
-  const { dismissedRelease } = getValue('settings')
+  const [dismissedRelease, setDismissedRelease] =
+    useAppSetting('DismissedRelease')
 
   const visible =
     storeUrl !== undefined &&
@@ -41,15 +41,12 @@ export function UpdateAvailableModal() {
     currentVersion !== null &&
     closedRelease !== latestRelease &&
     compareVersions(latestRelease, currentVersion) > 0 &&
-    (dismissedRelease === undefined ||
+    (dismissedRelease === null ||
       compareVersions(latestRelease, dismissedRelease) > 0)
 
   const onDismiss = () => {
     setClosedRelease(latestRelease)
-    setValue('settings', {
-      ...getValue('settings'),
-      dismissedRelease: latestRelease,
-    })
+    setDismissedRelease(latestRelease ?? null)
   }
 
   const onUpdate = async () => {

@@ -22,6 +22,7 @@ export const appSettingsDefaults: EfAppSettings = {
   ArtistsAlleyWebsiteUrl: null,
   ArtistsAlleyShortDescription: null,
   ArtistsAlleyTelegramHandle: null,
+  DismissedRelease: null,
 }
 
 export const appSettingsCollection = createCollection(

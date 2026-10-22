@@ -1,4 +1,4 @@
-import type {EfAppConfig} from "@/data/types/EfAppConfig";
+import type { EfAppConfig } from '@/data/types/EfAppConfig'
 
 const isTrue = (value?: string) => value?.toLowerCase() === 'true'
 
@@ -18,9 +18,7 @@ export type AppConfig = {
  * Normalizes the raw synced app config. String feature flags are parsed to
  * booleans; absent flags default to false.
  */
-export function normalizeAppConfig(
-  appConfig: EfAppConfig | null
-): AppConfig {
+export function normalizeAppConfig(appConfig: EfAppConfig | null): AppConfig {
   return {
     cmaUrl: appConfig?.CmaUrl,
     critterUrl: appConfig?.CritterUrl,

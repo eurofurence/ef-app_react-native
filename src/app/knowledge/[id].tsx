@@ -21,17 +21,14 @@ import type { EfId } from '@/data/types/EfId'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 function KnowledgeItemImage({ imageId }: { imageId: EfId }) {
-  const { data: image } = useLiveQuery(
-    {
-      id: `knowledge-item-image-${imageId}`,
-      query: (q) =>
-        q
-          .from({ item: imagesCollection })
-          .where(({ item }) => eq(item.Id, imageId))
-          .findOne(),
-    },
-    [imageId]
-  )
+  const { data: image } = useLiveQuery({
+    id: `knowledge-item-image-${imageId}`,
+    query: (q) =>
+      q
+        .from({ item: imagesCollection })
+        .where(({ item }) => eq(item.Id, imageId))
+        .findOne(),
+  })
 
   return image ? (
     <View className='my-2.5'>
@@ -45,24 +42,17 @@ const leadingHeading = /^\s*#{1,6}\s/
 export default function KnowledgeItem() {
   const { t } = useTranslation('KnowledgeGroups')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { data: entry, isLoading: pending } = useLiveQuery(
-    {
-      id: 'knowledge-item',
-      query: (q) =>
-        q
-          .from({ item: kbEntriesCollection })
-          .where(({ item }) => eq(item.Id, id))
-          .findOne(),
-    },
-    [id]
-  )
-
-  // Get the knowledge entry from cache
-  const entry = knowledgeEntries.dict[id]
-  const pending = !entry && isSynchronizing
+  const { data: entry, isLoading: pending } = useLiveQuery({
+    id: 'knowledge-item',
+    query: (q) =>
+      q
+        .from({ item: kbEntriesCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   const leadsWithHeading =
-    !entry?.Images?.length && leadingHeading.test(entry?.Text ?? '')
+    !entry?.ImageIds?.length && leadingHeading.test(entry?.Text ?? '')
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content

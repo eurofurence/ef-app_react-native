@@ -20,17 +20,14 @@ export default function ArtistsAlleyDetail() {
   })
   const { id } = useLocalSearchParams<{ id: string }>()
   const { user } = useAuthState()
-  const { data: artistAlleyEntry } = useLiveQuery(
-    {
-      id: 'artists-alley-item',
-      query: (q) =>
-        q
-          .from({ item: artistsAlleyFullCollection })
-          .where(({ item }) => eq(item.Id, id))
-          .findOne(),
-    },
-    [id]
-  )
+  const { data: artistAlleyEntry } = useLiveQuery({
+    id: 'artists-alley-item',
+    query: (q) =>
+      q
+        .from({ item: artistsAlleyFullCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)

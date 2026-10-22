@@ -51,34 +51,28 @@ export function DayView({ day }: { day: EfDay }) {
 
   const [showInternal] = useAppSetting('ShowInternalEvents')
 
-  const { data: events } = useLiveQuery(
-    {
-      id: `area-schedule-${day.Id}`,
-      query: (q) =>
-        q
-          .from({ item: eventsFullCollection })
-          .where(({ item }) => eq(item.ConferenceDayId, day.Id))
-          .where(({ item }) => isUndefined(item.Hidden))
-          .where(({ item }) => or(showInternal, not(item.IsInternal)))
-          .where(({ item }) => or(!results, inArray(item.Id, results)))
-          .orderBy(({ item }) => item.StartDateTimeUtc),
-    },
-    [day.Id, showInternal, results]
-  )
+  const { data: events } = useLiveQuery({
+    id: `area-schedule-${day.Id}`,
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => eq(item.ConferenceDayId, day.Id))
+        .where(({ item }) => isUndefined(item.Hidden))
+        .where(({ item }) => or(showInternal, not(item.IsInternal)))
+        .where(({ item }) => or(!results, inArray(item.Id, results)))
+        .orderBy(({ item }) => item.StartDateTimeUtc),
+  })
 
-  const { data: hidden } = useLiveQuery(
-    {
-      id: `area-schedule-${day.Id}-hidden`,
-      query: (q) =>
-        q
-          .from({ item: eventsFullCollection })
-          .where(({ item }) => eq(item.ConferenceDayId, day.Id))
-          .where(({ item }) => or(showInternal, not(item.IsInternal)))
-          .where(({ item }) => not(isUndefined(item.Hidden)))
-          .where(({ item }) => or(!results, inArray(item.Id, results))),
-    },
-    [day.Id, showInternal, results]
-  )
+  const { data: hidden } = useLiveQuery({
+    id: `area-schedule-${day.Id}-hidden`,
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => eq(item.ConferenceDayId, day.Id))
+        .where(({ item }) => or(showInternal, not(item.IsInternal)))
+        .where(({ item }) => not(isUndefined(item.Hidden)))
+        .where(({ item }) => or(!results, inArray(item.Id, results))),
+  })
 
   const grouping = useMemo(() => {
     const sorted = orderBy(events, (a) => (isLong(a.Duration) ? 0 : 1))

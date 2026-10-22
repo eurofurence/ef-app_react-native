@@ -11,18 +11,15 @@ export default function RegularScreen() {
   const { results } = useDealersSearch()
   const { t } = useTranslation('Dealers')
 
-  const { data: dealers } = useLiveQuery(
-    {
-      id: 'area-dealers-regular',
-      query: (q) =>
-        q
-          .from({ item: dealersFullCollection })
-          .where(({ item }) => not(item.IsAfterDark))
-          .where(({ item }) => or(!results, inArray(item.Id, results)))
-          .orderBy(({ item }) => item.DisplayName),
-    },
-    [results]
-  )
+  const { data: dealers } = useLiveQuery({
+    id: 'area-dealers-regular',
+    query: (q) =>
+      q
+        .from({ item: dealersFullCollection })
+        .where(({ item }) => not(item.IsAfterDark))
+        .where(({ item }) => or(!results, inArray(item.Id, results)))
+        .orderBy(({ item }) => item.DisplayName),
+  })
 
   const grouping = useMemo(() => {
     return collectBy(dealers, (a) => deriveDealerSection(a) ?? '')

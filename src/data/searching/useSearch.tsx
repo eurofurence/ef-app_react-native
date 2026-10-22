@@ -54,7 +54,7 @@ function getOrInitialize<
   })
 
   // Update weak ref and return.
-  indices.set(collection, fuse)
+  indices.set(collection, fuse as Fuse<unknown>)
   return fuse
 }
 

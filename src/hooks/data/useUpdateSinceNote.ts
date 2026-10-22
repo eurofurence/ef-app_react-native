@@ -34,17 +34,14 @@ export function useViewTrackingUpdate(entity: EfEntity, delay = 500) {
 
 export function useViewTrackingState(entity: EfEntity) {
   // Resolve source view entry.
-  const { data: view, isReady } = useLiveQuery(
-    {
-      id: `entity-last-view-${entity.Id}`,
-      query: (q) =>
-        q
-          .from({ entry: lastViewTimesCollection })
-          .where(({ entry }) => eq(entry.Id, entity.Id))
-          .findOne(),
-    },
-    [entity.Id]
-  )
+  const { data: view, isReady } = useLiveQuery({
+    id: `entity-last-view-${entity.Id}`,
+    query: (q) =>
+      q
+        .from({ entry: lastViewTimesCollection })
+        .where(({ entry }) => eq(entry.Id, entity.Id))
+        .findOne(),
+  })
 
   // Result is updated.
   const updated = Boolean(

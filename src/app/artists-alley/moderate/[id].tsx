@@ -38,17 +38,14 @@ export default function Moderate() {
   // Use toast function.
   const { toast } = useToastContext()
 
-  const { data, isLoading } = useLiveQuery(
-    {
-      id: 'artists-alley-moderate-item',
-      query: (q) =>
-        q
-          .from({ item: artistsAlleyAdminCollection })
-          .where(({ item }) => eq(item.Id, id))
-          .findOne(),
-    },
-    [id]
-  )
+  const { data, isLoading } = useLiveQuery({
+    id: 'artists-alley-moderate-item',
+    query: (q) =>
+      q
+        .from({ item: artistsAlleyAdminCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   const [announcementMessage, setAnnouncementMessage] = useState<string>('')
   const mainContentRef = useAccessibilityFocus<View>(200)

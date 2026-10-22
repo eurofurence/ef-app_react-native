@@ -18,17 +18,14 @@ export default function MapItem() {
   const linkId = params.slug?.[2]
   const backgroundStyle = useThemeBackground('background')
 
-  const { data: mapCache } = useLiveQuery(
-    {
-      id: 'maps-item',
-      query: (q) =>
-        q
-          .from({ map: mapsFullCollection })
-          .where(({ map }) => eq(map.Id, mapId))
-          .findOne(),
-    },
-    [mapId]
-  )
+  const { data: mapCache } = useLiveQuery({
+    id: 'maps-item',
+    query: (q) =>
+      q
+        .from({ map: mapsFullCollection })
+        .where(({ map }) => eq(map.Id, mapId))
+        .findOne(),
+  })
 
   // Resolve entry if requested
   const entry = useMemo(() => {

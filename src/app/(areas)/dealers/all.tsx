@@ -91,17 +91,14 @@ export default function AllScreen() {
   const { results } = useDealersSearch()
   const { t } = useTranslation('Dealers')
 
-  const { data: dealers } = useLiveQuery(
-    {
-      id: 'area-dealers-all',
-      query: (q) =>
-        q
-          .from({ item: dealersFullCollection })
-          .where(({ item }) => or(!results, inArray(item.Id, results)))
-          .orderBy(({ item }) => item.DisplayName),
-    },
-    [results]
-  )
+  const { data: dealers } = useLiveQuery({
+    id: 'area-dealers-all',
+    query: (q) =>
+      q
+        .from({ item: dealersFullCollection })
+        .where(({ item }) => or(!results, inArray(item.Id, results)))
+        .orderBy(({ item }) => item.DisplayName),
+  })
 
   const grouping = useMemo(() => {
     return collectBy(dealers, (a) => deriveDealerSection(a) ?? '')

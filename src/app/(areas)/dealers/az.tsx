@@ -11,16 +11,13 @@ export default function AzScreen() {
   const { results } = useDealersSearch()
   const { t } = useTranslation('Dealers')
 
-  const { data: dealers } = useLiveQuery(
-    {
-      id: 'area-dealers-az',
-      query: (q) =>
-        q
-          .from({ item: dealersFullCollection })
-          .where(({ item }) => or(!results, inArray(item.Id, results))),
-    },
-    [results]
-  )
+  const { data: dealers } = useLiveQuery({
+    id: 'area-dealers-az',
+    query: (q) =>
+      q
+        .from({ item: dealersFullCollection })
+        .where(({ item }) => or(!results, inArray(item.Id, results))),
+  })
 
   const grouping = useMemo(() => {
     return collectBy(

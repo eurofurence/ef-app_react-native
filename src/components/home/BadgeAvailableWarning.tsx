@@ -1,10 +1,9 @@
-import {useUserDatamatrix} from "@/hooks/api/useUserDatamatrix";
 import { router } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { View } from 'react-native'
-
 import { Icon } from '@/components/generic/atoms/Icon'
 import { useAuthState } from '@/data/clients/auth'
+import { useUserDatamatrix } from '@/hooks/api/useUserDatamatrix'
 import { useWarningState } from '@/hooks/data/useWarningState'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 

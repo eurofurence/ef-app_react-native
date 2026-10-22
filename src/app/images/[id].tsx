@@ -17,17 +17,14 @@ export default function ImageItem() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('Viewer')
 
-  const { data: image } = useLiveQuery(
-    {
-      id: 'images-item',
-      query: (q) =>
-        q
-          .from({ item: imagesCollection })
-          .where(({ item }) => eq(item.Id, id))
-          .findOne(),
-    },
-    [id]
-  )
+  const { data: image } = useLiveQuery({
+    id: 'images-item',
+    query: (q) =>
+      q
+        .from({ item: imagesCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   const location = useImageLocation(id)
   const title = t(location?.location ?? 'unspecified', {

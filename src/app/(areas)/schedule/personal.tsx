@@ -26,20 +26,17 @@ export default function Personal() {
 
   const [showInternal] = useAppSetting('ShowInternalEvents')
 
-  const { data: events } = useLiveQuery(
-    {
-      id: 'area-schedule-personal',
-      query: (q) =>
-        q
-          .from({ item: eventsFullCollection })
-          .where(({ item }) => isUndefined(item.Hidden))
-          .where(({ item }) => not(isUndefined(item.Favorite)))
-          .where(({ item }) => or(showInternal, not(item.IsInternal)))
-          .where(({ item }) => or(!results, inArray(item.Id, results)))
-          .orderBy(({ item }) => item.StartDateTimeUtc),
-    },
-    [showInternal, results]
-  )
+  const { data: events } = useLiveQuery({
+    id: 'area-schedule-personal',
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => isUndefined(item.Hidden))
+        .where(({ item }) => not(isUndefined(item.Favorite)))
+        .where(({ item }) => or(showInternal, not(item.IsInternal)))
+        .where(({ item }) => or(!results, inArray(item.Id, results)))
+        .orderBy(({ item }) => item.StartDateTimeUtc),
+  })
 
   const grouping = useMemo(() => {
     return collectBy(events, (a) => a.Day.Name)

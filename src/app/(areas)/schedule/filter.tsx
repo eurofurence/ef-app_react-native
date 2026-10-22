@@ -38,19 +38,16 @@ export default function FilterScreen() {
 
   const [showInternal] = useAppSetting('ShowInternalEvents')
 
-  const { data: events } = useLiveQuery(
-    {
-      id: 'area-schedule-filter',
-      query: (q) =>
-        q
-          .from({ item: eventsFullCollection })
-          .where(({ item }) => isUndefined(item.Hidden))
-          .where(({ item }) => or(showInternal, not(item.IsInternal)))
-          .where(({ item }) => or(!results, inArray(item.Id, results)))
-          .orderBy(({ item }) => item.StartDateTimeUtc),
-    },
-    [showInternal, results]
-  )
+  const { data: events } = useLiveQuery({
+    id: 'area-schedule-filter',
+    query: (q) =>
+      q
+        .from({ item: eventsFullCollection })
+        .where(({ item }) => isUndefined(item.Hidden))
+        .where(({ item }) => or(showInternal, not(item.IsInternal)))
+        .where(({ item }) => or(!results, inArray(item.Id, results)))
+        .orderBy(({ item }) => item.StartDateTimeUtc),
+  })
 
   const { data: days } = useLiveQuery(daysCollection)
   const { data: tracks } = useLiveQuery(tracksCollection)
