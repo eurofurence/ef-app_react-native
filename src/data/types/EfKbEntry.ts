@@ -8,7 +8,7 @@ export type EfKbEntry = EfEntity & {
   Title: string
   Text: string
   Order: number
-  Published: DateTimeString
+  Published?: DateTimeString
   Links: EfLink[]
   ImageIds: EfId[]
 }

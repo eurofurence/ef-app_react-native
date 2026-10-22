@@ -1,133 +1,94 @@
-import Fuse from 'fuse.js'
-import { chain } from 'lodash'
+import { useLiveQuery } from '@tanstack/react-db'
+import { router } from 'expo-router'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
+import type { IconNames } from '@/components/generic/atoms/Icon'
 import { Search } from '@/components/generic/atoms/Search'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Header } from '@/components/generic/containers/Header'
-import { KbSectionedList } from '@/components/kb/KbSectionedList'
-import { useCache } from '@/context/data/Cache'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { EfSectionList } from '@/components/generic/lists/EfLists'
+import { KbEntryCard } from '@/components/kb/KbEntryCard'
+import { KbSection } from '@/components/kb/KbSection'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import { kbGroupsCollection } from '@/data/collections/content/KbGroups'
+import { kbGroupsFullCollection } from '@/data/collections/content/KbGroupsFull'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
+import { useSearchIds } from '@/data/searching/useSearch'
+import type { EfKbEntry } from '@/data/types/EfKbEntry'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+import { vibrateAfter } from '@/util/vibrateAfter'
+
+type KnowledgeSection = {
+  name: string
+  description: string
+  icon: IconNames
+}
+
+export function onPressKbEntry(entry: EfKbEntry) {
+  router.navigate({
+    pathname: '/knowledge/[id]',
+    params: { id: entry.Id },
+  })
+}
 
 export default function Knowledge() {
   const { t } = useTranslation('KnowledgeGroups')
-  const { knowledgeGroups, knowledgeEntries, searchKnowledgeEntries } =
-    useCache()
-  const [filter, setFilter] = useState('')
+  const isSynchronizing = useIsSynchronizing()
+  const { data: knowledgeGroups } = useLiveQuery(kbGroupsFullCollection)
+
+  const [query, setQuery] = useState('')
   const [searchMessage, setSearchMessage] = useState('')
 
   // Focus management for the main content
   const mainContentRef = useAccessibilityFocus<View>(200)
 
   // Use the pre-configured search functionality for entries
-  const results = useFuseResults(searchKnowledgeEntries, filter)
+  const resultGroups = useSearchIds(kbGroupsCollection, query)
+  const resultEntries = useSearchIds(kbEntriesCollection, query)
 
   // Prepare data for search and display
-  const groups = useMemo(() => {
-    // Group entries by their group ID
-    const groupedEntries = chain(knowledgeEntries)
-      .groupBy('KnowledgeGroupId')
-      .value()
-
-    // Combine groups with their entries
-    return knowledgeGroups.map((group) => ({
-      group,
-      entries: groupedEntries[group.Id] || [],
-    }))
-  }, [knowledgeGroups, knowledgeEntries])
-
-  // Prepare final data for display
-  const displayData = useMemo(() => {
-    if (results && filter.length > 0) {
-      // When searching, maintain proper group structure
-      const matchingEntries = results
-      const matchingGroupIds = new Set(
-        matchingEntries.map(
-          (entry: { KnowledgeGroupId: string }) => entry.KnowledgeGroupId
-        )
+  const grouping = useMemo(() => {
+    const result: (KnowledgeSection | EfKbEntry)[] = []
+    for (const group of knowledgeGroups) {
+      // Was search result for group; or, is parent of an entry search result.
+      const includedAsGroup = resultGroups?.includes(group.Id) !== false
+      const includedAsParent = group.Entries.some(
+        (item) => resultEntries?.includes(item.Id) !== false
       )
+      if (!includedAsGroup && !includedAsParent) continue
 
-      // Also search in group names and descriptions with better settings
-      const groupFuse = new Fuse(knowledgeGroups, {
-        keys: [
-          { name: 'Name', weight: 2 },
-          { name: 'Description', weight: 1 },
-        ],
-        threshold: 0.3, // Use same threshold as entries for consistency
-        ignoreLocation: true,
-        includeScore: true,
-      })
-      const groupSearchResults = groupFuse.search(filter)
-      const matchingGroupsFromSearch = groupSearchResults.map(
-        (result) => result.item
-      )
+      // Add section header.
+      result.push({
+        name: group.Name,
+        description: group.Description,
+        icon: group.FontAwesomeIconName || 'bookmark',
+      } satisfies KnowledgeSection)
 
-      // Get all groups that either contain matching entries or match the search themselves
-      const allRelevantGroups = knowledgeGroups.filter(
-        (group) =>
-          matchingGroupIds.has(group.Id) ||
-          matchingGroupsFromSearch.includes(group)
-      )
-
-      // Build proper sectioned structure
-      const result: (
-        | (typeof knowledgeGroups)[0]
-        | (typeof knowledgeEntries)[0]
-      )[] = []
-
-      for (const group of allRelevantGroups) {
-        // Add matching entries for this group
-        const groupEntries = matchingEntries.filter(
-          (entry: any) => entry.KnowledgeGroupId === group.Id
-        )
-
-        // If group matched search but has no matching entries, show all entries from that group
-        if (
-          matchingGroupsFromSearch.includes(group) &&
-          groupEntries.length === 0
-        ) {
-          const allGroupEntries = knowledgeEntries.filter(
-            (entry) => entry.KnowledgeGroupId === group.Id
-          )
-          if (allGroupEntries.length > 0) {
-            result.push(group)
-            result.push(...allGroupEntries)
-          }
-        } else if (groupEntries.length > 0) {
-          // Only add group and entries if there are matching entries
-          result.push(group)
-          result.push(...groupEntries)
-        }
+      // Add matching (or all) entries.
+      for (const item of group.Entries) {
+        const includedAsChild = resultEntries?.includes(item.Id) !== false
+        if (includedAsChild) result.push(item)
       }
-
-      return result
     }
-
-    // Normal display: show all groups and entries in proper structure, but hide empty groups
-    return chain(groups)
-      .filter(({ entries }) => entries.length > 0) // Only include groups that have entries
-      .flatMap(({ group, entries }) => [group, ...entries])
-      .value()
-  }, [results, groups, knowledgeGroups, knowledgeEntries, filter])
+    return result
+  }, [knowledgeGroups, resultGroups, resultEntries])
 
   // Status messages for accessibility feedback
   const statusMessage = useMemo(() => {
-    if (filter && results) {
-      const count = results.length
+    if (query && resultGroups && resultEntries) {
+      const count = resultGroups.length + resultEntries.length
       if (count === 0) {
-        return t('accessibility.no_search_results', { query: filter })
+        return t('accessibility.no_search_results', { query: query })
       }
-      return t('accessibility.search_results', { count, query: filter })
+      return t('accessibility.search_results', { count, query: query })
     }
     return ''
-  }, [filter, results, t])
+  }, [query, resultGroups, resultEntries, t])
 
   // Handle search feedback
   useEffect(() => {
-    if (filter) {
+    if (query) {
       const timer = setTimeout(() => {
         setSearchMessage(statusMessage)
       }, 300) // Debounce search announcements
@@ -135,7 +96,16 @@ export default function Knowledge() {
     } else {
       setSearchMessage('')
     }
-  }, [filter, statusMessage])
+  }, [query, statusMessage])
+
+  const listHeaderComponent = (
+    <Search
+      className='my-2.5 mx-2.5'
+      filter={query}
+      setFilter={setQuery}
+      placeholder={t('search.placeholder')}
+    />
+  )
 
   return (
     <>
@@ -149,21 +119,44 @@ export default function Knowledge() {
         accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
       >
         <Header>{t('header')}</Header>
-        {/* flex allows sticky sections to stick correctly under the header */}
         <View className='flex-1'>
-          <KbSectionedList
-            kbGroups={displayData}
-            leader={
-              <Search
-                className='my-2.5 mx-2.5'
-                filter={filter}
-                setFilter={setFilter}
-                placeholder={t('search.placeholder')}
-              />
-            }
+          <EfSectionList<KnowledgeSection, EfKbEntry>
+            refreshing={isSynchronizing}
+            onRefresh={() => vibrateAfter(synchronize())}
+            scrollEnabled={true}
+            contentContainerClassName='pb-32'
+            ListHeaderComponent={listHeaderComponent}
+            data={grouping}
+            renderSection={({ item }) => {
+              return (
+                <KbSection
+                  style={styles.item}
+                  title={item.name}
+                  subtitle={item.description}
+                  icon={item.icon}
+                />
+              )
+            }}
+            renderItem={({ item }) => {
+              return (
+                <KbEntryCard
+                  containerStyle={styles.item}
+                  entry={item}
+                  onPress={onPressKbEntry}
+                />
+              )
+            }}
+            accessibilityLabel={t('accessibility.kb_sectioned_list')}
+            accessibilityHint={t('accessibility.kb_sectioned_list_hint')}
           />
         </View>
       </View>
     </>
   )
 }
+
+const styles = StyleSheet.create({
+  item: {
+    paddingHorizontal: 20,
+  },
+})

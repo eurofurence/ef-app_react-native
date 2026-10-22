@@ -1,8 +1,7 @@
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View, type ViewStyle } from 'react-native'
-
-import type { KnowledgeEntryDetails } from '@/context/data/types.details'
+import type { EfKbEntry } from '@/data/types/EfKbEntry'
 
 import { appStyles } from '../AppStyles'
 import { Label } from '../generic/atoms/Label'
@@ -11,8 +10,8 @@ import { Card } from '../generic/containers/Card'
 export type KbEntryCardProps = {
   containerStyle?: ViewStyle
   style?: ViewStyle
-  onPress: (entry: KnowledgeEntryDetails) => void
-  entry: KnowledgeEntryDetails
+  onPress: (entry: EfKbEntry) => void
+  entry: EfKbEntry
 }
 
 export const KbEntryCard: FC<KbEntryCardProps> = ({

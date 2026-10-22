@@ -1,17 +1,16 @@
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Image } from '@/components/generic/atoms/Image'
 import { sourceFromImage } from '@/components/generic/atoms/Image.common'
 import { Label } from '@/components/generic/atoms/Label'
 import { Button } from '@/components/generic/containers/Button'
-import type { TableRegistrationRecord } from '@/context/data/types.api'
+import type { EfTableRegistration } from '@/data/types/EfTableRegistration'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 
 import { handleExternalLink } from '../ExternalLink'
 
 export type ArtistsAlleyStatusProps = {
-  data: TableRegistrationRecord
+  data: EfTableRegistration
   canDelete: boolean
   onAccept: () => void
   onReject: () => void

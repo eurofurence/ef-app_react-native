@@ -1,17 +1,17 @@
+import { useLiveQuery } from '@tanstack/react-db'
 import { addWeeks, format, subWeeks } from 'date-fns'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
 import { Button } from '@/components/generic/containers/Button'
 import { Col } from '@/components/generic/containers/Col'
 import { Row } from '@/components/generic/containers/Row'
 import { conName } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
-import type { EventDayDetails } from '@/context/data/types.details'
-import { useAppSetting } from '@/data/collections/AppSettings'
+import { daysCollection } from '@/data/collections/content/Days'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
+import type { EfDay } from '@/data/types/EfDay'
 import { useNow } from '@/hooks/time/useNow'
 
 const ONE_HOUR = 60 * 60 * 1000
@@ -19,7 +19,7 @@ const ONE_MINUTE = 60 * 1000
 
 export function TimeTravel() {
   const { t } = useTranslation('TimeTravel')
-  const { eventDays } = useCache()
+  const { data: days } = useLiveQuery(daysCollection)
   const now = useNow()
 
   const [enabled, setEnabled] = useAppSetting('TimeTravelEnabled')
@@ -27,16 +27,16 @@ export function TimeTravel() {
 
   // Calculate week before and after
   const weekBefore = useMemo(() => {
-    if (!eventDays.length) return null
-    const firstDay = new Date(eventDays[0].Date)
+    if (!days.length) return null
+    const firstDay = new Date(days[0].Date)
     return subWeeks(firstDay, 1).toISOString()
-  }, [eventDays])
+  }, [days])
 
   const weekAfter = useMemo(() => {
-    if (!eventDays.length) return null
-    const lastDay = new Date(eventDays[eventDays.length - 1].Date)
+    if (!days.length) return null
+    const lastDay = new Date(days[days.length - 1].Date)
     return addWeeks(lastDay, 1).toISOString()
-  }, [eventDays])
+  }, [days])
 
   const setOffsetFromDate = (date: string) => {
     const currentDate = new Date()
@@ -124,7 +124,7 @@ export function TimeTravel() {
           </Button>
         )}
 
-        {eventDays.map((day: EventDayDetails) => (
+        {days.map((day: EfDay) => (
           <Button
             key={day.Id}
             containerStyle={styles.button}

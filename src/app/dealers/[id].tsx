@@ -1,7 +1,7 @@
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { useLocalSearchParams } from 'expo-router'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
 import { DealerContent } from '@/components/dealers/DealerContent'
 import { shareDealer } from '@/components/dealers/Dealers.common'
@@ -10,23 +10,21 @@ import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { LoadingContent } from '@/components/LoadingContent'
 import { NotFoundContent } from '@/components/NotFoundContent'
-import { useCache } from '@/context/data/Cache'
-import { useUpdateSinceNote } from '@/hooks/data/useUpdateSinceNote'
-import { useLatchTrue } from '@/hooks/util/useLatchTrue'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
 
 export default function DealerItem() {
   const { t } = useTranslation('Dealer')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { dealers, isSynchronizing } = useCache()
-  const dealer = dealers.dict[id]
-  const pending = !dealer && isSynchronizing
+  const { data: dealer, isLoading: pending } = useLiveQuery({
+    id: 'dealers-item',
+    query: (q) =>
+      q
+        .from({ item: dealersFullCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
-  // Get update note. Latch so it's displayed even if reset in background.
-  const updated = useUpdateSinceNote(dealer)
-  const showUpdated = useLatchTrue(updated)
-
-  const dealerName =
-    dealer?.DisplayNameOrAttendeeNickname ?? t('viewing_dealer')
+  const dealerName = dealer?.DisplayName ?? t('viewing_dealer')
 
   return (
     <ScrollView
@@ -52,11 +50,7 @@ export default function DealerItem() {
             message={t('dealer_not_found_message')}
           />
         ) : (
-          <DealerContent
-            dealer={dealer}
-            parentPad={padFloater}
-            updated={showUpdated}
-          />
+          <DealerContent dealer={dealer} parentPad={padFloater} />
         )}
       </Floater>
     </ScrollView>

@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 
 import { appStyles } from '@/components/AppStyles'
-import { TextSelectionContext } from '@/context/ui/TextSelectionContext'
+import { TextSelectionContext } from '@/context/TextSelectionContext'
 
 export type PressableProps = TouchableOpacityProps & {
   containerStyle?: StyleProp<ViewStyle>

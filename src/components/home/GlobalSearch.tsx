@@ -1,66 +1,78 @@
-import { useMemo } from 'react'
+import { inArray, isUndefined, not, or, useLiveQuery } from '@tanstack/react-db'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
+import { onLongPressDealer, onPressDealer } from '@/app/(areas)/dealers/all'
+import { onLongPressEvent, onPressEvent } from '@/app/(areas)/schedule/day-1'
+import { onPressKbEntry } from '@/app/knowledge'
+import { DealerCard2 } from '@/components/dealers/DealerCard2'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
+import type { EfId } from '@/data/types/EfId'
 
-import {
-  useDealerCardInteractions,
-  useDealerInstances,
-} from '@/components/dealers/Dealers.common'
-import {
-  useEventCardInteractions,
-  useEventInstances,
-} from '@/components/events/Events.common'
-import { useKbEntryCardInteractions } from '@/components/kb/KbEntry.common'
-import type {
-  DealerDetails,
-  EventDetails,
-  KnowledgeEntryDetails,
-} from '@/context/data/types.details'
-import type { GlobalSearchResult } from '@/context/data/types.own'
-
-import { DealerCard } from '../dealers/DealerCard'
-import { EventCard } from '../events/EventCard'
+import { EventCard2 } from '../events/EventCard2'
 import { Section } from '../generic/atoms/Section'
 import { KbEntryCard } from '../kb/KbEntryCard'
 
 export type GlobalSearchProps = {
-  now: Date
-  results: GlobalSearchResult[] | null
+  resultDealers: EfId[] | null
+  resultEvents: EfId[] | null
+  resultKbEntries: EfId[] | null
 }
 
-export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
+export const GlobalSearch = ({
+  resultDealers,
+  resultEvents,
+  resultKbEntries,
+}: GlobalSearchProps) => {
   const { t: tMenu } = useTranslation('Menu')
   const { t: tAccessibility } = useTranslation('Home', {
     keyPrefix: 'accessibility',
   })
 
-  // Filter for type tags.
-  const dealerFiltered = useMemo(
-    () => results?.filter((r) => r.type === 'dealer') as DealerDetails[],
-    [results]
-  )
-  const eventsFiltered = useMemo(
-    () => results?.filter((r) => r.type === 'event') as EventDetails[],
-    [results]
-  )
-  const kbGroupsFiltered = useMemo(
-    () =>
-      results?.filter(
-        (r) => r.type === 'knowledgeEntry'
-      ) as KnowledgeEntryDetails[],
-    [results]
+  const [showInternal] = useAppSetting('ShowInternalEvents')
+
+  const { data: dealers } = useLiveQuery(
+    {
+      id: 'global-search-dealers',
+      query: (q) =>
+        q
+          .from({ item: dealersFullCollection })
+          .where(({ item }) => inArray(item.Id, resultDealers ?? []))
+          .orderBy(({ item }) => item.DisplayName),
+    },
+    [resultDealers]
   )
 
-  // Use all dealers and group generically.
-  const dealers = useDealerInstances(now, dealerFiltered)
-  const events = useEventInstances(now, eventsFiltered)
-  const kbGroups = kbGroupsFiltered
+  const { data: events } = useLiveQuery(
+    {
+      id: 'global-search-events',
+      query: (q) =>
+        q
+          .from({ item: eventsFullCollection })
+          .where(({ item }) => isUndefined(item.Hidden))
+          .where(({ item }) => or(showInternal, not(item.IsInternal)))
+          .where(({ item }) => inArray(item.Id, resultEvents ?? []))
+          .orderBy(({ item }) => item.StartDateTimeUtc),
+    },
+    [showInternal, resultEvents]
+  )
 
-  const dealerInteraction = useDealerCardInteractions()
-  const eventInteractions = useEventCardInteractions()
-  const kbEntryInteractions = useKbEntryCardInteractions()
+  const { data: entries } = useLiveQuery(
+    {
+      id: 'global-search-kb-entries',
+      query: (q) =>
+        q
+          .from({ item: kbEntriesCollection })
+          .where(({ item }) => inArray(item.Id, resultKbEntries ?? []))
+          .orderBy(({ item }) => item.Title),
+    },
+    [showInternal, resultKbEntries]
+  )
 
-  if (!results) return null
+  if (!resultDealers && !resultEvents && !resultKbEntries) return null
+
   return (
     <View
       accessibilityLabel={tAccessibility('search_results_container')}
@@ -74,12 +86,12 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
         >
           <Section icon='card-search' title={tMenu('dealers')} />
           {dealers.map((item) => (
-            <DealerCard
-              key={item.details.Id}
+            <DealerCard2
+              key={item.Id}
               style={styles.item}
               dealer={item}
-              onPress={dealerInteraction.onPress}
-              onLongPress={dealerInteraction.onLongPress}
+              onPress={onPressDealer}
+              onLongPress={onLongPressDealer}
             />
           ))}
         </View>
@@ -92,30 +104,30 @@ export const GlobalSearch = ({ now, results }: GlobalSearchProps) => {
         >
           <Section icon='card-search' title={tMenu('events')} />
           {events.map((item) => (
-            <EventCard
-              key={item.details.Id}
+            <EventCard2
+              key={item.Id}
               style={styles.item}
               event={item}
               type='time'
-              onPress={eventInteractions.onPress}
-              onLongPress={eventInteractions.onLongPress}
+              onPress={onPressEvent}
+              onLongPress={onLongPressEvent}
             />
           ))}
         </View>
       )}
-      {kbGroups && kbGroups.length > 0 && (
+      {entries && entries.length > 0 && (
         <View
           accessibilityLabel={tAccessibility('knowledge_search_section', {
-            count: kbGroups.length,
+            count: entries.length,
           })}
         >
           <Section icon='card-search' title={tMenu('info')} />
-          {kbGroups.map((item) => (
+          {entries.map((item) => (
             <KbEntryCard
               style={styles.item}
               entry={item}
               key={item.Id}
-              onPress={kbEntryInteractions.onPress}
+              onPress={onPressKbEntry}
             />
           ))}
         </View>

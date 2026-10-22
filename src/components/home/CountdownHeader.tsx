@@ -1,3 +1,4 @@
+import { useLiveQuery } from '@tanstack/react-db'
 import { formatDistance, isSameDay } from 'date-fns' // Import date-fns utilities
 import { fromZonedTime } from 'date-fns-tz' // Import from date-fns-tz package
 import type { TFunction } from 'i18next'
@@ -10,11 +11,10 @@ import {
   View,
   type ViewStyle,
 } from 'react-native'
-
 import { conId, conName, conTimeZone } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
-import type { EventDayRecord } from '@/context/data/types.api'
-import { useRegistrationDatesQuery } from '@/hooks/api/registration/useRegistrationDatesQuery'
+import { daysCollection } from '@/data/collections/content/Days'
+import type { EfDay } from '@/data/types/EfDay'
+import { useRegistrationDatesQuery } from '@/hooks/api/useRegistrationDatesQuery'
 import { useNow } from '@/hooks/time/useNow'
 import { dateFnsLocales } from '@/i18n'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
@@ -48,11 +48,11 @@ const useCountdownTitle = (
   now: Date,
   currentLanguage: string
 ) => {
-  const { eventDays } = useCache()
+  const { data: days } = useLiveQuery(daysCollection)
   const { data: dates } = useRegistrationDatesQuery()
 
   // Try finding current day.
-  const currentDay = eventDays.find((it: EventDayRecord) =>
+  const currentDay = days.find((it: EfDay) =>
     isSameDayInTimezone(now, it.Date, conTimeZone)
   )
   if (currentDay) return currentDay.Name

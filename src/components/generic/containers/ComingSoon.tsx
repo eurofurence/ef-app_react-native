@@ -1,11 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-
-import { useCache } from '@/context/data/Cache'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { vibrateAfter } from '@/util/vibrateAfter'
-
 import { Image, type ImageProps } from '../atoms/Image'
 import { Label } from '../atoms/Label'
 
@@ -18,7 +16,7 @@ export type ComingSoonProps = {
 export const ComingSoon = ({ image, title, text }: ComingSoonProps) => {
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
-  const { isSynchronizing, synchronize } = useCache()
+  const isSynchronizing = useIsSynchronizing()
   const { t: a11y } = useTranslation('Accessibility')
 
   return (

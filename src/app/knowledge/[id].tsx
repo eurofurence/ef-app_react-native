@@ -1,3 +1,4 @@
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -14,23 +15,44 @@ import { shareKbEntry } from '@/components/kb/KbEntry.common'
 import { LoadingContent } from '@/components/LoadingContent'
 import { LinkItem } from '@/components/maps/LinkItem'
 import { NotFoundContent } from '@/components/NotFoundContent'
-import { useCache } from '@/context/data/Cache'
-import type { LinkFragment } from '@/context/data/types.api'
+import { imagesCollection } from '@/data/collections/content/Images'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import type { EfId } from '@/data/types/EfId'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
+
+function KnowledgeItemImage({ imageId }: { imageId: EfId }) {
+  const { data: image } = useLiveQuery({
+    id: `knowledge-item-image-${imageId}`,
+    query: (q) =>
+      q
+        .from({ item: imagesCollection })
+        .where(({ item }) => eq(item.Id, imageId))
+        .findOne(),
+  })
+
+  return image ? (
+    <View className='my-2.5'>
+      <Banner image={image} viewable />
+    </View>
+  ) : null
+}
 
 const leadingHeading = /^\s*#{1,6}\s/
 
 export default function KnowledgeItem() {
   const { t } = useTranslation('KnowledgeGroups')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { knowledgeEntries, isSynchronizing } = useCache()
-
-  // Get the knowledge entry from cache
-  const entry = knowledgeEntries.dict[id]
-  const pending = !entry && isSynchronizing
+  const { data: entry, isLoading: pending } = useLiveQuery({
+    id: 'knowledge-item',
+    query: (q) =>
+      q
+        .from({ item: kbEntriesCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
 
   const leadsWithHeading =
-    !entry?.Images?.length && leadingHeading.test(entry?.Text ?? '')
+    !entry?.ImageIds?.length && leadingHeading.test(entry?.Text ?? '')
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
@@ -84,13 +106,11 @@ export default function KnowledgeItem() {
               accessibilityLabel={t('accessibility.kb_entry_content')}
               accessibilityRole='text'
             >
-              {entry?.Images?.map((image) => (
-                <View key={image.Id} className='my-2.5'>
-                  <Banner image={image} viewable />
-                </View>
+              {entry?.ImageIds?.map((imageId) => (
+                <KnowledgeItemImage key={imageId} imageId={imageId} />
               )) ?? null}
               <MarkdownContent>{entry?.Text ?? ''}</MarkdownContent>
-              {entry?.Links?.map((link: LinkFragment) => (
+              {entry?.Links?.map((link) => (
                 <View className='mb-5' key={link.Target}>
                   <LinkItem link={link} />
                 </View>

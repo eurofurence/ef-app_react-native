@@ -8,4 +8,10 @@ export type EfAppSettings = {
   TimeTravelEnabled: boolean
   TimeTravelOffset: number
   ShowInternalEvents: boolean
+  WarningsHidden: Record<string, boolean>
+  ArtistsAlleyDisplayName: string | null
+  ArtistsAlleyWebsiteUrl: string | null
+  ArtistsAlleyShortDescription: string | null
+  ArtistsAlleyTelegramHandle: string | null
+  DismissedRelease: string | null
 }

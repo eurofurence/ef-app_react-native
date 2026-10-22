@@ -7,7 +7,7 @@ export type EfLostAndFound = EfEntity & {
   Title: string
   Description: string
   Status: string
-  LostDateTimeUtc: DateTimeString
-  FoundDateTimeUtc: DateTimeString
-  ReturnDateTimeUtc: DateTimeString
+  LostDateTimeUtc?: DateTimeString
+  FoundDateTimeUtc?: DateTimeString
+  ReturnDateTimeUtc?: DateTimeString
 }

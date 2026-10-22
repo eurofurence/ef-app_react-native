@@ -9,7 +9,7 @@ import { Platform, StyleSheet } from 'react-native'
 import { Image } from '@/components/generic/atoms/Image'
 import { Pressable } from '@/components/generic/Pressable'
 import { apiBase } from '@/configuration'
-import { useToastContext } from '@/context/ui/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { auth } from '@/data/clients/auth'
 import { useAppConfig } from '@/hooks/data/useAppConfig'
 

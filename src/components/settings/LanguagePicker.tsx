@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Animated, Platform } from 'react-native'
 
 import { Label } from '@/components/generic/atoms/Label'
-import { useAppSetting } from '@/data/collections/AppSettings'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 import { useThemeColorValue } from '@/hooks/themes/useThemeHooks'
 import type { Translation } from '@/i18n'
 import { Button } from '../generic/containers/Button'

@@ -1,12 +1,7 @@
-import { LRUCache } from 'lru-cache'
-
-const results = new LRUCache<string, number>({ max: 10 })
+import { toZonedTime } from 'date-fns-tz'
+import { conTimeZone } from '@/configuration'
+import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export function isDayOfWeek(date: string, dayOfWeek: number) {
-  let result = results.get(date)
-  if (result === undefined) {
-    result = new Date(date).getDay()
-    results.set(date, result)
-  }
-  return result === dayOfWeek
+  return toZonedTime(parseDefaultISO(date), conTimeZone).getDay() === dayOfWeek
 }

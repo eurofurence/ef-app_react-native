@@ -26,38 +26,36 @@ import { LanguageWarnings } from '@/components/home/LanguageWarnings'
 import { RegistrationCountdown } from '@/components/home/RegistrationCountdown'
 import { TimezoneWarning } from '@/components/home/TimezoneWarning'
 import { registrationUrl } from '@/configuration'
-import { useCache } from '@/context/data/Cache'
-import { useToastContext } from '@/context/ui/ToastContext'
-import { useAppSetting } from '@/data/collections/AppSettings'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { useToastContext } from '@/context/ToastContext'
+import { dealersFullCollection } from '@/data/collections/content/DealersFull'
+import { eventsFullCollection } from '@/data/collections/content/EventsFull'
+import { kbEntriesCollection } from '@/data/collections/content/KbEntries'
+import { synchronize, useIsSynchronizing } from '@/data/hooks/useSynchronize'
+import { useSearchIds } from '@/data/searching/useSearch'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
-import { useNow } from '@/hooks/time/useNow'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { vibrateAfter } from '@/util/vibrateAfter'
 
 export default function Index() {
   const { t } = useTranslation('Home')
   const { t: a11y } = useTranslation('Accessibility')
-  const now = useNow()
-  const { synchronize, isSynchronizing } = useCache()
+  const isSynchronizing = useIsSynchronizing()
   const { toast } = useToastContext()
   const backgroundSurface = useThemeBackground('surface')
 
-  const [filter, setFilter] = useState('')
+  const [query, setQuery] = useState('')
   const [searchMessage, setSearchMessage] = useState('')
   const [isInitialLoad, setIsInitialLoad] = useState(true)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const [showInternal] = useAppSetting('ShowInternalEvents')
+  const resultDealers = useSearchIds(dealersFullCollection, query, 5)
+  const resultEvents = useSearchIds(eventsFullCollection, query, 5)
+  const resultEntries = useSearchIds(kbEntriesCollection, query, 5)
 
-  // Search integration.
-  const globalIndex = useCache().searchGlobal
-  const results = useFuseResults(globalIndex, filter, 15)?.filter((item) => {
-    return (
-      item.type !== 'event' ||
-      (!item.Hidden && (showInternal || !item.IsInternal))
-    )
-  })
+  const resultsCount =
+    (resultDealers?.length ?? 0) +
+    (resultEvents?.length ?? 0) +
+    (resultEntries?.length ?? 0)
 
   // Focus management for search results
   const searchResultsRef = useAccessibilityFocus<View>(300)
@@ -67,30 +65,29 @@ export default function Index() {
     if (isSynchronizing) {
       return t('status.refreshing', { defaultValue: 'Refreshing content...' })
     }
-    if (filter && results) {
-      const count = results.length
-      if (count === 0) {
+    if (query) {
+      if (resultsCount === 0) {
         return t('status.no_search_results', {
           defaultValue: 'No results found for "{{query}}"',
-          query: filter,
+          query: query,
         })
       }
       return t('status.search_results', {
         defaultValue: 'Found {{count}} result{{s}} for "{{query}}"',
-        count,
-        s: count === 1 ? '' : 's',
-        query: filter,
+        count: resultsCount,
+        s: resultsCount === 1 ? '' : 's',
+        query: query,
       })
     }
     if (isInitialLoad && !isSynchronizing) {
       return a11y('content_loaded')
     }
     return ''
-  }, [isSynchronizing, filter, results, isInitialLoad, t, a11y])
+  }, [isSynchronizing, query, resultsCount, isInitialLoad, t, a11y])
 
   // Handle search feedback
   useEffect(() => {
-    if (filter) {
+    if (query) {
       const timer = setTimeout(() => {
         setSearchMessage(statusMessage)
       }, 300) // Debounce search announcements
@@ -98,7 +95,7 @@ export default function Index() {
     } else {
       setSearchMessage('')
     }
-  }, [filter, statusMessage])
+  }, [query, statusMessage])
 
   // Handle initial load completion
   useEffect(() => {
@@ -169,23 +166,23 @@ export default function Index() {
         <View className='flex-row items-center pr-2.5'>
           <Search
             className='flex-1 my-2.5 ml-2.5 mr-0'
-            filter={filter}
-            setFilter={setFilter}
+            filter={query}
+            setFilter={setQuery}
             placeholder={t('search.placeholder')}
           />
           <ShowInternalEventsToggle />
         </View>
 
         {/* Visual search status for sighted users */}
-        {!filter ? null : (
+        {!query ? null : (
           <View style={styles.searchStatus}>
             <Text style={styles.searchStatusText}>
-              {results?.length === 0
+              {resultsCount === 0
                 ? t('search.no_results', { defaultValue: 'No results found' })
                 : t('search.results_count', {
                     defaultValue: '{{count}} result{{s}}',
-                    count: results?.length || 0,
-                    s: results?.length === 1 ? '' : 's',
+                    count: resultsCount || 0,
+                    s: resultsCount === 1 ? '' : 's',
                   })}
             </Text>
           </View>
@@ -199,23 +196,27 @@ export default function Index() {
         <BadgeAvailableWarning />
         <CalendarSyncWarning />
         <FavoritesChangedWarning />
-        {results ? null : (
+        {resultDealers && resultEvents && resultEntries ? null : (
           <RegistrationCountdown registrationUrl={registrationUrl} />
         )}
 
-        {results ? (
+        {resultDealers && resultEvents && resultEntries ? (
           <View
             ref={searchResultsRef}
             accessibilityLabel={t('accessibility.search_results')}
           >
-            <GlobalSearch now={now} results={results} />
+            <GlobalSearch
+              resultDealers={resultDealers}
+              resultEvents={resultEvents}
+              resultKbEntries={resultEntries}
+            />
           </View>
         ) : (
           <View accessibilityLabel={a11y('main_sections')}>
-            <RecentAnnouncements now={now} />
-            <UpcomingEventsList now={now} />
-            <TodayScheduleList now={now} />
-            <CurrentEventList now={now} />
+            <RecentAnnouncements />
+            <UpcomingEventsList />
+            <TodayScheduleList />
+            <CurrentEventList />
           </View>
         )}
       </Floater>

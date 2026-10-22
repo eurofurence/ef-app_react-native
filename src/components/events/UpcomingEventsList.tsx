@@ -1,40 +1,50 @@
+import { isUndefined, not, or, useLiveQuery } from '@tanstack/react-db'
 import { isWithinInterval, subMinutes } from 'date-fns'
-import { type FC, useMemo } from 'react'
+import { toZonedTime } from 'date-fns-tz'
+import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
-import { useEventCardInteractions } from '@/components/events/Events.common'
-import { useCache } from '@/context/data/Cache'
-import type { EventDetails } from '@/context/data/types.details'
-import { useAppSetting } from '@/data/collections/AppSettings'
-import { parseDefaultISO } from '@/util/parseDefaultISO'
+import { onLongPressEvent, onPressEvent } from '@/app/(areas)/schedule/day-1'
+import { EventCard2 } from '@/components/events/EventCard2'
+import { conTimeZone } from '@/configuration'
+import {
+  type EfEventFull,
+  eventsFullCollection,
+} from '@/data/collections/content/EventsFull'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
+import { useNow } from '@/hooks/time/useNow'
 import { Section } from '../generic/atoms/Section'
-import { EventCard, eventInstanceForAny } from './EventCard'
 
-const filterUpcomingEvents = (events: readonly EventDetails[], now: Date) =>
-  events.filter((it) => {
-    const startDate = parseDefaultISO(it.StartDateTimeUtc)
-    const startMinus30 = subMinutes(startDate, 30)
-    return isWithinInterval(now, { start: startMinus30, end: startDate })
-  })
-
-export type UpcomingEventsListProps = {
-  now: Date
-}
-export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
+export function UpcomingEventsList() {
   const { t } = useTranslation('Events')
-  const { events } = useCache()
-
+  const now = useNow()
   const [showInternal] = useAppSetting('ShowInternalEvents')
-  const upcoming = useMemo(
-    () =>
-      filterUpcomingEvents(events, now)
-        .filter((item) => !item.Hidden && (showInternal || !item.IsInternal))
-        .map((details) => eventInstanceForAny(details, now)),
-    [events, now, showInternal]
+
+  const upcomingFilter = useCallback(
+    (event: EfEventFull) => {
+      const startDate = toZonedTime(event.StartDateTimeUtc, conTimeZone)
+      const startMinus30 = subMinutes(startDate, 30)
+      return isWithinInterval(now, {
+        start: startMinus30,
+        end: startDate,
+      })
+    },
+    [now]
   )
 
-  const { onPress, onLongPress } = useEventCardInteractions()
+  const { data: upcoming } = useLiveQuery(
+    {
+      id: 'upcoming-events',
+      query: (q) =>
+        q
+          .from({ item: eventsFullCollection })
+          .where(({ item }) => isUndefined(item.Hidden))
+          .where(({ item }) => or(showInternal, not(item.IsInternal)))
+          .orderBy(({ item }) => item.StartDateTimeUtc)
+          .fn.where(({ item }) => upcomingFilter(item)),
+    },
+    [showInternal, upcomingFilter]
+  )
 
   if (upcoming.length === 0) {
     return null
@@ -49,12 +59,12 @@ export const UpcomingEventsList: FC<UpcomingEventsListProps> = ({ now }) => {
       />
       <View style={styles.condense}>
         {upcoming.map((event) => (
-          <EventCard
-            key={event.details.Id}
+          <EventCard2
+            key={event.Id}
             event={event}
             type='duration'
-            onPress={onPress}
-            onLongPress={onLongPress}
+            onPress={onPressEvent}
+            onLongPress={onLongPressEvent}
           />
         ))}
       </View>

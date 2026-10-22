@@ -9,5 +9,5 @@ export type EfArtistsAlley = EfEntity & {
   ShortDescription: string
   TelegramHandle: string
   Location: string
-  ImageId: EfId
+  ImageId?: EfId
 }

@@ -1,28 +1,25 @@
-import { formatDistanceToNow } from 'date-fns'
-import { useMemo, useState } from 'react'
+import { inArray, or, useLiveQuery } from '@tanstack/react-db'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { StyleSheet, View } from 'react-native'
-
 import { AnnouncementList } from '@/components/announce/AnnouncementList'
 import { Label } from '@/components/generic/atoms/Label'
 import { Search } from '@/components/generic/atoms/Search'
 import { Header } from '@/components/generic/containers/Header'
-import { useCache } from '@/context/data/Cache'
-import type { AnnouncementDetails } from '@/context/data/types.details'
-import { useFuseResults } from '@/hooks/searching/useFuseResults'
+import { announcementsFullCollection } from '@/data/collections/content/AnnouncementsFull'
+import { useSearchIds } from '@/data/searching/useSearch'
 
 export default function AnnouncementsList() {
   const { t } = useTranslation('Announcements')
-  const { announcements, searchAnnouncements } = useCache()
-  const [filter, setFilter] = useState('')
-  const search = useFuseResults(searchAnnouncements, filter)
-
-  const announcementInstances = useMemo(() => {
-    return (search ?? announcements).map((details: AnnouncementDetails) => ({
-      details,
-      time: formatDistanceToNow(details.ValidFrom, { addSuffix: true }),
-    }))
-  }, [announcements, search])
+  const [query, setQuery] = useState('')
+  const results = useSearchIds(announcementsFullCollection, query)
+  const { data: announcements } = useLiveQuery({
+    id: `announcements`,
+    query: (q) =>
+      q
+        .from({ item: announcementsFullCollection })
+        .where(({ item }) => or(!results, inArray(item.Id, results))),
+  })
 
   const empty = (
     <View
@@ -32,7 +29,7 @@ export default function AnnouncementsList() {
       accessibilityRole='text'
     >
       <Label type='h2' variant='middle'>
-        {search ? t('noResults') : t('noAnnouncements')}
+        {t('noAnnouncements')}
       </Label>
     </View>
   )
@@ -43,8 +40,8 @@ export default function AnnouncementsList() {
       accessibilityLabel={t('accessibility.main_container')}
     >
       <Header>{t('header')}</Header>
-      <Search className='mx-2.5' filter={filter} setFilter={setFilter} />
-      <AnnouncementList announcements={announcementInstances} empty={empty} />
+      <Search className='mx-2.5' filter={query} setFilter={setQuery} />
+      <AnnouncementList announcements={announcements} empty={empty} />
     </View>
   )
 }

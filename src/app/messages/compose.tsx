@@ -10,7 +10,6 @@ import {
   View,
 } from 'react-native'
 import { z } from 'zod'
-
 import { Label } from '@/components/generic/atoms/Label'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Button } from '@/components/generic/containers/Button'
@@ -18,10 +17,10 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { ManagedChoiceButtons } from '@/components/generic/forms/ManagedChoiceButtons'
 import { ManagedTextInput } from '@/components/generic/forms/ManagedTextInput'
-import { useToastContext } from '@/context/ui/ToastContext'
+import { useToastContext } from '@/context/ToastContext'
 import { useAuthState } from '@/data/clients/auth'
 import { inRole } from '@/data/clients/auth.utils'
-import { useCommunicationsSendMutation } from '@/hooks/api/communications/useCommunicationsSendMutation'
+import { pmsSend } from '@/data/collections/user/Pms'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 
 const messageSchema = z.object({
@@ -60,7 +59,7 @@ export default function ComposeMessage() {
     },
   })
 
-  const { mutate, isPending } = useCommunicationsSendMutation()
+  const [isPending, setIsPending] = useState(false)
   const { toast } = useToastContext()
 
   // Announce form loaded to screen readers
@@ -70,12 +69,17 @@ export default function ComposeMessage() {
 
   const onSend = useCallback(
     (args: MessageSchema) => {
-      mutate(args, {
-        onSuccess: () => toast('info', 'Message sent'),
-        onError: () => toast('error', 'Failed to send message'),
-      })
+      setIsPending(true)
+      pmsSend(args)
+        .then(
+          () => toast('info', 'Message sent'),
+          () => toast('error', 'Failed to send message')
+        )
+        .finally(() => {
+          setIsPending(false)
+        })
     },
-    [mutate, toast]
+    [toast]
   )
   if (!isAdmin && !isPrivateMessageSender) return <Redirect href='/messages' />
 

@@ -1,3 +1,4 @@
+import type { IconNames } from '@/components/generic/atoms/Icon'
 import type { EfEntity } from './EfEntity.ts'
 
 export type EfKbGroup = EfEntity & {
@@ -5,5 +6,5 @@ export type EfKbGroup = EfEntity & {
   Description: string
   Order: number
   ShowInHamburgerMenu: boolean
-  FontAwesomeIconName: string
+  FontAwesomeIconName: IconNames
 }

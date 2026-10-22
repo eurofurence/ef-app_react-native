@@ -38,7 +38,8 @@ export const Default: Story = {
       ContentHashSha1: 'abc123',
       Url: 'https://picsum.photos/800/200',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-      IsDeleted: 0,
+      IsRestricted: false,
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     title: 'Event Banner',
     viewable: true,
@@ -65,7 +66,8 @@ export const NonViewable: Story = {
       ContentHashSha1: 'def456',
       Url: 'https://picsum.photos/800/200?random=2',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-      IsDeleted: 0,
+      IsRestricted: false,
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     title: 'Non-viewable Banner',
     viewable: false,
@@ -86,7 +88,8 @@ export const DifferentAspectRatios: Story = {
           ContentHashSha1: 'ghi789',
           Url: 'https://picsum.photos/1200/200',
           LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-          IsDeleted: 0,
+          IsRestricted: false,
+          BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
         }}
         title='Wide Banner'
         viewable={true}
@@ -102,7 +105,8 @@ export const DifferentAspectRatios: Story = {
           ContentHashSha1: 'jkl012',
           Url: 'https://picsum.photos/400/400',
           LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-          IsDeleted: 0,
+          IsRestricted: false,
+          BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
         }}
         title='Square Banner'
         viewable={true}
@@ -118,7 +122,8 @@ export const DifferentAspectRatios: Story = {
           ContentHashSha1: 'mno345',
           Url: 'https://picsum.photos/300/600',
           LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-          IsDeleted: 0,
+          IsRestricted: false,
+          BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
         }}
         title='Tall Banner'
         viewable={true}
@@ -139,7 +144,8 @@ export const Interactive: Story = {
       ContentHashSha1: 'pqr678',
       Url: 'https://picsum.photos/800/200?random=3',
       LastChangeDateTimeUtc: '2024-08-15T10:00:00Z',
-      IsDeleted: 0,
+      IsRestricted: false,
+      BlurHash: 'L38D%z^%020303D+bv~m%IWF-nIr/1309/667',
     },
     title: 'Clickable Banner',
     viewable: true,

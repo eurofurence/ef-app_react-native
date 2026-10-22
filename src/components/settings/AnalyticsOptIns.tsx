@@ -4,7 +4,7 @@ import { View } from 'react-native'
 
 import { Label } from '@/components/generic/atoms/Label'
 import { Pressable } from '@/components/generic/Pressable'
-import { useAppSetting } from '@/data/collections/AppSettings'
+import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
 import { SettingContainer } from './SettingContainer'
 
 /**

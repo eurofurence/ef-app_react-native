@@ -1,9 +1,10 @@
+import { captureException } from '@sentry/react-native'
+import { eq, useLiveQuery } from '@tanstack/react-db'
 import { format } from 'date-fns'
-import { Redirect, useLocalSearchParams } from 'expo-router'
+import { Redirect, router, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
-
 import { appStyles } from '@/components/AppStyles'
 import { Label } from '@/components/generic/atoms/Label'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
@@ -13,8 +14,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
 import { LoadingContent } from '@/components/LoadingContent'
-import { useCommunicationsMarkReadMutation } from '@/hooks/api/communications/useCommunicationsMarkReadMutation'
-import { useCommunicationsItemQuery } from '@/hooks/api/communications/useCommunicationsQuery'
+import { pmsCollection, pmsMarkRead } from '@/data/collections/user/Pms'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
@@ -25,8 +25,14 @@ export default function MessageItem() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('PrivateMessageItem')
   const { t: a11y } = useTranslation('PrivateMessageItem')
-  const { data: message, isPending } = useCommunicationsItemQuery(id)
-  const { mutate } = useCommunicationsMarkReadMutation()
+  const { data: message, isLoading } = useLiveQuery({
+    id: 'messages-item',
+    query: (q) =>
+      q
+        .from({ item: pmsCollection })
+        .where(({ item }) => eq(item.Id, id))
+        .findOne(),
+  })
   const backgroundStyle = useThemeBackground('background')
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
@@ -38,11 +44,18 @@ export default function MessageItem() {
     if (!message || message.ReadDateTimeUtc !== null) return
 
     const handle = setTimeout(() => {
-      mutate(message.Id)
+      pmsMarkRead(message.Id).catch(captureException)
     }, readOpenTimeRequirement)
 
     return () => clearTimeout(handle)
-  }, [message, mutate])
+  }, [message])
+
+  // Navigate back if the message not found
+  useEffect(() => {
+    if (!message) {
+      router.back()
+    }
+  }, [message])
 
   // Announce message loaded to screen readers
   useEffect(() => {
@@ -57,7 +70,7 @@ export default function MessageItem() {
 
   // Only assert absence once the query has settled; the notification path opens
   // this screen before the fetch that carries the message has finished.
-  if (isPending)
+  if (isLoading)
     return (
       <>
         <Header>{t('header')}</Header>
