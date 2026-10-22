@@ -2,12 +2,19 @@ name: Build App
 on:
     workflow_dispatch:
         inputs:
+            build_mode:
+                type: choice
+                description: Where the build runs. Cloud uses EAS servers (pair with ubuntu-latest); local uses this runner (iOS needs macos-26)
+                options:
+                    - cloud
+                    - local
             os:
                 type: choice
-                description: OS to build on. Ubuntu is faster, MacOS supports iOS builds
+                description: OS to build on. Ubuntu is faster, MacOS supports local iOS builds
                 options:
-                    - macos-latest
                     - ubuntu-latest
+                    - macos-26
+                    - macos-latest
             platform:
                 type: choice
                 description: Platform to build for
@@ -21,11 +28,6 @@ on:
                     - development
                     - preview
                     - production
-            should_submit:
-                type: boolean
-                description: Whether to perform the submit step
-                required: true
-                default: true
 jobs:
     build:
         permissions:
@@ -61,46 +63,92 @@ jobs:
                   token: ${{ secrets.EXPO_TOKEN }}
                   eas-version: latest
 
-            - name: Copy .env.example to .env
-              run: cp .env.example .env
+            # macos runners default to an Xcode whose iOS SDK predates Apple's
+            # submission floor, so pin the newest one on the image explicitly.
+            - name: 🏗 Select Xcode
+              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'ios' }}
+              run: |
+                  sudo xcode-select -s /Applications/Xcode_26.6.app
+                  xcodebuild -version
+                  xcodebuild -showsdks | grep iphoneos
 
             - name: 📦 Install dependencies
               run: bun install
 
-            - name: 👷 Build app
+            - name: 🔑 Pull environment variables
               run: |
+                  cp .env.example .env
+                  eas env:pull --non-interactive --environment ${{ inputs.profile }} --path .env
+
+            - name: 🏷 Read app version
+              id: version
+              run: echo "value=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+            - name: 👷 Build app on EAS
+              if: ${{ inputs.build_mode == 'cloud' }}
+              run: |
+                  eas build \
+                    --non-interactive \
+                    --platform=${{ inputs.platform }} \
+                    --profile=${{ inputs.profile }}
+
+            - name: 👷 Build app on runner
+              if: ${{ inputs.build_mode == 'local' }}
+              run: |
+                  mkdir -p app-build
                   eas build --local \
                     --non-interactive \
-                    --output=./app-build \
-                    --platform=${{ github.event.inputs.platform }} \
-                    --profile=${{ github.event.inputs.profile }}
-
-            - name: 🚢 Submit
-              if: ${{ github.event.inputs.should_submit }}
-              run: eas submit -p ${{ github.event.inputs.platform }} --profile ${{ github.event.inputs.profile }} --path app-build
+                    --output=./app-build/${{ steps.version.outputs.value }}-EF.${{ inputs.platform == 'ios' && 'ipa' || 'aab' }} \
+                    --platform=${{ inputs.platform }} \
+                    --profile=${{ inputs.profile }}
 
             - name: 🔄 Convert AAB to APK
-              if: ${{ github.event.inputs.platform == 'android' && github.event.inputs.profile == 'production' }}
+              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
+              env:
+                  VERSION: ${{ steps.version.outputs.value }}
+                  KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+                  KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+                  KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+                  KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
               run: |
                 # Download bundletool
                 curl -L https://github.com/google/bundletool/releases/download/1.15.6/bundletool-all-1.15.6.jar -o bundletool.jar
-                
+
+                # bundletool re-signs the split APKs, so it needs the same release key EAS signed the bundle with
+                echo "$KEYSTORE_BASE64" | base64 -d > keystore.jks
+
                 # Convert AAB to APK
-                java -jar bundletool.jar build-apks --bundle=app-build/*.aab --output=app-build/app.apks --mode=universal
+                java -jar bundletool.jar build-apks \
+                  --bundle="app-build/$VERSION-EF.aab" \
+                  --output=app-build/app.apks \
+                  --mode=universal \
+                  --ks=keystore.jks \
+                  --ks-pass="pass:$KEYSTORE_PASSWORD" \
+                  --ks-key-alias="$KEY_ALIAS" \
+                  --key-pass="pass:$KEY_PASSWORD"
                 unzip app-build/app.apks -d app-build/
-                mv app-build/universal.apk app-build/app-universal.apk
-                
+                mv app-build/universal.apk "app-build/$VERSION-EF.apk"
+
                 # Clean up temporary files
                 rm app-build/app.apks
                 rm bundletool.jar
+                rm keystore.jks
+
+            - name: 📤 Upload build
+              if: ${{ inputs.build_mode == 'local' }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ inputs.platform }}-build
+                  path: app-build
 
             - name: 📦 Create GitHub Release
-              if: ${{ github.event.inputs.platform == 'android' && github.event.inputs.profile == 'production' }}
+              if: ${{ inputs.build_mode == 'local' && inputs.platform == 'android' && inputs.profile == 'production' }}
               uses: softprops/action-gh-release@v1
               with:
-                files: app-build/app-universal.apk
+                tag_name: v${{ steps.version.outputs.value }}
+                files: app-build/${{ steps.version.outputs.value }}-EF.apk
                 generate_release_notes: true
-                draft: false
+                draft: true
                 prerelease: false
               env:
                 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

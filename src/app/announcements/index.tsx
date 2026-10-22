@@ -9,7 +9,9 @@ import { announcementsFullCollection } from '@/data/collections/content/Announce
 export default function AnnouncementsList() {
   const { t } = useTranslation('Announcements')
   const { data: announcements } = useLiveQuery(announcementsFullCollection)
+  const [filter, setFilter] = useState('')
 
+  // todo: search
   const empty = (
     <View
       className='items-center justify-center p-8'
@@ -29,6 +31,7 @@ export default function AnnouncementsList() {
       accessibilityLabel={t('accessibility.main_container')}
     >
       <Header>{t('header')}</Header>
+      <Search className='mx-2.5' filter={filter} setFilter={setFilter} />
       <AnnouncementList announcements={announcements} empty={empty} />
     </View>
   )

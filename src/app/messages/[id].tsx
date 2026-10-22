@@ -14,6 +14,7 @@ import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
 import { pmsCollection, pmsMarkRead } from '@/data/collections/user/Pms'
+import { LoadingContent } from '@/components/LoadingContent'
 import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
 import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
@@ -24,7 +25,7 @@ export default function MessageItem() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { t } = useTranslation('PrivateMessageItem')
   const { t: a11y } = useTranslation('PrivateMessageItem')
-  const { data: message } = useLiveQuery(
+  const { data: message, isLoading } = useLiveQuery(
     {
       id: 'messages-item',
       query: (q) =>
@@ -69,6 +70,18 @@ export default function MessageItem() {
       setAnnouncementMessage(messageText)
     }
   }, [message, a11y])
+
+  // Only assert absence once the query has settled; the notification path opens
+  // this screen before the fetch that carries the message has finished.
+  if (isLoading)
+    return (
+      <>
+        <Header>{t('header')}</Header>
+        <Floater contentStyle={appStyles.trailer}>
+          <LoadingContent message={t('loading')} />
+        </Floater>
+      </>
+    )
 
   if (!message) return <Redirect href='/messages' />
 

@@ -10,7 +10,7 @@ import { Grid } from '@/components/generic/containers/Grid'
 import { Tab } from '@/components/generic/containers/Tab'
 import type { TabsRef } from '@/components/generic/containers/Tabs'
 import { PagerPrimaryLogin } from '@/components/mainmenu/PagerPrimaryLogin'
-import { conWebsite, menuColumns, showLogin } from '@/configuration'
+import { conWebsite, showLogin } from '@/configuration'
 import { auth, useAuthState } from '@/data/clients/auth'
 import { useAppConfig } from '@/hooks/data/useAppConfig'
 
@@ -21,7 +21,8 @@ export type MainMenuProps = {
 export function MainMenu({ tabs }: MainMenuProps) {
   const { t } = useTranslation('Menu')
   const { isLoggedIn, claims } = useAuthState()
-  const { cmaUrl, mapsUrl, wifiConfigDisabled } = useAppConfig()
+  const { cmaUrl, critterUrl, mapsUrl, weatherUrl, wifiConfigDisabled } =
+    useAppConfig()
 
   const handleCatchEmAll = useCallback(async () => {
     if (!isLoggedIn) {
@@ -44,7 +45,7 @@ export function MainMenu({ tabs }: MainMenuProps) {
         />
       )}
 
-      <Grid cols={menuColumns}>
+      <Grid cols={3}>
         <Tab
           icon='information-outline'
           text={t('info')}
@@ -92,6 +93,24 @@ export function MainMenu({ tabs }: MainMenuProps) {
           accessibilityLabel={t('accessibility.settings_tab')}
           accessibilityHint={t('accessibility.settings_tab_hint')}
         />
+        {critterUrl && (
+          <Tab
+            icon='account-reactivate'
+            text={t('critter')}
+            onPress={() => openBrowserAsync(critterUrl)}
+            accessibilityLabel={t('accessibility.critter_tab')}
+            accessibilityHint={t('accessibility.critter_tab_hint')}
+          />
+        )}
+        {weatherUrl && (
+          <Tab
+            icon='weather-cloudy'
+            text={t('weather')}
+            onPress={() => openBrowserAsync(weatherUrl)}
+            accessibilityLabel={t('accessibility.weather_tab')}
+            accessibilityHint={t('accessibility.weather_tab_hint')}
+          />
+        )}
         {Platform.OS !== 'web' && !wifiConfigDisabled && (
           <Tab
             icon='wifi'

@@ -66,16 +66,6 @@ export const apiBase = required(
 )
 
 /**
- * Number of columns to use in main menu pager.
- */
-export const menuColumns = Number(
-  required(
-    process.env.EXPO_PUBLIC_CONVENTION_MENUCOLUMNS,
-    'EXPO_PUBLIC_CONVENTION_MENUCOLUMNS'
-  )
-)
-
-/**
  * True if login is available for this convention.
  */
 export const showLogin = process.env.EXPO_PUBLIC_CONVENTION_SHOWLOGIN

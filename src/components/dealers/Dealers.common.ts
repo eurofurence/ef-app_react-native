@@ -2,6 +2,7 @@ import { captureException } from '@sentry/react-native'
 import { Share } from 'react-native'
 import { appBase, conAbbr } from '@/configuration'
 import type { EfDealerFull } from '@/data/collections/content/DealersFull'
+import { shareLink } from '@/util/shareLink'
 
 /**
  * Compares category, checks if the categories are adult labeled.
@@ -21,12 +22,10 @@ export const compareCategory = (left: string, right: string) => {
   }
 }
 
-export const shareDealer = (dealer: Pick<EfDealerFull, 'DisplayName' | 'Id'>) =>
-  Share.share(
-    {
-      title: dealer.DisplayName || 'Unknown Dealer',
-      url: `${appBase}/Web/Dealers/${dealer.Id}`,
-      message: `Check out ${dealer.DisplayName || 'Unknown Dealer'} on ${conAbbr}!\n${appBase}/Web/Dealers/${dealer.Id}`,
-    },
-    {}
-  ).catch(captureException)
+export const shareDealer = (dealer: Pick<EfDealerFull, 'DisplayNameOrAttendeeNickname' | 'DisplayName' | 'Id'>) =>
+  shareLink(
+    dealer.DisplayNameOrAttendeeNickname ||
+    dealer.DisplayName ||
+    'Unknown Dealer',
+    `${appBase}/Web/Dealers/${dealer.Id}`,
+  )

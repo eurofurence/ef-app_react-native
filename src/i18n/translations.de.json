@@ -72,6 +72,7 @@
       "title_heading": "Mitteilungstitel"
     },
     "header": "Mitteilung",
+    "loading": "Laden...",
     "not_available": "Diese Mitteilung ist nicht mehr verfügbar."
   },
   "Announcements": {
@@ -91,6 +92,7 @@
     },
     "header": "Mitteilungen",
     "noAnnouncements": "Momentan gibt es keine Mitteilungen",
+    "noResults": "Keine Mitteilungen entsprechen deiner Suche",
     "sectionSubtitle": "Aktuelle Mitteilungen zur Veranstaltung",
     "sectionTitle": "Mitteilungen"
   },
@@ -173,6 +175,7 @@
       "location_invalid_string": "Gib die Tischnummer vom Handout auf deinem Tisch ein.",
       "telegramHandle_invalid_string": "Das sieht nicht nach einem gültigen Telegram-Handle aus.",
       "too_small": "Dieses Feld ist verpflichtend.",
+      "unsupported_image": "Dieses Bildformat wird nicht unterstützt. Wähle ein anderes Bild.",
       "websiteUrl_invalid_string": "Gib deine Webseite ein wie: https://eurofurence.org"
     },
     "explanation_edit_change": "Hier kannst du deine Tischregistrierung in der Artist Alley bearbeiten. Aktualisiere deine Eingaben, wähle ein Bild und schicke uns die Änderungen.",
@@ -282,6 +285,7 @@
       "art_preview_caption": "Kunstvorschau-Beschriftung: {{caption}}",
       "bluesky_button": "{{handle}} auf Bluesky besuchen",
       "bluesky_button_hint": "Öffnet Bluesky-Profil im Browser",
+      "dealer_after_dark_icon": "After Dark Bereich Markierung",
       "dealer_attendance": "Anwesenheitsinformationen: {{days}}",
       "dealer_avatar": "Profilbild für {{name}}",
       "dealer_content_area": "Dealer-Informationsinhalt",
@@ -316,6 +320,7 @@
     "dealer_was_updated": "Dealer wurde seit deinem letzten Besuch aktualisiert",
     "discord_handle_copied": "Discord-Handle {{discordHandle}} wurde in die Zwischenablage kopiert!",
     "in_after_dark": "Im After Dark Bereich",
+    "loading": "Laden...",
     "merchandise": "Angebot",
     "not_attending": "Heute nicht anwesend",
     "remove_favorite": "Favorit entfernen",
@@ -325,6 +330,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "After Dark Bereich Markierung",
       "dealer_avatar": "Profilbild für {{name}}",
       "dealer_card": "Dealer: {{name}}",
       "dealer_card_hint": "Tippen um Dealer-Details anzuzeigen, lange drücken für Optionen",
@@ -355,9 +361,10 @@
     "search": {
       "placeholder": "Suche Dealer…"
     },
-    "section_notice": "Dealer-Gruppierung wurde durch die App vorgenommen anhand hervorstechender Kategorien",
     "section_table": "Bereich {{section}}",
-    "section_table_none": "Ohne Bereich"
+    "section_table_none": "Ohne Bereich",
+    "section_notice": "Dealer-Gruppierung wurde durch die App vorgenommen anhand hervorstechender Kategorien",
+    "section_notice_search": "Dealer-Sortierung basiert auf bester Übereinstimmung mit Suchtext"
   },
   "EmptyScreen": {
     "notImplemented": "Inhalt noch nicht implementiert."
@@ -374,9 +381,9 @@
       "event_not_found": "Die Seite für dieses Event existiert nicht"
     },
     "add_favorite": "Favorit hinzufügen",
-    "event_was_updated": "Es gab Änderungen am Event, seitdem Du es das letzte Mal aufgerufen hast",
     "event_not_found_message": "Entschuldigung, wir konnten das Event, nachdem du suchst, nicht finden.",
     "event_not_found_title": "Dieses Event existiert nicht",
+    "event_was_updated": "Es gab Änderungen am Event, seitdem Du es das letzte Mal aufgerufen hast",
     "give_feedback": "Feedback geben",
     "hide": "Event verbergen",
     "label_event_description": "Mehr zu diesem Event",
@@ -384,6 +391,7 @@
     "label_event_room": "Raum",
     "label_event_track": "Kategorie",
     "label_event_when": "Zeit",
+    "loading": "Laden...",
     "mask_required": "Auf diesem Event ist eine Mund-Nasen-Maske verpflichtend zu tragen",
     "remove_favorite": "Favorit entfernen",
     "reveal": "Wieder anzeigen",
@@ -397,6 +405,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "Event existiert nicht",
       "feedback_form_content": "Feedback-Formular-Inhalt",
       "feedback_form_loaded": "Feedback-Formular für {{title}} geladen",
       "feedback_form_scroll": "Feedback-Formular Scroll-Ansicht",
@@ -404,10 +413,14 @@
       "submit_feedback": "Feedback absenden",
       "submit_feedback_hint": "Sendet deine Bewertung und Nachricht für dieses Event"
     },
+    "disabled_not_accepting_feedback": "Für dieses Event kann kein Feedback gegeben werden",
     "disabled_not_attending": "Nur Attendees können Feedback geben",
     "disabled_not_logged_in": "Bitte melde dich an, um Feedback zu geben",
+    "event_not_found_message": "Entschuldigung, wir konnten das Event, nachdem du suchst, nicht finden.",
+    "event_not_found_title": "Dieses Event existiert nicht",
     "explanation": "Lass uns wissen, wie du {{ eventTitle }} fandest. Gib eine Bewertung und optional eine Nachricht ein, und wir schauen, dass diese bei der richtigen Person landen.",
     "header": "Feedback: {{ eventTitle }}",
+    "loading": "Laden...",
     "message_placeholder": "Wenn du spezifische Anmerkungen an die Veranstaltenden hast, schreibe diese hier auf.",
     "message_title": "Feedbacknachricht",
     "rating_title": "Wir sehr hat dir das Event gefallen?",
@@ -448,6 +461,7 @@
     "search": {
       "placeholder": "Suche Events…"
     },
+    "section_notice_search": "Event-Sortierung basiert auf bester Übereinstimmung mit Suchtext",
     "today_schedule_subtitle": "Du wirst an diese Events erinnert werden",
     "today_schedule_title": "Deine Agenda",
     "upcoming_favorites_title": "Favorisierte Events",
@@ -541,6 +555,7 @@
       "kb_entry_card": "Wissensartikel: {{title}}",
       "kb_entry_card_hint": "Tippen um vollständige Artikeldetails anzuzeigen",
       "kb_entry_content": "Wissensartikel-Inhalt",
+      "kb_entry_header_hint": "Kopfzeile mit Artikeltitel und Teilen-Schaltfläche",
       "kb_entry_loaded": "Wissensartikel geladen: {{title}}",
       "kb_entry_not_found": "Die Seite für diesen Artikel existiert nicht",
       "kb_entry_scroll": "Wissensartikel-Scroll-Ansicht",
@@ -554,9 +569,11 @@
     "header": "Wissenswertes",
     "kb_entry_not_found_message": "Entschuldigung, wir konnten den Artikel, nachdem du suchst, nicht finden.",
     "kb_entry_not_found_title": "Dieser Artikel existiert nicht",
+    "loading": "Laden...",
     "search": {
       "placeholder": "Info-Artikel suchen…"
     },
+    "share": "Diesen Artikel teilen",
     "viewing_entry": "Artikel ansehen"
   },
   "LostAndFound": {
@@ -651,6 +668,8 @@
       "catch_em_tab": "Catch-em-all Spiel Tab",
       "catch_em_tab_disabled_hint": "Anmeldung erforderlich um Catch-em-all zu spielen",
       "catch_em_tab_hint": "Das Fursuit-Fangspiel spielen",
+      "critter_tab_hint": "Öffne das Critter System um dich freiwillig für Schichten zu melden oder deinen Schichtplan einzusehen",
+      "critter_tab": "Critter System Tab",
       "info_tab": "Info-Artikel Tab",
       "info_tab_hint": "Wissensdatenbank und Informationsartikel durchsuchen",
       "login_button": "Anmelde-Button",
@@ -675,6 +694,8 @@
       "profile_tab_hint": "Profil anzeigen und verwalten",
       "settings_tab": "Einstellungen Tab",
       "settings_tab_hint": "App-Einstellungen und Präferenzen konfigurieren",
+      "weather_tab": "Fursuit Wetter Tab",
+      "weather_tab_hint": "Informiere dich über das aktuelle Wetter für das Fursuiting auf der Eurofurence",
       "website_tab": "Convention-Website Tab",
       "website_tab_hint": "Öffnet Convention-Website im Browser",
       "wifi_tab": "WLAN-Einrichtung",
@@ -683,6 +704,7 @@
     "announcements": "Ankündigungen",
     "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
+    "critter": "Critter System",
     "dealers": "Dealer",
     "events": "Events",
     "home": "Start",
@@ -698,6 +720,7 @@
     "profile": "Profil",
     "services": "Services",
     "settings": "Einstellungen",
+    "weather": "Wetter",
     "website": "Webseite",
     "wifi": "WLAN"
   },
@@ -724,6 +747,7 @@
     },
     "from": "Von {{authorName}}",
     "header": "Private Nachricht",
+    "loading": "Laden...",
     "read_at": "Gelesen um {{time}}"
   },
   "PrivateMessageList": {
@@ -762,6 +786,9 @@
     "header": "Profil",
     "badge_code": "Badge-Code",
     "badge_code_subtitle": "Scanne dies an den Check-in-Schaltern oder Personal-Terminals",
+    "add_to_wallet": "Zur Wallet hinzufügen",
+    "wallet_unavailable": "Wallet ist auf diesem Gerät nicht verfügbar.",
+    "wallet_failed": "Der Pass konnte nicht zur Wallet hinzugefügt werden.",
     "idp_settings": "Identity setting website",
     "logged_in_as": "Du bist angemeldet als {{username}}",
     "login_description": "Wenn Du angemeldet bist, kann {{conName}} dir Private Nachrichten in der App zusenden. Außerdem kannst Du bei den Fursuit-Spielen teilnehmen und Dir Tische in der Artist Alley registieren.",
@@ -816,6 +843,12 @@
     "sign_in": "Anmelden",
     "not_now": "Nicht jetzt"
   },
+  "UpdateAvailable": {
+    "title": "Update verfügbar",
+    "body": "Version {{version}} der App ist da. Aktualisiere, um die neuesten Fehlerbehebungen und Funktionen zu erhalten.",
+    "update": "Jetzt aktualisieren",
+    "dismiss": "Schließen"
+  },
   "Settings": {
     "about": "Über uns",
     "allowAnalytics": "Erlaube uns, Fehler zu übermitteln",
@@ -836,7 +869,10 @@
       "login_required": "Melde Dich an, um Deine Favoriten zu synchronisieren.",
       "retry": "Erneut versuchen",
       "subscribe": "Favoriten zum Kalender hinzufügen",
+      "subscribe_google": "Favoriten zu Google Calendar hinzufügen",
+      "subscribe_google_hint": "Die Schaltfläche kopiert die Kalender-URL und öffnet Google Calendar in deinem Browser.",
       "subtitle": "Abonniere Deine Favoriten mit Deiner Kalender-App. Neue Favoriten und Änderungen werden automatisch synchronisiert.",
+      "sync_hint": "Die Kalender-Synchronisierung kann etwas dauern.",
       "title": "Kalender-Synchronisierung"
     },
     "changeLanguage": "Sprache ändern",
@@ -928,7 +964,10 @@
   "Todo": {},
   "WiFi": {
     "title": "WLAN-Einrichtung",
-    "subtitle": "Eurofurence betreibt ein kostenloses WLAN für Teilnehmer und Staff.\n\nHinweis: Für Dealers' Den, Artshow und andere Spezialfälle kann es eigene Netzwerke geben - in dem Fall wirst du vom Netzwerk-Team separat eingewiesen!",
+    "title_staff": "Staff-WLAN-Einrichtung",
+    "title_public": "Öffentliches WLAN",
+    "subtitle_staff": "Hallo Mitarbeiter! Um euch bei eurer Arbeit für die Eurofurence zu unterstützen, meldet euch bitte über den QR-Code oder die euch zur Verfügung gestellten Zugangsdaten im WPA-Enterprise-Netzwerk an, das ausschließlich für Mitarbeiter zugänglich ist.\nDiese Zugangsdaten dürfen nicht an die Öffentlichkeit oder andere Personen weitergegeben werden!\n\nBitte beachtet: Für den Dealers' Den, die Artshow und andere Sonderfälle können entsprechende Spezialnetzwerke eingerichtet sein; ihr werdet diesbezüglich separat vom Netzwerkpersonal informiert!",
+    "subtitle_public": "Die Eurofurence stellt den Teilnehmern ein kostenloses WLAN-Netzwerk zur Verfügung. Suchen Sie einfach nach einem Netzwerk mit dem Namen „{{ssid}}“ und stellen Sie eine Verbindung her.\n\nBitte beachtet: Für den Dealers' Den, die Artshow und andere Sonderfälle können entsprechende Spezialnetzwerke eingerichtet sein; ihr werdet diesbezüglich separat vom Netzwerkpersonal informiert!",
     "intro": "Als fortgeschrittener Nutzer oder Staff kannst du das Firewall-Verhalten ändern oder eigene Zugangsdaten verwenden.",
     "profile_eurofurence_name": "Geschützt (empfohlen)",
     "profile_eurofurence_desc": "Eingehende Verbindungen zu deinem Gerät sind nicht erlaubt. Du kannst das Internet frei nutzen, aber niemand kann von außen Verbindungen zu offenen Ports deines Geräts und den dahinter laufenden Apps aufbauen.",

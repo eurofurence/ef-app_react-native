@@ -45,6 +45,7 @@ export function createAsyncStorageCollectionOptions<
       for (const mutation of transaction.mutations) {
         await AsyncStorage.remove(`${config.storageKey}/${mutation.key}`)
       }
+      return { refetch: false }
     },
     onUpdate: async ({ transaction }) => {
       for (const mutation of transaction.mutations) {
@@ -53,6 +54,7 @@ export function createAsyncStorageCollectionOptions<
           stringifyJsonSafe(mutation.modified)
         )
       }
+      return { refetch: false }
     },
     onInsert: async ({ transaction }) => {
       for (const mutation of transaction.mutations) {
@@ -61,6 +63,7 @@ export function createAsyncStorageCollectionOptions<
           stringifyJsonSafe(mutation.modified)
         )
       }
+      return { refetch: false }
     },
   })
 }

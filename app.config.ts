@@ -28,7 +28,7 @@ const config: ExpoConfig & {
   version,
   orientation: 'default',
   userInterfaceStyle: 'automatic',
-  scheme: ['eurofurence', 'eventwifi'],
+  scheme: 'eurofurence',
   splash: {
     image: './assets/platform/splash.png',
     resizeMode: 'native',
@@ -103,7 +103,6 @@ const config: ExpoConfig & {
     favicon: './assets/platform/appicon-android.png',
   },
   experiments: {
-    baseUrl: '/ef-app_react-native',
     reactCompiler: true,
     typedRoutes: true,
   },
@@ -137,14 +136,6 @@ const config: ExpoConfig & {
         color: '#005953',
       },
     ],
-    // Used to render audio.
-    [
-      'expo-audio',
-      {
-        microphonePermission: false,
-        enableMicrophone: false,
-      },
-    ],
     // Used for Artist Alley registration
     [
       'expo-image-picker',
@@ -153,6 +144,7 @@ const config: ExpoConfig & {
       },
     ],
     'expo-localization',
+    ['react-native-enriched-markdown', { enableMath: false }],
     [
       'expo-build-properties',
       {

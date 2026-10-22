@@ -8,13 +8,14 @@ import { shareDealer } from '@/components/dealers/Dealers.common'
 import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { LoadingContent } from '@/components/LoadingContent'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { dealersFullCollection } from '@/data/collections/content/DealersFull'
 
 export default function DealerItem() {
   const { t } = useTranslation('Dealer')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { data: dealer } = useLiveQuery(
+  const { data: dealer, isLoading: pending } = useLiveQuery(
     {
       id: 'dealers-item',
       query: (q) =>
@@ -43,7 +44,9 @@ export default function DealerItem() {
         {dealerName}
       </Header>
       <Floater contentStyle={appStyles.trailer}>
-        {!dealer ? (
+        {pending ? (
+          <LoadingContent message={t('loading')} />
+        ) : !dealer ? (
           <NotFoundContent
             accessibilityStatus={t('accessibility.dealer_not_found')}
             title={t('dealer_not_found_title')}

@@ -70,6 +70,7 @@
       "title_heading": "Tytuł ogłoszenia"
     },
     "header": "Ogłoszenie",
+    "loading": "Ładowanie...",
     "not_available": "To ogłoszenie nie jest już dostępne."
   },
   "Announcements": {
@@ -89,6 +90,7 @@
     },
     "header": "Ogłoszenia",
     "noAnnouncements": "Brak aktywnych ogłoszeń w tej chwili",
+    "noResults": "Żadne ogłoszenia nie pasują do wyszukiwania",
     "sectionSubtitle": "Na żywo z konwentu",
     "sectionTitle": "Ogłoszenia"
   },
@@ -163,6 +165,7 @@
       "art_preview_caption": "Podpis podglądu sztuki: {{caption}}",
       "bluesky_button": "Odwiedź {{handle}} na Bluesky",
       "bluesky_button_hint": "Otwiera profil Bluesky w przeglądarce",
+      "dealer_after_dark_icon": "Wskaźnik sekcji „After Dark”",
       "dealer_attendance": "Informacje o obecności: {{days}}",
       "dealer_avatar": "Zdjęcie profilowe dla {{name}}",
       "dealer_content_area": "Zawartość informacji o wystawcy",
@@ -183,13 +186,14 @@
       "twitter_button": "Odwiedź {{handle}} na Twitter",
       "twitter_button_hint": "Otwiera profil Twitter w przeglądarce"
     },
-    "after_dark": "After dark",
+    "after_dark": "After Dark",
     "attends": "Bierze udział w dniach",
     "attends_fri": "Piątek",
     "attends_sat": "Sobotę",
     "attends_thu": "Czwartek",
     "categories": "Kategorie",
-    "in_after_dark": "Znajduje się w sekcji after dark",
+    "in_after_dark": "Znajduje się w sekcji After Dark",
+    "loading": "Ładowanie...",
     "merchandise": "Oferuje",
     "not_attending": "Dziś nie bierze udziału",
     "table": "Tabela",
@@ -198,6 +202,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "Wskaźnik sekcji „After Dark”",
       "dealer_avatar": "Zdjęcie profilowe dla {{name}}",
       "dealer_card": "Wystawca: {{name}}",
       "dealer_card_hint": "Dotknij, aby wyświetlić szczegóły wystawcy, przytrzymaj dla opcji",
@@ -218,7 +223,10 @@
     "not_attending_on": "Nie biorą udziału w {{offDays}}",
     "search": {
       "placeholder": "Szukaj wystawców…"
-    }
+    },
+    "section_notice": "Aplikacja wybiera grupę sprzedawców na podstawie kategorii o największej liczbie unikalnych wpisów",
+    "section_notice_alphabetical": "Sprzedawcy są pogrupowani według pierwszej litery nazwy",
+    "section_notice_search": "Sortowanie wyników według sprzedawców opiera się na najlepszym dopasowaniu do wyszukiwanego tekstu"
   },
   "EmptyScreen": {
     "notImplemented": "Ta sekcja nie jest jeszcze zaimplementowana."
@@ -234,6 +242,8 @@
       "event_header_hint": "Nagłówek zawierający tytuł wydarzenia i przycisk udostępniania"
     },
     "add_favorite": "Dodaj do ulubi",
+    "event_not_found_message": "Przepraszamy, nie udało nam się znaleźć wydarzenia, którego szukałeś.",
+    "event_not_found_title": "To wydarzenie nie istnieje",
     "event_was_updated": "Punkt programu został zaktualizowany od ostatniej wizyty",
     "give_feedback": "Dodaj feedback",
     "hide": "Ukryj z listy",
@@ -242,6 +252,7 @@
     "label_event_room": "Sala",
     "label_event_track": "Ścieżka",
     "label_event_when": "Kiedy",
+    "loading": "Ładowanie...",
     "mask_required": "Maseczki są obowiązkowe podczas tego punktu programu",
     "remove_favorite": "Usuń z ulubionych",
     "reveal": "Pokaż w listy",
@@ -262,10 +273,14 @@
       "submit_feedback": "Wyślij feedback",
       "submit_feedback_hint": "Wysyła Twoją ocenę i wiadomość dla tego wydarzenia"
     },
+    "disabled_not_accepting_feedback": "Nie można wystawić opinii na temat tego wydarzenia",
     "disabled_not_attending": "Tylko uczestnicy mogą dawać feedback",
     "disabled_not_logged_in": "Zaloguj się, aby dać feedback",
+    "event_not_found_message": "Przepraszamy, nie udało nam się znaleźć wydarzenia, którego szukałeś.",
+    "event_not_found_title": "To wydarzenie nie istnieje",
     "explanation": "Daj nam znać, jak Ci się podobało {{ eventTitle }}, zostawiając nam ocenę i może nawet wiadomość! Upewnimy się, że trafi do właściwej osoby.",
     "header": "Feedback: {{ eventTitle }}",
+    "loading": "Ładowanie...",
     "message_placeholder": "Czy masz jakieś konkretne uwagi dla organizatorów? Napisz je tutaj.",
     "message_title": "Wiadomość z feedbackiem",
     "rating_title": "Jak bardzo podobało Ci się to wydarzenie?",
@@ -299,6 +314,7 @@
     "search": {
       "placeholder": "Szukaj wydarzeń…"
     },
+    "section_notice_search": "Sortowanie wydarzeń opiera się na najlepszym dopasowaniu do wyszukiwanego tekstu",
     "upcoming_favorites_title": "Ulubione punkty programu",
     "upcoming_subtitle": "Te punkty programu zaczną się w przeciągu 30 minut",
     "upcoming_title": "Nadchodzące wydarzenia"
@@ -386,6 +402,7 @@
       "kb_entry_card": "Artykuł informacyjny: {{title}}",
       "kb_entry_card_hint": "Dotknij, aby wyświetlić pełne szczegóły artykułu",
       "kb_entry_content": "Treść artykułu informacyjnego",
+      "kb_entry_header_hint": "Nagłówek zawierający tytuł artykułu i przycisk udostępniania",
       "kb_entry_loaded": "Artykuł informacyjny załadowany: {{title}}",
       "kb_entry_scroll": "Widok przewijania artykułu informacyjnego",
       "kb_entry_scroll_hint": "Przewijalny widok zawierający treść artykułu informacyjnego",
@@ -396,9 +413,11 @@
       "search_results": "Znaleziono {{count}} artykułów informacyjnych dla \"{{query}}\""
     },
     "header": "Podstawowe informacje",
+    "loading": "Ładowanie...",
     "search": {
       "placeholder": "Szukaj artykułów informacyjnych…"
-    }
+    },
+    "share": "Udostępnij ten artykuł"
   },
   "LostAndFound": {
     "accessibility": {
@@ -492,6 +511,8 @@
       "catch_em_tab": "Zakładka gry Catch-em-all",
       "catch_em_tab_disabled_hint": "Wymagane logowanie, aby grać w catch-em-all",
       "catch_em_tab_hint": "Graj w grę łapania fursuitów",
+      "critter_tab_hint": "Otwórz Critter System, aby zapisać się na dyżury wolontariackie lub sprawdzić swój harmonogram",
+      "critter_tab": "Zakładka Critter System",
       "info_tab": "Zakładka artykułów informacyjnych",
       "info_tab_hint": "Przeglądaj bazę wiedzy i artykuły informacyjne",
       "login_button": "Przycisk logowania",
@@ -516,12 +537,15 @@
       "profile_tab_hint": "Wyświetl i zarządzaj swoim profilem",
       "settings_tab": "Zakładka ustawień",
       "settings_tab_hint": "Konfiguruj preferencje i ustawienia aplikacji",
+      "weather_tab": "Zakładka fursuit pogoda",
+      "weather_tab_hint": "Sprawdź aktualną pogodę na Eurofurence, jeśli planujesz wystąpić w fursuicie",
       "website_tab": "Zakładka strony konwentu",
       "website_tab_hint": "Otwiera stronę konwentu w przeglądarce",
       "wifi_tab": "WiFi setup",
       "wifi_tab_hint": "Opens the WiFi setup screen"
     },
     "announcements": "Ogłoszenia",
+    "critter": "Critter System",
     "dealers": "Wystawcy",
     "events": "Program",
     "home": "Start",
@@ -537,6 +561,7 @@
     "pm": "Prywatne wiadomości",
     "services": "Usługi",
     "settings": "Ustawienia",
+    "weather": "Pogoda",
     "wifi": "WiFi"
   },
   "Notification": {
@@ -562,6 +587,7 @@
     },
     "from": "Od {{authorName}}",
     "header": "Prywatna wiadomość",
+    "loading": "Ładowanie...",
     "read_at": "Przeczytana o {{time}}"
   },
   "PrivateMessageList": {
@@ -596,6 +622,9 @@
     "header": "Profil",
     "badge_code": "Kod identyfikatora",
     "badge_code_subtitle": "Zeskanuj to przy stanowiskach rejestracji lub terminalach personelu",
+    "add_to_wallet": "Dodaj do Portfela",
+    "wallet_unavailable": "Portfel jest niedostępny na tym urządzeniu.",
+    "wallet_failed": "Nie udało się dodać przepustki do portfela.",
     "idp_settings": "Strona ustawień tożsamości",
     "logged_in_as": "Jesteś zalogowany jako {{username}}",
     "login_description": "Będąc zalogowanym {{conName}} będzie mógł wysyłać ci spersonalizowane wiadomości. Możesz również dzięki temu brać udział w Fursuit Games i zarejestrować swoje stoisko na Artist Alley.",
@@ -650,6 +679,12 @@
     "sign_in": "Zaloguj się",
     "not_now": "Nie teraz"
   },
+  "UpdateAvailable": {
+    "title": "Dostępna aktualizacja",
+    "body": "Wersja {{version}} aplikacji jest już dostępna. Zaktualizuj, aby otrzymać najnowsze poprawki i funkcje.",
+    "update": "Aktualizuj teraz",
+    "dismiss": "Zamknij"
+  },
   "Settings": {
     "about": "O aplikacji",
     "allowAnalytics": "Pozwól nam gromadzić dane analityczne",
@@ -662,6 +697,19 @@
       "subtitle": "Ostatnia synchronizacja: {{ time }}",
       "synchronize": "Synchronizuj",
       "title": "Pamięć podręczna - statystyki"
+    },
+    "calendar": {
+      "copy_link": "Skopiuj link do kalendarza",
+      "error": "Nie udało się otworzyć Twojego kalendarza. Spróbuj zamiast tego skopiować link.",
+      "link_copied": "Link do kalendarza skopiowano do schowka",
+      "login_required": "Zaloguj się, aby zsynchronizować swoje ulubione wydarzenia.",
+      "retry": "Spróbuj ponownie",
+      "subscribe": "Dodaj ulubione do kalendarza",
+      "subscribe_google": "Dodaj ulubione do Kalendarza Google",
+      "subscribe_google_hint": "Powyższy przycisk skopiuje adres URL kalendarza i otworzy Google Calendar w przeglądarce.",
+      "subtitle": "Dodaj swoje ulubione wydarzenia do aplikacji kalendarza. Nowe ulubione i zmiany synchronizują się automatycznie.",
+      "sync_hint": "Synchronizacja kalendarza może chwilę potrwać.",
+      "title": "Synchronizacja kalendarza"
     },
     "changeLanguage": "Zmień język",
     "currentLanguage": "Twój aktualnie używany język to polski! 🥟",
@@ -722,7 +770,10 @@
   },
   "WiFi": {
     "title": "Konfiguracja WiFi",
-    "subtitle": "Eurofurence udostępnia bezpłatną sieć WiFi dla uczestników i staffu.\n\nUwaga: dla Dealers' Den, Artshow i innych szczególnych zastosowań mogą istnieć osobne sieci - w takim przypadku ekipa sieciowa poinstruuje cię osobno!",
+    "title_staff": "Konfiguracja sieci Wi-Fi dla pracowników",
+    "title_public": "Informacje o publicznych sieciach Wi-Fi",
+    "subtitle_staff": "Witaj, członku personelu! Aby ułatwić Ci pracę podczas Eurofurence, zaloguj się do sieci WPA-Enterprise przeznaczonej wyłącznie dla personelu, korzystając z kodu QR lub danych logowania, które otrzymałeś.\nNie wolno udostępniać tych danych logowania osobom postronnym ani innym osobom!\n\nUwaga: w przypadku Dealers' Den, Artshow i innych specjalnych sytuacji mogą istnieć odpowiednie sieci specjalistyczne, a personel sieci przekaże Ci oddzielne instrukcje!",
+    "subtitle_public": "Eurofurence udostępnia bezpłatną sieć Wi-Fi dla uczestników – wystarczy znaleźć sieć o nazwie „{{ssid}}” i połączyć się z nią.\n\nUwaga: w przypadku Dealers' Den, Artshow i innych specjalnych sytuacji mogą istnieć odpowiednie sieci specjalistyczne, a personel odpowiedzialny za sieć udzieli Państwu oddzielnych instrukcji!",
     "intro": "Jeśli jesteś zaawansowanym użytkownikiem lub członkiem staffu, możesz zmienić zachowanie zapory sieciowej lub podać własne dane dostępowe.",
     "profile_eurofurence_name": "Chroniony (zalecany)",
     "profile_eurofurence_desc": "Połączenia przychodzące do twojego urządzenia są zablokowane. Możesz swobodnie korzystać z internetu, ale nikt nie może nawiązać połączenia z otwartymi portami twojego urządzenia i działającymi za nimi aplikacjami.",

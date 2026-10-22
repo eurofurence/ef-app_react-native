@@ -3,11 +3,16 @@ import { useLocalSearchParams } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ScrollView, StyleSheet, View } from 'react-native'
+
+import { appStyles } from '@/components/AppStyles'
 import { Banner } from '@/components/generic/atoms/Banner'
+import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { MarkdownContent } from '@/components/generic/atoms/MarkdownContent'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { shareKbEntry } from '@/components/kb/KbEntry.common'
+import { LoadingContent } from '@/components/LoadingContent'
 import { LinkItem } from '@/components/maps/LinkItem'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { imagesCollection } from '@/data/collections/content/Images'
@@ -35,10 +40,12 @@ function KnowledgeItemImage({ imageId }: { imageId: EfId }) {
   ) : null
 }
 
+const leadingHeading = /^\s*#{1,6}\s/
+
 export default function KnowledgeItem() {
   const { t } = useTranslation('KnowledgeGroups')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { data: entry } = useLiveQuery(
+  const { data: entry, isLoading: pending } = useLiveQuery(
     {
       id: 'knowledge-item',
       query: (q) =>
@@ -51,6 +58,11 @@ export default function KnowledgeItem() {
   )
 
   // Get the knowledge entry from cache
+  const entry = knowledgeEntries.dict[id]
+  const pending = !entry && isSynchronizing
+
+  const leadsWithHeading =
+    !entry?.Images?.length && leadingHeading.test(entry?.Text ?? '')
   const [announcementMessage, setAnnouncementMessage] = useState('')
 
   // Focus management for the main content
@@ -80,9 +92,18 @@ export default function KnowledgeItem() {
         accessibilityLabel={t('accessibility.kb_entry_scroll')}
         accessibilityHint={t('accessibility.kb_entry_scroll_hint')}
       >
-        <Header>{entry?.Title ?? t('viewing_entry')}</Header>
-        <Floater>
-          {!entry ? (
+        <Header
+          secondaryIcon={entry ? platformShareIcon : undefined}
+          secondaryPress={entry ? () => shareKbEntry(entry) : undefined}
+          secondaryAccessibilityLabel={t('share')}
+          secondaryAccessibilityHint={t('accessibility.kb_entry_header_hint')}
+        >
+          {entry?.Title ?? t('viewing_entry')}
+        </Header>
+        <Floater contentStyle={appStyles.trailer}>
+          {pending ? (
+            <LoadingContent message={t('loading')} />
+          ) : !entry ? (
             <NotFoundContent
               accessibilityStatus={t('accessibility.kb_entry_not_found')}
               title={t('kb_entry_not_found_title')}
@@ -91,6 +112,7 @@ export default function KnowledgeItem() {
           ) : (
             <View
               ref={mainContentRef}
+              className={leadsWithHeading ? '' : 'mt-5'}
               accessibilityLabel={t('accessibility.kb_entry_content')}
               accessibilityRole='text'
             >

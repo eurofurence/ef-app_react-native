@@ -26,7 +26,10 @@ import { daysCollection } from '@/data/collections/content/Days'
 import { eventsFullCollection } from '@/data/collections/content/EventsFull'
 import { useSearchIds } from '@/data/searching/useSearch'
 import type { EfDay } from '@/data/types/EfDay'
-import { useThemeBackground } from '@/hooks/themes/useThemeHooks'
+import {
+  useThemeBackground,
+  useThemeColorValue,
+} from '@/hooks/themes/useThemeHooks'
 import { getNow } from '@/hooks/time/useNow'
 
 export const unstable_settings = {
@@ -71,6 +74,8 @@ export default function ScheduleLayout() {
   const { t } = useTranslation('Events')
   const insets = useSafeAreaInsets()
   const backgroundSurface = useThemeBackground('surface')
+  const tabBarActiveTintColor = useThemeColorValue('secondary')
+  const tabBarInactiveTintColor = useThemeColorValue('text')
   const { data: events, isReady } = useLiveQuery(eventsFullCollection)
   const { data: days } = useLiveQuery(daysCollection)
   const initialRouteName = getInitialRoute(days, getNow())
@@ -107,6 +112,9 @@ export default function ScheduleLayout() {
         style={StyleSheet.absoluteFill}
         screenOptions={{
           tabBarStyle: { paddingTop: insets.top },
+          tabBarActiveTintColor: tabBarActiveTintColor,
+          tabBarInactiveTintColor: tabBarInactiveTintColor,
+          tabBarIndicatorStyle: { height: 3 },
           sceneStyle: backgroundSurface,
           tabBarItemStyle: styles.tabItem,
         }}

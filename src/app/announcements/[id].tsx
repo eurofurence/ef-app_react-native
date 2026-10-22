@@ -11,13 +11,14 @@ import { Rule } from '@/components/generic/atoms/Rule'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
+import { LoadingContent } from '@/components/LoadingContent'
 import { announcementsFullCollection } from '@/data/collections/content/AnnouncementsFull'
 import { parseDefaultISO } from '@/util/parseDefaultISO'
 
 export default function AnnounceItem() {
   const { t } = useTranslation('Announcement')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { data: announcement } = useLiveQuery(
+  const { data: announcement, isLoading: pending } = useLiveQuery(
     {
       id: 'announcements-item',
       query: (q) =>
@@ -26,7 +27,7 @@ export default function AnnounceItem() {
           .where(({ item }) => eq(item.Id, id))
           .findOne(),
     },
-    [id]
+    [id],
   )
 
   return (
@@ -36,52 +37,54 @@ export default function AnnounceItem() {
       stickyHeaderHiddenOnScroll
       accessibilityLabel={t('accessibility.scroll_view')}
       accessibilityHint={t('accessibility.scroll_view_hint')}
-      accessibilityRole='scrollbar'
+      accessibilityRole="scrollbar"
     >
       <Header>{t('header')}</Header>
       <Floater contentStyle={appStyles.trailer}>
-        {!announcement ? (
+        {pending ? (
+          <LoadingContent message={t('loading')} />
+        ) : !announcement ? (
           <Label
-            type='h2'
-            className='mt-8 mb-3'
+            type="h2"
+            className="mt-8 mb-3"
             accessibilityLabel={t('accessibility.not_available_message')}
-            accessibilityRole='alert'
+            accessibilityRole="alert"
           >
             {t('not_available')}
           </Label>
         ) : (
           <>
             <Label
-              type='h1'
-              className='mt-8 mb-3'
+              type="h1"
+              className="mt-8 mb-3"
               accessibilityLabel={t('accessibility.title_heading')}
-              accessibilityRole='header'
+              accessibilityRole="header"
             >
               {announcement.Title}
             </Label>
 
             <Row
               style={styles.byline}
-              variant='spaced'
+              variant="spaced"
               accessibilityLabel={t('accessibility.byline_info')}
             >
               <Label
                 accessibilityLabel={t('accessibility.date_info', {
                   date: format(
                     parseDefaultISO(announcement.ValidFromDateTimeUtc),
-                    'PPpp'
+                    'PPpp',
                   ),
                 })}
               >
                 {format(
                   parseDefaultISO(announcement.ValidFromDateTimeUtc),
-                  'PPpp'
+                  'PPpp',
                 )}
               </Label>
 
               <Label
                 style={styles.tag}
-                ellipsizeMode='head'
+                ellipsizeMode="head"
                 numberOfLines={1}
                 accessibilityLabel={t('accessibility.area_author_info', {
                   area: announcement.Area,

@@ -1,5 +1,4 @@
 import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application'
-import { useAudioPlayer } from 'expo-audio'
 import { router } from 'expo-router'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -22,8 +21,10 @@ import { Col } from '@/components/generic/containers/Col'
 import { Floater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
 import { Row } from '@/components/generic/containers/Row'
+import { Pressable } from '@/components/generic/Pressable'
 import { conName } from '@/configuration'
 import { useAppSetting } from '@/data/collections/supplemental/AppSettings'
+import { useAppConfig } from '@/hooks/data/useAppConfig'
 import { useTheme } from '@/hooks/themes/useTheme'
 import { useMultiTap } from '@/hooks/util/useMultiTap'
 
@@ -109,7 +110,7 @@ type CreditProps = {
 
 const Credit = ({ url, name, jobTitle, onEasterEgg }: CreditProps) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() =>
         router.navigate({
           pathname: '/images/web',
@@ -137,7 +138,7 @@ const Credit = ({ url, name, jobTitle, onEasterEgg }: CreditProps) => {
           <Label>{jobTitle}</Label>
         </Col>
       </Row>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 
@@ -145,16 +146,17 @@ export default function AboutScreen() {
   const { t } = useTranslation('About')
   const { t: a11y } = useTranslation('Accessibility')
   const { setTheme } = useTheme()
+  const { supportUrl } = useAppConfig()
 
   const [devMenu, setDevMenu] = useAppSetting('DevMenuEnabled')
 
-  // Load static assets.
-  const sheeshSound = useAudioPlayer(require('@/assets/runtime/sheesh.webm'))
-
   const pazuzuEgg = useCallback(async () => {
-    sheeshSound.play()
     setTheme('pazuzu')
-  }, [sheeshSound, setTheme])
+  }, [setTheme])
+
+  const eggPlant = useCallback(async () => {
+    setTheme('adbergine')
+  }, [setTheme])
 
   const toggleDevMenu = useMultiTap(
     10,
@@ -227,23 +229,25 @@ export default function AboutScreen() {
         </TouchableOpacity>
 
         <Row style={styles.marginAround} gap={16}>
-          <Button
-            containerStyle={styles.flex}
-            onPress={() =>
-              handleExternalLink('https://t.me/+lAYTadnRKdY2NDBk', {
-                title: a11y('external_link_no_prompt'),
-                body: a11y('outside_link'),
-                confirmText: a11y('confirm'),
-                cancelText: a11y('cancel'),
-              })
-            }
-            icon='help'
-            accessible
-            accessibilityLabel={t('app_details.get_help')}
-            accessibilityRole='link'
-          >
-            {t('app_details.get_help')}
-          </Button>
+          {supportUrl && (
+            <Button
+              containerStyle={styles.flex}
+              onPress={() =>
+                handleExternalLink(supportUrl, {
+                  title: a11y('external_link_no_prompt'),
+                  body: a11y('outside_link'),
+                  confirmText: a11y('confirm'),
+                  cancelText: a11y('cancel'),
+                })
+              }
+              icon='help'
+              accessible
+              accessibilityLabel={t('app_details.get_help')}
+              accessibilityRole='link'
+            >
+              {t('app_details.get_help')}
+            </Button>
+          )}
           <Button
             containerStyle={styles.flex}
             onPress={() =>
@@ -276,6 +280,7 @@ export default function AboutScreen() {
           name='Fenrikur'
           url='https://avatars.githubusercontent.com/u/3359222'
           jobTitle='App Team Director and getting us to move our butts in gear'
+          onEasterEgg={eggPlant}
         />
         <Credit
           name='Kalynx'
@@ -304,7 +309,7 @@ export default function AboutScreen() {
           jobTitle='Backend Development'
         />
         <Credit
-          name='vanjmali'
+          name='Vanj'
           url='https://avatars.githubusercontent.com/u/31445914'
           jobTitle='App Development'
         />

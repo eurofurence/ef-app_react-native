@@ -10,6 +10,7 @@ import { platformShareIcon } from '@/components/generic/atoms/Icon'
 import { StatusMessage } from '@/components/generic/atoms/StatusMessage'
 import { Floater, padFloater } from '@/components/generic/containers/Floater'
 import { Header } from '@/components/generic/containers/Header'
+import { LoadingContent } from '@/components/LoadingContent'
 import { NotFoundContent } from '@/components/NotFoundContent'
 import { eventsFullCollection } from '@/data/collections/content/EventsFull'
 import { hiddenEventsToggle } from '@/data/collections/supplemental/HiddenEvents'
@@ -18,7 +19,7 @@ import { useAccessibilityFocus } from '@/hooks/util/useAccessibilityFocus'
 export default function EventItem() {
   const { t } = useTranslation('Event')
   const { id } = useLocalSearchParams<{ id: string }>()
-  const { data: event } = useLiveQuery(
+  const { data: event, isLoading: pending } = useLiveQuery(
     {
       id: 'events-item',
       query: (q) =>
@@ -76,7 +77,9 @@ export default function EventItem() {
             accessibilityLabel={t('accessibility.event_content')}
             accessibilityRole='text'
           >
-            {!event ? (
+            {pending ? (
+              <LoadingContent message={t('loading')} />
+            ) : !event ? (
               <NotFoundContent
                 accessibilityStatus={t('accessibility.event_not_found')}
                 title={t('event_not_found_title')}

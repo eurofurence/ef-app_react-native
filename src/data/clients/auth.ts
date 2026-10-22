@@ -3,6 +3,7 @@ import axios from 'axios'
 import {
   AuthRequest,
   exchangeCodeAsync,
+  Prompt,
   refreshAsync,
   TokenResponse,
 } from 'expo-auth-session'
@@ -137,6 +138,7 @@ export class AuthClient {
         clientId: authClientId,
         scopes: authScopes,
         redirectUri: authRedirect,
+        prompt: Prompt.Login,
       })
 
       // Prompt, result is code to exchange.
@@ -276,13 +278,20 @@ export class AuthClient {
   private async _setStateAndNotify(response: TokenResponse) {
     const fetchUserInfoPromise = AuthClient._fetchUserInfo(response.accessToken)
     const fetchUserSelfPromise = AuthClient._fetchUserSelf(response.accessToken)
+    const claims = await fetchUserInfoPromise
+    const user = await fetchUserSelfPromise
+    const idData = parseIdToken(response.idToken)
+
+    const sameSubject =
+      idData?.sub != null && idData.sub === this._state.idData?.sub
+
     this._state = {
       isReady: true,
       tokenResponse: response,
       isLoggedIn: Boolean(response),
-      idData: parseIdToken(response.idToken),
-      claims: await fetchUserInfoPromise,
-      user: await fetchUserSelfPromise,
+      idData,
+      claims: claims ?? (sameSubject ? this._state.claims : null),
+      user: user ?? (sameSubject ? this._state.user : null),
       sessionExpired: false,
     }
     await this._saveState()
@@ -308,12 +317,35 @@ export class AuthClient {
   }
 
   /**
+   * Reads the persisted state, retrying transient storage failures. Returns
+   * null for both "no session stored" and "unreadable after retries".
+   * @throws never
+   * @private
+   */
+  private static async _readPersistedState(attempts = 3) {
+    for (let attempt = 0; ; attempt++) {
+      try {
+        return await AsyncStorage.get('auth-client-persisted-state')
+      } catch (error) {
+        // A read failure is not proof of a missing session, so retry before
+        // giving up. Persisted data is deliberately left untouched here so a
+        // later launch can still restore it.
+        if (attempt >= attempts - 1) {
+          captureException(error)
+          return null
+        }
+        await new Promise((resolve) => setTimeout(resolve, 100 * 2 ** attempt))
+      }
+    }
+  }
+
+  /**
    * Restores the saved state.
    * @throws never
    * @private
    */
   private async _restoreState() {
-    const stored = await AsyncStorage.get('auth-client-persisted-state')
+    const stored = await AuthClient._readPersistedState()
     if (stored === null) {
       this._state = {
         isReady: true,

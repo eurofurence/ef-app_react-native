@@ -72,6 +72,7 @@
       "title_heading": "Announcement title"
     },
     "header": "Announcement",
+    "loading": "Loading...",
     "not_available": "This announcement is no longer available."
   },
   "Announcements": {
@@ -91,6 +92,7 @@
     },
     "header": "Announcements",
     "noAnnouncements": "There are currently no active announcements",
+    "noResults": "No announcements match your search",
     "sectionSubtitle": "Live updates from the convention",
     "sectionTitle": "Announcements"
   },
@@ -173,6 +175,7 @@
       "location_invalid_string": "Enter the number on the handout at your table.",
       "telegramHandle_invalid_string": "This does not look like a valid Telegram handle.",
       "too_small": "This is required.",
+      "unsupported_image": "This image format is not supported. Pick a different image.",
       "websiteUrl_invalid_string": "Write your website like: https://eurofurence.org"
     },
     "explanation_edit_change": "You can change your Artist Alley table registration details here. Just update your information, select a picture, and submit it.",
@@ -283,6 +286,7 @@
       "art_preview_caption": "Art preview caption: {{caption}}",
       "bluesky_button": "Visit {{handle}} on Bluesky",
       "bluesky_button_hint": "Opens Bluesky profile in browser",
+      "dealer_after_dark_icon": "After Dark section indicator",
       "dealer_attendance": "Attendance information: {{days}}",
       "dealer_avatar": "Profile image for {{name}}",
       "dealer_content_area": "Dealer information content",
@@ -305,7 +309,7 @@
       "twitter_button_hint": "Opens Twitter profile in browser"
     },
     "add_favorite": "Favorite",
-    "after_dark": "After dark",
+    "after_dark": "After Dark",
     "attends": "Attends on",
     "attends_fri": "Friday",
     "attends_sat": "Saturday",
@@ -316,7 +320,8 @@
     "dealer_not_found_title": "This dealer does not exist",
     "dealer_was_updated": "Dealer was updated since your last visit",
     "discord_handle_copied": "Discord handle {{discordHandle}} copied to clipboard!",
-    "in_after_dark": "Located in the after dark section",
+    "in_after_dark": "Located in the After Dark section",
+    "loading": "Loading...",
     "merchandise": "Merchandise",
     "not_attending": "Not attending today",
     "remove_favorite": "Unfavorite",
@@ -329,6 +334,7 @@
   },
   "Dealers": {
     "accessibility": {
+      "dealer_after_dark_icon": "After Dark section indicator",
       "dealer_avatar": "Profile image for {{name}}",
       "dealer_card": "Dealer: {{name}}",
       "dealer_card_hint": "Tap to view dealer details, long press for options",
@@ -342,14 +348,14 @@
       "dealers_sectioned_list": "Dealers organized by sections",
       "dealers_sectioned_list_hint": "Swipe to navigate through dealers grouped by category, pull down to refresh"
     },
-    "after_dark": "After dark",
+    "after_dark": "After Dark",
     "all": "All",
     "alphabetical": "A-Z",
     "coming_soon_body": "The Dealers' Den for {{conName}} is still being prepared. Check back later to see who will be there!",
     "coming_soon_title": "Coming soon!",
     "dealers_at_convention": "Dealers at {{convention}}",
-    "dealers_in_ad": "After dark dealers den",
-    "dealers_in_regular": "Regular dealers den",
+    "dealers_in_ad": "After Dark Dealers' Den",
+    "dealers_in_regular": "Regular Dealers' Den",
     "favorite_added": "Favorite added",
     "favorite_removed": "Favorite removed",
     "favorites_empty": "You do not have any favorite dealers yet. Favorite some dealers to create your own list.",
@@ -360,6 +366,8 @@
       "placeholder": "Search dealers…"
     },
     "section_notice": "Dealer grouping is picked by the app based on most unique category",
+    "section_notice_alphabetical": "Dealers are grouped by the first letter of their name",
+    "section_notice_search": "Dealer sorting is based on best match for search text",
     "section_table": "Section {{section}}",
     "section_table_none": "Without section"
   },
@@ -378,9 +386,9 @@
       "event_not_found": "The page for this event does not exist"
     },
     "add_favorite": "Favorite",
-    "event_was_updated": "Event was updated since your last visit",
     "event_not_found_message": "Sorry, we were unable to find the event you were looking for.",
     "event_not_found_title": "This event does not exist",
+    "event_was_updated": "Event was updated since your last visit",
     "give_feedback": "Give Feedback",
     "hide": "Hide from overview",
     "label_event_description": "More about the event",
@@ -388,6 +396,7 @@
     "label_event_room": "Room",
     "label_event_track": "Track",
     "label_event_when": "When",
+    "loading": "Loading...",
     "mask_required": "Face masks are mandatory for this event",
     "remove_favorite": "Unfavorite",
     "reveal": "Reveal in overview",
@@ -402,6 +411,7 @@
   },
   "EventFeedback": {
     "accessibility": {
+      "event_not_found": "Event does not exist",
       "feedback_form_content": "Feedback form content",
       "feedback_form_loaded": "Feedback form loaded for {{title}}",
       "feedback_form_scroll": "Feedback form scroll view",
@@ -409,10 +419,14 @@
       "submit_feedback": "Submit feedback",
       "submit_feedback_hint": "Submits your rating and message for this event"
     },
+    "disabled_not_accepting_feedback": "Feedback cannot be given for this event",
     "disabled_not_attending": "Only attendees can give feedback",
     "disabled_not_logged_in": "Please log in to give feedback",
+    "event_not_found_message": "Sorry, we were unable to find the event you were looking for.",
+    "event_not_found_title": "This event does not exist",
     "explanation": "Let us know how you felt about {{ eventTitle }} by leaving us a rating and maybe even a message! We'll see that it gets forwarded to the right person.",
     "header": "Feedback: {{ eventTitle }}",
+    "loading": "Loading...",
     "message_placeholder": "Do you have any more specific feedback for your host(s)? Type it here.",
     "message_title": "Feedback message",
     "rating_title": "How much did you like this event?",
@@ -454,6 +468,7 @@
     "search": {
       "placeholder": "Search events…"
     },
+    "section_notice_search": "Event sorting is based on best match for search text",
     "today_schedule_subtitle": "You will receive a reminder before this event starts",
     "today_schedule_title": "Today's schedule",
     "upcoming_favorites_title": "Favorite Events",
@@ -547,6 +562,7 @@
       "kb_entry_card": "Knowledge article: {{title}}",
       "kb_entry_card_hint": "Tap to view full article details",
       "kb_entry_content": "Knowledge article content",
+      "kb_entry_header_hint": "Header containing article title and share button",
       "kb_entry_loaded": "Knowledge article loaded: {{title}}",
       "kb_entry_not_found": "The page for this knowledge article does not exist",
       "kb_entry_scroll": "Knowledge article scroll view",
@@ -560,9 +576,11 @@
     "header": "Info Articles",
     "kb_entry_not_found_message": "Sorry, we were unable to find the article you were looking for.",
     "kb_entry_not_found_title": "This article does not exist",
+    "loading": "Loading...",
     "search": {
       "placeholder": "Search info articles…"
     },
+    "share": "Share this article",
     "viewing_entry": "Viewing article"
   },
   "LostAndFound": {
@@ -657,6 +675,8 @@
       "catch_em_tab": "Catch-em-all game tab",
       "catch_em_tab_disabled_hint": "Login required to play catch-em-all",
       "catch_em_tab_hint": "Play the fursuit catching game",
+      "critter_tab_hint": "Open the Critter System to sign up for volunteer shifts or view your schedule",
+      "critter_tab": "Critter System tab",
       "info_tab": "Info articles tab",
       "info_tab_hint": "Browse knowledge base and information articles",
       "login_button": "Login button",
@@ -681,6 +701,8 @@
       "profile_tab_hint": "View and manage your profile",
       "settings_tab": "Settings tab",
       "settings_tab_hint": "Configure app preferences and settings",
+      "weather_tab": "Fursuit weather tab",
+      "weather_tab_hint": "Check the current weather for fursuiting at Eurofurence",
       "website_tab": "Convention website tab",
       "website_tab_hint": "Opens convention website in browser",
       "wifi_tab": "WiFi setup",
@@ -689,6 +711,7 @@
     "announcements": "Announcements",
     "artist_alley": "Artist Alley",
     "catch_em": "Catch-em-all",
+    "critter": "Critter System",
     "dealers": "Dealers",
     "events": "Events",
     "home": "Home",
@@ -706,6 +729,7 @@
     "profile": "Profile",
     "services": "Services",
     "settings": "Settings",
+    "weather": "Weather",
     "website": "Website",
     "wifi": "WiFi"
   },
@@ -732,6 +756,7 @@
     },
     "from": "From {{authorName}}",
     "header": "Private Message",
+    "loading": "Loading...",
     "read_at": "Read at {{time}}"
   },
   "PrivateMessageList": {
@@ -770,6 +795,9 @@
     "header": "Profile",
     "badge_code": "Badge code",
     "badge_code_subtitle": "Scan this at check-in counters or staff terminals",
+    "add_to_wallet": "Add to Wallet",
+    "wallet_unavailable": "Wallet is not available on this device.",
+    "wallet_failed": "Could not add the pass to your wallet.",
     "idp_settings": "Identity setting website",
     "logged_in_as": "You are logged in as {{username}}",
     "login_description": "Being logged in allows {{conName}} to send you personal messages. It also allows you to participate in the Fursuit Catch 'em All and check in at tables in the Artist Alley.",
@@ -832,6 +860,12 @@
     "sign_in": "Sign in",
     "not_now": "Not now"
   },
+  "UpdateAvailable": {
+    "title": "Update available",
+    "body": "Version {{version}} of the app is out. Update to get the latest fixes and features.",
+    "update": "Update now",
+    "dismiss": "Dismiss"
+  },
   "Settings": {
     "about": "About",
     "allowAnalytics": "Allow us to collect analytics events",
@@ -853,7 +887,10 @@
       "login_required": "Log in to sync your favorite events.",
       "retry": "Try again",
       "subscribe": "Add favorites to calendar",
+      "subscribe_google": "Add favorites to Google Calendar",
+      "subscribe_google_hint": "The button above will copy the calendar URL and open Google Calendar in your browser.",
       "subtitle": "Subscribe your calendar app to your favorite events. New favorites and changes sync automatically.",
+      "sync_hint": "Calendar synchronization may take some time.",
       "title": "Calendar sync"
     },
     "changeLanguage": "Change language",
@@ -970,7 +1007,10 @@
   "Todo": {},
   "WiFi": {
     "title": "WiFi Setup",
-    "subtitle": "Eurofurence maintains a free WiFi network for use by attendees and staff.\n\nPlease note: for Dealers Den, Artshow and other special use-cases matching specialty networks may exist and you will be instructed by network staff seperately!",
+    "title_staff": "Staff WiFi Setup",
+    "title_public": "Public WiFi Info",
+    "subtitle_staff": "Hello Staffer! To help you with your work for Eurofurence please log into the staff-only WPA-Enterprise network, with the QR-code or credentials supplied to you.\nThese credentials are not to be shared with the public or others!\n\nPlease note: for Dealers' Den, Artshow and other special use-cases matching specialty networks may exist and you will be instructed by network staff separately!",
+    "subtitle_public": "Eurofurence maintains a free WiFi network for use by attendees, simply look out for a network with the name \"{{ssid}}\" and connect.\n\nPlease note: for Dealers' Den, Artshow and other special use-cases, matching specialty networks may exist and you will be instructed by network staff separately!",
     "intro": "If you are an advanced user or staff you can change the firewall behaviour or provide custom credentials.",
     "profile_eurofurence_name": "Protected (Recommended)",
     "profile_eurofurence_desc": "Incoming connections to your device aren't allowed, so you can still access the internet freely, but nobody can initiate connections to your devices open ports and running apps behind them.",

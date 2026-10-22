@@ -16,6 +16,7 @@ import { Label } from './generic/atoms/Label'
 import { Section } from './generic/atoms/Section'
 import { Badge } from './generic/containers/Badge'
 import { Button } from './generic/containers/Button'
+import { AddToWalletButton } from './profile/AddToWalletButton'
 
 /**
  * User role pill.
@@ -172,6 +173,8 @@ export const ProfileContent: FC<ProfileContentProps> = ({
           <UserRegistration key={r.Id} id={r.Id} status={r.Status} />
         ))}
       </View>
+
+      {datamatrix && <AddToWalletButton />}
 
       <Label className='mt-5' type='para'>
         {t('login_description', { conName })}

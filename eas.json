@@ -7,10 +7,12 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "environment": "development"
     },
     "preview": {
       "distribution": "internal",
+      "environment": "preview",
       "android": {
         "gradleCommand": ":app:assembleRelease --parallel --no-daemon"
       },
@@ -19,9 +21,7 @@
       }
     },
     "production": {
-      "ios": {
-        "credentialsSource": "local"
-      },
+      "environment": "production",
       "autoIncrement": true,
       "android": {
         "buildType": "app-bundle"
@@ -32,6 +32,9 @@
     "production": {
       "android": {
         "track": "internal"
+      },
+      "ios": {
+        "ascAppId": "1112547322"
       }
     }
   }

@@ -24,6 +24,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { AuthBridge } from '@/components/auth/AuthBridge'
 import { SessionExpiredModal } from '@/components/auth/SessionExpiredModal'
 import { ToastProvider } from '@/context/ToastContext'
+import { UpdateAvailableModal } from '@/components/update/UpdateAvailableModal'
 import { AppClients } from '@/data/clients/AppClients'
 import { useFavoriteDealersToasts } from '@/data/hooks/useFavoriteDealersToasts'
 import { useFavoriteEventsToasts } from '@/data/hooks/useFavoriteEventsToasts'
@@ -103,6 +104,7 @@ export function MainLayout() {
       <BottomSheetModalProvider>
         <AuthBridge />
         <SessionExpiredModal />
+        <UpdateAvailableModal />
         <ThemeProvider value={themeNavigation}>
           <StatusBar
             style={

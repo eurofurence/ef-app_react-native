@@ -1,17 +1,8 @@
-import { captureException } from '@sentry/react-native'
-import { Dimensions, Share } from 'react-native'
+import { Dimensions } from 'react-native'
 
-import { conAbbr } from '@/configuration'
+import { shareLink } from '@/util/shareLink'
 
-export const shareImage = (url: string, title: string) =>
-  Share.share(
-    {
-      title,
-      url,
-      message: `Check out ${title} on ${conAbbr}!\n${url}`,
-    },
-    {}
-  ).catch(captureException)
+export const shareImage = (url: string, title: string) => shareLink(title, url)
 
 export const minZoomFor = (width: number, height: number, padding: number) => {
   if (width <= 0 || height <= 0) return 1

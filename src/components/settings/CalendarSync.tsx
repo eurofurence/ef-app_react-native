@@ -1,7 +1,7 @@
 import { captureException } from '@sentry/react-native'
 import { setStringAsync } from 'expo-clipboard'
 import { useTranslation } from 'react-i18next'
-import { Linking, StyleSheet } from 'react-native'
+import { Linking, Platform, StyleSheet } from 'react-native'
 import { Icon } from '@/components/generic/atoms/Icon'
 import { Label } from '@/components/generic/atoms/Label'
 import { Section } from '@/components/generic/atoms/Section'
@@ -53,6 +53,18 @@ export const CalendarSync = () => {
     Linking.openURL(webcalUrl).catch(onError)
   }
 
+  const onSubscribeGoogle = () => {
+    if (!feedUrl) return
+    setStringAsync(feedUrl)
+      .then(() => toast('info', t('link_copied'), 3000))
+      .catch(onError)
+      .finally(() =>
+        Linking.openURL(
+          'https://calendar.google.com/calendar/u/0/r/settings/addbyurl'
+        )
+      )
+  }
+
   const onCopy = () => {
     if (!feedUrl) return
     setStringAsync(feedUrl)
@@ -62,6 +74,7 @@ export const CalendarSync = () => {
 
   const subscribeDisabled = isLoading || !webcalUrl
   const copyDisabled = isLoading || !feedUrl
+  const isAndroid = Platform.OS === 'android'
 
   return (
     <SettingContainer>
@@ -89,24 +102,50 @@ export const CalendarSync = () => {
           {t('retry')}
         </Button>
       ) : (
-        <Row type='stretch' gap={10}>
-          <Button
-            containerStyle={styles.subscribe}
-            icon='calendar-export'
-            onPress={onSubscribe}
-            disabled={subscribeDisabled}
-          >
-            {t('subscribe')}
-          </Button>
-          <Pressable
-            style={[styles.copy, copyBorder, copyDisabled && styles.disabled]}
-            onPress={onCopy}
-            disabled={copyDisabled}
-            accessibilityLabel={t('copy_link')}
-          >
-            <Icon name='content-copy' size={buttonIconSize} color={copyColor} />
-          </Pressable>
-        </Row>
+        <>
+          <Row type='stretch' gap={10}>
+            <Button
+              containerStyle={styles.subscribe}
+              icon='calendar-export'
+              onPress={onSubscribe}
+              disabled={subscribeDisabled}
+            >
+              {t('subscribe')}
+            </Button>
+            <Pressable
+              style={[styles.copy, copyBorder, copyDisabled && styles.disabled]}
+              onPress={onCopy}
+              disabled={copyDisabled}
+              accessibilityLabel={t('copy_link')}
+            >
+              <Icon
+                name='content-copy'
+                size={buttonIconSize}
+                color={copyColor}
+              />
+            </Pressable>
+          </Row>
+          {isAndroid ? (
+            <>
+              <Button
+                containerStyle={styles.subscribeGoogle}
+                icon='calendar-export'
+                onPress={onSubscribeGoogle}
+                disabled={subscribeDisabled}
+              >
+                {t('subscribe_google')}
+              </Button>
+              <Label variant='narrow' style={styles.syncHint}>
+                {t('subscribe_google_hint')}
+              </Label>
+            </>
+          ) : (
+            ''
+          )}
+          <Label variant='narrow' style={styles.syncHint}>
+            {t('sync_hint')}
+          </Label>
+        </>
       )}
     </SettingContainer>
   )
@@ -116,8 +155,15 @@ const styles = StyleSheet.create({
   hint: {
     marginBottom: 10,
   },
+  syncHint: {
+    marginTop: 10,
+    textAlign: 'center',
+  },
   subscribe: {
     flex: 1,
+  },
+  subscribeGoogle: {
+    marginTop: 5,
   },
   copy: {
     aspectRatio: 1,
